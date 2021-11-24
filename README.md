@@ -1,11 +1,19 @@
 ![LHQ main screen](./imgs/landing.png)
 
 # Localization HQ Editor (aka lhqeditor)
-**Visual Studio (2015/2017/2019/2022)** editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.
+**Visual Studio** extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.
 
 > Official project page on: [psulek.github.io/lhqeditor](https://psulek.github.io/lhqeditor/)
 
 ## Features
+
+### Supported Visual Studio versions
+- 2015
+- 2017
+- 2019
+- 2022
+
+from Community to Enterprise versions.
 
 ### WYSIWYG Editor
 - Edit and manage string resources in visual tree
@@ -67,6 +75,9 @@ To fix a bug or add new feature, follow these steps:
 
 ## Bug / Feature Request
 If you find a bug or missing some feature, please add new issue [here](https://github.com/psulek/lhqeditor/issues).
+
+## License
+[MIT](./LICENSE) / [Peter Šulek](https://github.com/psulek)
 
 ## Project Status
 ✅ Project is stable

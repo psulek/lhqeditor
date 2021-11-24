@@ -53,6 +53,20 @@ Install **lhqeditor** extension from [Visual Studio Marketplace](https://marketp
 Install **lhqeditor** extension directly from Visual Studio IDE:
 - Main Menu ➞ Extensions ➞ Manage Extensions ➞ Online ➞ enter search term "lhq"
 
+## Contributors
+Wanna help with project? 
+
+To fix a bug or add new feature, follow these steps:
+
+- Fork the repo
+- Create a new branch `git checkout -b bugfix`
+- Make the appropriate changes
+- Commit your changes `git commit -am 'Bug fixed'
+- Push to the branch `git push origin bugfix`
+- Create a Pull Request
+
+## Bug / Feature Request
+If you find a bug or missing some feature, please add new issue [here](https://github.com/psulek/lhqeditor/issues).
 
 ## Project Status
 ✅ Project is stable

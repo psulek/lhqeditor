@@ -1,0 +1,22 @@
+<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ LHQDirective Processor="LHQDirectiveProcessor" FileName="$fileinputname$.lhq" ItemTemplate="NetFwResxCsharp01" #>
+<#@ include file="EnvDteUtils.ttinclude" #>
+<#@ include file="LhqGenerator.ttinclude" #>
+<#@ include file="LhqToResXGenerator.ttinclude" #>
+<#@ include file="LhqToCSharpNetFw.ttinclude" #>
+<#@ import namespace="LHQ.Data.Templating.Templates.NetFw" #>
+
+<# //System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+	// NOTE: DO NOT change this file. Changes to this file may cause incorrect behavior and will be lost if the file is regenerated.
+	var codeGeneratorTemplate = this.CodeGeneratorTemplate<NetFwResxCsharp01Template>();
+
+	using(var fileManager = FileManager.CreateShared(this))
+    {
+		var resXgenerator = new ResXGenerator(this, this.ModelContext, codeGeneratorTemplate.ResX, fileManager);
+		resXgenerator.Generate();
+
+		var csharpGenerator = new CSharpGenerator(this, this.ModelContext, codeGeneratorTemplate.CSharp, fileManager);
+		csharpGenerator.Generate();
+    }
+#>

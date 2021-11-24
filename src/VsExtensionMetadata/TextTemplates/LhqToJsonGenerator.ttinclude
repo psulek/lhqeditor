@@ -1,0 +1,165 @@
+<#@ import namespace="System.Collections.ObjectModel" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="LHQ.Utils" #>
+<#@ import namespace="LHQ.Data" #>
+<#@ import namespace="LHQ.Data.Extensions" #>
+<#@ import namespace="LHQ.Data.Templating.Settings" #>
+<#@ import namespace="LHQ.Data.Templating.Settings.Json" #>
+
+<#+ //System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+public class JsonGenerator: GeneratorBase<JsonGeneratorSettings> {
+	private string baseFileName;
+
+	public JsonGenerator(object textTemplatingHost, ModelContext modelContext, 
+		JsonGeneratorSettings settings)
+		:this(textTemplatingHost, modelContext, settings, null)
+    {}
+
+	public JsonGenerator(object textTemplatingHost, ModelContext modelContext, 
+		JsonGeneratorSettings settings, FileManager manager)
+	: base(textTemplatingHost, modelContext, settings, manager)
+	{}
+
+	protected override string GeneratorName
+    {
+		get { return "Json Generator"; }
+    }
+
+	public override void DoGenerate()
+	{
+		try
+		{
+			this.baseFileName = this.ModelRoot.Name;
+
+			foreach(var language in this.ModelRoot.Languages) 
+			{
+				WriteJsonFile(language);
+			}
+
+			WriteMetadata();
+		}
+		finally
+		{
+			this.Manager.Flush();
+		}
+	}
+
+    public void WriteJsonFile(LHQ.Data.LanguageElement language)
+	{
+		string lang = language.Name.ToLowerInvariant();
+		if (language.IsPrimary && !Settings.CultureCodeInFileNameForPrimaryLanguage) {
+			lang = string.Empty; 
+		} else {
+			lang = "." + lang;
+		}
+		string jsonFileName = baseFileName + lang + ".json";
+	
+		this.StartNewFile(jsonFileName, this.Settings);
+#>
+{
+<#+
+	//this.PushIndent();
+	//WriteResources(language);
+    WriteCategoriesAndResources(ModelRoot.Categories, ModelRoot.Resources, language);
+	//this.PopIndent();
+#>
+}
+<#+
+		this.Manager.EndNewFile();
+	}
+
+    public void WriteCategoriesAndResources(LHQ.Data.CategoryElementList categories, 
+        LHQ.Data.ResourceElementList resources, LHQ.Data.LanguageElement language)
+    {
+        PushIndent();
+        bool hasResources = resources.Count > 0;
+        var orderedCategories = categories.OrderByName().ToList();
+        var lastCategory = orderedCategories.Count > 0 ? orderedCategories.Last() : null;
+
+        foreach (var category in orderedCategories)
+        {
+            string categoryName = category.Name.Trim();
+            string writeComma = (category != lastCategory || hasResources) ? "," : string.Empty;
+#>
+"<#= categoryName #>": {
+<#+
+    WriteCategoriesAndResources(category.Categories, category.Resources, language);
+#>
+}<#= writeComma #>
+<#+
+        }
+
+        WriteResources(resources, language);
+        PopIndent();
+    }
+
+	public void WriteResources(LHQ.Data.ResourceElementList resources, LHQ.Data.LanguageElement language)
+	{
+		Dictionary<string,string> data = new Dictionary<string,string>();
+		foreach(var resource in resources.OrderByName())
+		{
+			string resourceKey = resource.Name;
+			var resourceValue = resource.FindValueByLanguage(language.Name);
+			string encodedResourceValue = null;
+			
+			if (resourceValue != null) {
+				if (resourceValue.Value != null) {
+					resourceValue.Value = resourceValue.GetEncodedValue().Trim();
+				}
+				
+				encodedResourceValue = resourceValue.Value == null ? string.Empty : resourceValue.Value;
+			}
+			else if (Settings.WriteEmptyValues)
+			{
+				encodedResourceValue = string.Empty;
+            }
+
+			if (encodedResourceValue != null)
+            {
+				data.Add(resourceKey, encodedResourceValue);
+            }
+		}
+
+		int idx = -1;
+		foreach(var item in data) {
+			idx++;
+			string resourceKey = item.Key;
+			string resourceValue = item.Value;
+#>
+"<#= resourceKey #>": "<#= resourceValue #>"<#= idx == (data.Count-1) ? string.Empty : "," #>
+<#+
+		}
+	}
+
+	public void WriteMetadata()
+    {
+        string metadataSuffix = Settings.MetadataFileNameSuffix;
+        if (string.IsNullOrEmpty(metadataSuffix))
+        {
+            metadataSuffix = "metadata";
+        }
+
+		string metadataFileName = baseFileName + "-" + metadataSuffix + ".json";
+		this.StartNewFile(metadataFileName, this.Settings);
+#>
+{
+	"default": "<#= PrimaryLanguage.Name #>",
+	"languages": [
+<#+
+		int idx = -1;
+		int langCount = this.ModelRoot.Languages.Count;
+		foreach(var language in this.ModelRoot.Languages.OrderBy(x => x.Name))
+		{
+			idx++;
+#>
+		"<#= language.Name #>"<#= idx == (langCount-1) ? string.Empty : "," #>
+<#+
+		}
+#>
+	]
+}
+<#+
+		this.Manager.EndNewFile();
+    }
+}
+#>

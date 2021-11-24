@@ -1,0 +1,34 @@
+﻿{
+  "model": {
+    "uid": "6ce4d54c5dbd415c93019d315e278638",
+    "version": 1,
+    "options": {
+      "categories": true,
+      "resources": "All"
+    },
+    "name": "strings",
+    "primaryLanguage": "en"
+  },
+  "languages": [
+    "de",
+    "en"
+  ],
+  "categories": {
+    "messages": {
+      "resources": {
+        "helloWorld": {
+          "state": "Edited",
+          "values": {
+            "de": {
+              "value": "Hallo Welt!",
+              "auto": true
+            },
+            "en": {
+              "value": "Hello World!"
+            }
+          }
+        }
+      }
+    }
+  }
+}

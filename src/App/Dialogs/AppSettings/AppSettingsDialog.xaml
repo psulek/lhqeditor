@@ -1,0 +1,74 @@
+﻿<dialogs:DialogWindow x:Class="LHQ.App.Dialogs.AppSettings.AppSettingsDialog"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:appSettings="clr-namespace:LHQ.App.ViewModels.Dialogs.AppSettings"
+                      xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+                      xmlns:code="clr-namespace:LHQ.App.Code"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+                      xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+                      xmlns:uc="clr-namespace:LHQ.App.Dialogs.AppSettings"
+                      Title="{Binding Title}"
+                      Width="800"
+                      Height="500"
+                      d:DataContext="{d:DesignInstance appSettings:AppSettingsDialogViewModel,
+                                                       IsDesignTimeCreatable=False}"
+                      sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
+                      ResizeMode="NoResize"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+
+    <dialogs:DialogWindow.InputBindings>
+        <KeyBinding Command="{Binding Path=ShowHelpCommand}"
+                    Gesture="F1" />
+    </dialogs:DialogWindow.InputBindings>
+
+    <i:Interaction.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding Path=LoadedWindowCommand}"
+                                          Event="Loaded"
+                                          PassArguments="True" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <uc:AppSettingsView Grid.Row="0"
+                            Grid.Column="0" />
+
+        <Grid Grid.Row="2"
+              Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Padding="5,1,5,1"
+                    Command="{Binding Path=ResetToDefaultsCommand}"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ResetToDefaults}}" />
+            <StackPanel Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                <Button Width="70"
+                        Margin="0,0,10,0"
+                        Command="{Binding Path=SubmitDialogCommand}"
+                        Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonOk}}"
+                        IsDefault="True" />
+                <Button Width="70"
+                        Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonCancel}}"
+                        IsCancel="True" />
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</dialogs:DialogWindow>

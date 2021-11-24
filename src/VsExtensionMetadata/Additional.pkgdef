@@ -1,0 +1,11 @@
+﻿[$RootKey$\TextTemplating]
+[$RootKey$\TextTemplating\IncludeFolders]
+[$RootKey$\TextTemplating\IncludeFolders\.tt]
+"IncludeLhqEditorDsl"="$PackageFolder$\TextTemplates"
+
+[$RootKey$\TextTemplating]
+[$RootKey$\TextTemplating\DirectiveProcessors]
+[$RootKey$\TextTemplating\DirectiveProcessors\LHQDirectiveProcessor]
+@="A directive processor that provides access to LHQ strings model"
+"Class"="LHQ.VsExtension.LHQDirectiveProcessor"
+"CodeBase"="$PackageFolder$\LHQ.VsExtension.dll"

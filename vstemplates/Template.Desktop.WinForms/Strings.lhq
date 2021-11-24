@@ -1,0 +1,108 @@
+﻿{
+  "model": {
+    "uid": "6ce4d54c5dbd415c93019d315e278638",
+    "version": 1,
+    "options": {
+      "categories": true,
+      "resources": "All"
+    },
+    "name": "Strings",
+    "primaryLanguage": "en"
+  },
+  "languages": [
+    "de",
+    "en",
+    "sk"
+  ],
+  "categories": {
+    "Languages": {
+      "resources": {
+        "de": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "German Language"
+            },
+            "sk": {
+              "value": "Nemecký jazyk"
+            },
+            "de": {
+              "value": "Deutsche Sprache"
+            }
+          }
+        },
+        "en": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "English Language"
+            },
+            "sk": {
+              "value": "Anglický Jazyk"
+            },
+            "de": {
+              "value": "Englische Sprache"
+            }
+          }
+        },
+        "sk": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Slovak Language"
+            },
+            "sk": {
+              "value": "Slovenský Jazyk"
+            },
+            "de": {
+              "value": "Nemecký Jazyk"
+            }
+          }
+        }
+      }
+    },
+    "Messages": {
+      "resources": {
+        "Title": {
+          "state": "Edited",
+          "parameters": {
+            "userName": {
+              "order": 0
+            },
+            "productName": {
+              "order": 1
+            },
+            "date": {
+              "order": 2
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Hi {0}, we're glad you are using {1} at {2}"
+            },
+            "sk": {
+              "value": "Ahoj {0}, sme radi že používate {1} v čase {2}"
+            },
+            "de": {
+              "value": "Hallo {0}, wir freuen uns, dass Sie bei {2} {1} verwenden"
+            }
+          }
+        },
+        "Welcome": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Welcome"
+            },
+            "de": {
+              "value": "Willkommen"
+            },
+            "sk": {
+              "value": "Vitaj"
+            }
+          }
+        }
+      }
+    }
+  }
+}

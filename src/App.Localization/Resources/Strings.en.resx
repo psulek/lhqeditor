@@ -1,0 +1,2008 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppCopyright" xml:space="preserve">
+    <value>Copyright &#169; {0} ScaleHQ Solutions s.r.o.</value>
+  </data>
+  <data name="AppModelFileFilter" xml:space="preserve">
+    <value>Localization LHQ (*.lhq)|*.lhq</value>
+  </data>
+  <data name="AppProductName" xml:space="preserve">
+    <value>Localization HQ Editor</value>
+  </data>
+  <data name="AppStandaloneProductDescription" xml:space="preserve">
+    <value>Windows Desktop application for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file.</value>
+  </data>
+  <data name="AppTitle" xml:space="preserve">
+    <value>Localization HQ Editor</value>
+  </data>
+  <data name="AppUpdateStatusText" xml:space="preserve">
+    <value>Checking for program updates...</value>
+  </data>
+  <data name="AppUpdateUsingLatestVersionMessage" xml:space="preserve">
+    <value>You have the latest version.</value>
+  </data>
+  <data name="AppVsExtensionProductDescription" xml:space="preserve">
+    <value>Visual Studio editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.</value>
+  </data>
+  <data name="CommonCountTextsCount0Category" xml:space="preserve">
+    <value>categories</value>
+  </data>
+  <data name="CommonCountTextsCount0Resource" xml:space="preserve">
+    <value>resources</value>
+  </data>
+  <data name="CommonCountTextsCount1Category" xml:space="preserve">
+    <value>category</value>
+  </data>
+  <data name="CommonCountTextsCount1Resource" xml:space="preserve">
+    <value>resource</value>
+  </data>
+  <data name="CommonCountTextsCount2Category" xml:space="preserve">
+    <value>categories</value>
+  </data>
+  <data name="CommonCountTextsCount2Resource" xml:space="preserve">
+    <value>resources</value>
+  </data>
+  <data name="CommonCountTextsCount3Category" xml:space="preserve">
+    <value>categories</value>
+  </data>
+  <data name="CommonCountTextsCount3Resource" xml:space="preserve">
+    <value>resources</value>
+  </data>
+  <data name="CommonCountTextsCount4Category" xml:space="preserve">
+    <value>categories</value>
+  </data>
+  <data name="CommonCountTextsCount4Resource" xml:space="preserve">
+    <value>resources</value>
+  </data>
+  <data name="CommonCountTextsCountMoreCategories" xml:space="preserve">
+    <value>categories</value>
+  </data>
+  <data name="CommonCountTextsCountMoreResources" xml:space="preserve">
+    <value>resources</value>
+  </data>
+  <data name="CommonPropertiesDescription" xml:space="preserve">
+    <value>description</value>
+  </data>
+  <data name="CommonPropertiesName" xml:space="preserve">
+    <value>name</value>
+  </data>
+  <data name="CommonPropertiesParameters" xml:space="preserve">
+    <value>parameters</value>
+  </data>
+  <data name="CommonPropertiesTranslationNote" xml:space="preserve">
+    <value>translation note</value>
+  </data>
+  <data name="CommonPropertiesTranslationState" xml:space="preserve">
+    <value>translation state</value>
+  </data>
+  <data name="CommonPropertiesTranslationValue" xml:space="preserve">
+    <value>translation</value>
+  </data>
+  <data name="CommonThemesAutomatic" xml:space="preserve">
+    <value>Automatic selection</value>
+  </data>
+  <data name="CommonThemesDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="CommonThemesLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="CommonActions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="CommonButtonAdd" xml:space="preserve">
+    <value>_Add</value>
+  </data>
+  <data name="CommonButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CommonButtonClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CommonButtonConfigure" xml:space="preserve">
+    <value>Configure</value>
+  </data>
+  <data name="CommonButtonDelete" xml:space="preserve">
+    <value>_Delete</value>
+  </data>
+  <data name="CommonButtonEdit" xml:space="preserve">
+    <value>_Edit</value>
+  </data>
+  <data name="CommonButtonExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="CommonButtonFinish" xml:space="preserve">
+    <value>_Finish</value>
+  </data>
+  <data name="CommonButtonNext" xml:space="preserve">
+    <value>Ď_alej</value>
+  </data>
+  <data name="CommonButtonNo" xml:space="preserve">
+    <value>_No</value>
+  </data>
+  <data name="CommonButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CommonButtonPrevious" xml:space="preserve">
+    <value>_Previous</value>
+  </data>
+  <data name="CommonButtonRemove" xml:space="preserve">
+    <value>_Remove</value>
+  </data>
+  <data name="CommonButtonTest" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="CommonClickToHideThisHint" xml:space="preserve">
+    <value>Click to hide this hint (Re-enable in Settings)</value>
+  </data>
+  <data name="CommonClickToShowThisHint" xml:space="preserve">
+    <value>Click to show this hint</value>
+  </data>
+  <data name="CommonColumnError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="CommonColumnName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CommonDontShowThisPageAgain" xml:space="preserve">
+    <value>Do not show this page again</value>
+  </data>
+  <data name="CommonError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="CommonLanguageCode" xml:space="preserve">
+    <value>Language code</value>
+  </data>
+  <data name="CommonLanguageName" xml:space="preserve">
+    <value>Language name</value>
+  </data>
+  <data name="CommonMinimumPasswordLength" xml:space="preserve">
+    <value>Minimum password length is {0} characters.</value>
+  </data>
+  <data name="CommonNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="CommonPrimary" xml:space="preserve">
+    <value>Primary</value>
+  </data>
+  <data name="CommonProductFeatureIsDisabledForActiveLicense" xml:space="preserve">
+    <value>Active product license ({0}) has disabled &#39;{1}&#39; feature.</value>
+  </data>
+  <data name="CommonResetToDefaults" xml:space="preserve">
+    <value>Reset to defaults</value>
+  </data>
+  <data name="CommonUnknownError" xml:space="preserve">
+    <value>Unknown error</value>
+  </data>
+  <data name="CommonValidationError" xml:space="preserve">
+    <value>Validation error</value>
+  </data>
+  <data name="CommonYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="DialogsAboutAppVersion" xml:space="preserve">
+    <value>Program version: {0}</value>
+  </data>
+  <data name="DialogsAboutDialogTitle" xml:space="preserve">
+    <value>Localization HQ Editor - About</value>
+  </data>
+  <data name="DialogsAppSettingsPageGeneralColorTheme" xml:space="preserve">
+    <value>Color theme</value>
+  </data>
+  <data name="DialogsAppSettingsPageGeneralDefaultLanguageIsRequired" xml:space="preserve">
+    <value>Default language is required.</value>
+  </data>
+  <data name="DialogsAppSettingsPageGeneralLockTranslationsWithResource" xml:space="preserve">
+    <value>Lock translations when resource state is changed to Final</value>
+  </data>
+  <data name="DialogsAppSettingsPagePluginsCannotEnablePluginFeatureIsDisabled0000" xml:space="preserve">
+    <value>Cannot enable plugin because active license ({0}) has disabled &#39;{1}&#39; feature.</value>
+  </data>
+  <data name="DialogsAppSettingsPagePluginsInstalledPluginsHeader" xml:space="preserve">
+    <value>Installed plugins:</value>
+  </data>
+  <data name="DialogsAppSettingsPagePluginsTitle" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="DialogsAppSettingsPageTranslatorTestTestingText" xml:space="preserve">
+    <value>Testing &#39;{0}&#39;</value>
+  </data>
+  <data name="DialogsAppSettingsPageTranslatorTestTestSucceed" xml:space="preserve">
+    <value>Testing &#39;{0}&#39; succeeded.</value>
+  </data>
+  <data name="DialogsAppSettingsPageTranslatorTestTestSucceedTitle" xml:space="preserve">
+    <value>Test Succeed</value>
+  </data>
+  <data name="DialogsAppSettingsPageTranslatorEnableTranslation" xml:space="preserve">
+    <value>Enable translator integration</value>
+  </data>
+  <data name="DialogsAppSettingsPageTranslatorShowConfigureHint" xml:space="preserve">
+    <value>Translator must be configured for integration to work properly.</value>
+  </data>
+  <data name="DialogsAppSettingsPluginConfigurePluginHelp" xml:space="preserve">
+    <value>Plugin Help...</value>
+  </data>
+  <data name="DialogsAppSettingsPluginConfigurePluginVersion" xml:space="preserve">
+    <value>version:</value>
+  </data>
+  <data name="DialogsAppSettingsApplicationLocalization" xml:space="preserve">
+    <value>Application lozalization</value>
+  </data>
+  <data name="DialogsAppSettingsButtonCheckForUpdates" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="DialogsAppSettingsCaptionHint" xml:space="preserve">
+    <value>Change application behavior</value>
+  </data>
+  <data name="DialogsAppSettingsCheckUpdatesOnAppStart" xml:space="preserve">
+    <value>Check updates when application starts</value>
+  </data>
+  <data name="DialogsAppSettingsDefaultLanguage" xml:space="preserve">
+    <value>Default language for new projects</value>
+  </data>
+  <data name="DialogsAppSettingsDialogCaption" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="DialogsAppSettingsDialogTitle" xml:space="preserve">
+    <value>Localization HQ Editor - Preferences</value>
+  </data>
+  <data name="DialogsAppSettingsOpenLastProjectOnStartup" xml:space="preserve">
+    <value>Open last project when application starts</value>
+  </data>
+  <data name="DialogsAppSettingsShowHints" xml:space="preserve">
+    <value>Show hints</value>
+  </data>
+  <data name="DialogsChangePasswordCurrentPassword" xml:space="preserve">
+    <value>Current password:</value>
+  </data>
+  <data name="DialogsChangePasswordEmail" xml:space="preserve">
+    <value>Email:</value>
+  </data>
+  <data name="DialogsChangePasswordNewPassword" xml:space="preserve">
+    <value>New password:</value>
+  </data>
+  <data name="DialogsChangePasswordNewPasswordConfirm" xml:space="preserve">
+    <value>New password confirm:</value>
+  </data>
+  <data name="DialogsChangePasswordTitle" xml:space="preserve">
+    <value>Account - Change Password</value>
+  </data>
+  <data name="DialogsCodeGeneratorButtonResetToDefault" xml:space="preserve">
+    <value>Reset To Default</value>
+  </data>
+  <data name="DialogsCodeGeneratorResetConfirmCaption" xml:space="preserve">
+    <value>Reset Settings To Default Values</value>
+  </data>
+  <data name="DialogsCodeGeneratorResetConfirmMessage" xml:space="preserve">
+    <value>Do you want to reset settings to its default values?</value>
+  </data>
+  <data name="DialogsCodeGeneratorTemplateId" xml:space="preserve">
+    <value>Template id: {0}</value>
+  </data>
+  <data name="DialogsCodeGeneratorTemplateName" xml:space="preserve">
+    <value>Template name: {0}</value>
+  </data>
+  <data name="DialogsCodeGeneratorTitle" xml:space="preserve">
+    <value>Code Generator Settings</value>
+  </data>
+  <data name="DialogsEditLanguageDialogCaptionAdd" xml:space="preserve">
+    <value>Add language</value>
+  </data>
+  <data name="DialogsEditLanguageDialogCaptionAddHint" xml:space="preserve">
+    <value>Adds new language to current project</value>
+  </data>
+  <data name="DialogsEditLanguageDialogCaptionEdit" xml:space="preserve">
+    <value>Edit language</value>
+  </data>
+  <data name="DialogsEditLanguageDialogCaptionEditHint" xml:space="preserve">
+    <value>Edit language</value>
+  </data>
+  <data name="DialogsEditLanguageDialogTitleAdd" xml:space="preserve">
+    <value>Add language</value>
+  </data>
+  <data name="DialogsEditLanguageDialogTitleEdit" xml:space="preserve">
+    <value>Edit language</value>
+  </data>
+  <data name="DialogsEditLanguageIsPrimaryLanguage" xml:space="preserve">
+    <value>Is primary language?</value>
+  </data>
+  <data name="DialogsEditLanguageLanguagesTypeNeutral" xml:space="preserve">
+    <value>Neutral language</value>
+  </data>
+  <data name="DialogsEditLanguageLanguagesTypeSpecific" xml:space="preserve">
+    <value>Specific language</value>
+  </data>
+  <data name="DialogsEditLanguageLanguageTypeInfo" xml:space="preserve">
+    <value>Languages type:</value>
+  </data>
+  <data name="DialogsEditLanguageSetAsPrimaryLanguage" xml:space="preserve">
+    <value>Set as primary language</value>
+  </data>
+  <data name="DialogsEditParameterDescription" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DialogsEditParameterName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="DialogsEditParameterOrder" xml:space="preserve">
+    <value>Order:</value>
+  </data>
+  <data name="DialogsExceptionViewerAllMessages" xml:space="preserve">
+    <value>All Messages</value>
+  </data>
+  <data name="DialogsExceptionViewerAppVersion" xml:space="preserve">
+    <value>App version:</value>
+  </data>
+  <data name="DialogsExceptionViewerCopyToClipboard" xml:space="preserve">
+    <value>Copy to clipboard</value>
+  </data>
+  <data name="DialogsExceptionViewerCurrentTime" xml:space="preserve">
+    <value>Current time:</value>
+  </data>
+  <data name="DialogsExceptionViewerDialogTitle" xml:space="preserve">
+    <value>Unexpected exception occured</value>
+  </data>
+  <data name="DialogsExceptionViewerWrapText" xml:space="preserve">
+    <value>_Wrap text</value>
+  </data>
+  <data name="DialogsExportColumnsCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="DialogsExportColumnsEnglishName" xml:space="preserve">
+    <value>English name</value>
+  </data>
+  <data name="DialogsExportColumnsPrimary" xml:space="preserve">
+    <value>Primary</value>
+  </data>
+  <data name="DialogsExportValidationsMinimumLanguagesMessage" xml:space="preserve">
+    <value>At least two languages must be selected for export!</value>
+  </data>
+  <data name="DialogsExportValidationsMissingFileNameMessage" xml:space="preserve">
+    <value>File name must be specified.</value>
+  </data>
+  <data name="DialogsExportValidationsNoExportersAvailable" xml:space="preserve">
+    <value>There are no exporters available.</value>
+  </data>
+  <data name="DialogsExportAvailableExporters" xml:space="preserve">
+    <value>Available exporters:</value>
+  </data>
+  <data name="DialogsExportExportingAllResources" xml:space="preserve">
+    <value>All resources</value>
+  </data>
+  <data name="DialogsExportExportingAllResourcesRecursive" xml:space="preserve">
+    <value>All resources (Recursive)</value>
+  </data>
+  <data name="DialogsExportExportingLabel" xml:space="preserve">
+    <value>Exporting:</value>
+  </data>
+  <data name="DialogsExportExportingSelectedResources" xml:space="preserve">
+    <value>Selected resources ({0})</value>
+  </data>
+  <data name="DialogsExportExportResourcesToFile" xml:space="preserve">
+    <value>Export resources to file</value>
+  </data>
+  <data name="DialogsExportExportToFile" xml:space="preserve">
+    <value>Export to file:</value>
+  </data>
+  <data name="DialogsExportPageTitle" xml:space="preserve">
+    <value>Export resources</value>
+  </data>
+  <data name="DialogsImportAllowImportNewLanguages" xml:space="preserve">
+    <value>Allow import of new languages</value>
+  </data>
+  <data name="DialogsImportAvailableImporters" xml:space="preserve">
+    <value>Available importers:</value>
+  </data>
+  <data name="DialogsImportFilesToImport" xml:space="preserve">
+    <value>Files to import:</value>
+  </data>
+  <data name="DialogsImportImportMode" xml:space="preserve">
+    <value>Import mode:</value>
+  </data>
+  <data name="DialogsImportModeAutoMerge" xml:space="preserve">
+    <value>Merge with existing resources</value>
+  </data>
+  <data name="DialogsImportModeAutoMergeHint" xml:space="preserve">
+    <value>Categories and resources imported from file(s) will be merged with existing categories and resources.</value>
+  </data>
+  <data name="DialogsImportModeImportAsHint" xml:space="preserve">
+    <value>Categories and resources imported from file(s) will be added into a new category.</value>
+  </data>
+  <data name="DialogsImportModeImportAsNew" xml:space="preserve">
+    <value>Import into a new category</value>
+  </data>
+  <data name="DialogsImportNoImportersAvailable" xml:space="preserve">
+    <value>There are no importers available.</value>
+  </data>
+  <data name="DialogsImportTitle" xml:space="preserve">
+    <value>Import resources from file(s)</value>
+  </data>
+  <data name="DialogsPasteConfirmAddMissingLanguages" xml:space="preserve">
+    <value>Select missing languages to be added to model project:</value>
+  </data>
+  <data name="DialogsPasteConfirmCaption" xml:space="preserve">
+    <value>Resources translations from clipboard contains missing languages for current model project.</value>
+  </data>
+  <data name="DialogsPasteConfirmDialogTitle" xml:space="preserve">
+    <value>Paste from clipboard / missing languages</value>
+  </data>
+  <data name="DialogsPluginHelpDialogTitle" xml:space="preserve">
+    <value>Plugin Help</value>
+  </data>
+  <data name="DialogsPluginHelpTitle" xml:space="preserve">
+    <value>Plugin &#39;{0}&#39; Help</value>
+  </data>
+  <data name="DialogsResourceParametersMoveParameterDownTooltip" xml:space="preserve">
+    <value>Move selected parameter down</value>
+  </data>
+  <data name="DialogsResourceParametersMoveParameterUpTooltip" xml:space="preserve">
+    <value>Move selected parameter up</value>
+  </data>
+  <data name="DialogsResourceParametersParameterUsage" xml:space="preserve">
+    <value>Parameters will be used later when generating source code from current project file.</value>
+  </data>
+  <data name="DialogsUnhandledErrorDetail" xml:space="preserve">
+    <value>Do you want to report this error to us?
+
+NOTE: You need to have active github account to report error.</value>
+  </data>
+  <data name="DialogsUnhandledErrorMessage" xml:space="preserve">
+    <value>Unexpected error occured!</value>
+  </data>
+  <data name="DialogsVsOptionsApplyChangesCaption" xml:space="preserve">
+    <value>Apply Settings Change</value>
+  </data>
+  <data name="DialogsVsOptionsApplyChangesDetail" xml:space="preserve">
+    <value>WARNING: 
+Any unsaved changed in LHQ files will be discarded.
+
+Do you want to continue?</value>
+  </data>
+  <data name="DialogsVsOptionsApplyChangesMessage" xml:space="preserve">
+    <value>Do you want to apply settings change?</value>
+  </data>
+  <data name="EnumsModelLoadStatusLoadError" xml:space="preserve">
+    <value>Model loading error.</value>
+  </data>
+  <data name="EnumsModelLoadStatusModelSourceInvalid" xml:space="preserve">
+    <value>File content is not valid localization projekt.</value>
+  </data>
+  <data name="EnumsModelLoadStatusModelUpgraderRequired" xml:space="preserve">
+    <value>Content of project file has old format version and needs to be upgraded to newer version.</value>
+  </data>
+  <data name="EnumsModelLoadStatusSuccess" xml:space="preserve">
+    <value>Localization project was loaded successfully.</value>
+  </data>
+  <data name="EnumsProductFeaturesDescriptionsExport" xml:space="preserve">
+    <value>Exporting resources to various external formats</value>
+  </data>
+  <data name="EnumsProductFeaturesDescriptionsImport" xml:space="preserve">
+    <value>Importing resources from supported external formats</value>
+  </data>
+  <data name="EnumsProductFeaturesDescriptionsMultiInstances" xml:space="preserve">
+    <value>Multiple Visual Studio instances are allowed to run LHQ Editor at the same time</value>
+  </data>
+  <data name="EnumsProductFeaturesDescriptionsPlugins" xml:space="preserve">
+    <value>Plugin system extends then program with various plugins</value>
+  </data>
+  <data name="EnumsProductFeaturesDescriptionsTranslationServices" xml:space="preserve">
+    <value>Translation services provide support for translating resources between different languages</value>
+  </data>
+  <data name="EnumsProductFeaturesNamesExport" xml:space="preserve">
+    <value>Export resources</value>
+  </data>
+  <data name="EnumsProductFeaturesNamesImport" xml:space="preserve">
+    <value>Import resources</value>
+  </data>
+  <data name="EnumsProductFeaturesNamesMultiInstances" xml:space="preserve">
+    <value>Application multiple instances</value>
+  </data>
+  <data name="EnumsProductFeaturesNamesPlugins" xml:space="preserve">
+    <value>Plugins system</value>
+  </data>
+  <data name="EnumsProductFeaturesNamesTranslationServices" xml:space="preserve">
+    <value>Translation services</value>
+  </data>
+  <data name="EnumsProjectBusyOperationTypeExport" xml:space="preserve">
+    <value>Exporting resources from project...</value>
+  </data>
+  <data name="EnumsProjectBusyOperationTypeImport" xml:space="preserve">
+    <value>Importing resources into project...</value>
+  </data>
+  <data name="EnumsProjectBusyOperationTypeOpenProject" xml:space="preserve">
+    <value>Opening project...</value>
+  </data>
+  <data name="EnumsProjectBusyOperationTypeSaveProject" xml:space="preserve">
+    <value>Saving project...</value>
+  </data>
+  <data name="EnumsProjectBusyOperationTypeTreeSearch" xml:space="preserve">
+    <value>Searching...</value>
+  </data>
+  <data name="EnumsResourceElementTranslationStateEdited" xml:space="preserve">
+    <value>Edited</value>
+  </data>
+  <data name="EnumsResourceElementTranslationStateFinal" xml:space="preserve">
+    <value>Final</value>
+  </data>
+  <data name="EnumsResourceElementTranslationStateNeedsReview" xml:space="preserve">
+    <value>Review Required</value>
+  </data>
+  <data name="EnumsResourceElementTranslationStateNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="EnumsStartupModelLoadStatusFileNotFoundOrAccessDenied" xml:space="preserve">
+    <value>Could not open project file &#39;{0}&#39;, file does not exist or access denied!</value>
+  </data>
+  <data name="EnumsStartupModelLoadStatusModelLoadError" xml:space="preserve">
+    <value>Could not open project file &#39;{0}&#39;, file content is invalid!</value>
+  </data>
+  <data name="EnumsStartupModelLoadStatusModelUpgradeRequired" xml:space="preserve">
+    <value>ModelUpgradeRequired - {0}</value>
+  </data>
+  <data name="EnumsStartupModelLoadStatusSuccess" xml:space="preserve">
+    <value>Project file &#39;{0}&#39; was loaded successfully.</value>
+  </data>
+  <data name="EnumsTreeElementTypeCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EnumsTreeElementTypeModel" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="EnumsTreeElementTypeResource" xml:space="preserve">
+    <value>Resource</value>
+  </data>
+  <data name="LicensingEnumsProductVariantTypeCommercial" xml:space="preserve">
+    <value>Commercial</value>
+  </data>
+  <data name="LicensingEnumsProductVariantTypeFree" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="LicensingEnumsProductVariantTypeTrial" xml:space="preserve">
+    <value>Trial</value>
+  </data>
+  <data name="MainMenuEditCopy" xml:space="preserve">
+    <value>_Copy</value>
+  </data>
+  <data name="MainMenuEditCut" xml:space="preserve">
+    <value>Cu_t</value>
+  </data>
+  <data name="MainMenuEditDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MainMenuEditDuplicate" xml:space="preserve">
+    <value>_Duplicate</value>
+  </data>
+  <data name="MainMenuEditFindElement" xml:space="preserve">
+    <value>Find...</value>
+  </data>
+  <data name="MainMenuEditFindElementTooltip" xml:space="preserve">
+    <value>Find for category or resource</value>
+  </data>
+  <data name="MainMenuEditFocusNavigation" xml:space="preserve">
+    <value>Focus _Navigation</value>
+  </data>
+  <data name="MainMenuEditMenuItem" xml:space="preserve">
+    <value>_Edit</value>
+  </data>
+  <data name="MainMenuEditNewCategory" xml:space="preserve">
+    <value>New category</value>
+  </data>
+  <data name="MainMenuEditNewResource" xml:space="preserve">
+    <value>New resource</value>
+  </data>
+  <data name="MainMenuEditPaste" xml:space="preserve">
+    <value>_Paste</value>
+  </data>
+  <data name="MainMenuEditPreferences" xml:space="preserve">
+    <value>Pr_eferences</value>
+  </data>
+  <data name="MainMenuEditRedo" xml:space="preserve">
+    <value>_Redo</value>
+  </data>
+  <data name="MainMenuEditRename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="MainMenuEditUndo" xml:space="preserve">
+    <value>_Undo</value>
+  </data>
+  <data name="MainMenuFileCloseProject" xml:space="preserve">
+    <value>_Close</value>
+  </data>
+  <data name="MainMenuFileCloseProjectTooltip" xml:space="preserve">
+    <value>Close current project</value>
+  </data>
+  <data name="MainMenuFileExitApp" xml:space="preserve">
+    <value>E_xit</value>
+  </data>
+  <data name="MainMenuFileExitAppTooltip" xml:space="preserve">
+    <value>Exit application</value>
+  </data>
+  <data name="MainMenuFileExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="MainMenuFileExportResources" xml:space="preserve">
+    <value>_Export resources...</value>
+  </data>
+  <data name="MainMenuFileImport" xml:space="preserve">
+    <value>_Import</value>
+  </data>
+  <data name="MainMenuFileImportResources" xml:space="preserve">
+    <value>_Import resources...</value>
+  </data>
+  <data name="MainMenuFileImportTooltip" xml:space="preserve">
+    <value>Import projet from external translation</value>
+  </data>
+  <data name="MainMenuFileMenuItem" xml:space="preserve">
+    <value>_File</value>
+  </data>
+  <data name="MainMenuFileNewProject" xml:space="preserve">
+    <value>_New project</value>
+  </data>
+  <data name="MainMenuFileNewProjectTooltip" xml:space="preserve">
+    <value>Creates new project</value>
+  </data>
+  <data name="MainMenuFileOpenProject" xml:space="preserve">
+    <value>_Open project</value>
+  </data>
+  <data name="MainMenuFileOpenProjectTooltip" xml:space="preserve">
+    <value>Open project file</value>
+  </data>
+  <data name="MainMenuFileProjectSettings" xml:space="preserve">
+    <value>Project Se_ttings</value>
+  </data>
+  <data name="MainMenuFileRecentProjects" xml:space="preserve">
+    <value>_Recent projects</value>
+  </data>
+  <data name="MainMenuFileRecentProjectsTooltip" xml:space="preserve">
+    <value>List of recently opened projects</value>
+  </data>
+  <data name="MainMenuFileSaveProject" xml:space="preserve">
+    <value>_Save project</value>
+  </data>
+  <data name="MainMenuFileSaveProjectAs" xml:space="preserve">
+    <value>Save project _as...</value>
+  </data>
+  <data name="MainMenuFileSaveProjectAsTooltip" xml:space="preserve">
+    <value>Save project changes to new file</value>
+  </data>
+  <data name="MainMenuFileSaveProjectTooltip" xml:space="preserve">
+    <value>Save project changes to file</value>
+  </data>
+  <data name="MainMenuFileSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainMenuHelpAbout" xml:space="preserve">
+    <value>_About</value>
+  </data>
+  <data name="MainMenuHelpMenuItem" xml:space="preserve">
+    <value>_Help</value>
+  </data>
+  <data name="MainMenuHelpOnlineManual" xml:space="preserve">
+    <value>Online Manual</value>
+  </data>
+  <data name="MainMenuHelpProductWebPage" xml:space="preserve">
+    <value>Product Web Page</value>
+  </data>
+  <data name="MainMenuLanguagesMenuItem" xml:space="preserve">
+    <value>_Languages</value>
+  </data>
+  <data name="MainMenuLanguagesSettings" xml:space="preserve">
+    <value>_Settings</value>
+  </data>
+  <data name="MainMenuTranslations" xml:space="preserve">
+    <value>_Translations</value>
+  </data>
+  <data name="MenuCopySpecialMenuCopyAsCSharp" xml:space="preserve">
+    <value>Copy as C# code</value>
+  </data>
+  <data name="MenuCopySpecialMenuCopyAsXamlMarkup" xml:space="preserve">
+    <value>Copy as Xaml markup</value>
+  </data>
+  <data name="MenuCopySpecialMenuCopySpecial" xml:space="preserve">
+    <value>Copy Special</value>
+  </data>
+  <data name="MenuHelpAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="MenuHelpMenuItem" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="MenuHelpOnlineManual" xml:space="preserve">
+    <value>Online Manual</value>
+  </data>
+  <data name="MenuHelpPreferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="MenuHelpProductWebPage" xml:space="preserve">
+    <value>Product Web Page</value>
+  </data>
+  <data name="MenuHelpWhatsNew" xml:space="preserve">
+    <value>What&#39;s New?</value>
+  </data>
+  <data name="MenuCollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="MenuCollapseAllTooltip" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="MenuCopy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="MenuCopyTooltip" xml:space="preserve">
+    <value>Copy select categories/resources into clipboard</value>
+  </data>
+  <data name="MenuCut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="MenuCutTooltip" xml:space="preserve">
+    <value>Cut select categories or resource into clipboard</value>
+  </data>
+  <data name="MenuDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MenuDeleteTooltip" xml:space="preserve">
+    <value>Delete selected categories/resources</value>
+  </data>
+  <data name="MenuDuplicate" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="MenuExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="MenuExpandAllTooltip" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="MenuExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="MenuExportTooltip" xml:space="preserve">
+    <value>Export all resources...</value>
+  </data>
+  <data name="MenuImport" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="MenuLanguages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="MenuLanguagesRoot" xml:space="preserve">
+    <value>Languages (Total: {0} | Primary: {1})</value>
+  </data>
+  <data name="MenuLanguagesTooltip" xml:space="preserve">
+    <value>Manage Languages</value>
+  </data>
+  <data name="MenuManageLanguages" xml:space="preserve">
+    <value>Manage Languages</value>
+  </data>
+  <data name="MenuNewCategory" xml:space="preserve">
+    <value>New category</value>
+  </data>
+  <data name="MenuNewCategoryTooltip" xml:space="preserve">
+    <value>Adds new category</value>
+  </data>
+  <data name="MenuNewResource" xml:space="preserve">
+    <value>New resource</value>
+  </data>
+  <data name="MenuNewResourceTooltip" xml:space="preserve">
+    <value>Adds new resource</value>
+  </data>
+  <data name="MenuOpenProject" xml:space="preserve">
+    <value>Open project</value>
+  </data>
+  <data name="MenuPaste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="MenuPasteTooltip" xml:space="preserve">
+    <value>Paste categories or resources from clipboard</value>
+  </data>
+  <data name="MenuPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="MenuPluginsTooltip" xml:space="preserve">
+    <value>Manage plugins...</value>
+  </data>
+  <data name="MenuPrimaryLanguage00" xml:space="preserve">
+    <value>Primary language: {0}</value>
+  </data>
+  <data name="MenuProperties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="MenuPropertiesTooltip" xml:space="preserve">
+    <value>Change file properties...</value>
+  </data>
+  <data name="MenuRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="MenuRedoTooltip" xml:space="preserve">
+    <value>Redo last action</value>
+  </data>
+  <data name="MenuRedoTooltipNamed" xml:space="preserve">
+    <value>Redo: {0}</value>
+  </data>
+  <data name="MenuRename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="MenuRenameTooltip" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="MenuSaveProject" xml:space="preserve">
+    <value>Save project</value>
+  </data>
+  <data name="MenuTranslator" xml:space="preserve">
+    <value>Translator</value>
+  </data>
+  <data name="MenuTranslatorTooltip" xml:space="preserve">
+    <value>Setup Translator...</value>
+  </data>
+  <data name="MenuUndo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="MenuUndoTooltip" xml:space="preserve">
+    <value>Undo last action</value>
+  </data>
+  <data name="MenuUndoTooltipNamed" xml:space="preserve">
+    <value>Undo: {0}</value>
+  </data>
+  <data name="ModelTreeProjectRoot" xml:space="preserve">
+    <value>Project root</value>
+  </data>
+  <data name="ModelTreeSelectionMultiple" xml:space="preserve">
+    <value>Multiple selection ({0} elements)</value>
+  </data>
+  <data name="ModelTreeSelectionNone" xml:space="preserve">
+    <value>None selected</value>
+  </data>
+  <data name="OperationsExitAppConfirmCaption" xml:space="preserve">
+    <value>Exit application</value>
+  </data>
+  <data name="OperationsExitAppConfirmDetail" xml:space="preserve">
+    <value>Do you want to save changes before exit?</value>
+  </data>
+  <data name="OperationsExitAppConfirmMessage" xml:space="preserve">
+    <value>There are unsaved changes in project.</value>
+  </data>
+  <data name="OperationsMoveMoveChildsUndoUnitCommandName" xml:space="preserve">
+    <value>Moved {0}{1}{2} under {3} &#39;{4}&#39;</value>
+  </data>
+  <data name="OperationsMoveMoveElementsCaption" xml:space="preserve">
+    <value>Move resources (categories)</value>
+  </data>
+  <data name="OperationsMoveMoveElementsSomeDuplicatesDetail" xml:space="preserve">
+    <value>Some elements cant be moved because new parent already contains elements with same name.
+Those elements will be deselected from move operation.
+
+Do you want to continue with move action ?</value>
+  </data>
+  <data name="OperationsMoveMoveElementsSomeDuplicatesMessage" xml:space="preserve">
+    <value>Some elements will not be moved.</value>
+  </data>
+  <data name="OperationsMoveMoveElementsStoppedErrorMessage" xml:space="preserve">
+    <value>No elements will be moved because new parent already contains elements with same name for elements.</value>
+  </data>
+  <data name="OperationsProjectOpenProjectCaption" xml:space="preserve">
+    <value>Open project</value>
+  </data>
+  <data name="OperationsProjectOpenProjectErrorMessage" xml:space="preserve">
+    <value>Error loading project file &#39;{0}&#39;, reason: {1}</value>
+  </data>
+  <data name="OperationsProjectProjectSaveErrorTitle" xml:space="preserve">
+    <value>Save project error</value>
+  </data>
+  <data name="OperationsProjectProjectSaveFailed" xml:space="preserve">
+    <value>Save project file failed.</value>
+  </data>
+  <data name="OperationsProjectProjectSaveFailedFileIsReadOnly" xml:space="preserve">
+    <value>Save project file failed because file &#39;{0}&#39; is read-only.</value>
+  </data>
+  <data name="OperationsProjectRecentProjectDoestNotExistCaption" xml:space="preserve">
+    <value>Open recent project</value>
+  </data>
+  <data name="OperationsProjectRecentProjectDoestNotExistDetail" xml:space="preserve">
+    <value>Do you want to remove it from recent project list?</value>
+  </data>
+  <data name="OperationsProjectRecentProjectDoestNotExistMessage" xml:space="preserve">
+    <value>Recent project &#39;{0}&#39; does not exist or access denied.</value>
+  </data>
+  <data name="OperationsProjectSettingsValidationError1" xml:space="preserve">
+    <value>Project root contains some resources, could not turn off setting &#39;Allow resources under root&#39;.</value>
+  </data>
+  <data name="OperationsProjectSettingsValidationError2" xml:space="preserve">
+    <value>Project contains some categories, could not change layout to &#39;Resources&#39;.</value>
+  </data>
+  <data name="OperationsProjectSettingsValidationErrorCaption" xml:space="preserve">
+    <value>Project settings</value>
+  </data>
+  <data name="OperationsValidationsCategoryNameCouldNotBeEmpty" xml:space="preserve">
+    <value>Category name could not be empty.</value>
+  </data>
+  <data name="OperationsValidationsModelNameCouldNotBeEmpty" xml:space="preserve">
+    <value>Model name could not be empty.</value>
+  </data>
+  <data name="OperationsValidationsNameContainsDisallowedCharacters" xml:space="preserve">
+    <value>Name &#39;{0}&#39; contains disallowed characters, allowed are only a-z A-Z and numbers (not at start of name)</value>
+  </data>
+  <data name="OperationsValidationsNameStartingWithNumbersNotAllowed" xml:space="preserve">
+    <value>Name &#39;{0}&#39; starting with numbers which is not allowed.</value>
+  </data>
+  <data name="OperationsValidationsResourceNameCouldNotBeEmpty" xml:space="preserve">
+    <value>Resource name could not be empty.</value>
+  </data>
+  <data name="OperationsDelete000" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OperationsPasteFromClipboardUndoUnitCommandName" xml:space="preserve">
+    <value>Paste {0}{1}{2} under {3} &#39;{4}&#39;</value>
+  </data>
+  <data name="OperationsPropertyChangeTransactionInfo1" xml:space="preserve">
+    <value>Changed {0} value to &#39;{1}&#39;</value>
+  </data>
+  <data name="OperationsPropertyChangeTransactionInfo2" xml:space="preserve">
+    <value>Changed value of - {0}</value>
+  </data>
+  <data name="OperationsRemoveChildUndoUnitCommandName" xml:space="preserve">
+    <value>Remove {0} &#39;{1}&#39; from {2} &#39;{3}&#39;</value>
+  </data>
+  <data name="OperationsStartupModelLoadErrorCaption" xml:space="preserve">
+    <value>Project load error on startup</value>
+  </data>
+  <data name="OperationsUpdateLanguagesUndoUnitCommandName" xml:space="preserve">
+    <value>Project languages was updated</value>
+  </data>
+  <data name="ServicesApplicationBackupFileCreated" xml:space="preserve">
+    <value>Backup file was created</value>
+  </data>
+  <data name="ServicesApplicationBackupOfOriginalFileCreated" xml:space="preserve">
+    <value>Backup of original file was saved to:{0}{1}</value>
+  </data>
+  <data name="ServicesApplicationBackupOfOriginalFileFailed" xml:space="preserve">
+    <value>Error creating backup of original file{0}{1}.</value>
+  </data>
+  <data name="ServicesApplicationCannotTranslateResourcesFeatureIsDisabled" xml:space="preserve">
+    <value>Cannot translate resources because active license ({0}) has disabled &#39;{1}&#39; feature.</value>
+  </data>
+  <data name="ServicesApplicationDetectedUnsavedChangesCaption" xml:space="preserve">
+    <value>Save project changes</value>
+  </data>
+  <data name="ServicesApplicationDetectedUnsavedChangesDetail" xml:space="preserve">
+    <value>Do you want to save project changes ?</value>
+  </data>
+  <data name="ServicesApplicationDetectedUnsavedChangesMessage" xml:space="preserve">
+    <value>There are unsaved changes in project.</value>
+  </data>
+  <data name="ServicesApplicationErrorSavingProjectFileToDiskCaption" xml:space="preserve">
+    <value>Error saving project file to disk.</value>
+  </data>
+  <data name="ServicesApplicationErrorSavingProjectFileToDiskMessage" xml:space="preserve">
+    <value>Error saving project file &#39;{0}&#39; to disk, permission denied?</value>
+  </data>
+  <data name="ServicesApplicationFileCompatibilityIssueCaption" xml:space="preserve">
+    <value>File compatibility issue</value>
+  </data>
+  <data name="ServicesApplicationFileCompatibilityIssueCreatedInPreviousVersion" xml:space="preserve">
+    <value>Project file &#39;{0}&#39; was created in previous version of program.</value>
+  </data>
+  <data name="ServicesApplicationFileCompatibilityIssueCreatedWithHigherVersion" xml:space="preserve">
+    <value>File was created in higher version of program.
+Please upgrade program to latest version to be able to open this file.</value>
+  </data>
+  <data name="ServicesApplicationFileCompatibilityIssueUpgradeToCurrentVersionConfirm" xml:space="preserve">
+    <value>File must be upgraded to current version to be able to open it.
+Do you want to upgrade file and continue to open it?</value>
+  </data>
+  <data name="ServicesApplicationFileUpdatedToLatestVersion" xml:space="preserve">
+    <value>File {0} was updated to latest version.</value>
+  </data>
+  <data name="ServicesApplicationOpenProjectCaption" xml:space="preserve">
+    <value>Open project</value>
+  </data>
+  <data name="ServicesApplicationOpenProjectFailed" xml:space="preserve">
+    <value>Error loading project file 
+{0}.</value>
+  </data>
+  <data name="ServicesApplicationProjectChangesCantSaveCaption" xml:space="preserve">
+    <value>Project changes could not be saved!</value>
+  </data>
+  <data name="ServicesApplicationSaveFailedFileIsReadonly" xml:space="preserve">
+    <value>Failed to save project changes, file &#39;{0}&#39; is read-only.</value>
+  </data>
+  <data name="ServicesApplicationSaveFailedProjectContainsValidationErrors" xml:space="preserve">
+    <value>Project contains validations errors.</value>
+  </data>
+  <data name="ServicesApplicationSaveFailedProjectLayout1Error" xml:space="preserve">
+    <value>Project layout is &#39;Resources&#39; but contains some categories (which is not allowed).</value>
+  </data>
+  <data name="ServicesApplicationSaveFailedProjectLayout2Error" xml:space="preserve">
+    <value>Project root contains some resources which is not allowed.</value>
+  </data>
+  <data name="ServicesApplicationTranslationResourcesInProgress" xml:space="preserve">
+    <value>Translating resources...</value>
+  </data>
+  <data name="ServicesApplicationTranslationServiceCaption" xml:space="preserve">
+    <value>Translation service</value>
+  </data>
+  <data name="ServicesApplicationTranslationServiceConfigureConfirm" xml:space="preserve">
+    <value>Do you want to configure it now?</value>
+  </data>
+  <data name="ServicesApplicationTranslationServiceEnableConfirm" xml:space="preserve">
+    <value>Do you want to enable and configure now?</value>
+  </data>
+  <data name="ServicesApplicationTranslationServiceIsNotConfigured" xml:space="preserve">
+    <value>Translation service provider is not configured yet.</value>
+  </data>
+  <data name="ServicesApplicationTranslationServiceIsNotEnabled" xml:space="preserve">
+    <value>Translation service is not enabled.</value>
+  </data>
+  <data name="ServicesChangePasswordProgressMessage" xml:space="preserve">
+    <value>Change account password in progress...</value>
+  </data>
+  <data name="ServicesDialogRestartAppApplyThemeCaption" xml:space="preserve">
+    <value>Apply theme change</value>
+  </data>
+  <data name="ServicesDialogRestartAppApplyThemeDetail" xml:space="preserve">
+    <value>Continue to restart application?</value>
+  </data>
+  <data name="ServicesDialogRestartAppApplyThemeMessage" xml:space="preserve">
+    <value>To apply new visual theme, application must be restarted</value>
+  </data>
+  <data name="ServicesExportExportingResourcesFailed" xml:space="preserve">
+    <value>Exporting resources failed.</value>
+  </data>
+  <data name="ServicesExportExportingResourcesWasSuccessfull" xml:space="preserve">
+    <value>Exporting resources was successfull.</value>
+  </data>
+  <data name="ServicesExportExportResourcesCaption" xml:space="preserve">
+    <value>Export resources</value>
+  </data>
+  <data name="ServicesExportExportResourcesInProgress" xml:space="preserve">
+    <value>Exporting resources...</value>
+  </data>
+  <data name="ServicesExportNoResourcesToExport" xml:space="preserve">
+    <value>There are no resources to be exported.</value>
+  </data>
+  <data name="ServicesImportChangeProjectLayoutConfirmCaption" xml:space="preserve">
+    <value>Import Resources - Project layout incompatible</value>
+  </data>
+  <data name="ServicesImportChangeProjectLayoutConfirmDetail" xml:space="preserve">
+    <value>Do you want to change project layout to &quot;Categories and Resources&quot; and continue to import some resources?</value>
+  </data>
+  <data name="ServicesImportChangeProjectLayoutConfirmMessage" xml:space="preserve">
+    <value>When importing resources, project layout must be &quot;Categories and Resources&quot; but currently it is &quot;Resources only&quot;.</value>
+  </data>
+  <data name="ServicesImportFilesDoesNotContainResourcesToImport" xml:space="preserve">
+    <value>Selected file(s) does not contains any resources to be imported!</value>
+  </data>
+  <data name="ServicesImportImportedFolderName" xml:space="preserve">
+    <value>Imported_{0}</value>
+  </data>
+  <data name="ServicesImportImportingCategoriesIsNotAllowedDetail" xml:space="preserve">
+    <value>Nothing was imported.</value>
+  </data>
+  <data name="ServicesImportImportingCategoriesIsNotAllowedMessage" xml:space="preserve">
+    <value>Imported file contains categories but current project settings does not allow it!</value>
+  </data>
+  <data name="ServicesImportImportingResourcesFailed" xml:space="preserve">
+    <value>Importing resources failed.</value>
+  </data>
+  <data name="ServicesImportImportResourcesCaption" xml:space="preserve">
+    <value>Import resources</value>
+  </data>
+  <data name="ServicesImportImportResourcesInProgress" xml:space="preserve">
+    <value>Importing resources...</value>
+  </data>
+  <data name="ServicesImportImportSucceedDetail" xml:space="preserve">
+    <value>- {0} new resources was added
+- {1} new categories was added
+- {2} existing resources was updated
+- {3} existing categories was updated
+- {4} new languages was added</value>
+  </data>
+  <data name="ServicesImportImportSucceedMessage" xml:space="preserve">
+    <value>Import successfully completed.{0}</value>
+  </data>
+  <data name="ServicesImportImportWasCancelledByUser" xml:space="preserve">
+    <value>Importing resources was cancelled by user!</value>
+  </data>
+  <data name="ServicesImportResourcesWasImportedUnderElement" xml:space="preserve">
+    <value>Resources was imported under category:
+
+{0}</value>
+  </data>
+  <data name="ServicesTranslationSomeLanguagesAreNotSupported" xml:space="preserve">
+    <value>Some languages are not supported by {0}.
+
+List of unsupported languages: {1}</value>
+  </data>
+  <data name="ServicesTranslationTestingWasCancelledByUser" xml:space="preserve">
+    <value>Testing was cancelled by user!</value>
+  </data>
+  <data name="ServicesTranslationTranslateResourcesCaption" xml:space="preserve">
+    <value>Translate Resources</value>
+  </data>
+  <data name="ServicesTranslationTranslationCompletedSuccessfully" xml:space="preserve">
+    <value>Successfully translated {0} resources.</value>
+  </data>
+  <data name="ServicesTranslationTranslationCompletedWithErrors" xml:space="preserve">
+    <value>Translation completed where {0} resources was successfully translated and {1} resources failed to translate.</value>
+  </data>
+  <data name="ServicesTranslationTranslationFailedOrNoResources" xml:space="preserve">
+    <value>Translation failed or no resource to translate.</value>
+  </data>
+  <data name="ServicesTranslationTranslationProgressText" xml:space="preserve">
+    <value>Translating resource {0}/{1} ...</value>
+  </data>
+  <data name="ServicesTranslationTranslationWasCancelledByUser" xml:space="preserve">
+    <value>Translate resources was cancelled by user!</value>
+  </data>
+  <data name="ServicesUndoUnitsAddChildsActionName" xml:space="preserve">
+    <value>Add {0} under {1} &#39;{2}&#39;</value>
+  </data>
+  <data name="ServicesUndoUnitsAddSortedChildActionName" xml:space="preserve">
+    <value>Add {0} &#39;{1}&#39; under {2} &#39;{3}&#39;</value>
+  </data>
+  <data name="ServicesUndoUnitsAutoTranslateMultiResourcesActionName" xml:space="preserve">
+    <value>Update multiple resources translations (retrieved from translation service)</value>
+  </data>
+  <data name="ServicesUndoUnitsAutoTranslateResourceActionName" xml:space="preserve">
+    <value>Update resource &#39;{0}&#39; translations (retrieved from translation service)</value>
+  </data>
+  <data name="ServicesUndoUnitsImportResourcesActionName" xml:space="preserve">
+    <value>Import resources</value>
+  </data>
+  <data name="ServicesUndoUnitsLockResourceValuesActionName" xml:space="preserve">
+    <value>Lock all localized values for resource &#39;{0}&#39;</value>
+  </data>
+  <data name="ServicesUndoUnitsMultiSelectionActionName" xml:space="preserve">
+    <value>Action on multiple elements</value>
+  </data>
+  <data name="ServicesUpdatesDontCheckForUpdatesRememberText" xml:space="preserve">
+    <value>Don&#39;t check for updates</value>
+  </data>
+  <data name="ServicesUpdatesNewVersionAvailableCaption" xml:space="preserve">
+    <value>New version is available!</value>
+  </data>
+  <data name="ServicesUpdatesNewVersionAvailableDetail" xml:space="preserve">
+    <value>Please navigate to Main Menu -&gt; Tools -&gt; Extensions and Updates, then &quot;Updates&quot; tab, and search for &quot;LHQ Editor&quot;.</value>
+  </data>
+  <data name="ServicesUpdatesNewVersionAvailableMessage" xml:space="preserve">
+    <value>New version &#39;{0}&#39; is available! Navigate to Main Menu -&gt; Tools -&gt; Extensions and Updates, then &quot;Updates&quot; tab, and search for &quot;LHQ Editor&quot;.</value>
+  </data>
+  <data name="ServicesUpdatesReadWhatsNew" xml:space="preserve">
+    <value>Read what&#39;s new</value>
+  </data>
+  <data name="ServicesUpdatesUpdateAvailable" xml:space="preserve">
+    <value>Update Available</value>
+  </data>
+  <data name="ServicesUpdatesWhatsNewInCurrentVersion" xml:space="preserve">
+    <value>What&#39;s new in current version?</value>
+  </data>
+  <data name="ServicesUpdatesWhatsNewInVersion" xml:space="preserve">
+    <value>What&#39;s new in version {0}</value>
+  </data>
+  <data name="ValidationsCategoryNameCouldNotBeEmpty" xml:space="preserve">
+    <value>Category name could not be empty</value>
+  </data>
+  <data name="ValidationsCategoryWithSameNameAlreadyExist" xml:space="preserve">
+    <value>Category with name &#39;{0}&#39; already exist under same parent.</value>
+  </data>
+  <data name="ValidationsNameCanContainOnlyAlphaNumeric" xml:space="preserve">
+    <value>Name can contain only alpha numeric characters</value>
+  </data>
+  <data name="ValidationsNameCannotBeginWithNumber" xml:space="preserve">
+    <value>Name cannot begin with number</value>
+  </data>
+  <data name="ValidationsProjectNameCouldNotBeEmpty" xml:space="preserve">
+    <value>Project name could not be empty</value>
+  </data>
+  <data name="ValidationsResourceNameCouldNotBeEmpty" xml:space="preserve">
+    <value>Resource name could not be empty</value>
+  </data>
+  <data name="ValidationsResourceParameterNameCouldNotBeEmpty" xml:space="preserve">
+    <value>Resource parameter name could not be empty</value>
+  </data>
+  <data name="ValidationsResourceWithSameNameAlreadyExist" xml:space="preserve">
+    <value>Resource with name &#39;{0}&#39; already exist under same parent.</value>
+  </data>
+  <data name="ViewModelsAppSettingsPageGeneralDefaultLanguageValidationCaption" xml:space="preserve">
+    <value>Default language for new projects</value>
+  </data>
+  <data name="ViewModelsAppSettingsPageGeneralDefaultLanguageValidationMessage" xml:space="preserve">
+    <value>Default language for new projects must be selected!</value>
+  </data>
+  <data name="ViewModelsAppSettingsPageGeneralPageTitle" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="ViewModelsAppSettingsPagePluginsConfigurePluginTitle" xml:space="preserve">
+    <value>Configure plugin - {0}</value>
+  </data>
+  <data name="ViewModelsAppSettingsPagePluginsPageTitle" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="ViewModelsAppSettingsPagePluginsResetPluginToDefaultsCaption" xml:space="preserve">
+    <value>Reset to defaults</value>
+  </data>
+  <data name="ViewModelsAppSettingsPagePluginsResetPluginToDefaultsMessage" xml:space="preserve">
+    <value>Reset plugin &#39;{0}&#39; to default settings?</value>
+  </data>
+  <data name="ViewModelsAppSettingsPageTranslatorPageTitle" xml:space="preserve">
+    <value>Translator</value>
+  </data>
+  <data name="ViewModelsAppSettingsPageTranslatorTestingProviderFailed" xml:space="preserve">
+    <value>Testing &#39;{0}&#39; failed.</value>
+  </data>
+  <data name="ViewModelsAppSettingsPageTranslatorTranslatorMustBeSelected" xml:space="preserve">
+    <value>Translator must be selected when translation is enabled.</value>
+  </data>
+  <data name="ViewModelsAppSettingsResetSettingsToDefaultsCaption" xml:space="preserve">
+    <value>Reset settings to defaults</value>
+  </data>
+  <data name="ViewModelsAppSettingsResetSettingsToDefaultsDetail" xml:space="preserve">
+    <value>Plugins settings will not reset to defaults.
+Each plugin must be resetted manually on its settings page.</value>
+  </data>
+  <data name="ViewModelsAppSettingsResetSettingsToDefaultsMessage" xml:space="preserve">
+    <value>Reset settings to defaults?</value>
+  </data>
+  <data name="ViewModelsChangePasswordConfirmPasswordIsWrong" xml:space="preserve">
+    <value>Confirmation of new password must be same as new password.</value>
+  </data>
+  <data name="ViewModelsChangePasswordCurrentPasswordIsRequired" xml:space="preserve">
+    <value>Current password is required.</value>
+  </data>
+  <data name="ViewModelsChangePasswordEmailAddressIsRequired" xml:space="preserve">
+    <value>Email address is required.</value>
+  </data>
+  <data name="ViewModelsChangePasswordNewPasswordConfirmIsRequired" xml:space="preserve">
+    <value>New password confirm is required.</value>
+  </data>
+  <data name="ViewModelsChangePasswordNewPasswordIsRequired" xml:space="preserve">
+    <value>New password is required.</value>
+  </data>
+  <data name="ViewModelsChangePasswordPasswordSuccessfullyChanged" xml:space="preserve">
+    <value>Password was successfully changed!</value>
+  </data>
+  <data name="ViewModelsDeleteElementsConfirmCaption" xml:space="preserve">
+    <value>Delete {0}</value>
+  </data>
+  <data name="ViewModelsDeleteElementsConfirmMessage" xml:space="preserve">
+    <value>Do you want to delete {0}?</value>
+  </data>
+  <data name="ViewModelsDeleteElementsSelectedText" xml:space="preserve">
+    <value>Delete {0}:</value>
+  </data>
+  <data name="ViewModelsEditParameterAddTitle" xml:space="preserve">
+    <value>Add resources parameter</value>
+  </data>
+  <data name="ViewModelsEditParameterEditTitle" xml:space="preserve">
+    <value>Edit resource parameter</value>
+  </data>
+  <data name="ViewModelsEditParameterParameterWithSameNameExist" xml:space="preserve">
+    <value>Parameter with same name already exist!</value>
+  </data>
+  <data name="ViewModelsHintPanelCodeGeneratorHintText" xml:space="preserve">
+    <value>When you save changes (Ctrl+S or save icon in toolbar) an associated code generated is executed.
+Code generator can produce C# classes, resx files, JSON files, etc, depending on what code generator you choose.
+
+By default, generated code is saved in Resources folder within project where LHQ file is located.</value>
+  </data>
+  <data name="ViewModelsHintPanelCodeGeneratorHintTextOnlyInVS" xml:space="preserve">
+    <value>Code generation works only within Visual Studio!</value>
+  </data>
+  <data name="ViewModelsHintPanelCodeGeneratorHintTextReadMore" xml:space="preserve">
+    <value>Read more about code generator templates...</value>
+  </data>
+  <data name="ViewModelsImportPageTitle" xml:space="preserve">
+    <value>Import resources</value>
+  </data>
+  <data name="ViewModelsImportPleaseSelectFilesToImport" xml:space="preserve">
+    <value>Please select file(s) to import.</value>
+  </data>
+  <data name="ViewModelsImportPleaseSelectImporter" xml:space="preserve">
+    <value>Please select importer!</value>
+  </data>
+  <data name="ViewModelsImportPleaseSelectImportMode" xml:space="preserve">
+    <value>Please select import mode!</value>
+  </data>
+  <data name="ViewModelsImportUnsupportedFileExtensionsDetail" xml:space="preserve">
+    <value>Importer &#39;{0}&#39; does not support those extensions:
+
+{1}</value>
+  </data>
+  <data name="ViewModelsImportUnsupportedFileExtensionsMessage" xml:space="preserve">
+    <value>Selected file(s) has unsupported extension(s).</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsButtonRemoveTooltip" xml:space="preserve">
+    <value>Remove language</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsButtonSetAsPrimary" xml:space="preserve">
+    <value>Set as primary</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsButtonSetAsPrimaryToolip" xml:space="preserve">
+    <value>Sets language as primary</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsChangePrimaryLanguageConfirmCaption" xml:space="preserve">
+    <value>Change primary language</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsChangePrimaryLanguageConfirmDetail" xml:space="preserve">
+    <value>Do you really want to set language &#39;{0}&#39; as primary?</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsChangePrimaryLanguageConfirmMessage" xml:space="preserve">
+    <value>You are about to change current primary language &#39;{0}&#39; to language &#39;{1}&#39;.</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsColumnHeaderCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsColumnHeaderEnglishName" xml:space="preserve">
+    <value>English name</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsColumnHeaderPrimary" xml:space="preserve">
+    <value>Primary</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsDialogCaption" xml:space="preserve">
+    <value>Language settings</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsDialogCaptionHint" xml:space="preserve">
+    <value>Manage list of languages used in current project</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsHeaderIsPrimary" xml:space="preserve">
+    <value>Primary</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsLabelCountOfLanguage" xml:space="preserve">
+    <value>{0} Languages</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsLabelLanguages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsPageTitle" xml:space="preserve">
+    <value>Language settings</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsPrimaryLanguage" xml:space="preserve">
+    <value>Language is primary language</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsPrimaryLanguageCantBeRemoved" xml:space="preserve">
+    <value>Primary language cannot be removed</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsProjectLanguages" xml:space="preserve">
+    <value>Project languages:</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsRemoveLanguageConfirmCaption" xml:space="preserve">
+    <value>Remove language &#39;{0}&#39;</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsRemoveLanguageConfirmDetail" xml:space="preserve">
+    <value>All resources in this language will be also removed!</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsRemoveLanguageConfirmMessage" xml:space="preserve">
+    <value>Remove language &#39;{0}&#39; ?</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsReplaceLanguageCaption" xml:space="preserve">
+    <value>Replace project language with other language</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsReplaceLanguageDetail" xml:space="preserve">
+    <value>You are about to change project language from &#39;{0}&#39; to &#39;{1}&#39;. 
+All resources in current language &#39;{0}&#39; will be assigned to new language &#39;{1}&#39;.
+
+Do you want to continue?</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsReplaceLanguageMessage" xml:space="preserve">
+    <value>You are about to change project language from &#39;{0}&#39; to &#39;{1}&#39;.</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsSetAsPrimaryConfirmCaption" xml:space="preserve">
+    <value>Set as primary language</value>
+  </data>
+  <data name="ViewModelsLanguageSettingsSetAsPrimaryConfirmMessage" xml:space="preserve">
+    <value>Set language &#39;{0}&#39; as primary language?</value>
+  </data>
+  <data name="ViewModelsMessageBoxLabelCancel" xml:space="preserve">
+    <value>_Cancel</value>
+  </data>
+  <data name="ViewModelsMessageBoxLabelNo" xml:space="preserve">
+    <value>_No</value>
+  </data>
+  <data name="ViewModelsMessageBoxLabelOk" xml:space="preserve">
+    <value>_OK</value>
+  </data>
+  <data name="ViewModelsMessageBoxLabelYes" xml:space="preserve">
+    <value>_Yes</value>
+  </data>
+  <data name="ViewModelsMultiSelectionActionsTooltipCategories" xml:space="preserve">
+    <value>Show actions to be applied to resources within selected categories.</value>
+  </data>
+  <data name="ViewModelsMultiSelectionActionsTooltipResources" xml:space="preserve">
+    <value>Show actions to be applied to selected resources</value>
+  </data>
+  <data name="ViewModelsMultiSelectionButtonFirstLevel" xml:space="preserve">
+    <value>First Level</value>
+  </data>
+  <data name="ViewModelsMultiSelectionButtonRecursive" xml:space="preserve">
+    <value>Recursive</value>
+  </data>
+  <data name="ViewModelsMultiSelectionCategoriesHeader" xml:space="preserve">
+    <value>Selected categories ({0})</value>
+  </data>
+  <data name="ViewModelsMultiSelectionChangeResourcesStateFailedCaption" xml:space="preserve">
+    <value>Change resources state</value>
+  </data>
+  <data name="ViewModelsMultiSelectionChangeResourcesStateFailedDetail" xml:space="preserve">
+    <value>There are no resources to change state for.</value>
+  </data>
+  <data name="ViewModelsMultiSelectionChangeResourcesStateFailedMessage" xml:space="preserve">
+    <value>Could not change resources state to &#39;{0}&#39;.</value>
+  </data>
+  <data name="ViewModelsMultiSelectionChangeStateAllResourcesRecursive" xml:space="preserve">
+    <value>Do you want to change resources state from all categories to &#39;{0}&#39;?</value>
+  </data>
+  <data name="ViewModelsMultiSelectionChangeStateToEdited" xml:space="preserve">
+    <value>Change state to &#39;Edited&#39;</value>
+  </data>
+  <data name="ViewModelsMultiSelectionChangeStateToFinal" xml:space="preserve">
+    <value>Change state to &#39;Final&#39;</value>
+  </data>
+  <data name="ViewModelsMultiSelectionChangeStateToNeedsReview" xml:space="preserve">
+    <value>Change state to &#39;Needs review&#39;</value>
+  </data>
+  <data name="ViewModelsMultiSelectionChangeStateToNew" xml:space="preserve">
+    <value>Change state to &#39;New&#39;</value>
+  </data>
+  <data name="ViewModelsMultiSelectionExportAllResourcesRecursive" xml:space="preserve">
+    <value>Do you want to export resources from all categories?</value>
+  </data>
+  <data name="ViewModelsMultiSelectionExportResourcesFailedDetail" xml:space="preserve">
+    <value>There are no resources to be exported to file.</value>
+  </data>
+  <data name="ViewModelsMultiSelectionExportResourcesFailedMessage" xml:space="preserve">
+    <value>Could not export resources to file</value>
+  </data>
+  <data name="ViewModelsMultiSelectionExportResourcesToFile" xml:space="preserve">
+    <value>Export resources to file</value>
+  </data>
+  <data name="ViewModelsMultiSelectionResourcesHeader" xml:space="preserve">
+    <value>Selected resources ({0})</value>
+  </data>
+  <data name="ViewModelsMultiSelectionScanCategoriesRecursivelyConfirmDetail" xml:space="preserve">
+    <value>Yes - recursive scan
+No - first level scan
+Cancel - cancel current operation</value>
+  </data>
+  <data name="ViewModelsMultiSelectionScanCategoriesRecursivelyConfirmMessage" xml:space="preserve">
+    <value>Do you want to scan categories recursively?</value>
+  </data>
+  <data name="ViewModelsMultiSelectionSelectedProjectRoot" xml:space="preserve">
+    <value>Selected project root</value>
+  </data>
+  <data name="ViewModelsMultiSelectionTranslateAllResourcesRecursive" xml:space="preserve">
+    <value>Do you want to translate resources from all categories?</value>
+  </data>
+  <data name="ViewModelsMultiSelectionTranslateResourcesCaption" xml:space="preserve">
+    <value>Translate resources</value>
+  </data>
+  <data name="ViewModelsMultiSelectionTranslateResourcesFailedDetail" xml:space="preserve">
+    <value>There are no resources to be translated.</value>
+  </data>
+  <data name="ViewModelsMultiSelectionTranslateResourcesFailedMessage" xml:space="preserve">
+    <value>Could not translate resources</value>
+  </data>
+  <data name="ViewModelsNewElementCategoryNameCaption" xml:space="preserve">
+    <value>Category name:</value>
+  </data>
+  <data name="ViewModelsNewElementCategoryNameIsRequired" xml:space="preserve">
+    <value>Category name is required.</value>
+  </data>
+  <data name="ViewModelsNewElementNameHint" xml:space="preserve">
+    <value>Alllowed characters: a-z A-Z and numbers</value>
+  </data>
+  <data name="ViewModelsNewElementNewCategory" xml:space="preserve">
+    <value>New category</value>
+  </data>
+  <data name="ViewModelsNewElementNewCategoryCaptionText" xml:space="preserve">
+    <value>Enter category _name:</value>
+  </data>
+  <data name="ViewModelsNewElementNewCategoryTemplateName" xml:space="preserve">
+    <value>category</value>
+  </data>
+  <data name="ViewModelsNewElementNewResource" xml:space="preserve">
+    <value>New resource</value>
+  </data>
+  <data name="ViewModelsNewElementNewResourceCaptionText" xml:space="preserve">
+    <value>Enter resource _name:</value>
+  </data>
+  <data name="ViewModelsNewElementNewResourceTemplateName" xml:space="preserve">
+    <value>resource</value>
+  </data>
+  <data name="ViewModelsNewElementNewResourceUnderRootNotAllowedCaption" xml:space="preserve">
+    <value>New resource under root model failed</value>
+  </data>
+  <data name="ViewModelsNewElementNewResourceUnderRootNotAllowedDetail" xml:space="preserve">
+    <value>Set option &#39;Allow resources under root&#39; in file options to enable this.</value>
+  </data>
+  <data name="ViewModelsNewElementNewResourceUnderRootNotAllowedDetailByCodeGen" xml:space="preserve">
+    <value>Associated Code Generator does not support this.</value>
+  </data>
+  <data name="ViewModelsNewElementNewResourceUnderRootNotAllowedMessage" xml:space="preserve">
+    <value>Could not add new resource under root model.</value>
+  </data>
+  <data name="ViewModelsNewElementParent" xml:space="preserve">
+    <value>Parent:</value>
+  </data>
+  <data name="ViewModelsNewElementParentHierarchy" xml:space="preserve">
+    <value>Parent hierarchy</value>
+  </data>
+  <data name="ViewModelsNewElementResourceNameCaption" xml:space="preserve">
+    <value>Resource name:</value>
+  </data>
+  <data name="ViewModelsNewElementResourceNameIsRequired" xml:space="preserve">
+    <value>Resource name is required.</value>
+  </data>
+  <data name="ViewModelsNewProjectChangeCodeGeneratorSettingsLink" xml:space="preserve">
+    <value>Code Generator Settings</value>
+  </data>
+  <data name="ViewModelsNewProjectCodeGeneratorTemplateTitle" xml:space="preserve">
+    <value>Code Generator Template</value>
+  </data>
+  <data name="ViewModelsNewProjectCommonDetails" xml:space="preserve">
+    <value>Common</value>
+  </data>
+  <data name="ViewModelsNewProjectDefaultModelName" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="ViewModelsNewProjectDialogTitle" xml:space="preserve">
+    <value>Create new project</value>
+  </data>
+  <data name="ViewModelsNewProjectDialogTitleVS" xml:space="preserve">
+    <value>New localization file</value>
+  </data>
+  <data name="ViewModelsNewProjectLanguagesType" xml:space="preserve">
+    <value>Languages type:</value>
+  </data>
+  <data name="ViewModelsNewProjectLanguagesTypeNeutral" xml:space="preserve">
+    <value>Neutral language (en)</value>
+  </data>
+  <data name="ViewModelsNewProjectLanguagesTypeSpecific" xml:space="preserve">
+    <value>Specific language (en-US)</value>
+  </data>
+  <data name="ViewModelsNewProjectOpenLanguageSettingsAfterCreate" xml:space="preserve">
+    <value>Open &quot;Language settings&quot; after project created</value>
+  </data>
+  <data name="ViewModelsNewProjectOtherLanguagesHint" xml:space="preserve">
+    <value>Other translation languages can be added later in &quot;Language settings&quot;</value>
+  </data>
+  <data name="ViewModelsNewProjectPrimaryLanguage" xml:space="preserve">
+    <value>Primary language:</value>
+  </data>
+  <data name="ViewModelsNewProjectPrimaryLanguageIsRequired" xml:space="preserve">
+    <value>Primary language is required.</value>
+  </data>
+  <data name="ViewModelsNewProjectPrimaryLanguageValidationMessage" xml:space="preserve">
+    <value>Primary language must be selected!</value>
+  </data>
+  <data name="ViewModelsNewProjectProjectName" xml:space="preserve">
+    <value>Project name</value>
+  </data>
+  <data name="ViewModelsNewProjectProjectNameIsRequired" xml:space="preserve">
+    <value>Project name is required.</value>
+  </data>
+  <data name="ViewModelsNewProjectProjectNameVS" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ViewModelsNewProjectResxTitle" xml:space="preserve">
+    <value>ResX files generator</value>
+  </data>
+  <data name="ViewModelsNewProjectShowOnlyNeutralLanguages" xml:space="preserve">
+    <value>Show only neutral languages</value>
+  </data>
+  <data name="ViewModelsNewProjectT4TemplateWebHelp" xml:space="preserve">
+    <value>For more info about associated T4 generator, look at</value>
+  </data>
+  <data name="ViewModelsProgressDialogTitle" xml:space="preserve">
+    <value>Progress...</value>
+  </data>
+  <data name="ViewModelsProjectSettingsPageTitle" xml:space="preserve">
+    <value>Project Settings</value>
+  </data>
+  <data name="ViewModelsResourceModelFinalStateConfirmCaption" xml:space="preserve">
+    <value>Change resource state to &#39;Final&#39;</value>
+  </data>
+  <data name="ViewModelsResourceModelFinalStateConfirmMessageLock" xml:space="preserve">
+    <value>Do you want to lock resource translations?</value>
+  </data>
+  <data name="ViewModelsResourceModelFinalStateConfirmMessageNotify" xml:space="preserve">
+    <value>Change resource state to &#39;Final&#39; will lock resource name, description and parameters for edits.</value>
+  </data>
+  <data name="ViewModelsResourceModelFinalStateConfirmRememberHint" xml:space="preserve">
+    <value>Later you can change this in settings page</value>
+  </data>
+  <data name="ViewModelsResourceModelFinalStateConfirmRememberText" xml:space="preserve">
+    <value>Remember current choice for next time</value>
+  </data>
+  <data name="ViewModelsResourceModelHintText" xml:space="preserve">
+    <value>Press Enter for new line
+Press Tab to focus on next language translation
+Depending on associated code generator, parameter placeholder can be used in text
+For example, C# code generator uses string.Format() index parameters placeholder, e.g. {0} for first parameter, {1} for second and so on</value>
+  </data>
+  <data name="ViewModelsResourceModelLockAllValues" xml:space="preserve">
+    <value>Lock all values</value>
+  </data>
+  <data name="ViewModelsResourceModelLockResource" xml:space="preserve">
+    <value>Lock resource</value>
+  </data>
+  <data name="ViewModelsResourceModelStateLocked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="ViewModelsResourceModelStateNotLocked" xml:space="preserve">
+    <value>Not locked</value>
+  </data>
+  <data name="ViewModelsResourceModelUnlockAllValues" xml:space="preserve">
+    <value>Unlock all values</value>
+  </data>
+  <data name="ViewModelsResourceModelUnlockResource" xml:space="preserve">
+    <value>Unlock resource</value>
+  </data>
+  <data name="ViewModelsResourceParametersPageTitle" xml:space="preserve">
+    <value>Resource Parameters</value>
+  </data>
+  <data name="ViewModelsResourceParametersRemoveParameterCaption" xml:space="preserve">
+    <value>Remove parameter</value>
+  </data>
+  <data name="ViewModelsResourceParametersRemoveParameterMessage" xml:space="preserve">
+    <value>Remove parameter &#39;{0}&#39; at position {1}?</value>
+  </data>
+  <data name="ViewModelsResourceValueModelAutoTranslatedTooltip" xml:space="preserve">
+    <value>&#39;{0}&#39; value was automatically translated by translator service</value>
+  </data>
+  <data name="ViewModelsResourceValueModelBurgerMenuHeader" xml:space="preserve">
+    <value>Actions with &#39;{0}&#39; translation</value>
+  </data>
+  <data name="ViewModelsResourceValueModelLockIconTooltipIsLocked" xml:space="preserve">
+    <value>&#39;{0}&#39; translation is locked for edits</value>
+  </data>
+  <data name="ViewModelsResourceValueModelLockIconTooltipIsNotLocked" xml:space="preserve">
+    <value>&#39;{0}&#39; translation is not locked for edits</value>
+  </data>
+  <data name="ViewModelsResourceValueModelLockMenuHeader" xml:space="preserve">
+    <value>Lock &#39;{0}&#39; translation</value>
+  </data>
+  <data name="ViewModelsResourceValueModelLockMenuTooltip" xml:space="preserve">
+    <value>Click to lock &#39;{0}&#39; translation</value>
+  </data>
+  <data name="ViewModelsResourceValueModelPropertyAutoTranslatedIsFalse" xml:space="preserve">
+    <value>Resource &#39;{0}&#39; translation &#39;{1}&#39; was unmarked as auto-translated.</value>
+  </data>
+  <data name="ViewModelsResourceValueModelPropertyAutoTranslatedIsTrue" xml:space="preserve">
+    <value>Resource &#39;{0}&#39; translation &#39;{1}&#39; was marked as auto-translated.</value>
+  </data>
+  <data name="ViewModelsResourceValueModelPropertyLockedIsFalse" xml:space="preserve">
+    <value>Resource &#39;{0}&#39; translation &#39;{1}&#39; was unlocked.</value>
+  </data>
+  <data name="ViewModelsResourceValueModelPropertyLockedIsTrue" xml:space="preserve">
+    <value>Resource &#39;{0}&#39; translation &#39;{1}&#39; was locked.</value>
+  </data>
+  <data name="ViewModelsResourceValueModelTranslateMenuHeader" xml:space="preserve">
+    <value>Translate &#39;{0}&#39; value</value>
+  </data>
+  <data name="ViewModelsResourceValueModelUnlockMenuHeader" xml:space="preserve">
+    <value>Unlock &#39;{0}&#39; translation</value>
+  </data>
+  <data name="ViewModelsResourceValueModelUnlockMenuTooltip" xml:space="preserve">
+    <value>Click to unlock &#39;{0}&#39; translation</value>
+  </data>
+  <data name="ViewModelsRootModelChangePrimaryLanguageConfirmCaption" xml:space="preserve">
+    <value>Change primary language</value>
+  </data>
+  <data name="ViewModelsRootModelChangePrimaryLanguageConfirmMessage" xml:space="preserve">
+    <value>Do you want to change primary language to &#39;{0}&#39; ?</value>
+  </data>
+  <data name="ViewModelsRootModelEditModelNameCaption" xml:space="preserve">
+    <value>Edit model name</value>
+  </data>
+  <data name="ViewModelsRootModelEditModelNameMessage" xml:space="preserve">
+    <value>Enter new model name</value>
+  </data>
+  <data name="ViewModelsRootModelEditModelNameWarningDetail" xml:space="preserve">
+    <value>Do you want to continue renaming model name ?</value>
+  </data>
+  <data name="ViewModelsRootModelEditModelNameWarningMessage" xml:space="preserve">
+    <value>Changing model name will regenerate associated files with this new name.
+Any previously generated files must be removed manually!</value>
+  </data>
+  <data name="ViewModelsStatusBarAppVersion" xml:space="preserve">
+    <value>Application version:</value>
+  </data>
+  <data name="ViewModelsStatusBarCodeGenerator" xml:space="preserve">
+    <value>Code Generator:</value>
+  </data>
+  <data name="ViewModelsStatusBarCodeGeneratorTooltip" xml:space="preserve">
+    <value>Click to change Code Generator settings...</value>
+  </data>
+  <data name="ViewModelsStatusBarSelectedElement" xml:space="preserve">
+    <value>Selected: {0}</value>
+  </data>
+  <data name="ViewsCategoryViewActionsTooltip" xml:space="preserve">
+    <value>Show actions to be applied to resources under category</value>
+  </data>
+  <data name="ViewsCategoryViewCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="ViewsCategoryViewDescription" xml:space="preserve">
+    <value>_Description</value>
+  </data>
+  <data name="ViewsCategoryViewName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ViewsLanguageSelectorViewCountrySpecific" xml:space="preserve">
+    <value>Country specific</value>
+  </data>
+  <data name="ViewsLanguageSelectorViewFilterTooltipActive" xml:space="preserve">
+    <value>Searching by country code - click to search by country name</value>
+  </data>
+  <data name="ViewsLanguageSelectorViewFilterTooltipNotActive" xml:space="preserve">
+    <value>Searching by country name - click to search by country code</value>
+  </data>
+  <data name="ViewsProjectSettingsViewAllowResourcesUnderRoot" xml:space="preserve">
+    <value>Allow resources under root</value>
+  </data>
+  <data name="ViewsProjectSettingsViewCategoriesAndResources" xml:space="preserve">
+    <value>Categories and resources</value>
+  </data>
+  <data name="ViewsProjectSettingsViewFlatStructure" xml:space="preserve">
+    <value>Flat structure</value>
+  </data>
+  <data name="ViewsProjectSettingsViewHierarchicalStructure" xml:space="preserve">
+    <value>Hierarchical structure</value>
+  </data>
+  <data name="ViewsProjectSettingsViewResourcesOnly" xml:space="preserve">
+    <value>Resources only</value>
+  </data>
+  <data name="ViewsResourceViewActionsTooltip" xml:space="preserve">
+    <value>Show actions to be applied to all resource translations.</value>
+  </data>
+  <data name="ViewsResourceViewAddLanguageLinkPart1" xml:space="preserve">
+    <value>To add another language, click </value>
+  </data>
+  <data name="ViewsResourceViewAddLanguageLinkPart2" xml:space="preserve">
+    <value>here</value>
+  </data>
+  <data name="ViewsResourceViewAddLanguageLinkTooltip" xml:space="preserve">
+    <value>Click add or edit list of languages</value>
+  </data>
+  <data name="ViewsResourceViewClickToShowHint" xml:space="preserve">
+    <value>Click to show hint...</value>
+  </data>
+  <data name="ViewsResourceViewDefine" xml:space="preserve">
+    <value>Define...</value>
+  </data>
+  <data name="ViewsResourceViewDescription" xml:space="preserve">
+    <value>_Description</value>
+  </data>
+  <data name="ViewsResourceViewHold" xml:space="preserve">
+    <value>Resource string is empty, mark it as translated</value>
+  </data>
+  <data name="ViewsResourceViewLocked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="ViewsResourceViewName" xml:space="preserve">
+    <value>_Name</value>
+  </data>
+  <data name="ViewsResourceViewParameters" xml:space="preserve">
+    <value>_Parameters</value>
+  </data>
+  <data name="ViewsResourceViewResource" xml:space="preserve">
+    <value>Resource</value>
+  </data>
+  <data name="ViewsResourceViewResourceMarkedAsTranslated" xml:space="preserve">
+    <value>Resource &#39;{0}&#39; translation &#39;{1}&#39; was marked as translated.</value>
+  </data>
+  <data name="ViewsResourceViewResourceUnmarkedAsTranslated" xml:space="preserve">
+    <value>Resource &#39;{0}&#39; translation &#39;{1}&#39; was unmarked as translated.</value>
+  </data>
+  <data name="ViewsResourceViewState" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="ViewsResourceViewTranslateAllValuesMenuHeader" xml:space="preserve">
+    <value>Translate all values</value>
+  </data>
+  <data name="ViewsResourceViewTranslateAllValuesMenuTooltip" xml:space="preserve">
+    <value>Translate all values using translator service.</value>
+  </data>
+  <data name="ViewsResourceViewTranslateEmptyValuesMenuHeader" xml:space="preserve">
+    <value>Translate empty values</value>
+  </data>
+  <data name="ViewsResourceViewTranslateEmptyValuesMenuTooltip" xml:space="preserve">
+    <value>Translate only empty values using translator service.</value>
+  </data>
+  <data name="ViewsResourceViewTranslationNote" xml:space="preserve">
+    <value>_Translation note</value>
+  </data>
+  <data name="ViewsResourceViewTranslations" xml:space="preserve">
+    <value>Translations</value>
+  </data>
+  <data name="ViewsResourceViewTranslationsHint" xml:space="preserve">
+    <value>Press Ctrl+Enter to enter multi-line mode. Key Enter to move to next language translation.</value>
+  </data>
+  <data name="ViewsRootViewActionsTooltip" xml:space="preserve">
+    <value>Show actions to be applied to all resources within project</value>
+  </data>
+  <data name="ViewsRootViewAddMissingLanguages" xml:space="preserve">
+    <value>Add missing languages &#39;{0}&#39;</value>
+  </data>
+  <data name="ViewsRootViewDescription" xml:space="preserve">
+    <value>_Description</value>
+  </data>
+  <data name="ViewsRootViewHoldResources" xml:space="preserve">
+    <value>Hold resources:</value>
+  </data>
+  <data name="ViewsRootViewLanguages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="ViewsRootViewModel" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="ViewsRootViewName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ViewsRootViewPrimaryLanguage" xml:space="preserve">
+    <value>Language is primary language</value>
+  </data>
+  <data name="ViewsRootViewSearchTreeText" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="ViewsRootViewTranslatedResources" xml:space="preserve">
+    <value>Translated resources:</value>
+  </data>
+  <data name="ViewsRootViewUntranslatedResources" xml:space="preserve">
+    <value>Untranslated resources:</value>
+  </data>
+  <data name="ViewsShellViewAllResourceCount" xml:space="preserve">
+    <value>Resources count:</value>
+  </data>
+  <data name="ViewsShellViewPrimaryLanguage" xml:space="preserve">
+    <value>Primary language:</value>
+  </data>
+  <data name="ViewsTreeViewCanDropHere" xml:space="preserve">
+    <value>Can drop here.</value>
+  </data>
+  <data name="ViewsTreeViewDropNotAllowed" xml:space="preserve">
+    <value>Drop is not allowed here.</value>
+  </data>
+  <data name="ViewsTreeViewFilterTooltipActive" xml:space="preserve">
+    <value>Showing only untranslated resources - click to remove filter</value>
+  </data>
+  <data name="ViewsTreeViewFilterTooltipNotActive" xml:space="preserve">
+    <value>Showing all resources - click to show only untranslated</value>
+  </data>
+  <data name="ViewsTreeViewLegendCompleteTranslation" xml:space="preserve">
+    <value>Complete translation</value>
+  </data>
+  <data name="ViewsTreeViewLegendIncompleteTranslation" xml:space="preserve">
+    <value>Incomplete translation</value>
+  </data>
+  <data name="ViewsTreeViewRedBorderTooltip" xml:space="preserve">
+    <value>Red border - resource is not translated into all languages</value>
+  </data>
+  <data name="ViewsTreeViewShowOnlyUntranslated" xml:space="preserve">
+    <value>Show only untranslated</value>
+  </data>
+  <data name="VsExtensionFirstTimeOpenSettingsCaption" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="VsExtensionFirstTimeOpenSettingsDetail" xml:space="preserve">
+    <value>Do you want to open the settings?</value>
+  </data>
+  <data name="VsExtensionFirstTimeOpenSettingsMessage" xml:space="preserve">
+    <value>This is the first time you use Localization HQ Editor extension.</value>
+  </data>
+</root>

@@ -1,0 +1,101 @@
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Views.ValidationPanelView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:LHQ.App.Model"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:viewModels="clr-namespace:LHQ.App.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:ShellViewModel,
+                                     IsDesignTimeCreatable=false}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <components:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="GridViewColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+            </Style>
+
+            <DataTemplate x:Key="CellName" DataType="{x:Type models:ValidationError}">
+                <StackPanel
+                    x:Name="hiersp"
+                    VerticalAlignment="Center"
+                    DataContext="{Binding Path=TreeElement}"
+                    Orientation="Horizontal">
+                    <fa:ImageAwesome Margin="0,0,5,0" Style="{StaticResource IconTreeElementStyle}" />
+
+                    <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="CellError" DataType="{x:Type models:ValidationError}">
+                <TextBlock Text="{Binding Path=Error, Mode=OneWay}" />
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </components:AppUserControl.Resources>
+
+    <Grid DataContext="{Binding Path=ValidationPanel}">
+
+        <ListView
+            x:Name="ValidationListView"
+            Margin="0,0,0,0"
+            BorderThickness="0"
+            ItemsSource="{Binding Path=ValidatorContext.Errors, Mode=OneWay}"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            SelectedItem="{Binding Path=SelectedError, Mode=TwoWay}"
+            SelectionMode="Single"
+            Visibility="{Binding Path=ValidatorContext.HasErrors, Converter={StaticResource BoolToVisibilityConverter}}">
+            <i:Interaction.Behaviors>
+                <behaviors:EventToCommandBehavior
+                    Command="{Binding PreviewMouseDoubleClickCommand}"
+                    Event="PreviewMouseDoubleClick"
+                    PassArguments="True" />
+                <behaviors:EventToCommandBehavior
+                    Command="{Binding ErrorsKeyDownCommand}"
+                    Event="PreviewKeyDown"
+                    PassArguments="True" />
+            </i:Interaction.Behaviors>
+            <ListView.View>
+                <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                    <GridViewColumn
+                        x:Name="ColumnCellName"
+                        Width="Auto"
+                        CellTemplate="{StaticResource CellName}"
+                        Header="{localization:Localization Key={x:Static resources:StringsKeys+Common.ColumnName}}" />
+                    <GridViewColumn
+                        Width="{Binding ElementName=HelperField, Path=ActualWidth}"
+                        CellTemplate="{StaticResource CellError}"
+                        Header="{localization:Localization Key={x:Static resources:StringsKeys+Common.ColumnError}}" />
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <!--  Width is bound to width of the first GridViewColumn  -->
+                <ColumnDefinition Width="{Binding ElementName=ColumnCellName, Path=ActualWidth}" />
+                <!--  Width is set to "Fill"  -->
+                <ColumnDefinition Width="*" />
+                <!--  Correction Width  -->
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+            <!--  This is the hidden helper Field which is used to bind to, using the "Fill" column of the helper grid  -->
+            <Grid x:Name="HelperField" Grid.Column="1" />
+        </Grid>
+    </Grid>
+
+</components:AppUserControl>

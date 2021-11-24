@@ -1,0 +1,27 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <Name>Localization file for Typescript applications</Name>
+    <Description>Localization HQ file (*.lhq) with T4 template which generates JSON file to be consumed by javascript with typescript (*.d.ts) type definition.
+    
+Recommended target projects: 
+Any web application project.</Description>
+    <Icon>icon.png</Icon>
+    <PreviewImage>preview.png</PreviewImage>
+    <ProjectType>CSharp</ProjectType>
+    <TemplateID>CSharp.LHQ.typescript</TemplateID>
+    <DefaultName>Strings.lhq</DefaultName>
+    <NumberOfParentCategoriesToRollUp>2</NumberOfParentCategoriesToRollUp>
+    <SortOrder>500</SortOrder>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem TargetFileName="$fileinputname$.lhq" ReplaceParameters="true">Strings.lhq</ProjectItem>
+    <ProjectItem TargetFileName="$fileinputname$.lhq\$fileinputname$.lhq.tt" ReplaceParameters="true">Strings.lhq.tt</ProjectItem>
+    <CustomParameters>
+      <CustomParameter Name="$lhq_itemtemplate$" Value="TypescriptJson01"/>
+    </CustomParameters>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>LHQ.VsExtension, Culture=neutral, PublicKeyToken=null</Assembly>
+    <FullClassName>LHQ.VsExtension.Wizard.ItemWizard</FullClassName>
+  </WizardExtension>
+</VSTemplate>

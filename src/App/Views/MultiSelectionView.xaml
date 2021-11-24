@@ -1,0 +1,201 @@
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Views.MultiSelectionView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:lhq="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:LHQ.App.Model"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:vm="clr-namespace:LHQ.App.ViewModels"
+    d:DataContext="{d:DesignInstance vm:MultiSelectionViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="500"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <components:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/ModelActionsContextMenu.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="TreeElementDataTemplate">
+                <StackPanel d:DataContext="{d:DesignInstance model:ITreeElementViewModel, IsDesignTimeCreatable=False}" Orientation="Horizontal">
+
+                    <fa:ImageAwesome Margin="0,0,5,0" Style="{StaticResource IconTreeElementStyle}" />
+
+                    <TextBlock VerticalAlignment="Top" Text="{Binding Path=Name, Mode=OneWay}" />
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+    </components:AppUserControl.Resources>
+    <Border x:Name="MainBorder" Margin="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                Orientation="Horizontal"
+                Visibility="{Binding Path=HasModel, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock
+                    MinWidth="200"
+                    Padding="10,5,0,5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    FontWeight="SemiBold"
+                    Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                    Text="{lhq:Localization Key={x:Static resources:StringsKeys+ViewModels+MultiSelection.SelectedProjectRoot}}" />
+
+                <components:DropDownButton
+                    Width="230"
+                    Height="27"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
+                    DropDownContextMenu="{DynamicResource ModelActionsContextMenu}"
+                    TabIndex="1"
+                    Tag="{x:Static model:TreeElementType.Model}"
+                    Text="{lhq:Localization Key={x:Static resources:StringsKeys+Common.Actions}}"
+                    ToolTip="{lhq:Localization Key={x:Static resources:StringsKeys+Views+RootView.ActionsTooltip}}" />
+            </StackPanel>
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,10,0,0"
+                Visibility="{Binding Path=HasModel, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    FontWeight="SemiBold"
+                    Text="{Binding Path=Model.Name}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="0,5,0,0"
+                    FontSize="10pt"
+                    FontStyle="Italic"
+                    Text="{Binding Path=Model.Description}"
+                    Visibility="{Binding Path=ModelHasDescription, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </Grid>
+
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                Orientation="Horizontal"
+                Visibility="{Binding Path=HasCategories, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Margin" Value="0" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=HasModel}" Value="True">
+                                <Setter Property="Margin" Value="0,10,0,0" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <TextBlock
+                    MinWidth="200"
+                    Padding="10,5,0,5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    FontWeight="SemiBold"
+                    Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                    Text="{Binding Path=CategoriesHeader}" />
+
+                <components:DropDownButton
+                    Width="230"
+                    Height="27"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
+                    DropDownContextMenu="{DynamicResource ModelActionsContextMenu}"
+                    TabIndex="1"
+                    Tag="{x:Static model:TreeElementType.Category}"
+                    Text="{lhq:Localization Key={x:Static resources:StringsKeys+Common.Actions}}"
+                    ToolTip="{lhq:Localization Key={x:Static resources:StringsKeys+ViewModels+MultiSelection.ActionsTooltipCategories}}" />
+
+            </StackPanel>
+
+            <Border
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="0,10,0,0"
+                Visibility="{Binding Path=HasCategories, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl
+                        Focusable="False"
+                        IsTabStop="False"
+                        ItemTemplate="{StaticResource TreeElementDataTemplate}"
+                        ItemsSource="{Binding Path=Categories, Mode=OneTime}" />
+                </ScrollViewer>
+            </Border>
+
+            <StackPanel
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="{Binding Path=ResourcesMargin}"
+                Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                Orientation="Horizontal"
+                Visibility="{Binding Path=HasResources, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock
+                    MinWidth="200"
+                    Padding="10,5,0,5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    FontWeight="SemiBold"
+                    Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                    Text="{Binding Path=ResourcesHeader}" />
+
+                <components:DropDownButton
+                    Width="230"
+                    Height="27"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
+                    DropDownContextMenu="{DynamicResource ModelActionsContextMenu}"
+                    TabIndex="1"
+                    Tag="{x:Static model:TreeElementType.Resource}"
+                    Text="{lhq:Localization Key={x:Static resources:StringsKeys+Common.Actions}}"
+                    ToolTip="{lhq:Localization Key={x:Static resources:StringsKeys+ViewModels+MultiSelection.ActionsTooltipResources}}" />
+
+            </StackPanel>
+
+            <Border
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="0,10,0,0"
+                Visibility="{Binding Path=HasResources, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl
+                        Focusable="False"
+                        IsTabStop="False"
+                        ItemTemplate="{StaticResource TreeElementDataTemplate}"
+                        ItemsSource="{Binding Path=Resources, Mode=OneTime}" />
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Border>
+</components:AppUserControl>

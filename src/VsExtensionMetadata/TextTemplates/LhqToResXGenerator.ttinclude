@@ -1,0 +1,449 @@
+<#@ import namespace="System.Collections.ObjectModel" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="LHQ.Utils" #>
+<#@ import namespace="LHQ.Data" #>
+<#@ import namespace="LHQ.Data.Extensions" #>
+<#@ import namespace="LHQ.Data.Templating.Settings" #>
+<#@ import namespace="LHQ.Data.Templating.Settings.ResX" #>
+
+<#+
+class ResXGenerator: GeneratorBase<ResXGeneratorSettings> {
+	public class ResourceInfo {
+		public ResourceElement Resource { get; set; }
+		public string ParentsPath { get; set; }
+		public string ParentsPathWithSep { get; set; }
+
+		public ResourceInfo(ResourceElement resource) 
+		{
+			Resource = resource;
+		}
+
+		public string GetResourceKey(bool withSeparator)
+		{
+			return withSeparator 
+				? ParentsPathWithSep + "." + Resource.Name
+				: ParentsPath + Resource.Name;
+        }
+	}
+
+	private Dictionary<ResourceElement, ResourceInfo> AllResources { get; set; }
+
+	private string keysClassName;
+
+	public ResXGenerator(object textTemplatingHost, ModelContext modelContext,
+		ResXGeneratorSettings settings)
+		:this(textTemplatingHost, modelContext, settings, null)
+    {}
+
+	public ResXGenerator(object textTemplatingHost, ModelContext modelContext,
+		ResXGeneratorSettings settings, FileManager manager)
+		: base(textTemplatingHost, modelContext, settings, manager)
+	{}
+
+	protected override string GeneratorName
+    {
+		get { return "ResX Generator"; }
+    }
+
+	public override void DoGenerate() {
+		try
+		{
+			FlattenAllResources();
+
+			foreach(var language in ModelRoot.Languages) 
+			{
+				WriteResXFilePerModel(language);
+			}
+		}
+		finally
+		{
+			this.Manager.Flush();
+		}
+	}
+
+    void FlattenAllResources()
+    {
+        AllResources = ModelRoot.Resources.Where(x => x.ParentKey == null).ToDictionary(x => x, x => new ResourceInfo(x));
+        IterateCategories(ModelRoot.Categories, string.Empty, string.Empty);
+    }
+
+	void IterateCategories(CategoryElementList categories, string parentsPath, string parentsPathSep)
+	{
+		foreach(var category in categories.OrderByName())
+        {
+			var newparentsPath = parentsPath + category.Name;
+			var newparentsPathSep = parentsPath + "." + category.Name;
+
+			if (category.Categories.Count > 0)
+            {
+				IterateCategories(category.Categories, newparentsPath, newparentsPathSep);
+            }
+
+			foreach(var resource in category.Resources.OrderByName())
+			{
+				var resourceInfo = new ResourceInfo(resource);
+				resourceInfo.ParentsPath = newparentsPath;
+				resourceInfo.ParentsPathWithSep = newparentsPathSep;
+				AllResources.Add(resource, resourceInfo);
+			}
+        }
+	}
+
+
+	void WriteResXFilePerModel(LHQ.Data.LanguageElement language)
+	{
+		string baseFileName = this.ModelRoot.Name;
+		string lang = language.Name.ToLowerInvariant();
+		if (language.IsPrimary && !Settings.CultureCodeInFileNameForPrimaryLanguage) {
+			lang = string.Empty; 
+		} else {
+			lang = "." + lang;
+		}
+	
+		StartNewFile(baseFileName + lang + ".resx", this.Settings);
+		WriteResXFileHeader();
+
+		this.WriteResources(AllResources.Keys, language);
+
+		WriteResXFileFooter();
+
+		Manager.EndNewFile();
+	}
+
+
+	void WriteResXFilePerCategory(CategoryElement category, LHQ.Data.LanguageElement language)
+	{
+		string baseFileName = category.Name;
+		string lang = language.Name.ToLowerInvariant();
+		if (lang == "en") {
+			lang = string.Empty; 
+		} else {
+			lang = "." + lang;
+		}
+	
+		StartNewFile(baseFileName + lang + ".resx", this.Settings);
+		WriteResXFileHeader();
+
+		WriteResources(category.Resources, language);
+		WriteResXFileFooter();
+
+		Manager.EndNewFile();
+	}
+
+	string GetFullResourceKey(ResourceElement resource, bool withSeparator)
+	{
+		return AllResources[resource].GetResourceKey(withSeparator);
+	}
+
+	void WriteResources(IEnumerable<ResourceElement> resources, LHQ.Data.LanguageElement language)
+	{
+		foreach(var resource in resources)
+		{
+			string resourceKey = GetFullResourceKey(resource, false);
+			if (string.IsNullOrEmpty(resourceKey)) continue;
+
+			var resourceValue = resource.FindValueByLanguage(language.Name);
+			if (resourceValue != null) 
+			{
+				string resValue = string.Empty;
+				if (resourceValue.Value != null) {
+					resValue = System.Web.HttpUtility.HtmlEncode(resourceValue.Value);
+				}
+#>
+  <data name="<#= resourceKey #>" xml:space="preserve">
+    <value><#= resValue #></value>
+<#+
+		if (!string.IsNullOrEmpty(resource.Description)) 
+		{
+#>
+    <comment><#= resource.Description #></comment>
+<#+
+		}
+#>
+  </data>
+<#+
+			}
+		}
+	}
+
+	void WriteResXFileHeader() {
+#>
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<#+
+	}
+
+	void WriteResXFileFooter() {
+#>
+</root>
+<#+
+    }
+
+	void WriteCSharpModelClass()
+	{
+		string namespaceName = this.Manager.ResolveNamespace(); // DefaultProjectNamespace;
+		string modelName = this.ModelRoot.Name;
+		string modelClassName = modelName;
+		this.keysClassName = modelName + "Keys";
+		this.StartNewFile(modelName + ".cs", this.Settings);
+#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+namespace <#= namespaceName #>
+{
+	using System;
+	using Microsoft.Extensions.Localization;
+
+	public static class <#= keysClassName #>
+	{
+<#+
+		WriteCategoriesKeysClass(this.ModelRoot.Categories);
+#>
+	}
+
+	public sealed class <#= modelClassName #>
+	{
+		private static IStringLocalizer _localizer;
+
+		public <#= modelClassName #>(IStringLocalizer localizer)
+		{
+			_localizer = localizer;
+		}
+
+<#+
+		WriteCategoriesAndResourcesClass(this.ModelRoot.Categories);
+#>
+	}
+}
+<#+
+		this.Manager.EndNewFile();
+	}
+
+	void WriteCategoriesKeysClass(CategoryElementList categories)
+	{
+        var orderedCategories = categories.OrderByName();
+        var last = orderedCategories.LastOrDefault();
+
+		foreach(var category in orderedCategories)
+		{
+#>
+		public static class <#= category.Name #>
+		{
+<#+
+			if (category.Categories.Count > 0)
+            {
+#>
+<#+
+				PushIndent();
+				WriteCategoriesKeysClass(category.Categories);
+				PopIndent();
+            }
+
+			foreach(var resource in category.Resources)
+            {
+#>
+			public const string <#= resource.Name #> = "<#= GetFullResourceKey(resource, false) #>";
+<#+
+            }
+#>
+		}
+<#+
+			if (category != last)
+            { // add empty line
+#>
+		
+<#+
+            }
+		}
+    }
+
+	void WriteCategoriesAndResourcesClass(CategoryElementList categories)
+    {
+        var orderedCategories = categories.OrderByName();
+        var last = orderedCategories.LastOrDefault();
+
+		foreach(var category in orderedCategories)
+		{
+#>
+		public static class <#= category.Name #>
+		{
+<#+
+			if (category.Categories.Count > 0)
+            {
+#>
+<#+
+				PushIndent();
+				WriteCategoriesAndResourcesClass(category.Categories);
+				PopIndent();
+            }
+
+			foreach(var resource in category.Resources)
+            {
+				WriteCSharpResourceProxyProperty(resource, category);
+            }
+#>
+		}
+<#+
+			if (category != last)
+            { // add empty line
+#>
+		
+<#+
+            }
+		}
+    }
+
+	string GetLocalizerIndexerKey(ResourceElement resource, CategoryElement category) 
+	{
+		return keysClassName + "." + GetFullResourceKey(resource, true);
+    }
+
+	void WriteCSharpResourceProxyProperty(ResourceElement resource, CategoryElement category) 
+	{
+		if (string.IsNullOrEmpty(resource.Name)) return;
+		var localizerIndexerKey = GetLocalizerIndexerKey(resource, category);
+
+		if (resource.Parameters.Count == 0) 
+		{
+#>
+			public static string <#= resource.Name #> => _localizer[<#= localizerIndexerKey #>];
+
+<#+
+		} 
+		else 
+		{
+			var paramNames = string.Join(",", resource.Parameters.Select(x => x.Name));
+			var paramNamesWithTypes = string.Join(",", resource.Parameters.Select(x => "object " + x.Name));
+
+#>
+			public static string <#= resource.Name #>(<#= paramNamesWithTypes #>) => _localizer[<#= localizerIndexerKey #>];
+
+<#+
+		}
+	}
+}
+#>

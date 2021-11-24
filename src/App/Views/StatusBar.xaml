@@ -1,0 +1,119 @@
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Views.StatusBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lhq="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:vm="clr-namespace:LHQ.App.ViewModels"
+    d:DataContext="{d:DesignInstance vm:ShellViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <components:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style
+                x:Key="BorderStyle"
+                d:DataContext="{d:DesignInstance vm:ShellViewModel,
+                                                 IsDesignTimeCreatable=False}"
+                TargetType="Border">
+                <!-- <Setter Property="Visibility" Value="Collapsed" /> -->
+                <Setter Property="Background" Value="{Binding Path=BackgroundBrush, Source={x:Static code:VisualManager.Instance}}" />
+                <Setter Property="BorderBrush" Value="{Binding Path=BorderBrush, Source={x:Static code:VisualManager.Instance}}" />
+                <!--<Style.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding RunInVsPackage}" Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility" Value="Visible" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=RunInVsPackage}" Value="True" />
+                            <Condition Binding="{Binding Path=StatusInProgress}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility" Value="Visible" />
+                    </MultiDataTrigger>
+                </Style.Triggers>-->
+            </Style>
+        </ResourceDictionary>
+    </components:AppUserControl.Resources>
+
+    <Border Height="30" behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource BorderStyle}">
+        <Grid VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="1" Text="{Binding Path=SelectedElementPaths}" />
+
+            <TextBlock
+                Grid.Column="3"
+                Margin="0,0,5,0"
+                Text="{Binding Path=StatusInProgressText, Mode=OneWay}"
+                Visibility="{Binding Path=StatusInProgress, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+            <ProgressBar
+                Grid.Column="5"
+                Height="15"
+                IsIndeterminate="{Binding Path=StatusInProgress}"
+                Visibility="{Binding Path=StatusInProgress, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Column="7"
+                Style="{StaticResource StatusBarTextStyle}"
+                Text="{lhq:Localization Key={x:Static resources:StringsKeys+ViewModels+StatusBar.CodeGenerator}}"
+                Visibility="{Binding Path=HasCodeGeneratorItemTemplate, Converter={StaticResource BoolToVisibilityConverterHidden}}" />
+
+            <TextBlock
+                Grid.Column="9"
+                VerticalAlignment="Center"
+                Visibility="{Binding Path=HasCodeGeneratorItemTemplate, Converter={StaticResource BoolToVisibilityConverterHidden}}">
+                <Hyperlink
+                    Command="{Binding Path=CodeGeneratorItemTemplateNavigateCommand}"
+                    Style="{StaticResource HyperlinkDisabledStyle}"
+                    ToolTip="{lhq:Localization Key={x:Static resources:StringsKeys+ViewModels+StatusBar.CodeGeneratorTooltip}}">
+                    <Run Text="{Binding CodeGeneratorItemTemplate}" />
+                </Hyperlink>
+            </TextBlock>
+
+            <StackPanel
+                Grid.Column="11"
+                Margin="10,0,5,0"
+                Orientation="Horizontal"
+                Visibility="{Binding Path=RunInVsPackage, Converter={StaticResource BoolToVisibilityConverterReverse}}">
+                <TextBlock
+                    FontSize="10pt"
+                    Foreground="{Binding Path=BorderBrush, Source={x:Static code:VisualManager.Instance}}"
+                    Text="{lhq:Localization Key={x:Static resources:StringsKeys+ViewModels+StatusBar.AppVersion}}" />
+                <TextBlock
+                    Margin="5,0,0,0"
+                    FontSize="10pt"
+                    Foreground="{Binding Path=BorderBrush, Source={x:Static code:VisualManager.Instance}}"
+                    Text="{Binding AppVersion}" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</components:AppUserControl>

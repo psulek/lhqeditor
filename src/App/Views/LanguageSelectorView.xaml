@@ -1,0 +1,142 @@
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Views.LanguageSelectorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:viewModels="clr-namespace:LHQ.App.ViewModels"
+    xmlns:views="clr-namespace:LHQ.App.Views"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
+    d:DataContext="{d:DesignInstance viewModels:LanguageSelectorViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="40"
+    d:DesignWidth="620"
+    mc:Ignorable="d">
+    <components:AppUserControl.Resources>
+        <converters:AddLanguageSearchByCodeButtonConverter x:Key="SearchByCountryCodeConverter"/>
+
+        <DataTemplate x:Key="NameTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="350" Text="{Binding CultureDisplayName, Mode=OneTime}" />
+                <TextBlock Width="100" Text="{Binding CultureName, Mode=OneTime}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CodeTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="100" Text="{Binding CultureName, Mode=OneTime}" />
+                <TextBlock Width="350" Text="{Binding CultureDisplayName, Mode=OneTime}" />
+            </StackPanel>
+        </DataTemplate>
+
+
+        <viewModels:ComboBoxItemTemplateSelector 
+            x:Key="ComboBoxItemTemplateSelector" NameTemplate="{StaticResource NameTemplate}" 
+                                                 CodeTemplate="{StaticResource CodeTemplate}"/>
+    </components:AppUserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <!-- PreviewTextInput="OnPreviewTextInput" -->
+        <!-- Text="{Binding Path=SearchText, Mode=TwoWay}" -->
+        <!-- TextSearch.TextPath="CultureDisplayName" -->
+        <ComboBox
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            behaviors:IsStartupFocusedBehavior.IsStartupFocused="{Binding IsStartupFocused, Mode=OneTime}"
+            IsEditable="True"
+            IsSynchronizedWithCurrentItem="False"
+            IsTextSearchCaseSensitive="False"
+            IsTextSearchEnabled="True"
+            ItemsSource="{Binding Path=Cultures}"
+            
+            SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            StaysOpenOnEdit="True"
+            TabIndex="{Binding Path=TabIndex, RelativeSource={RelativeSource AncestorType={x:Type views:LanguageSelectorView}}}"
+            ItemTemplateSelector="{StaticResource ComboBoxItemTemplateSelector}"
+            TextSearch.TextPath="{Binding Path=TextSearchPath}"
+            VirtualizingStackPanel.IsVirtualizing="True"
+            VirtualizingStackPanel.VirtualizationMode="Recycling">
+            <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ComboBox.ItemsPanel>
+            <!-- <ComboBox.ItemTemplate> -->
+            <!--     <DataTemplate> -->
+            <!--         <StackPanel Orientation="Horizontal"> -->
+            <!--             <TextBlock Width="350" Text="{Binding CultureDisplayName, Mode=OneTime}" /> -->
+            <!--             <TextBlock Width="100" Text="{Binding CultureName, Mode=OneTime}" /> -->
+            <!--         </StackPanel> -->
+            <!--     </DataTemplate> -->
+            <!-- </ComboBox.ItemTemplate> -->
+            <i:Interaction.Behaviors>
+                <behaviors:EventToCommandBehavior
+                    Command="{Binding Path=PreviewTextInputCommand}"
+                    Event="PreviewTextInput"
+                    PassArguments="True" />
+            </i:Interaction.Behaviors>
+        </ComboBox>
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <ToggleButton
+                Width="30"
+                Margin="2,0,0,0"
+                Padding="0"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                DockPanel.Dock="Right"
+                IsChecked="{Binding Path=SearchByCultureCode, Mode=TwoWay}"
+                ToolTip="{Binding Path=SearchByCultureCode, Converter={StaticResource SearchByCountryCodeConverter}, ConverterParameter='tooltip'}">
+                <i:Interaction.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        Command="{Binding Path=SearchCommand}"
+                        Event="Checked"
+                        PassArguments="False" />
+                    <behaviors:EventToCommandBehavior
+                        Command="{Binding Path=SearchCommand}"
+                        Event="Unchecked"
+                        PassArguments="False" />
+                </i:Interaction.Behaviors>
+                <fa:ImageAwesome
+                    Width="15"
+                    Height="15"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{Binding Path=SearchByCultureCode, Converter={StaticResource SearchByCountryCodeConverter}, ConverterParameter='icon'}"
+                    Icon="Filter" />
+            </ToggleButton>
+            <ToggleButton
+                Width="30"
+                Margin="2,0,0,0"
+                Padding="0"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                DockPanel.Dock="Right"
+                IsChecked="{Binding Path=CountrySpecific, Mode=TwoWay}"
+                ToolTip="{localization:Localization Key={x:Static resources:StringsKeys+Views+LanguageSelectorView.CountrySpecific}}">
+                <fa:ImageAwesome
+                    Width="15"
+                    Height="15"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{Binding Path=CountrySpecific, Converter={StaticResource SearchByCountryCodeConverter}, ConverterParameter='icon'}"
+                    Icon="CheckSquareOutline" />
+            </ToggleButton>
+
+        </StackPanel>
+
+    </Grid>
+
+</components:AppUserControl>

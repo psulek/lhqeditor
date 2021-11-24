@@ -1,0 +1,138 @@
+﻿<dialogs:DialogWindow
+    x:Class="LHQ.App.Dialogs.AppSettings.PluginConfigureDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:appSettings="clr-namespace:LHQ.App.ViewModels.Dialogs.AppSettings"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    Title="{Binding Title}"
+    Width="800"
+    Height="500"
+    d:DataContext="{d:DesignInstance appSettings:PluginConfigureDialogViewModel,
+                                     IsDesignTimeCreatable=False}"
+    sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="SingleBorderWindow"
+    mc:Ignorable="d">
+    <dialogs:DialogWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </dialogs:DialogWindow.Resources>
+
+    <i:Interaction.Behaviors>
+        <behaviors:EventToCommandBehavior
+            Command="{Binding Path=LoadedWindowCommand}"
+            Event="Loaded"
+            PassArguments="True" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            FontWeight="Bold"
+            Text="{Binding Path=Plugin.DisplayName, Mode=OneWay}" />
+
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <TextBlock FontSize="10pt" Text="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings+PluginConfigure.PluginVersion}}" />
+            <TextBlock
+                Margin="5,0,0,0"
+                FontSize="10pt"
+                Text="{Binding Path=Plugin.Version, Mode=OneWay}" />
+        </StackPanel>
+
+
+        <Label
+            Grid.Row="3"
+            Grid.Column="1"
+            Padding="0"
+            Content="{Binding Path=Plugin.Description}"
+            Style="{StaticResource InfoStyle}"
+            Visibility="{Binding Path=HasDescription, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+        <syncfusion:PropertyGrid
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BorderThickness="0"
+            ButtonPanelVisibility="Collapsed"
+            DescriptionPanelHeight="70"
+            DescriptionPanelVisibility="Visible"
+            EnableGrouping="True"
+            EnableToolTip="False"
+            PropertyExpandMode="NestedMode"
+            SearchBoxVisibility="Collapsed"
+            SelectedObject="{Binding Path=Config}"
+            SortDirection="Ascending" />
+
+        <Grid
+            Grid.Row="7"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Margin="0,0,15,0"
+                Padding="5,0,5,0"
+                Command="{Binding Path=PluginHelpCommand}"
+                Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings+PluginConfigure.PluginHelp}}"
+                Visibility="{Binding Path=HasHelp, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <Button
+                Grid.Column="1"
+                Padding="5,0,5,0"
+                Command="{Binding Path=ResetToDefaultsCommand}"
+                Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ResetToDefaults}}" />
+            <StackPanel
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    Width="70"
+                    Margin="0,0,10,0"
+                    Command="{Binding Path=SubmitDialogCommand}"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonOk}}"
+                    IsDefault="True" />
+                <Button
+                    Width="70"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonCancel}}"
+                    IsCancel="True" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</dialogs:DialogWindow>

@@ -1,0 +1,109 @@
+﻿<dialogs:DialogWindow x:Class="LHQ.App.Dialogs.DeleteElementsDialog"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+                      xmlns:code="clr-namespace:LHQ.App.Code"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
+                      xmlns:fa="http://schemas.fontawesome.io/icons/"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+                      xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+                      xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
+                      Title="{Binding Title}"
+                      Width="450"
+                      Height="310"
+                      d:DataContext="{d:DesignInstance vm:DeleteElementsDialogViewModel,
+                                                       IsDesignTimeCreatable=False}"
+                      sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
+                      ResizeMode="NoResize"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <dialogs:DialogWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </dialogs:DialogWindow.Resources>
+
+    <i:Interaction.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding Path=LoadedWindowCommand}"
+                                          Event="Loaded"
+                                          PassArguments="True" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0"
+               Grid.Column="0"
+               Width="32"
+               Height="32"
+               Margin="10"
+               Source="/LHQ.App;component/Images/dialog-question.png" />
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Text="{Binding Path=ConfirmMessage}" />
+
+        <TextBlock Grid.Row="2"
+                   Grid.Column="1"
+                   Text="{Binding Path=SelectedItemsText}" />
+
+        <Border Grid.Row="4"
+                Grid.Column="1"
+                Height="100"
+                Margin="0,10,10,0"
+                BorderThickness="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl Focusable="False"
+                              ItemsSource="{Binding Path=ItemsToDelete, Mode=OneTime}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        ToolTipService.InitialShowDelay="0"
+                                        ToolTipService.ShowDuration="5000">
+                                <fa:ImageAwesome Margin="3,0,10,0"
+                                                 Style="{StaticResource IconTreeElementStyle}" />
+
+                                <TextBlock Text="{Binding Name, Mode=OneTime}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+        <StackPanel Grid.Row="6"
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+            <Button Width="70"
+                    Margin="0,0,10,0"
+                    Command="{Binding Path=SubmitDialogCommand}"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonOk}}"
+                    IsDefault="True" />
+            <Button Width="70"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonCancel}}"
+                    IsCancel="True" />
+        </StackPanel>
+    </Grid>
+</dialogs:DialogWindow>

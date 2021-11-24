@@ -1,0 +1,225 @@
+﻿<dialogs:DialogWindow x:Class="LHQ.App.Dialogs.LanguageSettingsDialog"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+                      xmlns:code="clr-namespace:LHQ.App.Code"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
+                      xmlns:elements="clr-namespace:LHQ.App.ViewModels.Elements"
+                      xmlns:fa="http://schemas.fontawesome.io/icons/"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+                      xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+                      xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
+                      Title="{Binding Title}"
+                      Width="800"
+                      Height="500"
+                      d:DataContext="{d:DesignInstance vm:LanguageSettingsDialogViewModel,
+                                                       IsDesignTimeCreatable=False}"
+                      sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
+                      FocusManager.FocusedElement="{Binding ElementName=listLanguages}"
+                      ResizeMode="NoResize"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <dialogs:DialogWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ListItemStyle"
+                   x:Shared="True"
+                   TargetType="{x:Type ListViewItem}">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Foreground" Value="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}" />
+            </Style>
+
+            <Style x:Key="GridViewColumnHeaderStyle"
+                   TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="IsHitTestVisible" Value="False" />
+            </Style>
+
+            <DataTemplate x:Key="CellName"
+                          DataType="{x:Type elements:LanguageViewModel}">
+                <TextBlock Text="{Binding Path=EnglishName, Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="CellCode"
+                          DataType="{x:Type elements:LanguageViewModel}">
+                <TextBlock Margin="5,0,0,0"
+                           Text="{Binding Path=Name, Mode=OneWay}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="CellPrimary">
+                <fa:ImageAwesome Width="16"
+                                 Height="16"
+                                 Margin="10,0,0,0"
+                                 Icon="Check"
+                                 Visibility="{Binding Path=IsPrimary, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <fa:ImageAwesome.Style>
+                        <Style TargetType="fa:ImageAwesome">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Theme, Source={x:Static code:VisualManager.Instance}}"
+                                             Value="Light">
+                                    <Setter Property="Foreground" Value="{StaticResource CheckColorBrushLight}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Theme, Source={x:Static code:VisualManager.Instance}}"
+                                             Value="Dark">
+                                    <Setter Property="Foreground" Value="{StaticResource CheckColorBrushDark}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </fa:ImageAwesome.Style>
+                </fa:ImageAwesome>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </dialogs:DialogWindow.Resources>
+
+    <dialogs:DialogWindow.InputBindings>
+        <KeyBinding Command="{Binding Path=ShowHelpCommand}"
+                    Gesture="F1" />
+    </dialogs:DialogWindow.InputBindings>
+
+    <i:Interaction.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding Path=LoadedWindowCommand}"
+                                          Event="Loaded"
+                                          PassArguments="True" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+        <Grid Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <!--  Width is bound to width of the first GridViewColumn  -->
+                <ColumnDefinition Width="*" />
+                <!--  Width is set to "Fill"  -->
+                <ColumnDefinition Width="{Binding ElementName=ColumnCellCode, Path=ActualWidth}" />
+                <!--  Correction Width  -->
+                <ColumnDefinition Width="{Binding ElementName=ColumnCellPrimary, Path=ActualWidth}" />
+                <!--  Correction Width  -->
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+            <!--  This is the hidden helper Field which is used to bind to, using the "Fill" column of the helper grid  -->
+            <Grid x:Name="GridStarSizeHelper"
+                  Grid.Column="0" />
+        </Grid>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Padding="10,5,0,5"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                   Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                   Text="{localization:Localization Key={x:Static resources:StringsKeys+ViewModels+LanguageSettings.LabelLanguages}}" />
+
+        <ListView Grid.Row="2"
+                  Grid.Column="0"
+                  Margin="0,0,0,0"
+                  BorderThickness="1"
+                  ItemContainerStyle="{StaticResource ListItemStyle}"
+                  ItemsSource="{Binding Path=LanguagesView}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  SelectedItem="{Binding SelectedLanguage}"
+                  SelectionMode="Single">
+            <i:Interaction.Behaviors>
+                <behaviors:EventToCommandBehavior Command="{Binding PreviewMouseDoubleClickCommand}"
+                                                  Event="PreviewMouseDoubleClick"
+                                                  PassArguments="True" />
+            </i:Interaction.Behaviors>
+            <ListView.View>
+                <GridView AllowsColumnReorder="False"
+                          ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                    <GridViewColumn Width="{Binding ElementName=GridStarSizeHelper, Path=ActualWidth}"
+                                    CellTemplate="{StaticResource CellName}"
+                                    Header="{localization:Localization Key={x:Static resources:StringsKeys+ViewModels+LanguageSettings.ColumnHeaderEnglishName}}" />
+                    <GridViewColumn x:Name="ColumnCellCode"
+                                    Width="100"
+                                    CellTemplate="{StaticResource CellCode}"
+                                    Header="{localization:Localization Key={x:Static resources:StringsKeys+ViewModels+LanguageSettings.ColumnHeaderCode}}" />
+                    <GridViewColumn x:Name="ColumnCellPrimary"
+                                    Width="100"
+                                    CellTemplate="{StaticResource CellPrimary}"
+                                    Header="{localization:Localization Key={x:Static resources:StringsKeys+ViewModels+LanguageSettings.ColumnHeaderPrimary}}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Top"
+                    Orientation="Vertical">
+            <Button Width="70"
+                    HorizontalAlignment="Left"
+                    Command="{Binding AddLanguageCommand}"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonAdd}}" />
+            <Button Width="70"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding EditLanguageCommand}"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonEdit}}" />
+            <Button Width="70"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding RemoveLanguageCommand}"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonRemove}}"
+                    IsEnabled="{Binding SelectedLanguageIsPrimary, Converter={StaticResource InvertBoolConverter}}"
+                    ToolTip="{Binding Path=RemoveLanguageTooltip}"
+                    ToolTipService.ShowOnDisabled="True" />
+        </StackPanel>
+
+        <Grid Grid.Row="4"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0">
+                <Label.Content>
+                    <localization:Localization Key="{x:Static resources:StringsKeys+ViewModels+LanguageSettings.LabelCountOfLanguage}">
+                        <Binding Path="Languages.Count" />
+                    </localization:Localization>
+                </Label.Content>
+            </Label>
+
+            <StackPanel Grid.Column="2"
+                        VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                <Button Width="70"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        Command="{Binding Path=SubmitDialogCommand}"
+                        Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonOk}}"
+                        IsDefault="True" />
+                <Button Width="70"
+                        HorizontalAlignment="Right"
+                        Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonCancel}}"
+                        IsCancel="True" />
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</dialogs:DialogWindow>

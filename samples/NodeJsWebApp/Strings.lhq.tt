@@ -1,0 +1,41 @@
+<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ LHQDirective Processor="LHQDirectiveProcessor" FileName="Strings.lhq" ItemTemplate="TsJsonSPA01" #>
+<#@ include file="EnvDteUtils.ttinclude" #>
+<#@ include file="LhqGenerator.ttinclude" #>
+<#@ include file="LhqToJsonGenerator.ttinclude" #>
+<#@ include file="LhqToTypescriptGenerator.ttinclude" #>
+
+<# //System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+
+	// NOTE: Modify this two settings to redirect generated files to other project/folder location
+	// Properties: 
+	// "outputProjectName" - name of project where this *.lhq.tt file is located (required)
+	// "json_outputFolder" - name of project folder where generated JSON files will be saved to (required)
+	// "dts_outputFolder" - name of project folder where generated typescript definition file (d.ts) will be saved to (required)
+	// Remarks:
+	// All 3 properties must be set and cannot be empty!
+	var outputProjectName = "NodeJsWebApp";
+	var json_outputFolder = "resources";
+	var dts_outputFolder = "types";
+
+	using(var fileManager = FileManager.CreateShared(this))
+    {
+		var jsonGenerator = new JsonGenerator(this, this.ModelContext, outputProjectName, json_outputFolder, fileManager);
+		// jsonGenerator settings:
+		// jsonGenerator.Settings.IncludeEnglishCultureCodeInFileName = true / false
+		// - true (default value) means two letter culture code will be in file name
+        // jsonGenerator.Settings.MetadataFileNameSuffix = "-metadata.json";
+        //   - string used to suffix file name of metadata json file where list of all languages, with default language are written at
+		jsonGenerator.Generate();
+
+		var typescriptGenerator = new TypescriptGenerator(this, this.ModelContext, outputProjectName, dts_outputFolder, fileManager);
+		// typescriptGenerator settings:
+        // typescriptGenerator.Settings.AmbientNamespaceName = string value or null
+		//   - null or empty string (default value) does not enclose generated typescript interface within ambient namespace, 
+		//     otherwise interface is enclosed within ambient namespace
+        typescriptGenerator.Settings.InterfacePrefix = "I";
+		//   - string used to prefix interface name
+		typescriptGenerator.Generate();
+    }
+#>

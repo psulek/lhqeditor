@@ -1,0 +1,170 @@
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Views.ResourceValuesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:elements="clr-namespace:LHQ.App.ViewModels.Elements"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:lhq="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:localization="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance elements:ResourceViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="300"
+    d:DesignWidth="600"
+    mc:Ignorable="d">
+
+    <components:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ResourceGridStyle" TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsReferenceLanguage}" Value="True">
+                        <Setter Property="Background" Value="{Binding Path=BackgroundBrush, Source={x:Static code:VisualManager.Instance}}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <ContextMenu x:Key="ResourceValueContextMenu" HorizontalContentAlignment="Left">
+                <MenuItem
+                    Command="{Binding Path=OwnerResource.SuggestTranslationCommand}"
+                    CommandParameter="{Binding}"
+                    Header="{Binding Path=TranslateMenuHeader}"
+                    IsEnabled="{Binding Path=TranslationIsAllowed}"
+                    Opacity="{Binding Path=TranslationItemOpacity}"
+                    ToolTip="Translate resource using active translator service." />
+                <MenuItem
+                    Command="{Binding Path=LockResourceValueCommand}"
+                    CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
+                    Header="{Binding Path=LockMenuHeader}"
+                    IsChecked="{Binding Path=Locked, Mode=TwoWay}"
+                    ToolTip="{Binding Path=LockMenuToolTip}" />
+            </ContextMenu>
+        </ResourceDictionary>
+    </components:AppUserControl.Resources>
+    <ItemsControl
+        x:Name="ResourceValues"
+        Focusable="False"
+        IsTabStop="False"
+        ItemsSource="{Binding Path=ValuesView, Mode=OneTime}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Grid
+                    d:DataContext="{d:DesignInstance elements:ResourceValueViewModel,
+                                                     IsDesignTimeCreatable=False}"
+                    KeyboardNavigation.TabNavigation="Local"
+                    Style="{StaticResource ResourceGridStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="G1Col1" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="10"
+                        Padding="0">
+                        <Run Text="{Binding Path=DisplayName, Mode=OneTime}" ToolTip="{lhq:Localization Key={x:Static localization:StringsKeys+Common.LanguageName}}" />
+                        <Run
+                            BaselineAlignment="TextTop"
+                            FontSize="8pt"
+                            Text="{Binding Path=LanguageName, Mode=OneTime}"
+                            ToolTip="{lhq:Localization Key={x:Static localization:StringsKeys+Common.LanguageCode}}" />
+
+                    </TextBlock>
+
+                    <Rectangle
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Height="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        Fill="Gray"
+                        Visibility="{Binding IsReferenceLanguage, Converter={StaticResource BoolToVisibilityConverterReverse}}" />
+                    <Grid
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="0"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <fa:ImageAwesome
+                                Width="12"
+                                Margin="0,0,5,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource IconAutoTranslatedStyle}"
+                                ToolTip="{Binding Path=AutoTranslatedTooltip}"
+                                Visibility="{Binding Path=AutoTranslated, Converter={StaticResource BoolToVisibilityConverterHidden}}" />
+
+                            <fa:ImageAwesome
+                                Width="12"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource IconLockedStyle}"
+                                ToolTip="{Binding Path=LockIconTooltip}"
+                                Visibility="{Binding Path=Locked, Converter={StaticResource BoolToVisibilityConverterHidden}}" />
+                        </StackPanel>
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Padding="0,2,0,2"
+                            VerticalContentAlignment="Center"
+                            behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBoxStyle}"
+                            behaviors:IsStartupFocusedBehavior.IsStartupFocused="{Binding IsAutoFocus}"
+                            behaviors:UpdateSourceOnDemandBehavior.IsEnabled="{Binding Path=OwnerResource.FlushCurrentChange, Mode=OneWay}"
+                            AcceptsReturn="True"
+                            DockPanel.Dock="Top"
+                            IsReadOnly="{Binding Path=EditAllowed, Converter={StaticResource InvertBoolConverter}}"
+                            IsReadOnlyCaretVisible="True"
+                            Tag="{Binding Path=IsReferenceLanguage}"
+                            Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap"
+                            VerticalScrollBarVisibility="Auto" />
+
+                        <components:DropDownButton
+                            Grid.Row="0"
+                            Grid.Column="4"
+                            Width="26"
+                            Height="27"
+                            VerticalAlignment="Top"
+                            ArrowVisibility="Collapsed"
+                            DropDownContextMenu="{DynamicResource ResourceValueContextMenu}"
+                            EllipsisVisibility="Visible"
+                            Image="/LHQ.App;component/Images/burger_menu.png"
+                            ImageVisible="False"
+                            KeyboardNavigation.IsTabStop="False"
+                            KeyboardNavigation.TabNavigation="None"
+                            ToolTip="{Binding Path=BurgerMenuHeader}" />
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</components:AppUserControl>

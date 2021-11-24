@@ -1,0 +1,6765 @@
+﻿{
+  "model": {
+    "uid": "6ce4d54c5dbd415c93019d315e278638",
+    "version": 1,
+    "options": {
+      "categories": true,
+      "resources": "Categories"
+    },
+    "name": "Strings",
+    "primaryLanguage": "en"
+  },
+  "languages": [
+    "zh-Hans",
+    "en",
+    "sk",
+    "zh-Hant"
+  ],
+  "categories": {
+    "App": {
+      "resources": {
+        "Copyright": {
+          "state": "Edited",
+          "parameters": {
+            "year": {
+              "order": 0
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Copyright © {0} ScaleHQ Solutions s.r.o."
+            }
+          }
+        },
+        "ModelFileFilter": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Localization LHQ (*.lhq)|*.lhq"
+            },
+            "sk": {
+              "value": "Súbor s prekladmi LHQ (*.lhq)|*.lhq"
+            }
+          }
+        },
+        "ProductName": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Localization HQ Editor"
+            },
+            "sk": {
+              "value": "LHQ - Editor lokalizácií"
+            }
+          }
+        },
+        "StandaloneProductDescription": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Windows Desktop application for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file."
+            }
+          }
+        },
+        "Title": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Localization HQ Editor"
+            },
+            "sk": {
+              "value": "LHQ - Editor lokalizácií"
+            }
+          }
+        },
+        "UpdateStatusText": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Checking for program updates..."
+            },
+            "sk": {
+              "value": "Kontrolujem aktualizácie programu..."
+            }
+          }
+        },
+        "UpdateUsingLatestVersionMessage": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "You have the latest version."
+            },
+            "sk": {
+              "value": "Máte najnovšiu verziu programu."
+            }
+          }
+        },
+        "VsExtensionProductDescription": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Visual Studio editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application."
+            }
+          }
+        }
+      }
+    },
+    "Common": {
+      "categories": {
+        "CountTexts": {
+          "resources": {
+            "Count0Category": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "categories"
+                },
+                "sk": {
+                  "value": "kategórií"
+                }
+              }
+            },
+            "Count0Resource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "resources"
+                },
+                "sk": {
+                  "value": "položiek"
+                }
+              }
+            },
+            "Count1Category": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "category"
+                },
+                "sk": {
+                  "value": "kategória"
+                }
+              }
+            },
+            "Count1Resource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "resource"
+                },
+                "sk": {
+                  "value": "položka"
+                }
+              }
+            },
+            "Count2Category": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "categories"
+                },
+                "sk": {
+                  "value": "kategórie"
+                }
+              }
+            },
+            "Count2Resource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "resources"
+                },
+                "sk": {
+                  "value": "položky"
+                }
+              }
+            },
+            "Count3Category": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "categories"
+                },
+                "sk": {
+                  "value": "kategórie"
+                }
+              }
+            },
+            "Count3Resource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "resources"
+                },
+                "sk": {
+                  "value": "položky"
+                }
+              }
+            },
+            "Count4Category": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "categories"
+                },
+                "sk": {
+                  "value": "kategórie"
+                }
+              }
+            },
+            "Count4Resource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "resources"
+                },
+                "sk": {
+                  "value": "položky"
+                }
+              }
+            },
+            "CountMoreCategories": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "categories"
+                },
+                "sk": {
+                  "value": "kategórií"
+                }
+              }
+            },
+            "CountMoreResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "resources"
+                },
+                "sk": {
+                  "value": "položiek"
+                }
+              }
+            }
+          }
+        },
+        "Properties": {
+          "resources": {
+            "Description": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "description"
+                },
+                "sk": {
+                  "value": "poznámka"
+                }
+              }
+            },
+            "Name": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "name"
+                },
+                "sk": {
+                  "value": "názov"
+                }
+              }
+            },
+            "Parameters": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "parameters"
+                },
+                "sk": {
+                  "value": "parametre"
+                }
+              }
+            },
+            "TranslationNote": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "translation note"
+                },
+                "sk": {
+                  "value": "poznámka k prekladu"
+                }
+              }
+            },
+            "TranslationState": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "translation state"
+                },
+                "sk": {
+                  "value": "stav prekladu"
+                }
+              }
+            },
+            "TranslationValue": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "translation"
+                },
+                "sk": {
+                  "value": "preklad"
+                }
+              }
+            }
+          }
+        },
+        "Themes": {
+          "resources": {
+            "Automatic": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Automatic selection"
+                }
+              }
+            },
+            "Dark": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Dark"
+                }
+              }
+            },
+            "Light": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Light"
+                }
+              }
+            }
+          }
+        }
+      },
+      "resources": {
+        "Actions": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Actions"
+            }
+          }
+        },
+        "ButtonAdd": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "_Add"
+            },
+            "sk": {
+              "value": "_Pridať"
+            }
+          }
+        },
+        "ButtonCancel": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Cancel"
+            },
+            "sk": {
+              "value": "Zrušiť"
+            }
+          }
+        },
+        "ButtonClose": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Close"
+            },
+            "sk": {
+              "value": "Zavrieť"
+            }
+          }
+        },
+        "ButtonConfigure": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Configure"
+            }
+          }
+        },
+        "ButtonDelete": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "_Delete"
+            },
+            "sk": {
+              "value": "_Vymazať"
+            }
+          }
+        },
+        "ButtonEdit": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "_Edit"
+            },
+            "sk": {
+              "value": "_Upraviť"
+            }
+          }
+        },
+        "ButtonExit": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Exit"
+            }
+          }
+        },
+        "ButtonFinish": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "_Finish"
+            },
+            "sk": {
+              "value": "_Dokončiť"
+            }
+          }
+        },
+        "ButtonNext": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Ď_alej"
+            },
+            "sk": {
+              "value": "_Next"
+            }
+          }
+        },
+        "ButtonNo": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "_No"
+            }
+          }
+        },
+        "ButtonOk": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "OK"
+            },
+            "sk": {
+              "value": "OK"
+            }
+          }
+        },
+        "ButtonPrevious": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "_Previous"
+            },
+            "sk": {
+              "value": "_Naspäť"
+            }
+          }
+        },
+        "ButtonRemove": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "_Remove"
+            },
+            "sk": {
+              "value": "_Odobrať"
+            }
+          }
+        },
+        "ButtonTest": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Test"
+            }
+          }
+        },
+        "ClickToHideThisHint": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Click to hide this hint (Re-enable in Settings)"
+            }
+          }
+        },
+        "ClickToShowThisHint": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Click to show this hint"
+            }
+          }
+        },
+        "ColumnError": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Error"
+            },
+            "sk": {
+              "value": "Chyba"
+            }
+          }
+        },
+        "ColumnName": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Name"
+            },
+            "sk": {
+              "value": "Názov"
+            }
+          }
+        },
+        "DontShowThisPageAgain": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Do not show this page again"
+            },
+            "sk": {
+              "value": "Nabudúce nezobrazovať túto stránku"
+            }
+          }
+        },
+        "Error": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Error"
+            },
+            "sk": {
+              "value": "Chyba"
+            }
+          }
+        },
+        "LanguageCode": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Language code"
+            }
+          }
+        },
+        "LanguageName": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Language name"
+            }
+          }
+        },
+        "MinimumPasswordLength": {
+          "state": "New",
+          "parameters": {
+            "minimumPassLength": {
+              "order": 0
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Minimum password length is {0} characters."
+            }
+          }
+        },
+        "No": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "No"
+            },
+            "sk": {
+              "value": "Nie"
+            }
+          }
+        },
+        "Primary": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Primary"
+            }
+          }
+        },
+        "ProductFeatureIsDisabledForActiveLicense": {
+          "state": "New",
+          "parameters": {
+            "licenseName": {
+              "order": 0
+            },
+            "featureName": {
+              "order": 0
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Active product license ({0}) has disabled '{1}' feature."
+            }
+          }
+        },
+        "ResetToDefaults": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Reset to defaults"
+            }
+          }
+        },
+        "UnknownError": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Unknown error"
+            }
+          }
+        },
+        "ValidationError": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Validation error"
+            }
+          }
+        },
+        "Yes": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Yes"
+            },
+            "sk": {
+              "value": "Áno"
+            }
+          }
+        }
+      }
+    },
+    "Dialogs": {
+      "categories": {
+        "About": {
+          "resources": {
+            "AppVersion": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Program version: {0}"
+                },
+                "sk": {
+                  "value": "Verzia programu: {0}"
+                }
+              }
+            },
+            "DialogTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Localization HQ Editor - About"
+                },
+                "sk": {
+                  "value": "LHQ - Editor - o programe"
+                }
+              }
+            }
+          }
+        },
+        "AppSettings": {
+          "categories": {
+            "PageGeneral": {
+              "resources": {
+                "ColorTheme": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Color theme"
+                    }
+                  }
+                },
+                "DefaultLanguageIsRequired": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Default language is required."
+                    }
+                  }
+                },
+                "LockTranslationsWithResource": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Lock translations when resource state is changed to Final"
+                    }
+                  }
+                }
+              }
+            },
+            "PagePlugins": {
+              "resources": {
+                "CannotEnablePluginFeatureIsDisabled0000": {
+                  "state": "Edited",
+                  "parameters": {
+                    "licenseName": {
+                      "order": 0
+                    },
+                    "featureName": {
+                      "order": 1
+                    }
+                  },
+                  "values": {
+                    "en": {
+                      "value": "Cannot enable plugin because active license ({0}) has disabled '{1}' feature."
+                    }
+                  }
+                },
+                "InstalledPluginsHeader": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Installed plugins:"
+                    }
+                  }
+                },
+                "Title": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Plugins"
+                    }
+                  }
+                }
+              }
+            },
+            "PageTranslator": {
+              "categories": {
+                "Test": {
+                  "resources": {
+                    "TestingText": {
+                      "state": "Edited",
+                      "parameters": {
+                        "translatorName": {
+                          "description": "Translator provider display name",
+                          "order": 1
+                        }
+                      },
+                      "values": {
+                        "en": {
+                          "value": "Testing '{0}'"
+                        }
+                      }
+                    },
+                    "TestSucceed": {
+                      "state": "Edited",
+                      "parameters": {
+                        "translatorName": {
+                          "order": 1
+                        }
+                      },
+                      "values": {
+                        "en": {
+                          "value": "Testing '{0}' succeeded."
+                        }
+                      }
+                    },
+                    "TestSucceedTitle": {
+                      "state": "Edited",
+                      "values": {
+                        "en": {
+                          "value": "Test Succeed"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "resources": {
+                "EnableTranslation": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Enable translator integration"
+                    }
+                  }
+                },
+                "ShowConfigureHint": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Translator must be configured for integration to work properly."
+                    }
+                  }
+                }
+              }
+            },
+            "PluginConfigure": {
+              "resources": {
+                "PluginHelp": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Plugin Help..."
+                    }
+                  }
+                },
+                "PluginVersion": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "version:"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "resources": {
+            "ApplicationLocalization": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Application lozalization"
+                },
+                "sk": {
+                  "value": "Jazyk aplikácie"
+                }
+              }
+            },
+            "ButtonCheckForUpdates": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Check for updates"
+                },
+                "sk": {
+                  "value": "Skontrolovať aktualizácie"
+                }
+              }
+            },
+            "CaptionHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change application behavior"
+                },
+                "sk": {
+                  "value": "Zmeniť nastavenia aplikácie"
+                }
+              }
+            },
+            "CheckUpdatesOnAppStart": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Check updates when application starts"
+                },
+                "sk": {
+                  "value": "Pri spustení aplikácie skontrolovať nové aktualizácie"
+                }
+              }
+            },
+            "DefaultLanguage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Default language for new projects"
+                },
+                "sk": {
+                  "value": "Predvolený jazyk pre nové projekty"
+                }
+              }
+            },
+            "DialogCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Preferences"
+                },
+                "sk": {
+                  "value": "Predvoľby"
+                }
+              }
+            },
+            "DialogTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Localization HQ Editor - Preferences"
+                },
+                "sk": {
+                  "value": "LHQ - Editor - Predvoľby"
+                }
+              }
+            },
+            "OpenLastProjectOnStartup": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Open last project when application starts"
+                },
+                "sk": {
+                  "value": "Pri spustení aplikácie otvoriť posledne otvorený projekt"
+                }
+              }
+            },
+            "ShowHints": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Show hints"
+                },
+                "sk": {
+                  "value": "Zobraziť pomôcky"
+                }
+              }
+            }
+          }
+        },
+        "ChangePassword": {
+          "resources": {
+            "CurrentPassword": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Current password:"
+                }
+              }
+            },
+            "Email": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Email:"
+                }
+              }
+            },
+            "NewPassword": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New password:"
+                }
+              }
+            },
+            "NewPasswordConfirm": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New password confirm:"
+                }
+              }
+            },
+            "Title": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Account - Change Password"
+                }
+              }
+            }
+          }
+        },
+        "CodeGenerator": {
+          "resources": {
+            "ButtonResetToDefault": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Reset To Default"
+                }
+              }
+            },
+            "ResetConfirmCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Reset Settings To Default Values"
+                }
+              }
+            },
+            "ResetConfirmMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to reset settings to its default values?"
+                }
+              }
+            },
+            "TemplateId": {
+              "state": "Edited",
+              "parameters": {
+                "templateId": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Template id: {0}"
+                }
+              }
+            },
+            "TemplateName": {
+              "state": "Edited",
+              "parameters": {
+                "templateName": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Template name: {0}"
+                }
+              }
+            },
+            "Title": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Code Generator Settings"
+                }
+              }
+            }
+          }
+        },
+        "EditLanguage": {
+          "resources": {
+            "DialogCaptionAdd": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Add language"
+                },
+                "sk": {
+                  "value": "Pridať jazyk"
+                }
+              }
+            },
+            "DialogCaptionAddHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Adds new language to current project"
+                },
+                "sk": {
+                  "value": "Pridať nový jazyk do projektu"
+                }
+              }
+            },
+            "DialogCaptionEdit": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Edit language"
+                },
+                "sk": {
+                  "value": "Upraviť jazyk"
+                }
+              }
+            },
+            "DialogCaptionEditHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Edit language"
+                },
+                "sk": {
+                  "value": "Upraviť jazyk"
+                }
+              }
+            },
+            "DialogTitleAdd": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Add language"
+                },
+                "sk": {
+                  "value": "Pridať jazyk"
+                }
+              }
+            },
+            "DialogTitleEdit": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Edit language"
+                },
+                "sk": {
+                  "value": "Upraviť jazyk"
+                }
+              }
+            },
+            "IsPrimaryLanguage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Is primary language?"
+                },
+                "sk": {
+                  "value": "Je základný jazyk?"
+                }
+              }
+            },
+            "LanguagesTypeNeutral": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Neutral language"
+                },
+                "sk": {
+                  "value": "Neutrálny jazyk"
+                }
+              }
+            },
+            "LanguagesTypeSpecific": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Specific language"
+                },
+                "sk": {
+                  "value": "Špecifický jazyk"
+                }
+              }
+            },
+            "LanguageTypeInfo": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Languages type:"
+                },
+                "sk": {
+                  "value": "Typ jazyka:"
+                }
+              }
+            },
+            "SetAsPrimaryLanguage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Set as primary language"
+                },
+                "sk": {
+                  "value": "Nastaviť ako základný jazyk"
+                }
+              }
+            }
+          }
+        },
+        "EditParameter": {
+          "resources": {
+            "Description": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Description:"
+                }
+              }
+            },
+            "Name": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Name:"
+                }
+              }
+            },
+            "Order": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Order:"
+                }
+              }
+            }
+          }
+        },
+        "ExceptionViewer": {
+          "resources": {
+            "AllMessages": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "All Messages"
+                }
+              }
+            },
+            "AppVersion": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "App version:"
+                }
+              }
+            },
+            "CopyToClipboard": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Copy to clipboard"
+                },
+                "sk": {
+                  "value": "Skopírovať do schránky"
+                }
+              }
+            },
+            "CurrentTime": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Current time:"
+                }
+              }
+            },
+            "DialogTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Unexpected exception occured"
+                },
+                "sk": {
+                  "value": "Nastala neočakávaná chyba"
+                }
+              }
+            },
+            "WrapText": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Wrap text"
+                },
+                "sk": {
+                  "value": "_Zalomiť text"
+                }
+              }
+            }
+          }
+        },
+        "Export": {
+          "categories": {
+            "Columns": {
+              "resources": {
+                "Code": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Code"
+                    }
+                  }
+                },
+                "EnglishName": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "English name"
+                    }
+                  }
+                },
+                "Primary": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Primary"
+                    }
+                  }
+                }
+              }
+            },
+            "Validations": {
+              "resources": {
+                "MinimumLanguagesMessage": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "At least two languages must be selected for export!"
+                    }
+                  }
+                },
+                "MissingFileNameMessage": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "File name must be specified."
+                    }
+                  }
+                },
+                "NoExportersAvailable": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "There are no exporters available."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "resources": {
+            "AvailableExporters": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Available exporters:"
+                }
+              }
+            },
+            "ExportingAllResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "All resources"
+                }
+              }
+            },
+            "ExportingAllResourcesRecursive": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "All resources (Recursive)"
+                }
+              }
+            },
+            "ExportingLabel": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Exporting:"
+                }
+              }
+            },
+            "ExportingSelectedResources": {
+              "state": "Edited",
+              "parameters": {
+                "countOfResources": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Selected resources ({0})"
+                }
+              }
+            },
+            "ExportResourcesToFile": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Export resources to file"
+                }
+              }
+            },
+            "ExportToFile": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Export to file:"
+                }
+              }
+            },
+            "PageTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Export resources"
+                }
+              }
+            }
+          }
+        },
+        "Import": {
+          "resources": {
+            "AllowImportNewLanguages": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Allow import of new languages"
+                }
+              }
+            },
+            "AvailableImporters": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Available importers:"
+                }
+              }
+            },
+            "FilesToImport": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Files to import:"
+                }
+              }
+            },
+            "ImportMode": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Import mode:"
+                }
+              }
+            },
+            "ModeAutoMerge": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Merge with existing resources"
+                }
+              }
+            },
+            "ModeAutoMergeHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Categories and resources imported from file(s) will be merged with existing categories and resources."
+                }
+              }
+            },
+            "ModeImportAsHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Categories and resources imported from file(s) will be added into a new category."
+                }
+              }
+            },
+            "ModeImportAsNew": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Import into a new category"
+                }
+              }
+            },
+            "NoImportersAvailable": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "There are no importers available."
+                }
+              }
+            },
+            "Title": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Import resources from file(s)"
+                }
+              }
+            }
+          }
+        },
+        "PasteConfirm": {
+          "resources": {
+            "AddMissingLanguages": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Select missing languages to be added to model project:"
+                },
+                "sk": {
+                  "value": "Vyberte chýbajúce jazyky ktoré chcete pridať do projektu:"
+                }
+              }
+            },
+            "Caption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resources translations from clipboard contains missing languages for current model project."
+                },
+                "sk": {
+                  "value": "Preklady vložené zo schránky obsahujú jazyky ktoré chýbajú v aktuálnom projekte."
+                }
+              }
+            },
+            "DialogTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Paste from clipboard / missing languages"
+                },
+                "sk": {
+                  "value": "Vložiť zo schránky / chýbajúce jazyky"
+                }
+              }
+            }
+          }
+        },
+        "PluginHelp": {
+          "resources": {
+            "DialogTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Plugin Help"
+                }
+              }
+            },
+            "Title": {
+              "state": "Edited",
+              "parameters": {
+                "pluginName": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Plugin '{0}' Help"
+                }
+              }
+            }
+          }
+        },
+        "ResourceParameters": {
+          "resources": {
+            "MoveParameterDownTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Move selected parameter down"
+                }
+              }
+            },
+            "MoveParameterUpTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Move selected parameter up"
+                }
+              }
+            },
+            "ParameterUsage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Parameters will be used later when generating source code from current project file."
+                }
+              }
+            }
+          }
+        },
+        "UnhandledError": {
+          "resources": {
+            "Detail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to report this error to us?\r\n\r\nNOTE: You need to have active github account to report error."
+                }
+              }
+            },
+            "Message": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Unexpected error occured!"
+                }
+              }
+            }
+          }
+        },
+        "VsOptions": {
+          "resources": {
+            "ApplyChangesCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Apply Settings Change"
+                }
+              }
+            },
+            "ApplyChangesDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "WARNING: \r\nAny unsaved changed in LHQ files will be discarded.\r\n\r\nDo you want to continue?"
+                }
+              }
+            },
+            "ApplyChangesMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to apply settings change?"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Enums": {
+      "categories": {
+        "ModelLoadStatus": {
+          "resources": {
+            "LoadError": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Model loading error."
+                },
+                "sk": {
+                  "value": "Chyba pri nahrávaní projektu."
+                }
+              }
+            },
+            "ModelSourceInvalid": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "File content is not valid localization projekt."
+                },
+                "sk": {
+                  "value": "Obsah súboru nie je validný lokalizačný projekt."
+                }
+              }
+            },
+            "ModelUpgraderRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Content of project file has old format version and needs to be upgraded to newer version."
+                },
+                "sk": {
+                  "value": "Obsah lokalizačného projektu je v staršom formáte a vyžaduje aktualizáciu na novšiu verziu."
+                }
+              }
+            },
+            "Success": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Localization project was loaded successfully."
+                },
+                "sk": {
+                  "value": "Lokalizačný projekt bol úspešne otvorený."
+                }
+              }
+            }
+          }
+        },
+        "ProductFeatures": {
+          "categories": {
+            "Descriptions": {
+              "resources": {
+                "Export": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Exporting resources to various external formats"
+                    }
+                  }
+                },
+                "Import": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Importing resources from supported external formats"
+                    }
+                  }
+                },
+                "MultiInstances": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Multiple Visual Studio instances are allowed to run LHQ Editor at the same time"
+                    }
+                  }
+                },
+                "Plugins": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Plugin system extends then program with various plugins"
+                    }
+                  }
+                },
+                "TranslationServices": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Translation services provide support for translating resources between different languages"
+                    }
+                  }
+                }
+              }
+            },
+            "Names": {
+              "resources": {
+                "Export": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Export resources"
+                    }
+                  }
+                },
+                "Import": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Import resources"
+                    }
+                  }
+                },
+                "MultiInstances": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Application multiple instances"
+                    }
+                  }
+                },
+                "Plugins": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Plugins system"
+                    }
+                  }
+                },
+                "TranslationServices": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Translation services"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ProjectBusyOperationType": {
+          "resources": {
+            "Export": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Exporting resources from project..."
+                }
+              }
+            },
+            "Import": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Importing resources into project..."
+                }
+              }
+            },
+            "OpenProject": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Opening project..."
+                }
+              }
+            },
+            "SaveProject": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Saving project..."
+                }
+              }
+            },
+            "TreeSearch": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Searching..."
+                }
+              }
+            }
+          }
+        },
+        "ResourceElementTranslationState": {
+          "resources": {
+            "Edited": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Edited"
+                }
+              }
+            },
+            "Final": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Final"
+                }
+              }
+            },
+            "NeedsReview": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Review Required"
+                }
+              }
+            },
+            "New": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New"
+                }
+              }
+            }
+          }
+        },
+        "StartupModelLoadStatus": {
+          "resources": {
+            "FileNotFoundOrAccessDenied": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Could not open project file '{0}', file does not exist or access denied!"
+                },
+                "sk": {
+                  "value": "Nie je možné otvoriť projekt '{0}', súbor neexistuje ale nemáte požadované práva!"
+                }
+              }
+            },
+            "ModelLoadError": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Could not open project file '{0}', file content is invalid!"
+                },
+                "sk": {
+                  "value": "Nie je možné otvoriť projekt '{0}', obsah súboru je neplatný!"
+                }
+              }
+            },
+            "ModelUpgradeRequired": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "ModelUpgradeRequired - {0}"
+                },
+                "sk": {
+                  "value": "ModelUpgradeRequired - {0}"
+                }
+              }
+            },
+            "Success": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Project file '{0}' was loaded successfully."
+                },
+                "sk": {
+                  "value": "Projektový súbor '{0}' bol úspešne otvorený."
+                }
+              }
+            }
+          }
+        },
+        "TreeElementType": {
+          "resources": {
+            "Category": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Category"
+                },
+                "sk": {
+                  "value": "Kategória"
+                }
+              }
+            },
+            "Model": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Model"
+                },
+                "sk": {
+                  "value": "Model"
+                }
+              }
+            },
+            "Resource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resource"
+                },
+                "sk": {
+                  "value": "Položka"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Licensing": {
+      "categories": {
+        "Enums": {
+          "categories": {
+            "ProductVariantType": {
+              "resources": {
+                "Commercial": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Commercial"
+                    }
+                  }
+                },
+                "Free": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Free"
+                    }
+                  }
+                },
+                "Trial": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Trial"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "MainMenu": {
+      "categories": {
+        "Edit": {
+          "resources": {
+            "Copy": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Copy"
+                }
+              }
+            },
+            "Cut": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Cu_t"
+                }
+              }
+            },
+            "Delete": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Delete"
+                },
+                "sk": {
+                  "value": "Vymazať"
+                }
+              }
+            },
+            "Duplicate": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Duplicate"
+                }
+              }
+            },
+            "FindElement": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Find..."
+                },
+                "sk": {
+                  "value": "Hladať..."
+                }
+              }
+            },
+            "FindElementTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Find for category or resource"
+                },
+                "sk": {
+                  "value": "Hladať kategóriu alebo položku"
+                }
+              }
+            },
+            "FocusNavigation": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Focus _Navigation"
+                }
+              }
+            },
+            "MenuItem": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Edit"
+                },
+                "sk": {
+                  "value": "_Upraviť"
+                }
+              }
+            },
+            "NewCategory": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New category"
+                },
+                "sk": {
+                  "value": "Nová kategória"
+                }
+              }
+            },
+            "NewResource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New resource"
+                },
+                "sk": {
+                  "value": "Nová položka"
+                }
+              }
+            },
+            "Paste": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Paste"
+                }
+              }
+            },
+            "Preferences": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Pr_eferences"
+                },
+                "sk": {
+                  "value": "Predvoľby"
+                }
+              }
+            },
+            "Redo": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Redo"
+                }
+              }
+            },
+            "Rename": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Rename"
+                },
+                "sk": {
+                  "value": "Premenovať"
+                }
+              }
+            },
+            "Undo": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Undo"
+                }
+              }
+            }
+          }
+        },
+        "File": {
+          "resources": {
+            "CloseProject": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Close"
+                },
+                "sk": {
+                  "value": "Zatvoriť"
+                }
+              }
+            },
+            "CloseProjectTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Close current project"
+                },
+                "sk": {
+                  "value": "Zatvoriť aktuálny projekt"
+                }
+              }
+            },
+            "ExitApp": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "E_xit"
+                },
+                "sk": {
+                  "value": "U_končiť"
+                }
+              }
+            },
+            "ExitAppTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Exit application"
+                },
+                "sk": {
+                  "value": "Ukončiť aplikáciu"
+                }
+              }
+            },
+            "Export": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Export"
+                }
+              }
+            },
+            "ExportResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Export resources..."
+                }
+              }
+            },
+            "Import": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Import"
+                },
+                "sk": {
+                  "value": "_Import"
+                }
+              }
+            },
+            "ImportResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Import resources..."
+                }
+              }
+            },
+            "ImportTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Import projet from external translation"
+                },
+                "sk": {
+                  "value": "Imortovať project z externého prekladu"
+                }
+              }
+            },
+            "MenuItem": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_File"
+                },
+                "sk": {
+                  "value": "_Súbor"
+                }
+              }
+            },
+            "NewProject": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_New project"
+                },
+                "sk": {
+                  "value": "_Nový projekt"
+                }
+              }
+            },
+            "NewProjectTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Creates new project"
+                },
+                "sk": {
+                  "value": "Vytvoriť nový projekt"
+                }
+              }
+            },
+            "OpenProject": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Open project"
+                },
+                "sk": {
+                  "value": "_Otvoriť projekt"
+                }
+              }
+            },
+            "OpenProjectTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Open project file"
+                },
+                "sk": {
+                  "value": "Otvoriť projektový súbor"
+                }
+              }
+            },
+            "ProjectSettings": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project Se_ttings"
+                }
+              }
+            },
+            "RecentProjects": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Recent projects"
+                },
+                "sk": {
+                  "value": "Nedávno otvorené projekty"
+                }
+              }
+            },
+            "RecentProjectsTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "List of recently opened projects"
+                },
+                "sk": {
+                  "value": "Zoznam nedávno otvorených projektov"
+                }
+              }
+            },
+            "SaveProject": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Save project"
+                },
+                "sk": {
+                  "value": "_Uložiť projekt"
+                }
+              }
+            },
+            "SaveProjectAs": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Save project _as..."
+                },
+                "sk": {
+                  "value": "Uložiť projekt _ako..."
+                }
+              }
+            },
+            "SaveProjectAsTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Save project changes to new file"
+                },
+                "sk": {
+                  "value": "Uložiť projekt do nového suboru"
+                }
+              }
+            },
+            "SaveProjectTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Save project changes to file"
+                },
+                "sk": {
+                  "value": "Uložiť zmeny v projekte do súboru"
+                }
+              }
+            },
+            "Settings": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Settings"
+                }
+              }
+            }
+          }
+        },
+        "Help": {
+          "resources": {
+            "About": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_About"
+                }
+              }
+            },
+            "MenuItem": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Help"
+                }
+              }
+            },
+            "OnlineManual": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Online Manual"
+                }
+              }
+            },
+            "ProductWebPage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Product Web Page"
+                }
+              }
+            }
+          }
+        },
+        "Languages": {
+          "resources": {
+            "MenuItem": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Languages"
+                }
+              }
+            },
+            "Settings": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Settings"
+                }
+              }
+            }
+          }
+        }
+      },
+      "resources": {
+        "Translations": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "_Translations"
+            },
+            "sk": {
+              "value": "_Preklady"
+            }
+          }
+        }
+      }
+    },
+    "Menu": {
+      "categories": {
+        "CopySpecialMenu": {
+          "resources": {
+            "CopyAsCSharp": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Copy as C# code"
+                }
+              }
+            },
+            "CopyAsXamlMarkup": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Copy as Xaml markup"
+                }
+              }
+            },
+            "CopySpecial": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Copy Special"
+                }
+              }
+            }
+          }
+        },
+        "Help": {
+          "resources": {
+            "About": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "About"
+                }
+              }
+            },
+            "MenuItem": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Help"
+                }
+              }
+            },
+            "OnlineManual": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Online Manual"
+                }
+              }
+            },
+            "Preferences": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Preferences"
+                },
+                "sk": {
+                  "value": "Predvoľby"
+                }
+              }
+            },
+            "ProductWebPage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Product Web Page"
+                }
+              }
+            },
+            "WhatsNew": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "What's New?"
+                }
+              }
+            }
+          }
+        }
+      },
+      "resources": {
+        "CollapseAll": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Collapse All"
+            },
+            "sk": {
+              "value": "Zbaliť všetko"
+            }
+          }
+        },
+        "CollapseAllTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Collapse All"
+            },
+            "sk": {
+              "value": "Zbaliť všetko"
+            }
+          }
+        },
+        "Copy": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Copy"
+            },
+            "sk": {
+              "value": "Kopírovať"
+            }
+          }
+        },
+        "CopyTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Copy select categories/resources into clipboard"
+            },
+            "sk": {
+              "value": "Kopírovať vybrané kategórie/položky do schránky"
+            }
+          }
+        },
+        "Cut": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Cut"
+            },
+            "sk": {
+              "value": "Vy_strihnúť"
+            }
+          }
+        },
+        "CutTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Cut select categories or resource into clipboard"
+            },
+            "sk": {
+              "value": "Vystrihnúť vybrané kategórie/položky do schránky"
+            }
+          }
+        },
+        "Delete": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Delete"
+            },
+            "sk": {
+              "value": "Vymazať"
+            }
+          }
+        },
+        "DeleteTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Delete selected categories/resources"
+            },
+            "sk": {
+              "value": "Vymazať vybrané kategórie/položky"
+            }
+          }
+        },
+        "Duplicate": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Duplicate"
+            }
+          }
+        },
+        "ExpandAll": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Expand All"
+            },
+            "sk": {
+              "value": "Rozbaliť všetko"
+            }
+          }
+        },
+        "ExpandAllTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Expand All"
+            },
+            "sk": {
+              "value": "Rozbaliť všetko"
+            }
+          }
+        },
+        "Export": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Export"
+            }
+          }
+        },
+        "ExportTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Export all resources..."
+            }
+          }
+        },
+        "Import": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Import"
+            }
+          }
+        },
+        "Languages": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Languages"
+            },
+            "sk": {
+              "value": "Jazyky"
+            }
+          }
+        },
+        "LanguagesRoot": {
+          "state": "Edited",
+          "parameters": {
+            "totalLangCount": {
+              "order": 0
+            },
+            "primaryLanguage": {
+              "order": 1
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Languages (Total: {0} | Primary: {1})"
+            }
+          }
+        },
+        "LanguagesTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Manage Languages"
+            }
+          }
+        },
+        "ManageLanguages": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Manage Languages"
+            }
+          }
+        },
+        "NewCategory": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "New category"
+            },
+            "sk": {
+              "value": "Nová kategória"
+            }
+          }
+        },
+        "NewCategoryTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Adds new category"
+            },
+            "sk": {
+              "value": "Pridať novú kategóriu"
+            }
+          }
+        },
+        "NewResource": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "New resource"
+            },
+            "sk": {
+              "value": "Nová položka"
+            }
+          }
+        },
+        "NewResourceTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Adds new resource"
+            },
+            "sk": {
+              "value": "Pridať novú položku"
+            }
+          }
+        },
+        "OpenProject": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Open project"
+            }
+          }
+        },
+        "Paste": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Paste"
+            },
+            "sk": {
+              "value": "Vložiť"
+            }
+          }
+        },
+        "PasteTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Paste categories or resources from clipboard"
+            },
+            "sk": {
+              "value": "Vložiť kategórie/položky zo schránky"
+            }
+          }
+        },
+        "Plugins": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Plugins"
+            }
+          }
+        },
+        "PluginsTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Manage plugins..."
+            }
+          }
+        },
+        "PrimaryLanguage00": {
+          "state": "Edited",
+          "parameters": {
+            "languageName": {
+              "order": 1
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Primary language: {0}"
+            },
+            "sk": {
+              "value": "Základný jazyk: {0}"
+            }
+          }
+        },
+        "Properties": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Properties"
+            }
+          }
+        },
+        "PropertiesTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Change file properties..."
+            }
+          }
+        },
+        "Redo": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Redo"
+            },
+            "sk": {
+              "value": "Prerobiť"
+            }
+          }
+        },
+        "RedoTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Redo last action"
+            },
+            "sk": {
+              "value": "Prerobiť"
+            }
+          }
+        },
+        "RedoTooltipNamed": {
+          "state": "Edited",
+          "parameters": {
+            "param0": {
+              "order": 1
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Redo: {0}"
+            },
+            "sk": {
+              "value": "Prerobiť: {0}"
+            }
+          }
+        },
+        "Rename": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Rename"
+            },
+            "sk": {
+              "value": "Premenovať"
+            }
+          }
+        },
+        "RenameTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Rename"
+            },
+            "sk": {
+              "value": "Premenovať"
+            }
+          }
+        },
+        "SaveProject": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Save project"
+            }
+          }
+        },
+        "Translator": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Translator"
+            }
+          }
+        },
+        "TranslatorTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Setup Translator..."
+            }
+          }
+        },
+        "Undo": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Undo"
+            },
+            "sk": {
+              "value": "Späť"
+            }
+          }
+        },
+        "UndoTooltip": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Undo last action"
+            },
+            "sk": {
+              "value": "Späť"
+            }
+          }
+        },
+        "UndoTooltipNamed": {
+          "state": "Edited",
+          "parameters": {
+            "param0": {
+              "order": 1
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Undo: {0}"
+            },
+            "sk": {
+              "value": "Späť: {0}"
+            }
+          }
+        }
+      }
+    },
+    "Model": {
+      "categories": {
+        "Tree": {
+          "resources": {
+            "ProjectRoot": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project root"
+                }
+              }
+            },
+            "SelectionMultiple": {
+              "state": "Edited",
+              "parameters": {
+                "count": {
+                  "description": "Count of selected elements",
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Multiple selection ({0} elements)"
+                }
+              }
+            },
+            "SelectionNone": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "None selected"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Operations": {
+      "categories": {
+        "ExitApp": {
+          "resources": {
+            "ConfirmCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Exit application"
+                },
+                "sk": {
+                  "value": "Ukončiť aplikáciu"
+                }
+              }
+            },
+            "ConfirmDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to save changes before exit?"
+                },
+                "sk": {
+                  "value": "Chcete uložiť zmeny v projekte pre ukončením aplikácie?"
+                }
+              }
+            },
+            "ConfirmMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "There are unsaved changes in project."
+                },
+                "sk": {
+                  "value": "Boli zistené neuložené zmeny v projekte."
+                }
+              }
+            }
+          }
+        },
+        "Move": {
+          "resources": {
+            "MoveChildsUndoUnitCommandName": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                },
+                "param1": {
+                  "order": 2
+                },
+                "param2": {
+                  "order": 3
+                },
+                "param3": {
+                  "order": 4
+                },
+                "param4": {
+                  "order": 5
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Moved {0}{1}{2} under {3} '{4}'"
+                },
+                "sk": {
+                  "value": "Presun {0}{1}{2} pod {3} '{4}'"
+                }
+              }
+            },
+            "MoveElementsCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Move resources (categories)"
+                },
+                "sk": {
+                  "value": "Presun položiek (kategórií)"
+                }
+              }
+            },
+            "MoveElementsSomeDuplicatesDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Some elements cant be moved because new parent already contains elements with same name.\r\nThose elements will be deselected from move operation.\r\n\r\nDo you want to continue with move action ?"
+                },
+                "sk": {
+                  "value": "Niektoré položky nemôžu byť presunuté pretože nový vlastník už obsahuje položky s rovnakým názvom.\r\nDané položky budú vyňaté z výberu pre presun.\r\n\r\nChcete pokračovať s presunom položiek?"
+                }
+              }
+            },
+            "MoveElementsSomeDuplicatesMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Some elements will not be moved."
+                }
+              }
+            },
+            "MoveElementsStoppedErrorMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "No elements will be moved because new parent already contains elements with same name for elements."
+                },
+                "sk": {
+                  "value": "Žiadne položky nebudú presunuté pretože nový vlastník už obsahuje položky s rovnakým názvom pre dané položky."
+                }
+              }
+            }
+          }
+        },
+        "Project": {
+          "resources": {
+            "OpenProjectCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Open project"
+                },
+                "sk": {
+                  "value": "Otvoriť projekt"
+                }
+              }
+            },
+            "OpenProjectErrorMessage": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                },
+                "param1": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Error loading project file '{0}', reason: {1}"
+                },
+                "sk": {
+                  "value": "Chyba pri otváraní projektu zo súboru '{0}', dôvod: {1}"
+                }
+              }
+            },
+            "ProjectSaveErrorTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Save project error"
+                },
+                "sk": {
+                  "value": "Chyba pri ukladaní projektu"
+                }
+              }
+            },
+            "ProjectSaveFailed": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Save project file failed."
+                },
+                "sk": {
+                  "value": "Chyba pri ukladaní projektu do súboru."
+                }
+              }
+            },
+            "ProjectSaveFailedFileIsReadOnly": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Save project file failed because file '{0}' is read-only."
+                },
+                "sk": {
+                  "value": "Ukladanie zmiem projektu do súboru zlyhala, súbor '{0}' má nastavený príznak 'iba na čítanie'."
+                }
+              }
+            },
+            "RecentProjectDoestNotExistCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Open recent project"
+                },
+                "sk": {
+                  "value": "Otvoriť nedávno otvorený projekt"
+                }
+              }
+            },
+            "RecentProjectDoestNotExistDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to remove it from recent project list?"
+                },
+                "sk": {
+                  "value": "Chcete odobrať tento projekt zo zoznamu nedávno otvorených projektov?"
+                }
+              }
+            },
+            "RecentProjectDoestNotExistMessage": {
+              "state": "Edited",
+              "parameters": {
+                "recentFileName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Recent project '{0}' does not exist or access denied."
+                },
+                "sk": {
+                  "value": "Nedávno otvorený projekt '{0}' neexistuje príp. bol zamietnutý prístup z bezpečnostných dôvodov."
+                }
+              }
+            }
+          }
+        },
+        "ProjectSettings": {
+          "resources": {
+            "ValidationError1": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project root contains some resources, could not turn off setting 'Allow resources under root'."
+                }
+              }
+            },
+            "ValidationError2": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project contains some categories, could not change layout to 'Resources'."
+                }
+              }
+            },
+            "ValidationErrorCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project settings"
+                }
+              }
+            }
+          }
+        },
+        "Validations": {
+          "resources": {
+            "CategoryNameCouldNotBeEmpty": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Category name could not be empty."
+                },
+                "sk": {
+                  "value": "Názov kategórie nemôže byť prázdny."
+                }
+              }
+            },
+            "ModelNameCouldNotBeEmpty": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Model name could not be empty."
+                },
+                "sk": {
+                  "value": "Názov modelu nemôže byť prázdny."
+                }
+              }
+            },
+            "NameContainsDisallowedCharacters": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Name '{0}' contains disallowed characters, allowed are only a-z A-Z and numbers (not at start of name)"
+                },
+                "sk": {
+                  "value": "Názov '{0}' obsahuje nepovolené znaky, povolené sú iba a-z A-Z a číslice (nie na začiatku názvu)"
+                }
+              }
+            },
+            "NameStartingWithNumbersNotAllowed": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Name '{0}' starting with numbers which is not allowed."
+                },
+                "sk": {
+                  "value": "Názov '{0}' začína číslicami čo nie je povolené."
+                }
+              }
+            },
+            "ResourceNameCouldNotBeEmpty": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resource name could not be empty."
+                },
+                "sk": {
+                  "value": "Názov položky nemôže byť prázdny."
+                }
+              }
+            }
+          }
+        }
+      },
+      "resources": {
+        "Delete000": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Delete"
+            },
+            "sk": {
+              "value": "Vymazať"
+            }
+          }
+        },
+        "PasteFromClipboardUndoUnitCommandName": {
+          "state": "Edited",
+          "parameters": {
+            "param0": {
+              "order": 1
+            },
+            "param1": {
+              "order": 2
+            },
+            "param2": {
+              "order": 3
+            },
+            "param3": {
+              "order": 4
+            },
+            "param4": {
+              "order": 5
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Paste {0}{1}{2} under {3} '{4}'"
+            },
+            "sk": {
+              "value": "Vložiť zo schránky {0}{1}{2} pod {3} '{4}'"
+            }
+          }
+        },
+        "PropertyChangeTransactionInfo1": {
+          "state": "Edited",
+          "parameters": {
+            "changeType": {
+              "order": 1
+            },
+            "changeValue": {
+              "order": 2
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Changed {0} value to '{1}'"
+            },
+            "sk": {
+              "value": "Zmenená hodnota {0} na '{1}'"
+            }
+          }
+        },
+        "PropertyChangeTransactionInfo2": {
+          "state": "Edited",
+          "parameters": {
+            "changeType": {
+              "order": 1
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Changed value of - {0}"
+            }
+          }
+        },
+        "RemoveChildUndoUnitCommandName": {
+          "state": "Edited",
+          "parameters": {
+            "param0": {
+              "order": 1
+            },
+            "param1": {
+              "order": 2
+            },
+            "param2": {
+              "order": 3
+            },
+            "param3": {
+              "order": 4
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Remove {0} '{1}' from {2} '{3}'"
+            },
+            "sk": {
+              "value": "Odobrať {0} '{1}' z {2} '{3}'"
+            }
+          }
+        },
+        "StartupModelLoadErrorCaption": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Project load error on startup"
+            },
+            "sk": {
+              "value": "Nastala chyba pri otváraní projektu"
+            }
+          }
+        },
+        "UpdateLanguagesUndoUnitCommandName": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Project languages was updated"
+            },
+            "sk": {
+              "value": "Jazyky projektu boli upravené"
+            }
+          }
+        }
+      }
+    },
+    "Services": {
+      "categories": {
+        "Application": {
+          "resources": {
+            "BackupFileCreated": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Backup file was created"
+                }
+              }
+            },
+            "BackupOfOriginalFileCreated": {
+              "state": "Edited",
+              "parameters": {
+                "newLineChar": {
+                  "description": "New line character",
+                  "order": 1
+                },
+                "backupFileName": {
+                  "description": "File name of backup file",
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Backup of original file was saved to:{0}{1}"
+                }
+              }
+            },
+            "BackupOfOriginalFileFailed": {
+              "state": "Edited",
+              "parameters": {
+                "newLineChar": {
+                  "order": 0
+                },
+                "backupFileName": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Error creating backup of original file{0}{1}."
+                }
+              }
+            },
+            "CannotTranslateResourcesFeatureIsDisabled": {
+              "state": "Edited",
+              "parameters": {
+                "licenseName": {
+                  "order": 0
+                },
+                "featureName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Cannot translate resources because active license ({0}) has disabled '{1}' feature."
+                }
+              }
+            },
+            "DetectedUnsavedChangesCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Save project changes"
+                },
+                "sk": {
+                  "value": "Uložiť zmeny v projekte"
+                }
+              }
+            },
+            "DetectedUnsavedChangesDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to save project changes ?"
+                },
+                "sk": {
+                  "value": "Chcete uložiť zmeny v projekte?"
+                }
+              }
+            },
+            "DetectedUnsavedChangesMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "There are unsaved changes in project."
+                },
+                "sk": {
+                  "value": "Boli zistené neuložené zmeny v projekte."
+                }
+              }
+            },
+            "ErrorSavingProjectFileToDiskCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Error saving project file to disk."
+                }
+              }
+            },
+            "ErrorSavingProjectFileToDiskMessage": {
+              "state": "Edited",
+              "parameters": {
+                "fileName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Error saving project file '{0}' to disk, permission denied?"
+                }
+              }
+            },
+            "FileCompatibilityIssueCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "File compatibility issue"
+                }
+              }
+            },
+            "FileCompatibilityIssueCreatedInPreviousVersion": {
+              "state": "Edited",
+              "parameters": {
+                "fileName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Project file '{0}' was created in previous version of program."
+                }
+              }
+            },
+            "FileCompatibilityIssueCreatedWithHigherVersion": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "File was created in higher version of program.\r\nPlease upgrade program to latest version to be able to open this file."
+                }
+              }
+            },
+            "FileCompatibilityIssueUpgradeToCurrentVersionConfirm": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "File must be upgraded to current version to be able to open it.\r\nDo you want to upgrade file and continue to open it?"
+                }
+              }
+            },
+            "FileUpdatedToLatestVersion": {
+              "state": "Edited",
+              "parameters": {
+                "fileName": {
+                  "description": "file name",
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "File {0} was updated to latest version."
+                }
+              }
+            },
+            "OpenProjectCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Open project"
+                }
+              }
+            },
+            "OpenProjectFailed": {
+              "state": "Edited",
+              "parameters": {
+                "fileName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Error loading project file \r\n{0}."
+                }
+              }
+            },
+            "ProjectChangesCantSaveCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project changes could not be saved!"
+                }
+              }
+            },
+            "SaveFailedFileIsReadonly": {
+              "state": "Edited",
+              "parameters": {
+                "fileName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Failed to save project changes, file '{0}' is read-only."
+                }
+              }
+            },
+            "SaveFailedProjectContainsValidationErrors": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project contains validations errors."
+                }
+              }
+            },
+            "SaveFailedProjectLayout1Error": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project layout is 'Resources' but contains some categories (which is not allowed)."
+                }
+              }
+            },
+            "SaveFailedProjectLayout2Error": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project root contains some resources which is not allowed."
+                }
+              }
+            },
+            "TranslationResourcesInProgress": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translating resources..."
+                }
+              }
+            },
+            "TranslationServiceCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translation service"
+                }
+              }
+            },
+            "TranslationServiceConfigureConfirm": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to configure it now?"
+                }
+              }
+            },
+            "TranslationServiceEnableConfirm": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to enable and configure now?"
+                }
+              }
+            },
+            "TranslationServiceIsNotConfigured": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translation service provider is not configured yet."
+                }
+              }
+            },
+            "TranslationServiceIsNotEnabled": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translation service is not enabled."
+                }
+              }
+            }
+          }
+        },
+        "ChangePassword": {
+          "resources": {
+            "ProgressMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change account password in progress..."
+                }
+              }
+            }
+          }
+        },
+        "Dialog": {
+          "categories": {
+            "RestartApp": {
+              "resources": {
+                "ApplyThemeCaption": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Apply theme change"
+                    }
+                  }
+                },
+                "ApplyThemeDetail": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Continue to restart application?"
+                    }
+                  }
+                },
+                "ApplyThemeMessage": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "To apply new visual theme, application must be restarted"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Export": {
+          "resources": {
+            "ExportingResourcesFailed": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Exporting resources failed."
+                }
+              }
+            },
+            "ExportingResourcesWasSuccessfull": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Exporting resources was successfull."
+                }
+              }
+            },
+            "ExportResourcesCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Export resources"
+                }
+              }
+            },
+            "ExportResourcesInProgress": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Exporting resources..."
+                }
+              }
+            },
+            "NoResourcesToExport": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "There are no resources to be exported."
+                }
+              }
+            }
+          }
+        },
+        "Import": {
+          "resources": {
+            "ChangeProjectLayoutConfirmCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Import Resources - Project layout incompatible"
+                }
+              }
+            },
+            "ChangeProjectLayoutConfirmDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to change project layout to \"Categories and Resources\" and continue to import some resources?"
+                }
+              }
+            },
+            "ChangeProjectLayoutConfirmMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "When importing resources, project layout must be \"Categories and Resources\" but currently it is \"Resources only\"."
+                }
+              }
+            },
+            "FilesDoesNotContainResourcesToImport": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Selected file(s) does not contains any resources to be imported!"
+                }
+              }
+            },
+            "ImportedFolderName": {
+              "state": "Edited",
+              "parameters": {
+                "nameUniqueValue": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Imported_{0}"
+                }
+              }
+            },
+            "ImportingCategoriesIsNotAllowedDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Nothing was imported."
+                }
+              }
+            },
+            "ImportingCategoriesIsNotAllowedMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Imported file contains categories but current project settings does not allow it!"
+                }
+              }
+            },
+            "ImportingResourcesFailed": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Importing resources failed."
+                }
+              }
+            },
+            "ImportResourcesCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Import resources"
+                }
+              }
+            },
+            "ImportResourcesInProgress": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Importing resources..."
+                }
+              }
+            },
+            "ImportSucceedDetail": {
+              "state": "Edited",
+              "parameters": {
+                "newResourceCount": {
+                  "description": "Count of new resources added",
+                  "order": 1
+                },
+                "newCategoriesCount": {
+                  "description": "Count of new resources added",
+                  "order": 2
+                },
+                "updatedResourcesCount": {
+                  "description": "Count of existing resources updated",
+                  "order": 3
+                },
+                "updatedCategoriesCount": {
+                  "description": "Count of existing categories updated",
+                  "order": 4
+                },
+                "newLanguagesCount": {
+                  "description": "Count of new languages added",
+                  "order": 5
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "- {0} new resources was added\r\n- {1} new categories was added\r\n- {2} existing resources was updated\r\n- {3} existing categories was updated\r\n- {4} new languages was added"
+                }
+              }
+            },
+            "ImportSucceedMessage": {
+              "state": "Edited",
+              "parameters": {
+                "importedFolderName": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Import successfully completed.{0}"
+                }
+              }
+            },
+            "ImportWasCancelledByUser": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Importing resources was cancelled by user!"
+                }
+              }
+            },
+            "ResourcesWasImportedUnderElement": {
+              "state": "Edited",
+              "parameters": {
+                "parentElement": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Resources was imported under category:\r\n\r\n{0}"
+                }
+              }
+            }
+          }
+        },
+        "Translation": {
+          "resources": {
+            "SomeLanguagesAreNotSupported": {
+              "state": "Edited",
+              "parameters": {
+                "translatorName": {
+                  "order": 0
+                },
+                "langs": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Some languages are not supported by {0}.\r\n\r\nList of unsupported languages: {1}"
+                }
+              }
+            },
+            "TestingWasCancelledByUser": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Testing was cancelled by user!"
+                }
+              }
+            },
+            "TranslateResourcesCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translate Resources"
+                }
+              }
+            },
+            "TranslationCompletedSuccessfully": {
+              "state": "Edited",
+              "parameters": {
+                "resourceCount": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Successfully translated {0} resources."
+                }
+              }
+            },
+            "TranslationCompletedWithErrors": {
+              "state": "Edited",
+              "parameters": {
+                "successCount": {
+                  "order": 0
+                },
+                "failedCount": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Translation completed where {0} resources was successfully translated and {1} resources failed to translate."
+                }
+              }
+            },
+            "TranslationFailedOrNoResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translation failed or no resource to translate."
+                }
+              }
+            },
+            "TranslationProgressText": {
+              "state": "Edited",
+              "parameters": {
+                "actual": {
+                  "order": 0
+                },
+                "total": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Translating resource {0}/{1} ..."
+                }
+              }
+            },
+            "TranslationWasCancelledByUser": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translate resources was cancelled by user!"
+                }
+              }
+            }
+          }
+        },
+        "UndoUnits": {
+          "categories": {
+            "AddChilds": {
+              "resources": {
+                "ActionName": {
+                  "state": "Edited",
+                  "parameters": {
+                    "elementsCount": {
+                      "order": 1
+                    },
+                    "parentElementType": {
+                      "order": 2
+                    },
+                    "parentName": {
+                      "order": 3
+                    }
+                  },
+                  "values": {
+                    "en": {
+                      "value": "Add {0} under {1} '{2}'"
+                    }
+                  }
+                }
+              }
+            },
+            "AddSortedChild": {
+              "resources": {
+                "ActionName": {
+                  "state": "Edited",
+                  "parameters": {
+                    "childElementType": {
+                      "order": 1
+                    },
+                    "childName": {
+                      "order": 2
+                    },
+                    "parentElementType": {
+                      "order": 3
+                    },
+                    "parentElementName": {
+                      "order": 4
+                    }
+                  },
+                  "values": {
+                    "en": {
+                      "value": "Add {0} '{1}' under {2} '{3}'"
+                    },
+                    "sk": {
+                      "value": "Pridať {0} '{1}' pod {2} '{3}'"
+                    }
+                  }
+                }
+              }
+            },
+            "AutoTranslateMultiResources": {
+              "resources": {
+                "ActionName": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Update multiple resources translations (retrieved from translation service)"
+                    }
+                  }
+                }
+              }
+            },
+            "AutoTranslateResource": {
+              "resources": {
+                "ActionName": {
+                  "state": "Edited",
+                  "parameters": {
+                    "childName": {
+                      "order": 1
+                    }
+                  },
+                  "values": {
+                    "en": {
+                      "value": "Update resource '{0}' translations (retrieved from translation service)"
+                    }
+                  }
+                }
+              }
+            },
+            "ImportResources": {
+              "resources": {
+                "ActionName": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Import resources"
+                    }
+                  }
+                }
+              }
+            },
+            "LockResourceValues": {
+              "resources": {
+                "ActionName": {
+                  "state": "Edited",
+                  "parameters": {
+                    "childName": {
+                      "order": 1
+                    }
+                  },
+                  "values": {
+                    "en": {
+                      "value": "Lock all localized values for resource '{0}'"
+                    }
+                  }
+                }
+              }
+            },
+            "MultiSelection": {
+              "resources": {
+                "ActionName": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Action on multiple elements"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Updates": {
+          "resources": {
+            "DontCheckForUpdatesRememberText": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Don't check for updates"
+                }
+              }
+            },
+            "NewVersionAvailableCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New version is available!"
+                }
+              }
+            },
+            "NewVersionAvailableDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Please navigate to Main Menu -> Tools -> Extensions and Updates, then \"Updates\" tab, and search for \"LHQ Editor\"."
+                }
+              }
+            },
+            "NewVersionAvailableMessage": {
+              "state": "Edited",
+              "parameters": {
+                "version": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "New version '{0}' is available! Navigate to Main Menu -> Tools -> Extensions and Updates, then \"Updates\" tab, and search for \"LHQ Editor\"."
+                }
+              }
+            },
+            "ReadWhatsNew": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Read what's new"
+                }
+              }
+            },
+            "UpdateAvailable": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Update Available"
+                }
+              }
+            },
+            "WhatsNewInCurrentVersion": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "What's new in current version?"
+                }
+              }
+            },
+            "WhatsNewInVersion": {
+              "state": "Edited",
+              "parameters": {
+                "newVersionNumber": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "What's new in version {0}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Validations": {
+      "resources": {
+        "CategoryNameCouldNotBeEmpty": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Category name could not be empty"
+            }
+          }
+        },
+        "CategoryWithSameNameAlreadyExist": {
+          "state": "Edited",
+          "parameters": {
+            "categoryName": {
+              "order": 1
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Category with name '{0}' already exist under same parent."
+            }
+          }
+        },
+        "NameCanContainOnlyAlphaNumeric": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Name can contain only alpha numeric characters"
+            }
+          }
+        },
+        "NameCannotBeginWithNumber": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Name cannot begin with number"
+            }
+          }
+        },
+        "ProjectNameCouldNotBeEmpty": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Project name could not be empty"
+            }
+          }
+        },
+        "ResourceNameCouldNotBeEmpty": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Resource name could not be empty"
+            }
+          }
+        },
+        "ResourceParameterNameCouldNotBeEmpty": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Resource parameter name could not be empty"
+            }
+          }
+        },
+        "ResourceWithSameNameAlreadyExist": {
+          "state": "Edited",
+          "parameters": {
+            "resourceName": {
+              "order": 1
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Resource with name '{0}' already exist under same parent."
+            }
+          }
+        }
+      }
+    },
+    "ViewModels": {
+      "categories": {
+        "AppSettings": {
+          "categories": {
+            "PageGeneral": {
+              "resources": {
+                "DefaultLanguageValidationCaption": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Default language for new projects"
+                    }
+                  }
+                },
+                "DefaultLanguageValidationMessage": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Default language for new projects must be selected!"
+                    }
+                  }
+                },
+                "PageTitle": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "General"
+                    }
+                  }
+                }
+              }
+            },
+            "PagePlugins": {
+              "resources": {
+                "ConfigurePluginTitle": {
+                  "state": "Edited",
+                  "parameters": {
+                    "pluginName": {
+                      "description": "Display name of plugin",
+                      "order": 1
+                    }
+                  },
+                  "values": {
+                    "en": {
+                      "value": "Configure plugin - {0}"
+                    }
+                  }
+                },
+                "PageTitle": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Plugins"
+                    }
+                  }
+                },
+                "ResetPluginToDefaultsCaption": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Reset to defaults"
+                    }
+                  }
+                },
+                "ResetPluginToDefaultsMessage": {
+                  "state": "Edited",
+                  "parameters": {
+                    "pluginName": {
+                      "order": 1
+                    }
+                  },
+                  "values": {
+                    "en": {
+                      "value": "Reset plugin '{0}' to default settings?"
+                    }
+                  }
+                }
+              }
+            },
+            "PageTranslator": {
+              "resources": {
+                "PageTitle": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Translator"
+                    }
+                  }
+                },
+                "TestingProviderFailed": {
+                  "state": "Edited",
+                  "parameters": {
+                    "translationProviderName": {
+                      "description": "Display name of translation provider name",
+                      "order": 1
+                    }
+                  },
+                  "values": {
+                    "en": {
+                      "value": "Testing '{0}' failed."
+                    }
+                  }
+                },
+                "TranslatorMustBeSelected": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Translator must be selected when translation is enabled."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "resources": {
+            "ResetSettingsToDefaultsCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Reset settings to defaults"
+                }
+              }
+            },
+            "ResetSettingsToDefaultsDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Plugins settings will not reset to defaults.\r\nEach plugin must be resetted manually on its settings page."
+                }
+              }
+            },
+            "ResetSettingsToDefaultsMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Reset settings to defaults?"
+                }
+              }
+            }
+          }
+        },
+        "ChangePassword": {
+          "resources": {
+            "ConfirmPasswordIsWrong": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Confirmation of new password must be same as new password."
+                }
+              }
+            },
+            "CurrentPasswordIsRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Current password is required."
+                }
+              }
+            },
+            "EmailAddressIsRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Email address is required."
+                }
+              }
+            },
+            "NewPasswordConfirmIsRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New password confirm is required."
+                }
+              }
+            },
+            "NewPasswordIsRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New password is required."
+                }
+              }
+            },
+            "PasswordSuccessfullyChanged": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Password was successfully changed!"
+                }
+              }
+            }
+          }
+        },
+        "DeleteElements": {
+          "resources": {
+            "ConfirmCaption": {
+              "state": "Edited",
+              "parameters": {
+                "elementName": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Delete {0}"
+                },
+                "sk": {
+                  "value": "Zmazať {0}"
+                }
+              }
+            },
+            "ConfirmMessage": {
+              "state": "Edited",
+              "parameters": {
+                "elementName": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Do you want to delete {0}?"
+                },
+                "sk": {
+                  "value": "Chcete vymazať {0}?"
+                }
+              }
+            },
+            "SelectedText": {
+              "state": "Edited",
+              "parameters": {
+                "elementName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Delete {0}:"
+                },
+                "sk": {
+                  "value": "Zmazať {0}:"
+                }
+              }
+            }
+          }
+        },
+        "EditParameter": {
+          "resources": {
+            "AddTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Add resources parameter"
+                }
+              }
+            },
+            "EditTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Edit resource parameter"
+                }
+              }
+            },
+            "ParameterWithSameNameExist": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Parameter with same name already exist!"
+                }
+              }
+            }
+          }
+        },
+        "HintPanel": {
+          "categories": {
+            "CodeGenerator": {
+              "resources": {
+                "HintText": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "When you save changes (Ctrl+S or save icon in toolbar) an associated code generated is executed.\r\nCode generator can produce C# classes, resx files, JSON files, etc, depending on what code generator you choose.\r\n\r\nBy default, generated code is saved in Resources folder within project where LHQ file is located."
+                    }
+                  }
+                },
+                "HintTextOnlyInVS": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Code generation works only within Visual Studio!"
+                    }
+                  }
+                },
+                "HintTextReadMore": {
+                  "state": "Edited",
+                  "values": {
+                    "en": {
+                      "value": "Read more about code generator templates..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Import": {
+          "resources": {
+            "PageTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Import resources"
+                }
+              }
+            },
+            "PleaseSelectFilesToImport": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Please select file(s) to import."
+                }
+              }
+            },
+            "PleaseSelectImporter": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Please select importer!"
+                }
+              }
+            },
+            "PleaseSelectImportMode": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Please select import mode!"
+                }
+              }
+            },
+            "UnsupportedFileExtensionsDetail": {
+              "state": "Edited",
+              "parameters": {
+                "importerDisplayName": {
+                  "order": 1
+                },
+                "unknownFileExtensions": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Importer '{0}' does not support those extensions:\r\n\r\n{1}"
+                }
+              }
+            },
+            "UnsupportedFileExtensionsMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Selected file(s) has unsupported extension(s)."
+                }
+              }
+            }
+          }
+        },
+        "LanguageSettings": {
+          "resources": {
+            "ButtonRemoveTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Remove language"
+                },
+                "sk": {
+                  "value": "Odobrať jazyk"
+                }
+              }
+            },
+            "ButtonSetAsPrimary": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Set as primary"
+                },
+                "sk": {
+                  "value": "Nastaviť ako základný"
+                }
+              }
+            },
+            "ButtonSetAsPrimaryToolip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Sets language as primary"
+                },
+                "sk": {
+                  "value": "Nastaviť jazyk ako základný"
+                }
+              }
+            },
+            "ChangePrimaryLanguageConfirmCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change primary language"
+                },
+                "sk": {
+                  "value": "Zmeniť základný jazyk"
+                }
+              }
+            },
+            "ChangePrimaryLanguageConfirmDetail": {
+              "state": "Edited",
+              "parameters": {
+                "newLanguageEnglishName": {
+                  "description": "New primary language english name",
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Do you really want to set language '{0}' as primary?"
+                }
+              }
+            },
+            "ChangePrimaryLanguageConfirmMessage": {
+              "state": "Edited",
+              "parameters": {
+                "currentPrimaryEnglishName": {
+                  "description": "Current primary language english name",
+                  "order": 1
+                },
+                "newPrimaryEnglishName": {
+                  "description": "New primary language english name",
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "You are about to change current primary language '{0}' to language '{1}'."
+                }
+              }
+            },
+            "ColumnHeaderCode": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Code"
+                },
+                "sk": {
+                  "value": "Kód"
+                }
+              }
+            },
+            "ColumnHeaderEnglishName": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "English name"
+                }
+              }
+            },
+            "ColumnHeaderPrimary": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Primary"
+                }
+              }
+            },
+            "DialogCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Language settings"
+                },
+                "sk": {
+                  "value": "Nastavenia jazykov"
+                }
+              }
+            },
+            "DialogCaptionHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Manage list of languages used in current project"
+                },
+                "sk": {
+                  "value": "Upraviť zoznam jazykov použitých v projekte"
+                }
+              }
+            },
+            "HeaderIsPrimary": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Primary"
+                },
+                "sk": {
+                  "value": "Základny"
+                }
+              }
+            },
+            "LabelCountOfLanguage": {
+              "state": "Edited",
+              "parameters": {
+                "countOfLanguages": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "{0} Languages"
+                }
+              }
+            },
+            "LabelLanguages": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Languages"
+                }
+              }
+            },
+            "PageTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Language settings"
+                },
+                "sk": {
+                  "value": "Nastavenia jazykov"
+                }
+              }
+            },
+            "PrimaryLanguage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Language is primary language"
+                },
+                "sk": {
+                  "value": "Jazyk je základným jazykom"
+                }
+              }
+            },
+            "PrimaryLanguageCantBeRemoved": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Primary language cannot be removed"
+                },
+                "sk": {
+                  "value": "Základný jazyk nemôže byť odobraný"
+                }
+              }
+            },
+            "ProjectLanguages": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project languages:"
+                },
+                "sk": {
+                  "value": "Projektové jazyky:"
+                }
+              }
+            },
+            "RemoveLanguageConfirmCaption": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Remove language '{0}'"
+                },
+                "sk": {
+                  "value": "Odobrať jazyk '{0}'"
+                }
+              }
+            },
+            "RemoveLanguageConfirmDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "All resources in this language will be also removed!"
+                },
+                "sk": {
+                  "value": "Všetky preklady v tomto jazyku budý taktiež odobrané!"
+                }
+              }
+            },
+            "RemoveLanguageConfirmMessage": {
+              "state": "Edited",
+              "parameters": {
+                "languageName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Remove language '{0}' ?"
+                },
+                "sk": {
+                  "value": "Odobrať jazyk '{0}' ?"
+                }
+              }
+            },
+            "ReplaceLanguageCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Replace project language with other language"
+                },
+                "sk": {
+                  "value": "Zameniť jazyk v projekte za iný jazyk"
+                }
+              }
+            },
+            "ReplaceLanguageDetail": {
+              "state": "Edited",
+              "parameters": {
+                "currentLanguageName": {
+                  "order": 1
+                },
+                "newLanguageName": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "You are about to change project language from '{0}' to '{1}'. \r\nAll resources in current language '{0}' will be assigned to new language '{1}'.\r\n\r\nDo you want to continue?"
+                },
+                "sk": {
+                  "value": "Práve chcete zameniť jazyk v projekte '{0}' za iný jazyk '{1}'.\r\nVšetkým prekladom v jazyku '{0}' bude zmenený jazyk na '{1}'.\r\n\r\nChcete pokračovať?"
+                }
+              }
+            },
+            "ReplaceLanguageMessage": {
+              "state": "Edited",
+              "parameters": {
+                "currentLanguageName": {
+                  "order": 1
+                },
+                "newLanguageName": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "You are about to change project language from '{0}' to '{1}'."
+                },
+                "sk": {
+                  "value": "Práve chcete zameniť jazyk v projekte '{0}' za iný jazyk '{1}'."
+                }
+              }
+            },
+            "SetAsPrimaryConfirmCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Set as primary language"
+                },
+                "sk": {
+                  "value": "Nastaviť ako základný jazyk"
+                }
+              }
+            },
+            "SetAsPrimaryConfirmMessage": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Set language '{0}' as primary language?"
+                },
+                "sk": {
+                  "value": "Nastaviť jazyk '{0}' ako základný jazyk?"
+                }
+              }
+            }
+          }
+        },
+        "MessageBox": {
+          "resources": {
+            "LabelCancel": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Cancel"
+                }
+              }
+            },
+            "LabelNo": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_No"
+                }
+              }
+            },
+            "LabelOk": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_OK"
+                }
+              }
+            },
+            "LabelYes": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Yes"
+                }
+              }
+            }
+          }
+        },
+        "MultiSelection": {
+          "resources": {
+            "ActionsTooltipCategories": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Show actions to be applied to resources within selected categories."
+                }
+              }
+            },
+            "ActionsTooltipResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Show actions to be applied to selected resources"
+                }
+              }
+            },
+            "ButtonFirstLevel": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "First Level"
+                }
+              }
+            },
+            "ButtonRecursive": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Recursive"
+                }
+              }
+            },
+            "CategoriesHeader": {
+              "state": "Edited",
+              "parameters": {
+                "categoriesCount": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Selected categories ({0})"
+                }
+              }
+            },
+            "ChangeResourcesStateFailedCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change resources state"
+                }
+              }
+            },
+            "ChangeResourcesStateFailedDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "There are no resources to change state for."
+                }
+              }
+            },
+            "ChangeResourcesStateFailedMessage": {
+              "state": "Edited",
+              "parameters": {
+                "newState": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Could not change resources state to '{0}'."
+                }
+              }
+            },
+            "ChangeStateAllResourcesRecursive": {
+              "state": "Edited",
+              "parameters": {
+                "newState": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Do you want to change resources state from all categories to '{0}'?"
+                }
+              }
+            },
+            "ChangeStateToEdited": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change state to 'Edited'"
+                }
+              }
+            },
+            "ChangeStateToFinal": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change state to 'Final'"
+                }
+              }
+            },
+            "ChangeStateToNeedsReview": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change state to 'Needs review'"
+                }
+              }
+            },
+            "ChangeStateToNew": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change state to 'New'"
+                }
+              }
+            },
+            "ExportAllResourcesRecursive": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to export resources from all categories?"
+                }
+              }
+            },
+            "ExportResourcesFailedDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "There are no resources to be exported to file."
+                }
+              }
+            },
+            "ExportResourcesFailedMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Could not export resources to file"
+                }
+              }
+            },
+            "ExportResourcesToFile": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Export resources to file"
+                }
+              }
+            },
+            "ResourcesHeader": {
+              "state": "Edited",
+              "parameters": {
+                "resourcesCount": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Selected resources ({0})"
+                }
+              }
+            },
+            "ScanCategoriesRecursivelyConfirmDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Yes - recursive scan\r\nNo - first level scan\r\nCancel - cancel current operation"
+                }
+              }
+            },
+            "ScanCategoriesRecursivelyConfirmMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to scan categories recursively?"
+                }
+              }
+            },
+            "SelectedProjectRoot": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Selected project root"
+                }
+              }
+            },
+            "TranslateAllResourcesRecursive": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to translate resources from all categories?"
+                }
+              }
+            },
+            "TranslateResourcesCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translate resources"
+                }
+              }
+            },
+            "TranslateResourcesFailedDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "There are no resources to be translated."
+                }
+              }
+            },
+            "TranslateResourcesFailedMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Could not translate resources"
+                }
+              }
+            }
+          }
+        },
+        "NewElement": {
+          "resources": {
+            "CategoryNameCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Category name:"
+                }
+              }
+            },
+            "CategoryNameIsRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Category name is required."
+                },
+                "sk": {
+                  "value": "Názov kategórie je povinný."
+                }
+              }
+            },
+            "NameHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Alllowed characters: a-z A-Z and numbers"
+                },
+                "sk": {
+                  "value": "Povolené znaky: a-z A-Z a čísla"
+                }
+              }
+            },
+            "NewCategory": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New category"
+                },
+                "sk": {
+                  "value": "Nov8 kategória"
+                }
+              }
+            },
+            "NewCategoryCaptionText": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Enter category _name:"
+                },
+                "sk": {
+                  "value": "Zadajte _názov kategórie:"
+                }
+              }
+            },
+            "NewCategoryTemplateName": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "category"
+                },
+                "sk": {
+                  "value": "kategoria"
+                }
+              }
+            },
+            "NewResource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New resource"
+                },
+                "sk": {
+                  "value": "Nová položka"
+                }
+              }
+            },
+            "NewResourceCaptionText": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Enter resource _name:"
+                },
+                "sk": {
+                  "value": "Zadajte _názov položky:"
+                }
+              }
+            },
+            "NewResourceTemplateName": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "resource"
+                },
+                "sk": {
+                  "value": "polozka"
+                }
+              }
+            },
+            "NewResourceUnderRootNotAllowedCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New resource under root model failed"
+                }
+              }
+            },
+            "NewResourceUnderRootNotAllowedDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Set option 'Allow resources under root' in file options to enable this."
+                }
+              }
+            },
+            "NewResourceUnderRootNotAllowedDetailByCodeGen": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Associated Code Generator does not support this."
+                }
+              }
+            },
+            "NewResourceUnderRootNotAllowedMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Could not add new resource under root model."
+                }
+              }
+            },
+            "Parent": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Parent:"
+                },
+                "sk": {
+                  "value": "Vlastník:"
+                }
+              }
+            },
+            "ParentHierarchy": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Parent hierarchy"
+                },
+                "sk": {
+                  "value": "Hierarchia:"
+                }
+              }
+            },
+            "ResourceNameCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resource name:"
+                }
+              }
+            },
+            "ResourceNameIsRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resource name is required."
+                },
+                "sk": {
+                  "value": "Názov položky je povinný."
+                }
+              }
+            }
+          }
+        },
+        "NewProject": {
+          "resources": {
+            "ChangeCodeGeneratorSettingsLink": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Code Generator Settings"
+                }
+              }
+            },
+            "CodeGeneratorTemplateTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Code Generator Template"
+                }
+              }
+            },
+            "CommonDetails": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Common"
+                }
+              }
+            },
+            "DefaultModelName": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Default"
+                },
+                "sk": {
+                  "value": "Model"
+                }
+              }
+            },
+            "DialogTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Create new project"
+                },
+                "sk": {
+                  "value": "Vytvoriť nový projekt"
+                }
+              }
+            },
+            "DialogTitleVS": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "New localization file"
+                }
+              }
+            },
+            "LanguagesType": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Languages type:"
+                },
+                "sk": {
+                  "value": "Typ jazyka:"
+                }
+              }
+            },
+            "LanguagesTypeNeutral": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Neutral language (en)"
+                },
+                "sk": {
+                  "value": "Neutrálny jazyk (sk)"
+                }
+              }
+            },
+            "LanguagesTypeSpecific": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Specific language (en-US)"
+                },
+                "sk": {
+                  "value": "Špecifický jazyk (sk-SK)"
+                }
+              }
+            },
+            "OpenLanguageSettingsAfterCreate": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Open \"Language settings\" after project created"
+                },
+                "sk": {
+                  "value": "Otvoriť \"Nastavenia jazykov\" po vytvorení projektu"
+                }
+              }
+            },
+            "OtherLanguagesHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Other translation languages can be added later in \"Language settings\""
+                },
+                "sk": {
+                  "value": "Ďalšie jazyky pre lokalizáciu možete pridať v \"Nastavenia jazykov\""
+                }
+              }
+            },
+            "PrimaryLanguage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Primary language:"
+                },
+                "sk": {
+                  "value": "Základný jazyk:"
+                }
+              }
+            },
+            "PrimaryLanguageIsRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Primary language is required."
+                },
+                "sk": {
+                  "value": "Základný jazyk je povinný."
+                }
+              }
+            },
+            "PrimaryLanguageValidationMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Primary language must be selected!"
+                }
+              }
+            },
+            "ProjectName": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project name"
+                }
+              }
+            },
+            "ProjectNameIsRequired": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project name is required."
+                }
+              }
+            },
+            "ProjectNameVS": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Name"
+                }
+              }
+            },
+            "ResxTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "ResX files generator"
+                }
+              }
+            },
+            "ShowOnlyNeutralLanguages": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Show only neutral languages"
+                },
+                "sk": {
+                  "value": "Zobraziť iba neutrálne jazyky"
+                }
+              }
+            },
+            "T4TemplateWebHelp": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "For more info about associated T4 generator, look at"
+                }
+              }
+            }
+          }
+        },
+        "Progress": {
+          "resources": {
+            "DialogTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Progress..."
+                }
+              }
+            }
+          }
+        },
+        "ProjectSettings": {
+          "resources": {
+            "PageTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project Settings"
+                }
+              }
+            }
+          }
+        },
+        "ResourceModel": {
+          "resources": {
+            "FinalStateConfirmCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change resource state to 'Final'"
+                }
+              }
+            },
+            "FinalStateConfirmMessageLock": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to lock resource translations?"
+                }
+              }
+            },
+            "FinalStateConfirmMessageNotify": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change resource state to 'Final' will lock resource name, description and parameters for edits."
+                }
+              }
+            },
+            "FinalStateConfirmRememberHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Later you can change this in settings page"
+                }
+              }
+            },
+            "FinalStateConfirmRememberText": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Remember current choice for next time"
+                }
+              }
+            },
+            "HintText": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Press Enter for new line\r\nPress Tab to focus on next language translation\r\nDepending on associated code generator, parameter placeholder can be used in text\r\nFor example, C# code generator uses string.Format() index parameters placeholder, e.g. {0} for first parameter, {1} for second and so on"
+                }
+              }
+            },
+            "LockAllValues": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Lock all values"
+                }
+              }
+            },
+            "LockResource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Lock resource"
+                }
+              }
+            },
+            "StateLocked": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Locked"
+                }
+              }
+            },
+            "StateNotLocked": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Not locked"
+                }
+              }
+            },
+            "UnlockAllValues": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Unlock all values"
+                }
+              }
+            },
+            "UnlockResource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Unlock resource"
+                }
+              }
+            }
+          }
+        },
+        "ResourceParameters": {
+          "resources": {
+            "PageTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resource Parameters"
+                }
+              }
+            },
+            "RemoveParameterCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Remove parameter"
+                }
+              }
+            },
+            "RemoveParameterMessage": {
+              "state": "Edited",
+              "parameters": {
+                "parameterName": {
+                  "order": 1
+                },
+                "parameterPosition": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Remove parameter '{0}' at position {1}?"
+                }
+              }
+            }
+          }
+        },
+        "ResourceValueModel": {
+          "resources": {
+            "AutoTranslatedTooltip": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "'{0}' value was automatically translated by translator service"
+                }
+              }
+            },
+            "BurgerMenuHeader": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Actions with '{0}' translation"
+                }
+              }
+            },
+            "LockIconTooltipIsLocked": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "'{0}' translation is locked for edits"
+                }
+              }
+            },
+            "LockIconTooltipIsNotLocked": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "'{0}' translation is not locked for edits"
+                }
+              }
+            },
+            "LockMenuHeader": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Lock '{0}' translation"
+                }
+              }
+            },
+            "LockMenuTooltip": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Click to lock '{0}' translation"
+                }
+              }
+            },
+            "PropertyAutoTranslatedIsFalse": {
+              "state": "Edited",
+              "parameters": {
+                "ownerResourceName": {
+                  "order": 1
+                },
+                "languageName": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Resource '{0}' translation '{1}' was unmarked as auto-translated."
+                }
+              }
+            },
+            "PropertyAutoTranslatedIsTrue": {
+              "state": "Edited",
+              "parameters": {
+                "ownerResourceName": {
+                  "order": 1
+                },
+                "languageName": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Resource '{0}' translation '{1}' was marked as auto-translated."
+                }
+              }
+            },
+            "PropertyLockedIsFalse": {
+              "state": "Edited",
+              "parameters": {
+                "ownerResourceName": {
+                  "order": 1
+                },
+                "languageName": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Resource '{0}' translation '{1}' was unlocked."
+                }
+              }
+            },
+            "PropertyLockedIsTrue": {
+              "state": "Edited",
+              "parameters": {
+                "ownerResourceName": {
+                  "order": 1
+                },
+                "languageName": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Resource '{0}' translation '{1}' was locked."
+                }
+              }
+            },
+            "TranslateMenuHeader": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Translate '{0}' value"
+                }
+              }
+            },
+            "UnlockMenuHeader": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Unlock '{0}' translation"
+                }
+              }
+            },
+            "UnlockMenuTooltip": {
+              "state": "Edited",
+              "parameters": {
+                "languageEnglishName": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Click to unlock '{0}' translation"
+                }
+              }
+            }
+          }
+        },
+        "RootModel": {
+          "resources": {
+            "ChangePrimaryLanguageConfirmCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Change primary language"
+                },
+                "sk": {
+                  "value": "Zmeniť základný jazyk"
+                }
+              }
+            },
+            "ChangePrimaryLanguageConfirmMessage": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Do you want to change primary language to '{0}' ?"
+                },
+                "sk": {
+                  "value": "Naozaj chcete zmeniť základný jazyk na '{0}' ?"
+                }
+              }
+            },
+            "EditModelNameCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Edit model name"
+                }
+              }
+            },
+            "EditModelNameMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Enter new model name"
+                }
+              }
+            },
+            "EditModelNameWarningDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to continue renaming model name ?"
+                }
+              }
+            },
+            "EditModelNameWarningMessage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Changing model name will regenerate associated files with this new name.\r\nAny previously generated files must be removed manually!"
+                }
+              }
+            }
+          }
+        },
+        "StatusBar": {
+          "resources": {
+            "AppVersion": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Application version:"
+                }
+              }
+            },
+            "CodeGenerator": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Code Generator:"
+                }
+              }
+            },
+            "CodeGeneratorTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Click to change Code Generator settings..."
+                }
+              }
+            },
+            "SelectedElement": {
+              "state": "Edited",
+              "parameters": {
+                "elementsPath": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Selected: {0}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Views": {
+      "categories": {
+        "CategoryView": {
+          "resources": {
+            "ActionsTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Show actions to be applied to resources under category"
+                }
+              }
+            },
+            "Category": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Category"
+                },
+                "sk": {
+                  "value": "Kategória"
+                }
+              }
+            },
+            "Description": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Description"
+                },
+                "sk": {
+                  "value": "_Poznámka"
+                }
+              }
+            },
+            "Name": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Name"
+                },
+                "sk": {
+                  "value": "Názov"
+                }
+              }
+            }
+          }
+        },
+        "LanguageSelectorView": {
+          "resources": {
+            "CountrySpecific": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Country specific"
+                }
+              }
+            },
+            "FilterTooltipActive": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Searching by country code - click to search by country name"
+                }
+              }
+            },
+            "FilterTooltipNotActive": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Searching by country name - click to search by country code"
+                }
+              }
+            }
+          }
+        },
+        "ProjectSettingsView": {
+          "resources": {
+            "AllowResourcesUnderRoot": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Allow resources under root"
+                }
+              }
+            },
+            "CategoriesAndResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Categories and resources"
+                }
+              }
+            },
+            "FlatStructure": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Flat structure"
+                }
+              }
+            },
+            "HierarchicalStructure": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Hierarchical structure"
+                }
+              }
+            },
+            "ResourcesOnly": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resources only"
+                }
+              }
+            }
+          }
+        },
+        "ResourceView": {
+          "resources": {
+            "ActionsTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Show actions to be applied to all resource translations."
+                }
+              }
+            },
+            "AddLanguageLinkPart1": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "To add another language, click "
+                }
+              }
+            },
+            "AddLanguageLinkPart2": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "here"
+                }
+              }
+            },
+            "AddLanguageLinkTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Click add or edit list of languages"
+                }
+              }
+            },
+            "ClickToShowHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Click to show hint..."
+                },
+                "sk": {
+                  "value": "Kliknutím zobrazíte pomôcku"
+                }
+              }
+            },
+            "Define": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Define..."
+                }
+              }
+            },
+            "Description": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Description"
+                },
+                "sk": {
+                  "value": "_Poznámka"
+                }
+              }
+            },
+            "Hold": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resource string is empty, mark it as translated"
+                },
+                "sk": {
+                  "value": "Preklad nie je zadaný, označiť ako preložený"
+                }
+              }
+            },
+            "Locked": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Locked"
+                }
+              }
+            },
+            "Name": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Name"
+                },
+                "sk": {
+                  "value": "_Názov"
+                }
+              }
+            },
+            "Parameters": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Parameters"
+                },
+                "sk": {
+                  "value": "_Parametre"
+                }
+              }
+            },
+            "Resource": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resource"
+                },
+                "sk": {
+                  "value": "Položka"
+                }
+              }
+            },
+            "ResourceMarkedAsTranslated": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                },
+                "param1": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Resource '{0}' translation '{1}' was marked as translated."
+                },
+                "sk": {
+                  "value": "Preklad v jazyku '{1}' položky '{0}' bol označení ako preložený."
+                }
+              }
+            },
+            "ResourceUnmarkedAsTranslated": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                },
+                "param1": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Resource '{0}' translation '{1}' was unmarked as translated."
+                },
+                "sk": {
+                  "value": "Preklad v jazyku '{1}' položky '{0}' bol označení ako nepreložený."
+                }
+              }
+            },
+            "State": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "State"
+                }
+              }
+            },
+            "TranslateAllValuesMenuHeader": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translate all values"
+                }
+              }
+            },
+            "TranslateAllValuesMenuTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translate all values using translator service."
+                }
+              }
+            },
+            "TranslateEmptyValuesMenuHeader": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translate empty values"
+                }
+              }
+            },
+            "TranslateEmptyValuesMenuTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translate only empty values using translator service."
+                }
+              }
+            },
+            "TranslationNote": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Translation note"
+                },
+                "sk": {
+                  "value": "_Poznámka k prekladu"
+                }
+              }
+            },
+            "Translations": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translations"
+                },
+                "sk": {
+                  "value": "Preklady"
+                }
+              }
+            },
+            "TranslationsHint": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Press Ctrl+Enter to enter multi-line mode. Key Enter to move to next language translation."
+                },
+                "sk": {
+                  "value": "Stlačením Ctrl+Enter pridáte nový riadok. Klávesa Enter pre posun na ďalší jazyk prekladu"
+                }
+              }
+            }
+          }
+        },
+        "RootView": {
+          "resources": {
+            "ActionsTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Show actions to be applied to all resources within project"
+                }
+              }
+            },
+            "AddMissingLanguages": {
+              "state": "Edited",
+              "parameters": {
+                "param0": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Add missing languages '{0}'"
+                },
+                "sk": {
+                  "value": "Pridať chýbajúce jazyky '{0}'"
+                }
+              }
+            },
+            "Description": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "_Description"
+                },
+                "sk": {
+                  "value": "_Poznámka"
+                }
+              }
+            },
+            "HoldResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Hold resources:"
+                },
+                "sk": {
+                  "value": "Pozdržané preklady:"
+                }
+              }
+            },
+            "Languages": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Languages"
+                },
+                "sk": {
+                  "value": "Jazyky"
+                }
+              }
+            },
+            "Model": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Model"
+                },
+                "sk": {
+                  "value": "Model"
+                }
+              }
+            },
+            "Name": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Name"
+                },
+                "sk": {
+                  "value": "Názov"
+                }
+              }
+            },
+            "PrimaryLanguage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Language is primary language"
+                },
+                "sk": {
+                  "value": "Jazyk je základným jazykom"
+                }
+              }
+            },
+            "SearchTreeText": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Search"
+                },
+                "sk": {
+                  "value": "Hladať"
+                }
+              }
+            },
+            "TranslatedResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Translated resources:"
+                },
+                "sk": {
+                  "value": "Preložené položky:"
+                }
+              }
+            },
+            "UntranslatedResources": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Untranslated resources:"
+                },
+                "sk": {
+                  "value": "Nepreložené položky:"
+                }
+              }
+            }
+          }
+        },
+        "ShellView": {
+          "resources": {
+            "AllResourceCount": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Resources count:"
+                },
+                "sk": {
+                  "value": "Počet položiek:"
+                }
+              }
+            },
+            "PrimaryLanguage": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Primary language:"
+                },
+                "sk": {
+                  "value": "Základný jazyk:"
+                }
+              }
+            }
+          }
+        },
+        "TreeView": {
+          "resources": {
+            "CanDropHere": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Can drop here."
+                },
+                "sk": {
+                  "value": "Presunúť sem."
+                }
+              }
+            },
+            "DropNotAllowed": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Drop is not allowed here."
+                },
+                "sk": {
+                  "value": "Presun sem nie je povolený."
+                }
+              }
+            },
+            "FilterTooltipActive": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Showing only untranslated resources - click to remove filter"
+                },
+                "sk": {
+                  "value": "Zobrazujú sa iba nepreložené položky - kliknutím zrušíte filter"
+                }
+              }
+            },
+            "FilterTooltipNotActive": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Showing all resources - click to show only untranslated"
+                },
+                "sk": {
+                  "value": "Zobrazujú sa všetky položky - kliknutím sa zobrazia iba nepreložené položky"
+                }
+              }
+            },
+            "LegendCompleteTranslation": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Complete translation"
+                },
+                "sk": {
+                  "value": "Kompletný preklad"
+                }
+              }
+            },
+            "LegendIncompleteTranslation": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Incomplete translation"
+                },
+                "sk": {
+                  "value": "Nekompletný preklad"
+                }
+              }
+            },
+            "RedBorderTooltip": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Red border - resource is not translated into all languages"
+                }
+              }
+            },
+            "ShowOnlyUntranslated": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Show only untranslated"
+                },
+                "sk": {
+                  "value": "Zobraziť iba nepreložené"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "VsExtension": {
+      "categories": {
+        "FirstTimeOpenSettings": {
+          "resources": {
+            "Caption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Welcome"
+                }
+              }
+            },
+            "Detail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to open the settings?"
+                }
+              }
+            },
+            "Message": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "This is the first time you use Localization HQ Editor extension."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "metadatas": {
+  "childs": [
+    {
+      "name": "metadata",
+      "attrs": {
+        "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
+      },
+      "childs": [
+        {
+          "name": "content",
+          "attrs": {
+            "templateId": "WpfResxCsharp01"
+          },
+          "childs": [
+            {
+              "name": "Settings",
+              "childs": [
+                {
+                  "name": "CSharp",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "UseExpressionBodySyntax": "true",
+                    "MissingTranslationFallbackToPrimary": "true"
+                  }
+                },
+                {
+                  "name": "ResX",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "CultureCodeInFileNameForPrimaryLanguage": "true"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+}

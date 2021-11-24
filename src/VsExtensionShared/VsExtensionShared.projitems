@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>ddbae22a-3121-44fe-8580-ffa34312ab4e</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>LHQ.VsExtension</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Code\DteExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\Extensions\EnumExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\NuGetExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\OutputMessageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VisualStudioThemeManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsAppConfigFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsAppConfigStorage_v1_0_0_0.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsApplicationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsDialogService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsRecentFilesService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsServicesRegistrator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsShellService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsUpdateService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\CommandBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\CommandsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\DuplicateElementCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\InputBindingsCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\OptionsCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\ShowMainHelpCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\SingleCommandBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MultiColumnComboBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EditorFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EditorPane.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LHQDirectiveProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\VsOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T4TemplateExecutor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Undo\OleUndoUnit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Undo\UndoUnitState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VSCommandTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VsPackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VsPackageService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\ItemWizard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\ItemWizardData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\MultiProjectWizard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\MultiProjectWizardData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\ProjectWizard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\ProjectWizardBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\ProjectWizardData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\WizardBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\WizardData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\WizardDataPackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\WizardDialog.xaml.cs">
+      <DependentUpon>WizardDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Wizard\WizardType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Wizard\WizardDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EditorPane.resx">
+      <DependentUpon>EditorPane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Icon.ico" />
+  </ItemGroup>
+</Project>

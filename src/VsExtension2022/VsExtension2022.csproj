@@ -1,0 +1,425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <UseCodebase>true</UseCodebase>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\LHQ.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ZipPackageCompressionLevel>Normal</ZipPackageCompressionLevel>
+    <TargetVsixContainerName>ScaleHQ.LHQEditor.VSExtension.VS2022.vsix</TargetVsixContainerName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{4A6B5AD8-10F4-44D3-95E7-4E3B7CC72BA1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LHQ.VsExtension</RootNamespace>
+    <AssemblyName>LHQ.VsExtension</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <VSixType>v3</VSixType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;VS_IDE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
+    <DeployExtension>True</DeployExtension>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;CODE_ANALYSIS;VS_IDE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <LangVersion>7.1</LangVersion>
+    <DeployExtension>False</DeployExtension>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="source.extension.cs">
+      <DependentUpon>source.extension.vsixmanifest</DependentUpon>
+    </Compile>
+    <Compile Include="VsExtensionConstants.cs" />
+    <!-- itemtemplates begin -->
+    <None Include="ItemTemplates\LocalizationHQ\NetCore\Default\Strings.lhq" />
+    <None Include="ItemTemplates\LocalizationHQ\NetCore\Web\Strings.lhq" />
+    <None Include="ItemTemplates\LocalizationHQ\NetFW\Generic\Strings.lhq.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
+      <Parameters>
+				&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
+				&lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;
+			</Parameters>
+    </None>
+    <None Include="ItemTemplates\LocalizationHQ\NetCore\Web\Strings.lhq.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
+    </None>
+    <Content Include="ItemTemplates\LocalizationHQ\NetCore\Default\icon.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetCore\Default\preview.png" />
+    <None Include="ItemTemplates\LocalizationHQ\NetCore\Default\Strings.lhq.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
+    </None>
+    <Content Include="ItemTemplates\LocalizationHQ\NetCore\Default\_Definitions\CSharp.vstemplate" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetCore\Default\_preprocess.xml" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetCore\Web\preview.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetCore\Web\icon.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetCore\Web\_Definitions\CSharp.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ItemTemplates\LocalizationHQ\NetCore\Web\_preprocess.xml" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\Generic\icon.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\Generic\preview.png" />
+    <None Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\Strings.lhq">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\Strings.lhq.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
+    </None>
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\_Definitions\CSharp.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\Generic\_Definitions\CSharp.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\Generic\_preprocess.xml" />
+    <None Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\Strings.lhq" />
+    <None Include="ItemTemplates\LocalizationHQ\NetFW\WPF\Strings.lhq.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
+    </None>
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\icon.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\preview.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\_preprocess.xml" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\icon.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\preview.png" />
+    <None Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\Strings.lhq.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
+    </None>
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\_Definitions\CSharp.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\_preprocess.xml" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\WPF\icon.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\WPF\preview.png" />
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\WPF\_Definitions\CSharp.vstemplate">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ItemTemplates\LocalizationHQ\NetFW\WPF\_preprocess.xml" />
+    <None Include="ItemTemplates\LocalizationHQ\NetFW\Generic\Strings.lhq">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ItemTemplates\LocalizationHQ\NetFW\WPF\Strings.lhq" />
+    <!-- itemtemplates end -->
+    <Content Include="..\VsExtensionMetadata\Additional.pkgdef">
+      <Link>Additional.pkgdef</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\EULA.txt">
+      <Link>EULA.txt</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\icons.pkgdef">
+      <Link>icons.pkgdef</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\readme.html">
+      <Link>readme.html</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\ReleaseNotes.txt">
+      <Link>ReleaseNotes.txt</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\ProjectTemplates\Localization HQ\ASP.NETCoreMVC.zip">
+      <Link>ProjectTemplates\Localization HQ\ASP.NETCoreMVC.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\ProjectTemplates\Localization HQ\ASP.NETCoreRazorPages.zip">
+      <Link>ProjectTemplates\Localization HQ\ASP.NETCoreRazorPages.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\ProjectTemplates\Localization HQ\Desktop.WinForms.zip">
+      <Link>ProjectTemplates\Localization HQ\Desktop.WinForms.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\ProjectTemplates\Localization HQ\Desktop.WPF.zip">
+      <Link>ProjectTemplates\Localization HQ\Desktop.WPF.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <VSCTCompile Include="VSCommandTable.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <Generator>VsctGenerator</Generator>
+      <LastGenOutput>VSCommandTable.cs</LastGenOutput>
+    </VSCTCompile>
+    <Resource Include="Resources\FileIcon.png" />
+    <Resource Include="Resources\Icon.ico" />
+    <Content Include="Resources\Icon.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Preview.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="source.extension.resx">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>source.extension.vsixmanifest</DependentUpon>
+      <MergeWithCTO>true</MergeWithCTO>
+      <ManifestResourceName>VSPackage</ManifestResourceName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\VsExtensionMetadata\source.extension.ico">
+      <Link>source.extension.ico</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\EnvDteUtils.ttinclude">
+      <Link>TextTemplates\EnvDteUtils.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\LhqGenerator.ttinclude">
+      <Link>TextTemplates\LhqGenerator.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\LhqToCSharpNetCore.ttinclude">
+      <Link>TextTemplates\LhqToCSharpNetCore.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\LhqToCSharpNetFw.ttinclude">
+      <Link>TextTemplates\LhqToCSharpNetFw.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\LhqToCSharpWinForms.ttinclude">
+      <Link>TextTemplates\LhqToCSharpWinForms.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\LhqToCSharpWpf.ttinclude">
+      <Link>TextTemplates\LhqToCSharpWpf.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\LhqToJsonGenerator.ttinclude">
+      <Link>TextTemplates\LhqToJsonGenerator.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\LhqToResXGenerator.ttinclude">
+      <Link>TextTemplates\LhqToResXGenerator.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\TextTemplates\LhqToTypescriptGenerator.ttinclude">
+      <Link>TextTemplates\LhqToTypescriptGenerator.ttinclude</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\app.config">
+      <Link>app.config</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\config.json">
+      <Link>config.json</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\VsExtensionMetadata\LHQ.VsExtension.imagemanifest">
+      <Link>LHQ.VsExtension.imagemanifest</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\LICENSE">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+      <Generator>VsixManifestGenerator</Generator>
+      <LastGenOutput>source.extension.resx</LastGenOutput>
+    </None>
+    <None Include="Templates\LHQ.VsExtension.vsdir" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.Localization\App.Localization.csproj">
+      <Project>{5941b24f-e10b-411b-9621-547fcb78ab0b}</Project>
+      <Name>App.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\App\App.csproj">
+      <Project>{87f223e0-202a-4712-b0eb-710d32b3e16b}</Project>
+      <Name>App</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{1c7a8813-2e72-4825-8a1f-b0e3c51ca2d6}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{ee616feb-a683-41ed-95ca-e6a555292239}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\ExportImportPack\ExportImportPack.csproj">
+      <Project>{1a43af51-9d19-40ea-a87a-5b36e24e2e69}</Project>
+      <Name>ExportImportPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\MicrosoftTranslator\MicrosoftTranslator.csproj">
+      <Project>{d1e7efca-c3d2-4e79-b6d9-021f9e730464}</Project>
+      <Name>MicrosoftTranslator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\YandexTranslator\YandexTranslator.csproj">
+      <Project>{920eb8f4-19f7-4c0a-b6aa-0aaddf3c35a0}</Project>
+      <Name>YandexTranslator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{5b60761b-5710-4971-a61d-66559d8a6b39}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.0-previews-4-31709-430" ExcludeAssets="runtime" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools">
+      <Version>17.0.5232</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Crc32.NET" Version="1.2.0" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="NuGet.VisualStudio">
+      <Version>6.0.0-preview.4.243</Version>
+    </PackageReference>
+    <PackageReference Include="RestSharpSigned">
+      <Version>105.2.3</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="TemplateBuilder">
+      <Version>1.1.6.1</Version>
+    </PackageReference>
+    <PackageReference Include="VSSDK.TemplateWizardInterface">
+      <Version>12.0.4</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="..\VsExtensionShared\VsExtensionShared.projitems" Label="Shared" />
+  <PropertyGroup>
+    <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
+    <StartAction>Program</StartAction>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RegisterOutputPackage>true</RegisterOutputPackage>
+    <RegisterWithCodebase>true</RegisterWithCodebase>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Label="TemplateBuilder">
+    <TemplateBuilderTargets Condition=" '$(TemplateBuilderTargets)'=='' ">$([System.IO.Path]::GetFullPath( $(NugetPackageRoot)TemplateBuilder\1.1.6.1\tools\ligershark.templates.targets ))</TemplateBuilderTargets>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!--<Target Name="BeforeBuild">
+    <Message Text="Getting VSIX Version" Importance="High" />
+
+    <XmlPeek XmlInputPath="$(ProjectDir)source.extension.vsixmanifest"
+             Query="/n:PackageManifest/n:Metadata/n:Identity/@Version"
+             Namespaces="&lt;Namespace Prefix='n' Uri='http://schemas.microsoft.com/developer/vsx-schema/2011' Name='DoNotKnowWhatThisIsFor-ButItIsRequired' /&gt;">
+      <Output TaskParameter="Result" PropertyName="VsixVersion" />
+    </XmlPeek>
+
+    <Message Text="VsixVersion: [$(VsixVersion)]" Importance="High"/>
+
+    <CreateProperty Value="LHQEditor_v$(VsixVersion).vsix">
+      <Output TaskParameter="Value" PropertyName="TargetVsixContainerName" />
+    </CreateProperty>
+  </Target>-->
+  <!--<Target Name="GetVSIXVersion" BeforeTargets="PrepareForBuild" >
+    <Message Text="Getting VSIX Version" Importance="High" />
+
+    <XmlPeek XmlInputPath="$(ProjectDir)source.extension.vsixmanifest"
+             Query="/n:PackageManifest/n:Metadata/n:Identity/@Version"
+             Namespaces="&lt;Namespace Prefix='n' Uri='http://schemas.microsoft.com/developer/vsx-schema/2011' Name='DoNotKnowWhatThisIsFor-ButItIsRequired' /&gt;">
+      <Output TaskParameter="Result" PropertyName="VsixVersion" />
+    </XmlPeek>
+
+    <Message Text="VsixVersion: [$(VsixVersion)]" Importance="High"/>
+
+    <PropertyGroup>
+      <TargetVsixContainerName>LHQEditor_v$(VsixVersion).vsix</TargetVsixContainerName>
+    </PropertyGroup>
+  </Target>-->
+  <Target Name="BeforeBuild">
+    <Message Text="TargetVsixContainerName: [$(TargetVsixContainerName)] " Importance="High" />
+    <Message Importance="High" Text="TemplateBuilderTargets value: $(TemplateBuilderTargets)" />
+    <Message Importance="High" Text="VSToolsPath value: $(VSToolsPath)" />
+    <Message Importance="High" Text="MSBuildExtensionsPath value: $(MSBuildExtensionsPath)" />
+    <Message Importance="High" Text="MSBuildProjectDirectory value: $(MSBuildProjectDirectory)" />
+    <Message Importance="High" Text="NugetPackageRoot value: $(NugetPackageRoot)" />
+    <!-- <ItemGroup> -->
+    <!-- 	<VSIXSourceItem Include="$(OutDir)\Newtonsoft.Json.dll" /> -->
+    <!-- 	<VSIXSourceItem Include="$(OutDir)\System.ValueTuple.dll" /> -->
+    <!-- </ItemGroup> -->
+  </Target>
+  <Import Project="$(TemplateBuilderTargets)" Condition="Exists('$(TemplateBuilderTargets)')" Label="TemplateBuilder" />
+</Project>

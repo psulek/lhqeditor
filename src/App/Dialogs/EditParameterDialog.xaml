@@ -1,0 +1,114 @@
+﻿<dialogs:DialogWindow x:Class="LHQ.App.Dialogs.EditParameterDialog"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+                      xmlns:code="clr-namespace:LHQ.App.Code"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+                      xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+                      xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
+                      Title="{Binding Title}"
+                      Width="500"
+                      Height="320"
+                      d:DataContext="{d:DesignInstance vm:EditParameterDialogViewModel,
+                                                       IsDesignTimeCreatable=False}"
+                      sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
+                      FocusManager.FocusedElement="{Binding ElementName=EditName}"
+                      ResizeMode="NoResize"
+                      WindowStartupLocation="CenterOwner"
+                      mc:Ignorable="d">
+    <dialogs:DialogWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </dialogs:DialogWindow.Resources>
+
+    <i:Interaction.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding Path=LoadedWindowCommand}"
+                                          Event="Loaded"
+                                          PassArguments="True" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Text="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+EditParameter.Order}}" />
+
+        <TextBlock Grid.Row="3"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Text="{Binding Path=Order}" />
+
+        <TextBlock Grid.Row="5"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Text="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+EditParameter.Name}}" />
+
+        <TextBox Grid.Row="7"
+                 x:Name="EditName"
+                 behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBoxStyle}"
+                 behaviors:TextBoxSelectionBehavior.IsAllSelected="True"
+                 Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                 TextWrapping="Wrap" />
+
+        <TextBlock Grid.Row="9"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Text="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+EditParameter.Description}}" />
+
+        <TextBox Grid.Row="11"
+                 behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBoxStyle}"
+                 behaviors:TextBoxSelectionBehavior.IsAllSelected="True"
+                 Text="{Binding Path=Description, Mode=TwoWay}"
+                 TextWrapping="Wrap" />
+
+        <TextBlock Grid.Row="13"
+                   Margin="0,3,0,0"
+                   Style="{DynamicResource ErrorTextBlock}"
+                   Text="{Binding Error}" />
+
+        <StackPanel Grid.Row="15"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+            <Button Width="70"
+                    Margin="0,0,10,0"
+                    Command="{Binding Path=SubmitDialogCommand}"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonOk}}"
+                    IsDefault="True" />
+            <Button Width="70"
+                    Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonCancel}}"
+                    IsCancel="True" />
+        </StackPanel>
+
+    </Grid>
+
+</dialogs:DialogWindow>

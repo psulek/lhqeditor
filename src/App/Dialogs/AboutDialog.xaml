@@ -1,0 +1,102 @@
+﻿<dialogs:DialogWindow
+    x:Class="LHQ.App.Dialogs.AboutDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+    xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
+    Title="{Binding Title}"
+    Width="550"
+    Height="400"
+    d:DataContext="{d:DesignInstance vm:AboutDialogViewModel,
+                                     IsDesignTimeCreatable=False}"
+    sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+
+    <dialogs:DialogWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Dialogs.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </dialogs:DialogWindow.Resources>
+
+    <i:Interaction.Behaviors>
+        <behaviors:EventToCommandBehavior
+            Command="{Binding Path=LoadedWindowCommand}"
+            Event="Loaded"
+            PassArguments="True" />
+    </i:Interaction.Behaviors>
+    <Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Bottom"
+                    FontSize="20pt"
+                    FontWeight="SemiBold"
+                    Text="{localization:Localization Key={x:Static resources:StringsKeys+App.Title}}" />
+                <TextBlock
+                    Margin="15,0,0,3"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    FontSize="9pt"
+                    Text="{Binding Path=AppVersion}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                Text="{Binding Path=ProductDescription}"
+                TextWrapping="Wrap" />
+
+            <TextBlock Grid.Row="4" Grid.Column="1"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontWeight="Normal"
+                TextWrapping="NoWrap">
+                <Hyperlink Command="{Binding Path=WebsiteLinkCommand}" Style="{StaticResource HyperlinkStyle}">
+                    <Run Text="{x:Static code:AppConstants+WebSiteUrls.HomePage}" />
+                </Hyperlink>
+            </TextBlock>
+
+
+            <Button Grid.Row="8" Grid.Column="1"
+                Width="70"
+                HorizontalAlignment="Right"
+                Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonClose}}"
+                IsCancel="True" />
+
+        </Grid>
+    </Border>
+</dialogs:DialogWindow>

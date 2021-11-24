@@ -1,0 +1,185 @@
+﻿<UserControl x:Class="LHQ.App.Components.BulletList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:code="clr-namespace:LHQ.App.Code"
+             xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="control"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibleOrHidden x:Key="BoolToVisibilityHiddenConverter"
+                                              Collapse="True"
+                                              Reverse="False" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+
+            <ItemsControl BorderThickness="0"
+                          ItemsSource="{Binding Path=ItemsSource, ElementName=control}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid d:DataContext="{d:DesignInstance code:BulletListItem, IsDesignTimeCreatable=False}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"
+                                                  SharedSizeGroup="ColumnBullet" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="5" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0"
+                                        Grid.Column="0"
+                                        Height="{Binding Converter={StaticResource BulletListItemHeightConverter}, ConverterParameter='Height'}"
+                                        Margin="{Binding Converter={StaticResource BulletListItemHeightConverter}, ConverterParameter='Margin'}"
+                                        VerticalAlignment="Stretch"
+                                        Orientation="Horizontal">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=HasBulletOrCheck}"
+                                                         Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+
+                                </StackPanel.Style>
+                                <Ellipse VerticalAlignment="Top"
+                                         Style="{StaticResource BulletListEllipseBorderStyle}"
+                                         Visibility="{Binding Path=BulletVisible, Converter={StaticResource BoolToVisibilityHiddenConverter}}" />
+
+                                <fa:ImageAwesome Width="6"
+                                                 Height="6"
+                                                 VerticalAlignment="Top"
+                                                 Foreground="LimeGreen"
+                                                 Icon="Check"
+                                                 Visibility="{Binding Path=CheckVisible, Converter={StaticResource BoolToVisibilityHiddenConverter}}" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="0"
+                                        Grid.Column="1">
+                                <TextBlock VerticalAlignment="Center"
+                                           FontWeight="{Binding Path=FontWeight}"
+                                           Foreground="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                                           Text="{Binding Path=Text}"
+                                           TextWrapping="Wrap">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsText}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=HasBulletOrCheck}"
+                                                             Value="True">
+                                                    <Setter Property="Margin" Value="5,0,0,0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock VerticalAlignment="Center"
+                                           Visibility="{Binding Path=IsHyperlink, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <Hyperlink Click="Hyperlink_OnClick"
+                                               Style="{StaticResource HyperlinkStyle}"
+                                               ToolTip="{Binding Path=Url}">
+                                        <Run Text="{Binding Path=Text}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+
+                        </Grid>
+
+                        <!--
+                    <BulletDecorator Width="Auto"
+                                     Height="{Binding Converter={StaticResource BulletListItemHeightConverter}, ConverterParameter='Height'}"
+                                     Margin="{Binding Converter={StaticResource BulletListItemHeightConverter}, ConverterParameter='Margin'}"
+                                     d:DataContext="{d:DesignInstance code:BulletListItem,
+                                                                      IsDesignTimeCreatable=False}">
+                        <BulletDecorator.Bullet>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=HasBulletOrCheck}"
+                                                         Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+
+                                </StackPanel.Style>
+                                <Ellipse Style="{StaticResource BulletListEllipseBorderStyle}"
+                                         Visibility="{Binding Path=BulletVisible, Converter={StaticResource BoolToVisibilityHiddenConverter}}" />
+
+                                <fa:ImageAwesome Width="6"
+                                                 Height="6"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="LimeGreen"
+                                                 Icon="Check"
+                                                 Visibility="{Binding Path=CheckVisible, Converter={StaticResource BoolToVisibilityHiddenConverter}}" />
+                            </StackPanel>
+                        </BulletDecorator.Bullet>
+
+                        <StackPanel>
+                            <TextBlock VerticalAlignment="Center"
+                                       FontWeight="{Binding Path=FontWeight}"
+                                       Foreground="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                                       Text="{Binding Path=Text}"
+                                       TextWrapping="Wrap">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsText}"
+                                                         Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=HasBulletOrCheck}"
+                                                         Value="True">
+                                                <Setter Property="Margin" Value="5,0,0,0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <TextBlock VerticalAlignment="Center"
+                                       Visibility="{Binding Path=IsHyperlink, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Hyperlink Click="Hyperlink_OnClick"
+                                           Style="{StaticResource HyperlinkStyle}"
+                                           ToolTip="{Binding Path=Url}">
+                                    <Run Text="{Binding Path=Text}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </BulletDecorator>
+                        -->
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </ScrollViewer>
+    </Grid>
+</UserControl>

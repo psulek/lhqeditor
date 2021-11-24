@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+
+  <Commands package="guidPackage">
+    <Groups>
+      <Group guid="guidPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidPackageCmdSet" id="MyMenu"/>
+      </Group>
+    </Groups>
+
+    <Menus>
+      <Menu guid="guidPackageCmdSet" id="MyMenu" priority="0x9999" type="Menu">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLS_EXTENSIBILITY"/>
+        <Strings>
+          <ButtonText>Localization HQ Editor</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Buttons>
+      <Button guid="guidPackageCmdSet" id="OptionsCommand" priority="0x0200" type="Button">
+        <Parent guid="guidPackageCmdSet" id="MyMenuGroup" />
+        <Strings>
+          <ButtonText>Options</ButtonText>
+          <LocCanonicalName>LHQEditor.Options</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageCmdSet" id="DuplicateElementCommand" priority="0x0100" type="Button">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>RouteToDocs</CommandFlag>
+        <Strings>
+          <ButtonText>Duplicate</ButtonText>
+          <LocCanonicalName>LHQEditor.DuplicateElement</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageCmdSet" id="CopyElementAsSpecial1Command" priority="0x0100" type="Button">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>RouteToDocs</CommandFlag>
+        <Strings>
+          <ButtonText>Copy element as special #1</ButtonText>
+          <LocCanonicalName>LHQEditor.CopyElementAsSpecial1</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageCmdSet" id="CopyElementAsSpecial2Command" priority="0x0100" type="Button">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>RouteToDocs</CommandFlag>
+        <Strings>
+          <ButtonText>Copy element as special #2</ButtonText>
+          <LocCanonicalName>LHQEditor.CopyElementAsSpecial2</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageCmdSet" id="FindElementCommand" priority="0x0100" type="Button">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>RouteToDocs</CommandFlag>
+        <Strings>
+          <ButtonText>Find</ButtonText>
+          <LocCanonicalName>LHQEditor.FindElement</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageCmdSet" id="NewCategoryCommand" priority="0x0100" type="Button">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>RouteToDocs</CommandFlag>
+        <Strings>
+          <ButtonText>New Category</ButtonText>
+          <LocCanonicalName>LHQEditor.NewCategory</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageCmdSet" id="NewResourceCommand" priority="0x0100" type="Button">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>RouteToDocs</CommandFlag>
+        <Strings>
+          <ButtonText>New Resource</ButtonText>
+          <LocCanonicalName>LHQEditor.NewResource</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageCmdSet" id="MainHelpCommand" priority="0x0100" type="Button">
+        <Parent guid="guidPackageCmdSet" id="MyMenuGroup" />
+        <Strings>
+          <ButtonText>Help</ButtonText>
+          <LocCanonicalName>LHQEditor.NewResource</LocCanonicalName>
+        </Strings>
+      </Button>
+
+    </Buttons>
+  </Commands>
+
+  <CommandPlacements>
+    <CommandPlacement guid="guidPackageCmdSet" id="MyMenu" priority="0xFFFF">
+      <Parent guid="guidExtensionMenu" id="guidExtensionMenuGroup" />
+    </CommandPlacement>
+  </CommandPlacements>
+
+  <KeyBindings>
+    <KeyBinding guid="guidPackageCmdSet" id="DuplicateElementCommand" mod1="Control" key1="D" editor="guidLhqEditor"/>
+    <KeyBinding guid="guidPackageCmdSet" id="CopyElementAsSpecial1Command" mod1="Control Shift" key1="C" editor="guidLhqEditor"/>
+    <KeyBinding guid="guidPackageCmdSet" id="CopyElementAsSpecial2Command" mod1="Control Alt" key1="C" editor="guidLhqEditor"/>
+    <KeyBinding guid="guidPackageCmdSet" id="FindElementCommand" mod1="Control" key1="F" editor="guidLhqEditor"/>
+    <KeyBinding guid="guidPackageCmdSet" id="NewCategoryCommand" mod1="Control" key1="VK_INSERT" editor="guidLhqEditor"/>
+    <KeyBinding guid="guidPackageCmdSet" id="NewResourceCommand" key1="VK_INSERT" editor="guidLhqEditor"/>
+    <KeyBinding guid="guidPackageCmdSet" id="MainHelpCommand" key1="VK_F1" editor="guidLhqEditor"/>
+  </KeyBindings>
+
+  <Symbols>
+    <GuidSymbol name="guidPackage" value="{d5b195f6-4332-4061-9c2b-ce9edf43fb88}" />
+    <GuidSymbol name="guidLhqEditor" value="{07e76e77-f1fb-416c-aebc-03a6a40af16c}" />
+
+    <GuidSymbol name="guidPackageCmdSet" value="{57CE79BE-4B52-4CA1-A682-B1A3819793F5}">
+      <IDSymbol name="MyMenu" value="0x0001" />
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+
+      <IDSymbol name="LicensingCommand" value="0x0100" />
+      <IDSymbol name="OptionsCommand" value="0x0200" />
+
+      <IDSymbol name="DuplicateElementCommand" value="0x0201" />
+      <IDSymbol name="CopyElementAsSpecial1Command" value="0x0202" />
+      <IDSymbol name="CopyElementAsSpecial2Command" value="0x0203" />
+      <IDSymbol name="FindElementCommand" value="0x0204" />
+      <IDSymbol name="NewCategoryCommand" value="0x0206" />
+      <IDSymbol name="NewResourceCommand" value="0x0207" />
+      <IDSymbol name="MainHelpCommand" value="0x0208" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidExtensionMenu" value="{C1B6F4D9-396A-437C-B2CC-A46AD5F3FD0E}">
+      <IDSymbol name="guidExtensionMenuGroup" value="0x6000" />
+    </GuidSymbol>
+  </Symbols>
+
+</CommandTable>

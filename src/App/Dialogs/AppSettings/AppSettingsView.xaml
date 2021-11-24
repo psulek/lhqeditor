@@ -1,0 +1,58 @@
+﻿<components:AppUserControl x:Class="LHQ.App.Dialogs.AppSettings.AppSettingsView"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:appSettings="clr-namespace:LHQ.App.ViewModels.Dialogs.AppSettings"
+                           xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+                           xmlns:components="clr-namespace:LHQ.App.Components"
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+                           xmlns:uc="clr-namespace:LHQ.App.Dialogs.AppSettings"
+                           d:DataContext="{d:DesignInstance appSettings:AppSettingsDialogViewModel,
+                                                            IsDesignTimeCreatable=False}"
+                           mc:Ignorable="d">
+    <components:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </components:AppUserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <syncfusion:TabControlExt Grid.Row="0"
+                                  AllowDragDrop="False"
+                                  CloseButtonType="Hide"
+                                  EnableLabelEdit="False"
+                                  HotTrackingEnabled="True"
+                                  SelectedIndex="{Binding Path=SelectedPageIndex}"
+                                  ShowTabItemContextMenu="False"
+                                  TabVisualStyle="None">
+            <i:Interaction.Behaviors>
+                <behaviors:EventToCommandBehavior Command="{Binding TabSelectionChanged}"
+                                                  Event="SelectionChanged"
+                                                  PassArguments="True" />
+            </i:Interaction.Behaviors>
+            <syncfusion:TabItemExt DataContext="{Binding Path=PageGeneral}"
+                                   Header="{Binding Path=Name}">
+                <uc:PageGeneral Padding="0,10,0,0" />
+            </syncfusion:TabItemExt>
+            <syncfusion:TabItemExt DataContext="{Binding Path=PageTranslator}"
+                                   Header="{Binding Path=Name}">
+                <uc:PageTranslator Padding="0,10,0,0" />
+            </syncfusion:TabItemExt>
+            <syncfusion:TabItemExt DataContext="{Binding Path=PagePlugins}"
+                                   Header="{Binding Path=Name}">
+                <uc:PagePlugins Padding="0,10,0,0" />
+            </syncfusion:TabItemExt>
+        </syncfusion:TabControlExt>
+    </Grid>
+</components:AppUserControl>

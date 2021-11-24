@@ -1,0 +1,11 @@
+﻿{
+  "version": "1.0.0.0",
+  "uiLanguage": "en",
+  "defaultProjectLanguage": "en",
+  "openLastProjectOnStartup": false,
+  "appHints": "All",
+  "enableTranslation": false,
+  "translatorProviderKey": null,
+  "theme": "Light",
+  "data": {}
+}

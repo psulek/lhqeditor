@@ -1,0 +1,307 @@
+﻿<components1:AppUserControl
+    x:Class="LHQ.App.Views.TreeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:components="clr-namespace:LHQ.App.Components.VirtualTreeListViewControl"
+    xmlns:components1="clr-namespace:LHQ.App.Components"
+    xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:LHQ.App.Model"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:vm="clr-namespace:LHQ.App.ViewModels"
+    d:DataContext="{d:DesignInstance vm:ShellViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    TextOptions.TextFormattingMode="Display"
+    mc:Ignorable="d">
+    <components1:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <components1:MenuItemTemplateSelector x:Key="MenuItemTemplateSelector" />
+            <converters:MenuOpacityConverter x:Key="MenuOpacityConverter" />
+            <converters:MenuItemTooltipConverter x:Key="MenuItemTooltipConverter" />
+
+            <ContextMenu
+                x:Key="TreeContextMenu"
+                ItemContainerTemplateSelector="{StaticResource MenuItemTemplateSelector}"
+                ItemsSource="{Binding PlacementTarget.Tag.ContextMenuItems, RelativeSource={RelativeSource Self}}"
+                UsesItemContainerTemplate="True">
+                <ContextMenu.Resources>
+                    <DataTemplate DataType="{x:Type vm:MenuItemViewModel}">
+                        <MenuItem
+                            Command="{Binding Command}"
+                            CommandParameter="{Binding CommandParameter}"
+                            Header="{Binding Header}"
+                            Icon="{Binding Image}"
+                            ItemContainerTemplateSelector="{StaticResource MenuItemTemplateSelector}"
+                            Opacity="{Binding Path=IsEnabled, Converter={StaticResource MenuOpacityConverter}}"
+                            ToolTip="{Binding Path=., Converter={StaticResource MenuItemTooltipConverter}}"
+                            UsesItemContainerTemplate="true"
+                            Visibility="{Binding Path=Visible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:MenuItemSeparatorViewModel}">
+                        <Separator />
+                    </DataTemplate>
+                </ContextMenu.Resources>
+            </ContextMenu>
+
+            <Style
+                x:Key="TreeItemStyle"
+                x:Shared="True"
+                TargetType="{x:Type ListViewItem}">
+                <Setter Property="ContextMenu" Value="{StaticResource TreeContextMenu}" />
+                <Setter Property="Tag" Value="{Binding Path=DataContext.Menu, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type components:VirtualTreeListView}}}" />
+                <Setter Property="Visibility" Value="{Binding Path=Tag.IsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Foreground" Value="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}" />
+                <Setter Property="Background" Value="{Binding Path=ContentBackgroundBrush, Source={x:Static code:VisualManager.Instance}}" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Width" Value="Auto" />
+
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected" Value="true" />
+                            <Condition Property="Selector.IsSelectionActive" Value="false" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{Binding Path=SelectionInActiveBrush, Source={x:Static code:VisualManager.Instance}}" />
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected" Value="true" />
+                            <Condition Property="Selector.IsSelectionActive" Value="true" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{Binding Path=ActiveBackgroundBrush, Source={x:Static code:VisualManager.Instance}}" />
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="true" />
+                            <Condition Property="IsSelected" Value="false" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="{Binding Path=HoverBackgroundBrush, Source={x:Static code:VisualManager.Instance}}" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="TreeHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Width" Value="Auto" />
+            </Style>
+
+            <converters:TreeViewSearchFilterButtonConverter x:Key="SearchFilterIconConverter" />
+
+            <DataTemplate x:Key="DragAdorner">
+                <Border
+                    Margin="1"
+                    Padding="5,2"
+                    Background="GhostWhite"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CornerRadius="2">
+                    <StackPanel DataContext="{Binding Path=Tag}" Orientation="Horizontal">
+                        <fa:ImageAwesome Margin="0,0,5,0" Style="{StaticResource IconTreeElementStyle}" />
+
+                        <TextBlock
+                            VerticalAlignment="Top"
+                            FontFamily="{StaticResource DefaultFontFamily}"
+                            FontSize="12pt"
+                            Text="{Binding Path=Name, Mode=OneWay}" />
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
+
+            <components1:DragAdornerTemplateSelector x:Key="TreeAdornerTemplateSelector" SingleTemplate="{StaticResource DragAdorner}" />
+
+        </ResourceDictionary>
+    </components1:AppUserControl.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" MaxHeight="200" />
+            </Grid.RowDefinitions>
+
+            <DockPanel
+                Grid.Row="0"
+                Margin="0,0,0,5"
+                LastChildFill="True">
+
+                <ToggleButton
+                    Width="30"
+                    Margin="2,0,0,0"
+                    Padding="0"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    DockPanel.Dock="Right"
+                    IsChecked="{Binding Path=ShowOnlyUntranslated, Mode=TwoWay}"
+                    ToolTip="{Binding Path=ShowOnlyUntranslated, Converter={StaticResource SearchFilterIconConverter}, ConverterParameter='tooltip'}">
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior
+                            Command="{Binding Path=TreeSearchCommand}"
+                            Event="Checked"
+                            PassArguments="False" />
+                        <behaviors:EventToCommandBehavior
+                            Command="{Binding Path=TreeSearchCommand}"
+                            Event="Unchecked"
+                            PassArguments="False" />
+                    </i:Interaction.Behaviors>
+                    <fa:ImageAwesome
+                        Width="15"
+                        Height="15"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{Binding Path=ShowOnlyUntranslated, Converter={StaticResource SearchFilterIconConverter}, ConverterParameter='icon'}"
+                        Icon="Filter" />
+                </ToggleButton>
+
+                <components1:SearchTextBox
+                    x:Name="SearchPanel"
+                    Margin="2,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="{Binding Path=BackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                    BorderThickness="0"
+                    DockPanel.Dock="Right"
+                    Foreground="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                    LabelText="{localization:Localization Key={x:Static resources:StringsKeys+Views+RootView.SearchTreeText}}"
+                    LabelTextColor="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                    SearchEventTimeDelay="00:00:00.200"
+                    SearchMode="Instant"
+                    Text="{Binding Path=HighlightTreeText, Mode=TwoWay}">
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior
+                            Command="{Binding Path=TreeSearchCommand}"
+                            Event="OnSearch"
+                            PassArguments="True" />
+                    </i:Interaction.Behaviors>
+                    <components1:SearchTextBox.InputBindings>
+                        <KeyBinding
+                            Command="{Binding Path=TreeSearchCancelCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"
+                            Gesture="Esc" />
+                        <KeyBinding
+                            Command="{Binding Path=TreeSearchExitCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"
+                            Gesture="Down" />
+                    </components1:SearchTextBox.InputBindings>
+                </components1:SearchTextBox>
+            </DockPanel>
+
+            <components:VirtualTreeListView
+                x:Name="TreeListView"
+                Grid.Row="1"
+                Width="Auto"
+                Height="Auto"
+                HorizontalContentAlignment="Stretch"
+                behaviors:GridViewColumnResize.Enabled="True"
+                behaviors:IsStartupFocusedBehavior.IsStartupFocused="{Binding Path=TreeIsStartupFocused, Mode=OneWay}"
+                dd:DragDrop.DefaultDragAdornerOpacity="0.8"
+                dd:DragDrop.DragAdornerTemplateSelector="{StaticResource TreeAdornerTemplateSelector}"
+                dd:DragDrop.DropHandler="{Binding Path=TreeElementsView}"
+                dd:DragDrop.IsDragSource="True"
+                dd:DragDrop.IsDropTarget="True"
+                dd:DragDrop.UseDefaultDragAdorner="True"
+                dd:DragDrop.UseDefaultEffectDataTemplate="True"
+                Background="{x:Null}"
+                BorderThickness="0"
+                ItemContainerStyle="{StaticResource TreeItemStyle}"
+                ItemsSource="{Binding Path=TreeElementsView}"
+                SelectionMode="Extended"
+                SnapsToDevicePixels="True"
+                VirtualizingStackPanel.VirtualizationMode="Recycling">
+                <i:Interaction.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        Command="{Binding SelectionChangedCommand}"
+                        Event="SelectionChanged"
+                        PassArguments="True" />
+                    <behaviors:EventToCommandBehavior
+                        Command="{Binding PreviewKeyDownCommand}"
+                        Event="PreviewKeyDown"
+                        PassArguments="True" />
+                </i:Interaction.Behaviors>
+                <components:VirtualTreeListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource TreeHeaderStyle}">
+                        <GridViewColumn behaviors:GridViewColumnResize.Width="*" Header="Node Path">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        d:DataContext="{d:DesignInstance model:ITreeElementViewModel,
+                                                                         IsDesignTimeCreatable=False}"
+                                        BorderThickness="2,0,0,0"
+                                        DataContext="{Binding Node.Tag, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type components:VirtualTreeListViewItem}}}">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="BorderBrush" Value="Transparent" />
+                                                <Setter Property="ToolTip" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=IsTranslationValid, FallbackValue=false}" Value="False">
+                                                        <Setter Property="BorderBrush" Value="Red" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=IsTranslationValid, FallbackValue=false}" Value="False">
+                                                        <Setter Property="ToolTip" Value="{localization:Localization Key={x:Static resources:StringsKeys+Views+TreeView.RedBorderTooltip}}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <DockPanel LastChildFill="True">
+                                            <components:NodeExpander VerticalAlignment="Center" />
+
+                                            <Border
+                                                Margin="0,0,5,0"
+                                                Style="{StaticResource TreeResourceStateBorderStyle}"
+                                                Visibility="{Binding Path=ElementIsResource, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                                            <fa:ImageAwesome Margin="0,0,5,0" Style="{StaticResource IconTreeElementStyle}" />
+
+                                            <TextBlock VerticalAlignment="Top" Text="{Binding Path=Name, Mode=OneWay}" />
+                                        </DockPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </components:VirtualTreeListView.View>
+            </components:VirtualTreeListView>
+        </Grid>
+        <Rectangle Style="{StaticResource TreeSearchBusyRectangleStyle}" />
+        <Border
+            Height="80"
+            Margin="5"
+            Padding="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            Background="Transparent">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=ProjectBusyOperation}" Value="TreeSearch">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <fa:ImageAwesome
+                Height="30"
+                VerticalAlignment="Center"
+                Icon="Spinner"
+                Style="{StaticResource TreeSearchBusyIconColor}" />
+        </Border>
+    </Grid>
+</components1:AppUserControl>

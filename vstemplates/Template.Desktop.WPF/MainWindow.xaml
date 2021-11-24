@@ -1,0 +1,86 @@
+﻿<Window
+    x:Class="Template.Desktop.WPF.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lhq="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Template.Desktop.WPF.Models"
+    xmlns:resources="clr-namespace:Template.Desktop.WPF"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    Title="Localization HQ Editor Sample App"
+    Width="900"
+    Height="500"
+    d:DataContext="{d:DesignInstance models:MainWindowModel,
+                                     IsDesignTimeCreatable=False}"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            <system:String x:Key="StaticString">Localization HQ Editor</system:String>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="FontSize" Value="11pt" />
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="Foreground" Value="Brown" />
+                <Setter Property="FontSize" Value="11pt" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="PaddingText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="Brown" />
+                <Setter Property="Margin" Value="20,10,10,10" />
+                <Setter Property="FontSize" Value="11pt" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel>
+        <TextBlock>
+            <Run FontWeight="DemiBold">Usage examples how to write XAML expressions with Localization HQ strings model file and nuget library.</Run>
+            <LineBreak />
+            <Run>Only text in</Run>
+            <Run Foreground="Brown">Brown</Run>
+            color is localizable in this sample application!</TextBlock>
+
+        <TextBlock>1) Simple text binding</TextBlock>
+        <TextBlock Foreground="Brown" Text="{lhq:Localization Key={x:Static resources:StringsKeys+Messages.Welcome}}" />
+
+        <TextBlock>2) Advanced binding in Model code behind</TextBlock>
+        <StackPanel Orientation="Vertical">
+            <ItemsControl ItemsSource="{Binding Path=AvailableCultures}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton
+                            Margin="20,0,0,10"
+                            Content="{Binding Path=DisplayName}"
+                            GroupName="Culture"
+                            IsChecked="{Binding Path=Active}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
+        <TextBlock>3) Advanced binding resource string with 3 parameters which are bind in XAML binding expression</TextBlock>
+        <TextBlock Style="{StaticResource PaddingText}">
+            <TextBlock.Text>
+                <lhq:Localization Key="{x:Static resources:StringsKeys+Messages.Title}">
+                    <Binding Path="WindowsUser" />
+                    <Binding Path="." Source="{StaticResource StaticString}" />
+                    <Binding
+                        Path="Now"
+                        Source="{x:Static system:DateTime.Now}"
+                        StringFormat="{}{0:dd/MM/yyyy (dddd)}" />
+                </lhq:Localization>
+            </TextBlock.Text>
+        </TextBlock>
+
+        <Border BorderBrush="Gray" BorderThickness="0,1,0,0">
+            <TextBlock FontSize="14pt" TextWrapping="Wrap">
+                Feel free to remove all sample resources from<Run xml:space="preserve"> </Run>
+                <Run FontWeight="DemiBold">Strings.lhq</Run>
+                file, sample<Run xml:space="preserve"> </Run>
+                <Run FontWeight="DemiBold">C#</Run>
+                code and add your own application code :-)</TextBlock>
+        </Border>
+    </StackPanel>
+</Window>

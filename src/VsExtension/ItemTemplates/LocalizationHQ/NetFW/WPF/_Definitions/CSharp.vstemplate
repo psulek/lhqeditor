@@ -1,0 +1,36 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <Name>Localization file for WPF (NET Framework, C#, ResX)</Name>
+    <Description>Localization HQ file (*.lhq) with T4 template which generates c# (*.cs) and resource (*.resx) file(s).
+    
+C# file(s) are generated for classic NET Framework.
+
+Recommended target projects: 
+Classic NET Framework WPF project.</Description>
+    <Icon>icon.png</Icon>
+    <PreviewImage>preview.png</PreviewImage>
+    <ProjectType>CSharp</ProjectType>
+    <TemplateID>CSharp.LHQ.net</TemplateID>
+    <DefaultName>Strings.lhq</DefaultName>
+    <NumberOfParentCategoriesToRollUp>2</NumberOfParentCategoriesToRollUp>
+    <SortOrder>500</SortOrder>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem TargetFileName="$fileinputname$.lhq" ReplaceParameters="true">Strings.lhq</ProjectItem>
+    <ProjectItem TargetFileName="$fileinputname$.lhq\$fileinputname$.lhq.tt" ReplaceParameters="true">Strings.lhq.tt</ProjectItem>
+    <CustomParameters>
+      <CustomParameter Name="$lhq_itemtemplate$" Value="WpfResxCsharp01"/>
+    </CustomParameters>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>LHQ.VsExtension, Culture=neutral, PublicKeyToken=null</Assembly>
+    <FullClassName>LHQ.VsExtension.Wizard.ItemWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    {
+      "Packages": [
+        {"Id": "ScaleHQ.WPF.LHQ", "Version": "1.0.0"}
+      ]
+    }
+  </WizardData>
+</VSTemplate>

@@ -1,0 +1,48 @@
+﻿2021.4
+- Fixed issue with some languages not translated by translator (e.g. zh-Hans and zh-Hant)
+- Fixed issue when command 'translate all empty only resources' will also translate not empty when executed on category or model
+
+2021.3
+- Fixed missing "LHQ *" item templates to create new LHQ files
+- Autofix missing code generator settings in lhq files
+
+2021.1
+- New version for Visual Studio 2022
+
+2.0.0
+- Removed licensing integration as Localization HQ Editor became FREE for all
+
+1.2.2.0
+- Minor fix in ASP.NET Core Template
+
+1.2.1.0
+- Added new option 'MissingTranslationFallbackToPrimary' into ASP.NET Core Template
+  this options will generate code that returns primary language text in case of missing translation in foreign language
+
+1.2.0.0
+- Expiration of full version license was extended to 1.1.2022, for everyone
+- Show error dialog on unsupported language(s)
+- Added 'Translator' button into toolbar
+- Minor fixes (typo in texts)
+
+
+1.1.0.0
+- Code Generators can be disabled (in Code Generator dialog)
+- Adding Strings.lhq file via New Item dialog will automatically install required ScaleHQ.* NuGet package when required
+- After 'ScaleHQ.AspNetCore.LHQ' NuGet package is installed, readme.txt file now contains instructions how to integrate LHQ with ASP.NET Core infrastructure
+- Importing resources to new category will automatically select that category in navigation tree
+- Shortcuts for some actions (duplicate, find element, etc) was fixed and now works properly
+- Fixed issue 'Saving code generator settings throw error on file readonly'
+- Added "What's New" menu item under Help toolbar menu
+
+
+1.0.2.0
+- Errors from code generators are shown in VS pane instead of modal dialog
+
+
+1.0.1.0
+- Fixed bug in c# code generators and xml doc comments with new lines
+
+
+1.0.0.0
+- Initial Release

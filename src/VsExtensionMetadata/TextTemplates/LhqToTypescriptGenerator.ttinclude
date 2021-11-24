@@ -1,0 +1,119 @@
+﻿<#@ import namespace="System.Collections.ObjectModel" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="LHQ.Utils" #>
+<#@ import namespace="LHQ.Data" #>
+<#@ import namespace="LHQ.Data.Extensions" #>
+<#@ import namespace="LHQ.Data.Templating.Settings" #>
+<#@ import namespace="LHQ.Data.Templating.Settings.Typescript" #>
+
+<#+ //System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+public class TypescriptGenerator: GeneratorBase<TypescriptGeneratorSettings> {
+	private string baseFileName;
+
+	public TypescriptGenerator(object textTemplatingHost, ModelContext modelContext, 
+		TypescriptGeneratorSettings settings)
+		:this(textTemplatingHost, modelContext, settings, null)
+    {}
+
+	public TypescriptGenerator(object textTemplatingHost, ModelContext modelContext, 
+		TypescriptGeneratorSettings settings, FileManager manager)
+	: base(textTemplatingHost, modelContext, settings, manager)
+	{}
+
+	protected override string GeneratorName
+    {
+		get { return "Typescript Generator"; }
+    }
+
+	public override void DoGenerate()
+	{
+		try
+		{
+			this.baseFileName = this.ModelRoot.Name;
+			WriteTypeDefFile();
+		}
+		finally
+		{
+			this.Manager.Flush();
+		}
+	}
+
+    public void WriteTypeDefFile()
+	{
+		string fileName = baseFileName + ".d.ts";
+        string interfaceName = string.IsNullOrEmpty(Settings.InterfacePrefix)
+            ? this.ModelRoot.Name
+            : Settings.InterfacePrefix + this.ModelRoot.Name;
+
+        string metadataInterfaceName = interfaceName + "Metadata";
+	
+		this.StartNewFile(fileName, this.Settings);
+        bool hasNamespace = !string.IsNullOrEmpty(Settings.AmbientNamespaceName);
+        if (hasNamespace)
+        {
+#>
+declare namespace <#= Settings.AmbientNamespaceName #> {
+<#+
+            PushIndent();
+        }
+
+#>
+export interface <#= interfaceName #> {
+<#+
+    WriteCategoriesAndResources(ModelRoot.Categories, ModelRoot.Resources);
+#>
+}
+
+export interface <#= metadataInterfaceName #> {
+    default: string;
+    languages: Array<string>;
+}
+
+<#+
+        if (hasNamespace)
+        {
+            PopIndent();
+#>
+}
+<#+
+        }
+		this.Manager.EndNewFile();
+	}
+
+    public void WriteCategoriesAndResources(LHQ.Data.CategoryElementList categories, 
+        LHQ.Data.ResourceElementList resources)
+    {
+        PushIndent();
+        bool hasResources = resources.Count > 0;
+        var orderedCategories = categories.OrderByName().ToList();
+        var lastCategory = orderedCategories.Count > 0 ? orderedCategories.Last() : null;
+
+        foreach (var category in orderedCategories)
+        {
+            string categoryName = category.Name.Trim();
+            string writeComma = (category != lastCategory || hasResources) ? "," : string.Empty;
+#>
+<#= categoryName #>: {
+<#+
+    WriteCategoriesAndResources(category.Categories, category.Resources);
+#>
+}<#= writeComma #>
+<#+
+        }
+
+        WriteResources(resources);
+        PopIndent();
+    }
+
+	public void WriteResources(LHQ.Data.ResourceElementList resources)
+	{
+		foreach(var resource in resources.OrderByName())
+		{
+			string resourceKey = resource.Name;
+#>
+<#= resourceKey #>: string;
+<#+
+		}
+	}
+}
+#>

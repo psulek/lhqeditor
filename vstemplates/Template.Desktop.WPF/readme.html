@@ -1,0 +1,460 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+
+    <title>Localization HQ Editor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            color: #1e1e1e;
+            font-size: 13px;
+            font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.45;
+            word-wrap: break-word
+        }
+
+        .container {
+            width: 1080px;
+            margin: 0 auto
+        }
+
+        b {
+            font-weight: 600;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0
+        }
+
+        #header {
+            color: #fff;
+            background: #68217a;
+            position: relative
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Segoe UI Light", "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1;
+            margin: 0 18px;
+            padding: 0
+        }
+
+        #header h1 {
+            font-size: 3.4em;
+            padding-top: 18px;
+            font-weight: 400;
+            margin-left: 15px
+        }
+
+        #header h2 {
+            font-size: 1.5em;
+            margin-top: 10px;
+            padding-bottom: 18px;
+            font-weight: 400
+        }
+
+        #main_content {
+            width: 100%;
+            display: flex;
+            flex-direction: row
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: bolder
+        }
+
+        #main_content h1 {
+            font-size: 1.8em;
+            margin-top: 34px
+        }
+
+        #main_content h1:first-child {
+            margin-top: 30px
+        }
+
+        #main_content h2 {
+            font-size: 1.4em;
+            font-weight: 700
+        }
+
+        p,
+        ul {
+            margin: 11px 18px
+        }
+
+        #main_content a {
+            color: #06c;
+            text-decoration: none
+        }
+
+        ul {
+            margin-top: 13px;
+            margin-left: 18px;
+            padding-left: 0
+        }
+
+        ul li {
+            margin-left: 18px;
+            padding-left: 0
+        }
+
+        #lpanel li:not(:last-child) {
+            margin-bottom: 5px;
+        }
+
+        #lpanel {
+            width: 720px;
+            float: left
+        }
+
+        #rpanel ul {
+            list-style-type: circle;
+            width: 300px
+        }
+
+        #rpanel ul li {
+            line-height: 1.8em
+        }
+
+        #rpanel {
+            background: #e7e7e7;
+            width: 360px;
+            float: right
+        }
+
+        #rpanel div {
+            width: 300px
+        }
+
+        #rpanel>div>h1 {
+            white-space: nowrap;
+        }
+
+        .file {
+            color: darkred;
+            font-weight: 600;
+        }
+
+        .code {
+            font-family: Consolas;
+            color: black;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .comment {
+            color: green;
+            font-weight: 600;
+        }
+
+        .vsversion {
+            border: 1px solid black;
+            background-color: darkgray;
+            color: white;
+            font-weight: 600;
+            padding: 3px;
+        }
+
+        .remarks {
+            list-style: square;
+            color: #68217a;
+            font-weight: 600;
+            padding: 5px;
+            border: 1px solid #68217a
+        }
+
+        .warning {
+            padding: 5px;
+            border: 1px solid orangered;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="header">
+            <h1>Localization HQ Editor</h1>
+            <h2>Visual Studio Extension / Project Template</h2>
+        </div>
+
+        <div id="main_content">
+            <div id="lpanel">
+                <h1>Project Template - Windows WPF Application with LHQ</h1>
+
+                <p>
+                    <span class="vsversion">VS2015</span>
+                    <span class="vsversion">VS2017</span>
+                    <span class="vsversion">VS2019</span>
+                </p>
+                <p>
+                    <ul class="remarks">
+                        <li>
+                            This project template is compatible with Visual Studio 2015, 2017 and 2019
+                        </li>
+                        <li>
+                            Project template showcase usage of <q>LHQ Editor</q> in Windows Desktop WPF application
+                        </li>
+                    </ul>
+                </p>
+
+                <h2>Visual Editor</h2>
+
+                <ul>
+                    <li>
+                        File <span class="file">Strings.lhq</span> (project root) is container for all string resources
+                        in application
+                    </li>
+                    <li>
+                        File extension (<span class="file">lhq</span>) is handled by LHQ extension loaded into Visual
+                        Studio Editor
+                    </li>
+                    <li>
+                        Visual Studio shows editor pane where you can visually edit all string resources for all
+                        languages
+                        your application requires
+                    </li>
+                </ul>
+
+                <h2>Code Generator</h2>
+                <ul>
+                    <li>
+                        File <span class="file">Strings.lhq.tt</span> is responsible for generating NET resource files
+                        (<span class="file">*.resx</span>) and strongly typed C# files (<span class="file">*.cs</span>)
+                    </li>
+                    <li>
+                        Each time file <span class="file">Strings.lhq</span> is saved in LHQ editor, code generation is
+                        triggered automatically by executing file <span class="file">Strings.lhq.tt</span> (T4 Text
+                        Templating)
+                    </li>
+                    <li>
+                        File <span class="file">Strings.lhq.tt</span> can be edited to configure
+                        generator settings, like destination folder where to produce generated files, format of output,
+                        etc
+                    </li>
+                </ul>
+                <br />
+
+                <h2>Integration with Windows Desktop WPF application</h2>
+                <p>
+                    To utilize the most from LHQ editor extension,
+                    an Nuget package <b>ScaleHQ.WPF.LHQ</b> was created.<br />
+                    This nuget package provides custom extension to WPF markup to be used in XAML.
+                    <br />
+                    This sample project contains usage of this markup extension.
+                </p>
+
+                <p class="warning">
+                    Nuget package <b>ScaleHQ.WPF.LHQ</b> is already installed in project template.<br />
+                    Building project will restore this package.<br />
+                    In some cases manual restore of nuget packages is required (uninstall and then install back).
+                </p>
+
+                <br />
+
+                <h3>
+                    Sample project description
+                </h3>
+
+                <p>
+                    File <span class="file">App.xaml.cs</span>&nbsp;:
+                    <ul>
+                        <li>
+                            <span class="code"><span style="color:darkblue;">LocalizationExtension</span>.<span
+                                    style="color:darkcyan;">Initialize</span>(...);
+                            </span><br />
+                            Registers generated class <span class="code">StringsContext</span> into WPF system to be
+                            able to use localization markup extension.
+                        </li>
+                        <li>
+                            <span class="code">
+                                <span style="color:darkblue;">StringsContext</span>.<span
+                                    style="color:purple;">Instance</span>.<span
+                                    style="color:purple;">Culture</span>&nbsp;=&nbsp;<span
+                                    style="color:blue;">new</span>&nbsp;<span
+                                    style="color:darkblue;">CultureInfo</span>(<span
+                                    style="color:#a31515;">&quot;en&quot;</span>);
+                            </span><br />
+                            Sets current culture to English on <span class="code">StringsContext</span> class.
+                        </li>
+                    </ul>
+                </p>
+
+                <p>
+                    File <span class="file">MainWindow.xaml</span>&nbsp;:
+
+                    <ul>
+                        <li>
+                            <span class="code">
+                                <span style="color:blue;">&lt;</span><span style="color:darkblue;">TextBlock</span><span
+                                    style="color:red;">&nbsp;</span><span style="color:purple;">Text</span><span
+                                    style="color:blue;">=&quot;{</span><span style="color:purple;">lhq</span><span
+                                    style="color:blue;">:</span><span style="color:darkblue;">Localization</span><span
+                                    style="color:red;">&nbsp;</span><span style="color:purple;">Key</span><span
+                                    style="color:blue;">={</span><span style="color:purple;">x</span><span
+                                    style="color:blue;">:</span><span style="color:darkblue;">Static</span><span
+                                    style="color:red;">&nbsp;</span><span style="color:purple;">resources</span><span
+                                    style="color:blue;">:</span><span style="color:darkblue;">StringsKeys</span><span
+                                    style="color:blue;">+</span><span style="color:darkblue;">Messages</span><span
+                                    style="color:blue;">.</span><span
+                                    style="font-weight:bold;color:purple;">Welcome</span><span
+                                    style="color:blue;">}}</span><span style="color:blue;">&quot;</span><span
+                                    style="color:blue;">/&gt;</span>
+                            </span><br />
+                            Renders localized text user specified resource key, according to current culture.
+                        </li>
+                        <li>
+                            <span class="code">
+                                <span style="color:blue;">&lt;</span><span
+                                    style="color:darkblue;">ItemsControl</span><span
+                                    style="color:red;">&nbsp;</span><span style="color:purple;">ItemsSource</span><span
+                                    style="color:blue;">=&quot;{</span><span style="color:darkblue;">Binding</span><span
+                                    style="color:red;">&nbsp;</span><span style="color:purple;">Path</span><span
+                                    style="color:blue;">=</span><span
+                                    style="color:purple;">AvailableCultures</span><span
+                                    style="color:blue;">}</span><span style="color:blue;">&quot;</span><span
+                                    style="color:blue;">&gt;</span>
+                            </span><br />
+                            Populates list of radio buttons with localized text binded in model using <span
+                                class="code">StringsContext</span> class.
+                        </li>
+                        <li>
+                            <span class="code">
+                                <span style="color:blue;">&lt;</span><span style="color:purple;">lhq</span><span
+                                    style="color:blue;">:</span><span style="color:darkblue;">Localization</span><span
+                                    style="color:red;">&nbsp;</span><span style="color:purple;">Key</span><span
+                                    style="color:blue;">=&quot;{</span><span style="color:purple;">x</span><span
+                                    style="color:blue;">:</span><span style="color:darkblue;">Static</span><span
+                                    style="color:red;">&nbsp;</span><span style="color:purple;">resources</span><span
+                                    style="color:blue;">:</span><span style="color:darkblue;">StringsKeys</span><span
+                                    style="color:blue;">+</span><span style="color:darkblue;">Messages</span><span
+                                    style="color:blue;">.</span><span
+                                    style="font-weight:bold;color:purple;">Title</span><span
+                                    style="color:blue;">}</span><span style="color:blue;">&quot;</span><span
+                                    style="color:blue;">&gt;</span><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:blue;">&lt;</span><span
+                                    style="color:darkblue;">Binding</span><span style="color:red;">&nbsp;</span><span
+                                    style="color:purple;">Path</span><span style="color:blue;">=</span><span
+                                    style="color:blue;">&quot;</span><span style="color:purple;">WindowsUser</span><span
+                                    style="color:blue;">&quot;</span><span style="color:blue;">&nbsp;/&gt;</span><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:blue;">&lt;</span><span
+                                    style="color:darkblue;">Binding</span><span style="color:red;">&nbsp;</span><span
+                                    style="color:purple;">Path</span><span style="color:blue;">=</span><span
+                                    style="color:blue;">&quot;.&quot;</span><span style="color:red;">&nbsp;</span><span
+                                    style="color:purple;">Source</span><span style="color:blue;">=&quot;{</span><span
+                                    style="color:darkblue;">StaticResource</span><span
+                                    style="color:red;">&nbsp;</span><span style="color:purple;">StaticString</span><span
+                                    style="color:blue;">}</span><span style="color:blue;">&quot;</span><span
+                                    style="color:blue;">&nbsp;/&gt;</span><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:blue;">&lt;</span><span
+                                    style="color:darkblue;">Binding</span><span style="color:red;">&nbsp;</span><span
+                                    style="color:purple;">Path</span><span style="color:blue;">=</span><span
+                                    style="color:blue;">&quot;</span><span style="color:purple;">Now</span><span
+                                    style="color:blue;">&quot;</span><span style="color:red;">&nbsp;</span><span
+                                    style="color:purple;">Source</span><span style="color:blue;">=&quot;{</span><span
+                                    style="color:purple;">x</span><span style="color:blue;">:</span><span
+                                    style="color:darkblue;">Static</span><span style="color:red;">&nbsp;</span><span
+                                    style="color:purple;">system</span><span style="color:blue;">:</span><span
+                                    style="color:darkblue;">DateTime</span><span style="color:blue;">.</span><span
+                                    style="color:purple;">Now</span><span style="color:blue;">}</span><span
+                                    style="color:blue;">&quot;</span><br /><span
+                                    style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+                                    style="color:purple;">StringFormat</span><span style="color:blue;">=</span><span
+                                    style="color:blue;">&quot;{}{0:dd/MM/yyyy&nbsp;(dddd)}&quot;</span><span
+                                    style="color:blue;">&nbsp;/&gt;</span><br /><span
+                                    style="color:blue;">&lt;/</span><span style="color:purple;">lhq</span><span
+                                    style="color:blue;">:</span><span style="color:darkblue;">Localization</span><span
+                                    style="color:blue;">&gt;</span>
+                            </span><br /><br />
+                            Renders localized text with C# string parameters dynamically binded values using XAML
+                            <span class="code">&lt;Binding .../&gt;</span> expression.
+                        </li>
+                    </ul>
+                </p>
+
+                <h3>Other Notes</h3>
+                <ul>
+                    <li>
+                        Look for <span class="comment">// LHQ:</span> comments within project for more information
+                    </li>
+                    <li>
+                        This project template has target framework set to <b>NET Framework 4.6.1</b> but can be
+                        upgraded to newer NET Framework version
+                    </li>
+                </ul>
+
+                <!-- <p>
+                    &copy; 2019 ScaleHQ Solutions.
+                </p> -->
+            </div>
+            <div id="rpanel">
+                <div>
+                    <h1>Localization HQ Editor Resources</h1>
+                    <ul>
+                        <li>
+                            <a href="https://marketplace.visualstudio.com/items?itemName=scalehqsolutions.lhq"
+                                target="_blank">
+                                Visual Studio Marketplace (Gallery)
+                            </a><br />
+                            Install required <b>Localization HQ Editor</b> extension into Visual Studio.
+                        </li>
+                        <li>
+                            <a href="https://www.lhqeditor.com/docs/" target="_blank">
+                                Product Documentation
+                            </a><br />
+                            Read more about product documentation.
+                        </li>
+                        <li>
+                            <a href="https://www.lhqeditor.com/templates?id=WpfResxCsharp01" target="_blank">
+                                Customizing Code Generator Templates
+                            </a><br />
+                            Read more about code generator T4 templates customization.
+                        </li>
+                        <li>
+                            <a href="https://www.lhqeditor.com/buy" target="_blank">
+                                Export/Import from/to Excel, Translate resources and more
+                            </a><br />
+                            Read about PRO version of product
+                        </li>
+                    </ul>
+                    <h2>Give us feedback</h2>
+                    <ul>
+                        <li>
+                            <a href="https://www.lhqeditor.com/feedback" target="_blank">
+                                Submit a new feature idea or suggestion
+                            </a>
+                        </li>
+                    </ul>
+                    <h2>Product Web Page</h2>
+                    <ul>
+                        <li>
+                            <a href="https://www.lhqeditor.com" target="_blank">
+                                Localization HQ Editor
+                            </a>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 20px">
+                        &copy; 2019 ScaleHQ Solutions
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

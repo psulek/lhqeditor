@@ -1,0 +1,149 @@
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Dialogs.AppSettings.PagePlugins"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:appSettings="clr-namespace:LHQ.App.ViewModels.Dialogs.AppSettings"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+    d:DataContext="{d:DesignInstance appSettings:PagePlugins,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
+    mc:Ignorable="d">
+    <components:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </components:AppUserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            Padding="0"
+            HorizontalAlignment="Left"
+            Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings+PagePlugins.InstalledPluginsHeader}}"
+            Target="{Binding ElementName=lbPlugins}" />
+
+        <DockPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            LastChildFill="True">
+            <Border
+                Height="180"
+                Margin="0,5,0,0"
+                Padding="5,10,5,10"
+                BorderThickness="0,1,0,0"
+                DockPanel.Dock="Bottom"
+                Style="{StaticResource HorizontalLineBorderStyle}"
+                Visibility="{Binding Path=HasSelectedPlugin, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <components:BulletList FontSize="10pt" ItemsSource="{Binding Path=SelectedPluginHelpItems}" />
+                </ScrollViewer>
+            </Border>
+            <ListBox
+                x:Name="lbPlugins"
+                HorizontalContentAlignment="Stretch"
+                behaviors:ApplyBaseItemContainerStyleBehaviour.Style="{StaticResource ItemsControlItemStyle}"
+                behaviors:IsStartupFocusedBehavior.IsStartupFocused="true"
+                BorderThickness="0"
+                DockPanel.Dock="Top"
+                ItemsSource="{Binding Path=Plugins}"
+                SelectedItem="{Binding SelectedPlugin}">
+                <i:Interaction.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        Command="{Binding PluginsKeyDownCommand}"
+                        Event="PreviewKeyDown"
+                        PassArguments="True" />
+                </i:Interaction.Behaviors>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox
+                                Grid.Column="0"
+                                Width="40"
+                                VerticalContentAlignment="Center"
+                                IsChecked="{Binding Path=IsEnabled}" />
+
+                            <TextBlock
+                                Grid.Column="2"
+                                Text="{Binding Path=DisplayName}"
+                                TextAlignment="Left"
+                                ToolTip="{Binding Path=DisplayName}">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsEnabled}" Value="false">
+                                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrush}}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <TextBlock
+                                Grid.Column="4"
+                                HorizontalAlignment="Right"
+                                Text="{Binding Path=Version}"
+                                TextAlignment="Right">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsEnabled}" Value="false">
+                                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrush}}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <Button
+                                Grid.Column="6"
+                                HorizontalAlignment="Right"
+                                BorderThickness="0"
+                                Command="{Binding Path=DataContext.ConfigurePluginCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                CommandParameter="{Binding}"
+                                Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonConfigure}}"
+                                IsEnabled="{Binding Path=IsEnabled}"
+                                ToolTip="{Binding Path=ConfigureTooltip}"
+                                Visibility="{Binding Path=IsConfigurable, Converter={StaticResource BoolToVisibilityConverterHidden}}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </Grid>
+</components:AppUserControl>

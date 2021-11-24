@@ -1,0 +1,104 @@
+﻿<dialogs:DialogWindow
+    x:Class="LHQ.App.Dialogs.ExceptionDebugDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+    Title="{Binding Title}"
+    Width="520"
+    Height="430"
+    sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
+    Loaded="Window_Loaded"
+    ResizeMode="CanResizeWithGrip"
+    SizeChanged="ExpressionViewerWindow_SizeChanged"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+
+    <dialogs:DialogWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </dialogs:DialogWindow.Resources>
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                x:Name="TreeCol"
+                Width="Auto"
+                MinWidth="90"
+                MaxWidth="250" />
+            <ColumnDefinition
+                x:Name="TextCol"
+                Width="*"
+                MinWidth="90" />
+        </Grid.ColumnDefinitions>
+        <TreeView
+            x:Name="TreeView1"
+            Margin="5"
+            SelectedItemChanged="treeView1_SelectedItemChanged" />
+        <GridSplitter
+            Grid.Row="0"
+            Grid.Column="0"
+            Width="5"
+            Margin="0,5,0,5"
+            ResizeBehavior="CurrentAndNext" />
+        <Border
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="0,5,5,5"
+            BorderBrush="{Binding ElementName=TreeView1, Path=BorderBrush}"
+            BorderThickness="{Binding ElementName=TreeView1, Path=BorderThickness}">
+            <FlowDocumentScrollViewer
+                x:Name="DocViewer"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Auto" />
+        </Border>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <CheckBox
+                x:Name="ChkWrap"
+                Height="16"
+                Margin="0,0,23,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="center"
+                Checked="chkWrap_Checked"
+                Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+ExceptionViewer.WrapText}}"
+                IsChecked="True"
+                Unchecked="chkWrap_Unchecked" />
+            <Button
+                Grid.Column="1"
+                Margin="1,3,4,6"
+                Padding="15,0"
+                VerticalAlignment="Center"
+                Click="btnCopy_Click"
+                Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+ExceptionViewer.CopyToClipboard}}" />
+            <Button
+                Grid.Column="2"
+                Margin="1,3,4,6"
+                Padding="15,0"
+                VerticalAlignment="Center"
+                Click="btnClose_Click"
+                Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonClose}}" />
+        </Grid>
+    </Grid>
+</dialogs:DialogWindow>

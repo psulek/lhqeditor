@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions
+@{
+    string currentPathAndQuery = Context.Request.GetEncodedPathAndQuery();
+}
+@inject IStringLocalizer stringLocalizer
+
+<ul class="flex-grow-1" id="languages">
+    @foreach (var culture in @StringsModel.AvailableCultures)
+    {
+        string langResourceKey = nameof(StringsModelKeys.Languages) + culture;
+        <li>
+            <a asp-controller="Home" asp-action="SetLanguage" asp-route-culture="@culture"
+               asp-route-returnUrl="@currentPathAndQuery">
+                @stringLocalizer[langResourceKey]
+            </a>
+        </li>
+    }
+</ul>

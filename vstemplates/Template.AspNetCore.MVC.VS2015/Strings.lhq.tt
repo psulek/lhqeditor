@@ -1,0 +1,28 @@
+<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ LHQDirective Processor="LHQDirectiveProcessor" FileName="Strings.lhq" #>
+<#@ include file="EnvDteUtils.ttinclude" #>
+<#@ include file="LhqGenerator.ttinclude" #>
+<#@ include file="LhqToResXGenerator.ttinclude" #>
+<#@ include file="LhqToCSharpNetCore.ttinclude" #>
+
+<# //System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+
+	// NOTE: Modify this two settings to redirect generated files to other project/folder location
+	// Properties: 
+	// "outputProjectName" - name of project where this *.lhq.tt file is located (required)
+	// "outputFolder" - name of project folder where generated files will be saved to (required)
+	// Remarks:
+	// Both properties must be set and cannot be empty!
+	var outputProjectName = "Template.AspNetCore.MVC.VS2015";
+	var outputFolder = "Resources";
+
+	using(var fileManager = FileManager.CreateShared(this))
+    {
+		var resXgenerator = new ResXGenerator(this, this.ModelContext, outputProjectName, outputFolder, fileManager);
+		resXgenerator.Generate();
+
+		var csharpGenerator = new CSharpGenerator(this, this.ModelContext, outputProjectName, outputFolder, fileManager);
+		csharpGenerator.Generate();
+    }
+#>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Preprocess>
+  <TemplateInfo Path="CSharp\Web\General"/>
+  <Replacements Include="*.*" Exclude="*.vstemplate;*.csproj;*.fsproj;*.vbproj;*.jpg;*.png;*.ico;_preprocess.xml;_project.vstemplate.xml">
+  </Replacements>
+</Preprocess>

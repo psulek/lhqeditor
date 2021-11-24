@@ -1,0 +1,70 @@
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Views.ToolbarControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:LHQ.App.ViewModels"
+    d:DataContext="{d:DesignInstance vm:ShellViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="53"
+    d:DesignWidth="1000"
+    mc:Ignorable="d">
+    <components:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <components:MenuItemTemplateSelector x:Key="MenuItemTemplateSelector" />
+            <converters:MenuOpacityConverter x:Key="MenuOpacityConverter" />
+            <converters:MenuItemTooltipConverter x:Key="MenuItemTooltipConverter" />
+
+        </ResourceDictionary>
+    </components:AppUserControl.Resources>
+
+    <Grid d:DataContext="{d:DesignInstance vm:ShellViewModel, IsDesignTimeCreatable=False}" KeyboardNavigation.TabNavigation="None">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Menu
+            Grid.Row="0"
+            Effect="{x:Null}"
+            IsMainMenu="True"
+            ItemContainerTemplateSelector="{StaticResource MenuItemTemplateSelector}"
+            ItemsSource="{Binding Menu.MenuItems}"
+            SnapsToDevicePixels="True"
+            UsesItemContainerTemplate="True">
+            <Menu.Resources>
+                <HierarchicalDataTemplate
+                    d:DataContext="{d:DesignInstance vm:MenuItemViewModel,
+                                                     IsDesignTimeCreatable=False}"
+                    DataType="{x:Type vm:MenuItemViewModel}"
+                    ItemsSource="{Binding MenuItems}">
+
+
+                    <MenuItem
+                        Padding="7,7,8,7"
+                        Command="{Binding Command}"
+                        CommandParameter="{Binding CommandParameter}"
+                        Header="{Binding Header}"
+                        Icon="{Binding Image}"
+                        ItemContainerTemplateSelector="{StaticResource MenuItemTemplateSelector}"
+                        Opacity="{Binding Path=IsEnabled, Converter={StaticResource MenuOpacityConverter}}"
+                        SnapsToDevicePixels="True"
+                        ToolTip="{Binding Path=., Converter={StaticResource MenuItemTooltipConverter}}"
+                        UsesItemContainerTemplate="true"
+                        Visibility="{Binding Path=Visible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type vm:MenuItemSeparatorViewModel}">
+                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                </DataTemplate>
+            </Menu.Resources>
+        </Menu>
+    </Grid>
+</components:AppUserControl>

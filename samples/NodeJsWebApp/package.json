@@ -1,0 +1,15 @@
+{
+  "name": "node-js-web-app",
+  "version": "0.0.0",
+  "description": "NodeJsWebApp",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.14"
+  },
+  "engines": {
+    "node": ">=8.0.14"
+  }
+}

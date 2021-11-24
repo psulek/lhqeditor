@@ -1,0 +1,155 @@
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Dialogs.AppSettings.PageGeneral"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:appSettings="clr-namespace:LHQ.App.ViewModels.Dialogs.AppSettings"
+    xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:views="clr-namespace:LHQ.App.Views"
+    d:DataContext="{d:DesignInstance appSettings:PageGeneral,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+
+    <components:AppUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </components:AppUserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            Padding="0"
+            HorizontalAlignment="Left"
+            Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings.DefaultLanguage}}"
+            Target="{Binding ElementName=ProjectLanguageSelector}" />
+
+        <views:LanguageSelectorView
+            x:Name="ProjectLanguageSelector"
+            Grid.Row="2"
+            Grid.Column="1"
+            behaviors:IsStartupFocusedBehavior.IsStartupFocused="True"
+            DataContext="{Binding ProjectLanguageSelector}"
+            IsTabStop="False"
+            TabIndex="2" />
+
+        <Label
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="0,2,0,0"
+            Padding="0"
+            HorizontalAlignment="Right"
+            Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings+PageGeneral.DefaultLanguageIsRequired}}"
+            Style="{StaticResource ErrorStyle}"
+            Visibility="{Binding Path=HasSelectedDefaultLanguage, Converter={StaticResource BoolToVisibilityConverterHiddenReverse}}" />
+
+
+        <Label
+            Grid.Row="5"
+            Grid.Column="1"
+            Padding="0"
+            HorizontalAlignment="Left"
+            Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings+PageGeneral.ColorTheme}}"
+            Target="{Binding ElementName=ProjectLanguageSelector}" />
+
+        <ComboBox
+            Grid.Row="7"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            DisplayMemberPath="Key"
+            ItemsSource="{Binding Path=ColorThemes, Mode=OneTime}"
+            SelectedIndex="{Binding Path=SelectedThemeIndex, Mode=TwoWay}" />
+
+        <CheckBox
+            Grid.Row="9"
+            Grid.Column="1"
+            VerticalContentAlignment="Center"
+            Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings.OpenLastProjectOnStartup}}"
+            IsChecked="{Binding OpenLastProjectOnStartup}"
+            TabIndex="0"
+            Visibility="{Binding Path=RunInVsPackage, Converter={StaticResource BoolToVisibilityConverterReverse}}" />
+
+        <CheckBox
+            Grid.Row="11"
+            Grid.Column="1"
+            VerticalContentAlignment="Center"
+            Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings+PageGeneral.LockTranslationsWithResource}}"
+            IsChecked="{Binding LockTranslationsWithResource}"
+            IsThreeState="True"
+            TabIndex="2" />
+
+        <CheckBox
+            Grid.Row="13"
+            Grid.Column="1"
+            VerticalContentAlignment="Center"
+            Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings.ShowHints}}"
+            IsChecked="{Binding Path=ShowHints}"
+            IsThreeState="{Binding Path=ShowHintsIsThreeState}" />
+
+        <!--
+        <Label Grid.Row="13"
+               Grid.Column="1"
+               Margin="0,10,0,0"
+               Padding="0,5"
+               Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings.ApplicationLocalization}}"
+               Target="{Binding ElementName=CmbLocalizations}"
+               Visibility="Visible" />
+        -->
+
+        <!--<ComboBox Grid.Row="15"
+                  x:Name="CmbLocalizations"
+                  Grid.Column="1"
+                  Margin="0,5,0,0"
+                  ItemsSource="{Binding Localizations}"
+                  SelectedItem="{Binding Path=SelectedLocalization}"
+                  TabIndex="3"
+                  Visibility="Visible">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16"
+                               Height="16"
+                               Source="{Binding Converter={StaticResource UiLanguageImageConverter}}" />
+                        <TextBlock Margin="5,0,0,0"
+                                   FontWeight="Bold"
+                                   Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>-->
+    </Grid>
+</components:AppUserControl>

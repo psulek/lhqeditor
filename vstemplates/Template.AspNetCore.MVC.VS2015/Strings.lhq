@@ -1,0 +1,160 @@
+﻿{
+  "model": {
+    "uid": "6ce4d54c5dbd415c93019d315e278638",
+    "version": 1,
+    "options": {
+      "categories": true,
+      "resources": "All"
+    },
+    "name": "StringsModel",
+    "primaryLanguage": "en"
+  },
+  "languages": [
+    "en",
+    "sk"
+  ],
+  "categories": {
+    "Form": {
+      "resources": {
+        "Name": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Name"
+            },
+            "sk": {
+              "value": "Meno"
+            }
+          }
+        },
+        "Surname": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Surname"
+            },
+            "sk": {
+              "value": "Priezvisko"
+            }
+          }
+        },
+        "Username": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "User name"
+            },
+            "sk": {
+              "value": "Užívateľské meno"
+            }
+          }
+        }
+      }
+    },
+    "Languages": {
+      "resources": {
+        "en": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "English Language"
+            },
+            "sk": {
+              "value": "Anglický Jazyk"
+            }
+          }
+        },
+        "sk": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Slovak Language"
+            },
+            "sk": {
+              "value": "Slovenský Jazyk"
+            }
+          }
+        }
+      }
+    },
+    "Messages": {
+      "resources": {
+        "PleaseEnterInfo": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Please enter information about you:"
+            },
+            "sk": {
+              "value": "Prosím vyplňte informácie o Vás:"
+            }
+          }
+        },
+        "WelcomeMessage": {
+          "state": "Edited",
+          "parameters": {
+            "name": {
+              "order": 0
+            },
+            "surname": {
+              "order": 1
+            },
+            "username": {
+              "order": 2
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Welcome {0} {1} ({2}) !"
+            },
+            "sk": {
+              "value": "Vitaj používateľ {0} {1} ({2}) !"
+            }
+          }
+        },
+        "WelcomeSubmessage": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "We're glad you are using \"Localization HQ Editor\""
+            },
+            "sk": {
+              "value": "Sme radi že používate program \"Localization HQ Editor\""
+            }
+          }
+        }
+      }
+    },
+    "ValidationErrors": {
+      "resources": {
+        "FieldIsRequired": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Field value is required."
+            },
+            "sk": {
+              "value": "Hodnota položky je požadovaná."
+            }
+          }
+        },
+        "OnlyAlphanumericAllowed": {
+          "state": "Edited",
+          "parameters": {
+            "fieldName": {
+              "order": 0
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Only alphanumeric characters without space and accent are allowed for field '{0}'."
+            },
+            "sk": {
+              "value": "Povolené sú iba alfanumerické znaky bez medzier a diakritiky pre položku '{0}'."
+            }
+          }
+        }
+      }
+    }
+  }
+}

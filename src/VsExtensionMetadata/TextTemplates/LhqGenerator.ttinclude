@@ -1,0 +1,169 @@
+﻿<#@ import namespace="System.Collections.ObjectModel" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ import namespace="LHQ.Utils" #>
+<#@ import namespace="LHQ.Data" #>
+<#@ import namespace="LHQ.Data.Extensions" #>
+<#@ import namespace="LHQ.Data.Templating.Settings" #>
+
+<#+
+public abstract class GeneratorBase
+{
+	protected TextTransformation _textTemplatingHost;
+
+    public FileManager Manager { get; private set; }
+
+	protected abstract string GeneratorName { get; }
+
+	protected EnvDTE.DTE Dte
+    {
+		get { return Manager.GetDte(); }
+    }
+
+	public GeneratorBase(object textTemplatingHost, FileManager manager) {
+		this._textTemplatingHost = textTemplatingHost as TextTransformation;
+
+		this.Manager = manager == null 
+				? FileManager.Create(textTemplatingHost)
+				: manager;
+    }
+}
+
+public abstract class GeneratorBase<TSettings>: GeneratorBase where TSettings: GeneratorSettingsBase, new()
+{
+	private string _projectFileName;
+
+    public TSettings Settings { get; private set; }
+    public Model ModelRoot { get; private set; }
+	public LHQ.Data.LanguageElement PrimaryLanguage { get; private set; }
+	public string ProjectFileName
+    {
+		get
+		{
+			return _projectFileName;
+        }
+    }
+
+    public GeneratorBase(object textTemplatingHost, ModelContext modelContext,
+		TSettings settings, FileManager manager): 
+		base(textTemplatingHost, manager)
+	{
+		if (settings == null)
+		{
+			throw new ArgumentNullException("settings");
+        }
+
+        this.ModelRoot = modelContext.Model;
+		this.PrimaryLanguage = modelContext.GetPrimaryLanguage();
+        this.Settings = settings;
+    }
+
+	public void PushIndent()
+	{
+		this._textTemplatingHost.PushIndent(new String(' ', 4));
+	}
+
+	public void PopIndent() {
+		this._textTemplatingHost.PopIndent();
+	}
+	
+	public void Write(string textToAppend) {
+		this._textTemplatingHost.Write(textToAppend);
+	}
+
+	public void Write(string format, params object[] args) {
+		this._textTemplatingHost.Write(format, args);
+	}
+
+	public void WriteLine(string textToAppend) {
+		this._textTemplatingHost.WriteLine(textToAppend);
+	}
+
+	public void WriteLine(string format,params object[] args) {
+		this._textTemplatingHost.WriteLine(format, args);
+	}
+
+    protected void StartNewFile(string fileNameWithExtension, OutputSettings outputSettings)
+    {
+	    var outputTarget = this.Manager.StartNewFile(fileNameWithExtension, outputSettings.OutputProjectName, 
+			outputSettings.OutputFolder);
+
+		if (this._projectFileName == null)
+        {
+			this._projectFileName = outputTarget.ProjectFileName;
+        }
+    }
+
+    public void Generate() {
+		if (T4Utils.HasLastError())
+		{
+			return;
+        }
+
+		if (!Settings.Enabled)
+        {
+			T4Utils.AddMessageToOutput(string.Format("{0} is disabled, no output files will be generated.", this.GeneratorName), T4Utils.OutputMessageInfo);
+			return;
+        }
+
+		try
+		{
+			DoGenerate();
+		}
+		catch(Exception e)
+		{
+			T4Utils.SetLastError(e);
+        }
+    }
+    
+	public abstract void DoGenerate();
+
+	protected virtual string GetCommentForResourceProperty(ResourceElement resource)
+    {
+		var primaryResourceValue = resource.FindValueByLanguage(PrimaryLanguage.Name);
+		string propertyComment = primaryResourceValue != null && !string.IsNullOrEmpty(primaryResourceValue.Value) 
+			? primaryResourceValue.Value
+			: resource.Description;
+
+		if (propertyComment == null)
+        {
+			propertyComment = string.Empty;
+        }
+
+		bool trimmed = false;
+		var idxNewLine = propertyComment.IndexOf(Environment.NewLine);
+		
+		if (idxNewLine == -1)
+		{
+			idxNewLine = propertyComment.IndexOf('\n');
+        }
+
+		if (idxNewLine == -1)
+		{
+			idxNewLine = propertyComment.IndexOf('\r');
+        }
+
+		if (idxNewLine > -1)
+        {
+			propertyComment = propertyComment.Substring(0, idxNewLine);
+			trimmed = true;
+        }
+
+		if (propertyComment.Length > 80)
+        {
+			propertyComment = propertyComment.Substring(0, 80);
+			trimmed = true;
+        }
+
+		if (trimmed)
+        {
+			propertyComment += "...";
+        }
+
+		propertyComment = propertyComment.Replace('\t', ' ');
+
+		return propertyComment;
+    }
+}
+
+#>

@@ -1,0 +1,21 @@
+﻿@{
+    var httpRequest = ViewContext.HttpContext.Request;
+    var pathBase = httpRequest.PathBase;
+    var path = httpRequest.Path;
+    var query = httpRequest.QueryString;
+    string currentPathAndQuery = (pathBase.HasValue || path.HasValue ? (pathBase + path).ToString() : "/") + query;
+}
+@inject IStringLocalizer stringLocalizer
+
+<ul class="flex-grow-1" id="languages">
+    @foreach (var culture in @StringsModel.AvailableCultures)
+    {
+        string langResourceKey = nameof(StringsModelKeys.Languages) + culture;
+        <li>
+            <a asp-controller="Home" asp-action="SetLanguage" asp-route-culture="@culture"
+               asp-route-returnUrl="@currentPathAndQuery">
+                @stringLocalizer[langResourceKey]
+            </a>
+        </li>
+    }
+</ul>

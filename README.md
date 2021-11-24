@@ -1,10 +1,42 @@
 ![LHQ main screen](./imgs/landing.png)
 
 # Localization HQ Editor (aka lhqeditor)
-> **Visual Studio (2015/2017/2019/2022)** editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.
+**Visual Studio (2015/2017/2019/2022)** editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.
 
-## Official project page
-Read more about features and help pages on: [psulek.github.io/lhqeditor](https://psulek.github.io/lhqeditor/)
+> Official project page on: [psulek.github.io/lhqeditor](https://psulek.github.io/lhqeditor/)
+
+## Features
+
+### WYSIWYG Editor
+- Edit and manage string resources in visual tree
+- Add foreign languages using lookup editor
+- Translate multiple string resources in one click
+- Lock translations for editing
+- Perform actions on multiple resources
+
+### Dark Mode
+- Popular Dark mode is available
+![LHQ main screen](./imgs/darkmode.png)
+
+### Plugins
+- Buildin plugins (import, export, online translation services)
+- Import resources from multiple languages resx files
+- Export resources to Microsoft Excel for external translation
+- Import Microsoft Excel translations from external entity
+
+### Code Generator
+- Save file automatically generates code (strongly typed C#, resX, JSON)
+- Different generator for ASP.NET Core, WPF, WinForms
+
+### Visual Studio Templates
+- New Project Wizard ➞ Localization HQ ➞ Project Templates
+- New Item Wizard ➞ Localization HQ ➞ Item Templates
+
+### Nuget Packages
+- Nuget package for [ASP.NET Core](https://www.nuget.org/packages/ScaleHQ.AspNetCore.LHQ/)
+- Nuget package for [WPF](https://www.nuget.org/packages/ScaleHQ.WPF.LHQ/)
+
+> Read more about features and help pages on: [psulek.github.io/lhqeditor](https://psulek.github.io/lhqeditor/)
 
 ## Installation
 There are two versions of **lhqeditor** extension:

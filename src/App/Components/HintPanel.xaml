@@ -1,19 +1,20 @@
-﻿<UserControl x:Class="LHQ.App.Components.HintPanel"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:code="clr-namespace:LHQ.App.Code"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
-             xmlns:lhq="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
-             xmlns:local="clr-namespace:LHQ.App.Components"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
-             xmlns:viewModels="clr-namespace:LHQ.App.ViewModels"
-             d:DataContext="{d:DesignInstance viewModels:HintPanelViewModel,
-                                              IsDesignTimeCreatable=False}"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
-             mc:Ignorable="d">
+﻿<UserControl
+    x:Class="LHQ.App.Components.HintPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:code="clr-namespace:LHQ.App.Code"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:lhq="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:local="clr-namespace:LHQ.App.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    xmlns:viewModels="clr-namespace:LHQ.App.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:HintPanelViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,10 +24,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border Padding="5"
-            BorderThickness="0"
-            Style="{StaticResource HintPanelStyle}"
-            Visibility="{Binding Path=Visible, Converter={StaticResource BoolToVisibilityConverter}}">
+    <Border
+        Padding="5"
+        BorderThickness="0"
+        Style="{StaticResource HintPanelStyle}"
+        Visibility="{Binding Path=Visible, Converter={StaticResource BoolToVisibilityConverter}}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10" />
@@ -43,29 +45,25 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <local:TooltipIcon Grid.Row="0"
-                               Grid.RowSpan="2"
-                               Grid.Column="1"
-                               VerticalAlignment="Center" />
+            <local:TooltipIcon Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+                VerticalAlignment="Center" />
 
-            <local:BulletList Grid.Row="0"
-                              Grid.RowSpan="2"
-                              Grid.Column="3"
-                              FontSize="12"
-                              ItemsSource="{Binding Path=ItemsSource}" />
+            <local:BulletList Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"
+                FontSize="12"
+                ItemsSource="{Binding Path=ItemsSource}" />
 
-            <Button Grid.Row="0"
-                    Grid.Column="5"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=CloseCommand}"
-                    Focusable="False"
-                    ToolTip="{lhq:Localization Key={x:Static resources:StringsKeys+Common.ClickToHideThisHint}}"
-                    Visibility="{Binding Path=CloseButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-                <fa:ImageAwesome Width="10"
-                                 Height="10"
-                                 Foreground="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
-                                 Icon="Close" />
+            <Button Grid.Row="0" Grid.Column="5"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding Path=CloseCommand}"
+                Focusable="False"
+                ToolTip="{lhq:Localization Key={x:Static resources:StringsKeys+Common.ClickToHideThisHint}}"
+                Visibility="{Binding Path=CloseButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <fa:ImageAwesome
+                    Width="10"
+                    Height="10"
+                    Foreground="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                    Icon="Close" />
             </Button>
 
         </Grid>

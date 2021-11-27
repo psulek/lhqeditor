@@ -50,10 +50,7 @@
             </Grid.RowDefinitions>
 
 
-            <StackPanel
-                Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                 Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
                 Orientation="Horizontal"
                 Visibility="{Binding Path=HasModel, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -78,21 +75,17 @@
                     ToolTip="{lhq:Localization Key={x:Static resources:StringsKeys+Views+RootView.ActionsTooltip}}" />
             </StackPanel>
 
-            <Grid
-                Grid.Row="1"
-                Grid.Column="1"
+            <Grid Grid.Row="1" Grid.Column="1"
                 Margin="0,10,0,0"
                 Visibility="{Binding Path=HasModel, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock
-                    Grid.Row="0"
+                <TextBlock Grid.Row="0"
                     FontWeight="SemiBold"
                     Text="{Binding Path=Model.Name}" />
-                <TextBlock
-                    Grid.Row="1"
+                <TextBlock Grid.Row="1"
                     Margin="0,5,0,0"
                     FontSize="10pt"
                     FontStyle="Italic"
@@ -100,10 +93,7 @@
                     Visibility="{Binding Path=ModelHasDescription, Converter={StaticResource BoolToVisibilityConverter}}" />
             </Grid>
 
-            <StackPanel
-                Grid.Row="2"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                 Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
                 Orientation="Horizontal"
                 Visibility="{Binding Path=HasCategories, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -139,9 +129,7 @@
 
             </StackPanel>
 
-            <Border
-                Grid.Row="3"
-                Grid.Column="1"
+            <Border Grid.Row="3" Grid.Column="1"
                 Margin="0,10,0,0"
                 Visibility="{Binding Path=HasCategories, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -153,10 +141,7 @@
                 </ScrollViewer>
             </Border>
 
-            <StackPanel
-                Grid.Row="4"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
+            <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
                 Margin="{Binding Path=ResourcesMargin}"
                 Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
                 Orientation="Horizontal"
@@ -183,9 +168,7 @@
 
             </StackPanel>
 
-            <Border
-                Grid.Row="5"
-                Grid.Column="1"
+            <Border Grid.Row="5" Grid.Column="1"
                 Margin="0,10,0,0"
                 Visibility="{Binding Path=HasResources, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">

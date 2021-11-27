@@ -4,22 +4,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="clr-namespace:LHQ.App.Behaviors"
     xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
     xmlns:viewModels="clr-namespace:LHQ.App.ViewModels"
     xmlns:views="clr-namespace:LHQ.App.Views"
-    xmlns:fa="http://schemas.fontawesome.io/icons/"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
     d:DataContext="{d:DesignInstance viewModels:LanguageSelectorViewModel,
                                      IsDesignTimeCreatable=False}"
     d:DesignHeight="40"
     d:DesignWidth="620"
     mc:Ignorable="d">
     <components:AppUserControl.Resources>
-        <converters:AddLanguageSearchByCodeButtonConverter x:Key="SearchByCountryCodeConverter"/>
+        <converters:AddLanguageSearchByCodeButtonConverter x:Key="SearchByCountryCodeConverter" />
 
         <DataTemplate x:Key="NameTemplate">
             <StackPanel Orientation="Horizontal">
@@ -35,12 +35,11 @@
             </StackPanel>
         </DataTemplate>
 
-
-        <viewModels:ComboBoxItemTemplateSelector 
-            x:Key="ComboBoxItemTemplateSelector" NameTemplate="{StaticResource NameTemplate}" 
-                                                 CodeTemplate="{StaticResource CodeTemplate}"/>
+        <viewModels:ComboBoxItemTemplateSelector
+            x:Key="ComboBoxItemTemplateSelector"
+            CodeTemplate="{StaticResource CodeTemplate}"
+            NameTemplate="{StaticResource NameTemplate}" />
     </components:AppUserControl.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -48,23 +47,18 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <!-- PreviewTextInput="OnPreviewTextInput" -->
-        <!-- Text="{Binding Path=SearchText, Mode=TwoWay}" -->
-        <!-- TextSearch.TextPath="CultureDisplayName" -->
-        <ComboBox
-            Grid.Column="0"
+        <ComboBox Grid.Column="0"
             VerticalAlignment="Center"
             behaviors:IsStartupFocusedBehavior.IsStartupFocused="{Binding IsStartupFocused, Mode=OneTime}"
             IsEditable="True"
             IsSynchronizedWithCurrentItem="False"
             IsTextSearchCaseSensitive="False"
             IsTextSearchEnabled="True"
+            ItemTemplateSelector="{StaticResource ComboBoxItemTemplateSelector}"
             ItemsSource="{Binding Path=Cultures}"
-            
             SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             StaysOpenOnEdit="True"
             TabIndex="{Binding Path=TabIndex, RelativeSource={RelativeSource AncestorType={x:Type views:LanguageSelectorView}}}"
-            ItemTemplateSelector="{StaticResource ComboBoxItemTemplateSelector}"
             TextSearch.TextPath="{Binding Path=TextSearchPath}"
             VirtualizingStackPanel.IsVirtualizing="True"
             VirtualizingStackPanel.VirtualizationMode="Recycling">
@@ -73,14 +67,6 @@
                     <VirtualizingStackPanel />
                 </ItemsPanelTemplate>
             </ComboBox.ItemsPanel>
-            <!-- <ComboBox.ItemTemplate> -->
-            <!--     <DataTemplate> -->
-            <!--         <StackPanel Orientation="Horizontal"> -->
-            <!--             <TextBlock Width="350" Text="{Binding CultureDisplayName, Mode=OneTime}" /> -->
-            <!--             <TextBlock Width="100" Text="{Binding CultureName, Mode=OneTime}" /> -->
-            <!--         </StackPanel> -->
-            <!--     </DataTemplate> -->
-            <!-- </ComboBox.ItemTemplate> -->
             <i:Interaction.Behaviors>
                 <behaviors:EventToCommandBehavior
                     Command="{Binding Path=PreviewTextInputCommand}"
@@ -134,9 +120,6 @@
                     Foreground="{Binding Path=CountrySpecific, Converter={StaticResource SearchByCountryCodeConverter}, ConverterParameter='icon'}"
                     Icon="CheckSquareOutline" />
             </ToggleButton>
-
         </StackPanel>
-
     </Grid>
-
 </components:AppUserControl>

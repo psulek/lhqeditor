@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:elements="clr-namespace:LHQ.App.ViewModels.Elements"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:lhq="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
     xmlns:localization="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -69,8 +68,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock
-                        Grid.Row="0"
+                    <TextBlock Grid.Row="0"
                         Margin="10"
                         Padding="0">
                         <Run Text="{Binding Path=DisplayName, Mode=OneTime}" ToolTip="{lhq:Localization Key={x:Static localization:StringsKeys+Common.LanguageName}}" />
@@ -82,18 +80,13 @@
 
                     </TextBlock>
 
-                    <Rectangle
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
+                    <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                         Height="1"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
                         Fill="Gray"
                         Visibility="{Binding IsReferenceLanguage, Converter={StaticResource BoolToVisibilityConverterReverse}}" />
-                    <Grid
-                        Grid.Row="0"
-                        Grid.Column="1"
+                    <Grid Grid.Row="0" Grid.Column="1"
                         VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5" />
@@ -106,9 +99,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <StackPanel
-                            Grid.Row="0"
-                            Grid.Column="1"
+                        <StackPanel Grid.Row="0" Grid.Column="1"
                             Margin="0"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
@@ -131,9 +122,7 @@
                                 Visibility="{Binding Path=Locked, Converter={StaticResource BoolToVisibilityConverterHidden}}" />
                         </StackPanel>
 
-                        <TextBox
-                            Grid.Row="0"
-                            Grid.Column="3"
+                        <TextBox Grid.Row="0" Grid.Column="3"
                             Padding="0,2,0,2"
                             VerticalContentAlignment="Center"
                             behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBoxStyle}"
@@ -148,9 +137,7 @@
                             TextWrapping="Wrap"
                             VerticalScrollBarVisibility="Auto" />
 
-                        <components:DropDownButton
-                            Grid.Row="0"
-                            Grid.Column="4"
+                        <components:DropDownButton Grid.Row="0" Grid.Column="4"
                             Width="26"
                             Height="27"
                             VerticalAlignment="Top"

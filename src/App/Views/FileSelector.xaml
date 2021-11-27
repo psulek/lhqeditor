@@ -27,15 +27,13 @@
             <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>
 
-        <TextBox
-            Grid.Column="0"
+        <TextBox Grid.Column="0"
             behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBoxStyle}"
             IsReadOnly="{Binding IsReadonly, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
             IsReadOnlyCaretVisible="True"
             Text="{Binding FileName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
 
-        <Button
-            Grid.Column="1"
+        <Button Grid.Column="1"
             Width="40"
             Padding="0"
             HorizontalContentAlignment="Center"

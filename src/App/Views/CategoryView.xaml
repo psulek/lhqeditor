@@ -46,16 +46,12 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Label
-                Grid.Row="1"
-                Grid.Column="0"
+            <Label Grid.Row="1" Grid.Column="0"
                 VerticalAlignment="Center"
                 Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+CategoryView.Name}}" />
 
-            <TextBox
+            <TextBox Grid.Row="1" Grid.Column="2"
                 x:Name="CategoryName"
-                Grid.Row="1"
-                Grid.Column="2"
                 Padding="0,2,0,0"
                 VerticalAlignment="Top"
                 VerticalContentAlignment="Center"
@@ -68,20 +64,13 @@
                 Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                 TextWrapping="Wrap" />
 
-            <views:ElementDebugInfo
-                Grid.Row="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="3" />
+            <views:ElementDebugInfo Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
 
-            <Label
-                Grid.Row="5"
-                Grid.Column="0"
+            <Label Grid.Row="5" Grid.Column="0"
                 VerticalAlignment="Center"
                 Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+CategoryView.Description}}" />
 
-            <TextBox
-                Grid.Row="5"
-                Grid.Column="2"
+            <TextBox Grid.Row="5" Grid.Column="2"
                 Padding="0,2,0,0"
                 VerticalAlignment="Top"
                 VerticalContentAlignment="Center"
@@ -99,9 +88,7 @@
                 </TextBox.InputBindings>
             </TextBox>
 
-            <components:DropDownButton
-                Grid.Row="7"
-                Grid.Column="2"
+            <components:DropDownButton Grid.Row="7" Grid.Column="2"
                 Width="230"
                 Height="27"
                 HorizontalAlignment="Left"

@@ -1,13 +1,27 @@
-﻿// /* Copyright (C) 2021 ScaleHQ Solutions s.r.o. - All Rights Reserved
-//  * Unauthorized copying of this file, via any medium is strictly prohibited
-//  * Proprietary and confidential
-//  * Written by Peter Šulek <peter.sulek@scalehq.sk> / ScaleHQ Solutions company
-//  */
-using System;
-using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Input;
-using LHQ.App.ViewModels;
+﻿#region License
+// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// 
+// Permission is hereby granted, free of charge, to any person
+// obtaining a copy of this software and associated documentation
+// files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use,
+// copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following
+// conditions:
+// 
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+#endregion
 
 namespace LHQ.App.Views
 {
@@ -16,27 +30,6 @@ namespace LHQ.App.Views
         public LanguageSelectorView()
         {
             InitializeComponent();
-        }
-
-        private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            // if (sender is ComboBox comboBox)
-            // {
-            //     var viewModel = (LanguageSelectorViewModel)comboBox.DataContext;
-            //     var searchEdit = (TextBox)comboBox.Template.FindName("PART_EditableTextBox", comboBox);
-            //     string searchText = string.Empty;
-            //     int selectionStart = searchEdit.SelectionStart;
-            //     if (selectionStart > 0)
-            //     {
-            //         searchText = searchEdit.Text.Substring(0, selectionStart) + e.Text;
-            //     }
-            //
-            //     if (!viewModel.Cultures.Any(
-            //         x => x.CultureDisplayName.IndexOf(searchText, StringComparison.InvariantCultureIgnoreCase) > -1))
-            //     {
-            //         e.Handled = true;
-            //     }
-            // }
         }
     }
 }

@@ -32,8 +32,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ScrollViewer
-            Grid.Column="0"
+        <ScrollViewer Grid.Column="0"
             DataContext="{Binding RootModel}"
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Auto">

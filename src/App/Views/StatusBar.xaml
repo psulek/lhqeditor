@@ -27,24 +27,8 @@
                 d:DataContext="{d:DesignInstance vm:ShellViewModel,
                                                  IsDesignTimeCreatable=False}"
                 TargetType="Border">
-                <!-- <Setter Property="Visibility" Value="Collapsed" /> -->
                 <Setter Property="Background" Value="{Binding Path=BackgroundBrush, Source={x:Static code:VisualManager.Instance}}" />
                 <Setter Property="BorderBrush" Value="{Binding Path=BorderBrush, Source={x:Static code:VisualManager.Instance}}" />
-                <!--<Style.Triggers>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding RunInVsPackage}" Value="False" />
-                        </MultiDataTrigger.Conditions>
-                        <Setter Property="Visibility" Value="Visible" />
-                    </MultiDataTrigger>
-                    <MultiDataTrigger>
-                        <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding Path=RunInVsPackage}" Value="True" />
-                            <Condition Binding="{Binding Path=StatusInProgress}" Value="True" />
-                        </MultiDataTrigger.Conditions>
-                        <Setter Property="Visibility" Value="Visible" />
-                    </MultiDataTrigger>
-                </Style.Triggers>-->
             </Style>
         </ResourceDictionary>
     </components:AppUserControl.Resources>

@@ -18,14 +18,4 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </components:AppUserControl.Resources>
-    <!--<Grid>
-        <TextBlock Foreground="Silver"
-                   Visibility="{Binding Converter={StaticResource DebugOnlyVisibilityConverter}}">
-            <Run Text="Key:" />
-            <Run Text="{Binding Path=ElementKey, Mode=OneWay}" />
-
-            <Run Text="Version:" />
-            <Run Text="{Binding Path=Version, Mode=OneWay}" />
-        </TextBlock>
-    </Grid>-->
 </components:AppUserControl>

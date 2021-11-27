@@ -536,9 +536,6 @@
     <Compile Include="Dialogs\ExceptionDebugDialog.xaml.cs">
       <DependentUpon>ExceptionDebugDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dummy.xaml.cs">
-      <DependentUpon>Dummy.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ElementDebugInfo.xaml.cs">
       <DependentUpon>ElementDebugInfo.xaml</DependentUpon>
     </Compile>
@@ -759,10 +756,6 @@
     <Page Include="Dialogs\ExceptionDebugDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Dummy.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ElementDebugInfo.xaml">
       <SubType>Designer</SubType>

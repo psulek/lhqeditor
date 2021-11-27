@@ -1,15 +1,16 @@
-﻿<components:AppUserControl x:Class="LHQ.App.Components.TranslationStateSelector"
-                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                           xmlns:components="clr-namespace:LHQ.App.Components"
-                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                           xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
-                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                           xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
-                           x:Name="control"
-                           d:DesignHeight="50"
-                           d:DesignWidth="300"
-                           mc:Ignorable="d">
+﻿<components:AppUserControl
+    x:Class="LHQ.App.Components.TranslationStateSelector"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:LHQ.App.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
+    x:Name="control"
+    d:DesignHeight="50"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
     <components:AppUserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,46 +18,52 @@
                 <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Image x:Key="MenuItemImageStyle"
-                   Width="16"
-                   Height="16"
-                   x:Shared="False"
-                   Source="{Binding Converter={StaticResource TranslationStateImageConverter}}" />
+            <Image
+                x:Key="MenuItemImageStyle"
+                Width="16"
+                Height="16"
+                x:Shared="False"
+                Source="{Binding Converter={StaticResource TranslationStateImageConverter}}" />
 
-            <ContextMenu x:Key="StatesContextMenu"
-                         Width="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.ActualWidth}"
-                         HorizontalContentAlignment="Left"
-                         DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                <MenuItem Background="{Binding Path=StateIsNewBackground, Mode=OneWay}"
-                          Command="{Binding Path=StateSelectedCommand}"
-                          CommandParameter="New"
-                          Header="{localization:Localization Key={x:Static resources:StringsKeys+Enums+ResourceElementTranslationState.New}}">
+            <ContextMenu
+                x:Key="StatesContextMenu"
+                Width="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.ActualWidth}"
+                HorizontalContentAlignment="Left"
+                DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                <MenuItem
+                    Background="{Binding Path=StateIsNewBackground, Mode=OneWay}"
+                    Command="{Binding Path=StateSelectedCommand}"
+                    CommandParameter="New"
+                    Header="{localization:Localization Key={x:Static resources:StringsKeys+Enums+ResourceElementTranslationState.New}}">
                     <MenuItem.Icon>
                         <Border Style="{StaticResource ResourceStateNewBorderStyle}" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Background="{Binding Path=StateIsEditedBackground, Mode=OneWay}"
-                          Command="{Binding Path=StateSelectedCommand}"
-                          CommandParameter="Edited"
-                          Header="{localization:Localization Key={x:Static resources:StringsKeys+Enums+ResourceElementTranslationState.Edited}}">
+                <MenuItem
+                    Background="{Binding Path=StateIsEditedBackground, Mode=OneWay}"
+                    Command="{Binding Path=StateSelectedCommand}"
+                    CommandParameter="Edited"
+                    Header="{localization:Localization Key={x:Static resources:StringsKeys+Enums+ResourceElementTranslationState.Edited}}">
                     <MenuItem.Icon>
                         <Border Style="{StaticResource ResourceStateEditedBorderStyle}" />
                     </MenuItem.Icon>
 
                 </MenuItem>
-                <MenuItem Background="{Binding Path=StateIsNeedsReviewBackground, Mode=OneWay}"
-                          Command="{Binding Path=StateSelectedCommand}"
-                          CommandParameter="NeedsReview"
-                          Header="{localization:Localization Key={x:Static resources:StringsKeys+Enums+ResourceElementTranslationState.NeedsReview}}">
+                <MenuItem
+                    Background="{Binding Path=StateIsNeedsReviewBackground, Mode=OneWay}"
+                    Command="{Binding Path=StateSelectedCommand}"
+                    CommandParameter="NeedsReview"
+                    Header="{localization:Localization Key={x:Static resources:StringsKeys+Enums+ResourceElementTranslationState.NeedsReview}}">
                     <MenuItem.Icon>
                         <Border Style="{StaticResource ResourceStateNeedsReviewBorderStyle}" />
                     </MenuItem.Icon>
 
                 </MenuItem>
-                <MenuItem Background="{Binding Path=StateIsFinalBackground, Mode=OneWay}"
-                          Command="{Binding Path=StateSelectedCommand}"
-                          CommandParameter="Final"
-                          Header="{localization:Localization Key={x:Static resources:StringsKeys+Enums+ResourceElementTranslationState.Final}}">
+                <MenuItem
+                    Background="{Binding Path=StateIsFinalBackground, Mode=OneWay}"
+                    Command="{Binding Path=StateSelectedCommand}"
+                    CommandParameter="Final"
+                    Header="{localization:Localization Key={x:Static resources:StringsKeys+Enums+ResourceElementTranslationState.Final}}">
                     <MenuItem.Icon>
                         <Border Style="{StaticResource ResourceStateFinalBorderStyle}" />
                     </MenuItem.Icon>
@@ -79,18 +86,19 @@
         </ResourceDictionary>
     </components:AppUserControl.Resources>
 
-    <components:DropDownButton Width="200"
-                               Height="27"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Top"
-                               Content="{Binding Path=SelectedState}"
-                               ContentControlVisible="True"
-                               ContentTemplateSelector="{x:Static components:TranslationStateTemplateSelector.Instance}"
-                               DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                               DropDownContextMenu="{DynamicResource StatesContextMenu}"
-                               IsEnabled="{Binding Path=IsEnabled}"
-                               KeyboardNavigation.IsTabStop="True"
-                               KeyboardNavigation.TabIndex="2"
-                               Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                               Text="{Binding Path=SelectedState, Converter={StaticResource TranslationStateTextConverter}}" />
+    <components:DropDownButton
+        Width="200"
+        Height="27"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Content="{Binding Path=SelectedState}"
+        ContentControlVisible="True"
+        ContentTemplateSelector="{x:Static components:TranslationStateTemplateSelector.Instance}"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+        DropDownContextMenu="{DynamicResource StatesContextMenu}"
+        IsEnabled="{Binding Path=IsEnabled}"
+        KeyboardNavigation.IsTabStop="True"
+        KeyboardNavigation.TabIndex="2"
+        Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+        Text="{Binding Path=SelectedState, Converter={StaticResource TranslationStateTextConverter}}" />
 </components:AppUserControl>

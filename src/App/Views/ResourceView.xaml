@@ -94,16 +94,12 @@
                 </Grid.RowDefinitions>
 
 
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="1"
+                <Label Grid.Row="1" Grid.Column="1"
                     VerticalAlignment="Center"
                     Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+ResourceView.Name}}" />
 
-                <TextBox
+                <TextBox Grid.Row="1" Grid.Column="3"
                     x:Name="ResourceName"
-                    Grid.Row="1"
-                    Grid.Column="3"
                     Padding="0,2,0,0"
                     behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBoxStyle}"
                     behaviors:EnterKeyTraversalBehavior.IsEnabled="false"
@@ -113,37 +109,25 @@
                     KeyboardNavigation.TabIndex="0"
                     Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="5"
+                <Label Grid.Row="1" Grid.Column="5"
                     VerticalAlignment="Center"
                     Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+ResourceView.State}}" />
 
-                <components:TranslationStateSelector
-                    Grid.Row="1"
-                    Grid.Column="7"
+                <components:TranslationStateSelector Grid.Row="1" Grid.Column="7"
                     IsTabStop="False"
                     KeyboardNavigation.TabIndex="1"
                     KeyboardNavigation.TabNavigation="None"
                     SelectedState="{Binding State, Mode=TwoWay}" />
 
-                <views:ElementDebugInfo
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="8" />
+                <views:ElementDebugInfo Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="8" />
 
 
-                <Label
-                    Grid.Row="5"
-                    Grid.Column="1"
+                <Label Grid.Row="5" Grid.Column="1"
                     VerticalAlignment="Center"
                     Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+ResourceView.Description}}" />
 
 
-                <TextBox
-                    Grid.Row="5"
-                    Grid.Column="3"
-                    Grid.ColumnSpan="5"
+                <TextBox Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="5"
                     Padding="0,2,0,0"
                     behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBoxStyle}"
                     behaviors:EnterKeyTraversalBehavior.IsEnabled="false"
@@ -152,16 +136,12 @@
                     KeyboardNavigation.TabIndex="3"
                     Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label
-                    Grid.Row="5"
-                    Grid.Column="5"
+                <Label Grid.Row="5" Grid.Column="5"
                     VerticalAlignment="Center"
                     Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+ResourceView.Locked}}"
                     Visibility="Collapsed" />
 
-                <components:DropDownButton
-                    Grid.Row="5"
-                    Grid.Column="7"
+                <components:DropDownButton Grid.Row="5" Grid.Column="7"
                     Height="27"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
@@ -175,16 +155,11 @@
                     ToolTip="{Binding CurrentLockStatusHeader}"
                     Visibility="Collapsed" />
 
-                <Label
-                    Grid.Row="9"
-                    Grid.Column="1"
+                <Label Grid.Row="9" Grid.Column="1"
                     VerticalAlignment="Center"
                     Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+ResourceView.Parameters}}" />
 
-                <Grid
-                    Grid.Row="9"
-                    Grid.Column="3"
-                    Grid.ColumnSpan="5"
+                <Grid Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="5"
                     KeyboardNavigation.IsTabStop="False"
                     KeyboardNavigation.TabIndex="4"
                     KeyboardNavigation.TabNavigation="Local">
@@ -192,8 +167,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <implementation:TokenizedTextBox
-                        Grid.Column="0"
+                    <implementation:TokenizedTextBox Grid.Column="0"
                         Height="27"
                         Padding="0,2,0,0"
                         HorizontalAlignment="Left"
@@ -202,8 +176,7 @@
                         KeyboardNavigation.IsTabStop="False"
                         KeyboardNavigation.TabNavigation="None"
                         Text="{Binding Parameters, Converter={StaticResource ResourceParameterListConverter}, Mode=OneWay}" />
-                    <Button
-                        Grid.Column="1"
+                    <Button Grid.Column="1"
                         Width="150"
                         Padding="10,0,10,0"
                         HorizontalContentAlignment="Center"
@@ -212,17 +185,12 @@
                         KeyboardNavigation.IsTabStop="True" />
                 </Grid>
 
-                <Label
-                    Grid.Row="11"
-                    Grid.Column="1"
+                <Label Grid.Row="11" Grid.Column="1"
                     VerticalAlignment="Center"
                     Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+ResourceView.TranslationNote}}"
                     Visibility="{Binding ShellViewModel.IsTranslationMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
 
-                <TextBox
-                    Grid.Row="11"
-                    Grid.Column="3"
-                    Grid.ColumnSpan="5"
+                <TextBox Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="5"
                     Padding="0,2,0,0"
                     behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBoxStyle}"
                     behaviors:EnterKeyTraversalBehavior.IsEnabled="false"
@@ -232,10 +200,7 @@
                     Text="{Binding TranslationNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding ShellViewModel.IsTranslationMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
 
-                <DockPanel
-                    Grid.Row="13"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="7"
+                <DockPanel Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="7"
                     Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
                     KeyboardNavigation.IsTabStop="False"
                     KeyboardNavigation.TabIndex="6"
@@ -259,19 +224,13 @@
 
                 </DockPanel>
 
-                <StackPanel
-                    Grid.Row="15"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="7"
+                <StackPanel Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="7"
                     Orientation="Vertical">
                     <components:HintPanel Margin="0,0,0,10" DataContext="{Binding Path=HintPanelViewModel}" />
                     <views:ResourceValuesView />
                 </StackPanel>
 
-                <StackPanel
-                    Grid.Row="16"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="7"
+                <StackPanel Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="7"
                     Margin="0,10,0,0"
                     Focusable="False"
                     Orientation="Horizontal">

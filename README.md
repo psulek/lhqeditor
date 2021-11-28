@@ -4,7 +4,7 @@
 **Visual Studio** extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.
 
 ## Official project page
-Web - [psulek.github.io/lhqeditor](https://psulek.github.io/lhqeditor/)
+Web - [psulek.github.io/lhqeditor](https://psulek.github.io/lhqeditor/)\
 Help - [psulek.github.io/lhqeditor/help](https://psulek.github.io/lhqeditor/help/index.html)
 
 ## Features

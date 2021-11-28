@@ -41,4 +41,4 @@ using System.Runtime.InteropServices;
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "AssemblyInformationalVersion does not need to be a parsable version")]
 
-[assembly: AssemblyVersion("2021.4")]
+[assembly: AssemblyVersion("2021.5")]

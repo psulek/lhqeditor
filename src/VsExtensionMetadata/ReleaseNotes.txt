@@ -1,4 +1,7 @@
-﻿2021.4
+﻿2021.5
+- Fixed non working shortcuts (Ctrl+D, Ctrl+Ins, Shift+Ins ...)
+
+2021.4
 - Fixed issue with some languages not translated by translator (e.g. zh-Hans and zh-Hant)
 - Fixed issue when command 'translate all empty only resources' will also translate not empty when executed on category or model
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="1864cfa5-8e63-493a-8f8c-ad935df04a25" Version="2021.4" Language="en-US" Publisher="ScaleHQ" />
+        <Identity Id="1864cfa5-8e63-493a-8f8c-ad935df04a25" Version="2021.5" Language="en-US" Publisher="ScaleHQ" />
         <DisplayName>LHQ Editor</DisplayName>
         <Description xml:space="preserve">Visual Studio editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.</Description>
         <MoreInfo>https://www.lhqeditor.com</MoreInfo>

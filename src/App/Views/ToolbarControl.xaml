@@ -32,8 +32,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Menu
-            Grid.Row="0"
+        <Menu Grid.Row="0"
             Effect="{x:Null}"
             IsMainMenu="True"
             ItemContainerTemplateSelector="{StaticResource MenuItemTemplateSelector}"

@@ -53,26 +53,22 @@
 
             <TextBlock Grid.Column="1" Text="{Binding Path=SelectedElementPaths}" />
 
-            <TextBlock
-                Grid.Column="3"
+            <TextBlock Grid.Column="3"
                 Margin="0,0,5,0"
                 Text="{Binding Path=StatusInProgressText, Mode=OneWay}"
                 Visibility="{Binding Path=StatusInProgress, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-            <ProgressBar
-                Grid.Column="5"
+            <ProgressBar Grid.Column="5"
                 Height="15"
                 IsIndeterminate="{Binding Path=StatusInProgress}"
                 Visibility="{Binding Path=StatusInProgress, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-            <TextBlock
-                Grid.Column="7"
+            <TextBlock Grid.Column="7"
                 Style="{StaticResource StatusBarTextStyle}"
                 Text="{lhq:Localization Key={x:Static resources:StringsKeys+ViewModels+StatusBar.CodeGenerator}}"
                 Visibility="{Binding Path=HasCodeGeneratorItemTemplate, Converter={StaticResource BoolToVisibilityConverterHidden}}" />
 
-            <TextBlock
-                Grid.Column="9"
+            <TextBlock Grid.Column="9"
                 VerticalAlignment="Center"
                 Visibility="{Binding Path=HasCodeGeneratorItemTemplate, Converter={StaticResource BoolToVisibilityConverterHidden}}">
                 <Hyperlink
@@ -83,8 +79,7 @@
                 </Hyperlink>
             </TextBlock>
 
-            <StackPanel
-                Grid.Column="11"
+            <StackPanel Grid.Column="11"
                 Margin="10,0,5,0"
                 Orientation="Horizontal"
                 Visibility="{Binding Path=RunInVsPackage, Converter={StaticResource BoolToVisibilityConverterReverse}}">

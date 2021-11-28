@@ -137,8 +137,7 @@
                 <RowDefinition Height="Auto" MaxHeight="200" />
             </Grid.RowDefinitions>
 
-            <DockPanel
-                Grid.Row="0"
+            <DockPanel Grid.Row="0"
                 Margin="0,0,0,5"
                 LastChildFill="True">
 
@@ -203,9 +202,8 @@
                 </components1:SearchTextBox>
             </DockPanel>
 
-            <components:VirtualTreeListView
+            <components:VirtualTreeListView Grid.Row="1"
                 x:Name="TreeListView"
-                Grid.Row="1"
                 Width="Auto"
                 Height="Auto"
                 HorizontalContentAlignment="Stretch"

@@ -1,0 +1,200 @@
+﻿{
+  "model": {
+    "uid": "6ce4d54c5dbd415c93019d315e278638",
+    "version": 1,
+    "options": {
+      "categories": true,
+      "resources": "Categories"
+    },
+    "name": "StringsModel",
+    "primaryLanguage": "en"
+  },
+  "languages": [
+    "en",
+    "sk"
+  ],
+  "categories": {
+    "Form": {
+      "resources": {
+        "Name": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Name"
+            },
+            "sk": {
+              "value": "Meno"
+            }
+          }
+        },
+        "Surname": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Surname"
+            },
+            "sk": {
+              "value": "Priezvisko"
+            }
+          }
+        },
+        "Username": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "User name"
+            },
+            "sk": {
+              "value": "Užívateľské meno"
+            }
+          }
+        }
+      }
+    },
+    "Languages": {
+      "resources": {
+        "en": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "English Language"
+            },
+            "sk": {
+              "value": "Anglický Jazyk"
+            }
+          }
+        },
+        "sk": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Slovak Language"
+            },
+            "sk": {
+              "value": "Slovenský Jazyk"
+            }
+          }
+        }
+      }
+    },
+    "Messages": {
+      "resources": {
+        "PleaseEnterInfo": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Please enter information about you:"
+            },
+            "sk": {
+              "value": "Prosím vyplňte informácie o Vás:"
+            }
+          }
+        },
+        "WelcomeMessage": {
+          "state": "New",
+          "parameters": {
+            "name": {
+              "order": 0
+            },
+            "surname": {
+              "order": 1
+            },
+            "username": {
+              "order": 2
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Welcome {0} {1} ({2}) !"
+            },
+            "sk": {
+              "value": "Vitaj používateľ {0} {1} ({2}) !"
+            }
+          }
+        },
+        "WelcomeSubmessage": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "We're glad you are using \"Localization HQ Editor\""
+            },
+            "sk": {
+              "value": "Sme radi že používate program \"Localization HQ Editor\""
+            }
+          }
+        }
+      }
+    },
+    "ValidationErrors": {
+      "resources": {
+        "FieldIsRequired": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Field value is required."
+            },
+            "sk": {
+              "value": "Hodnota položky je požadovaná."
+            }
+          }
+        },
+        "OnlyAlphanumericAllowed": {
+          "state": "New",
+          "parameters": {
+            "fieldName": {
+              "order": 0
+            }
+          },
+          "values": {
+            "en": {
+              "value": "Only alphanumeric characters without space and accent are allowed for field '{0}'."
+            },
+            "sk": {
+              "value": "Povolené sú iba alfanumerické znaky bez medzier a diakritiky pre položku '{0}'."
+            }
+          }
+        }
+      }
+    }
+  },
+  "metadatas": {
+  "childs": [
+    {
+      "name": "metadata",
+      "attrs": {
+        "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
+      },
+      "childs": [
+        {
+          "name": "content",
+          "attrs": {
+            "templateId": "NetCoreResxCsharp01"
+          },
+          "childs": [
+            {
+              "name": "Settings",
+              "childs": [
+                {
+                  "name": "CSharp",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "UseExpressionBodySyntax": "true",
+                    "MissingTranslationFallbackToPrimary": "false"
+                  }
+                },
+                {
+                  "name": "ResX",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "CultureCodeInFileNameForPrimaryLanguage": "true"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+}

@@ -1,0 +1,53 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    bool hasData = !string.IsNullOrEmpty(Model.Name) || !string.IsNullOrEmpty(Model.Surname);
+}
+
+<div class="row">
+    <div class="col-12">
+        <h3>
+            @if (hasData)
+            {
+                @Model.GetWelcomeMessage()
+            }
+            else
+            {
+                @StringsModel.Messages.PleaseEnterInfo
+            }
+        </h3>
+        
+        @if (hasData)
+        {
+            <h4>
+                @StringsModel.Messages.WelcomeSubmessage
+            </h4>
+        }
+    </div>
+</div>
+@if (!hasData)
+{
+    <div class="row">
+        <div class="col-6">
+            <form asp-controller="Home" asp-action="Index" method="post" class="form-horizontal">
+                <div id="ChangePasswordValidationSummary" asp-validation-summary="ModelOnly" class=""></div>
+                <div class="form-group required">
+                    <label for="edUsername" asp-for="Username" class="control-label"></label>
+                    <input type="text" asp-for="Username" class="form-control" id="edUsername">
+                    <span id="valAge" asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group required">
+                    <label for="edName" asp-for="Name" class="control-label"></label>
+                    <input type="text" asp-for="Name" class="form-control" id="edName">
+                    <span id="valName" asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="edSurname" asp-for="Surname" class="control-label"></label>
+                    <input type="text" asp-for="Surname" class="form-control" id="edSurname">
+                    <span id="valSurname" asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+}

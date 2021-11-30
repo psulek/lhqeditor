@@ -2,16 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>ScaleHQ.WPF.LHQ</id>
-    <version>1.0.3</version>
+    <version>1.1.0</version>
     <title>ScaleHQ LHQ Editor Support Library for WPF projects</title>
     <authors>ScaleHQ Solutions</authors>
     <owners>ScaleHQ Solutions</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>https://www.lhqeditor.com/</projectUrl>
+    <projectUrl>https://psulek.github.io/lhqeditor</projectUrl>
     <description>Localization library consuming LHQ localization files (*.lhq) to be used in WPF application as markup extension in xaml.</description>
     <releaseNotes>First release of LHQ Editor Library.</releaseNotes>
-    <copyright>Copyright (c) 2020 ScaleHQ Solutions</copyright>
+    <copyright>Copyright (c) 2021 ScaleHQ Solutions</copyright>
     <tags>lhq,localization,strings,editor,resx,wpf</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.6" />

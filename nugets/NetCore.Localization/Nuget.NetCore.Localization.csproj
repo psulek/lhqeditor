@@ -20,8 +20,8 @@
     <RootNamespace>ScaleHQ.AspNetCore.LHQ</RootNamespace>
     <PackageTags>resources,resx,localization,editor</PackageTags>
     <PackageReleaseNotes>Updated to NET 5.0</PackageReleaseNotes>
-    <PackageLicenseUrl>https://www.lhqeditor.com/buy</PackageLicenseUrl>
-    <PackageProjectUrl>https://www.lhqeditor.com</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/psulek/lhqeditor/blob/main/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://psulek.github.io/lhqeditor</PackageProjectUrl>
     <LangVersion>7.3</LangVersion>
     <NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
     <SolutionFolder>$(MSBuildProjectDirectory)\..\</SolutionFolder>
@@ -30,7 +30,7 @@
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
+    <Version>1.2.2</Version>
   </PropertyGroup>
 
 
@@ -65,8 +65,8 @@
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' or '$(TargetFramework)' == 'net462'">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="1.1.3" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
     <!-- Fixed to 2.1.0 as 2.1 is Long Term Supported (LTS) and works with vanilla .NET Core 2.1 SDK -->

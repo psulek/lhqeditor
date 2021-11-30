@@ -36,4 +36,4 @@ For example, how to use this library, you can:
 
 
 For more information about Localization HQ Editor, visit the official web site:
-https://www.lhqeditor.com
+https://psulek.github.io/lhqeditor

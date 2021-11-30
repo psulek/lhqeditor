@@ -9,4 +9,4 @@ For example, how to use this library, add new project 'Windows WPF Application w
 Visual Studio Extension - 'Localization HQ Editor' is required for this library to be useful.
 
 For more info about Localization HQ Editor, visit the official web site:
-https://www.lhqeditor.com
+https://psulek.github.io/lhqeditor

@@ -4,7 +4,7 @@
         <Identity Id="1864cfa5-8e63-493a-8f8c-ad935df04a25" Version="2021.6" Language="en-US" Publisher="ScaleHQ" />
         <DisplayName>LHQ Editor</DisplayName>
         <Description xml:space="preserve">Visual Studio editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.</Description>
-        <MoreInfo>https://www.lhqeditor.com</MoreInfo>
+        <MoreInfo>https://psulek.github.io/lhqeditor</MoreInfo>
         <License>Resources\LICENSE</License>
         <GettingStartedGuide>readme.html</GettingStartedGuide>
         <Icon>Resources\Icon.png</Icon>

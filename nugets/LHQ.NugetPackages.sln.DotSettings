@@ -1,6 +1,24 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">/* Copyright (C) 2020 ScaleHQ Solutions s.r.o. - All Rights Reserved&#xD;
- * Unauthorized copying of this file, via any medium is strictly prohibited&#xD;
- * Proprietary and confidential&#xD;
- * Written by Peter Šulek &lt;peter.sulek@scalehq.sk&gt; / ScaleHQ Solutions company&#xD;
- */</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderRegionName/@EntryValue">License</s:String>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright (c) $CURRENT_YEAR$ Peter Šulek / ScaleHQ Solutions s.r.o.&#xD;
+&#xD;
+Permission is hereby granted, free of charge, to any person&#xD;
+obtaining a copy of this software and associated documentation&#xD;
+files (the "Software"), to deal in the Software without&#xD;
+restriction, including without limitation the rights to use,&#xD;
+copy, modify, merge, publish, distribute, sublicense, and/or sell&#xD;
+copies of the Software, and to permit persons to whom the&#xD;
+Software is furnished to do so, subject to the following&#xD;
+conditions:&#xD;
+&#xD;
+The above copyright notice and this permission notice shall be&#xD;
+included in all copies or substantial portions of the Software.&#xD;
+&#xD;
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,&#xD;
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES&#xD;
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND&#xD;
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT&#xD;
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,&#xD;
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING&#xD;
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR&#xD;
+OTHER DEALINGS IN THE SOFTWARE.</s:String></wpf:ResourceDictionary>

@@ -1,0 +1,2032 @@
+
+//  Microsoft (R) .NET Framework IL Disassembler.  Version 4.8.3928.0
+//  Copyright (c) Microsoft Corporation.  All rights reserved.
+
+
+
+// Metadata version: v4.0.30319
+.assembly extern mscorlib
+{
+  .publickeytoken = (B7 7A 5C 56 19 34 E0 89 )                         // .z\V.4..
+  .ver 4:0:0:0
+}
+.assembly extern Microsoft.VisualStudio.TemplateWizardInterface
+{
+  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )                         // .?_....:
+  .ver 8:0:0:0
+}
+.assembly extern EnvDTE
+{
+  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )                         // .?_....:
+  .ver 8:0:0:0
+}
+.assembly extern Microsoft.Build
+{
+  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )                         // .?_....:
+  .ver 4:0:0:0
+}
+.assembly extern NuGet.Core
+{
+  .publickeytoken = (31 BF 38 56 AD 36 4E 35 )                         // 1.8V.6N5
+  .ver 2:11:1:812
+}
+.assembly extern EnvDTE100
+{
+  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )                         // .?_....:
+  .ver 10:0:0:0
+}
+.assembly extern EnvDTE80
+{
+  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )                         // .?_....:
+  .ver 8:0:0:0
+}
+.assembly extern System
+{
+  .publickeytoken = (B7 7A 5C 56 19 34 E0 89 )                         // .z\V.4..
+  .ver 4:0:0:0
+}
+.assembly extern System.Core
+{
+  .publickeytoken = (B7 7A 5C 56 19 34 E0 89 )                         // .z\V.4..
+  .ver 4:0:0:0
+}
+.assembly extern 'Microsoft.VisualStudio.Shell.14.0'
+{
+  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )                         // .?_....:
+  .ver 14:0:0:0
+}
+.assembly TemplateBuilder
+{
+  .custom instance void [mscorlib]System.Runtime.CompilerServices.CompilationRelaxationsAttribute::.ctor(int32) = ( 01 00 08 00 00 00 00 00 ) 
+  .custom instance void [mscorlib]System.Runtime.CompilerServices.RuntimeCompatibilityAttribute::.ctor() = ( 01 00 01 00 54 02 16 57 72 61 70 4E 6F 6E 45 78   // ....T..WrapNonEx
+                                                                                                             63 65 70 74 69 6F 6E 54 68 72 6F 77 73 01 )       // ceptionThrows.
+
+  // --- The following custom attribute is added automatically, do not uncomment -------
+  //  .custom instance void [mscorlib]System.Diagnostics.DebuggableAttribute::.ctor(valuetype [mscorlib]System.Diagnostics.DebuggableAttribute/DebuggingModes) = ( 01 00 02 00 00 00 00 00 ) 
+
+  .custom instance void [mscorlib]System.Reflection.AssemblyTitleAttribute::.ctor(string) = ( 01 00 0F 54 65 6D 70 6C 61 74 65 42 75 69 6C 64   // ...TemplateBuild
+                                                                                              65 72 00 00 )                                     // er..
+  .custom instance void [mscorlib]System.Reflection.AssemblyDescriptionAttribute::.ctor(string) = ( 01 00 00 00 00 ) 
+  .custom instance void [mscorlib]System.Reflection.AssemblyConfigurationAttribute::.ctor(string) = ( 01 00 00 00 00 ) 
+  .custom instance void [mscorlib]System.Reflection.AssemblyCompanyAttribute::.ctor(string) = ( 01 00 00 00 00 ) 
+  .custom instance void [mscorlib]System.Reflection.AssemblyProductAttribute::.ctor(string) = ( 01 00 0F 54 65 6D 70 6C 61 74 65 42 75 69 6C 64   // ...TemplateBuild
+                                                                                                65 72 00 00 )                                     // er..
+  .custom instance void [mscorlib]System.Reflection.AssemblyCopyrightAttribute::.ctor(string) = ( 01 00 12 43 6F 70 79 72 69 67 68 74 20 C2 A9 20   // ...Copyright .. 
+                                                                                                  20 32 30 31 33 00 00 )                            //  2013..
+  .custom instance void [mscorlib]System.Reflection.AssemblyTrademarkAttribute::.ctor(string) = ( 01 00 00 00 00 ) 
+  .custom instance void [mscorlib]System.Runtime.InteropServices.ComVisibleAttribute::.ctor(bool) = ( 01 00 00 00 00 ) 
+  .custom instance void [mscorlib]System.Runtime.InteropServices.GuidAttribute::.ctor(string) = ( 01 00 24 34 31 64 66 65 31 62 32 2D 63 38 65 64   // ..$41dfe1b2-c8ed
+                                                                                                  2D 34 66 62 36 2D 38 61 32 64 2D 63 37 36 34 65   // -4fb6-8a2d-c764e
+                                                                                                  39 61 30 34 64 33 63 00 00 )                      // 9a04d3c..
+  .custom instance void [mscorlib]System.Reflection.AssemblyFileVersionAttribute::.ctor(string) = ( 01 00 07 31 2E 32 2E 30 2E 30 00 00 )             // ...1.2.0.0..
+  .custom instance void [mscorlib]System.Runtime.Versioning.TargetFrameworkAttribute::.ctor(string) = ( 01 00 1A 2E 4E 45 54 46 72 61 6D 65 77 6F 72 6B   // ....NETFramework
+                                                                                                        2C 56 65 72 73 69 6F 6E 3D 76 34 2E 35 01 00 54   // ,Version=v4.5..T
+                                                                                                        0E 14 46 72 61 6D 65 77 6F 72 6B 44 69 73 70 6C   // ..FrameworkDispl
+                                                                                                        61 79 4E 61 6D 65 12 2E 4E 45 54 20 46 72 61 6D   // ayName..NET Fram
+                                                                                                        65 77 6F 72 6B 20 34 2E 35 )                      // ework 4.5
+  .hash algorithm 0x00008004
+  .ver 1:2:0:0
+}
+.module TemplateBuilder.dll
+// MVID: {0F08DDBE-060D-45DE-AC88-9B2EDF836267}
+.imagebase 0x10000000
+.file alignment 0x00000200
+.stackreserve 0x00100000
+.subsystem 0x0003       // WINDOWS_CUI
+.corflags 0x00000001    //  ILONLY
+// Image base: 0x069E0000
+
+
+// =============== CLASS MEMBERS DECLARATION ===================
+
+.class public auto ansi beforefieldinit TemplateBuilder.ChildWizard
+       extends [mscorlib]System.Object
+       implements [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.IWizard
+{
+  .method public hidebysig newslot virtual final 
+          instance void  RunStarted(object automationObject,
+                                    class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> replacementsDictionary,
+                                    valuetype [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.WizardRunKind runKind,
+                                    object[] customParams) cil managed
+  {
+    // Code size       88 (0x58)
+    .maxstack  4
+    IL_0000:  ldsfld     class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> TemplateBuilder.RootWizard::GlobalDictionary
+    IL_0005:  ldstr      "$saferootprojectname$"
+    IL_000a:  callvirt   instance bool class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::ContainsKey(!0)
+    IL_000f:  brfalse.s  IL_002c
+
+    IL_0011:  ldarg.2
+    IL_0012:  ldstr      "$saferootprojectname$"
+    IL_0017:  ldsfld     class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> TemplateBuilder.RootWizard::GlobalDictionary
+    IL_001c:  ldstr      "$saferootprojectname$"
+    IL_0021:  callvirt   instance !1 class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::get_Item(!0)
+    IL_0026:  callvirt   instance void class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::Add(!0,
+                                                                                                                   !1)
+    IL_002b:  ret
+
+    IL_002c:  ldsfld     class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> TemplateBuilder.SolutionWizard::GlobalDictionary
+    IL_0031:  ldstr      "$saferootprojectname$"
+    IL_0036:  callvirt   instance bool class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::ContainsKey(!0)
+    IL_003b:  brfalse.s  IL_0057
+
+    IL_003d:  ldarg.2
+    IL_003e:  ldstr      "$saferootprojectname$"
+    IL_0043:  ldsfld     class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> TemplateBuilder.SolutionWizard::GlobalDictionary
+    IL_0048:  ldstr      "$saferootprojectname$"
+    IL_004d:  callvirt   instance !1 class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::get_Item(!0)
+    IL_0052:  callvirt   instance void class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::Add(!0,
+                                                                                                                   !1)
+    IL_0057:  ret
+  } // end of method ChildWizard::RunStarted
+
+  .method public hidebysig newslot virtual final 
+          instance bool  ShouldAddProjectItem(string filePath) cil managed
+  {
+    // Code size       2 (0x2)
+    .maxstack  8
+    IL_0000:  ldc.i4.1
+    IL_0001:  ret
+  } // end of method ChildWizard::ShouldAddProjectItem
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunFinished() cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method ChildWizard::RunFinished
+
+  .method public hidebysig newslot virtual final 
+          instance void  BeforeOpeningFile(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method ChildWizard::BeforeOpeningFile
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectItemFinishedGenerating(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method ChildWizard::ProjectItemFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectFinishedGenerating(class [EnvDTE]EnvDTE.Project project) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method ChildWizard::ProjectFinishedGenerating
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method ChildWizard::.ctor
+
+} // end of class TemplateBuilder.ChildWizard
+
+.class public auto ansi beforefieldinit TemplateBuilder.ReloadProjectWizard
+       extends [mscorlib]System.Object
+       implements [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.IWizard
+{
+  .method public hidebysig newslot virtual final 
+          instance void  BeforeOpeningFile(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method ReloadProjectWizard::BeforeOpeningFile
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectFinishedGenerating(class [EnvDTE]EnvDTE.Project project) cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.1
+    IL_0001:  call       void TemplateBuilder.Helpers.ProjectHelper::ReloadProject(class [EnvDTE]EnvDTE.Project)
+    IL_0006:  ret
+  } // end of method ReloadProjectWizard::ProjectFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectItemFinishedGenerating(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method ReloadProjectWizard::ProjectItemFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunFinished() cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method ReloadProjectWizard::RunFinished
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunStarted(object automationObject,
+                                    class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> replacementsDictionary,
+                                    valuetype [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.WizardRunKind runKind,
+                                    object[] customParams) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method ReloadProjectWizard::RunStarted
+
+  .method public hidebysig newslot virtual final 
+          instance bool  ShouldAddProjectItem(string filePath) cil managed
+  {
+    // Code size       2 (0x2)
+    .maxstack  8
+    IL_0000:  ldc.i4.1
+    IL_0001:  ret
+  } // end of method ReloadProjectWizard::ShouldAddProjectItem
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method ReloadProjectWizard::.ctor
+
+} // end of class TemplateBuilder.ReloadProjectWizard
+
+.class public auto ansi beforefieldinit TemplateBuilder.FixArtifactsPathWizard
+       extends [mscorlib]System.Object
+       implements [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.IWizard
+{
+  .class auto ansi serializable sealed nested private beforefieldinit '<>c'
+         extends [mscorlib]System.Object
+  {
+    .custom instance void [mscorlib]System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor() = ( 01 00 00 00 ) 
+    .field public static initonly class TemplateBuilder.FixArtifactsPathWizard/'<>c' '<>9'
+    .field public static class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement,bool> '<>9__3_0'
+    .field public static class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement,bool> '<>9__3_1'
+    .field public static class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement,bool> '<>9__3_2'
+    .field public static class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement,bool> '<>9__3_3'
+    .method private hidebysig specialname rtspecialname static 
+            void  .cctor() cil managed
+    {
+      // Code size       11 (0xb)
+      .maxstack  8
+      IL_0000:  newobj     instance void TemplateBuilder.FixArtifactsPathWizard/'<>c'::.ctor()
+      IL_0005:  stsfld     class TemplateBuilder.FixArtifactsPathWizard/'<>c' TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9'
+      IL_000a:  ret
+    } // end of method '<>c'::.cctor
+
+    .method public hidebysig specialname rtspecialname 
+            instance void  .ctor() cil managed
+    {
+      // Code size       7 (0x7)
+      .maxstack  8
+      IL_0000:  ldarg.0
+      IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+      IL_0006:  ret
+    } // end of method '<>c'::.ctor
+
+    .method assembly hidebysig instance bool 
+            '<ProjectFinishedGenerating>b__3_0'(class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement x) cil managed
+    {
+      // Code size       17 (0x11)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Construction.ProjectElement::get_Label()
+      IL_0006:  ldstr      "Globals"
+      IL_000b:  call       bool [mscorlib]System.String::Equals(string,
+                                                                string)
+      IL_0010:  ret
+    } // end of method '<>c'::'<ProjectFinishedGenerating>b__3_0'
+
+    .method assembly hidebysig instance bool 
+            '<ProjectFinishedGenerating>b__3_1'(class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement x) cil managed
+    {
+      // Code size       17 (0x11)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement::get_Name()
+      IL_0006:  ldstr      "BaseIntermediateOutputPath"
+      IL_000b:  call       bool [mscorlib]System.String::Equals(string,
+                                                                string)
+      IL_0010:  ret
+    } // end of method '<>c'::'<ProjectFinishedGenerating>b__3_1'
+
+    .method assembly hidebysig instance bool 
+            '<ProjectFinishedGenerating>b__3_2'(class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement x) cil managed
+    {
+      // Code size       17 (0x11)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Construction.ProjectElement::get_Label()
+      IL_0006:  ldstr      "Globals"
+      IL_000b:  call       bool [mscorlib]System.String::Equals(string,
+                                                                string)
+      IL_0010:  ret
+    } // end of method '<>c'::'<ProjectFinishedGenerating>b__3_2'
+
+    .method assembly hidebysig instance bool 
+            '<ProjectFinishedGenerating>b__3_3'(class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement x) cil managed
+    {
+      // Code size       17 (0x11)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement::get_Name()
+      IL_0006:  ldstr      "OutputPath"
+      IL_000b:  call       bool [mscorlib]System.String::Equals(string,
+                                                                string)
+      IL_0010:  ret
+    } // end of method '<>c'::'<ProjectFinishedGenerating>b__3_3'
+
+  } // end of class '<>c'
+
+  .field private static literal string BaseIntermediateOutputPathPropertyName = "BaseIntermediateOutputPath"
+  .field private static literal string OutputPathPropertyName = "OutputPath"
+  .method public hidebysig newslot virtual final 
+          instance void  BeforeOpeningFile(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method FixArtifactsPathWizard::BeforeOpeningFile
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectFinishedGenerating(class [EnvDTE]EnvDTE.Project project) cil managed
+  {
+    // Code size       443 (0x1bb)
+    .maxstack  6
+    .locals init (string V_0,
+             string V_1,
+             string V_2,
+             string V_3,
+             string V_4,
+             string V_5,
+             string V_6,
+             bool V_7,
+             class [Microsoft.Build]Microsoft.Build.Evaluation.Project V_8,
+             class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement V_9,
+             class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement V_10)
+    IL_0000:  ldarg.1
+    IL_0001:  callvirt   instance string [EnvDTE]EnvDTE.Project::get_FileName()
+    IL_0006:  stloc.0
+    IL_0007:  ldarg.1
+    IL_0008:  callvirt   instance class [EnvDTE]EnvDTE.DTE [EnvDTE]EnvDTE.Project::get_DTE()
+    IL_000d:  callvirt   instance class [EnvDTE]EnvDTE.Solution [EnvDTE]EnvDTE._DTE::get_Solution()
+    IL_0012:  callvirt   instance string [EnvDTE]EnvDTE._Solution::get_FileName()
+    IL_0017:  stloc.1
+    IL_0018:  ldloc.0
+    IL_0019:  call       string [mscorlib]System.IO.Path::GetExtension(string)
+    IL_001e:  ldstr      ".xproj"
+    IL_0023:  call       bool [mscorlib]System.String::Equals(string,
+                                                              string)
+    IL_0028:  brtrue.s   IL_002b
+
+    IL_002a:  ret
+
+    IL_002b:  ldloc.0
+    IL_002c:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_0031:  stloc.2
+    IL_0032:  ldloc.1
+    IL_0033:  call       bool [mscorlib]System.String::IsNullOrEmpty(string)
+    IL_0038:  brtrue.s   IL_0042
+
+    IL_003a:  ldloc.1
+    IL_003b:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_0040:  br.s       IL_0043
+
+    IL_0042:  ldloc.2
+    IL_0043:  dup
+    IL_0044:  ldstr      "artifacts\\obj\\$(MSBuildProjectName)"
+    IL_0049:  call       string [mscorlib]System.IO.Path::Combine(string,
+                                                                  string)
+    IL_004e:  stloc.3
+    IL_004f:  ldstr      "artifacts\\bin\\$(MSBuildProjectName)"
+    IL_0054:  call       string [mscorlib]System.IO.Path::Combine(string,
+                                                                  string)
+    IL_0059:  stloc.s    V_4
+    IL_005b:  ldloc.2
+    IL_005c:  ldloc.3
+    IL_005d:  call       string TemplateBuilder.Helpers.PathHelper::GetRelativePath(string,
+                                                                                    string)
+    IL_0062:  stloc.s    V_5
+    IL_0064:  ldloc.2
+    IL_0065:  ldloc.s    V_4
+    IL_0067:  call       string TemplateBuilder.Helpers.PathHelper::GetRelativePath(string,
+                                                                                    string)
+    IL_006c:  stloc.s    V_6
+    IL_006e:  ldc.i4.0
+    IL_006f:  stloc.s    V_7
+    IL_0071:  ldloc.0
+    IL_0072:  newobj     instance void [Microsoft.Build]Microsoft.Build.Evaluation.Project::.ctor(string)
+    IL_0077:  stloc.s    V_8
+    IL_0079:  ldloc.s    V_8
+    IL_007b:  callvirt   instance class [Microsoft.Build]Microsoft.Build.Construction.ProjectRootElement [Microsoft.Build]Microsoft.Build.Evaluation.Project::get_Xml()
+    IL_0080:  callvirt   instance class [mscorlib]System.Collections.Generic.ICollection`1<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement> [Microsoft.Build]Microsoft.Build.Construction.ProjectRootElement::get_PropertyGroups()
+    IL_0085:  ldsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement,bool> TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9__3_0'
+    IL_008a:  dup
+    IL_008b:  brtrue.s   IL_00a4
+
+    IL_008d:  pop
+    IL_008e:  ldsfld     class TemplateBuilder.FixArtifactsPathWizard/'<>c' TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9'
+    IL_0093:  ldftn      instance bool TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<ProjectFinishedGenerating>b__3_0'(class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement)
+    IL_0099:  newobj     instance void class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement,bool>::.ctor(object,
+                                                                                                                                                                  native int)
+    IL_009e:  dup
+    IL_009f:  stsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement,bool> TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9__3_0'
+    IL_00a4:  call       !!0 [System.Core]System.Linq.Enumerable::FirstOrDefault<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                  class [mscorlib]System.Func`2<!!0,bool>)
+    IL_00a9:  dup
+    IL_00aa:  brtrue.s   IL_00b0
+
+    IL_00ac:  pop
+    IL_00ad:  ldnull
+    IL_00ae:  br.s       IL_00de
+
+    IL_00b0:  call       instance class [mscorlib]System.Collections.Generic.ICollection`1<class [Microsoft.Build]Microsoft.Build.Construction.ProjectElement> [Microsoft.Build]Microsoft.Build.Construction.ProjectElementContainer::get_Children()
+    IL_00b5:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0> [System.Core]System.Linq.Enumerable::OfType<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement>(class [mscorlib]System.Collections.IEnumerable)
+    IL_00ba:  ldsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement,bool> TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9__3_1'
+    IL_00bf:  dup
+    IL_00c0:  brtrue.s   IL_00d9
+
+    IL_00c2:  pop
+    IL_00c3:  ldsfld     class TemplateBuilder.FixArtifactsPathWizard/'<>c' TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9'
+    IL_00c8:  ldftn      instance bool TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<ProjectFinishedGenerating>b__3_1'(class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement)
+    IL_00ce:  newobj     instance void class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement,bool>::.ctor(object,
+                                                                                                                                                             native int)
+    IL_00d3:  dup
+    IL_00d4:  stsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement,bool> TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9__3_1'
+    IL_00d9:  call       !!0 [System.Core]System.Linq.Enumerable::FirstOrDefault<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                             class [mscorlib]System.Func`2<!!0,bool>)
+    IL_00de:  stloc.s    V_9
+    IL_00e0:  ldloc.s    V_9
+    IL_00e2:  brfalse.s  IL_0121
+
+    IL_00e4:  ldloc.s    V_9
+    IL_00e6:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement::get_Value()
+    IL_00eb:  ldloc.s    V_5
+    IL_00ed:  ldc.i4.1
+    IL_00ee:  newarr     [mscorlib]System.Char
+    IL_00f3:  dup
+    IL_00f4:  ldc.i4.0
+    IL_00f5:  ldc.i4.s   92
+    IL_00f7:  stelem.i2
+    IL_00f8:  callvirt   instance string [mscorlib]System.String::TrimEnd(char[])
+    IL_00fd:  ldc.i4.4
+    IL_00fe:  call       bool [mscorlib]System.String::Equals(string,
+                                                              string,
+                                                              valuetype [mscorlib]System.StringComparison)
+    IL_0103:  brtrue.s   IL_0121
+
+    IL_0105:  ldloc.s    V_9
+    IL_0107:  ldloc.s    V_5
+    IL_0109:  ldc.i4.1
+    IL_010a:  newarr     [mscorlib]System.Char
+    IL_010f:  dup
+    IL_0110:  ldc.i4.0
+    IL_0111:  ldc.i4.s   92
+    IL_0113:  stelem.i2
+    IL_0114:  callvirt   instance string [mscorlib]System.String::TrimEnd(char[])
+    IL_0119:  callvirt   instance void [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement::set_Value(string)
+    IL_011e:  ldc.i4.1
+    IL_011f:  stloc.s    V_7
+    IL_0121:  ldloc.s    V_8
+    IL_0123:  callvirt   instance class [Microsoft.Build]Microsoft.Build.Construction.ProjectRootElement [Microsoft.Build]Microsoft.Build.Evaluation.Project::get_Xml()
+    IL_0128:  callvirt   instance class [mscorlib]System.Collections.Generic.ICollection`1<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement> [Microsoft.Build]Microsoft.Build.Construction.ProjectRootElement::get_PropertyGroups()
+    IL_012d:  ldsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement,bool> TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9__3_2'
+    IL_0132:  dup
+    IL_0133:  brtrue.s   IL_014c
+
+    IL_0135:  pop
+    IL_0136:  ldsfld     class TemplateBuilder.FixArtifactsPathWizard/'<>c' TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9'
+    IL_013b:  ldftn      instance bool TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<ProjectFinishedGenerating>b__3_2'(class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement)
+    IL_0141:  newobj     instance void class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement,bool>::.ctor(object,
+                                                                                                                                                                  native int)
+    IL_0146:  dup
+    IL_0147:  stsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement,bool> TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9__3_2'
+    IL_014c:  call       !!0 [System.Core]System.Linq.Enumerable::FirstOrDefault<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyGroupElement>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                  class [mscorlib]System.Func`2<!!0,bool>)
+    IL_0151:  dup
+    IL_0152:  brtrue.s   IL_0158
+
+    IL_0154:  pop
+    IL_0155:  ldnull
+    IL_0156:  br.s       IL_0186
+
+    IL_0158:  call       instance class [mscorlib]System.Collections.Generic.ICollection`1<class [Microsoft.Build]Microsoft.Build.Construction.ProjectElement> [Microsoft.Build]Microsoft.Build.Construction.ProjectElementContainer::get_Children()
+    IL_015d:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0> [System.Core]System.Linq.Enumerable::OfType<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement>(class [mscorlib]System.Collections.IEnumerable)
+    IL_0162:  ldsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement,bool> TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9__3_3'
+    IL_0167:  dup
+    IL_0168:  brtrue.s   IL_0181
+
+    IL_016a:  pop
+    IL_016b:  ldsfld     class TemplateBuilder.FixArtifactsPathWizard/'<>c' TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9'
+    IL_0170:  ldftn      instance bool TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<ProjectFinishedGenerating>b__3_3'(class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement)
+    IL_0176:  newobj     instance void class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement,bool>::.ctor(object,
+                                                                                                                                                             native int)
+    IL_017b:  dup
+    IL_017c:  stsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement,bool> TemplateBuilder.FixArtifactsPathWizard/'<>c'::'<>9__3_3'
+    IL_0181:  call       !!0 [System.Core]System.Linq.Enumerable::FirstOrDefault<class [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                             class [mscorlib]System.Func`2<!!0,bool>)
+    IL_0186:  stloc.s    V_10
+    IL_0188:  ldloc.s    V_10
+    IL_018a:  brfalse.s  IL_01a9
+
+    IL_018c:  ldloc.s    V_10
+    IL_018e:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement::get_Value()
+    IL_0193:  ldloc.s    V_6
+    IL_0195:  ldc.i4.4
+    IL_0196:  call       bool [mscorlib]System.String::Equals(string,
+                                                              string,
+                                                              valuetype [mscorlib]System.StringComparison)
+    IL_019b:  brtrue.s   IL_01a9
+
+    IL_019d:  ldloc.s    V_10
+    IL_019f:  ldloc.s    V_6
+    IL_01a1:  callvirt   instance void [Microsoft.Build]Microsoft.Build.Construction.ProjectPropertyElement::set_Value(string)
+    IL_01a6:  ldc.i4.1
+    IL_01a7:  stloc.s    V_7
+    IL_01a9:  ldloc.s    V_7
+    IL_01ab:  brfalse.s  IL_01ba
+
+    IL_01ad:  ldloc.s    V_8
+    IL_01af:  callvirt   instance void [Microsoft.Build]Microsoft.Build.Evaluation.Project::Save()
+    IL_01b4:  ldarg.1
+    IL_01b5:  call       void TemplateBuilder.Helpers.ProjectHelper::ReloadProject(class [EnvDTE]EnvDTE.Project)
+    IL_01ba:  ret
+  } // end of method FixArtifactsPathWizard::ProjectFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectItemFinishedGenerating(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method FixArtifactsPathWizard::ProjectItemFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunFinished() cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method FixArtifactsPathWizard::RunFinished
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunStarted(object automationObject,
+                                    class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> replacementsDictionary,
+                                    valuetype [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.WizardRunKind runKind,
+                                    object[] customParams) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method FixArtifactsPathWizard::RunStarted
+
+  .method public hidebysig newslot virtual final 
+          instance bool  ShouldAddProjectItem(string filePath) cil managed
+  {
+    // Code size       2 (0x2)
+    .maxstack  8
+    IL_0000:  ldc.i4.1
+    IL_0001:  ret
+  } // end of method FixArtifactsPathWizard::ShouldAddProjectItem
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method FixArtifactsPathWizard::.ctor
+
+} // end of class TemplateBuilder.FixArtifactsPathWizard
+
+.class public auto ansi beforefieldinit TemplateBuilder.FixNuGetPackageHintPathsWizard
+       extends [mscorlib]System.Object
+       implements [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.IWizard
+{
+  .class auto ansi serializable sealed nested private beforefieldinit '<>c'
+         extends [mscorlib]System.Object
+  {
+    .custom instance void [mscorlib]System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor() = ( 01 00 00 00 ) 
+    .field public static initonly class TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c' '<>9'
+    .field public static class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,bool> '<>9__10_0'
+    .field public static class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,class [mscorlib]System.Collections.Generic.IEnumerable`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata>> '<>9__10_1'
+    .field public static class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata,bool> '<>9__10_2'
+    .field public static class [mscorlib]System.Func`2<class [NuGet.Core]NuGet.Settings,string> '<>9__12_0'
+    .field public static class [mscorlib]System.Func`2<string,bool> '<>9__12_1'
+    .method private hidebysig specialname rtspecialname static 
+            void  .cctor() cil managed
+    {
+      // Code size       11 (0xb)
+      .maxstack  8
+      IL_0000:  newobj     instance void TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::.ctor()
+      IL_0005:  stsfld     class TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c' TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9'
+      IL_000a:  ret
+    } // end of method '<>c'::.cctor
+
+    .method public hidebysig specialname rtspecialname 
+            instance void  .ctor() cil managed
+    {
+      // Code size       7 (0x7)
+      .maxstack  8
+      IL_0000:  ldarg.0
+      IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+      IL_0006:  ret
+    } // end of method '<>c'::.ctor
+
+    .method assembly hidebysig instance bool 
+            '<Execute>b__10_0'(class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem x) cil managed
+    {
+      // Code size       18 (0x12)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem::get_ItemType()
+      IL_0006:  ldstr      "Reference"
+      IL_000b:  ldc.i4.5
+      IL_000c:  call       bool [mscorlib]System.String::Equals(string,
+                                                                string,
+                                                                valuetype [mscorlib]System.StringComparison)
+      IL_0011:  ret
+    } // end of method '<>c'::'<Execute>b__10_0'
+
+    .method assembly hidebysig instance class [mscorlib]System.Collections.Generic.IEnumerable`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata> 
+            '<Execute>b__10_1'(class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem x) cil managed
+    {
+      // Code size       7 (0x7)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  callvirt   instance class [mscorlib]System.Collections.Generic.ICollection`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata> [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem::get_Metadata()
+      IL_0006:  ret
+    } // end of method '<>c'::'<Execute>b__10_1'
+
+    .method assembly hidebysig instance bool 
+            '<Execute>b__10_2'(class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata x) cil managed
+    {
+      // Code size       58 (0x3a)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata::get_Name()
+      IL_0006:  ldstr      "HintPath"
+      IL_000b:  ldc.i4.5
+      IL_000c:  call       bool [mscorlib]System.String::Equals(string,
+                                                                string,
+                                                                valuetype [mscorlib]System.StringComparison)
+      IL_0011:  brfalse.s  IL_0038
+
+      IL_0013:  ldarg.1
+      IL_0014:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata::get_UnevaluatedValue()
+      IL_0019:  ldstr      "packages\\"
+      IL_001e:  callvirt   instance bool [mscorlib]System.String::StartsWith(string)
+      IL_0023:  brtrue.s   IL_0036
+
+      IL_0025:  ldarg.1
+      IL_0026:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata::get_UnevaluatedValue()
+      IL_002b:  ldstr      "\\packages\\"
+      IL_0030:  callvirt   instance bool [mscorlib]System.String::Contains(string)
+      IL_0035:  ret
+
+      IL_0036:  ldc.i4.1
+      IL_0037:  ret
+
+      IL_0038:  ldc.i4.0
+      IL_0039:  ret
+    } // end of method '<>c'::'<Execute>b__10_2'
+
+    .method assembly hidebysig instance string 
+            '<GetCustomPackagesDirectoryPath>b__12_0'(class [NuGet.Core]NuGet.Settings x) cil managed
+    {
+      // Code size       7 (0x7)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  call       string [NuGet.Core]NuGet.SettingsExtensions::GetRepositoryPath(class [NuGet.Core]NuGet.ISettings)
+      IL_0006:  ret
+    } // end of method '<>c'::'<GetCustomPackagesDirectoryPath>b__12_0'
+
+    .method assembly hidebysig instance bool 
+            '<GetCustomPackagesDirectoryPath>b__12_1'(string x) cil managed
+    {
+      // Code size       5 (0x5)
+      .maxstack  8
+      IL_0000:  ldarg.1
+      IL_0001:  ldnull
+      IL_0002:  cgt.un
+      IL_0004:  ret
+    } // end of method '<>c'::'<GetCustomPackagesDirectoryPath>b__12_1'
+
+  } // end of class '<>c'
+
+  .field private static literal string PackagesSlash = "packages\\"
+  .field private static literal string SlashPackagesSlash = "\\packages\\"
+  .field private static literal string Reference = "Reference"
+  .field private static literal string HintPath = "HintPath"
+  .method public hidebysig newslot virtual final 
+          instance void  BeforeOpeningFile(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::BeforeOpeningFile
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectFinishedGenerating(class [EnvDTE]EnvDTE.Project project) cil managed
+  {
+    // Code size       48 (0x30)
+    .maxstack  2
+    .locals init (string V_0)
+    IL_0000:  ldarg.1
+    IL_0001:  callvirt   instance string [EnvDTE]EnvDTE.Project::get_FileName()
+    IL_0006:  stloc.0
+    IL_0007:  ldarg.1
+    IL_0008:  callvirt   instance class [EnvDTE]EnvDTE.CodeModel [EnvDTE]EnvDTE.Project::get_CodeModel()
+    IL_000d:  callvirt   instance class [EnvDTE]EnvDTE.DTE [EnvDTE]EnvDTE.CodeModel::get_DTE()
+    IL_0012:  callvirt   instance class [EnvDTE]EnvDTE.Solution [EnvDTE]EnvDTE._DTE::get_Solution()
+    IL_0017:  callvirt   instance string [EnvDTE]EnvDTE._Solution::get_FileName()
+    IL_001c:  ldloc.0
+    IL_001d:  call       bool TemplateBuilder.FixNuGetPackageHintPathsWizard::Execute(string,
+                                                                                      string)
+    IL_0022:  brfalse.s  IL_002f
+
+    IL_0024:  ldarg.1
+    IL_0025:  ldstr      ""
+    IL_002a:  callvirt   instance void [EnvDTE]EnvDTE.Project::Save(string)
+    IL_002f:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::ProjectFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectItemFinishedGenerating(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::ProjectItemFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunFinished() cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::RunFinished
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunStarted(object automationObject,
+                                    class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> replacementsDictionary,
+                                    valuetype [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.WizardRunKind runKind,
+                                    object[] customParams) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::RunStarted
+
+  .method public hidebysig newslot virtual final 
+          instance bool  ShouldAddProjectItem(string filePath) cil managed
+  {
+    // Code size       2 (0x2)
+    .maxstack  8
+    IL_0000:  ldc.i4.1
+    IL_0001:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::ShouldAddProjectItem
+
+  .method private hidebysig static bool  Execute(string solutionFilePath,
+                                                 string projectFilePath) cil managed
+  {
+    // Code size       316 (0x13c)
+    .maxstack  3
+    .locals init (bool V_0,
+             string V_1,
+             string V_2,
+             string V_3,
+             string V_4,
+             class [mscorlib]System.Collections.Generic.IEnumerator`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata> V_5,
+             class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata V_6,
+             int32 V_7,
+             string V_8)
+    IL_0000:  ldc.i4.0
+    IL_0001:  stloc.0
+    IL_0002:  ldarg.1
+    IL_0003:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_0008:  stloc.1
+    IL_0009:  ldarg.0
+    IL_000a:  call       bool [mscorlib]System.String::IsNullOrEmpty(string)
+    IL_000f:  brtrue.s   IL_0019
+
+    IL_0011:  ldarg.0
+    IL_0012:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_0017:  br.s       IL_001a
+
+    IL_0019:  ldloc.1
+    IL_001a:  stloc.2
+    IL_001b:  ldloc.2
+    IL_001c:  call       string TemplateBuilder.FixNuGetPackageHintPathsWizard::GetCustomPackagesDirectoryPath(string)
+    IL_0021:  stloc.3
+    IL_0022:  ldloc.1
+    IL_0023:  ldloc.2
+    IL_0024:  ldloc.3
+    IL_0025:  call       string TemplateBuilder.FixNuGetPackageHintPathsWizard::GetRelativePackagesDirectoryPath(string,
+                                                                                                                 string,
+                                                                                                                 string)
+    IL_002a:  stloc.s    V_4
+    IL_002c:  ldarg.1
+    IL_002d:  newobj     instance void [Microsoft.Build]Microsoft.Build.Evaluation.Project::.ctor(string)
+    IL_0032:  callvirt   instance class [mscorlib]System.Collections.Generic.ICollection`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem> [Microsoft.Build]Microsoft.Build.Evaluation.Project::get_Items()
+    IL_0037:  ldsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,bool> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__10_0'
+    IL_003c:  dup
+    IL_003d:  brtrue.s   IL_0056
+
+    IL_003f:  pop
+    IL_0040:  ldsfld     class TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c' TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9'
+    IL_0045:  ldftn      instance bool TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<Execute>b__10_0'(class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem)
+    IL_004b:  newobj     instance void class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,bool>::.ctor(object,
+                                                                                                                                                native int)
+    IL_0050:  dup
+    IL_0051:  stsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,bool> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__10_0'
+    IL_0056:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0> [System.Core]System.Linq.Enumerable::Where<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                                                 class [mscorlib]System.Func`2<!!0,bool>)
+    IL_005b:  ldsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,class [mscorlib]System.Collections.Generic.IEnumerable`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata>> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__10_1'
+    IL_0060:  dup
+    IL_0061:  brtrue.s   IL_007a
+
+    IL_0063:  pop
+    IL_0064:  ldsfld     class TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c' TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9'
+    IL_0069:  ldftn      instance class [mscorlib]System.Collections.Generic.IEnumerable`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<Execute>b__10_1'(class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem)
+    IL_006f:  newobj     instance void class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,class [mscorlib]System.Collections.Generic.IEnumerable`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata>>::.ctor(object,
+                                                                                                                                                                                                                                                                       native int)
+    IL_0074:  dup
+    IL_0075:  stsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,class [mscorlib]System.Collections.Generic.IEnumerable`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata>> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__10_1'
+    IL_007a:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!1> [System.Core]System.Linq.Enumerable::SelectMany<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectItem,class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                                                                                                                        class [mscorlib]System.Func`2<!!0,class [mscorlib]System.Collections.Generic.IEnumerable`1<!!1>>)
+    IL_007f:  ldsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata,bool> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__10_2'
+    IL_0084:  dup
+    IL_0085:  brtrue.s   IL_009e
+
+    IL_0087:  pop
+    IL_0088:  ldsfld     class TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c' TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9'
+    IL_008d:  ldftn      instance bool TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<Execute>b__10_2'(class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata)
+    IL_0093:  newobj     instance void class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata,bool>::.ctor(object,
+                                                                                                                                                    native int)
+    IL_0098:  dup
+    IL_0099:  stsfld     class [mscorlib]System.Func`2<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata,bool> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__10_2'
+    IL_009e:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0> [System.Core]System.Linq.Enumerable::Where<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                                                     class [mscorlib]System.Func`2<!!0,bool>)
+    IL_00a3:  callvirt   instance class [mscorlib]System.Collections.Generic.IEnumerator`1<!0> class [mscorlib]System.Collections.Generic.IEnumerable`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata>::GetEnumerator()
+    IL_00a8:  stloc.s    V_5
+    .try
+    {
+      IL_00aa:  br.s       IL_0123
+
+      IL_00ac:  ldloc.s    V_5
+      IL_00ae:  callvirt   instance !0 class [mscorlib]System.Collections.Generic.IEnumerator`1<class [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata>::get_Current()
+      IL_00b3:  stloc.s    V_6
+      IL_00b5:  ldloc.3
+      IL_00b6:  brtrue.s   IL_00cd
+
+      IL_00b8:  ldloc.s    V_6
+      IL_00ba:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata::get_UnevaluatedValue()
+      IL_00bf:  ldstr      "packages\\"
+      IL_00c4:  callvirt   instance int32 [mscorlib]System.String::IndexOf(string)
+      IL_00c9:  stloc.s    V_7
+      IL_00cb:  br.s       IL_00eb
+
+      IL_00cd:  ldloc.s    V_6
+      IL_00cf:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata::get_UnevaluatedValue()
+      IL_00d4:  ldstr      "packages\\"
+      IL_00d9:  callvirt   instance int32 [mscorlib]System.String::IndexOf(string)
+      IL_00de:  ldstr      "packages\\"
+      IL_00e3:  call       instance int32 [mscorlib]System.String::get_Length()
+      IL_00e8:  add
+      IL_00e9:  stloc.s    V_7
+      IL_00eb:  ldloc.s    V_7
+      IL_00ed:  ldc.i4.m1
+      IL_00ee:  beq.s      IL_0123
+
+      IL_00f0:  ldloc.s    V_4
+      IL_00f2:  ldloc.s    V_6
+      IL_00f4:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata::get_UnevaluatedValue()
+      IL_00f9:  ldloc.s    V_7
+      IL_00fb:  callvirt   instance string [mscorlib]System.String::Substring(int32)
+      IL_0100:  call       string [mscorlib]System.String::Concat(string,
+                                                                  string)
+      IL_0105:  stloc.s    V_8
+      IL_0107:  ldloc.s    V_6
+      IL_0109:  callvirt   instance string [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata::get_UnevaluatedValue()
+      IL_010e:  ldloc.s    V_8
+      IL_0110:  ldc.i4.5
+      IL_0111:  call       bool [mscorlib]System.String::Equals(string,
+                                                                string,
+                                                                valuetype [mscorlib]System.StringComparison)
+      IL_0116:  brtrue.s   IL_0123
+
+      IL_0118:  ldc.i4.1
+      IL_0119:  stloc.0
+      IL_011a:  ldloc.s    V_6
+      IL_011c:  ldloc.s    V_8
+      IL_011e:  callvirt   instance void [Microsoft.Build]Microsoft.Build.Evaluation.ProjectMetadata::set_UnevaluatedValue(string)
+      IL_0123:  ldloc.s    V_5
+      IL_0125:  callvirt   instance bool [mscorlib]System.Collections.IEnumerator::MoveNext()
+      IL_012a:  brtrue.s   IL_00ac
+
+      IL_012c:  leave.s    IL_013a
+
+    }  // end .try
+    finally
+    {
+      IL_012e:  ldloc.s    V_5
+      IL_0130:  brfalse.s  IL_0139
+
+      IL_0132:  ldloc.s    V_5
+      IL_0134:  callvirt   instance void [mscorlib]System.IDisposable::Dispose()
+      IL_0139:  endfinally
+    }  // end handler
+    IL_013a:  ldloc.0
+    IL_013b:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::Execute
+
+  .method private hidebysig static string 
+          GetRelativePackagesDirectoryPath(string projectDirectoryPath,
+                                           string solutionDirectoryPath,
+                                           string customPackagesDirectoryPath) cil managed
+  {
+    // Code size       47 (0x2f)
+    .maxstack  2
+    .locals init (string V_0,
+             string V_1)
+    IL_0000:  ldarg.2
+    IL_0001:  brtrue.s   IL_000d
+
+    IL_0003:  ldarg.0
+    IL_0004:  ldarg.1
+    IL_0005:  call       string TemplateBuilder.Helpers.PathHelper::GetRelativePath(string,
+                                                                                    string)
+    IL_000a:  stloc.0
+    IL_000b:  br.s       IL_002d
+
+    IL_000d:  ldarg.2
+    IL_000e:  call       bool [mscorlib]System.IO.Path::IsPathRooted(string)
+    IL_0013:  brfalse.s  IL_001d
+
+    IL_0015:  ldarg.0
+    IL_0016:  ldarg.2
+    IL_0017:  call       string TemplateBuilder.Helpers.PathHelper::GetRelativePath(string,
+                                                                                    string)
+    IL_001c:  ret
+
+    IL_001d:  ldarg.1
+    IL_001e:  ldarg.2
+    IL_001f:  call       string [mscorlib]System.IO.Path::Combine(string,
+                                                                  string)
+    IL_0024:  stloc.1
+    IL_0025:  ldarg.0
+    IL_0026:  ldloc.1
+    IL_0027:  call       string TemplateBuilder.Helpers.PathHelper::GetRelativePath(string,
+                                                                                    string)
+    IL_002c:  ret
+
+    IL_002d:  ldloc.0
+    IL_002e:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::GetRelativePackagesDirectoryPath
+
+  .method private hidebysig static string 
+          GetCustomPackagesDirectoryPath(string projectDirectoryPath) cil managed
+  {
+    // Code size       104 (0x68)
+    .maxstack  5
+    IL_0000:  ldarg.0
+    IL_0001:  call       string [mscorlib]System.IO.Path::GetPathRoot(string)
+    IL_0006:  newobj     instance void [NuGet.Core]NuGet.PhysicalFileSystem::.ctor(string)
+    IL_000b:  ldc.i4.1
+    IL_000c:  newarr     [mscorlib]System.String
+    IL_0011:  dup
+    IL_0012:  ldc.i4.0
+    IL_0013:  ldarg.0
+    IL_0014:  stelem.ref
+    IL_0015:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<class [NuGet.Core]NuGet.Settings> [NuGet.Core]NuGet.Settings::LoadMachineWideSettings(class [NuGet.Core]NuGet.IFileSystem,
+                                                                                                                                                                        string[])
+    IL_001a:  ldsfld     class [mscorlib]System.Func`2<class [NuGet.Core]NuGet.Settings,string> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__12_0'
+    IL_001f:  dup
+    IL_0020:  brtrue.s   IL_0039
+
+    IL_0022:  pop
+    IL_0023:  ldsfld     class TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c' TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9'
+    IL_0028:  ldftn      instance string TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<GetCustomPackagesDirectoryPath>b__12_0'(class [NuGet.Core]NuGet.Settings)
+    IL_002e:  newobj     instance void class [mscorlib]System.Func`2<class [NuGet.Core]NuGet.Settings,string>::.ctor(object,
+                                                                                                                     native int)
+    IL_0033:  dup
+    IL_0034:  stsfld     class [mscorlib]System.Func`2<class [NuGet.Core]NuGet.Settings,string> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__12_0'
+    IL_0039:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!1> [System.Core]System.Linq.Enumerable::Select<class [NuGet.Core]NuGet.Settings,string>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                            class [mscorlib]System.Func`2<!!0,!!1>)
+    IL_003e:  ldsfld     class [mscorlib]System.Func`2<string,bool> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__12_1'
+    IL_0043:  dup
+    IL_0044:  brtrue.s   IL_005d
+
+    IL_0046:  pop
+    IL_0047:  ldsfld     class TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c' TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9'
+    IL_004c:  ldftn      instance bool TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<GetCustomPackagesDirectoryPath>b__12_1'(string)
+    IL_0052:  newobj     instance void class [mscorlib]System.Func`2<string,bool>::.ctor(object,
+                                                                                         native int)
+    IL_0057:  dup
+    IL_0058:  stsfld     class [mscorlib]System.Func`2<string,bool> TemplateBuilder.FixNuGetPackageHintPathsWizard/'<>c'::'<>9__12_1'
+    IL_005d:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0> [System.Core]System.Linq.Enumerable::Where<string>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                          class [mscorlib]System.Func`2<!!0,bool>)
+    IL_0062:  call       !!0 [System.Core]System.Linq.Enumerable::FirstOrDefault<string>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>)
+    IL_0067:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::GetCustomPackagesDirectoryPath
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method FixNuGetPackageHintPathsWizard::.ctor
+
+} // end of class TemplateBuilder.FixNuGetPackageHintPathsWizard
+
+.class public auto ansi beforefieldinit TemplateBuilder.RootWizard
+       extends [mscorlib]System.Object
+       implements [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.IWizard
+{
+  .field public static class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> GlobalDictionary
+  .method public hidebysig newslot virtual final 
+          instance void  RunStarted(object automationObject,
+                                    class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> replacementsDictionary,
+                                    valuetype [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.WizardRunKind runKind,
+                                    object[] customParams) cil managed
+  {
+    // Code size       27 (0x1b)
+    .maxstack  8
+    IL_0000:  ldsfld     class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> TemplateBuilder.RootWizard::GlobalDictionary
+    IL_0005:  ldstr      "$saferootprojectname$"
+    IL_000a:  ldarg.2
+    IL_000b:  ldstr      "$safeprojectname$"
+    IL_0010:  callvirt   instance !1 class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::get_Item(!0)
+    IL_0015:  callvirt   instance void class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::set_Item(!0,
+                                                                                                                        !1)
+    IL_001a:  ret
+  } // end of method RootWizard::RunStarted
+
+  .method public hidebysig newslot virtual final 
+          instance bool  ShouldAddProjectItem(string filePath) cil managed
+  {
+    // Code size       2 (0x2)
+    .maxstack  8
+    IL_0000:  ldc.i4.1
+    IL_0001:  ret
+  } // end of method RootWizard::ShouldAddProjectItem
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunFinished() cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method RootWizard::RunFinished
+
+  .method public hidebysig newslot virtual final 
+          instance void  BeforeOpeningFile(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method RootWizard::BeforeOpeningFile
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectItemFinishedGenerating(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method RootWizard::ProjectItemFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectFinishedGenerating(class [EnvDTE]EnvDTE.Project project) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method RootWizard::ProjectFinishedGenerating
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method RootWizard::.ctor
+
+  .method private hidebysig specialname rtspecialname static 
+          void  .cctor() cil managed
+  {
+    // Code size       11 (0xb)
+    .maxstack  8
+    IL_0000:  newobj     instance void class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::.ctor()
+    IL_0005:  stsfld     class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> TemplateBuilder.RootWizard::GlobalDictionary
+    IL_000a:  ret
+  } // end of method RootWizard::.cctor
+
+} // end of class TemplateBuilder.RootWizard
+
+.class public auto ansi beforefieldinit TemplateBuilder.SolutionWizard
+       extends [mscorlib]System.Object
+       implements [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.IWizard
+{
+  .class auto ansi sealed nested private beforefieldinit '<>c__DisplayClass5_0'
+         extends [mscorlib]System.Object
+  {
+    .custom instance void [mscorlib]System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor() = ( 01 00 00 00 ) 
+    .field public string projectsDir
+    .method public hidebysig specialname rtspecialname 
+            instance void  .ctor() cil managed
+    {
+      // Code size       7 (0x7)
+      .maxstack  8
+      IL_0000:  ldarg.0
+      IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+      IL_0006:  ret
+    } // end of method '<>c__DisplayClass5_0'::.ctor
+
+    .method assembly hidebysig instance void 
+            '<RunFinished>b__1'(object state) cil managed
+    {
+      // Code size       23 (0x17)
+      .maxstack  8
+      IL_0000:  ldc.i4     0xfa0
+      IL_0005:  call       void [mscorlib]System.Threading.Thread::Sleep(int32)
+      IL_000a:  ldarg.0
+      IL_000b:  ldfld      string TemplateBuilder.SolutionWizard/'<>c__DisplayClass5_0'::projectsDir
+      IL_0010:  ldc.i4.3
+      IL_0011:  call       void TemplateBuilder.SolutionWizard::DeleteDirectory(string,
+                                                                                int32)
+      IL_0016:  ret
+    } // end of method '<>c__DisplayClass5_0'::'<RunFinished>b__1'
+
+  } // end of class '<>c__DisplayClass5_0'
+
+  .class auto ansi serializable sealed nested private beforefieldinit '<>c'
+         extends [mscorlib]System.Object
+  {
+    .custom instance void [mscorlib]System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor() = ( 01 00 00 00 ) 
+    .field public static initonly class TemplateBuilder.SolutionWizard/'<>c' '<>9'
+    .field public static class [mscorlib]System.Func`2<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>,bool> '<>9__5_0'
+    .method private hidebysig specialname rtspecialname static 
+            void  .cctor() cil managed
+    {
+      // Code size       11 (0xb)
+      .maxstack  8
+      IL_0000:  newobj     instance void TemplateBuilder.SolutionWizard/'<>c'::.ctor()
+      IL_0005:  stsfld     class TemplateBuilder.SolutionWizard/'<>c' TemplateBuilder.SolutionWizard/'<>c'::'<>9'
+      IL_000a:  ret
+    } // end of method '<>c'::.cctor
+
+    .method public hidebysig specialname rtspecialname 
+            instance void  .ctor() cil managed
+    {
+      // Code size       7 (0x7)
+      .maxstack  8
+      IL_0000:  ldarg.0
+      IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+      IL_0006:  ret
+    } // end of method '<>c'::.ctor
+
+    .method assembly hidebysig instance bool 
+            '<RunFinished>b__5_0'(valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string> keyValuePair) cil managed
+    {
+      // Code size       16 (0x10)
+      .maxstack  8
+      IL_0000:  ldarga.s   keyValuePair
+      IL_0002:  call       instance !1 valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>::get_Value()
+      IL_0007:  call       bool [mscorlib]System.String::IsNullOrWhiteSpace(string)
+      IL_000c:  ldc.i4.0
+      IL_000d:  ceq
+      IL_000f:  ret
+    } // end of method '<>c'::'<RunFinished>b__5_0'
+
+  } // end of class '<>c'
+
+  .field private class [EnvDTE100]EnvDTE100.Solution4 _solution
+  .field private class [mscorlib]System.Collections.Generic.IList`1<class [EnvDTE]EnvDTE.Project> _existingProjects
+  .field public static class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> GlobalDictionary
+  .method public hidebysig newslot virtual final 
+          instance void  RunStarted(object automationObject,
+                                    class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> replacementsDictionary,
+                                    valuetype [Microsoft.VisualStudio.TemplateWizardInterface]Microsoft.VisualStudio.TemplateWizard.WizardRunKind runKind,
+                                    object[] customParams) cil managed
+  {
+    // Code size       81 (0x51)
+    .maxstack  4
+    .locals init (class [EnvDTE80]EnvDTE80.DTE2 V_0)
+    IL_0000:  ldsfld     class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> TemplateBuilder.SolutionWizard::GlobalDictionary
+    IL_0005:  ldstr      "$saferootprojectname$"
+    IL_000a:  ldarg.2
+    IL_000b:  ldstr      "$safeprojectname$"
+    IL_0010:  callvirt   instance !1 class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::get_Item(!0)
+    IL_0015:  callvirt   instance void class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::set_Item(!0,
+                                                                                                                        !1)
+    IL_001a:  ldarg.3
+    IL_001b:  ldc.i4.3
+    IL_001c:  beq.s      IL_001f
+
+    IL_001e:  ret
+
+    IL_001f:  ldarg.1
+    IL_0020:  isinst     [EnvDTE80]EnvDTE80.DTE2
+    IL_0025:  stloc.0
+    IL_0026:  ldloc.0
+    IL_0027:  brfalse.s  IL_003a
+
+    IL_0029:  ldarg.0
+    IL_002a:  ldloc.0
+    IL_002b:  callvirt   instance class [EnvDTE]EnvDTE.Solution [EnvDTE80]EnvDTE80.DTE2::get_Solution()
+    IL_0030:  castclass  [EnvDTE100]EnvDTE100.Solution4
+    IL_0035:  stfld      class [EnvDTE100]EnvDTE100.Solution4 TemplateBuilder.SolutionWizard::_solution
+    IL_003a:  ldarg.0
+    IL_003b:  ldarg.0
+    IL_003c:  call       instance class [mscorlib]System.Collections.Generic.IList`1<class [EnvDTE]EnvDTE.Project> TemplateBuilder.SolutionWizard::GetProjects()
+    IL_0041:  dup
+    IL_0042:  brtrue.s   IL_004b
+
+    IL_0044:  pop
+    IL_0045:  ldc.i4.0
+    IL_0046:  newarr     [EnvDTE]EnvDTE.Project
+    IL_004b:  stfld      class [mscorlib]System.Collections.Generic.IList`1<class [EnvDTE]EnvDTE.Project> TemplateBuilder.SolutionWizard::_existingProjects
+    IL_0050:  ret
+  } // end of method SolutionWizard::RunStarted
+
+  .method public hidebysig newslot virtual final 
+          instance bool  ShouldAddProjectItem(string filePath) cil managed
+  {
+    // Code size       2 (0x2)
+    .maxstack  8
+    IL_0000:  ldc.i4.1
+    IL_0001:  ret
+  } // end of method SolutionWizard::ShouldAddProjectItem
+
+  .method public hidebysig newslot virtual final 
+          instance void  RunFinished() cil managed
+  {
+    // Code size       352 (0x160)
+    .maxstack  3
+    .locals init (class TemplateBuilder.SolutionWizard/'<>c__DisplayClass5_0' V_0,
+             class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project> V_1,
+             class [mscorlib]System.Collections.Generic.List`1<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>> V_2,
+             valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<class [EnvDTE]EnvDTE.Project> V_3,
+             class [EnvDTE]EnvDTE.Project V_4,
+             class [mscorlib]System.Collections.Generic.IEnumerator`1<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>> V_5,
+             valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string> V_6,
+             class [EnvDTE80]EnvDTE80.SolutionFolder V_7)
+    IL_0000:  newobj     instance void TemplateBuilder.SolutionWizard/'<>c__DisplayClass5_0'::.ctor()
+    IL_0005:  stloc.0
+    IL_0006:  ldarg.0
+    IL_0007:  ldfld      class [EnvDTE100]EnvDTE100.Solution4 TemplateBuilder.SolutionWizard::_solution
+    IL_000c:  brtrue.s   IL_0019
+
+    IL_000e:  ldstr      "No solution found."
+    IL_0013:  newobj     instance void [mscorlib]System.Exception::.ctor(string)
+    IL_0018:  throw
+
+    IL_0019:  ldarg.0
+    IL_001a:  call       instance class [mscorlib]System.Collections.Generic.IList`1<class [EnvDTE]EnvDTE.Project> TemplateBuilder.SolutionWizard::GetProjects()
+    IL_001f:  ldarg.0
+    IL_0020:  ldfld      class [mscorlib]System.Collections.Generic.IList`1<class [EnvDTE]EnvDTE.Project> TemplateBuilder.SolutionWizard::_existingProjects
+    IL_0025:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0> [System.Core]System.Linq.Enumerable::Except<class [EnvDTE]EnvDTE.Project>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                 class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>)
+    IL_002a:  call       class [mscorlib]System.Collections.Generic.List`1<!!0> [System.Core]System.Linq.Enumerable::ToList<class [EnvDTE]EnvDTE.Project>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>)
+    IL_002f:  stloc.1
+    IL_0030:  ldloc.1
+    IL_0031:  brfalse.s  IL_003b
+
+    IL_0033:  ldloc.1
+    IL_0034:  call       bool [System.Core]System.Linq.Enumerable::Any<class [EnvDTE]EnvDTE.Project>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>)
+    IL_0039:  brtrue.s   IL_0046
+
+    IL_003b:  ldstr      "No projects found."
+    IL_0040:  newobj     instance void [mscorlib]System.Exception::.ctor(string)
+    IL_0045:  throw
+
+    IL_0046:  ldloc.0
+    IL_0047:  ldloc.1
+    IL_0048:  call       !!0 [System.Core]System.Linq.Enumerable::First<class [EnvDTE]EnvDTE.Project>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>)
+    IL_004d:  callvirt   instance string [EnvDTE]EnvDTE.Project::get_FullName()
+    IL_0052:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_0057:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_005c:  stfld      string TemplateBuilder.SolutionWizard/'<>c__DisplayClass5_0'::projectsDir
+    IL_0061:  ldloc.0
+    IL_0062:  ldfld      string TemplateBuilder.SolutionWizard/'<>c__DisplayClass5_0'::projectsDir
+    IL_0067:  brtrue.s   IL_006a
+
+    IL_0069:  ret
+
+    IL_006a:  ldloc.1
+    IL_006b:  ldarg.0
+    IL_006c:  ldftn      instance valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string> TemplateBuilder.SolutionWizard::AdjustProjectLocation(class [EnvDTE]EnvDTE.Project)
+    IL_0072:  newobj     instance void class [mscorlib]System.Func`2<class [EnvDTE]EnvDTE.Project,valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>>::.ctor(object,
+                                                                                                                                                                                                             native int)
+    IL_0077:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!1> [System.Core]System.Linq.Enumerable::Select<class [EnvDTE]EnvDTE.Project,valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                                                                                                                    class [mscorlib]System.Func`2<!!0,!!1>)
+    IL_007c:  call       class [mscorlib]System.Collections.Generic.List`1<!!0> [System.Core]System.Linq.Enumerable::ToList<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>)
+    IL_0081:  stloc.2
+    IL_0082:  ldloc.1
+    IL_0083:  callvirt   instance valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<!0> class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project>::GetEnumerator()
+    IL_0088:  stloc.3
+    .try
+    {
+      IL_0089:  br.s       IL_00a1
+
+      IL_008b:  ldloca.s   V_3
+      IL_008d:  call       instance !0 valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<class [EnvDTE]EnvDTE.Project>::get_Current()
+      IL_0092:  stloc.s    V_4
+      IL_0094:  ldarg.0
+      IL_0095:  ldfld      class [EnvDTE100]EnvDTE100.Solution4 TemplateBuilder.SolutionWizard::_solution
+      IL_009a:  ldloc.s    V_4
+      IL_009c:  callvirt   instance void [EnvDTE100]EnvDTE100.Solution4::Remove(class [EnvDTE]EnvDTE.Project)
+      IL_00a1:  ldloca.s   V_3
+      IL_00a3:  call       instance bool valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<class [EnvDTE]EnvDTE.Project>::MoveNext()
+      IL_00a8:  brtrue.s   IL_008b
+
+      IL_00aa:  leave.s    IL_00ba
+
+    }  // end .try
+    finally
+    {
+      IL_00ac:  ldloca.s   V_3
+      IL_00ae:  constrained. valuetype [mscorlib]System.Collections.Generic.List`1/Enumerator<class [EnvDTE]EnvDTE.Project>
+      IL_00b4:  callvirt   instance void [mscorlib]System.IDisposable::Dispose()
+      IL_00b9:  endfinally
+    }  // end handler
+    IL_00ba:  ldloc.2
+    IL_00bb:  ldsfld     class [mscorlib]System.Func`2<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>,bool> TemplateBuilder.SolutionWizard/'<>c'::'<>9__5_0'
+    IL_00c0:  dup
+    IL_00c1:  brtrue.s   IL_00da
+
+    IL_00c3:  pop
+    IL_00c4:  ldsfld     class TemplateBuilder.SolutionWizard/'<>c' TemplateBuilder.SolutionWizard/'<>c'::'<>9'
+    IL_00c9:  ldftn      instance bool TemplateBuilder.SolutionWizard/'<>c'::'<RunFinished>b__5_0'(valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>)
+    IL_00cf:  newobj     instance void class [mscorlib]System.Func`2<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>,bool>::.ctor(object,
+                                                                                                                                                                                     native int)
+    IL_00d4:  dup
+    IL_00d5:  stsfld     class [mscorlib]System.Func`2<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>,bool> TemplateBuilder.SolutionWizard/'<>c'::'<>9__5_0'
+    IL_00da:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0> [System.Core]System.Linq.Enumerable::Where<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>>(class [mscorlib]System.Collections.Generic.IEnumerable`1<!!0>,
+                                                                                                                                                                                                                                      class [mscorlib]System.Func`2<!!0,bool>)
+    IL_00df:  callvirt   instance class [mscorlib]System.Collections.Generic.IEnumerator`1<!0> class [mscorlib]System.Collections.Generic.IEnumerable`1<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>>::GetEnumerator()
+    IL_00e4:  stloc.s    V_5
+    .try
+    {
+      IL_00e6:  br.s       IL_0136
+
+      IL_00e8:  ldloc.s    V_5
+      IL_00ea:  callvirt   instance !0 class [mscorlib]System.Collections.Generic.IEnumerator`1<valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>>::get_Current()
+      IL_00ef:  stloc.s    V_6
+      IL_00f1:  ldloca.s   V_6
+      IL_00f3:  call       instance !0 valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>::get_Key()
+      IL_00f8:  brfalse.s  IL_0122
+
+      IL_00fa:  ldloca.s   V_6
+      IL_00fc:  call       instance !0 valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>::get_Key()
+      IL_0101:  callvirt   instance object [EnvDTE]EnvDTE.Project::get_Object()
+      IL_0106:  isinst     [EnvDTE80]EnvDTE80.SolutionFolder
+      IL_010b:  stloc.s    V_7
+      IL_010d:  ldloc.s    V_7
+      IL_010f:  brfalse.s  IL_0136
+
+      IL_0111:  ldloc.s    V_7
+      IL_0113:  ldloca.s   V_6
+      IL_0115:  call       instance !1 valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>::get_Value()
+      IL_011a:  callvirt   instance class [EnvDTE]EnvDTE.Project [EnvDTE80]EnvDTE80.SolutionFolder::AddFromFile(string)
+      IL_011f:  pop
+      IL_0120:  br.s       IL_0136
+
+      IL_0122:  ldarg.0
+      IL_0123:  ldfld      class [EnvDTE100]EnvDTE100.Solution4 TemplateBuilder.SolutionWizard::_solution
+      IL_0128:  ldloca.s   V_6
+      IL_012a:  call       instance !1 valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>::get_Value()
+      IL_012f:  ldc.i4.1
+      IL_0130:  callvirt   instance class [EnvDTE]EnvDTE.Project [EnvDTE100]EnvDTE100.Solution4::AddFromFile(string,
+                                                                                                             bool)
+      IL_0135:  pop
+      IL_0136:  ldloc.s    V_5
+      IL_0138:  callvirt   instance bool [mscorlib]System.Collections.IEnumerator::MoveNext()
+      IL_013d:  brtrue.s   IL_00e8
+
+      IL_013f:  leave.s    IL_014d
+
+    }  // end .try
+    finally
+    {
+      IL_0141:  ldloc.s    V_5
+      IL_0143:  brfalse.s  IL_014c
+
+      IL_0145:  ldloc.s    V_5
+      IL_0147:  callvirt   instance void [mscorlib]System.IDisposable::Dispose()
+      IL_014c:  endfinally
+    }  // end handler
+    IL_014d:  ldloc.0
+    IL_014e:  ldftn      instance void TemplateBuilder.SolutionWizard/'<>c__DisplayClass5_0'::'<RunFinished>b__1'(object)
+    IL_0154:  newobj     instance void [mscorlib]System.Threading.WaitCallback::.ctor(object,
+                                                                                      native int)
+    IL_0159:  call       bool [mscorlib]System.Threading.ThreadPool::QueueUserWorkItem(class [mscorlib]System.Threading.WaitCallback)
+    IL_015e:  pop
+    IL_015f:  ret
+  } // end of method SolutionWizard::RunFinished
+
+  .method public hidebysig newslot virtual final 
+          instance void  BeforeOpeningFile(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method SolutionWizard::BeforeOpeningFile
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectItemFinishedGenerating(class [EnvDTE]EnvDTE.ProjectItem projectItem) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method SolutionWizard::ProjectItemFinishedGenerating
+
+  .method public hidebysig newslot virtual final 
+          instance void  ProjectFinishedGenerating(class [EnvDTE]EnvDTE.Project project) cil managed
+  {
+    // Code size       1 (0x1)
+    .maxstack  8
+    IL_0000:  ret
+  } // end of method SolutionWizard::ProjectFinishedGenerating
+
+  .method private hidebysig static void  CopyDirectory(string sourceDirectory,
+                                                       string destDirectory) cil managed
+  {
+    // Code size       126 (0x7e)
+    .maxstack  2
+    .locals init (string[] V_0,
+             int32 V_1,
+             string V_2,
+             string V_3,
+             string V_4,
+             string V_5,
+             string V_6,
+             string V_7)
+    IL_0000:  ldarg.1
+    IL_0001:  call       bool [mscorlib]System.IO.Directory::Exists(string)
+    IL_0006:  brtrue.s   IL_000f
+
+    IL_0008:  ldarg.1
+    IL_0009:  call       class [mscorlib]System.IO.DirectoryInfo [mscorlib]System.IO.Directory::CreateDirectory(string)
+    IL_000e:  pop
+    IL_000f:  ldarg.0
+    IL_0010:  call       string[] [mscorlib]System.IO.Directory::GetFiles(string)
+    IL_0015:  stloc.0
+    IL_0016:  ldc.i4.0
+    IL_0017:  stloc.1
+    IL_0018:  br.s       IL_003d
+
+    IL_001a:  ldloc.0
+    IL_001b:  ldloc.1
+    IL_001c:  ldelem.ref
+    IL_001d:  stloc.2
+    IL_001e:  ldloc.2
+    IL_001f:  call       string [mscorlib]System.IO.Path::GetFileName(string)
+    IL_0024:  stloc.3
+    IL_0025:  ldloc.3
+    IL_0026:  brfalse.s  IL_0039
+
+    IL_0028:  ldarg.1
+    IL_0029:  ldloc.3
+    IL_002a:  call       string [mscorlib]System.IO.Path::Combine(string,
+                                                                  string)
+    IL_002f:  stloc.s    V_4
+    IL_0031:  ldloc.2
+    IL_0032:  ldloc.s    V_4
+    IL_0034:  call       void [mscorlib]System.IO.File::Copy(string,
+                                                             string)
+    IL_0039:  ldloc.1
+    IL_003a:  ldc.i4.1
+    IL_003b:  add
+    IL_003c:  stloc.1
+    IL_003d:  ldloc.1
+    IL_003e:  ldloc.0
+    IL_003f:  ldlen
+    IL_0040:  conv.i4
+    IL_0041:  blt.s      IL_001a
+
+    IL_0043:  ldarg.0
+    IL_0044:  call       string[] [mscorlib]System.IO.Directory::GetDirectories(string)
+    IL_0049:  stloc.0
+    IL_004a:  ldc.i4.0
+    IL_004b:  stloc.1
+    IL_004c:  br.s       IL_0077
+
+    IL_004e:  ldloc.0
+    IL_004f:  ldloc.1
+    IL_0050:  ldelem.ref
+    IL_0051:  stloc.s    V_5
+    IL_0053:  ldloc.s    V_5
+    IL_0055:  call       string [mscorlib]System.IO.Path::GetFileName(string)
+    IL_005a:  stloc.s    V_6
+    IL_005c:  ldloc.s    V_6
+    IL_005e:  brfalse.s  IL_0073
+
+    IL_0060:  ldarg.1
+    IL_0061:  ldloc.s    V_6
+    IL_0063:  call       string [mscorlib]System.IO.Path::Combine(string,
+                                                                  string)
+    IL_0068:  stloc.s    V_7
+    IL_006a:  ldloc.s    V_5
+    IL_006c:  ldloc.s    V_7
+    IL_006e:  call       void TemplateBuilder.SolutionWizard::CopyDirectory(string,
+                                                                            string)
+    IL_0073:  ldloc.1
+    IL_0074:  ldc.i4.1
+    IL_0075:  add
+    IL_0076:  stloc.1
+    IL_0077:  ldloc.1
+    IL_0078:  ldloc.0
+    IL_0079:  ldlen
+    IL_007a:  conv.i4
+    IL_007b:  blt.s      IL_004e
+
+    IL_007d:  ret
+  } // end of method SolutionWizard::CopyDirectory
+
+  .method private hidebysig static void  DeleteDirectory(string directory,
+                                                         [opt] int32 inUseRetryCount) cil managed
+  {
+    .param [2] = int32(0x00000003)
+    // Code size       114 (0x72)
+    .maxstack  2
+    .locals init (int32 V_0,
+             string[] V_1,
+             int32 V_2,
+             string V_3)
+    IL_0000:  ldc.i4.0
+    IL_0001:  stloc.0
+    IL_0002:  br.s       IL_006d
+
+    IL_0004:  nop
+    .try
+    {
+      IL_0005:  ldarg.0
+      IL_0006:  call       bool [mscorlib]System.IO.Directory::Exists(string)
+      IL_000b:  brtrue.s   IL_000f
+
+      IL_000d:  leave.s    IL_0071
+
+      IL_000f:  ldarg.0
+      IL_0010:  call       string[] [mscorlib]System.IO.Directory::GetFiles(string)
+      IL_0015:  stloc.1
+      IL_0016:  ldc.i4.0
+      IL_0017:  stloc.2
+      IL_0018:  br.s       IL_0026
+
+      IL_001a:  ldloc.1
+      IL_001b:  ldloc.2
+      IL_001c:  ldelem.ref
+      IL_001d:  call       void [mscorlib]System.IO.File::Delete(string)
+      IL_0022:  ldloc.2
+      IL_0023:  ldc.i4.1
+      IL_0024:  add
+      IL_0025:  stloc.2
+      IL_0026:  ldloc.2
+      IL_0027:  ldloc.1
+      IL_0028:  ldlen
+      IL_0029:  conv.i4
+      IL_002a:  blt.s      IL_001a
+
+      IL_002c:  ldarg.0
+      IL_002d:  call       string[] [mscorlib]System.IO.Directory::GetDirectories(string)
+      IL_0032:  stloc.1
+      IL_0033:  ldc.i4.0
+      IL_0034:  stloc.2
+      IL_0035:  br.s       IL_004e
+
+      IL_0037:  ldloc.1
+      IL_0038:  ldloc.2
+      IL_0039:  ldelem.ref
+      IL_003a:  stloc.3
+      IL_003b:  ldloc.3
+      IL_003c:  call       string [mscorlib]System.IO.Path::GetFileName(string)
+      IL_0041:  brfalse.s  IL_004a
+
+      IL_0043:  ldloc.3
+      IL_0044:  ldc.i4.3
+      IL_0045:  call       void TemplateBuilder.SolutionWizard::DeleteDirectory(string,
+                                                                                int32)
+      IL_004a:  ldloc.2
+      IL_004b:  ldc.i4.1
+      IL_004c:  add
+      IL_004d:  stloc.2
+      IL_004e:  ldloc.2
+      IL_004f:  ldloc.1
+      IL_0050:  ldlen
+      IL_0051:  conv.i4
+      IL_0052:  blt.s      IL_0037
+
+      IL_0054:  ldarg.0
+      IL_0055:  call       void [mscorlib]System.IO.Directory::Delete(string)
+      IL_005a:  leave.s    IL_0071
+
+    }  // end .try
+    catch [mscorlib]System.Exception 
+    {
+      IL_005c:  pop
+      IL_005d:  ldc.i4     0x7d0
+      IL_0062:  call       void [mscorlib]System.Threading.Thread::Sleep(int32)
+      IL_0067:  ldloc.0
+      IL_0068:  ldc.i4.1
+      IL_0069:  add
+      IL_006a:  stloc.0
+      IL_006b:  leave.s    IL_006d
+
+    }  // end handler
+    IL_006d:  ldloc.0
+    IL_006e:  ldarg.1
+    IL_006f:  blt.s      IL_0004
+
+    IL_0071:  ret
+  } // end of method SolutionWizard::DeleteDirectory
+
+  .method private hidebysig instance valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string> 
+          AdjustProjectLocation(class [EnvDTE]EnvDTE.Project project) cil managed
+  {
+    // Code size       152 (0x98)
+    .maxstack  3
+    .locals init (string V_0,
+             string V_1,
+             class [EnvDTE]EnvDTE.Project V_2,
+             string V_3,
+             string V_4,
+             string V_5,
+             valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string> V_6)
+    IL_0000:  ldarg.1
+    IL_0001:  callvirt   instance string [EnvDTE]EnvDTE.Project::get_FullName()
+    IL_0006:  stloc.0
+    IL_0007:  ldloc.0
+    IL_0008:  call       string [mscorlib]System.IO.Path::GetFileName(string)
+    IL_000d:  stloc.1
+    IL_000e:  ldloc.1
+    IL_000f:  brtrue.s   IL_001c
+
+    IL_0011:  ldloca.s   V_6
+    IL_0013:  initobj    valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>
+    IL_0019:  ldloc.s    V_6
+    IL_001b:  ret
+
+    IL_001c:  ldarg.1
+    IL_001d:  callvirt   instance class [EnvDTE]EnvDTE.ProjectItem [EnvDTE]EnvDTE.Project::get_ParentProjectItem()
+    IL_0022:  callvirt   instance class [EnvDTE]EnvDTE.Project [EnvDTE]EnvDTE.ProjectItem::get_ContainingProject()
+    IL_0027:  callvirt   instance string [EnvDTE]EnvDTE.Project::get_Kind()
+    IL_002c:  ldstr      "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}"
+    IL_0031:  call       bool [mscorlib]System.String::op_Equality(string,
+                                                                   string)
+    IL_0036:  brtrue.s   IL_003b
+
+    IL_0038:  ldnull
+    IL_0039:  br.s       IL_0046
+
+    IL_003b:  ldarg.1
+    IL_003c:  callvirt   instance class [EnvDTE]EnvDTE.ProjectItem [EnvDTE]EnvDTE.Project::get_ParentProjectItem()
+    IL_0041:  callvirt   instance class [EnvDTE]EnvDTE.Project [EnvDTE]EnvDTE.ProjectItem::get_ContainingProject()
+    IL_0046:  stloc.2
+    IL_0047:  ldloc.0
+    IL_0048:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_004d:  stloc.3
+    IL_004e:  ldloc.3
+    IL_004f:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_0054:  call       string [mscorlib]System.IO.Path::GetDirectoryName(string)
+    IL_0059:  stloc.s    V_4
+    IL_005b:  ldloc.s    V_4
+    IL_005d:  brtrue.s   IL_006a
+
+    IL_005f:  ldloca.s   V_6
+    IL_0061:  initobj    valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>
+    IL_0067:  ldloc.s    V_6
+    IL_0069:  ret
+
+    IL_006a:  ldloc.s    V_4
+    IL_006c:  ldloc.1
+    IL_006d:  call       string [mscorlib]System.IO.Path::GetFileNameWithoutExtension(string)
+    IL_0072:  call       string [mscorlib]System.IO.Path::Combine(string,
+                                                                  string)
+    IL_0077:  stloc.s    V_5
+    IL_0079:  ldloc.s    V_5
+    IL_007b:  call       class [mscorlib]System.IO.DirectoryInfo [mscorlib]System.IO.Directory::CreateDirectory(string)
+    IL_0080:  pop
+    IL_0081:  ldloc.3
+    IL_0082:  ldloc.s    V_5
+    IL_0084:  call       void TemplateBuilder.SolutionWizard::CopyDirectory(string,
+                                                                            string)
+    IL_0089:  ldloc.2
+    IL_008a:  ldloc.s    V_5
+    IL_008c:  ldloc.1
+    IL_008d:  call       string [mscorlib]System.IO.Path::Combine(string,
+                                                                  string)
+    IL_0092:  newobj     instance void valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<class [EnvDTE]EnvDTE.Project,string>::.ctor(!0,
+                                                                                                                                                 !1)
+    IL_0097:  ret
+  } // end of method SolutionWizard::AdjustProjectLocation
+
+  .method private hidebysig instance class [mscorlib]System.Collections.Generic.IList`1<class [EnvDTE]EnvDTE.Project> 
+          GetProjects() cil managed
+  {
+    // Code size       89 (0x59)
+    .maxstack  2
+    .locals init (class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project> V_0,
+             class [mscorlib]System.Collections.IEnumerator V_1,
+             class [EnvDTE]EnvDTE.Project V_2)
+    IL_0000:  ldarg.0
+    IL_0001:  ldfld      class [EnvDTE100]EnvDTE100.Solution4 TemplateBuilder.SolutionWizard::_solution
+    IL_0006:  callvirt   instance class [EnvDTE]EnvDTE.Projects [EnvDTE100]EnvDTE100.Solution4::get_Projects()
+    IL_000b:  newobj     instance void class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project>::.ctor()
+    IL_0010:  stloc.0
+    IL_0011:  callvirt   instance class [mscorlib]System.Collections.IEnumerator [EnvDTE]EnvDTE.Projects::GetEnumerator()
+    IL_0016:  stloc.1
+    IL_0017:  br.s       IL_004f
+
+    IL_0019:  ldloc.1
+    IL_001a:  callvirt   instance object [mscorlib]System.Collections.IEnumerator::get_Current()
+    IL_001f:  isinst     [EnvDTE]EnvDTE.Project
+    IL_0024:  stloc.2
+    IL_0025:  ldloc.2
+    IL_0026:  brfalse.s  IL_004f
+
+    IL_0028:  ldloc.2
+    IL_0029:  callvirt   instance string [EnvDTE]EnvDTE.Project::get_Kind()
+    IL_002e:  ldstr      "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}"
+    IL_0033:  call       bool [mscorlib]System.String::op_Equality(string,
+                                                                   string)
+    IL_0038:  brfalse.s  IL_0048
+
+    IL_003a:  ldloc.0
+    IL_003b:  ldloc.2
+    IL_003c:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<class [EnvDTE]EnvDTE.Project> TemplateBuilder.SolutionWizard::GetSolutionFolderProjects(class [EnvDTE]EnvDTE.Project)
+    IL_0041:  callvirt   instance void class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project>::AddRange(class [mscorlib]System.Collections.Generic.IEnumerable`1<!0>)
+    IL_0046:  br.s       IL_004f
+
+    IL_0048:  ldloc.0
+    IL_0049:  ldloc.2
+    IL_004a:  callvirt   instance void class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project>::Add(!0)
+    IL_004f:  ldloc.1
+    IL_0050:  callvirt   instance bool [mscorlib]System.Collections.IEnumerator::MoveNext()
+    IL_0055:  brtrue.s   IL_0019
+
+    IL_0057:  ldloc.0
+    IL_0058:  ret
+  } // end of method SolutionWizard::GetProjects
+
+  .method private hidebysig static class [mscorlib]System.Collections.Generic.IEnumerable`1<class [EnvDTE]EnvDTE.Project> 
+          GetSolutionFolderProjects(class [EnvDTE]EnvDTE.Project solutionFolder) cil managed
+  {
+    // Code size       95 (0x5f)
+    .maxstack  2
+    .locals init (class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project> V_0,
+             int32 V_1,
+             class [EnvDTE]EnvDTE.Project V_2)
+    IL_0000:  newobj     instance void class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project>::.ctor()
+    IL_0005:  stloc.0
+    IL_0006:  ldc.i4.1
+    IL_0007:  stloc.1
+    IL_0008:  br.s       IL_004f
+
+    IL_000a:  ldarg.0
+    IL_000b:  callvirt   instance class [EnvDTE]EnvDTE.ProjectItems [EnvDTE]EnvDTE.Project::get_ProjectItems()
+    IL_0010:  ldloc.1
+    IL_0011:  box        [mscorlib]System.Int32
+    IL_0016:  callvirt   instance class [EnvDTE]EnvDTE.ProjectItem [EnvDTE]EnvDTE.ProjectItems::Item(object)
+    IL_001b:  callvirt   instance class [EnvDTE]EnvDTE.Project [EnvDTE]EnvDTE.ProjectItem::get_SubProject()
+    IL_0020:  stloc.2
+    IL_0021:  ldloc.2
+    IL_0022:  brfalse.s  IL_004b
+
+    IL_0024:  ldloc.2
+    IL_0025:  callvirt   instance string [EnvDTE]EnvDTE.Project::get_Kind()
+    IL_002a:  ldstr      "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}"
+    IL_002f:  call       bool [mscorlib]System.String::op_Equality(string,
+                                                                   string)
+    IL_0034:  brfalse.s  IL_0044
+
+    IL_0036:  ldloc.0
+    IL_0037:  ldloc.2
+    IL_0038:  call       class [mscorlib]System.Collections.Generic.IEnumerable`1<class [EnvDTE]EnvDTE.Project> TemplateBuilder.SolutionWizard::GetSolutionFolderProjects(class [EnvDTE]EnvDTE.Project)
+    IL_003d:  callvirt   instance void class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project>::AddRange(class [mscorlib]System.Collections.Generic.IEnumerable`1<!0>)
+    IL_0042:  br.s       IL_004b
+
+    IL_0044:  ldloc.0
+    IL_0045:  ldloc.2
+    IL_0046:  callvirt   instance void class [mscorlib]System.Collections.Generic.List`1<class [EnvDTE]EnvDTE.Project>::Add(!0)
+    IL_004b:  ldloc.1
+    IL_004c:  ldc.i4.1
+    IL_004d:  add
+    IL_004e:  stloc.1
+    IL_004f:  ldloc.1
+    IL_0050:  ldarg.0
+    IL_0051:  callvirt   instance class [EnvDTE]EnvDTE.ProjectItems [EnvDTE]EnvDTE.Project::get_ProjectItems()
+    IL_0056:  callvirt   instance int32 [EnvDTE]EnvDTE.ProjectItems::get_Count()
+    IL_005b:  ble.s      IL_000a
+
+    IL_005d:  ldloc.0
+    IL_005e:  ret
+  } // end of method SolutionWizard::GetSolutionFolderProjects
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  8
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method SolutionWizard::.ctor
+
+  .method private hidebysig specialname rtspecialname static 
+          void  .cctor() cil managed
+  {
+    // Code size       11 (0xb)
+    .maxstack  8
+    IL_0000:  newobj     instance void class [mscorlib]System.Collections.Generic.Dictionary`2<string,string>::.ctor()
+    IL_0005:  stsfld     class [mscorlib]System.Collections.Generic.Dictionary`2<string,string> TemplateBuilder.SolutionWizard::GlobalDictionary
+    IL_000a:  ret
+  } // end of method SolutionWizard::.cctor
+
+} // end of class TemplateBuilder.SolutionWizard
+
+.class private abstract auto ansi sealed beforefieldinit TemplateBuilder.Helpers.PathHelper
+       extends [mscorlib]System.Object
+{
+  .method public hidebysig static string 
+          GetRelativePath(string fromPath,
+                          string toPath) cil managed
+  {
+    // Code size       139 (0x8b)
+    .maxstack  3
+    .locals init (class [System]System.Uri V_0,
+             class [System]System.Uri V_1,
+             string V_2)
+    IL_0000:  ldarg.0
+    IL_0001:  call       bool [mscorlib]System.String::IsNullOrEmpty(string)
+    IL_0006:  brfalse.s  IL_0013
+
+    IL_0008:  ldstr      "fromPath"
+    IL_000d:  newobj     instance void [mscorlib]System.ArgumentNullException::.ctor(string)
+    IL_0012:  throw
+
+    IL_0013:  ldarg.1
+    IL_0014:  call       bool [mscorlib]System.String::IsNullOrEmpty(string)
+    IL_0019:  brfalse.s  IL_0026
+
+    IL_001b:  ldstr      "toPath"
+    IL_0020:  newobj     instance void [mscorlib]System.ArgumentNullException::.ctor(string)
+    IL_0025:  throw
+
+    IL_0026:  ldarg.0
+    IL_0027:  call       string TemplateBuilder.Helpers.PathHelper::AppendDirectorySeparatorChar(string)
+    IL_002c:  newobj     instance void [System]System.Uri::.ctor(string)
+    IL_0031:  stloc.0
+    IL_0032:  ldarg.1
+    IL_0033:  call       string TemplateBuilder.Helpers.PathHelper::AppendDirectorySeparatorChar(string)
+    IL_0038:  newobj     instance void [System]System.Uri::.ctor(string)
+    IL_003d:  stloc.1
+    IL_003e:  ldloc.0
+    IL_003f:  callvirt   instance string [System]System.Uri::get_Scheme()
+    IL_0044:  ldloc.1
+    IL_0045:  callvirt   instance string [System]System.Uri::get_Scheme()
+    IL_004a:  call       bool [mscorlib]System.String::op_Inequality(string,
+                                                                     string)
+    IL_004f:  brfalse.s  IL_0053
+
+    IL_0051:  ldarg.1
+    IL_0052:  ret
+
+    IL_0053:  ldloc.0
+    IL_0054:  ldloc.1
+    IL_0055:  callvirt   instance class [System]System.Uri [System]System.Uri::MakeRelativeUri(class [System]System.Uri)
+    IL_005a:  callvirt   instance string [mscorlib]System.Object::ToString()
+    IL_005f:  call       string [System]System.Uri::UnescapeDataString(string)
+    IL_0064:  stloc.2
+    IL_0065:  ldloc.1
+    IL_0066:  callvirt   instance string [System]System.Uri::get_Scheme()
+    IL_006b:  ldsfld     string [System]System.Uri::UriSchemeFile
+    IL_0070:  ldc.i4.5
+    IL_0071:  call       bool [mscorlib]System.String::Equals(string,
+                                                              string,
+                                                              valuetype [mscorlib]System.StringComparison)
+    IL_0076:  brfalse.s  IL_0089
+
+    IL_0078:  ldloc.2
+    IL_0079:  ldsfld     char [mscorlib]System.IO.Path::AltDirectorySeparatorChar
+    IL_007e:  ldsfld     char [mscorlib]System.IO.Path::DirectorySeparatorChar
+    IL_0083:  callvirt   instance string [mscorlib]System.String::Replace(char,
+                                                                          char)
+    IL_0088:  stloc.2
+    IL_0089:  ldloc.2
+    IL_008a:  ret
+  } // end of method PathHelper::GetRelativePath
+
+  .method private hidebysig static string 
+          AppendDirectorySeparatorChar(string directoryPath) cil managed
+  {
+    // Code size       43 (0x2b)
+    .maxstack  2
+    .locals init (char V_0)
+    IL_0000:  ldarg.0
+    IL_0001:  ldsfld     char [mscorlib]System.IO.Path::DirectorySeparatorChar
+    IL_0006:  stloc.0
+    IL_0007:  ldloca.s   V_0
+    IL_0009:  call       instance string [mscorlib]System.Char::ToString()
+    IL_000e:  callvirt   instance bool [mscorlib]System.String::EndsWith(string)
+    IL_0013:  brtrue.s   IL_0029
+
+    IL_0015:  ldarg.0
+    IL_0016:  ldsfld     char [mscorlib]System.IO.Path::DirectorySeparatorChar
+    IL_001b:  stloc.0
+    IL_001c:  ldloca.s   V_0
+    IL_001e:  call       instance string [mscorlib]System.Char::ToString()
+    IL_0023:  call       string [mscorlib]System.String::Concat(string,
+                                                                string)
+    IL_0028:  ret
+
+    IL_0029:  ldarg.0
+    IL_002a:  ret
+  } // end of method PathHelper::AppendDirectorySeparatorChar
+
+} // end of class TemplateBuilder.Helpers.PathHelper
+
+.class private abstract auto ansi sealed beforefieldinit TemplateBuilder.Helpers.ProjectHelper
+       extends [mscorlib]System.Object
+{
+  .method public hidebysig static void  ReloadProject(class [EnvDTE]EnvDTE.Project currentProject) cil managed
+  {
+    // Code size       157 (0x9d)
+    .maxstack  5
+    .locals init (string V_0,
+             string V_1)
+    IL_0000:  ldtoken    [EnvDTE]EnvDTE.DTE
+    IL_0005:  call       class [mscorlib]System.Type [mscorlib]System.Type::GetTypeFromHandle(valuetype [mscorlib]System.RuntimeTypeHandle)
+    IL_000a:  call       object ['Microsoft.VisualStudio.Shell.14.0']Microsoft.VisualStudio.Shell.Package::GetGlobalService(class [mscorlib]System.Type)
+    IL_000f:  castclass  [EnvDTE80]EnvDTE80.DTE2
+    IL_0014:  dup
+    IL_0015:  ldstr      "File.SaveAll"
+    IL_001a:  ldstr      ""
+    IL_001f:  callvirt   instance void [EnvDTE80]EnvDTE80.DTE2::ExecuteCommand(string,
+                                                                               string)
+    IL_0024:  dup
+    IL_0025:  callvirt   instance class [EnvDTE]EnvDTE.Solution [EnvDTE80]EnvDTE80.DTE2::get_Solution()
+    IL_002a:  callvirt   instance string [EnvDTE]EnvDTE._Solution::get_FullName()
+    IL_002f:  call       string [mscorlib]System.IO.Path::GetFileNameWithoutExtension(string)
+    IL_0034:  stloc.0
+    IL_0035:  ldarg.0
+    IL_0036:  callvirt   instance string [EnvDTE]EnvDTE.Project::get_Name()
+    IL_003b:  stloc.1
+    IL_003c:  dup
+    IL_003d:  callvirt   instance class [EnvDTE]EnvDTE.Windows [EnvDTE80]EnvDTE80.DTE2::get_Windows()
+    IL_0042:  ldstr      "{3AE79031-E1BC-11D0-8F78-00A0C9110057}"
+    IL_0047:  callvirt   instance class [EnvDTE]EnvDTE.Window [EnvDTE]EnvDTE.Windows::Item(object)
+    IL_004c:  callvirt   instance void [EnvDTE]EnvDTE.Window::Activate()
+    IL_0051:  dup
+    IL_0052:  callvirt   instance class [EnvDTE80]EnvDTE80.ToolWindows [EnvDTE80]EnvDTE80.DTE2::get_ToolWindows()
+    IL_0057:  callvirt   instance class [EnvDTE]EnvDTE.UIHierarchy [EnvDTE80]EnvDTE80.ToolWindows::get_SolutionExplorer()
+    IL_005c:  ldloc.0
+    IL_005d:  ldstr      "\\"
+    IL_0062:  ldloc.1
+    IL_0063:  call       string [mscorlib]System.String::Concat(string,
+                                                                string,
+                                                                string)
+    IL_0068:  callvirt   instance class [EnvDTE]EnvDTE.UIHierarchyItem [EnvDTE]EnvDTE.UIHierarchy::GetItem(string)
+    IL_006d:  ldc.i4.1
+    IL_006e:  callvirt   instance void [EnvDTE]EnvDTE.UIHierarchyItem::Select(valuetype [EnvDTE]EnvDTE.vsUISelectionType)
+    IL_0073:  dup
+    IL_0074:  ldstr      "Project.UnloadProject"
+    IL_0079:  ldstr      ""
+    IL_007e:  callvirt   instance void [EnvDTE80]EnvDTE80.DTE2::ExecuteCommand(string,
+                                                                               string)
+    IL_0083:  ldc.i4     0x1f4
+    IL_0088:  call       void [mscorlib]System.Threading.Thread::Sleep(int32)
+    IL_008d:  ldstr      "Project.ReloadProject"
+    IL_0092:  ldstr      ""
+    IL_0097:  callvirt   instance void [EnvDTE80]EnvDTE80.DTE2::ExecuteCommand(string,
+                                                                               string)
+    IL_009c:  ret
+  } // end of method ProjectHelper::ReloadProject
+
+} // end of class TemplateBuilder.Helpers.ProjectHelper
+
+
+// =============================================================
+
+// *********** DISASSEMBLY COMPLETE ***********************
+// WARNING: Created Win32 resource file C:\Users\Tato\AppData\Local\Temp\ildasm-scan-6200517ead0d4b9b93987cc758a39231\TemplateBuilder-result.res

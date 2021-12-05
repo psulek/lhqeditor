@@ -1,4 +1,7 @@
-﻿2021.5
+﻿2021.6
+- Added new project templates for ASP.NET Core NET5 and NET6(only for Visual Studio 2022)
+
+2021.5
 - Fixed non working shortcuts (Ctrl+D, Ctrl+Ins, Shift+Ins ...)
 
 2021.4

@@ -1,0 +1,21 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "module": "ES2015",
+    "outDir": "Scripts",
+    "diagnostics": true
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ],
+  "include": [
+    "Typescript/**/*.ts",
+    "Typescript/**/*.d.ts"
+  ]
+}

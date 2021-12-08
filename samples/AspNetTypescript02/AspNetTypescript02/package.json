@@ -1,0 +1,29 @@
+{
+  "name": "webapplication1",
+  "version": "1.0.0",
+  "scripts": {
+    "BUILD-WATCH": "webpack --config webpack.config.js --watch --progress --colors",
+    "DEV": "webpack --config webpack.config.js --colors",
+    "PROD": "webpack --config webpack.config.js --env.prod=true --colors"
+  },
+  "author": "ScaleHQ Solutions",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^3.3.31",
+    "ts-loader": "5.3.0",
+    "typescript": "3.1.6",
+    "uglifyjs-webpack-plugin": "2.0.1",
+    "webpack": "4.25.1",
+    "webpack-cli": "3.1.2"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scalehq/lhq.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scalehq/lhq/issues"
+  },
+  "homepage": "https://github.com/scalehq/lhq#readme",
+  "description": ""
+}

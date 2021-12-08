@@ -1,0 +1,83 @@
+﻿{
+  "model": {
+    "uid": "6ce4d54c5dbd415c93019d315e278638",
+    "version": 1,
+    "options": {
+      "categories": true,
+      "resources": "All"
+    },
+    "name": "Strings",
+    "primaryLanguage": "en"
+  },
+  "languages": [
+    "en",
+    "sk"
+  ],
+  "categories": {
+    "Messages": {
+      "resources": {
+        "SampleText": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Sample text"
+            }
+          }
+        },
+        "Welcome": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Welcome LHQ Editor user"
+            },
+            "sk": {
+              "value": "Vitaj pouzivatel LHQ Editora"
+            }
+          }
+        }
+      }
+    }
+  },
+  "metadatas": {
+  "childs": [
+    {
+      "name": "metadata",
+      "attrs": {
+        "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
+      },
+      "childs": [
+        {
+          "name": "content",
+          "attrs": {
+            "templateId": "TypescriptJson01"
+          },
+          "childs": [
+            {
+              "name": "Settings",
+              "childs": [
+                {
+                  "name": "Typescript",
+                  "attrs": {
+                    "OutputFolder": "Typescript",
+                    "AmbientNamespaceName": null,
+                    "InterfacePrefix": null
+                  }
+                },
+                {
+                  "name": "Json",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "CultureCodeInFileNameForPrimaryLanguage": "true",
+                    "MetadataFileNameSuffix": "metadata",
+                    "WriteEmptyValues": "true"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+}

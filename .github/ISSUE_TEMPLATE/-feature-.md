@@ -8,20 +8,23 @@ assignees: psulek
 ---
 
 ### Select category
-- [ ] **LHQ Editor** - Visual Studio Extension
+- [x] **LHQ Editor** - Visual Studio Extension
 - [ ] **ScaleHQ.WPF.LHQ** - NuGet Package
 - [ ] **ScaleHQ.AspNetCore.LHQ** - NuGet Package
+(place x inside square brackets to mark category or multiple categories)
 
 ### Visual Studio Edition
-- [ ] Visual Studio Community
-- [ ] Visual Studio Pro
-- [ ] Visual Studio Enterprise
+- [x] Visual Studio Community
+- [x] Visual Studio Pro
+- [x] Visual Studio Enterprise
+(place x inside square brackets to mark edition or multiple editions)
 
 ### Visual Studio Version
 - [ ] 2015
 - [ ] 2017
 - [ ] 2019
-- [ ] 2022
+- [x] 2022
+(place x inside square brackets to mark version or multiple versions)
 
 ### Describe Feature
-enter feature description
+(enter feature description here)

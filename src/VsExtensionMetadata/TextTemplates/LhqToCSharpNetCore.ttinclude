@@ -7,7 +7,7 @@
 <#@ import namespace="LHQ.Data.Templating.Settings.NetCore" #>
 
 <#+
-class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
+class CSharpGenerator: GeneratorBase<CSharpNetCoreGeneratorSettings> {
 	public class ResourceInfo {
 		public ResourceElement Resource { get; set; }
 		public string ParentsPath { get; set; }
@@ -32,12 +32,12 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 	private string stringLocalizerClassName;
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
-			CSharpGeneratorSettings settings)
+			CSharpNetCoreGeneratorSettings settings)
 			: this(textTemplatingHost, modelContext, settings, null)
     {}
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
-			CSharpGeneratorSettings settings, FileManager manager)
+			CSharpNetCoreGeneratorSettings settings, FileManager manager)
 		: base(textTemplatingHost, modelContext, settings, manager) 
 	{}
 

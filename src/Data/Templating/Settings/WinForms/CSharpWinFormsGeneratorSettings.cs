@@ -30,9 +30,9 @@ using LHQ.Utils.Extensions;
 
 namespace LHQ.Data.Templating.Settings.WinForms
 {
-    public class CSharpGeneratorSettings : CSharpGeneratorSettingsBase
+    public class CSharpWinFormsGeneratorSettings : CSharpGeneratorSettingsBase
     {
-        public CSharpGeneratorSettings()
+        public CSharpWinFormsGeneratorSettings()
         {
             GenerateParamsMethods = true;
             ParamsMethodsSuffix = "WithParams";
@@ -49,7 +49,7 @@ namespace LHQ.Data.Templating.Settings.WinForms
         {
             base.AssignFrom(other);
 
-            if (other is CSharpGeneratorSettings other2)
+            if (other is CSharpWinFormsGeneratorSettings other2)
             {
                 GenerateParamsMethods = other2.GenerateParamsMethods;
                 ParamsMethodsSuffix = other2.ParamsMethodsSuffix;

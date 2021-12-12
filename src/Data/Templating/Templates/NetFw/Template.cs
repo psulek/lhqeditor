@@ -30,7 +30,7 @@ using Newtonsoft.Json;
 
 namespace LHQ.Data.Templating.Templates.NetFw
 {
-    public class NetFwResxCsharp01Template: CSharpResXTemplateBase<CSharpGeneratorSettings>
+    public class NetFwResxCsharp01Template: CSharpResXTemplateBase<CSharpNetFwGeneratorSettings>
     {
         [Browsable(false)]
         [JsonIgnore]

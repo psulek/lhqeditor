@@ -31,7 +31,7 @@ using Newtonsoft.Json;
 
 namespace LHQ.Data.Templating.Templates.Wpf
 {
-    public class WpfResxCsharp01Template : CSharpResXTemplateBase<CSharpGeneratorSettings>
+    public class WpfResxCsharp01Template : CSharpResXTemplateBase<CSharpWpfGeneratorSettings>
     {
         [Browsable(false)]
         [JsonIgnore]

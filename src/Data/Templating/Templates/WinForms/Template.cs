@@ -31,7 +31,7 @@ using Newtonsoft.Json;
 
 namespace LHQ.Data.Templating.Templates.WinForms
 {
-    public class WinFormsResxCsharp01Template : CSharpResXTemplateBase<CSharpGeneratorSettings>
+    public class WinFormsResxCsharp01Template : CSharpResXTemplateBase<CSharpWinFormsGeneratorSettings>
     {
         [Browsable(false)]
         [JsonIgnore]

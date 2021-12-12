@@ -30,7 +30,7 @@ using Newtonsoft.Json;
 
 namespace LHQ.Data.Templating.Templates.NetCore
 {
-    public class NetCoreResxCsharp01Template: CSharpResXTemplateBase<CSharpGeneratorSettings>
+    public class NetCoreResxCsharp01Template: CSharpResXTemplateBase<CSharpNetCoreGeneratorSettings>
     {
         [Browsable(false)]
         [JsonIgnore]

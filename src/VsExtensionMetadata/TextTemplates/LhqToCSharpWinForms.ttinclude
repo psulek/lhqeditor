@@ -7,7 +7,7 @@
 <#@ import namespace="LHQ.Data.Templating.Settings.WinForms" #>
 
 <#+
-class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
+class CSharpGenerator: GeneratorBase<CSharpWinFormsGeneratorSettings> {
 	public class ResourceInfo {
 		public ResourceElement Resource { get; set; }
 		public string ParentsPath { get; set; }
@@ -34,11 +34,11 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 	private string bindableObjectFullName;
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
-			CSharpGeneratorSettings settings) : this(textTemplatingHost, modelContext, settings, null)
+			CSharpWinFormsGeneratorSettings settings) : this(textTemplatingHost, modelContext, settings, null)
     {}
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
-			CSharpGeneratorSettings settings, FileManager manager)
+			CSharpWinFormsGeneratorSettings settings, FileManager manager)
 		: base(textTemplatingHost, modelContext, settings, manager) 
 	{}
 

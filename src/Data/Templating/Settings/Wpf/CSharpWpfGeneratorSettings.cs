@@ -26,11 +26,11 @@
 using LHQ.Data.Support;
 using LHQ.Utils.Extensions;
 
-namespace LHQ.Data.Templating.Settings.NetCore
+namespace LHQ.Data.Templating.Settings.Wpf
 {
-    public class CSharpGeneratorSettings : CSharpGeneratorSettingsBase
+    public class CSharpWpfGeneratorSettings : CSharpGeneratorSettingsBase
     {
-        public CSharpGeneratorSettings()
+        public CSharpWpfGeneratorSettings()
         {
             MissingTranslationFallbackToPrimary = false;
         }
@@ -41,9 +41,9 @@ namespace LHQ.Data.Templating.Settings.NetCore
         {
             base.AssignFrom(other);
 
-            if (other is CSharpGeneratorSettings otherSettings)
+            if (other is CSharpWpfGeneratorSettings other2)
             {
-                MissingTranslationFallbackToPrimary = otherSettings.MissingTranslationFallbackToPrimary;
+                MissingTranslationFallbackToPrimary = other2.MissingTranslationFallbackToPrimary;
             }
         }
 
@@ -70,7 +70,7 @@ namespace LHQ.Data.Templating.Settings.NetCore
                 }
             }
 
-            return result;
+            return result; 
         }
     }
 }

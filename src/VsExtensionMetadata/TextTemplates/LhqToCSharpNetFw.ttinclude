@@ -6,7 +6,7 @@
 <#@ import namespace="LHQ.Data.Templating.Settings.NetFw" #>
 
 <#+
-class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
+class CSharpGenerator: GeneratorBase<CSharpNetFwGeneratorSettings> {
 	public class ResourceInfo {
 		public ResourceElement Resource { get; set; }
 		public string ParentsPath { get; set; }
@@ -31,12 +31,12 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 	private string metadataClassName;
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
-			CSharpGeneratorSettings settings)
+			CSharpNetFwGeneratorSettings settings)
 			: this(textTemplatingHost, modelContext, settings, null)
     {}
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
-			CSharpGeneratorSettings settings, FileManager manager)
+			CSharpNetFwGeneratorSettings settings, FileManager manager)
 		: base(textTemplatingHost, modelContext, settings, manager) 
 	{}
 

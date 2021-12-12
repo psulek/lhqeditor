@@ -28,9 +28,9 @@ using LHQ.Utils.Extensions;
 
 namespace LHQ.Data.Templating.Settings.NetFw
 {
-    public class CSharpGeneratorSettings : CSharpGeneratorSettingsBase
+    public class CSharpNetFwGeneratorSettings : CSharpGeneratorSettingsBase
     {
-        public CSharpGeneratorSettings()
+        public CSharpNetFwGeneratorSettings()
         {
             MissingTranslationFallbackToPrimary = false;
         }
@@ -41,7 +41,7 @@ namespace LHQ.Data.Templating.Settings.NetFw
         {
             base.AssignFrom(other);
 
-            if (other is CSharpGeneratorSettings otherSettings)
+            if (other is CSharpNetFwGeneratorSettings otherSettings)
             {
                 MissingTranslationFallbackToPrimary = otherSettings.MissingTranslationFallbackToPrimary;
             }

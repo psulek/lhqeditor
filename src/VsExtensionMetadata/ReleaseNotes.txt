@@ -1,4 +1,4 @@
-﻿2021.7
+﻿2022.1
 - Fixed bug #2 (Option Allow resources under root should be available for all item templates)
 - Fixed bug #3 (Inconsistency of tabs and spaces in generated output C# files)
 

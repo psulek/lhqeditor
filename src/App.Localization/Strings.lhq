@@ -10,10 +10,8 @@
     "primaryLanguage": "en"
   },
   "languages": [
-    "zh-Hans",
     "en",
-    "sk",
-    "zh-Hant"
+    "sk"
   ],
   "categories": {
     "App": {
@@ -5389,15 +5387,7 @@
               "state": "Edited",
               "values": {
                 "en": {
-                  "value": "Set option 'Allow resources under root' in file options to enable this."
-                }
-              }
-            },
-            "NewResourceUnderRootNotAllowedDetailByCodeGen": {
-              "state": "Edited",
-              "values": {
-                "en": {
-                  "value": "Associated Code Generator does not support this."
+                  "value": "Enable option 'Allow resources under root' to add resource ?"
                 }
               }
             },

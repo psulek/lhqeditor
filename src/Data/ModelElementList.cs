@@ -101,5 +101,11 @@ namespace LHQ.Data
 
             return this.Cast<IModelNamedElement>().SingleOrDefault(x => x.Name.EqualsTo(name, ignoreCase, cultureInfo)) as T;
         }
+
+        protected bool ContainsByNameInternal(string name, bool ignoreCase, CultureInfo cultureInfo = null)
+        {
+            cultureInfo = cultureInfo ?? CultureInfo.InvariantCulture;
+            return this.Cast<IModelNamedElement>().Any(x => x.Name.EqualsTo(name, ignoreCase, cultureInfo));
+        }
     }
 }

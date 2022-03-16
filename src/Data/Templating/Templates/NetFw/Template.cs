@@ -41,10 +41,6 @@ namespace LHQ.Data.Templating.Templates.NetFw
         public override string Name { get; } = "Template which generates strongly typed C# and resource (*.resx) files.\n" +
             "Usable in classic desktop applications (Console, Windows Service, etc.)";
 
-        [Browsable(false)]
-        [JsonIgnore]
-        public override ModelFeatures ModelFeatures { get; } = ModelFeatures.HideResourcesUnderRoot;
-
         [DisplayName("Return primary language text on missing foreign translation")]
         [Description("Return primary language text in case of missing translation in foreign language.")]
         [Category("C# Generator")]

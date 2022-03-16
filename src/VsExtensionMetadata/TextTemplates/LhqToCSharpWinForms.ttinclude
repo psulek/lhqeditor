@@ -2,6 +2,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="LHQ.Utils" #>
 <#@ import namespace="LHQ.Data" #>
+<#@ import namespace="LHQ.Data.Interfaces" #>
 <#@ import namespace="LHQ.Data.Extensions" #>
 <#@ import namespace="LHQ.Data.Templating.Settings" #>
 <#@ import namespace="LHQ.Data.Templating.Settings.WinForms" #>
@@ -20,10 +21,13 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 
 		public string GetResourceKey(bool withSeparator)
 		{
-			return withSeparator 
-				? ParentsPathWithSep + "." + Resource.Name
-				: ParentsPath + Resource.Name;
-        }
+			if (withSeparator)
+			{
+				return string.IsNullOrEmpty(ParentsPathWithSep) ? Resource.Name : ParentsPathWithSep + "." + Resource.Name;
+			}
+			
+			return string.IsNullOrEmpty(ParentsPath) ? Resource.Name : ParentsPath + Resource.Name;
+		}
 	}
 
 	private Dictionary<ResourceElement, ResourceInfo> AllResources { get; set; }
@@ -32,10 +36,11 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 	private string bindingKeysClassName;
 	private string metadataClassName;
 	private string bindableObjectFullName;
+	private ResourceElementList _rootResources;
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
 			CSharpGeneratorSettings settings) : this(textTemplatingHost, modelContext, settings, null)
-    {}
+	{}
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
 			CSharpGeneratorSettings settings, FileManager manager)
@@ -44,9 +49,9 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 
 
 	protected override string GeneratorName
-    {
+	{
 		get { return "C# WinForms Generator"; }
-    }
+	}
 
 	public override void DoGenerate() {
 		try
@@ -62,29 +67,29 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 		}
 	}
 
-    void FlattenAllResources()
-    {
-        var rootResources = ModelRoot.Resources.Where(x => x.ParentKey == null).OrderByName().ToList();
-        if (rootResources.Count > 0)
-        {
-            throw new ApplicationException("Could not generate c# code when model contains resources under root.\nChange this in Model Properties.");
-        }
+	void FlattenAllResources()
+	{
+		_rootResources = new ResourceElementList(ModelRoot.Resources.Where(x => x.ParentKey == null).ToList());
+		AllResources = _rootResources.ToDictionary(x => x, x => new ResourceInfo(x));
+		IterateCategories(ModelRoot.Categories, string.Empty, string.Empty, _rootResources);
+	}
 
-        AllResources = rootResources.ToDictionary(x => x, x => new ResourceInfo(x));
-        IterateCategories(ModelRoot.Categories, string.Empty, string.Empty);
-    }
-
-	void IterateCategories(CategoryElementList categories, string parentsPath, string parentsPathSep)
+	void IterateCategories(CategoryElementList categories, string parentsPath, string parentsPathSep, ResourceElementList parentResources)
 	{
 		foreach(var category in categories.OrderByName())
-        {
+		{
 			var newparentsPath = parentsPath + category.Name;
 			var newparentsPathSep = string.IsNullOrEmpty(parentsPathSep) ? category.Name : parentsPathSep + "." + category.Name;
 
+			if (parentResources.ContainsByName(category.Name, true)) 
+			{
+				throw new ApplicationException(string.Format("Could not generate C# code! Resource and category name '{0}' could not be same for parent '{1}'!", category.Name, parentsPathSep ?? ""));
+			}
+
 			if (category.Categories.Count > 0)
-            {
-				IterateCategories(category.Categories, newparentsPath, newparentsPathSep);
-            }
+			{
+				IterateCategories(category.Categories, newparentsPath, newparentsPathSep, category.Resources);
+			}
 
 			foreach(var resource in category.Resources.OrderByName())
 			{
@@ -93,7 +98,7 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 				resourceInfo.ParentsPathWithSep = newparentsPathSep;
 				AllResources.Add(resource, resourceInfo);
 			}
-        }
+		}
 	}
 
 
@@ -122,24 +127,24 @@ namespace <#= namespaceName #>
 	using System.ComponentModel;
 	using System.Runtime.CompilerServices;
 
-    public abstract class BindableObject : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-    
-	    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+	public abstract class BindableObject : INotifyPropertyChanged
+	{
+		public event PropertyChangedEventHandler PropertyChanged;
+	
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 
-        public void RefreshProperties()
-        {
-            OnPropertyChanged(null);
-        }
-    }
+		public void RefreshProperties()
+		{
+			OnPropertyChanged(null);
+		}
+	}
 }
 <#+
 		this.Manager.EndNewFile();
-    }
+	}
 
 	void WriteCSharpModelClass()
 	{
@@ -150,7 +155,7 @@ namespace <#= namespaceName #>
 		string resourcesNamespace = namespaceName;
 		if (!string.IsNullOrEmpty(Settings.OutputFolder)) {
 			resourcesNamespace += "." + Settings.OutputFolder.Replace("\\", ".");
-        }
+		}
 		string modelClassNameWithNamespace = namespaceName + "." + modelClassName;
 
 		var availableCultures = string.Join(",", ModelRoot.Languages.Select(x => "\"" + x.Name + "\""));
@@ -158,7 +163,7 @@ namespace <#= namespaceName #>
 		this.keysClassName = modelName + "Keys";
 		this.bindingKeysClassName = modelName + "BindingKeys";
 		this.metadataClassName = modelName + "Context";
-        bindableObjectFullName = namespaceName + ".BindableObject";
+		bindableObjectFullName = namespaceName + ".BindableObject";
 		this.StartNewFile(modelName + ".gen.cs", this.Settings);
 #>
 //------------------------------------------------------------------------------
@@ -179,22 +184,22 @@ namespace <#= namespaceName #>
 	using System.Threading;
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public partial class <#= metadataClassName #>: <#= bindableObjectFullName #>, IFormattable
 	{
 		private CultureInfo _culture;
 		private CultureInfo _fallbackCulture;
 		private static readonly Lazy<<#= metadataClassName #>> _instance = new Lazy<<#= metadataClassName #>>(() => new <#= metadataClassName #>());
-        private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
+		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
 
 		private <#= metadataClassName #>()
-        {}
+		{}
 
 		public static ResourceManager ResourceManager
 		{
-		    get
+			get
 			{
-			    return _resourceManager.Value;
+				return _resourceManager.Value;
 			}
 		}
 
@@ -205,84 +210,84 @@ namespace <#= namespaceName #>
 		};
 
 		public CultureInfo FallbackCulture
-        {
-	        get
-	        {
-	            if (_fallbackCulture == null)
-	            {
-	                _fallbackCulture = new CultureInfo(PrimaryCulture);
-	            }
-	            return _fallbackCulture;
-	        }
-	        set
-	        {
-	            if ((value == null) || !AvailableCultures.Contains(value.Name))
-	            {
-	                throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
-	            }
+		{
+			get
+			{
+				if (_fallbackCulture == null)
+				{
+					_fallbackCulture = new CultureInfo(PrimaryCulture);
+				}
+				return _fallbackCulture;
+			}
+			set
+			{
+				if ((value == null) || !AvailableCultures.Contains(value.Name))
+				{
+					throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
+				}
 
-	            _fallbackCulture = value;
-            }
-	    }
+				_fallbackCulture = value;
+			}
+		}
 
 		public static <#= metadataClassName #> Instance
 		{
-		    get
+			get
 			{
 				return _instance.Value;
 			}
 		}
 
 		public CultureInfo Culture
-        {
-            get
+		{
+			get
 			{
-			    return _culture ?? (_culture = CultureInfo.CurrentUICulture);
+				return _culture ?? (_culture = CultureInfo.CurrentUICulture);
 			}
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("Culture must not be null");
-                }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException("Culture must not be null");
+				}
 
-                if (value.Name == Culture.Name)
-                {
-                    return;
-                }
+				if (value.Name == Culture.Name)
+				{
+					return;
+				}
 
-                _culture = value;
-                Thread.CurrentThread.CurrentUICulture = _culture;
-                OnPropertyChanged(nameof(Culture));
+				_culture = value;
+				Thread.CurrentThread.CurrentUICulture = _culture;
+				OnPropertyChanged(nameof(Culture));
 
 				<#= bindingProxyClassName #>.Instance.RefreshProperties();
-            }
-        }
+			}
+		}
 
 		private static ResourceManager CreateResourceManager()
 		{
-		    return new ResourceManager("<#= resourcesNamespace #>.<#= modelClassName #>",
+			return new ResourceManager("<#= resourcesNamespace #>.<#= modelClassName #>",
 				typeof(<#= modelClassNameWithNamespace #>).Assembly);
 		}
 
 		public string ToString(string format, IFormatProvider formatProvider)
-        {
-            return GetStringSafely(format);
-        }
+		{
+			return GetStringSafely(format);
+		}
 
 		public string GetStringSafely(string name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+		{
+			if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
 
 			string result = GetStringSafely(name, Culture);
 			if (result == null)
 			{
 <#+
 				if (Settings.MissingTranslationFallbackToPrimary)
-                {
+				{
 #>
 				if (FallbackCulture != null)
 				{
@@ -293,64 +298,64 @@ namespace <#= namespaceName #>
 					}
 				}
 <#+
-                }
+				}
 				else
-                {
+				{
 #>
 				result = string.Format("???{0}.{1}???", name, Culture == null ? string.Empty : Culture.Name);
 <#+
-                }
+				}
 #>
 			}
 
-            return result;
-        }
+			return result;
+		}
 
 		private string GetStringSafely(string name, CultureInfo culture)
 		{
-            string result = null;
-            try
-            {
-                result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
-            }
-            catch (MissingManifestResourceException)
-            {
-                // Resource does not exist
-            }
+			string result = null;
+			try
+			{
+				result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
+			}
+			catch (MissingManifestResourceException)
+			{
+				// Resource does not exist
+			}
 
-            return result;
+			return result;
 		}
 	}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public static partial class <#= keysClassName #>
 	{
 <#+
-		WriteCategoriesKeysClass(this.ModelRoot.Categories, false);
+		WriteCategoriesKeysClass(this.ModelRoot.Categories, false, this._rootResources);
 #>
 	}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public partial class <#= modelClassName #>
 	{
 <#+
-		WriteCategoriesAndResourcesClass(this.ModelRoot.Categories);
+		WriteCategoriesAndResourcesClass(this.ModelRoot, this._rootResources);
 #>
 	}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public partial class <#= bindingProxyClassName #>: <#= bindableObjectFullName #>
 	{
-	    private <#= bindingProxyClassName #>() 
+		private <#= bindingProxyClassName #>() 
 		{}
 
-	    public static <#= bindingProxyClassName #> Instance { get; } = new <#= bindingProxyClassName #>();
+		public static <#= bindingProxyClassName #> Instance { get; } = new <#= bindingProxyClassName #>();
 
 <#+
-	WriteCategoriesAndResourcesClassForBindingProxy(this.ModelRoot.Categories);
+	WriteCategoriesAndResourcesClassForBindingProxy(this.ModelRoot, this._rootResources);
 #>
 	}
 }
@@ -358,10 +363,10 @@ namespace <#= namespaceName #>
 		this.Manager.EndNewFile();
 	}
 
-	void WriteCategoriesKeysClass(CategoryElementList categories, bool bindingKeys)
+	void WriteCategoriesKeysClass(CategoryElementList categories, bool bindingKeys, ResourceElementList parentResources = null)
 	{
-        var orderedCategories = categories.OrderByName();
-        var last = orderedCategories.LastOrDefault();
+		var orderedCategories = categories.OrderByName();
+		var last = orderedCategories.LastOrDefault();
 
 		foreach(var category in orderedCategories)
 		{
@@ -370,162 +375,195 @@ namespace <#= namespaceName #>
 		{
 <#+
 			if (category.Categories.Count > 0)
-            {
+			{
 #>
 <#+
 				PushIndent();
 				WriteCategoriesKeysClass(category.Categories, bindingKeys);
 				PopIndent();
-            }
-
-			foreach(var resource in category.Resources.OrderByName())
-            {
-				var propertyComment = GetCommentForResourceProperty(resource);
+			}
 #>
-			/// <summary>
-			/// Gets localized string similar to: <#= propertyComment #>
-			/// </summary>
-			public const string <#= resource.Name #> = "<#= GetFullResourceKey(resource, bindingKeys) #>";
 <#+
-            }
+			PushIndent();
+			WriteResourcesToKeysClass(category.Resources, bindingKeys);
+			PopIndent();
 #>
 		}
 <#+
 			if (category != last)
-            { // add empty line
+			{ // add empty line
 #>
 		
 <#+
-            }
+			}
 		}
-    }
 
-	void WriteCategoriesAndResourcesClass(CategoryElementList categories)
-    {
-        var orderedCategories = categories.OrderByName();
-        var last = orderedCategories.LastOrDefault();
+		if (parentResources != null && parentResources.Count > 0)
+		{
+#>
+		
+<#+
+			WriteResourcesToKeysClass(parentResources, bindingKeys);
+#>
+<#+
+		}
+	}
+
+	void WriteResourcesToKeysClass(ResourceElementList resources, bool bindingKeys)
+	{
+		foreach(var resource in resources.OrderByName())
+		{
+			var propertyComment = GetCommentForResourceProperty(resource);
+#>
+		/// <summary>
+		/// Gets localized string similar to: <#= propertyComment #>
+		/// </summary>
+		public const string <#= resource.Name #> = "<#= GetFullResourceKey(resource, bindingKeys) #>";
+<#+
+		}
+	}
+
+	void WriteCategoriesAndResourcesClass(ICategoryLikeElement parentCategoryLike, ResourceElementList parentResources = null)
+	{
+		var orderedCategories = parentCategoryLike.Categories.OrderByName();
+		var last = orderedCategories.LastOrDefault();
 
 		foreach(var category in orderedCategories)
-        {
+		{
 #>
 		public partial class <#= category.Name #>
 		{
 <#+
 			if (category.Categories.Count > 0)
-            {
+			{
 #>
 <#+
 				PushIndent();
-				WriteCategoriesAndResourcesClass(category.Categories);
+				WriteCategoriesAndResourcesClass(category);
 				PopIndent();
-            }
+			}
 
-            if (category.Resources.Count > 0)
-            {
-                PushIndent();
-                foreach (var resource in category.Resources.OrderByName())
-                {
-                    WriteCSharpResourceProxyProperty(resource, category);
-                }
-                PopIndent();
-            }
+			PushIndent();
+			WriteResourcesToClass(category.Resources, category);
+			PopIndent();
 
-            #>
+			#>
 		}
 <#+
 			if (category != last)
-            { // add empty line
+			{ // add empty line
 #>
 		
 <#+
-            }
+			}
 		}
-    }
 
-	void WriteCategoriesAndResourcesClassForBindingProxy(CategoryElementList categories, string parentName = null)
-    {
-        var orderedCategories = categories.OrderByName();
-        var last = orderedCategories.LastOrDefault();
+		if (parentResources != null && parentResources.Count > 0)
+		{
+#>
+		
+<#+
+			WriteResourcesToClass(parentResources, parentCategoryLike as CategoryElement);
+		}
+	}
+
+	void WriteResourcesToClass(ResourceElementList resources, CategoryElement parentCategory, string parentName = null)
+	{
+		foreach(var resource in resources.OrderByName())
+		{
+			WriteCSharpResourceProxyProperty(resource, parentCategory, parentName);
+		}
+	}
+
+	void WriteCategoriesAndResourcesClassForBindingProxy(ICategoryLikeElement parentCategoryLike, ResourceElementList parentResources = null, string parentName = null)
+	{
+		var orderedCategories = parentCategoryLike.Categories.OrderByName();
+		var last = orderedCategories.LastOrDefault();
 
 		foreach(var category in orderedCategories)
-        {
+		{
 			if (category.Categories.Count > 0)
-            {
-				//PushIndent();
-                WriteCategoriesAndResourcesClassForBindingProxy(category.Categories, parentName + category.Name);
-				//PopIndent();
-            }
+			{
+				PushIndent();
+				WriteCategoriesAndResourcesClassForBindingProxy(category, null, parentName + category.Name);
+				PopIndent();
+			}
 
-			foreach(var resource in category.Resources.OrderByName())
-            {
-				WriteCSharpResourceProxyProperty(resource, category, parentName + category.Name);
-            }
+			WriteResourcesToClass(category.Resources, category, parentName + category.Name);
 			
-            if (category != last)
-            { // add empty line
+			if (category != last)
+			{ // add empty line
 #>
 		
 <#+
-            }
+			}
 		}
-    }
+
+		if (parentResources != null && parentResources.Count > 0)
+		{
+#>
+		
+<#+
+			WriteResourcesToClass(parentResources, parentCategoryLike as CategoryElement, parentName);
+		}
+	}
 
 	string GetLocalizerIndexerKey(ResourceElement resource, CategoryElement category) 
 	{
 		return keysClassName + "." + GetFullResourceKey(resource, true);
-    }
+	}
 
 	/*string GetCommentForResourceProperty(ResourceElement resource)
-    {
+	{
 		var primaryResourceValue = resource.FindValueByLanguage(PrimaryLanguage.Name);
 		string propertyComment = primaryResourceValue != null && !string.IsNullOrEmpty(primaryResourceValue.Value) 
 			? primaryResourceValue.Value
 			: resource.Description;
 
 		if (propertyComment == null)
-        {
+		{
 			propertyComment = string.Empty;
-        }
+		}
 
 		bool trimmed = false;
 		var idxNewLine = propertyComment.IndexOf(Environment.NewLine);
 		if (idxNewLine > -1)
-        {
+		{
 			propertyComment = propertyComment.Substring(0, idxNewLine);
 			trimmed = true;
-        }
+		}
 
 		if (propertyComment.Length > 80)
-        {
+		{
 			propertyComment = propertyComment.Substring(0, 80);
 			trimmed = true;
-        }
+		}
 
 		if (trimmed)
-        {
+		{
 			propertyComment += "...";
-        }
+		}
 
 		return propertyComment;
-    }*/
+	}*/
 
 	void WriteCSharpResourceProxyProperty(ResourceElement resource, CategoryElement category, string parentName = null) 
 	{
-        if (string.IsNullOrEmpty(resource.Name))
-        {
-            return;
-        }
+		if (string.IsNullOrEmpty(resource.Name))
+		{
+			return;
+		}
 
-        string staticStr = string.IsNullOrEmpty(parentName) ? "static " : string.Empty;
+		string staticStr = string.IsNullOrEmpty(parentName) ? "static " : string.Empty;
 		string resourceName = string.IsNullOrEmpty(parentName) ? resource.Name : parentName + resource.Name;
 
 		var localizerIndexerKey = GetLocalizerIndexerKey(resource, category);
 
 		var propertyComment = GetCommentForResourceProperty(resource);
-        bool hasParameters = resource.Parameters.Count > 0;
+		bool hasParameters = resource.Parameters.Count > 0;
 
 		if (Settings.UseExpressionBodySyntax)
-        {
+		{
 #>
 		/// <summary>
 		/// Gets localized string similar to: <#= propertyComment #>
@@ -533,18 +571,18 @@ namespace <#= namespaceName #>
 		public <#= staticStr #>string <#= resourceName #> => <#= metadataClassName #>.Instance.GetStringSafely(<#= localizerIndexerKey #>);
 
 <#+
-        }
+		}
 		else
-        {
+		{
 #>
 		/// <summary>
 		/// Gets localized string similar to: <#= propertyComment #>
 		/// </summary>
 		public <#= staticStr #>string <#= resourceName #>
 		{
-		    get
+			get
 			{
-			    return <#= metadataClassName #>.Instance.GetStringSafely(<#= localizerIndexerKey #>);
+				return <#= metadataClassName #>.Instance.GetStringSafely(<#= localizerIndexerKey #>);
 			}
 		}
 
@@ -557,10 +595,10 @@ namespace <#= namespaceName #>
 			var paramNames = resource.Parameters.Count == 0 ? string.Empty : ", " + string.Join(",", resource.Parameters.Select(x => x.Name));
 			var paramNamesWithTypes = string.Join(",", resource.Parameters.Select(x => "object " + x.Name));
 
-            resourceName = resourceName + (string.IsNullOrEmpty(this.Settings.ParamsMethodsSuffix) ? "WithParams" : this.Settings.ParamsMethodsSuffix);
+			resourceName = resourceName + (string.IsNullOrEmpty(this.Settings.ParamsMethodsSuffix) ? "WithParams" : this.Settings.ParamsMethodsSuffix);
 
 			if (Settings.UseExpressionBodySyntax)
-            {
+			{
 #>
 		/// <summary>
 		/// Gets localized string similar to: <#= propertyComment #>
@@ -568,20 +606,20 @@ namespace <#= namespaceName #>
 		public <#= staticStr #>string <#= resourceName #>(<#= paramNamesWithTypes #>) => string.Format(<#= metadataClassName #>.Instance.GetStringSafely(<#= localizerIndexerKey #>)<#= paramNames #>);
 
 <#+
-            }
+			}
 			else
-            {
+			{
 #>
 		/// <summary>
 		/// Gets localized string similar to: <#= propertyComment #>
 		/// </summary>
 		public <#= staticStr #>string <#= resourceName #>(<#= paramNamesWithTypes #>)
 		{
-		    return string.Format(<#= metadataClassName #>.Instance.GetStringSafely(<#= localizerIndexerKey #>)<#= paramNames #>);
+			return string.Format(<#= metadataClassName #>.Instance.GetStringSafely(<#= localizerIndexerKey #>)<#= paramNames #>);
 		}
 
 <#+
-            }
+			}
 		}
 	}
 }

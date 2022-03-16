@@ -41,7 +41,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             Padding="10,5,0,5"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
@@ -80,7 +83,6 @@
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding Path=ResourcesUnderRootVisible}" Value="True" />
                                         <Condition Binding="{Binding Path=Categories}" Value="True" />
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="Visibility" Value="Visible" />
@@ -92,15 +94,15 @@
                 <RadioButton
                     VerticalContentAlignment="Center"
                     Content="{localization:Localization Key={x:Static resources:StringsKeys+Views+ProjectSettingsView.ResourcesOnly}}"
-                    IsChecked="{Binding Path=Resources, Mode=TwoWay}"
-                    Visibility="{Binding Path=ResourcesUnderRootVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    IsChecked="{Binding Path=Resources, Mode=TwoWay}" />
                 <TextBlock
                     Margin="20,0,0,10"
                     behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource LayoutInfoStyle}"
-                    Text="{localization:Localization Key={x:Static resources:StringsKeys+Views+ProjectSettingsView.FlatStructure}}"
-                    Visibility="{Binding Path=ResourcesUnderRootVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    Text="{localization:Localization Key={x:Static resources:StringsKeys+Views+ProjectSettingsView.FlatStructure}}" />
             </ItemsControl>
-            <Image Grid.Row="0" Grid.Column="2"
+            <Image
+                Grid.Row="0"
+                Grid.Column="2"
                 VerticalAlignment="Center"
                 Source="{Binding Path=LayoutImage}" />
         </Grid>

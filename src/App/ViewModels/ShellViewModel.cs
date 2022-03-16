@@ -534,7 +534,10 @@ namespace LHQ.App.ViewModels
         {
             if (Keyboard.IsKeyDown(Key.Enter))
             {
-                RootModel.SelectedTreeElement.FocusName = true;
+                if (RootModel.SelectedTreeElement != null)
+                {
+                    RootModel.SelectedTreeElement.FocusName = true;
+                }
             }
             else if (Keyboard.IsKeyDown(Key.Escape))
             {
@@ -908,9 +911,11 @@ namespace LHQ.App.ViewModels
                 saveResult = ValidateBeforeSave(fileName);
                 if (saveResult.IsSuccess)
                 {
-                    RootModel.UpdateVersion(true); // increase model version on save
+                    // increase model version on save
+                    RootModel.UpdateVersion(true);
 
                     Data.Model model = RootModel.SaveToModelElement();
+
                     ModelContext.AssignModelFrom(model);
                     saveResult = ShellService.SaveModelContextToFile(fileName, ModelContext);
                     _lastFreshSave = saveResult.IsSuccess;
@@ -974,6 +979,17 @@ namespace LHQ.App.ViewModels
                 }
             }
 
+            string templateId = CodeGeneratorItemTemplate;
+            var template = ModelContext.GetCodeGeneratorTemplate(templateId);
+            if (template?.ModelFeatures.IsFlagSet(ModelFeatures.ValidateFullKeyNames) == true)
+            {
+                (string error, string detail) = CodeGeneratorValidateModel();
+                if (!error.IsNullOrEmpty())
+                {
+                    result.SetError(error,  detail);
+                }
+            }
+
             if (ValidatorContext.HasErrors)
             {
                 result.SetError(errorCaption, 
@@ -982,6 +998,66 @@ namespace LHQ.App.ViewModels
 
             return result;
         }
+
+        private (string error, string detail) CodeGeneratorValidateModel()
+        {
+            string error = null;
+            string detail = null;
+            var resourceKeys = new Dictionary<string, ResourceViewModel>();
+
+            void IterateCategories(IEnumerable<CategoryViewModel> categories)
+            {
+                foreach (var category in categories)
+                {
+                    IterateResources(category);
+
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        break;
+                    }
+
+                    IterateCategories(category.GetCategories());
+
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        break;
+                    }
+                }
+            }
+
+            void IterateResources(ICategoryLikeViewModel parent)
+            {
+                var path = parent is RootModelViewModel ? string.Empty : parent.GetParentNames(true, true, false).ToDelimitedString("");
+
+                foreach (var resource in parent.GetResources())
+                {
+                    string fullKey = $"{path}{resource.Name}".ToLowerInvariant();
+
+                    if (resourceKeys.ContainsKey(fullKey))
+                    {
+                        var parentNames = resource.GetParentNames(true, true, false);
+                        string resourceKeyFullPath = parentNames.ToDelimitedString("");
+                        string resourceA = "/" + parentNames.ToDelimitedString("/");
+                        string resourceB = "/" + resourceKeys[fullKey].GetParentNames(true, true, false).ToDelimitedString("/");
+
+                        error = "Invalid resource name.";
+                        detail =
+                            $"Resources '{resourceA}' and '{resourceB}' will have same resource key '{resourceKeyFullPath}' when generating resx file.\n\n" +
+                            "Please rename one resource to distinguish resource key(s).";
+
+                        break;
+                    }
+
+                    resourceKeys.Add(fullKey, resource);
+                }
+            }
+
+            IterateResources(RootModel);
+            IterateCategories(RootModel.GetCategories());
+
+            return (error, detail);
+        }
+
 
         private void CloseCurrent()
         {

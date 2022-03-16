@@ -30,7 +30,6 @@ using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Data;
-using LHQ.Data.Extensions;
 using LHQ.Utils.Extensions;
 
 namespace LHQ.App.ViewModels
@@ -41,7 +40,6 @@ namespace LHQ.App.ViewModels
         private bool _categories;
         private bool _resources;
         private string _layoutImage;
-        private bool _resourcesUnderRootVisible;
 
         public ProjectSettingsViewModel(IShellViewContext shellViewContext)
             : base(shellViewContext, false)
@@ -50,14 +48,6 @@ namespace LHQ.App.ViewModels
             Categories = modelOptions.Categories;
             Resources = !modelOptions.Categories;
             ResourcesUnderRoot = modelOptions.Resources == ModelOptionsResources.All;
-            ResourcesUnderRootVisible = true;
-
-            string templateId = shellViewContext.ShellViewModel.CodeGeneratorItemTemplate;
-            var template = shellViewContext.ShellViewModel.ModelContext.GetCodeGeneratorTemplate(templateId);
-            if (template != null)
-            {
-                ResourcesUnderRootVisible = !template.ModelFeatures.IsFlagSet(ModelFeatures.HideResourcesUnderRoot);
-            }
         }
 
         private ITreeViewService TreeViewService => ShellViewContext.TreeViewService;
@@ -109,19 +99,6 @@ namespace LHQ.App.ViewModels
         {
             get => _resourcesUnderRoot;
             set => SetProperty(ref _resourcesUnderRoot, value);
-        }
-
-        public bool ResourcesUnderRootVisible
-        {
-            get => _resourcesUnderRootVisible;
-            set
-            {
-                SetProperty(ref _resourcesUnderRootVisible, value);
-                if (!value)
-                {
-                    ResourcesUnderRoot = false;
-                }
-            }
         }
 
         public bool Validate()

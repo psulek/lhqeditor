@@ -471,24 +471,22 @@ namespace LHQ.App.ViewModels
 
             if (selection.IsSingleSelection && selection.ElementIsModel && ShellViewModel.ModelOptions.Resources != ModelOptionsResources.All)
             {
-                bool hideResourcesUnderRoot = false;
-                if (AppContext.RunInVsPackage)
-                {
-                    var template = ShellViewModel.GetCodeGeneratorTemplate();
-                    if (template != null)
-                    {
-                        hideResourcesUnderRoot =  template.ModelFeatures.IsFlagSet(ModelFeatures.HideResourcesUnderRoot);
-                    }
-                }
-
                 var caption = Strings.ViewModels.NewElement.NewResourceUnderRootNotAllowedCaption;
                 var message = Strings.ViewModels.NewElement.NewResourceUnderRootNotAllowedMessage;
-                var detail = hideResourcesUnderRoot
-                    ? Strings.ViewModels.NewElement.NewResourceUnderRootNotAllowedDetailByCodeGen
-                    : Strings.ViewModels.NewElement.NewResourceUnderRootNotAllowedDetail;
+                var detail = Strings.ViewModels.NewElement.NewResourceUnderRootNotAllowedDetail;
 
-                DialogService.ShowError(caption, message, detail);
-                return;
+                bool exit = true;
+
+                if (DialogService.ShowConfirm(caption, message, detail) == DialogResult.Yes)
+                {
+                    ShellViewModel.RootModel.ModelOptions.Resources = ModelOptionsResources.All;
+                    exit = ShellService.SaveProject() == false;
+                }
+
+                if (exit)
+                {
+                    return;
+                }
             }
 
 

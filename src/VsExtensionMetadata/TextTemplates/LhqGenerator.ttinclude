@@ -60,7 +60,8 @@ public abstract class GeneratorBase<TSettings>: GeneratorBase where TSettings: G
 
 	public void PushIndent()
 	{
-		this._textTemplatingHost.PushIndent(new String(' ', 4));
+		//this._textTemplatingHost.PushIndent(new String(' ', 4));
+		this._textTemplatingHost.PushIndent("\t");
 	}
 
 	public void PopIndent() {

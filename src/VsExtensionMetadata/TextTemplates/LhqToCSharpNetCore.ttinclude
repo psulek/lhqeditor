@@ -2,6 +2,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="LHQ.Utils" #>
 <#@ import namespace="LHQ.Data" #>
+<#@ import namespace="LHQ.Data.Interfaces" #>
 <#@ import namespace="LHQ.Data.Extensions" #>
 <#@ import namespace="LHQ.Data.Templating.Settings" #>
 <#@ import namespace="LHQ.Data.Templating.Settings.NetCore" #>
@@ -20,21 +21,25 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 
 		public string GetResourceKey(bool withSeparator)
 		{
-			return withSeparator 
-				? ParentsPathWithSep + "." + Resource.Name
-				: ParentsPath + Resource.Name;
-        }
+			if (withSeparator)
+			{
+				return string.IsNullOrEmpty(ParentsPathWithSep) ? Resource.Name : ParentsPathWithSep + "." + Resource.Name;
+			}
+			
+			return string.IsNullOrEmpty(ParentsPath) ? Resource.Name : ParentsPath + Resource.Name;
+		}
 	}
 
 	private Dictionary<ResourceElement, ResourceInfo> AllResources { get; set; }
 
 	private string keysClassName;
 	private string stringLocalizerClassName;
+	private ResourceElementList _rootResources;
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
 			CSharpGeneratorSettings settings)
 			: this(textTemplatingHost, modelContext, settings, null)
-    {}
+	{}
 
 	public CSharpGenerator(object textTemplatingHost, ModelContext modelContext,
 			CSharpGeneratorSettings settings, FileManager manager)
@@ -42,9 +47,9 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 	{}
 
 	protected override string GeneratorName
-    {
+	{
 		get { return "C# .NET Core Generator"; }
-    }
+	}
 
 	public override void DoGenerate() {
 		try
@@ -59,29 +64,29 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 		}
 	}
 
-    void FlattenAllResources()
-    {
-        var rootResources = ModelRoot.Resources.Where(x => x.ParentKey == null).OrderByName().ToList();
-        if (rootResources.Count > 0)
-        {
-            throw new ApplicationException("Could not generate c# code when model contains resources under root.\nChange this in Model Properties.");
-        }
+	void FlattenAllResources()
+	{
+		_rootResources = new ResourceElementList(ModelRoot.Resources.Where(x => x.ParentKey == null).ToList());
+		AllResources = _rootResources.ToDictionary(x => x, x => new ResourceInfo(x));
+		IterateCategories(ModelRoot.Categories, string.Empty, string.Empty, _rootResources);
+	}
 
-        AllResources = rootResources.ToDictionary(x => x, x => new ResourceInfo(x));
-        IterateCategories(ModelRoot.Categories, string.Empty, string.Empty);
-    }
-
-	void IterateCategories(CategoryElementList categories, string parentsPath, string parentsPathSep)
+	void IterateCategories(CategoryElementList categories, string parentsPath, string parentsPathSep, ResourceElementList parentResources)
 	{
 		foreach(var category in categories.OrderByName())
-        {
+		{
 			var newparentsPath = parentsPath + category.Name;
 			var newparentsPathSep = string.IsNullOrEmpty(parentsPathSep) ? category.Name : parentsPathSep + "." + category.Name;
 
+			if (parentResources.ContainsByName(category.Name, true)) 
+			{
+				throw new ApplicationException(string.Format("Could not generate C# code! Resource and category name '{0}' could not be same for parent '{1}'!", category.Name, parentsPathSep ?? ""));
+			}
+
 			if (category.Categories.Count > 0)
-            {
-				IterateCategories(category.Categories, newparentsPath, newparentsPathSep);
-            }
+			{
+				IterateCategories(category.Categories, newparentsPath, newparentsPathSep, category.Resources);
+			}
 
 			foreach(var resource in category.Resources.OrderByName())
 			{
@@ -90,7 +95,7 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 				resourceInfo.ParentsPathWithSep = newparentsPathSep;
 				AllResources.Add(resource, resourceInfo);
 			}
-        }
+		}
 	}
 
 
@@ -109,10 +114,10 @@ class CSharpGenerator: GeneratorBase<CSharpGeneratorSettings> {
 		string resourcesNamespace = namespaceName;
 		if (!string.IsNullOrEmpty(Settings.OutputFolder)) {
 			resourcesNamespace += "." + Settings.OutputFolder.Replace("\\", ".");
-        }
+		}
 		string modelClassNameWithNamespace = namespaceName + "." + modelClassName;
 
-        var availableCultures = string.Join(",", ModelRoot.Languages.Select(x => "\"" + x.Name + "\""));
+		var availableCultures = string.Join(",", ModelRoot.Languages.Select(x => "\"" + x.Name + "\""));
 
 		this.keysClassName = modelName + "Keys";
 		this.stringLocalizerClassName = modelName + "Localizer";
@@ -137,151 +142,151 @@ namespace <#= namespaceName #>
 	using System.Globalization;
 	using Microsoft.Extensions.Localization;
 
-    public class <#= stringLocalizerClassName #> : IStringLocalizer
-    {
-        private readonly CultureInfo _culture;
+	public class <#= stringLocalizerClassName #> : IStringLocalizer
+	{
+		private readonly CultureInfo _culture;
 <#+
-	    if (Settings.MissingTranslationFallbackToPrimary)
-	    {
+		if (Settings.MissingTranslationFallbackToPrimary)
+		{
 #>
 		private CultureInfo _fallbackCulture;
 <#+
-	    }
+		}
 #>	
 		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
 
-        public <#= stringLocalizerClassName #>()
-        {}
+		public <#= stringLocalizerClassName #>()
+		{}
 
-        public <#= stringLocalizerClassName #>(CultureInfo culture)
-        {
-            _culture = culture;
-        }
+		public <#= stringLocalizerClassName #>(CultureInfo culture)
+		{
+			_culture = culture;
+		}
 
-        public const string PrimaryCulture = "<#= PrimaryLanguage.Name #>";
+		public const string PrimaryCulture = "<#= PrimaryLanguage.Name #>";
 
 <#+
 		if (Settings.UseExpressionBodySyntax)
-        {
+		{
 #>
 		public static ResourceManager ResourceManager => _resourceManager.Value;
 <#+
-        }
+		}
 		else
-        {
+		{
 #>
 		public static ResourceManager ResourceManager
 		{
-		    get
+			get
 			{
-			    return _resourceManager.Value;
+				return _resourceManager.Value;
 			}
 		}
 <#+
-        }
+		}
 #>
 
 		private static ResourceManager CreateResourceManager()
 		{
-		    return new ResourceManager("<#= resourcesNamespace #>.<#= modelClassName #>",
-				    typeof(<#= modelClassNameWithNamespace #>).GetTypeInfo().Assembly);
+			return new ResourceManager("<#= resourcesNamespace #>.<#= modelClassName #>",
+					typeof(<#= modelClassNameWithNamespace #>).GetTypeInfo().Assembly);
 		}
 
 <#+
-	    if (Settings.MissingTranslationFallbackToPrimary)
-	    {
+		if (Settings.MissingTranslationFallbackToPrimary)
+		{
 #>
 		public CultureInfo FallbackCulture
-        {
-	        get
-	        {
-	            if (_fallbackCulture == null)
-	            {
-	                _fallbackCulture = new CultureInfo(PrimaryCulture);
-	            }
-	            return _fallbackCulture;
-	        }
-	        set
-	        {
-	            if ((value == null) || !<#= modelClassName #>.AvailableCultures.Contains(value.Name))
-	            {
-	                throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
-	            }
+		{
+			get
+			{
+				if (_fallbackCulture == null)
+				{
+					_fallbackCulture = new CultureInfo(PrimaryCulture);
+				}
+				return _fallbackCulture;
+			}
+			set
+			{
+				if ((value == null) || !<#= modelClassName #>.AvailableCultures.Contains(value.Name))
+				{
+					throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
+				}
 
-	            _fallbackCulture = value;
-            }
-	    }
+				_fallbackCulture = value;
+			}
+		}
 <#+
-	    }
+		}
 #>	
 
-        LocalizedString IStringLocalizer.this[string name]
-        {
-            get
-            {
-                if (name == null)
-                {
-                    throw new ArgumentNullException(nameof(name));
-                }
+		LocalizedString IStringLocalizer.this[string name]
+		{
+			get
+			{
+				if (name == null)
+				{
+					throw new ArgumentNullException(nameof(name));
+				}
 
-                var value = GetStringSafely(name, _culture);
-                return new LocalizedString(name, value ?? name, value == null);
-            }
-        }
+				var value = GetStringSafely(name, _culture);
+				return new LocalizedString(name, value ?? name, value == null);
+			}
+		}
 
-        LocalizedString IStringLocalizer.this[string name, params object[] arguments]
-        {
-            get
-            {
-                if (name == null)
-                {
-                    throw new ArgumentNullException(nameof(name));
-                }
+		LocalizedString IStringLocalizer.this[string name, params object[] arguments]
+		{
+			get
+			{
+				if (name == null)
+				{
+					throw new ArgumentNullException(nameof(name));
+				}
 
-                var format = GetStringSafely(name, _culture);
-                var value = string.Format(format ?? name, arguments);
-                return new LocalizedString(name, value, format == null);
-            }
-        }
+				var format = GetStringSafely(name, _culture);
+				var value = string.Format(format ?? name, arguments);
+				return new LocalizedString(name, value, format == null);
+			}
+		}
 
-        public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
-        {
-            throw new NotImplementedException();
-        }
+		public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
+		{
+			throw new NotImplementedException();
+		}
 
 <#+
 		if (Settings.UseExpressionBodySyntax)
-        {
+		{
 #>
 		public IStringLocalizer WithCulture(CultureInfo culture) => new <#= stringLocalizerClassName #>(culture);
 <#+
-        }
+		}
 		else
-        {
+		{
 #>
-        public IStringLocalizer WithCulture(CultureInfo culture)
-        {
-            return new <#= stringLocalizerClassName #>(culture);
-        }
+		public IStringLocalizer WithCulture(CultureInfo culture)
+		{
+			return new <#= stringLocalizerClassName #>(culture);
+		}
 <#+
-        }
+		}
 #>
 
 		private string GetStringSafely(string name, CultureInfo culture)
 		{
-            string result = null;
-            try
-            {
-                result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
-            }
-            catch (MissingManifestResourceException)
-            {} // Resource does not exist
+			string result = null;
+			try
+			{
+				result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
+			}
+			catch (MissingManifestResourceException)
+			{} // Resource does not exist
 
 			if (result == null)
 			{
 <#+
 				if (Settings.MissingTranslationFallbackToPrimary)
-                {
+				{
 #>
 				if (FallbackCulture != null)
 				{
@@ -302,24 +307,24 @@ namespace <#= namespaceName #>
 					result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
 				}
 <#+
-                }
+				}
 				else
-                {
+				{
 #>
 				result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
 <#+
-                }
+				}
 #>
 			}
 
-            return result;
+			return result;
 		}
-    }
+	}
 
 	public static class <#= keysClassName #>
 	{
 <#+
-		WriteCategoriesKeysClass(this.ModelRoot.Categories);
+		WriteCategoriesKeysClass(this.ModelRoot.Categories, this._rootResources);
 #>
 	}
 
@@ -334,29 +339,29 @@ namespace <#= namespaceName #>
 
 <#+
 		if (Settings.UseExpressionBodySyntax)
-        {
+		{
 #>
 
 		public static string[] AvailableCultures => new string[] { <#= availableCultures #> };
 
 <#+
-        }
+		}
 		else
-        {
+		{
 #>
 
 		public static string[] AvailableCultures
 		{
-		    get
+			get
 			{
-                return new string[] { <#= availableCultures #> };
+				return new string[] { <#= availableCultures #> };
 			}
 		}
 
 <#+
-        }
+		}
 
-		WriteCategoriesAndResourcesClass(this.ModelRoot.Categories);
+		WriteCategoriesAndResourcesClass(this.ModelRoot, this._rootResources);
 #>
 	}
 }
@@ -364,9 +369,9 @@ namespace <#= namespaceName #>
 		this.Manager.EndNewFile();
 	}
 
-	void WriteCategoriesKeysClass(CategoryElementList categories)
-    {
-        var orderedCategories = categories.OrderByName();
+	void WriteCategoriesKeysClass(CategoryElementList categories, ResourceElementList parentResources = null)
+	{
+		var orderedCategories = categories.OrderByName();
 		var last = orderedCategories.LastOrDefault();
 
 		foreach(var category in orderedCategories)
@@ -376,40 +381,58 @@ namespace <#= namespaceName #>
 		{
 <#+
 			if (category.Categories.Count > 0)
-            {
+			{
 #>
 <#+
 				PushIndent();
 				WriteCategoriesKeysClass(category.Categories);
 				PopIndent();
-            }
-
-			foreach(var resource in category.Resources.OrderByName())
-            {
-				var propertyComment = GetCommentForResourceProperty(resource);
+			}
 #>
-			/// <summary>
-			/// Gets localized string similar to: <#= propertyComment #>
-			/// </summary>
-			public const string <#= resource.Name #> = "<#= GetFullResourceKey(resource, false) #>";
 <#+
-            }
+			PushIndent();
+			WriteResourcesToKeysClass(category.Resources);
+			PopIndent();
 #>
 		}
 <#+
 			if (category != last)
-            { // add empty line
+			{ // add empty line
 #>
 		
 <#+
-            }
+			}
 		}
-    }
 
-	void WriteCategoriesAndResourcesClass(CategoryElementList categories)
-    {
-        var orderedCategories = categories.OrderByName();
-        var last = orderedCategories.LastOrDefault();
+		if (parentResources != null && parentResources.Count > 0)
+		{
+#>
+		
+<#+
+			WriteResourcesToKeysClass(parentResources);
+#>
+<#+
+		}
+	}
+
+	void WriteResourcesToKeysClass(ResourceElementList resources)
+	{
+		foreach(var resource in resources.OrderByName())
+		{
+			var propertyComment = GetCommentForResourceProperty(resource);
+#>
+		/// <summary>
+		/// Gets localized string similar to: <#= propertyComment #>
+		/// </summary>
+		public const string <#= resource.Name #> = "<#= GetFullResourceKey(resource, false) #>";
+<#+
+		}
+	}
+
+	void WriteCategoriesAndResourcesClass(ICategoryLikeElement parentCategoryLike, ResourceElementList parentResources = null)
+	{
+		var orderedCategories = parentCategoryLike.Categories.OrderByName();
+		var last = orderedCategories.LastOrDefault();
 
 		foreach(var category in orderedCategories)
 		{
@@ -418,69 +441,84 @@ namespace <#= namespaceName #>
 		{
 <#+
 			if (category.Categories.Count > 0)
-            {
+			{
 #>
 <#+
 				PushIndent();
-				WriteCategoriesAndResourcesClass(category.Categories);
+				WriteCategoriesAndResourcesClass(category);
 				PopIndent();
-            }
+			}
 
-			foreach(var resource in category.Resources.OrderByName())
-            {
-				WriteCSharpResourceProxyProperty(resource, category);
-            }
+			PushIndent();
+			WriteResourcesToClass(category.Resources, category);
+			PopIndent();
 #>
 		}
 <#+
 			if (category != last)
-            { // add empty line
+			{ // add empty line
 #>
 		
 <#+
-            }
+			}
 		}
-    }
+
+		if (parentResources != null && parentResources.Count > 0)
+		{
+#>
+		
+<#+
+			WriteResourcesToClass(parentResources, parentCategoryLike as CategoryElement);
+		}
+	}
+
+	void WriteResourcesToClass(ResourceElementList resources, CategoryElement parentCategory)
+	{
+		foreach(var resource in resources.OrderByName())
+		{
+			WriteCSharpResourceProxyProperty(resource, parentCategory);
+		}
+	}
 
 	string GetLocalizerIndexerKey(ResourceElement resource, CategoryElement category) 
 	{
 		return keysClassName + "." + GetFullResourceKey(resource, true);
-    }
+	}
 
 	/*string GetCommentForResourceProperty(ResourceElement resource)
-    {
+	{
 		var primaryResourceValue = resource.FindValueByLanguage(PrimaryLanguage.Name);
 		string propertyComment = primaryResourceValue != null && !string.IsNullOrEmpty(primaryResourceValue.Value) 
 			? primaryResourceValue.Value
 			: resource.Description;
 
 		if (propertyComment == null)
-        {
+		{
 			propertyComment = string.Empty;
-        }
+		}
 
 		bool trimmed = false;
 		var idxNewLine = propertyComment.IndexOf(Environment.NewLine);
 
 		if (idxNewLine > -1)
-        {
+		{
 			propertyComment = propertyComment.Substring(0, idxNewLine);
 			trimmed = true;
-        }
+		}
 
 		if (propertyComment.Length > 80)
-        {
+		{
 			propertyComment = propertyComment.Substring(0, 80);
 			trimmed = true;
-        }
+		}
 
 		if (trimmed)
-        {
+		{
 			propertyComment += "...";
-        }
+		}
 
 		return propertyComment;
-    }*/
+	}*/
 
 	void WriteCSharpResourceProxyProperty(ResourceElement resource, CategoryElement category) 
 	{
@@ -492,31 +530,31 @@ namespace <#= namespaceName #>
 		if (resource.Parameters.Count == 0) 
 		{
 			if (Settings.UseExpressionBodySyntax)
-            {
-#>
-			/// <summary>
-			/// Gets localized string similar to: <#= propertyComment #>
-			/// </summary>
-			public static string <#= resource.Name #> => _localizer[<#= localizerIndexerKey #>];
-
-<#+
-            }
-			else
-            {
-#>
-			/// <summary>
-			/// Gets localized string similar to: <#= propertyComment #>
-			/// </summary>
-			public static string <#= resource.Name #>
 			{
-			    get
-				{
-				    return _localizer[<#= localizerIndexerKey #>];
-				}
-			}
+#>
+		/// <summary>
+		/// Gets localized string similar to: <#= propertyComment #>
+		/// </summary>
+		public static string <#= resource.Name #> => _localizer[<#= localizerIndexerKey #>];
 
 <#+
-            }
+			}
+			else
+			{
+#>
+		/// <summary>
+		/// Gets localized string similar to: <#= propertyComment #>
+		/// </summary>
+		public static string <#= resource.Name #>
+		{
+			get
+			{
+				return _localizer[<#= localizerIndexerKey #>];
+			}
+		}
+
+<#+
+			}
 
 		} 
 		else 
@@ -525,28 +563,28 @@ namespace <#= namespaceName #>
 			var paramNamesWithTypes = string.Join(",", resource.Parameters.Select(x => "object " + x.Name));
 			
 			if (Settings.UseExpressionBodySyntax)
-            {
-#>
-			/// <summary>
-			/// Gets localized string similar to: <#= propertyComment #>
-			/// </summary>
-			public static string <#= resource.Name #>(<#= paramNamesWithTypes #>) => _localizer[<#= localizerIndexerKey #><#= paramNames #>];
-
-<#+
-            }
-			else
-            {
-#>
-			/// <summary>
-			/// Gets localized string similar to: <#= propertyComment #>
-			/// </summary>
-			public static string <#= resource.Name #>(<#= paramNamesWithTypes #>)
 			{
-			    return _localizer[<#= localizerIndexerKey #><#= paramNames #>];
-			}
+#>
+		/// <summary>
+		/// Gets localized string similar to: <#= propertyComment #>
+		/// </summary>
+		public static string <#= resource.Name #>(<#= paramNamesWithTypes #>) => _localizer[<#= localizerIndexerKey #><#= paramNames #>];
 
 <#+
-            }
+			}
+			else
+			{
+#>
+		/// <summary>
+		/// Gets localized string similar to: <#= propertyComment #>
+		/// </summary>
+		public static string <#= resource.Name #>(<#= paramNamesWithTypes #>)
+		{
+			return _localizer[<#= localizerIndexerKey #><#= paramNames #>];
+		}
+
+<#+
+			}
 		}
 	}
 }

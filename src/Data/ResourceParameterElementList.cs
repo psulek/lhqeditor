@@ -47,6 +47,11 @@ namespace LHQ.Data
             return FindByNameInternal(name, ignoreCase, cultureInfo);
         }
 
+        public bool ContainsByName(string name, bool ignoreCase, CultureInfo cultureInfo = null)
+        {
+            return ContainsByNameInternal(name, ignoreCase, cultureInfo);
+        }
+
         object IClonable.Clone()
         {
             return Clone();

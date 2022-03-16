@@ -1627,10 +1627,7 @@ Cancel - cancel current operation</value>
     <value>New resource under root model failed</value>
   </data>
   <data name="ViewModelsNewElementNewResourceUnderRootNotAllowedDetail" xml:space="preserve">
-    <value>Set option &#39;Allow resources under root&#39; in file options to enable this.</value>
-  </data>
-  <data name="ViewModelsNewElementNewResourceUnderRootNotAllowedDetailByCodeGen" xml:space="preserve">
-    <value>Associated Code Generator does not support this.</value>
+    <value>Enable option &#39;Allow resources under root&#39; to add resource ?</value>
   </data>
   <data name="ViewModelsNewElementNewResourceUnderRootNotAllowedMessage" xml:space="preserve">
     <value>Could not add new resource under root model.</value>

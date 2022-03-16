@@ -33,8 +33,15 @@ namespace LHQ.Data
         Default = 0,
 
         /// <summary>
-        /// Model needs to hide 'resources under root' option in this case.
+        /// Turns on validation on save for cases like:
+        /// <code>
+        /// Model -> CategoryA -> ResourceA
+        /// Model -> CategoryAResourceA
+        /// </code>
+        ///
+        /// To be detected because both of them will generate same key for resources (resx).
+        /// Some code generates can support such behavior, but C#/resx will not.
         /// </summary>
-        HideResourcesUnderRoot = 1
+        ValidateFullKeyNames = 1
     }
 }

@@ -46,7 +46,7 @@ namespace LHQ.Data.Templating.Templates
 
         [Browsable(false)]
         [JsonIgnore]
-        public override ModelFeatures ModelFeatures { get; } = ModelFeatures.HideResourcesUnderRoot;
+        public override ModelFeatures ModelFeatures { get; } = ModelFeatures.ValidateFullKeyNames;
 
         [Browsable(false)]
         [JsonIgnore]

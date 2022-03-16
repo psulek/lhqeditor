@@ -42,10 +42,6 @@ namespace LHQ.Data.Templating.Templates.Wpf
         public override string Name { get; } = "Template which generates strongly typed C# and resource (*.resx) files.\n" +
             "Usable in WPF desktop applications.";
 
-        [Browsable(false)]
-        [JsonIgnore]
-        public override ModelFeatures ModelFeatures { get; } = ModelFeatures.HideResourcesUnderRoot;
-
         [DisplayName("Return primary language text on missing foreign translation")]
         [Description("Return primary language text in case of missing translation in foreign language.")]
         [Category("C# Generator")]

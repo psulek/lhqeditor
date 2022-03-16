@@ -19,7 +19,7 @@ namespace LHQ.App.Localization
 	using System.Threading;
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public partial class StringsContext: INotifyPropertyChanged, IFormattable
 	{
 		private CultureInfo _culture;
@@ -28,13 +28,13 @@ namespace LHQ.App.Localization
 		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
 
 		private StringsContext()
-        {}
+		{}
 
 		public static ResourceManager ResourceManager
 		{
-		    get
+			get
 			{
-			    return _resourceManager.Value;
+				return _resourceManager.Value;
 			}
 		}
 
@@ -42,82 +42,82 @@ namespace LHQ.App.Localization
 
 		public string[] AvailableCultures
 		{
-		    get
+			get
 			{
-                return new string[] { "zh-Hans","en","sk","zh-Hant" };
+				return new string[] { "en","sk" };
 			}
 		}
 
 		public CultureInfo FallbackCulture
-        {
-	        get
-	        {
-	            if (_fallbackCulture == null)
-	            {
-	                _fallbackCulture = new CultureInfo(PrimaryCulture);
-	            }
-	            return _fallbackCulture;
-	        }
-	        set
-	        {
-	            if ((value == null) || !AvailableCultures.Contains(value.Name))
-	            {
-	                throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
-	            }
+		{
+			get
+			{
+				if (_fallbackCulture == null)
+				{
+					_fallbackCulture = new CultureInfo(PrimaryCulture);
+				}
+				return _fallbackCulture;
+			}
+			set
+			{
+				if ((value == null) || !AvailableCultures.Contains(value.Name))
+				{
+					throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
+				}
 
-	            _fallbackCulture = value;
-            }
-	    }
+				_fallbackCulture = value;
+			}
+		}
 
 		public static StringsContext Instance
 		{
-		    get
+			get
 			{
 				return _instance.Value;
 			}
 		}
 		
 		public CultureInfo Culture
-        {
-            get
+		{
+			get
 			{
-			    return _culture ?? (_culture = CultureInfo.CurrentUICulture);
+				return _culture ?? (_culture = CultureInfo.CurrentUICulture);
 			}
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("Culture must not be null");
-                }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException("Culture must not be null");
+				}
 
-                if (value.Name == Culture.Name)
-                {
-                    return;
-                }
+				if (value.Name == Culture.Name)
+				{
+					return;
+				}
 
-                _culture = value;
-                Thread.CurrentThread.CurrentUICulture = _culture;
-                OnPropertyChanged(nameof(Culture));
-            }
-        }
+				_culture = value;
+				Thread.CurrentThread.CurrentUICulture = _culture;
+				OnPropertyChanged(nameof(Culture));
+			}
+		}
 
 		private static ResourceManager CreateResourceManager()
 		{
-		    return new ResourceManager("LHQ.App.Localization.Resources.Strings",
+			return new ResourceManager("LHQ.App.Localization.Resources.Strings",
 				typeof(LHQ.App.Localization.Strings).Assembly);
 		}
 
 		public string ToString(string format, IFormatProvider formatProvider)
-        {
-            return GetStringSafely(format);
-        }
+		{
+			return GetStringSafely(format);
+		}
 
 		public string GetStringSafely(string name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+		{
+			if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
 
 			string result = GetStringSafely(name, Culture);
 			if (result == null)
@@ -132,34 +132,34 @@ namespace LHQ.App.Localization
 				}
 			}
 
-            return result;
-        }
+			return result;
+		}
 
 		private string GetStringSafely(string name, CultureInfo culture)
 		{
-            string result = null;
-            try
-            {
-                result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
-            }
-            catch (MissingManifestResourceException)
-            {
-                // Resource does not exist
-            }
+			string result = null;
+			try
+			{
+				result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
+			}
+			catch (MissingManifestResourceException)
+			{
+				// Resource does not exist
+			}
 
-            return result;
+			return result;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string property)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
+		private void OnPropertyChanged(string property)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+		}
 	}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public static partial class StringsKeys
 	{
 		public static partial class App
@@ -200,101 +200,101 @@ namespace LHQ.App.Localization
 		
 		public static partial class Common
 		{
-    		public static partial class CountTexts
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public const string Count0Category = "CommonCountTextsCount0Category";
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public const string Count0Resource = "CommonCountTextsCount0Resource";
-    			/// <summary>
-    			/// Gets localized string similar to: category
-    			/// </summary>
-    			public const string Count1Category = "CommonCountTextsCount1Category";
-    			/// <summary>
-    			/// Gets localized string similar to: resource
-    			/// </summary>
-    			public const string Count1Resource = "CommonCountTextsCount1Resource";
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public const string Count2Category = "CommonCountTextsCount2Category";
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public const string Count2Resource = "CommonCountTextsCount2Resource";
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public const string Count3Category = "CommonCountTextsCount3Category";
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public const string Count3Resource = "CommonCountTextsCount3Resource";
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public const string Count4Category = "CommonCountTextsCount4Category";
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public const string Count4Resource = "CommonCountTextsCount4Resource";
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public const string CountMoreCategories = "CommonCountTextsCountMoreCategories";
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public const string CountMoreResources = "CommonCountTextsCountMoreResources";
-    		}
-    		
-    		public static partial class Properties
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: description
-    			/// </summary>
-    			public const string Description = "CommonPropertiesDescription";
-    			/// <summary>
-    			/// Gets localized string similar to: name
-    			/// </summary>
-    			public const string Name = "CommonPropertiesName";
-    			/// <summary>
-    			/// Gets localized string similar to: parameters
-    			/// </summary>
-    			public const string Parameters = "CommonPropertiesParameters";
-    			/// <summary>
-    			/// Gets localized string similar to: translation note
-    			/// </summary>
-    			public const string TranslationNote = "CommonPropertiesTranslationNote";
-    			/// <summary>
-    			/// Gets localized string similar to: translation state
-    			/// </summary>
-    			public const string TranslationState = "CommonPropertiesTranslationState";
-    			/// <summary>
-    			/// Gets localized string similar to: translation
-    			/// </summary>
-    			public const string TranslationValue = "CommonPropertiesTranslationValue";
-    		}
-    		
-    		public static partial class Themes
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Automatic selection
-    			/// </summary>
-    			public const string Automatic = "CommonThemesAutomatic";
-    			/// <summary>
-    			/// Gets localized string similar to: Dark
-    			/// </summary>
-    			public const string Dark = "CommonThemesDark";
-    			/// <summary>
-    			/// Gets localized string similar to: Light
-    			/// </summary>
-    			public const string Light = "CommonThemesLight";
-    		}
+			public static partial class CountTexts
+			{
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public const string Count0Category = "CommonCountTextsCount0Category";
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public const string Count0Resource = "CommonCountTextsCount0Resource";
+				/// <summary>
+				/// Gets localized string similar to: category
+				/// </summary>
+				public const string Count1Category = "CommonCountTextsCount1Category";
+				/// <summary>
+				/// Gets localized string similar to: resource
+				/// </summary>
+				public const string Count1Resource = "CommonCountTextsCount1Resource";
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public const string Count2Category = "CommonCountTextsCount2Category";
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public const string Count2Resource = "CommonCountTextsCount2Resource";
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public const string Count3Category = "CommonCountTextsCount3Category";
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public const string Count3Resource = "CommonCountTextsCount3Resource";
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public const string Count4Category = "CommonCountTextsCount4Category";
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public const string Count4Resource = "CommonCountTextsCount4Resource";
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public const string CountMoreCategories = "CommonCountTextsCountMoreCategories";
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public const string CountMoreResources = "CommonCountTextsCountMoreResources";
+			}
+			
+			public static partial class Properties
+			{
+				/// <summary>
+				/// Gets localized string similar to: description
+				/// </summary>
+				public const string Description = "CommonPropertiesDescription";
+				/// <summary>
+				/// Gets localized string similar to: name
+				/// </summary>
+				public const string Name = "CommonPropertiesName";
+				/// <summary>
+				/// Gets localized string similar to: parameters
+				/// </summary>
+				public const string Parameters = "CommonPropertiesParameters";
+				/// <summary>
+				/// Gets localized string similar to: translation note
+				/// </summary>
+				public const string TranslationNote = "CommonPropertiesTranslationNote";
+				/// <summary>
+				/// Gets localized string similar to: translation state
+				/// </summary>
+				public const string TranslationState = "CommonPropertiesTranslationState";
+				/// <summary>
+				/// Gets localized string similar to: translation
+				/// </summary>
+				public const string TranslationValue = "CommonPropertiesTranslationValue";
+			}
+			
+			public static partial class Themes
+			{
+				/// <summary>
+				/// Gets localized string similar to: Automatic selection
+				/// </summary>
+				public const string Automatic = "CommonThemesAutomatic";
+				/// <summary>
+				/// Gets localized string similar to: Dark
+				/// </summary>
+				public const string Dark = "CommonThemesDark";
+				/// <summary>
+				/// Gets localized string similar to: Light
+				/// </summary>
+				public const string Light = "CommonThemesLight";
+			}
 			/// <summary>
 			/// Gets localized string similar to: Actions
 			/// </summary>
@@ -423,821 +423,821 @@ namespace LHQ.App.Localization
 		
 		public static partial class Dialogs
 		{
-    		public static partial class About
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Program version: {0}
-    			/// </summary>
-    			public const string AppVersion = "DialogsAboutAppVersion";
-    			/// <summary>
-    			/// Gets localized string similar to: Localization HQ Editor - About
-    			/// </summary>
-    			public const string DialogTitle = "DialogsAboutDialogTitle";
-    		}
-    		
-    		public static partial class AppSettings
-    		{
-        		public static partial class PageGeneral
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Color theme
-        			/// </summary>
-        			public const string ColorTheme = "DialogsAppSettingsPageGeneralColorTheme";
-        			/// <summary>
-        			/// Gets localized string similar to: Default language is required.
-        			/// </summary>
-        			public const string DefaultLanguageIsRequired = "DialogsAppSettingsPageGeneralDefaultLanguageIsRequired";
-        			/// <summary>
-        			/// Gets localized string similar to: Lock translations when resource state is changed to Final
-        			/// </summary>
-        			public const string LockTranslationsWithResource = "DialogsAppSettingsPageGeneralLockTranslationsWithResource";
-        		}
-        		
-        		public static partial class PagePlugins
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Cannot enable plugin because active license ({0}) has disabled '{1}' feature.
-        			/// </summary>
-        			public const string CannotEnablePluginFeatureIsDisabled0000 = "DialogsAppSettingsPagePluginsCannotEnablePluginFeatureIsDisabled0000";
-        			/// <summary>
-        			/// Gets localized string similar to: Installed plugins:
-        			/// </summary>
-        			public const string InstalledPluginsHeader = "DialogsAppSettingsPagePluginsInstalledPluginsHeader";
-        			/// <summary>
-        			/// Gets localized string similar to: Plugins
-        			/// </summary>
-        			public const string Title = "DialogsAppSettingsPagePluginsTitle";
-        		}
-        		
-        		public static partial class PageTranslator
-        		{
-            		public static partial class Test
-            		{
-            			/// <summary>
-            			/// Gets localized string similar to: Testing '{0}'
-            			/// </summary>
-            			public const string TestingText = "DialogsAppSettingsPageTranslatorTestTestingText";
-            			/// <summary>
-            			/// Gets localized string similar to: Testing '{0}' succeeded.
-            			/// </summary>
-            			public const string TestSucceed = "DialogsAppSettingsPageTranslatorTestTestSucceed";
-            			/// <summary>
-            			/// Gets localized string similar to: Test Succeed
-            			/// </summary>
-            			public const string TestSucceedTitle = "DialogsAppSettingsPageTranslatorTestTestSucceedTitle";
-            		}
-        			/// <summary>
-        			/// Gets localized string similar to: Enable translator integration
-        			/// </summary>
-        			public const string EnableTranslation = "DialogsAppSettingsPageTranslatorEnableTranslation";
-        			/// <summary>
-        			/// Gets localized string similar to: Translator must be configured for integration to work properly.
-        			/// </summary>
-        			public const string ShowConfigureHint = "DialogsAppSettingsPageTranslatorShowConfigureHint";
-        		}
-        		
-        		public static partial class PluginConfigure
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Plugin Help...
-        			/// </summary>
-        			public const string PluginHelp = "DialogsAppSettingsPluginConfigurePluginHelp";
-        			/// <summary>
-        			/// Gets localized string similar to: version:
-        			/// </summary>
-        			public const string PluginVersion = "DialogsAppSettingsPluginConfigurePluginVersion";
-        		}
-    			/// <summary>
-    			/// Gets localized string similar to: Application lozalization
-    			/// </summary>
-    			public const string ApplicationLocalization = "DialogsAppSettingsApplicationLocalization";
-    			/// <summary>
-    			/// Gets localized string similar to: Check for updates
-    			/// </summary>
-    			public const string ButtonCheckForUpdates = "DialogsAppSettingsButtonCheckForUpdates";
-    			/// <summary>
-    			/// Gets localized string similar to: Change application behavior
-    			/// </summary>
-    			public const string CaptionHint = "DialogsAppSettingsCaptionHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Check updates when application starts
-    			/// </summary>
-    			public const string CheckUpdatesOnAppStart = "DialogsAppSettingsCheckUpdatesOnAppStart";
-    			/// <summary>
-    			/// Gets localized string similar to: Default language for new projects
-    			/// </summary>
-    			public const string DefaultLanguage = "DialogsAppSettingsDefaultLanguage";
-    			/// <summary>
-    			/// Gets localized string similar to: Preferences
-    			/// </summary>
-    			public const string DialogCaption = "DialogsAppSettingsDialogCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Localization HQ Editor - Preferences
-    			/// </summary>
-    			public const string DialogTitle = "DialogsAppSettingsDialogTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Open last project when application starts
-    			/// </summary>
-    			public const string OpenLastProjectOnStartup = "DialogsAppSettingsOpenLastProjectOnStartup";
-    			/// <summary>
-    			/// Gets localized string similar to: Show hints
-    			/// </summary>
-    			public const string ShowHints = "DialogsAppSettingsShowHints";
-    		}
-    		
-    		public static partial class ChangePassword
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Current password:
-    			/// </summary>
-    			public const string CurrentPassword = "DialogsChangePasswordCurrentPassword";
-    			/// <summary>
-    			/// Gets localized string similar to: Email:
-    			/// </summary>
-    			public const string Email = "DialogsChangePasswordEmail";
-    			/// <summary>
-    			/// Gets localized string similar to: New password:
-    			/// </summary>
-    			public const string NewPassword = "DialogsChangePasswordNewPassword";
-    			/// <summary>
-    			/// Gets localized string similar to: New password confirm:
-    			/// </summary>
-    			public const string NewPasswordConfirm = "DialogsChangePasswordNewPasswordConfirm";
-    			/// <summary>
-    			/// Gets localized string similar to: Account - Change Password
-    			/// </summary>
-    			public const string Title = "DialogsChangePasswordTitle";
-    		}
-    		
-    		public static partial class CodeGenerator
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Reset To Default
-    			/// </summary>
-    			public const string ButtonResetToDefault = "DialogsCodeGeneratorButtonResetToDefault";
-    			/// <summary>
-    			/// Gets localized string similar to: Reset Settings To Default Values
-    			/// </summary>
-    			public const string ResetConfirmCaption = "DialogsCodeGeneratorResetConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to reset settings to its default values?
-    			/// </summary>
-    			public const string ResetConfirmMessage = "DialogsCodeGeneratorResetConfirmMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Template id: {0}
-    			/// </summary>
-    			public const string TemplateId = "DialogsCodeGeneratorTemplateId";
-    			/// <summary>
-    			/// Gets localized string similar to: Template name: {0}
-    			/// </summary>
-    			public const string TemplateName = "DialogsCodeGeneratorTemplateName";
-    			/// <summary>
-    			/// Gets localized string similar to: Code Generator Settings
-    			/// </summary>
-    			public const string Title = "DialogsCodeGeneratorTitle";
-    		}
-    		
-    		public static partial class EditLanguage
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Add language
-    			/// </summary>
-    			public const string DialogCaptionAdd = "DialogsEditLanguageDialogCaptionAdd";
-    			/// <summary>
-    			/// Gets localized string similar to: Adds new language to current project
-    			/// </summary>
-    			public const string DialogCaptionAddHint = "DialogsEditLanguageDialogCaptionAddHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Edit language
-    			/// </summary>
-    			public const string DialogCaptionEdit = "DialogsEditLanguageDialogCaptionEdit";
-    			/// <summary>
-    			/// Gets localized string similar to: Edit language
-    			/// </summary>
-    			public const string DialogCaptionEditHint = "DialogsEditLanguageDialogCaptionEditHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Add language
-    			/// </summary>
-    			public const string DialogTitleAdd = "DialogsEditLanguageDialogTitleAdd";
-    			/// <summary>
-    			/// Gets localized string similar to: Edit language
-    			/// </summary>
-    			public const string DialogTitleEdit = "DialogsEditLanguageDialogTitleEdit";
-    			/// <summary>
-    			/// Gets localized string similar to: Is primary language?
-    			/// </summary>
-    			public const string IsPrimaryLanguage = "DialogsEditLanguageIsPrimaryLanguage";
-    			/// <summary>
-    			/// Gets localized string similar to: Neutral language
-    			/// </summary>
-    			public const string LanguagesTypeNeutral = "DialogsEditLanguageLanguagesTypeNeutral";
-    			/// <summary>
-    			/// Gets localized string similar to: Specific language
-    			/// </summary>
-    			public const string LanguagesTypeSpecific = "DialogsEditLanguageLanguagesTypeSpecific";
-    			/// <summary>
-    			/// Gets localized string similar to: Languages type:
-    			/// </summary>
-    			public const string LanguageTypeInfo = "DialogsEditLanguageLanguageTypeInfo";
-    			/// <summary>
-    			/// Gets localized string similar to: Set as primary language
-    			/// </summary>
-    			public const string SetAsPrimaryLanguage = "DialogsEditLanguageSetAsPrimaryLanguage";
-    		}
-    		
-    		public static partial class EditParameter
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Description:
-    			/// </summary>
-    			public const string Description = "DialogsEditParameterDescription";
-    			/// <summary>
-    			/// Gets localized string similar to: Name:
-    			/// </summary>
-    			public const string Name = "DialogsEditParameterName";
-    			/// <summary>
-    			/// Gets localized string similar to: Order:
-    			/// </summary>
-    			public const string Order = "DialogsEditParameterOrder";
-    		}
-    		
-    		public static partial class ExceptionViewer
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: All Messages
-    			/// </summary>
-    			public const string AllMessages = "DialogsExceptionViewerAllMessages";
-    			/// <summary>
-    			/// Gets localized string similar to: App version:
-    			/// </summary>
-    			public const string AppVersion = "DialogsExceptionViewerAppVersion";
-    			/// <summary>
-    			/// Gets localized string similar to: Copy to clipboard
-    			/// </summary>
-    			public const string CopyToClipboard = "DialogsExceptionViewerCopyToClipboard";
-    			/// <summary>
-    			/// Gets localized string similar to: Current time:
-    			/// </summary>
-    			public const string CurrentTime = "DialogsExceptionViewerCurrentTime";
-    			/// <summary>
-    			/// Gets localized string similar to: Unexpected exception occured
-    			/// </summary>
-    			public const string DialogTitle = "DialogsExceptionViewerDialogTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: _Wrap text
-    			/// </summary>
-    			public const string WrapText = "DialogsExceptionViewerWrapText";
-    		}
-    		
-    		public static partial class Export
-    		{
-        		public static partial class Columns
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Code
-        			/// </summary>
-        			public const string Code = "DialogsExportColumnsCode";
-        			/// <summary>
-        			/// Gets localized string similar to: English name
-        			/// </summary>
-        			public const string EnglishName = "DialogsExportColumnsEnglishName";
-        			/// <summary>
-        			/// Gets localized string similar to: Primary
-        			/// </summary>
-        			public const string Primary = "DialogsExportColumnsPrimary";
-        		}
-        		
-        		public static partial class Validations
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: At least two languages must be selected for export!
-        			/// </summary>
-        			public const string MinimumLanguagesMessage = "DialogsExportValidationsMinimumLanguagesMessage";
-        			/// <summary>
-        			/// Gets localized string similar to: File name must be specified.
-        			/// </summary>
-        			public const string MissingFileNameMessage = "DialogsExportValidationsMissingFileNameMessage";
-        			/// <summary>
-        			/// Gets localized string similar to: There are no exporters available.
-        			/// </summary>
-        			public const string NoExportersAvailable = "DialogsExportValidationsNoExportersAvailable";
-        		}
-    			/// <summary>
-    			/// Gets localized string similar to: Available exporters:
-    			/// </summary>
-    			public const string AvailableExporters = "DialogsExportAvailableExporters";
-    			/// <summary>
-    			/// Gets localized string similar to: All resources
-    			/// </summary>
-    			public const string ExportingAllResources = "DialogsExportExportingAllResources";
-    			/// <summary>
-    			/// Gets localized string similar to: All resources (Recursive)
-    			/// </summary>
-    			public const string ExportingAllResourcesRecursive = "DialogsExportExportingAllResourcesRecursive";
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting:
-    			/// </summary>
-    			public const string ExportingLabel = "DialogsExportExportingLabel";
-    			/// <summary>
-    			/// Gets localized string similar to: Selected resources ({0})
-    			/// </summary>
-    			public const string ExportingSelectedResources = "DialogsExportExportingSelectedResources";
-    			/// <summary>
-    			/// Gets localized string similar to: Export resources to file
-    			/// </summary>
-    			public const string ExportResourcesToFile = "DialogsExportExportResourcesToFile";
-    			/// <summary>
-    			/// Gets localized string similar to: Export to file:
-    			/// </summary>
-    			public const string ExportToFile = "DialogsExportExportToFile";
-    			/// <summary>
-    			/// Gets localized string similar to: Export resources
-    			/// </summary>
-    			public const string PageTitle = "DialogsExportPageTitle";
-    		}
-    		
-    		public static partial class Import
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Allow import of new languages
-    			/// </summary>
-    			public const string AllowImportNewLanguages = "DialogsImportAllowImportNewLanguages";
-    			/// <summary>
-    			/// Gets localized string similar to: Available importers:
-    			/// </summary>
-    			public const string AvailableImporters = "DialogsImportAvailableImporters";
-    			/// <summary>
-    			/// Gets localized string similar to: Files to import:
-    			/// </summary>
-    			public const string FilesToImport = "DialogsImportFilesToImport";
-    			/// <summary>
-    			/// Gets localized string similar to: Import mode:
-    			/// </summary>
-    			public const string ImportMode = "DialogsImportImportMode";
-    			/// <summary>
-    			/// Gets localized string similar to: Merge with existing resources
-    			/// </summary>
-    			public const string ModeAutoMerge = "DialogsImportModeAutoMerge";
-    			/// <summary>
-    			/// Gets localized string similar to: Categories and resources imported from file(s) will be merged with existing cate...
-    			/// </summary>
-    			public const string ModeAutoMergeHint = "DialogsImportModeAutoMergeHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Categories and resources imported from file(s) will be added into a new category...
-    			/// </summary>
-    			public const string ModeImportAsHint = "DialogsImportModeImportAsHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Import into a new category
-    			/// </summary>
-    			public const string ModeImportAsNew = "DialogsImportModeImportAsNew";
-    			/// <summary>
-    			/// Gets localized string similar to: There are no importers available.
-    			/// </summary>
-    			public const string NoImportersAvailable = "DialogsImportNoImportersAvailable";
-    			/// <summary>
-    			/// Gets localized string similar to: Import resources from file(s)
-    			/// </summary>
-    			public const string Title = "DialogsImportTitle";
-    		}
-    		
-    		public static partial class PasteConfirm
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Select missing languages to be added to model project:
-    			/// </summary>
-    			public const string AddMissingLanguages = "DialogsPasteConfirmAddMissingLanguages";
-    			/// <summary>
-    			/// Gets localized string similar to: Resources translations from clipboard contains missing languages for current mod...
-    			/// </summary>
-    			public const string Caption = "DialogsPasteConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Paste from clipboard / missing languages
-    			/// </summary>
-    			public const string DialogTitle = "DialogsPasteConfirmDialogTitle";
-    		}
-    		
-    		public static partial class PluginHelp
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Plugin Help
-    			/// </summary>
-    			public const string DialogTitle = "DialogsPluginHelpDialogTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Plugin '{0}' Help
-    			/// </summary>
-    			public const string Title = "DialogsPluginHelpTitle";
-    		}
-    		
-    		public static partial class ResourceParameters
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Move selected parameter down
-    			/// </summary>
-    			public const string MoveParameterDownTooltip = "DialogsResourceParametersMoveParameterDownTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Move selected parameter up
-    			/// </summary>
-    			public const string MoveParameterUpTooltip = "DialogsResourceParametersMoveParameterUpTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Parameters will be used later when generating source code from current project f...
-    			/// </summary>
-    			public const string ParameterUsage = "DialogsResourceParametersParameterUsage";
-    		}
-    		
-    		public static partial class UnhandledError
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to report this error to us?...
-    			/// </summary>
-    			public const string Detail = "DialogsUnhandledErrorDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Unexpected error occured!
-    			/// </summary>
-    			public const string Message = "DialogsUnhandledErrorMessage";
-    		}
-    		
-    		public static partial class VsOptions
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Apply Settings Change
-    			/// </summary>
-    			public const string ApplyChangesCaption = "DialogsVsOptionsApplyChangesCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: WARNING: ...
-    			/// </summary>
-    			public const string ApplyChangesDetail = "DialogsVsOptionsApplyChangesDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to apply settings change?
-    			/// </summary>
-    			public const string ApplyChangesMessage = "DialogsVsOptionsApplyChangesMessage";
-    		}
+			public static partial class About
+			{
+				/// <summary>
+				/// Gets localized string similar to: Program version: {0}
+				/// </summary>
+				public const string AppVersion = "DialogsAboutAppVersion";
+				/// <summary>
+				/// Gets localized string similar to: Localization HQ Editor - About
+				/// </summary>
+				public const string DialogTitle = "DialogsAboutDialogTitle";
+			}
+			
+			public static partial class AppSettings
+			{
+				public static partial class PageGeneral
+				{
+					/// <summary>
+					/// Gets localized string similar to: Color theme
+					/// </summary>
+					public const string ColorTheme = "DialogsAppSettingsPageGeneralColorTheme";
+					/// <summary>
+					/// Gets localized string similar to: Default language is required.
+					/// </summary>
+					public const string DefaultLanguageIsRequired = "DialogsAppSettingsPageGeneralDefaultLanguageIsRequired";
+					/// <summary>
+					/// Gets localized string similar to: Lock translations when resource state is changed to Final
+					/// </summary>
+					public const string LockTranslationsWithResource = "DialogsAppSettingsPageGeneralLockTranslationsWithResource";
+				}
+				
+				public static partial class PagePlugins
+				{
+					/// <summary>
+					/// Gets localized string similar to: Cannot enable plugin because active license ({0}) has disabled '{1}' feature.
+					/// </summary>
+					public const string CannotEnablePluginFeatureIsDisabled0000 = "DialogsAppSettingsPagePluginsCannotEnablePluginFeatureIsDisabled0000";
+					/// <summary>
+					/// Gets localized string similar to: Installed plugins:
+					/// </summary>
+					public const string InstalledPluginsHeader = "DialogsAppSettingsPagePluginsInstalledPluginsHeader";
+					/// <summary>
+					/// Gets localized string similar to: Plugins
+					/// </summary>
+					public const string Title = "DialogsAppSettingsPagePluginsTitle";
+				}
+				
+				public static partial class PageTranslator
+				{
+					public static partial class Test
+					{
+						/// <summary>
+						/// Gets localized string similar to: Testing '{0}'
+						/// </summary>
+						public const string TestingText = "DialogsAppSettingsPageTranslatorTestTestingText";
+						/// <summary>
+						/// Gets localized string similar to: Testing '{0}' succeeded.
+						/// </summary>
+						public const string TestSucceed = "DialogsAppSettingsPageTranslatorTestTestSucceed";
+						/// <summary>
+						/// Gets localized string similar to: Test Succeed
+						/// </summary>
+						public const string TestSucceedTitle = "DialogsAppSettingsPageTranslatorTestTestSucceedTitle";
+					}
+					/// <summary>
+					/// Gets localized string similar to: Enable translator integration
+					/// </summary>
+					public const string EnableTranslation = "DialogsAppSettingsPageTranslatorEnableTranslation";
+					/// <summary>
+					/// Gets localized string similar to: Translator must be configured for integration to work properly.
+					/// </summary>
+					public const string ShowConfigureHint = "DialogsAppSettingsPageTranslatorShowConfigureHint";
+				}
+				
+				public static partial class PluginConfigure
+				{
+					/// <summary>
+					/// Gets localized string similar to: Plugin Help...
+					/// </summary>
+					public const string PluginHelp = "DialogsAppSettingsPluginConfigurePluginHelp";
+					/// <summary>
+					/// Gets localized string similar to: version:
+					/// </summary>
+					public const string PluginVersion = "DialogsAppSettingsPluginConfigurePluginVersion";
+				}
+				/// <summary>
+				/// Gets localized string similar to: Application lozalization
+				/// </summary>
+				public const string ApplicationLocalization = "DialogsAppSettingsApplicationLocalization";
+				/// <summary>
+				/// Gets localized string similar to: Check for updates
+				/// </summary>
+				public const string ButtonCheckForUpdates = "DialogsAppSettingsButtonCheckForUpdates";
+				/// <summary>
+				/// Gets localized string similar to: Change application behavior
+				/// </summary>
+				public const string CaptionHint = "DialogsAppSettingsCaptionHint";
+				/// <summary>
+				/// Gets localized string similar to: Check updates when application starts
+				/// </summary>
+				public const string CheckUpdatesOnAppStart = "DialogsAppSettingsCheckUpdatesOnAppStart";
+				/// <summary>
+				/// Gets localized string similar to: Default language for new projects
+				/// </summary>
+				public const string DefaultLanguage = "DialogsAppSettingsDefaultLanguage";
+				/// <summary>
+				/// Gets localized string similar to: Preferences
+				/// </summary>
+				public const string DialogCaption = "DialogsAppSettingsDialogCaption";
+				/// <summary>
+				/// Gets localized string similar to: Localization HQ Editor - Preferences
+				/// </summary>
+				public const string DialogTitle = "DialogsAppSettingsDialogTitle";
+				/// <summary>
+				/// Gets localized string similar to: Open last project when application starts
+				/// </summary>
+				public const string OpenLastProjectOnStartup = "DialogsAppSettingsOpenLastProjectOnStartup";
+				/// <summary>
+				/// Gets localized string similar to: Show hints
+				/// </summary>
+				public const string ShowHints = "DialogsAppSettingsShowHints";
+			}
+			
+			public static partial class ChangePassword
+			{
+				/// <summary>
+				/// Gets localized string similar to: Current password:
+				/// </summary>
+				public const string CurrentPassword = "DialogsChangePasswordCurrentPassword";
+				/// <summary>
+				/// Gets localized string similar to: Email:
+				/// </summary>
+				public const string Email = "DialogsChangePasswordEmail";
+				/// <summary>
+				/// Gets localized string similar to: New password:
+				/// </summary>
+				public const string NewPassword = "DialogsChangePasswordNewPassword";
+				/// <summary>
+				/// Gets localized string similar to: New password confirm:
+				/// </summary>
+				public const string NewPasswordConfirm = "DialogsChangePasswordNewPasswordConfirm";
+				/// <summary>
+				/// Gets localized string similar to: Account - Change Password
+				/// </summary>
+				public const string Title = "DialogsChangePasswordTitle";
+			}
+			
+			public static partial class CodeGenerator
+			{
+				/// <summary>
+				/// Gets localized string similar to: Reset To Default
+				/// </summary>
+				public const string ButtonResetToDefault = "DialogsCodeGeneratorButtonResetToDefault";
+				/// <summary>
+				/// Gets localized string similar to: Reset Settings To Default Values
+				/// </summary>
+				public const string ResetConfirmCaption = "DialogsCodeGeneratorResetConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to reset settings to its default values?
+				/// </summary>
+				public const string ResetConfirmMessage = "DialogsCodeGeneratorResetConfirmMessage";
+				/// <summary>
+				/// Gets localized string similar to: Template id: {0}
+				/// </summary>
+				public const string TemplateId = "DialogsCodeGeneratorTemplateId";
+				/// <summary>
+				/// Gets localized string similar to: Template name: {0}
+				/// </summary>
+				public const string TemplateName = "DialogsCodeGeneratorTemplateName";
+				/// <summary>
+				/// Gets localized string similar to: Code Generator Settings
+				/// </summary>
+				public const string Title = "DialogsCodeGeneratorTitle";
+			}
+			
+			public static partial class EditLanguage
+			{
+				/// <summary>
+				/// Gets localized string similar to: Add language
+				/// </summary>
+				public const string DialogCaptionAdd = "DialogsEditLanguageDialogCaptionAdd";
+				/// <summary>
+				/// Gets localized string similar to: Adds new language to current project
+				/// </summary>
+				public const string DialogCaptionAddHint = "DialogsEditLanguageDialogCaptionAddHint";
+				/// <summary>
+				/// Gets localized string similar to: Edit language
+				/// </summary>
+				public const string DialogCaptionEdit = "DialogsEditLanguageDialogCaptionEdit";
+				/// <summary>
+				/// Gets localized string similar to: Edit language
+				/// </summary>
+				public const string DialogCaptionEditHint = "DialogsEditLanguageDialogCaptionEditHint";
+				/// <summary>
+				/// Gets localized string similar to: Add language
+				/// </summary>
+				public const string DialogTitleAdd = "DialogsEditLanguageDialogTitleAdd";
+				/// <summary>
+				/// Gets localized string similar to: Edit language
+				/// </summary>
+				public const string DialogTitleEdit = "DialogsEditLanguageDialogTitleEdit";
+				/// <summary>
+				/// Gets localized string similar to: Is primary language?
+				/// </summary>
+				public const string IsPrimaryLanguage = "DialogsEditLanguageIsPrimaryLanguage";
+				/// <summary>
+				/// Gets localized string similar to: Neutral language
+				/// </summary>
+				public const string LanguagesTypeNeutral = "DialogsEditLanguageLanguagesTypeNeutral";
+				/// <summary>
+				/// Gets localized string similar to: Specific language
+				/// </summary>
+				public const string LanguagesTypeSpecific = "DialogsEditLanguageLanguagesTypeSpecific";
+				/// <summary>
+				/// Gets localized string similar to: Languages type:
+				/// </summary>
+				public const string LanguageTypeInfo = "DialogsEditLanguageLanguageTypeInfo";
+				/// <summary>
+				/// Gets localized string similar to: Set as primary language
+				/// </summary>
+				public const string SetAsPrimaryLanguage = "DialogsEditLanguageSetAsPrimaryLanguage";
+			}
+			
+			public static partial class EditParameter
+			{
+				/// <summary>
+				/// Gets localized string similar to: Description:
+				/// </summary>
+				public const string Description = "DialogsEditParameterDescription";
+				/// <summary>
+				/// Gets localized string similar to: Name:
+				/// </summary>
+				public const string Name = "DialogsEditParameterName";
+				/// <summary>
+				/// Gets localized string similar to: Order:
+				/// </summary>
+				public const string Order = "DialogsEditParameterOrder";
+			}
+			
+			public static partial class ExceptionViewer
+			{
+				/// <summary>
+				/// Gets localized string similar to: All Messages
+				/// </summary>
+				public const string AllMessages = "DialogsExceptionViewerAllMessages";
+				/// <summary>
+				/// Gets localized string similar to: App version:
+				/// </summary>
+				public const string AppVersion = "DialogsExceptionViewerAppVersion";
+				/// <summary>
+				/// Gets localized string similar to: Copy to clipboard
+				/// </summary>
+				public const string CopyToClipboard = "DialogsExceptionViewerCopyToClipboard";
+				/// <summary>
+				/// Gets localized string similar to: Current time:
+				/// </summary>
+				public const string CurrentTime = "DialogsExceptionViewerCurrentTime";
+				/// <summary>
+				/// Gets localized string similar to: Unexpected exception occured
+				/// </summary>
+				public const string DialogTitle = "DialogsExceptionViewerDialogTitle";
+				/// <summary>
+				/// Gets localized string similar to: _Wrap text
+				/// </summary>
+				public const string WrapText = "DialogsExceptionViewerWrapText";
+			}
+			
+			public static partial class Export
+			{
+				public static partial class Columns
+				{
+					/// <summary>
+					/// Gets localized string similar to: Code
+					/// </summary>
+					public const string Code = "DialogsExportColumnsCode";
+					/// <summary>
+					/// Gets localized string similar to: English name
+					/// </summary>
+					public const string EnglishName = "DialogsExportColumnsEnglishName";
+					/// <summary>
+					/// Gets localized string similar to: Primary
+					/// </summary>
+					public const string Primary = "DialogsExportColumnsPrimary";
+				}
+				
+				public static partial class Validations
+				{
+					/// <summary>
+					/// Gets localized string similar to: At least two languages must be selected for export!
+					/// </summary>
+					public const string MinimumLanguagesMessage = "DialogsExportValidationsMinimumLanguagesMessage";
+					/// <summary>
+					/// Gets localized string similar to: File name must be specified.
+					/// </summary>
+					public const string MissingFileNameMessage = "DialogsExportValidationsMissingFileNameMessage";
+					/// <summary>
+					/// Gets localized string similar to: There are no exporters available.
+					/// </summary>
+					public const string NoExportersAvailable = "DialogsExportValidationsNoExportersAvailable";
+				}
+				/// <summary>
+				/// Gets localized string similar to: Available exporters:
+				/// </summary>
+				public const string AvailableExporters = "DialogsExportAvailableExporters";
+				/// <summary>
+				/// Gets localized string similar to: All resources
+				/// </summary>
+				public const string ExportingAllResources = "DialogsExportExportingAllResources";
+				/// <summary>
+				/// Gets localized string similar to: All resources (Recursive)
+				/// </summary>
+				public const string ExportingAllResourcesRecursive = "DialogsExportExportingAllResourcesRecursive";
+				/// <summary>
+				/// Gets localized string similar to: Exporting:
+				/// </summary>
+				public const string ExportingLabel = "DialogsExportExportingLabel";
+				/// <summary>
+				/// Gets localized string similar to: Selected resources ({0})
+				/// </summary>
+				public const string ExportingSelectedResources = "DialogsExportExportingSelectedResources";
+				/// <summary>
+				/// Gets localized string similar to: Export resources to file
+				/// </summary>
+				public const string ExportResourcesToFile = "DialogsExportExportResourcesToFile";
+				/// <summary>
+				/// Gets localized string similar to: Export to file:
+				/// </summary>
+				public const string ExportToFile = "DialogsExportExportToFile";
+				/// <summary>
+				/// Gets localized string similar to: Export resources
+				/// </summary>
+				public const string PageTitle = "DialogsExportPageTitle";
+			}
+			
+			public static partial class Import
+			{
+				/// <summary>
+				/// Gets localized string similar to: Allow import of new languages
+				/// </summary>
+				public const string AllowImportNewLanguages = "DialogsImportAllowImportNewLanguages";
+				/// <summary>
+				/// Gets localized string similar to: Available importers:
+				/// </summary>
+				public const string AvailableImporters = "DialogsImportAvailableImporters";
+				/// <summary>
+				/// Gets localized string similar to: Files to import:
+				/// </summary>
+				public const string FilesToImport = "DialogsImportFilesToImport";
+				/// <summary>
+				/// Gets localized string similar to: Import mode:
+				/// </summary>
+				public const string ImportMode = "DialogsImportImportMode";
+				/// <summary>
+				/// Gets localized string similar to: Merge with existing resources
+				/// </summary>
+				public const string ModeAutoMerge = "DialogsImportModeAutoMerge";
+				/// <summary>
+				/// Gets localized string similar to: Categories and resources imported from file(s) will be merged with existing cate...
+				/// </summary>
+				public const string ModeAutoMergeHint = "DialogsImportModeAutoMergeHint";
+				/// <summary>
+				/// Gets localized string similar to: Categories and resources imported from file(s) will be added into a new category...
+				/// </summary>
+				public const string ModeImportAsHint = "DialogsImportModeImportAsHint";
+				/// <summary>
+				/// Gets localized string similar to: Import into a new category
+				/// </summary>
+				public const string ModeImportAsNew = "DialogsImportModeImportAsNew";
+				/// <summary>
+				/// Gets localized string similar to: There are no importers available.
+				/// </summary>
+				public const string NoImportersAvailable = "DialogsImportNoImportersAvailable";
+				/// <summary>
+				/// Gets localized string similar to: Import resources from file(s)
+				/// </summary>
+				public const string Title = "DialogsImportTitle";
+			}
+			
+			public static partial class PasteConfirm
+			{
+				/// <summary>
+				/// Gets localized string similar to: Select missing languages to be added to model project:
+				/// </summary>
+				public const string AddMissingLanguages = "DialogsPasteConfirmAddMissingLanguages";
+				/// <summary>
+				/// Gets localized string similar to: Resources translations from clipboard contains missing languages for current mod...
+				/// </summary>
+				public const string Caption = "DialogsPasteConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Paste from clipboard / missing languages
+				/// </summary>
+				public const string DialogTitle = "DialogsPasteConfirmDialogTitle";
+			}
+			
+			public static partial class PluginHelp
+			{
+				/// <summary>
+				/// Gets localized string similar to: Plugin Help
+				/// </summary>
+				public const string DialogTitle = "DialogsPluginHelpDialogTitle";
+				/// <summary>
+				/// Gets localized string similar to: Plugin '{0}' Help
+				/// </summary>
+				public const string Title = "DialogsPluginHelpTitle";
+			}
+			
+			public static partial class ResourceParameters
+			{
+				/// <summary>
+				/// Gets localized string similar to: Move selected parameter down
+				/// </summary>
+				public const string MoveParameterDownTooltip = "DialogsResourceParametersMoveParameterDownTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Move selected parameter up
+				/// </summary>
+				public const string MoveParameterUpTooltip = "DialogsResourceParametersMoveParameterUpTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Parameters will be used later when generating source code from current project f...
+				/// </summary>
+				public const string ParameterUsage = "DialogsResourceParametersParameterUsage";
+			}
+			
+			public static partial class UnhandledError
+			{
+				/// <summary>
+				/// Gets localized string similar to: Do you want to report this error to us?...
+				/// </summary>
+				public const string Detail = "DialogsUnhandledErrorDetail";
+				/// <summary>
+				/// Gets localized string similar to: Unexpected error occured!
+				/// </summary>
+				public const string Message = "DialogsUnhandledErrorMessage";
+			}
+			
+			public static partial class VsOptions
+			{
+				/// <summary>
+				/// Gets localized string similar to: Apply Settings Change
+				/// </summary>
+				public const string ApplyChangesCaption = "DialogsVsOptionsApplyChangesCaption";
+				/// <summary>
+				/// Gets localized string similar to: WARNING: ...
+				/// </summary>
+				public const string ApplyChangesDetail = "DialogsVsOptionsApplyChangesDetail";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to apply settings change?
+				/// </summary>
+				public const string ApplyChangesMessage = "DialogsVsOptionsApplyChangesMessage";
+			}
 		}
 		
 		public static partial class Enums
 		{
-    		public static partial class ModelLoadStatus
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Model loading error.
-    			/// </summary>
-    			public const string LoadError = "EnumsModelLoadStatusLoadError";
-    			/// <summary>
-    			/// Gets localized string similar to: File content is not valid localization projekt.
-    			/// </summary>
-    			public const string ModelSourceInvalid = "EnumsModelLoadStatusModelSourceInvalid";
-    			/// <summary>
-    			/// Gets localized string similar to: Content of project file has old format version and needs to be upgraded to newer...
-    			/// </summary>
-    			public const string ModelUpgraderRequired = "EnumsModelLoadStatusModelUpgraderRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: Localization project was loaded successfully.
-    			/// </summary>
-    			public const string Success = "EnumsModelLoadStatusSuccess";
-    		}
-    		
-    		public static partial class ProductFeatures
-    		{
-        		public static partial class Descriptions
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Exporting resources to various external formats
-        			/// </summary>
-        			public const string Export = "EnumsProductFeaturesDescriptionsExport";
-        			/// <summary>
-        			/// Gets localized string similar to: Importing resources from supported external formats
-        			/// </summary>
-        			public const string Import = "EnumsProductFeaturesDescriptionsImport";
-        			/// <summary>
-        			/// Gets localized string similar to: Multiple Visual Studio instances are allowed to run LHQ Editor at the same time
-        			/// </summary>
-        			public const string MultiInstances = "EnumsProductFeaturesDescriptionsMultiInstances";
-        			/// <summary>
-        			/// Gets localized string similar to: Plugin system extends then program with various plugins
-        			/// </summary>
-        			public const string Plugins = "EnumsProductFeaturesDescriptionsPlugins";
-        			/// <summary>
-        			/// Gets localized string similar to: Translation services provide support for translating resources between different...
-        			/// </summary>
-        			public const string TranslationServices = "EnumsProductFeaturesDescriptionsTranslationServices";
-        		}
-        		
-        		public static partial class Names
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Export resources
-        			/// </summary>
-        			public const string Export = "EnumsProductFeaturesNamesExport";
-        			/// <summary>
-        			/// Gets localized string similar to: Import resources
-        			/// </summary>
-        			public const string Import = "EnumsProductFeaturesNamesImport";
-        			/// <summary>
-        			/// Gets localized string similar to: Application multiple instances
-        			/// </summary>
-        			public const string MultiInstances = "EnumsProductFeaturesNamesMultiInstances";
-        			/// <summary>
-        			/// Gets localized string similar to: Plugins system
-        			/// </summary>
-        			public const string Plugins = "EnumsProductFeaturesNamesPlugins";
-        			/// <summary>
-        			/// Gets localized string similar to: Translation services
-        			/// </summary>
-        			public const string TranslationServices = "EnumsProductFeaturesNamesTranslationServices";
-        		}
-    		}
-    		
-    		public static partial class ProjectBusyOperationType
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting resources from project...
-    			/// </summary>
-    			public const string Export = "EnumsProjectBusyOperationTypeExport";
-    			/// <summary>
-    			/// Gets localized string similar to: Importing resources into project...
-    			/// </summary>
-    			public const string Import = "EnumsProjectBusyOperationTypeImport";
-    			/// <summary>
-    			/// Gets localized string similar to: Opening project...
-    			/// </summary>
-    			public const string OpenProject = "EnumsProjectBusyOperationTypeOpenProject";
-    			/// <summary>
-    			/// Gets localized string similar to: Saving project...
-    			/// </summary>
-    			public const string SaveProject = "EnumsProjectBusyOperationTypeSaveProject";
-    			/// <summary>
-    			/// Gets localized string similar to: Searching...
-    			/// </summary>
-    			public const string TreeSearch = "EnumsProjectBusyOperationTypeTreeSearch";
-    		}
-    		
-    		public static partial class ResourceElementTranslationState
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Edited
-    			/// </summary>
-    			public const string Edited = "EnumsResourceElementTranslationStateEdited";
-    			/// <summary>
-    			/// Gets localized string similar to: Final
-    			/// </summary>
-    			public const string Final = "EnumsResourceElementTranslationStateFinal";
-    			/// <summary>
-    			/// Gets localized string similar to: Review Required
-    			/// </summary>
-    			public const string NeedsReview = "EnumsResourceElementTranslationStateNeedsReview";
-    			/// <summary>
-    			/// Gets localized string similar to: New
-    			/// </summary>
-    			public const string New = "EnumsResourceElementTranslationStateNew";
-    		}
-    		
-    		public static partial class StartupModelLoadStatus
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Could not open project file '{0}', file does not exist or access denied!
-    			/// </summary>
-    			public const string FileNotFoundOrAccessDenied = "EnumsStartupModelLoadStatusFileNotFoundOrAccessDenied";
-    			/// <summary>
-    			/// Gets localized string similar to: Could not open project file '{0}', file content is invalid!
-    			/// </summary>
-    			public const string ModelLoadError = "EnumsStartupModelLoadStatusModelLoadError";
-    			/// <summary>
-    			/// Gets localized string similar to: ModelUpgradeRequired - {0}
-    			/// </summary>
-    			public const string ModelUpgradeRequired = "EnumsStartupModelLoadStatusModelUpgradeRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: Project file '{0}' was loaded successfully.
-    			/// </summary>
-    			public const string Success = "EnumsStartupModelLoadStatusSuccess";
-    		}
-    		
-    		public static partial class TreeElementType
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Category
-    			/// </summary>
-    			public const string Category = "EnumsTreeElementTypeCategory";
-    			/// <summary>
-    			/// Gets localized string similar to: Model
-    			/// </summary>
-    			public const string Model = "EnumsTreeElementTypeModel";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource
-    			/// </summary>
-    			public const string Resource = "EnumsTreeElementTypeResource";
-    		}
+			public static partial class ModelLoadStatus
+			{
+				/// <summary>
+				/// Gets localized string similar to: Model loading error.
+				/// </summary>
+				public const string LoadError = "EnumsModelLoadStatusLoadError";
+				/// <summary>
+				/// Gets localized string similar to: File content is not valid localization projekt.
+				/// </summary>
+				public const string ModelSourceInvalid = "EnumsModelLoadStatusModelSourceInvalid";
+				/// <summary>
+				/// Gets localized string similar to: Content of project file has old format version and needs to be upgraded to newer...
+				/// </summary>
+				public const string ModelUpgraderRequired = "EnumsModelLoadStatusModelUpgraderRequired";
+				/// <summary>
+				/// Gets localized string similar to: Localization project was loaded successfully.
+				/// </summary>
+				public const string Success = "EnumsModelLoadStatusSuccess";
+			}
+			
+			public static partial class ProductFeatures
+			{
+				public static partial class Descriptions
+				{
+					/// <summary>
+					/// Gets localized string similar to: Exporting resources to various external formats
+					/// </summary>
+					public const string Export = "EnumsProductFeaturesDescriptionsExport";
+					/// <summary>
+					/// Gets localized string similar to: Importing resources from supported external formats
+					/// </summary>
+					public const string Import = "EnumsProductFeaturesDescriptionsImport";
+					/// <summary>
+					/// Gets localized string similar to: Multiple Visual Studio instances are allowed to run LHQ Editor at the same time
+					/// </summary>
+					public const string MultiInstances = "EnumsProductFeaturesDescriptionsMultiInstances";
+					/// <summary>
+					/// Gets localized string similar to: Plugin system extends then program with various plugins
+					/// </summary>
+					public const string Plugins = "EnumsProductFeaturesDescriptionsPlugins";
+					/// <summary>
+					/// Gets localized string similar to: Translation services provide support for translating resources between different...
+					/// </summary>
+					public const string TranslationServices = "EnumsProductFeaturesDescriptionsTranslationServices";
+				}
+				
+				public static partial class Names
+				{
+					/// <summary>
+					/// Gets localized string similar to: Export resources
+					/// </summary>
+					public const string Export = "EnumsProductFeaturesNamesExport";
+					/// <summary>
+					/// Gets localized string similar to: Import resources
+					/// </summary>
+					public const string Import = "EnumsProductFeaturesNamesImport";
+					/// <summary>
+					/// Gets localized string similar to: Application multiple instances
+					/// </summary>
+					public const string MultiInstances = "EnumsProductFeaturesNamesMultiInstances";
+					/// <summary>
+					/// Gets localized string similar to: Plugins system
+					/// </summary>
+					public const string Plugins = "EnumsProductFeaturesNamesPlugins";
+					/// <summary>
+					/// Gets localized string similar to: Translation services
+					/// </summary>
+					public const string TranslationServices = "EnumsProductFeaturesNamesTranslationServices";
+				}
+			}
+			
+			public static partial class ProjectBusyOperationType
+			{
+				/// <summary>
+				/// Gets localized string similar to: Exporting resources from project...
+				/// </summary>
+				public const string Export = "EnumsProjectBusyOperationTypeExport";
+				/// <summary>
+				/// Gets localized string similar to: Importing resources into project...
+				/// </summary>
+				public const string Import = "EnumsProjectBusyOperationTypeImport";
+				/// <summary>
+				/// Gets localized string similar to: Opening project...
+				/// </summary>
+				public const string OpenProject = "EnumsProjectBusyOperationTypeOpenProject";
+				/// <summary>
+				/// Gets localized string similar to: Saving project...
+				/// </summary>
+				public const string SaveProject = "EnumsProjectBusyOperationTypeSaveProject";
+				/// <summary>
+				/// Gets localized string similar to: Searching...
+				/// </summary>
+				public const string TreeSearch = "EnumsProjectBusyOperationTypeTreeSearch";
+			}
+			
+			public static partial class ResourceElementTranslationState
+			{
+				/// <summary>
+				/// Gets localized string similar to: Edited
+				/// </summary>
+				public const string Edited = "EnumsResourceElementTranslationStateEdited";
+				/// <summary>
+				/// Gets localized string similar to: Final
+				/// </summary>
+				public const string Final = "EnumsResourceElementTranslationStateFinal";
+				/// <summary>
+				/// Gets localized string similar to: Review Required
+				/// </summary>
+				public const string NeedsReview = "EnumsResourceElementTranslationStateNeedsReview";
+				/// <summary>
+				/// Gets localized string similar to: New
+				/// </summary>
+				public const string New = "EnumsResourceElementTranslationStateNew";
+			}
+			
+			public static partial class StartupModelLoadStatus
+			{
+				/// <summary>
+				/// Gets localized string similar to: Could not open project file '{0}', file does not exist or access denied!
+				/// </summary>
+				public const string FileNotFoundOrAccessDenied = "EnumsStartupModelLoadStatusFileNotFoundOrAccessDenied";
+				/// <summary>
+				/// Gets localized string similar to: Could not open project file '{0}', file content is invalid!
+				/// </summary>
+				public const string ModelLoadError = "EnumsStartupModelLoadStatusModelLoadError";
+				/// <summary>
+				/// Gets localized string similar to: ModelUpgradeRequired - {0}
+				/// </summary>
+				public const string ModelUpgradeRequired = "EnumsStartupModelLoadStatusModelUpgradeRequired";
+				/// <summary>
+				/// Gets localized string similar to: Project file '{0}' was loaded successfully.
+				/// </summary>
+				public const string Success = "EnumsStartupModelLoadStatusSuccess";
+			}
+			
+			public static partial class TreeElementType
+			{
+				/// <summary>
+				/// Gets localized string similar to: Category
+				/// </summary>
+				public const string Category = "EnumsTreeElementTypeCategory";
+				/// <summary>
+				/// Gets localized string similar to: Model
+				/// </summary>
+				public const string Model = "EnumsTreeElementTypeModel";
+				/// <summary>
+				/// Gets localized string similar to: Resource
+				/// </summary>
+				public const string Resource = "EnumsTreeElementTypeResource";
+			}
 		}
 		
 		public static partial class Licensing
 		{
-    		public static partial class Enums
-    		{
-        		public static partial class ProductVariantType
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Commercial
-        			/// </summary>
-        			public const string Commercial = "LicensingEnumsProductVariantTypeCommercial";
-        			/// <summary>
-        			/// Gets localized string similar to: Free
-        			/// </summary>
-        			public const string Free = "LicensingEnumsProductVariantTypeFree";
-        			/// <summary>
-        			/// Gets localized string similar to: Trial
-        			/// </summary>
-        			public const string Trial = "LicensingEnumsProductVariantTypeTrial";
-        		}
-    		}
+			public static partial class Enums
+			{
+				public static partial class ProductVariantType
+				{
+					/// <summary>
+					/// Gets localized string similar to: Commercial
+					/// </summary>
+					public const string Commercial = "LicensingEnumsProductVariantTypeCommercial";
+					/// <summary>
+					/// Gets localized string similar to: Free
+					/// </summary>
+					public const string Free = "LicensingEnumsProductVariantTypeFree";
+					/// <summary>
+					/// Gets localized string similar to: Trial
+					/// </summary>
+					public const string Trial = "LicensingEnumsProductVariantTypeTrial";
+				}
+			}
 		}
 		
 		public static partial class MainMenu
 		{
-    		public static partial class Edit
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _Copy
-    			/// </summary>
-    			public const string Copy = "MainMenuEditCopy";
-    			/// <summary>
-    			/// Gets localized string similar to: Cu_t
-    			/// </summary>
-    			public const string Cut = "MainMenuEditCut";
-    			/// <summary>
-    			/// Gets localized string similar to: Delete
-    			/// </summary>
-    			public const string Delete = "MainMenuEditDelete";
-    			/// <summary>
-    			/// Gets localized string similar to: _Duplicate
-    			/// </summary>
-    			public const string Duplicate = "MainMenuEditDuplicate";
-    			/// <summary>
-    			/// Gets localized string similar to: Find...
-    			/// </summary>
-    			public const string FindElement = "MainMenuEditFindElement";
-    			/// <summary>
-    			/// Gets localized string similar to: Find for category or resource
-    			/// </summary>
-    			public const string FindElementTooltip = "MainMenuEditFindElementTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Focus _Navigation
-    			/// </summary>
-    			public const string FocusNavigation = "MainMenuEditFocusNavigation";
-    			/// <summary>
-    			/// Gets localized string similar to: _Edit
-    			/// </summary>
-    			public const string MenuItem = "MainMenuEditMenuItem";
-    			/// <summary>
-    			/// Gets localized string similar to: New category
-    			/// </summary>
-    			public const string NewCategory = "MainMenuEditNewCategory";
-    			/// <summary>
-    			/// Gets localized string similar to: New resource
-    			/// </summary>
-    			public const string NewResource = "MainMenuEditNewResource";
-    			/// <summary>
-    			/// Gets localized string similar to: _Paste
-    			/// </summary>
-    			public const string Paste = "MainMenuEditPaste";
-    			/// <summary>
-    			/// Gets localized string similar to: Pr_eferences
-    			/// </summary>
-    			public const string Preferences = "MainMenuEditPreferences";
-    			/// <summary>
-    			/// Gets localized string similar to: _Redo
-    			/// </summary>
-    			public const string Redo = "MainMenuEditRedo";
-    			/// <summary>
-    			/// Gets localized string similar to: Rename
-    			/// </summary>
-    			public const string Rename = "MainMenuEditRename";
-    			/// <summary>
-    			/// Gets localized string similar to: _Undo
-    			/// </summary>
-    			public const string Undo = "MainMenuEditUndo";
-    		}
-    		
-    		public static partial class File
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _Close
-    			/// </summary>
-    			public const string CloseProject = "MainMenuFileCloseProject";
-    			/// <summary>
-    			/// Gets localized string similar to: Close current project
-    			/// </summary>
-    			public const string CloseProjectTooltip = "MainMenuFileCloseProjectTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: E_xit
-    			/// </summary>
-    			public const string ExitApp = "MainMenuFileExitApp";
-    			/// <summary>
-    			/// Gets localized string similar to: Exit application
-    			/// </summary>
-    			public const string ExitAppTooltip = "MainMenuFileExitAppTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Export
-    			/// </summary>
-    			public const string Export = "MainMenuFileExport";
-    			/// <summary>
-    			/// Gets localized string similar to: _Export resources...
-    			/// </summary>
-    			public const string ExportResources = "MainMenuFileExportResources";
-    			/// <summary>
-    			/// Gets localized string similar to: _Import
-    			/// </summary>
-    			public const string Import = "MainMenuFileImport";
-    			/// <summary>
-    			/// Gets localized string similar to: _Import resources...
-    			/// </summary>
-    			public const string ImportResources = "MainMenuFileImportResources";
-    			/// <summary>
-    			/// Gets localized string similar to: Import projet from external translation
-    			/// </summary>
-    			public const string ImportTooltip = "MainMenuFileImportTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: _File
-    			/// </summary>
-    			public const string MenuItem = "MainMenuFileMenuItem";
-    			/// <summary>
-    			/// Gets localized string similar to: _New project
-    			/// </summary>
-    			public const string NewProject = "MainMenuFileNewProject";
-    			/// <summary>
-    			/// Gets localized string similar to: Creates new project
-    			/// </summary>
-    			public const string NewProjectTooltip = "MainMenuFileNewProjectTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: _Open project
-    			/// </summary>
-    			public const string OpenProject = "MainMenuFileOpenProject";
-    			/// <summary>
-    			/// Gets localized string similar to: Open project file
-    			/// </summary>
-    			public const string OpenProjectTooltip = "MainMenuFileOpenProjectTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Project Se_ttings
-    			/// </summary>
-    			public const string ProjectSettings = "MainMenuFileProjectSettings";
-    			/// <summary>
-    			/// Gets localized string similar to: _Recent projects
-    			/// </summary>
-    			public const string RecentProjects = "MainMenuFileRecentProjects";
-    			/// <summary>
-    			/// Gets localized string similar to: List of recently opened projects
-    			/// </summary>
-    			public const string RecentProjectsTooltip = "MainMenuFileRecentProjectsTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: _Save project
-    			/// </summary>
-    			public const string SaveProject = "MainMenuFileSaveProject";
-    			/// <summary>
-    			/// Gets localized string similar to: Save project _as...
-    			/// </summary>
-    			public const string SaveProjectAs = "MainMenuFileSaveProjectAs";
-    			/// <summary>
-    			/// Gets localized string similar to: Save project changes to new file
-    			/// </summary>
-    			public const string SaveProjectAsTooltip = "MainMenuFileSaveProjectAsTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Save project changes to file
-    			/// </summary>
-    			public const string SaveProjectTooltip = "MainMenuFileSaveProjectTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Settings
-    			/// </summary>
-    			public const string Settings = "MainMenuFileSettings";
-    		}
-    		
-    		public static partial class Help
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _About
-    			/// </summary>
-    			public const string About = "MainMenuHelpAbout";
-    			/// <summary>
-    			/// Gets localized string similar to: _Help
-    			/// </summary>
-    			public const string MenuItem = "MainMenuHelpMenuItem";
-    			/// <summary>
-    			/// Gets localized string similar to: Online Manual
-    			/// </summary>
-    			public const string OnlineManual = "MainMenuHelpOnlineManual";
-    			/// <summary>
-    			/// Gets localized string similar to: Product Web Page
-    			/// </summary>
-    			public const string ProductWebPage = "MainMenuHelpProductWebPage";
-    		}
-    		
-    		public static partial class Languages
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _Languages
-    			/// </summary>
-    			public const string MenuItem = "MainMenuLanguagesMenuItem";
-    			/// <summary>
-    			/// Gets localized string similar to: _Settings
-    			/// </summary>
-    			public const string Settings = "MainMenuLanguagesSettings";
-    		}
+			public static partial class Edit
+			{
+				/// <summary>
+				/// Gets localized string similar to: _Copy
+				/// </summary>
+				public const string Copy = "MainMenuEditCopy";
+				/// <summary>
+				/// Gets localized string similar to: Cu_t
+				/// </summary>
+				public const string Cut = "MainMenuEditCut";
+				/// <summary>
+				/// Gets localized string similar to: Delete
+				/// </summary>
+				public const string Delete = "MainMenuEditDelete";
+				/// <summary>
+				/// Gets localized string similar to: _Duplicate
+				/// </summary>
+				public const string Duplicate = "MainMenuEditDuplicate";
+				/// <summary>
+				/// Gets localized string similar to: Find...
+				/// </summary>
+				public const string FindElement = "MainMenuEditFindElement";
+				/// <summary>
+				/// Gets localized string similar to: Find for category or resource
+				/// </summary>
+				public const string FindElementTooltip = "MainMenuEditFindElementTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Focus _Navigation
+				/// </summary>
+				public const string FocusNavigation = "MainMenuEditFocusNavigation";
+				/// <summary>
+				/// Gets localized string similar to: _Edit
+				/// </summary>
+				public const string MenuItem = "MainMenuEditMenuItem";
+				/// <summary>
+				/// Gets localized string similar to: New category
+				/// </summary>
+				public const string NewCategory = "MainMenuEditNewCategory";
+				/// <summary>
+				/// Gets localized string similar to: New resource
+				/// </summary>
+				public const string NewResource = "MainMenuEditNewResource";
+				/// <summary>
+				/// Gets localized string similar to: _Paste
+				/// </summary>
+				public const string Paste = "MainMenuEditPaste";
+				/// <summary>
+				/// Gets localized string similar to: Pr_eferences
+				/// </summary>
+				public const string Preferences = "MainMenuEditPreferences";
+				/// <summary>
+				/// Gets localized string similar to: _Redo
+				/// </summary>
+				public const string Redo = "MainMenuEditRedo";
+				/// <summary>
+				/// Gets localized string similar to: Rename
+				/// </summary>
+				public const string Rename = "MainMenuEditRename";
+				/// <summary>
+				/// Gets localized string similar to: _Undo
+				/// </summary>
+				public const string Undo = "MainMenuEditUndo";
+			}
+			
+			public static partial class File
+			{
+				/// <summary>
+				/// Gets localized string similar to: _Close
+				/// </summary>
+				public const string CloseProject = "MainMenuFileCloseProject";
+				/// <summary>
+				/// Gets localized string similar to: Close current project
+				/// </summary>
+				public const string CloseProjectTooltip = "MainMenuFileCloseProjectTooltip";
+				/// <summary>
+				/// Gets localized string similar to: E_xit
+				/// </summary>
+				public const string ExitApp = "MainMenuFileExitApp";
+				/// <summary>
+				/// Gets localized string similar to: Exit application
+				/// </summary>
+				public const string ExitAppTooltip = "MainMenuFileExitAppTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Export
+				/// </summary>
+				public const string Export = "MainMenuFileExport";
+				/// <summary>
+				/// Gets localized string similar to: _Export resources...
+				/// </summary>
+				public const string ExportResources = "MainMenuFileExportResources";
+				/// <summary>
+				/// Gets localized string similar to: _Import
+				/// </summary>
+				public const string Import = "MainMenuFileImport";
+				/// <summary>
+				/// Gets localized string similar to: _Import resources...
+				/// </summary>
+				public const string ImportResources = "MainMenuFileImportResources";
+				/// <summary>
+				/// Gets localized string similar to: Import projet from external translation
+				/// </summary>
+				public const string ImportTooltip = "MainMenuFileImportTooltip";
+				/// <summary>
+				/// Gets localized string similar to: _File
+				/// </summary>
+				public const string MenuItem = "MainMenuFileMenuItem";
+				/// <summary>
+				/// Gets localized string similar to: _New project
+				/// </summary>
+				public const string NewProject = "MainMenuFileNewProject";
+				/// <summary>
+				/// Gets localized string similar to: Creates new project
+				/// </summary>
+				public const string NewProjectTooltip = "MainMenuFileNewProjectTooltip";
+				/// <summary>
+				/// Gets localized string similar to: _Open project
+				/// </summary>
+				public const string OpenProject = "MainMenuFileOpenProject";
+				/// <summary>
+				/// Gets localized string similar to: Open project file
+				/// </summary>
+				public const string OpenProjectTooltip = "MainMenuFileOpenProjectTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Project Se_ttings
+				/// </summary>
+				public const string ProjectSettings = "MainMenuFileProjectSettings";
+				/// <summary>
+				/// Gets localized string similar to: _Recent projects
+				/// </summary>
+				public const string RecentProjects = "MainMenuFileRecentProjects";
+				/// <summary>
+				/// Gets localized string similar to: List of recently opened projects
+				/// </summary>
+				public const string RecentProjectsTooltip = "MainMenuFileRecentProjectsTooltip";
+				/// <summary>
+				/// Gets localized string similar to: _Save project
+				/// </summary>
+				public const string SaveProject = "MainMenuFileSaveProject";
+				/// <summary>
+				/// Gets localized string similar to: Save project _as...
+				/// </summary>
+				public const string SaveProjectAs = "MainMenuFileSaveProjectAs";
+				/// <summary>
+				/// Gets localized string similar to: Save project changes to new file
+				/// </summary>
+				public const string SaveProjectAsTooltip = "MainMenuFileSaveProjectAsTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Save project changes to file
+				/// </summary>
+				public const string SaveProjectTooltip = "MainMenuFileSaveProjectTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Settings
+				/// </summary>
+				public const string Settings = "MainMenuFileSettings";
+			}
+			
+			public static partial class Help
+			{
+				/// <summary>
+				/// Gets localized string similar to: _About
+				/// </summary>
+				public const string About = "MainMenuHelpAbout";
+				/// <summary>
+				/// Gets localized string similar to: _Help
+				/// </summary>
+				public const string MenuItem = "MainMenuHelpMenuItem";
+				/// <summary>
+				/// Gets localized string similar to: Online Manual
+				/// </summary>
+				public const string OnlineManual = "MainMenuHelpOnlineManual";
+				/// <summary>
+				/// Gets localized string similar to: Product Web Page
+				/// </summary>
+				public const string ProductWebPage = "MainMenuHelpProductWebPage";
+			}
+			
+			public static partial class Languages
+			{
+				/// <summary>
+				/// Gets localized string similar to: _Languages
+				/// </summary>
+				public const string MenuItem = "MainMenuLanguagesMenuItem";
+				/// <summary>
+				/// Gets localized string similar to: _Settings
+				/// </summary>
+				public const string Settings = "MainMenuLanguagesSettings";
+			}
 			/// <summary>
 			/// Gets localized string similar to: _Translations
 			/// </summary>
@@ -1246,49 +1246,49 @@ namespace LHQ.App.Localization
 		
 		public static partial class Menu
 		{
-    		public static partial class CopySpecialMenu
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Copy as C# code
-    			/// </summary>
-    			public const string CopyAsCSharp = "MenuCopySpecialMenuCopyAsCSharp";
-    			/// <summary>
-    			/// Gets localized string similar to: Copy as Xaml markup
-    			/// </summary>
-    			public const string CopyAsXamlMarkup = "MenuCopySpecialMenuCopyAsXamlMarkup";
-    			/// <summary>
-    			/// Gets localized string similar to: Copy Special
-    			/// </summary>
-    			public const string CopySpecial = "MenuCopySpecialMenuCopySpecial";
-    		}
-    		
-    		public static partial class Help
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: About
-    			/// </summary>
-    			public const string About = "MenuHelpAbout";
-    			/// <summary>
-    			/// Gets localized string similar to: Help
-    			/// </summary>
-    			public const string MenuItem = "MenuHelpMenuItem";
-    			/// <summary>
-    			/// Gets localized string similar to: Online Manual
-    			/// </summary>
-    			public const string OnlineManual = "MenuHelpOnlineManual";
-    			/// <summary>
-    			/// Gets localized string similar to: Preferences
-    			/// </summary>
-    			public const string Preferences = "MenuHelpPreferences";
-    			/// <summary>
-    			/// Gets localized string similar to: Product Web Page
-    			/// </summary>
-    			public const string ProductWebPage = "MenuHelpProductWebPage";
-    			/// <summary>
-    			/// Gets localized string similar to: What's New?
-    			/// </summary>
-    			public const string WhatsNew = "MenuHelpWhatsNew";
-    		}
+			public static partial class CopySpecialMenu
+			{
+				/// <summary>
+				/// Gets localized string similar to: Copy as C# code
+				/// </summary>
+				public const string CopyAsCSharp = "MenuCopySpecialMenuCopyAsCSharp";
+				/// <summary>
+				/// Gets localized string similar to: Copy as Xaml markup
+				/// </summary>
+				public const string CopyAsXamlMarkup = "MenuCopySpecialMenuCopyAsXamlMarkup";
+				/// <summary>
+				/// Gets localized string similar to: Copy Special
+				/// </summary>
+				public const string CopySpecial = "MenuCopySpecialMenuCopySpecial";
+			}
+			
+			public static partial class Help
+			{
+				/// <summary>
+				/// Gets localized string similar to: About
+				/// </summary>
+				public const string About = "MenuHelpAbout";
+				/// <summary>
+				/// Gets localized string similar to: Help
+				/// </summary>
+				public const string MenuItem = "MenuHelpMenuItem";
+				/// <summary>
+				/// Gets localized string similar to: Online Manual
+				/// </summary>
+				public const string OnlineManual = "MenuHelpOnlineManual";
+				/// <summary>
+				/// Gets localized string similar to: Preferences
+				/// </summary>
+				public const string Preferences = "MenuHelpPreferences";
+				/// <summary>
+				/// Gets localized string similar to: Product Web Page
+				/// </summary>
+				public const string ProductWebPage = "MenuHelpProductWebPage";
+				/// <summary>
+				/// Gets localized string similar to: What's New?
+				/// </summary>
+				public const string WhatsNew = "MenuHelpWhatsNew";
+			}
 			/// <summary>
 			/// Gets localized string similar to: Collapse All
 			/// </summary>
@@ -1457,140 +1457,140 @@ namespace LHQ.App.Localization
 		
 		public static partial class Model
 		{
-    		public static partial class Tree
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Project root
-    			/// </summary>
-    			public const string ProjectRoot = "ModelTreeProjectRoot";
-    			/// <summary>
-    			/// Gets localized string similar to: Multiple selection ({0} elements)
-    			/// </summary>
-    			public const string SelectionMultiple = "ModelTreeSelectionMultiple";
-    			/// <summary>
-    			/// Gets localized string similar to: None selected
-    			/// </summary>
-    			public const string SelectionNone = "ModelTreeSelectionNone";
-    		}
+			public static partial class Tree
+			{
+				/// <summary>
+				/// Gets localized string similar to: Project root
+				/// </summary>
+				public const string ProjectRoot = "ModelTreeProjectRoot";
+				/// <summary>
+				/// Gets localized string similar to: Multiple selection ({0} elements)
+				/// </summary>
+				public const string SelectionMultiple = "ModelTreeSelectionMultiple";
+				/// <summary>
+				/// Gets localized string similar to: None selected
+				/// </summary>
+				public const string SelectionNone = "ModelTreeSelectionNone";
+			}
 		}
 		
 		public static partial class Operations
 		{
-    		public static partial class ExitApp
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Exit application
-    			/// </summary>
-    			public const string ConfirmCaption = "OperationsExitAppConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to save changes before exit?
-    			/// </summary>
-    			public const string ConfirmDetail = "OperationsExitAppConfirmDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: There are unsaved changes in project.
-    			/// </summary>
-    			public const string ConfirmMessage = "OperationsExitAppConfirmMessage";
-    		}
-    		
-    		public static partial class Move
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Moved {0}{1}{2} under {3} '{4}'
-    			/// </summary>
-    			public const string MoveChildsUndoUnitCommandName = "OperationsMoveMoveChildsUndoUnitCommandName";
-    			/// <summary>
-    			/// Gets localized string similar to: Move resources (categories)
-    			/// </summary>
-    			public const string MoveElementsCaption = "OperationsMoveMoveElementsCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Some elements cant be moved because new parent already contains elements with sa...
-    			/// </summary>
-    			public const string MoveElementsSomeDuplicatesDetail = "OperationsMoveMoveElementsSomeDuplicatesDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Some elements will not be moved.
-    			/// </summary>
-    			public const string MoveElementsSomeDuplicatesMessage = "OperationsMoveMoveElementsSomeDuplicatesMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: No elements will be moved because new parent already contains elements with same...
-    			/// </summary>
-    			public const string MoveElementsStoppedErrorMessage = "OperationsMoveMoveElementsStoppedErrorMessage";
-    		}
-    		
-    		public static partial class Project
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Open project
-    			/// </summary>
-    			public const string OpenProjectCaption = "OperationsProjectOpenProjectCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Error loading project file '{0}', reason: {1}
-    			/// </summary>
-    			public const string OpenProjectErrorMessage = "OperationsProjectOpenProjectErrorMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Save project error
-    			/// </summary>
-    			public const string ProjectSaveErrorTitle = "OperationsProjectProjectSaveErrorTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Save project file failed.
-    			/// </summary>
-    			public const string ProjectSaveFailed = "OperationsProjectProjectSaveFailed";
-    			/// <summary>
-    			/// Gets localized string similar to: Save project file failed because file '{0}' is read-only.
-    			/// </summary>
-    			public const string ProjectSaveFailedFileIsReadOnly = "OperationsProjectProjectSaveFailedFileIsReadOnly";
-    			/// <summary>
-    			/// Gets localized string similar to: Open recent project
-    			/// </summary>
-    			public const string RecentProjectDoestNotExistCaption = "OperationsProjectRecentProjectDoestNotExistCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to remove it from recent project list?
-    			/// </summary>
-    			public const string RecentProjectDoestNotExistDetail = "OperationsProjectRecentProjectDoestNotExistDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Recent project '{0}' does not exist or access denied.
-    			/// </summary>
-    			public const string RecentProjectDoestNotExistMessage = "OperationsProjectRecentProjectDoestNotExistMessage";
-    		}
-    		
-    		public static partial class ProjectSettings
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Project root contains some resources, could not turn off setting 'Allow resource...
-    			/// </summary>
-    			public const string ValidationError1 = "OperationsProjectSettingsValidationError1";
-    			/// <summary>
-    			/// Gets localized string similar to: Project contains some categories, could not change layout to 'Resources'.
-    			/// </summary>
-    			public const string ValidationError2 = "OperationsProjectSettingsValidationError2";
-    			/// <summary>
-    			/// Gets localized string similar to: Project settings
-    			/// </summary>
-    			public const string ValidationErrorCaption = "OperationsProjectSettingsValidationErrorCaption";
-    		}
-    		
-    		public static partial class Validations
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Category name could not be empty.
-    			/// </summary>
-    			public const string CategoryNameCouldNotBeEmpty = "OperationsValidationsCategoryNameCouldNotBeEmpty";
-    			/// <summary>
-    			/// Gets localized string similar to: Model name could not be empty.
-    			/// </summary>
-    			public const string ModelNameCouldNotBeEmpty = "OperationsValidationsModelNameCouldNotBeEmpty";
-    			/// <summary>
-    			/// Gets localized string similar to: Name '{0}' contains disallowed characters, allowed are only a-z A-Z and numbers ...
-    			/// </summary>
-    			public const string NameContainsDisallowedCharacters = "OperationsValidationsNameContainsDisallowedCharacters";
-    			/// <summary>
-    			/// Gets localized string similar to: Name '{0}' starting with numbers which is not allowed.
-    			/// </summary>
-    			public const string NameStartingWithNumbersNotAllowed = "OperationsValidationsNameStartingWithNumbersNotAllowed";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource name could not be empty.
-    			/// </summary>
-    			public const string ResourceNameCouldNotBeEmpty = "OperationsValidationsResourceNameCouldNotBeEmpty";
-    		}
+			public static partial class ExitApp
+			{
+				/// <summary>
+				/// Gets localized string similar to: Exit application
+				/// </summary>
+				public const string ConfirmCaption = "OperationsExitAppConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to save changes before exit?
+				/// </summary>
+				public const string ConfirmDetail = "OperationsExitAppConfirmDetail";
+				/// <summary>
+				/// Gets localized string similar to: There are unsaved changes in project.
+				/// </summary>
+				public const string ConfirmMessage = "OperationsExitAppConfirmMessage";
+			}
+			
+			public static partial class Move
+			{
+				/// <summary>
+				/// Gets localized string similar to: Moved {0}{1}{2} under {3} '{4}'
+				/// </summary>
+				public const string MoveChildsUndoUnitCommandName = "OperationsMoveMoveChildsUndoUnitCommandName";
+				/// <summary>
+				/// Gets localized string similar to: Move resources (categories)
+				/// </summary>
+				public const string MoveElementsCaption = "OperationsMoveMoveElementsCaption";
+				/// <summary>
+				/// Gets localized string similar to: Some elements cant be moved because new parent already contains elements with sa...
+				/// </summary>
+				public const string MoveElementsSomeDuplicatesDetail = "OperationsMoveMoveElementsSomeDuplicatesDetail";
+				/// <summary>
+				/// Gets localized string similar to: Some elements will not be moved.
+				/// </summary>
+				public const string MoveElementsSomeDuplicatesMessage = "OperationsMoveMoveElementsSomeDuplicatesMessage";
+				/// <summary>
+				/// Gets localized string similar to: No elements will be moved because new parent already contains elements with same...
+				/// </summary>
+				public const string MoveElementsStoppedErrorMessage = "OperationsMoveMoveElementsStoppedErrorMessage";
+			}
+			
+			public static partial class Project
+			{
+				/// <summary>
+				/// Gets localized string similar to: Open project
+				/// </summary>
+				public const string OpenProjectCaption = "OperationsProjectOpenProjectCaption";
+				/// <summary>
+				/// Gets localized string similar to: Error loading project file '{0}', reason: {1}
+				/// </summary>
+				public const string OpenProjectErrorMessage = "OperationsProjectOpenProjectErrorMessage";
+				/// <summary>
+				/// Gets localized string similar to: Save project error
+				/// </summary>
+				public const string ProjectSaveErrorTitle = "OperationsProjectProjectSaveErrorTitle";
+				/// <summary>
+				/// Gets localized string similar to: Save project file failed.
+				/// </summary>
+				public const string ProjectSaveFailed = "OperationsProjectProjectSaveFailed";
+				/// <summary>
+				/// Gets localized string similar to: Save project file failed because file '{0}' is read-only.
+				/// </summary>
+				public const string ProjectSaveFailedFileIsReadOnly = "OperationsProjectProjectSaveFailedFileIsReadOnly";
+				/// <summary>
+				/// Gets localized string similar to: Open recent project
+				/// </summary>
+				public const string RecentProjectDoestNotExistCaption = "OperationsProjectRecentProjectDoestNotExistCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to remove it from recent project list?
+				/// </summary>
+				public const string RecentProjectDoestNotExistDetail = "OperationsProjectRecentProjectDoestNotExistDetail";
+				/// <summary>
+				/// Gets localized string similar to: Recent project '{0}' does not exist or access denied.
+				/// </summary>
+				public const string RecentProjectDoestNotExistMessage = "OperationsProjectRecentProjectDoestNotExistMessage";
+			}
+			
+			public static partial class ProjectSettings
+			{
+				/// <summary>
+				/// Gets localized string similar to: Project root contains some resources, could not turn off setting 'Allow resource...
+				/// </summary>
+				public const string ValidationError1 = "OperationsProjectSettingsValidationError1";
+				/// <summary>
+				/// Gets localized string similar to: Project contains some categories, could not change layout to 'Resources'.
+				/// </summary>
+				public const string ValidationError2 = "OperationsProjectSettingsValidationError2";
+				/// <summary>
+				/// Gets localized string similar to: Project settings
+				/// </summary>
+				public const string ValidationErrorCaption = "OperationsProjectSettingsValidationErrorCaption";
+			}
+			
+			public static partial class Validations
+			{
+				/// <summary>
+				/// Gets localized string similar to: Category name could not be empty.
+				/// </summary>
+				public const string CategoryNameCouldNotBeEmpty = "OperationsValidationsCategoryNameCouldNotBeEmpty";
+				/// <summary>
+				/// Gets localized string similar to: Model name could not be empty.
+				/// </summary>
+				public const string ModelNameCouldNotBeEmpty = "OperationsValidationsModelNameCouldNotBeEmpty";
+				/// <summary>
+				/// Gets localized string similar to: Name '{0}' contains disallowed characters, allowed are only a-z A-Z and numbers ...
+				/// </summary>
+				public const string NameContainsDisallowedCharacters = "OperationsValidationsNameContainsDisallowedCharacters";
+				/// <summary>
+				/// Gets localized string similar to: Name '{0}' starting with numbers which is not allowed.
+				/// </summary>
+				public const string NameStartingWithNumbersNotAllowed = "OperationsValidationsNameStartingWithNumbersNotAllowed";
+				/// <summary>
+				/// Gets localized string similar to: Resource name could not be empty.
+				/// </summary>
+				public const string ResourceNameCouldNotBeEmpty = "OperationsValidationsResourceNameCouldNotBeEmpty";
+			}
 			/// <summary>
 			/// Gets localized string similar to: Delete
 			/// </summary>
@@ -1623,359 +1623,359 @@ namespace LHQ.App.Localization
 		
 		public static partial class Services
 		{
-    		public static partial class Application
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Backup file was created
-    			/// </summary>
-    			public const string BackupFileCreated = "ServicesApplicationBackupFileCreated";
-    			/// <summary>
-    			/// Gets localized string similar to: Backup of original file was saved to:{0}{1}
-    			/// </summary>
-    			public const string BackupOfOriginalFileCreated = "ServicesApplicationBackupOfOriginalFileCreated";
-    			/// <summary>
-    			/// Gets localized string similar to: Error creating backup of original file{0}{1}.
-    			/// </summary>
-    			public const string BackupOfOriginalFileFailed = "ServicesApplicationBackupOfOriginalFileFailed";
-    			/// <summary>
-    			/// Gets localized string similar to: Cannot translate resources because active license ({0}) has disabled '{1}' featu...
-    			/// </summary>
-    			public const string CannotTranslateResourcesFeatureIsDisabled = "ServicesApplicationCannotTranslateResourcesFeatureIsDisabled";
-    			/// <summary>
-    			/// Gets localized string similar to: Save project changes
-    			/// </summary>
-    			public const string DetectedUnsavedChangesCaption = "ServicesApplicationDetectedUnsavedChangesCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to save project changes ?
-    			/// </summary>
-    			public const string DetectedUnsavedChangesDetail = "ServicesApplicationDetectedUnsavedChangesDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: There are unsaved changes in project.
-    			/// </summary>
-    			public const string DetectedUnsavedChangesMessage = "ServicesApplicationDetectedUnsavedChangesMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Error saving project file to disk.
-    			/// </summary>
-    			public const string ErrorSavingProjectFileToDiskCaption = "ServicesApplicationErrorSavingProjectFileToDiskCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Error saving project file '{0}' to disk, permission denied?
-    			/// </summary>
-    			public const string ErrorSavingProjectFileToDiskMessage = "ServicesApplicationErrorSavingProjectFileToDiskMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: File compatibility issue
-    			/// </summary>
-    			public const string FileCompatibilityIssueCaption = "ServicesApplicationFileCompatibilityIssueCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Project file '{0}' was created in previous version of program.
-    			/// </summary>
-    			public const string FileCompatibilityIssueCreatedInPreviousVersion = "ServicesApplicationFileCompatibilityIssueCreatedInPreviousVersion";
-    			/// <summary>
-    			/// Gets localized string similar to: File was created in higher version of program....
-    			/// </summary>
-    			public const string FileCompatibilityIssueCreatedWithHigherVersion = "ServicesApplicationFileCompatibilityIssueCreatedWithHigherVersion";
-    			/// <summary>
-    			/// Gets localized string similar to: File must be upgraded to current version to be able to open it....
-    			/// </summary>
-    			public const string FileCompatibilityIssueUpgradeToCurrentVersionConfirm = "ServicesApplicationFileCompatibilityIssueUpgradeToCurrentVersionConfirm";
-    			/// <summary>
-    			/// Gets localized string similar to: File {0} was updated to latest version.
-    			/// </summary>
-    			public const string FileUpdatedToLatestVersion = "ServicesApplicationFileUpdatedToLatestVersion";
-    			/// <summary>
-    			/// Gets localized string similar to: Open project
-    			/// </summary>
-    			public const string OpenProjectCaption = "ServicesApplicationOpenProjectCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Error loading project file ...
-    			/// </summary>
-    			public const string OpenProjectFailed = "ServicesApplicationOpenProjectFailed";
-    			/// <summary>
-    			/// Gets localized string similar to: Project changes could not be saved!
-    			/// </summary>
-    			public const string ProjectChangesCantSaveCaption = "ServicesApplicationProjectChangesCantSaveCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Failed to save project changes, file '{0}' is read-only.
-    			/// </summary>
-    			public const string SaveFailedFileIsReadonly = "ServicesApplicationSaveFailedFileIsReadonly";
-    			/// <summary>
-    			/// Gets localized string similar to: Project contains validations errors.
-    			/// </summary>
-    			public const string SaveFailedProjectContainsValidationErrors = "ServicesApplicationSaveFailedProjectContainsValidationErrors";
-    			/// <summary>
-    			/// Gets localized string similar to: Project layout is 'Resources' but contains some categories (which is not allowed...
-    			/// </summary>
-    			public const string SaveFailedProjectLayout1Error = "ServicesApplicationSaveFailedProjectLayout1Error";
-    			/// <summary>
-    			/// Gets localized string similar to: Project root contains some resources which is not allowed.
-    			/// </summary>
-    			public const string SaveFailedProjectLayout2Error = "ServicesApplicationSaveFailedProjectLayout2Error";
-    			/// <summary>
-    			/// Gets localized string similar to: Translating resources...
-    			/// </summary>
-    			public const string TranslationResourcesInProgress = "ServicesApplicationTranslationResourcesInProgress";
-    			/// <summary>
-    			/// Gets localized string similar to: Translation service
-    			/// </summary>
-    			public const string TranslationServiceCaption = "ServicesApplicationTranslationServiceCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to configure it now?
-    			/// </summary>
-    			public const string TranslationServiceConfigureConfirm = "ServicesApplicationTranslationServiceConfigureConfirm";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to enable and configure now?
-    			/// </summary>
-    			public const string TranslationServiceEnableConfirm = "ServicesApplicationTranslationServiceEnableConfirm";
-    			/// <summary>
-    			/// Gets localized string similar to: Translation service provider is not configured yet.
-    			/// </summary>
-    			public const string TranslationServiceIsNotConfigured = "ServicesApplicationTranslationServiceIsNotConfigured";
-    			/// <summary>
-    			/// Gets localized string similar to: Translation service is not enabled.
-    			/// </summary>
-    			public const string TranslationServiceIsNotEnabled = "ServicesApplicationTranslationServiceIsNotEnabled";
-    		}
-    		
-    		public static partial class ChangePassword
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Change account password in progress...
-    			/// </summary>
-    			public const string ProgressMessage = "ServicesChangePasswordProgressMessage";
-    		}
-    		
-    		public static partial class Dialog
-    		{
-        		public static partial class RestartApp
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Apply theme change
-        			/// </summary>
-        			public const string ApplyThemeCaption = "ServicesDialogRestartAppApplyThemeCaption";
-        			/// <summary>
-        			/// Gets localized string similar to: Continue to restart application?
-        			/// </summary>
-        			public const string ApplyThemeDetail = "ServicesDialogRestartAppApplyThemeDetail";
-        			/// <summary>
-        			/// Gets localized string similar to: To apply new visual theme, application must be restarted
-        			/// </summary>
-        			public const string ApplyThemeMessage = "ServicesDialogRestartAppApplyThemeMessage";
-        		}
-    		}
-    		
-    		public static partial class Export
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting resources failed.
-    			/// </summary>
-    			public const string ExportingResourcesFailed = "ServicesExportExportingResourcesFailed";
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting resources was successfull.
-    			/// </summary>
-    			public const string ExportingResourcesWasSuccessfull = "ServicesExportExportingResourcesWasSuccessfull";
-    			/// <summary>
-    			/// Gets localized string similar to: Export resources
-    			/// </summary>
-    			public const string ExportResourcesCaption = "ServicesExportExportResourcesCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting resources...
-    			/// </summary>
-    			public const string ExportResourcesInProgress = "ServicesExportExportResourcesInProgress";
-    			/// <summary>
-    			/// Gets localized string similar to: There are no resources to be exported.
-    			/// </summary>
-    			public const string NoResourcesToExport = "ServicesExportNoResourcesToExport";
-    		}
-    		
-    		public static partial class Import
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Import Resources - Project layout incompatible
-    			/// </summary>
-    			public const string ChangeProjectLayoutConfirmCaption = "ServicesImportChangeProjectLayoutConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to change project layout to "Categories and Resources" and continue ...
-    			/// </summary>
-    			public const string ChangeProjectLayoutConfirmDetail = "ServicesImportChangeProjectLayoutConfirmDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: When importing resources, project layout must be "Categories and Resources" but ...
-    			/// </summary>
-    			public const string ChangeProjectLayoutConfirmMessage = "ServicesImportChangeProjectLayoutConfirmMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Selected file(s) does not contains any resources to be imported!
-    			/// </summary>
-    			public const string FilesDoesNotContainResourcesToImport = "ServicesImportFilesDoesNotContainResourcesToImport";
-    			/// <summary>
-    			/// Gets localized string similar to: Imported_{0}
-    			/// </summary>
-    			public const string ImportedFolderName = "ServicesImportImportedFolderName";
-    			/// <summary>
-    			/// Gets localized string similar to: Nothing was imported.
-    			/// </summary>
-    			public const string ImportingCategoriesIsNotAllowedDetail = "ServicesImportImportingCategoriesIsNotAllowedDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Imported file contains categories but current project settings does not allow it...
-    			/// </summary>
-    			public const string ImportingCategoriesIsNotAllowedMessage = "ServicesImportImportingCategoriesIsNotAllowedMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Importing resources failed.
-    			/// </summary>
-    			public const string ImportingResourcesFailed = "ServicesImportImportingResourcesFailed";
-    			/// <summary>
-    			/// Gets localized string similar to: Import resources
-    			/// </summary>
-    			public const string ImportResourcesCaption = "ServicesImportImportResourcesCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Importing resources...
-    			/// </summary>
-    			public const string ImportResourcesInProgress = "ServicesImportImportResourcesInProgress";
-    			/// <summary>
-    			/// Gets localized string similar to: - {0} new resources was added...
-    			/// </summary>
-    			public const string ImportSucceedDetail = "ServicesImportImportSucceedDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Import successfully completed.{0}
-    			/// </summary>
-    			public const string ImportSucceedMessage = "ServicesImportImportSucceedMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Importing resources was cancelled by user!
-    			/// </summary>
-    			public const string ImportWasCancelledByUser = "ServicesImportImportWasCancelledByUser";
-    			/// <summary>
-    			/// Gets localized string similar to: Resources was imported under category:...
-    			/// </summary>
-    			public const string ResourcesWasImportedUnderElement = "ServicesImportResourcesWasImportedUnderElement";
-    		}
-    		
-    		public static partial class Translation
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Some languages are not supported by {0}....
-    			/// </summary>
-    			public const string SomeLanguagesAreNotSupported = "ServicesTranslationSomeLanguagesAreNotSupported";
-    			/// <summary>
-    			/// Gets localized string similar to: Testing was cancelled by user!
-    			/// </summary>
-    			public const string TestingWasCancelledByUser = "ServicesTranslationTestingWasCancelledByUser";
-    			/// <summary>
-    			/// Gets localized string similar to: Translate Resources
-    			/// </summary>
-    			public const string TranslateResourcesCaption = "ServicesTranslationTranslateResourcesCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Successfully translated {0} resources.
-    			/// </summary>
-    			public const string TranslationCompletedSuccessfully = "ServicesTranslationTranslationCompletedSuccessfully";
-    			/// <summary>
-    			/// Gets localized string similar to: Translation completed where {0} resources was successfully translated and {1} re...
-    			/// </summary>
-    			public const string TranslationCompletedWithErrors = "ServicesTranslationTranslationCompletedWithErrors";
-    			/// <summary>
-    			/// Gets localized string similar to: Translation failed or no resource to translate.
-    			/// </summary>
-    			public const string TranslationFailedOrNoResources = "ServicesTranslationTranslationFailedOrNoResources";
-    			/// <summary>
-    			/// Gets localized string similar to: Translating resource {0}/{1} ...
-    			/// </summary>
-    			public const string TranslationProgressText = "ServicesTranslationTranslationProgressText";
-    			/// <summary>
-    			/// Gets localized string similar to: Translate resources was cancelled by user!
-    			/// </summary>
-    			public const string TranslationWasCancelledByUser = "ServicesTranslationTranslationWasCancelledByUser";
-    		}
-    		
-    		public static partial class UndoUnits
-    		{
-        		public static partial class AddChilds
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Add {0} under {1} '{2}'
-        			/// </summary>
-        			public const string ActionName = "ServicesUndoUnitsAddChildsActionName";
-        		}
-        		
-        		public static partial class AddSortedChild
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Add {0} '{1}' under {2} '{3}'
-        			/// </summary>
-        			public const string ActionName = "ServicesUndoUnitsAddSortedChildActionName";
-        		}
-        		
-        		public static partial class AutoTranslateMultiResources
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Update multiple resources translations (retrieved from translation service)
-        			/// </summary>
-        			public const string ActionName = "ServicesUndoUnitsAutoTranslateMultiResourcesActionName";
-        		}
-        		
-        		public static partial class AutoTranslateResource
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Update resource '{0}' translations (retrieved from translation service)
-        			/// </summary>
-        			public const string ActionName = "ServicesUndoUnitsAutoTranslateResourceActionName";
-        		}
-        		
-        		public static partial class ImportResources
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Import resources
-        			/// </summary>
-        			public const string ActionName = "ServicesUndoUnitsImportResourcesActionName";
-        		}
-        		
-        		public static partial class LockResourceValues
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Lock all localized values for resource '{0}'
-        			/// </summary>
-        			public const string ActionName = "ServicesUndoUnitsLockResourceValuesActionName";
-        		}
-        		
-        		public static partial class MultiSelection
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Action on multiple elements
-        			/// </summary>
-        			public const string ActionName = "ServicesUndoUnitsMultiSelectionActionName";
-        		}
-    		}
-    		
-    		public static partial class Updates
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Don't check for updates
-    			/// </summary>
-    			public const string DontCheckForUpdatesRememberText = "ServicesUpdatesDontCheckForUpdatesRememberText";
-    			/// <summary>
-    			/// Gets localized string similar to: New version is available!
-    			/// </summary>
-    			public const string NewVersionAvailableCaption = "ServicesUpdatesNewVersionAvailableCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Please navigate to Main Menu -> Tools -> Extensions and Updates, then "Updates" ...
-    			/// </summary>
-    			public const string NewVersionAvailableDetail = "ServicesUpdatesNewVersionAvailableDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: New version '{0}' is available! Navigate to Main Menu -> Tools -> Extensions and...
-    			/// </summary>
-    			public const string NewVersionAvailableMessage = "ServicesUpdatesNewVersionAvailableMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Read what's new
-    			/// </summary>
-    			public const string ReadWhatsNew = "ServicesUpdatesReadWhatsNew";
-    			/// <summary>
-    			/// Gets localized string similar to: Update Available
-    			/// </summary>
-    			public const string UpdateAvailable = "ServicesUpdatesUpdateAvailable";
-    			/// <summary>
-    			/// Gets localized string similar to: What's new in current version?
-    			/// </summary>
-    			public const string WhatsNewInCurrentVersion = "ServicesUpdatesWhatsNewInCurrentVersion";
-    			/// <summary>
-    			/// Gets localized string similar to: What's new in version {0}
-    			/// </summary>
-    			public const string WhatsNewInVersion = "ServicesUpdatesWhatsNewInVersion";
-    		}
+			public static partial class Application
+			{
+				/// <summary>
+				/// Gets localized string similar to: Backup file was created
+				/// </summary>
+				public const string BackupFileCreated = "ServicesApplicationBackupFileCreated";
+				/// <summary>
+				/// Gets localized string similar to: Backup of original file was saved to:{0}{1}
+				/// </summary>
+				public const string BackupOfOriginalFileCreated = "ServicesApplicationBackupOfOriginalFileCreated";
+				/// <summary>
+				/// Gets localized string similar to: Error creating backup of original file{0}{1}.
+				/// </summary>
+				public const string BackupOfOriginalFileFailed = "ServicesApplicationBackupOfOriginalFileFailed";
+				/// <summary>
+				/// Gets localized string similar to: Cannot translate resources because active license ({0}) has disabled '{1}' featu...
+				/// </summary>
+				public const string CannotTranslateResourcesFeatureIsDisabled = "ServicesApplicationCannotTranslateResourcesFeatureIsDisabled";
+				/// <summary>
+				/// Gets localized string similar to: Save project changes
+				/// </summary>
+				public const string DetectedUnsavedChangesCaption = "ServicesApplicationDetectedUnsavedChangesCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to save project changes ?
+				/// </summary>
+				public const string DetectedUnsavedChangesDetail = "ServicesApplicationDetectedUnsavedChangesDetail";
+				/// <summary>
+				/// Gets localized string similar to: There are unsaved changes in project.
+				/// </summary>
+				public const string DetectedUnsavedChangesMessage = "ServicesApplicationDetectedUnsavedChangesMessage";
+				/// <summary>
+				/// Gets localized string similar to: Error saving project file to disk.
+				/// </summary>
+				public const string ErrorSavingProjectFileToDiskCaption = "ServicesApplicationErrorSavingProjectFileToDiskCaption";
+				/// <summary>
+				/// Gets localized string similar to: Error saving project file '{0}' to disk, permission denied?
+				/// </summary>
+				public const string ErrorSavingProjectFileToDiskMessage = "ServicesApplicationErrorSavingProjectFileToDiskMessage";
+				/// <summary>
+				/// Gets localized string similar to: File compatibility issue
+				/// </summary>
+				public const string FileCompatibilityIssueCaption = "ServicesApplicationFileCompatibilityIssueCaption";
+				/// <summary>
+				/// Gets localized string similar to: Project file '{0}' was created in previous version of program.
+				/// </summary>
+				public const string FileCompatibilityIssueCreatedInPreviousVersion = "ServicesApplicationFileCompatibilityIssueCreatedInPreviousVersion";
+				/// <summary>
+				/// Gets localized string similar to: File was created in higher version of program....
+				/// </summary>
+				public const string FileCompatibilityIssueCreatedWithHigherVersion = "ServicesApplicationFileCompatibilityIssueCreatedWithHigherVersion";
+				/// <summary>
+				/// Gets localized string similar to: File must be upgraded to current version to be able to open it....
+				/// </summary>
+				public const string FileCompatibilityIssueUpgradeToCurrentVersionConfirm = "ServicesApplicationFileCompatibilityIssueUpgradeToCurrentVersionConfirm";
+				/// <summary>
+				/// Gets localized string similar to: File {0} was updated to latest version.
+				/// </summary>
+				public const string FileUpdatedToLatestVersion = "ServicesApplicationFileUpdatedToLatestVersion";
+				/// <summary>
+				/// Gets localized string similar to: Open project
+				/// </summary>
+				public const string OpenProjectCaption = "ServicesApplicationOpenProjectCaption";
+				/// <summary>
+				/// Gets localized string similar to: Error loading project file ...
+				/// </summary>
+				public const string OpenProjectFailed = "ServicesApplicationOpenProjectFailed";
+				/// <summary>
+				/// Gets localized string similar to: Project changes could not be saved!
+				/// </summary>
+				public const string ProjectChangesCantSaveCaption = "ServicesApplicationProjectChangesCantSaveCaption";
+				/// <summary>
+				/// Gets localized string similar to: Failed to save project changes, file '{0}' is read-only.
+				/// </summary>
+				public const string SaveFailedFileIsReadonly = "ServicesApplicationSaveFailedFileIsReadonly";
+				/// <summary>
+				/// Gets localized string similar to: Project contains validations errors.
+				/// </summary>
+				public const string SaveFailedProjectContainsValidationErrors = "ServicesApplicationSaveFailedProjectContainsValidationErrors";
+				/// <summary>
+				/// Gets localized string similar to: Project layout is 'Resources' but contains some categories (which is not allowed...
+				/// </summary>
+				public const string SaveFailedProjectLayout1Error = "ServicesApplicationSaveFailedProjectLayout1Error";
+				/// <summary>
+				/// Gets localized string similar to: Project root contains some resources which is not allowed.
+				/// </summary>
+				public const string SaveFailedProjectLayout2Error = "ServicesApplicationSaveFailedProjectLayout2Error";
+				/// <summary>
+				/// Gets localized string similar to: Translating resources...
+				/// </summary>
+				public const string TranslationResourcesInProgress = "ServicesApplicationTranslationResourcesInProgress";
+				/// <summary>
+				/// Gets localized string similar to: Translation service
+				/// </summary>
+				public const string TranslationServiceCaption = "ServicesApplicationTranslationServiceCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to configure it now?
+				/// </summary>
+				public const string TranslationServiceConfigureConfirm = "ServicesApplicationTranslationServiceConfigureConfirm";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to enable and configure now?
+				/// </summary>
+				public const string TranslationServiceEnableConfirm = "ServicesApplicationTranslationServiceEnableConfirm";
+				/// <summary>
+				/// Gets localized string similar to: Translation service provider is not configured yet.
+				/// </summary>
+				public const string TranslationServiceIsNotConfigured = "ServicesApplicationTranslationServiceIsNotConfigured";
+				/// <summary>
+				/// Gets localized string similar to: Translation service is not enabled.
+				/// </summary>
+				public const string TranslationServiceIsNotEnabled = "ServicesApplicationTranslationServiceIsNotEnabled";
+			}
+			
+			public static partial class ChangePassword
+			{
+				/// <summary>
+				/// Gets localized string similar to: Change account password in progress...
+				/// </summary>
+				public const string ProgressMessage = "ServicesChangePasswordProgressMessage";
+			}
+			
+			public static partial class Dialog
+			{
+				public static partial class RestartApp
+				{
+					/// <summary>
+					/// Gets localized string similar to: Apply theme change
+					/// </summary>
+					public const string ApplyThemeCaption = "ServicesDialogRestartAppApplyThemeCaption";
+					/// <summary>
+					/// Gets localized string similar to: Continue to restart application?
+					/// </summary>
+					public const string ApplyThemeDetail = "ServicesDialogRestartAppApplyThemeDetail";
+					/// <summary>
+					/// Gets localized string similar to: To apply new visual theme, application must be restarted
+					/// </summary>
+					public const string ApplyThemeMessage = "ServicesDialogRestartAppApplyThemeMessage";
+				}
+			}
+			
+			public static partial class Export
+			{
+				/// <summary>
+				/// Gets localized string similar to: Exporting resources failed.
+				/// </summary>
+				public const string ExportingResourcesFailed = "ServicesExportExportingResourcesFailed";
+				/// <summary>
+				/// Gets localized string similar to: Exporting resources was successfull.
+				/// </summary>
+				public const string ExportingResourcesWasSuccessfull = "ServicesExportExportingResourcesWasSuccessfull";
+				/// <summary>
+				/// Gets localized string similar to: Export resources
+				/// </summary>
+				public const string ExportResourcesCaption = "ServicesExportExportResourcesCaption";
+				/// <summary>
+				/// Gets localized string similar to: Exporting resources...
+				/// </summary>
+				public const string ExportResourcesInProgress = "ServicesExportExportResourcesInProgress";
+				/// <summary>
+				/// Gets localized string similar to: There are no resources to be exported.
+				/// </summary>
+				public const string NoResourcesToExport = "ServicesExportNoResourcesToExport";
+			}
+			
+			public static partial class Import
+			{
+				/// <summary>
+				/// Gets localized string similar to: Import Resources - Project layout incompatible
+				/// </summary>
+				public const string ChangeProjectLayoutConfirmCaption = "ServicesImportChangeProjectLayoutConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to change project layout to "Categories and Resources" and continue ...
+				/// </summary>
+				public const string ChangeProjectLayoutConfirmDetail = "ServicesImportChangeProjectLayoutConfirmDetail";
+				/// <summary>
+				/// Gets localized string similar to: When importing resources, project layout must be "Categories and Resources" but ...
+				/// </summary>
+				public const string ChangeProjectLayoutConfirmMessage = "ServicesImportChangeProjectLayoutConfirmMessage";
+				/// <summary>
+				/// Gets localized string similar to: Selected file(s) does not contains any resources to be imported!
+				/// </summary>
+				public const string FilesDoesNotContainResourcesToImport = "ServicesImportFilesDoesNotContainResourcesToImport";
+				/// <summary>
+				/// Gets localized string similar to: Imported_{0}
+				/// </summary>
+				public const string ImportedFolderName = "ServicesImportImportedFolderName";
+				/// <summary>
+				/// Gets localized string similar to: Nothing was imported.
+				/// </summary>
+				public const string ImportingCategoriesIsNotAllowedDetail = "ServicesImportImportingCategoriesIsNotAllowedDetail";
+				/// <summary>
+				/// Gets localized string similar to: Imported file contains categories but current project settings does not allow it...
+				/// </summary>
+				public const string ImportingCategoriesIsNotAllowedMessage = "ServicesImportImportingCategoriesIsNotAllowedMessage";
+				/// <summary>
+				/// Gets localized string similar to: Importing resources failed.
+				/// </summary>
+				public const string ImportingResourcesFailed = "ServicesImportImportingResourcesFailed";
+				/// <summary>
+				/// Gets localized string similar to: Import resources
+				/// </summary>
+				public const string ImportResourcesCaption = "ServicesImportImportResourcesCaption";
+				/// <summary>
+				/// Gets localized string similar to: Importing resources...
+				/// </summary>
+				public const string ImportResourcesInProgress = "ServicesImportImportResourcesInProgress";
+				/// <summary>
+				/// Gets localized string similar to: - {0} new resources was added...
+				/// </summary>
+				public const string ImportSucceedDetail = "ServicesImportImportSucceedDetail";
+				/// <summary>
+				/// Gets localized string similar to: Import successfully completed.{0}
+				/// </summary>
+				public const string ImportSucceedMessage = "ServicesImportImportSucceedMessage";
+				/// <summary>
+				/// Gets localized string similar to: Importing resources was cancelled by user!
+				/// </summary>
+				public const string ImportWasCancelledByUser = "ServicesImportImportWasCancelledByUser";
+				/// <summary>
+				/// Gets localized string similar to: Resources was imported under category:...
+				/// </summary>
+				public const string ResourcesWasImportedUnderElement = "ServicesImportResourcesWasImportedUnderElement";
+			}
+			
+			public static partial class Translation
+			{
+				/// <summary>
+				/// Gets localized string similar to: Some languages are not supported by {0}....
+				/// </summary>
+				public const string SomeLanguagesAreNotSupported = "ServicesTranslationSomeLanguagesAreNotSupported";
+				/// <summary>
+				/// Gets localized string similar to: Testing was cancelled by user!
+				/// </summary>
+				public const string TestingWasCancelledByUser = "ServicesTranslationTestingWasCancelledByUser";
+				/// <summary>
+				/// Gets localized string similar to: Translate Resources
+				/// </summary>
+				public const string TranslateResourcesCaption = "ServicesTranslationTranslateResourcesCaption";
+				/// <summary>
+				/// Gets localized string similar to: Successfully translated {0} resources.
+				/// </summary>
+				public const string TranslationCompletedSuccessfully = "ServicesTranslationTranslationCompletedSuccessfully";
+				/// <summary>
+				/// Gets localized string similar to: Translation completed where {0} resources was successfully translated and {1} re...
+				/// </summary>
+				public const string TranslationCompletedWithErrors = "ServicesTranslationTranslationCompletedWithErrors";
+				/// <summary>
+				/// Gets localized string similar to: Translation failed or no resource to translate.
+				/// </summary>
+				public const string TranslationFailedOrNoResources = "ServicesTranslationTranslationFailedOrNoResources";
+				/// <summary>
+				/// Gets localized string similar to: Translating resource {0}/{1} ...
+				/// </summary>
+				public const string TranslationProgressText = "ServicesTranslationTranslationProgressText";
+				/// <summary>
+				/// Gets localized string similar to: Translate resources was cancelled by user!
+				/// </summary>
+				public const string TranslationWasCancelledByUser = "ServicesTranslationTranslationWasCancelledByUser";
+			}
+			
+			public static partial class UndoUnits
+			{
+				public static partial class AddChilds
+				{
+					/// <summary>
+					/// Gets localized string similar to: Add {0} under {1} '{2}'
+					/// </summary>
+					public const string ActionName = "ServicesUndoUnitsAddChildsActionName";
+				}
+				
+				public static partial class AddSortedChild
+				{
+					/// <summary>
+					/// Gets localized string similar to: Add {0} '{1}' under {2} '{3}'
+					/// </summary>
+					public const string ActionName = "ServicesUndoUnitsAddSortedChildActionName";
+				}
+				
+				public static partial class AutoTranslateMultiResources
+				{
+					/// <summary>
+					/// Gets localized string similar to: Update multiple resources translations (retrieved from translation service)
+					/// </summary>
+					public const string ActionName = "ServicesUndoUnitsAutoTranslateMultiResourcesActionName";
+				}
+				
+				public static partial class AutoTranslateResource
+				{
+					/// <summary>
+					/// Gets localized string similar to: Update resource '{0}' translations (retrieved from translation service)
+					/// </summary>
+					public const string ActionName = "ServicesUndoUnitsAutoTranslateResourceActionName";
+				}
+				
+				public static partial class ImportResources
+				{
+					/// <summary>
+					/// Gets localized string similar to: Import resources
+					/// </summary>
+					public const string ActionName = "ServicesUndoUnitsImportResourcesActionName";
+				}
+				
+				public static partial class LockResourceValues
+				{
+					/// <summary>
+					/// Gets localized string similar to: Lock all localized values for resource '{0}'
+					/// </summary>
+					public const string ActionName = "ServicesUndoUnitsLockResourceValuesActionName";
+				}
+				
+				public static partial class MultiSelection
+				{
+					/// <summary>
+					/// Gets localized string similar to: Action on multiple elements
+					/// </summary>
+					public const string ActionName = "ServicesUndoUnitsMultiSelectionActionName";
+				}
+			}
+			
+			public static partial class Updates
+			{
+				/// <summary>
+				/// Gets localized string similar to: Don't check for updates
+				/// </summary>
+				public const string DontCheckForUpdatesRememberText = "ServicesUpdatesDontCheckForUpdatesRememberText";
+				/// <summary>
+				/// Gets localized string similar to: New version is available!
+				/// </summary>
+				public const string NewVersionAvailableCaption = "ServicesUpdatesNewVersionAvailableCaption";
+				/// <summary>
+				/// Gets localized string similar to: Please navigate to Main Menu -> Tools -> Extensions and Updates, then "Updates" ...
+				/// </summary>
+				public const string NewVersionAvailableDetail = "ServicesUpdatesNewVersionAvailableDetail";
+				/// <summary>
+				/// Gets localized string similar to: New version '{0}' is available! Navigate to Main Menu -> Tools -> Extensions and...
+				/// </summary>
+				public const string NewVersionAvailableMessage = "ServicesUpdatesNewVersionAvailableMessage";
+				/// <summary>
+				/// Gets localized string similar to: Read what's new
+				/// </summary>
+				public const string ReadWhatsNew = "ServicesUpdatesReadWhatsNew";
+				/// <summary>
+				/// Gets localized string similar to: Update Available
+				/// </summary>
+				public const string UpdateAvailable = "ServicesUpdatesUpdateAvailable";
+				/// <summary>
+				/// Gets localized string similar to: What's new in current version?
+				/// </summary>
+				public const string WhatsNewInCurrentVersion = "ServicesUpdatesWhatsNewInCurrentVersion";
+				/// <summary>
+				/// Gets localized string similar to: What's new in version {0}
+				/// </summary>
+				public const string WhatsNewInVersion = "ServicesUpdatesWhatsNewInVersion";
+			}
 		}
 		
 		public static partial class Validations
@@ -2016,1030 +2016,1026 @@ namespace LHQ.App.Localization
 		
 		public static partial class ViewModels
 		{
-    		public static partial class AppSettings
-    		{
-        		public static partial class PageGeneral
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Default language for new projects
-        			/// </summary>
-        			public const string DefaultLanguageValidationCaption = "ViewModelsAppSettingsPageGeneralDefaultLanguageValidationCaption";
-        			/// <summary>
-        			/// Gets localized string similar to: Default language for new projects must be selected!
-        			/// </summary>
-        			public const string DefaultLanguageValidationMessage = "ViewModelsAppSettingsPageGeneralDefaultLanguageValidationMessage";
-        			/// <summary>
-        			/// Gets localized string similar to: General
-        			/// </summary>
-        			public const string PageTitle = "ViewModelsAppSettingsPageGeneralPageTitle";
-        		}
-        		
-        		public static partial class PagePlugins
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Configure plugin - {0}
-        			/// </summary>
-        			public const string ConfigurePluginTitle = "ViewModelsAppSettingsPagePluginsConfigurePluginTitle";
-        			/// <summary>
-        			/// Gets localized string similar to: Plugins
-        			/// </summary>
-        			public const string PageTitle = "ViewModelsAppSettingsPagePluginsPageTitle";
-        			/// <summary>
-        			/// Gets localized string similar to: Reset to defaults
-        			/// </summary>
-        			public const string ResetPluginToDefaultsCaption = "ViewModelsAppSettingsPagePluginsResetPluginToDefaultsCaption";
-        			/// <summary>
-        			/// Gets localized string similar to: Reset plugin '{0}' to default settings?
-        			/// </summary>
-        			public const string ResetPluginToDefaultsMessage = "ViewModelsAppSettingsPagePluginsResetPluginToDefaultsMessage";
-        		}
-        		
-        		public static partial class PageTranslator
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Translator
-        			/// </summary>
-        			public const string PageTitle = "ViewModelsAppSettingsPageTranslatorPageTitle";
-        			/// <summary>
-        			/// Gets localized string similar to: Testing '{0}' failed.
-        			/// </summary>
-        			public const string TestingProviderFailed = "ViewModelsAppSettingsPageTranslatorTestingProviderFailed";
-        			/// <summary>
-        			/// Gets localized string similar to: Translator must be selected when translation is enabled.
-        			/// </summary>
-        			public const string TranslatorMustBeSelected = "ViewModelsAppSettingsPageTranslatorTranslatorMustBeSelected";
-        		}
-    			/// <summary>
-    			/// Gets localized string similar to: Reset settings to defaults
-    			/// </summary>
-    			public const string ResetSettingsToDefaultsCaption = "ViewModelsAppSettingsResetSettingsToDefaultsCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Plugins settings will not reset to defaults....
-    			/// </summary>
-    			public const string ResetSettingsToDefaultsDetail = "ViewModelsAppSettingsResetSettingsToDefaultsDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Reset settings to defaults?
-    			/// </summary>
-    			public const string ResetSettingsToDefaultsMessage = "ViewModelsAppSettingsResetSettingsToDefaultsMessage";
-    		}
-    		
-    		public static partial class ChangePassword
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Confirmation of new password must be same as new password.
-    			/// </summary>
-    			public const string ConfirmPasswordIsWrong = "ViewModelsChangePasswordConfirmPasswordIsWrong";
-    			/// <summary>
-    			/// Gets localized string similar to: Current password is required.
-    			/// </summary>
-    			public const string CurrentPasswordIsRequired = "ViewModelsChangePasswordCurrentPasswordIsRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: Email address is required.
-    			/// </summary>
-    			public const string EmailAddressIsRequired = "ViewModelsChangePasswordEmailAddressIsRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: New password confirm is required.
-    			/// </summary>
-    			public const string NewPasswordConfirmIsRequired = "ViewModelsChangePasswordNewPasswordConfirmIsRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: New password is required.
-    			/// </summary>
-    			public const string NewPasswordIsRequired = "ViewModelsChangePasswordNewPasswordIsRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: Password was successfully changed!
-    			/// </summary>
-    			public const string PasswordSuccessfullyChanged = "ViewModelsChangePasswordPasswordSuccessfullyChanged";
-    		}
-    		
-    		public static partial class DeleteElements
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Delete {0}
-    			/// </summary>
-    			public const string ConfirmCaption = "ViewModelsDeleteElementsConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to delete {0}?
-    			/// </summary>
-    			public const string ConfirmMessage = "ViewModelsDeleteElementsConfirmMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Delete {0}:
-    			/// </summary>
-    			public const string SelectedText = "ViewModelsDeleteElementsSelectedText";
-    		}
-    		
-    		public static partial class EditParameter
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Add resources parameter
-    			/// </summary>
-    			public const string AddTitle = "ViewModelsEditParameterAddTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Edit resource parameter
-    			/// </summary>
-    			public const string EditTitle = "ViewModelsEditParameterEditTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Parameter with same name already exist!
-    			/// </summary>
-    			public const string ParameterWithSameNameExist = "ViewModelsEditParameterParameterWithSameNameExist";
-    		}
-    		
-    		public static partial class HintPanel
-    		{
-        		public static partial class CodeGenerator
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: When you save changes (Ctrl+S or save icon in toolbar) an associated code genera...
-        			/// </summary>
-        			public const string HintText = "ViewModelsHintPanelCodeGeneratorHintText";
-        			/// <summary>
-        			/// Gets localized string similar to: Code generation works only within Visual Studio!
-        			/// </summary>
-        			public const string HintTextOnlyInVS = "ViewModelsHintPanelCodeGeneratorHintTextOnlyInVS";
-        			/// <summary>
-        			/// Gets localized string similar to: Read more about code generator templates...
-        			/// </summary>
-        			public const string HintTextReadMore = "ViewModelsHintPanelCodeGeneratorHintTextReadMore";
-        		}
-    		}
-    		
-    		public static partial class Import
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Import resources
-    			/// </summary>
-    			public const string PageTitle = "ViewModelsImportPageTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Please select file(s) to import.
-    			/// </summary>
-    			public const string PleaseSelectFilesToImport = "ViewModelsImportPleaseSelectFilesToImport";
-    			/// <summary>
-    			/// Gets localized string similar to: Please select importer!
-    			/// </summary>
-    			public const string PleaseSelectImporter = "ViewModelsImportPleaseSelectImporter";
-    			/// <summary>
-    			/// Gets localized string similar to: Please select import mode!
-    			/// </summary>
-    			public const string PleaseSelectImportMode = "ViewModelsImportPleaseSelectImportMode";
-    			/// <summary>
-    			/// Gets localized string similar to: Importer '{0}' does not support those extensions:...
-    			/// </summary>
-    			public const string UnsupportedFileExtensionsDetail = "ViewModelsImportUnsupportedFileExtensionsDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Selected file(s) has unsupported extension(s).
-    			/// </summary>
-    			public const string UnsupportedFileExtensionsMessage = "ViewModelsImportUnsupportedFileExtensionsMessage";
-    		}
-    		
-    		public static partial class LanguageSettings
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Remove language
-    			/// </summary>
-    			public const string ButtonRemoveTooltip = "ViewModelsLanguageSettingsButtonRemoveTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Set as primary
-    			/// </summary>
-    			public const string ButtonSetAsPrimary = "ViewModelsLanguageSettingsButtonSetAsPrimary";
-    			/// <summary>
-    			/// Gets localized string similar to: Sets language as primary
-    			/// </summary>
-    			public const string ButtonSetAsPrimaryToolip = "ViewModelsLanguageSettingsButtonSetAsPrimaryToolip";
-    			/// <summary>
-    			/// Gets localized string similar to: Change primary language
-    			/// </summary>
-    			public const string ChangePrimaryLanguageConfirmCaption = "ViewModelsLanguageSettingsChangePrimaryLanguageConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you really want to set language '{0}' as primary?
-    			/// </summary>
-    			public const string ChangePrimaryLanguageConfirmDetail = "ViewModelsLanguageSettingsChangePrimaryLanguageConfirmDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: You are about to change current primary language '{0}' to language '{1}'.
-    			/// </summary>
-    			public const string ChangePrimaryLanguageConfirmMessage = "ViewModelsLanguageSettingsChangePrimaryLanguageConfirmMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Code
-    			/// </summary>
-    			public const string ColumnHeaderCode = "ViewModelsLanguageSettingsColumnHeaderCode";
-    			/// <summary>
-    			/// Gets localized string similar to: English name
-    			/// </summary>
-    			public const string ColumnHeaderEnglishName = "ViewModelsLanguageSettingsColumnHeaderEnglishName";
-    			/// <summary>
-    			/// Gets localized string similar to: Primary
-    			/// </summary>
-    			public const string ColumnHeaderPrimary = "ViewModelsLanguageSettingsColumnHeaderPrimary";
-    			/// <summary>
-    			/// Gets localized string similar to: Language settings
-    			/// </summary>
-    			public const string DialogCaption = "ViewModelsLanguageSettingsDialogCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Manage list of languages used in current project
-    			/// </summary>
-    			public const string DialogCaptionHint = "ViewModelsLanguageSettingsDialogCaptionHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Primary
-    			/// </summary>
-    			public const string HeaderIsPrimary = "ViewModelsLanguageSettingsHeaderIsPrimary";
-    			/// <summary>
-    			/// Gets localized string similar to: {0} Languages
-    			/// </summary>
-    			public const string LabelCountOfLanguage = "ViewModelsLanguageSettingsLabelCountOfLanguage";
-    			/// <summary>
-    			/// Gets localized string similar to: Languages
-    			/// </summary>
-    			public const string LabelLanguages = "ViewModelsLanguageSettingsLabelLanguages";
-    			/// <summary>
-    			/// Gets localized string similar to: Language settings
-    			/// </summary>
-    			public const string PageTitle = "ViewModelsLanguageSettingsPageTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Language is primary language
-    			/// </summary>
-    			public const string PrimaryLanguage = "ViewModelsLanguageSettingsPrimaryLanguage";
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language cannot be removed
-    			/// </summary>
-    			public const string PrimaryLanguageCantBeRemoved = "ViewModelsLanguageSettingsPrimaryLanguageCantBeRemoved";
-    			/// <summary>
-    			/// Gets localized string similar to: Project languages:
-    			/// </summary>
-    			public const string ProjectLanguages = "ViewModelsLanguageSettingsProjectLanguages";
-    			/// <summary>
-    			/// Gets localized string similar to: Remove language '{0}'
-    			/// </summary>
-    			public const string RemoveLanguageConfirmCaption = "ViewModelsLanguageSettingsRemoveLanguageConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: All resources in this language will be also removed!
-    			/// </summary>
-    			public const string RemoveLanguageConfirmDetail = "ViewModelsLanguageSettingsRemoveLanguageConfirmDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Remove language '{0}' ?
-    			/// </summary>
-    			public const string RemoveLanguageConfirmMessage = "ViewModelsLanguageSettingsRemoveLanguageConfirmMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Replace project language with other language
-    			/// </summary>
-    			public const string ReplaceLanguageCaption = "ViewModelsLanguageSettingsReplaceLanguageCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: You are about to change project language from '{0}' to '{1}'. ...
-    			/// </summary>
-    			public const string ReplaceLanguageDetail = "ViewModelsLanguageSettingsReplaceLanguageDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: You are about to change project language from '{0}' to '{1}'.
-    			/// </summary>
-    			public const string ReplaceLanguageMessage = "ViewModelsLanguageSettingsReplaceLanguageMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Set as primary language
-    			/// </summary>
-    			public const string SetAsPrimaryConfirmCaption = "ViewModelsLanguageSettingsSetAsPrimaryConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Set language '{0}' as primary language?
-    			/// </summary>
-    			public const string SetAsPrimaryConfirmMessage = "ViewModelsLanguageSettingsSetAsPrimaryConfirmMessage";
-    		}
-    		
-    		public static partial class MessageBox
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _Cancel
-    			/// </summary>
-    			public const string LabelCancel = "ViewModelsMessageBoxLabelCancel";
-    			/// <summary>
-    			/// Gets localized string similar to: _No
-    			/// </summary>
-    			public const string LabelNo = "ViewModelsMessageBoxLabelNo";
-    			/// <summary>
-    			/// Gets localized string similar to: _OK
-    			/// </summary>
-    			public const string LabelOk = "ViewModelsMessageBoxLabelOk";
-    			/// <summary>
-    			/// Gets localized string similar to: _Yes
-    			/// </summary>
-    			public const string LabelYes = "ViewModelsMessageBoxLabelYes";
-    		}
-    		
-    		public static partial class MultiSelection
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to resources within selected categories.
-    			/// </summary>
-    			public const string ActionsTooltipCategories = "ViewModelsMultiSelectionActionsTooltipCategories";
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to selected resources
-    			/// </summary>
-    			public const string ActionsTooltipResources = "ViewModelsMultiSelectionActionsTooltipResources";
-    			/// <summary>
-    			/// Gets localized string similar to: First Level
-    			/// </summary>
-    			public const string ButtonFirstLevel = "ViewModelsMultiSelectionButtonFirstLevel";
-    			/// <summary>
-    			/// Gets localized string similar to: Recursive
-    			/// </summary>
-    			public const string ButtonRecursive = "ViewModelsMultiSelectionButtonRecursive";
-    			/// <summary>
-    			/// Gets localized string similar to: Selected categories ({0})
-    			/// </summary>
-    			public const string CategoriesHeader = "ViewModelsMultiSelectionCategoriesHeader";
-    			/// <summary>
-    			/// Gets localized string similar to: Change resources state
-    			/// </summary>
-    			public const string ChangeResourcesStateFailedCaption = "ViewModelsMultiSelectionChangeResourcesStateFailedCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: There are no resources to change state for.
-    			/// </summary>
-    			public const string ChangeResourcesStateFailedDetail = "ViewModelsMultiSelectionChangeResourcesStateFailedDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Could not change resources state to '{0}'.
-    			/// </summary>
-    			public const string ChangeResourcesStateFailedMessage = "ViewModelsMultiSelectionChangeResourcesStateFailedMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to change resources state from all categories to '{0}'?
-    			/// </summary>
-    			public const string ChangeStateAllResourcesRecursive = "ViewModelsMultiSelectionChangeStateAllResourcesRecursive";
-    			/// <summary>
-    			/// Gets localized string similar to: Change state to 'Edited'
-    			/// </summary>
-    			public const string ChangeStateToEdited = "ViewModelsMultiSelectionChangeStateToEdited";
-    			/// <summary>
-    			/// Gets localized string similar to: Change state to 'Final'
-    			/// </summary>
-    			public const string ChangeStateToFinal = "ViewModelsMultiSelectionChangeStateToFinal";
-    			/// <summary>
-    			/// Gets localized string similar to: Change state to 'Needs review'
-    			/// </summary>
-    			public const string ChangeStateToNeedsReview = "ViewModelsMultiSelectionChangeStateToNeedsReview";
-    			/// <summary>
-    			/// Gets localized string similar to: Change state to 'New'
-    			/// </summary>
-    			public const string ChangeStateToNew = "ViewModelsMultiSelectionChangeStateToNew";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to export resources from all categories?
-    			/// </summary>
-    			public const string ExportAllResourcesRecursive = "ViewModelsMultiSelectionExportAllResourcesRecursive";
-    			/// <summary>
-    			/// Gets localized string similar to: There are no resources to be exported to file.
-    			/// </summary>
-    			public const string ExportResourcesFailedDetail = "ViewModelsMultiSelectionExportResourcesFailedDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Could not export resources to file
-    			/// </summary>
-    			public const string ExportResourcesFailedMessage = "ViewModelsMultiSelectionExportResourcesFailedMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Export resources to file
-    			/// </summary>
-    			public const string ExportResourcesToFile = "ViewModelsMultiSelectionExportResourcesToFile";
-    			/// <summary>
-    			/// Gets localized string similar to: Selected resources ({0})
-    			/// </summary>
-    			public const string ResourcesHeader = "ViewModelsMultiSelectionResourcesHeader";
-    			/// <summary>
-    			/// Gets localized string similar to: Yes - recursive scan...
-    			/// </summary>
-    			public const string ScanCategoriesRecursivelyConfirmDetail = "ViewModelsMultiSelectionScanCategoriesRecursivelyConfirmDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to scan categories recursively?
-    			/// </summary>
-    			public const string ScanCategoriesRecursivelyConfirmMessage = "ViewModelsMultiSelectionScanCategoriesRecursivelyConfirmMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Selected project root
-    			/// </summary>
-    			public const string SelectedProjectRoot = "ViewModelsMultiSelectionSelectedProjectRoot";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to translate resources from all categories?
-    			/// </summary>
-    			public const string TranslateAllResourcesRecursive = "ViewModelsMultiSelectionTranslateAllResourcesRecursive";
-    			/// <summary>
-    			/// Gets localized string similar to: Translate resources
-    			/// </summary>
-    			public const string TranslateResourcesCaption = "ViewModelsMultiSelectionTranslateResourcesCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: There are no resources to be translated.
-    			/// </summary>
-    			public const string TranslateResourcesFailedDetail = "ViewModelsMultiSelectionTranslateResourcesFailedDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Could not translate resources
-    			/// </summary>
-    			public const string TranslateResourcesFailedMessage = "ViewModelsMultiSelectionTranslateResourcesFailedMessage";
-    		}
-    		
-    		public static partial class NewElement
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Category name:
-    			/// </summary>
-    			public const string CategoryNameCaption = "ViewModelsNewElementCategoryNameCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Category name is required.
-    			/// </summary>
-    			public const string CategoryNameIsRequired = "ViewModelsNewElementCategoryNameIsRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: Alllowed characters: a-z A-Z and numbers
-    			/// </summary>
-    			public const string NameHint = "ViewModelsNewElementNameHint";
-    			/// <summary>
-    			/// Gets localized string similar to: New category
-    			/// </summary>
-    			public const string NewCategory = "ViewModelsNewElementNewCategory";
-    			/// <summary>
-    			/// Gets localized string similar to: Enter category _name:
-    			/// </summary>
-    			public const string NewCategoryCaptionText = "ViewModelsNewElementNewCategoryCaptionText";
-    			/// <summary>
-    			/// Gets localized string similar to: category
-    			/// </summary>
-    			public const string NewCategoryTemplateName = "ViewModelsNewElementNewCategoryTemplateName";
-    			/// <summary>
-    			/// Gets localized string similar to: New resource
-    			/// </summary>
-    			public const string NewResource = "ViewModelsNewElementNewResource";
-    			/// <summary>
-    			/// Gets localized string similar to: Enter resource _name:
-    			/// </summary>
-    			public const string NewResourceCaptionText = "ViewModelsNewElementNewResourceCaptionText";
-    			/// <summary>
-    			/// Gets localized string similar to: resource
-    			/// </summary>
-    			public const string NewResourceTemplateName = "ViewModelsNewElementNewResourceTemplateName";
-    			/// <summary>
-    			/// Gets localized string similar to: New resource under root model failed
-    			/// </summary>
-    			public const string NewResourceUnderRootNotAllowedCaption = "ViewModelsNewElementNewResourceUnderRootNotAllowedCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Set option 'Allow resources under root' in file options to enable this.
-    			/// </summary>
-    			public const string NewResourceUnderRootNotAllowedDetail = "ViewModelsNewElementNewResourceUnderRootNotAllowedDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Associated Code Generator does not support this.
-    			/// </summary>
-    			public const string NewResourceUnderRootNotAllowedDetailByCodeGen = "ViewModelsNewElementNewResourceUnderRootNotAllowedDetailByCodeGen";
-    			/// <summary>
-    			/// Gets localized string similar to: Could not add new resource under root model.
-    			/// </summary>
-    			public const string NewResourceUnderRootNotAllowedMessage = "ViewModelsNewElementNewResourceUnderRootNotAllowedMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Parent:
-    			/// </summary>
-    			public const string Parent = "ViewModelsNewElementParent";
-    			/// <summary>
-    			/// Gets localized string similar to: Parent hierarchy
-    			/// </summary>
-    			public const string ParentHierarchy = "ViewModelsNewElementParentHierarchy";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource name:
-    			/// </summary>
-    			public const string ResourceNameCaption = "ViewModelsNewElementResourceNameCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource name is required.
-    			/// </summary>
-    			public const string ResourceNameIsRequired = "ViewModelsNewElementResourceNameIsRequired";
-    		}
-    		
-    		public static partial class NewProject
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Code Generator Settings
-    			/// </summary>
-    			public const string ChangeCodeGeneratorSettingsLink = "ViewModelsNewProjectChangeCodeGeneratorSettingsLink";
-    			/// <summary>
-    			/// Gets localized string similar to: Code Generator Template
-    			/// </summary>
-    			public const string CodeGeneratorTemplateTitle = "ViewModelsNewProjectCodeGeneratorTemplateTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Common
-    			/// </summary>
-    			public const string CommonDetails = "ViewModelsNewProjectCommonDetails";
-    			/// <summary>
-    			/// Gets localized string similar to: Default
-    			/// </summary>
-    			public const string DefaultModelName = "ViewModelsNewProjectDefaultModelName";
-    			/// <summary>
-    			/// Gets localized string similar to: Create new project
-    			/// </summary>
-    			public const string DialogTitle = "ViewModelsNewProjectDialogTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: New localization file
-    			/// </summary>
-    			public const string DialogTitleVS = "ViewModelsNewProjectDialogTitleVS";
-    			/// <summary>
-    			/// Gets localized string similar to: Languages type:
-    			/// </summary>
-    			public const string LanguagesType = "ViewModelsNewProjectLanguagesType";
-    			/// <summary>
-    			/// Gets localized string similar to: Neutral language (en)
-    			/// </summary>
-    			public const string LanguagesTypeNeutral = "ViewModelsNewProjectLanguagesTypeNeutral";
-    			/// <summary>
-    			/// Gets localized string similar to: Specific language (en-US)
-    			/// </summary>
-    			public const string LanguagesTypeSpecific = "ViewModelsNewProjectLanguagesTypeSpecific";
-    			/// <summary>
-    			/// Gets localized string similar to: Open "Language settings" after project created
-    			/// </summary>
-    			public const string OpenLanguageSettingsAfterCreate = "ViewModelsNewProjectOpenLanguageSettingsAfterCreate";
-    			/// <summary>
-    			/// Gets localized string similar to: Other translation languages can be added later in "Language settings"
-    			/// </summary>
-    			public const string OtherLanguagesHint = "ViewModelsNewProjectOtherLanguagesHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language:
-    			/// </summary>
-    			public const string PrimaryLanguage = "ViewModelsNewProjectPrimaryLanguage";
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language is required.
-    			/// </summary>
-    			public const string PrimaryLanguageIsRequired = "ViewModelsNewProjectPrimaryLanguageIsRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language must be selected!
-    			/// </summary>
-    			public const string PrimaryLanguageValidationMessage = "ViewModelsNewProjectPrimaryLanguageValidationMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Project name
-    			/// </summary>
-    			public const string ProjectName = "ViewModelsNewProjectProjectName";
-    			/// <summary>
-    			/// Gets localized string similar to: Project name is required.
-    			/// </summary>
-    			public const string ProjectNameIsRequired = "ViewModelsNewProjectProjectNameIsRequired";
-    			/// <summary>
-    			/// Gets localized string similar to: Name
-    			/// </summary>
-    			public const string ProjectNameVS = "ViewModelsNewProjectProjectNameVS";
-    			/// <summary>
-    			/// Gets localized string similar to: ResX files generator
-    			/// </summary>
-    			public const string ResxTitle = "ViewModelsNewProjectResxTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Show only neutral languages
-    			/// </summary>
-    			public const string ShowOnlyNeutralLanguages = "ViewModelsNewProjectShowOnlyNeutralLanguages";
-    			/// <summary>
-    			/// Gets localized string similar to: For more info about associated T4 generator, look at
-    			/// </summary>
-    			public const string T4TemplateWebHelp = "ViewModelsNewProjectT4TemplateWebHelp";
-    		}
-    		
-    		public static partial class Progress
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Progress...
-    			/// </summary>
-    			public const string DialogTitle = "ViewModelsProgressDialogTitle";
-    		}
-    		
-    		public static partial class ProjectSettings
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Project Settings
-    			/// </summary>
-    			public const string PageTitle = "ViewModelsProjectSettingsPageTitle";
-    		}
-    		
-    		public static partial class ResourceModel
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Change resource state to 'Final'
-    			/// </summary>
-    			public const string FinalStateConfirmCaption = "ViewModelsResourceModelFinalStateConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to lock resource translations?
-    			/// </summary>
-    			public const string FinalStateConfirmMessageLock = "ViewModelsResourceModelFinalStateConfirmMessageLock";
-    			/// <summary>
-    			/// Gets localized string similar to: Change resource state to 'Final' will lock resource name, description and parame...
-    			/// </summary>
-    			public const string FinalStateConfirmMessageNotify = "ViewModelsResourceModelFinalStateConfirmMessageNotify";
-    			/// <summary>
-    			/// Gets localized string similar to: Later you can change this in settings page
-    			/// </summary>
-    			public const string FinalStateConfirmRememberHint = "ViewModelsResourceModelFinalStateConfirmRememberHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Remember current choice for next time
-    			/// </summary>
-    			public const string FinalStateConfirmRememberText = "ViewModelsResourceModelFinalStateConfirmRememberText";
-    			/// <summary>
-    			/// Gets localized string similar to: Press Enter for new line...
-    			/// </summary>
-    			public const string HintText = "ViewModelsResourceModelHintText";
-    			/// <summary>
-    			/// Gets localized string similar to: Lock all values
-    			/// </summary>
-    			public const string LockAllValues = "ViewModelsResourceModelLockAllValues";
-    			/// <summary>
-    			/// Gets localized string similar to: Lock resource
-    			/// </summary>
-    			public const string LockResource = "ViewModelsResourceModelLockResource";
-    			/// <summary>
-    			/// Gets localized string similar to: Locked
-    			/// </summary>
-    			public const string StateLocked = "ViewModelsResourceModelStateLocked";
-    			/// <summary>
-    			/// Gets localized string similar to: Not locked
-    			/// </summary>
-    			public const string StateNotLocked = "ViewModelsResourceModelStateNotLocked";
-    			/// <summary>
-    			/// Gets localized string similar to: Unlock all values
-    			/// </summary>
-    			public const string UnlockAllValues = "ViewModelsResourceModelUnlockAllValues";
-    			/// <summary>
-    			/// Gets localized string similar to: Unlock resource
-    			/// </summary>
-    			public const string UnlockResource = "ViewModelsResourceModelUnlockResource";
-    		}
-    		
-    		public static partial class ResourceParameters
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Resource Parameters
-    			/// </summary>
-    			public const string PageTitle = "ViewModelsResourceParametersPageTitle";
-    			/// <summary>
-    			/// Gets localized string similar to: Remove parameter
-    			/// </summary>
-    			public const string RemoveParameterCaption = "ViewModelsResourceParametersRemoveParameterCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Remove parameter '{0}' at position {1}?
-    			/// </summary>
-    			public const string RemoveParameterMessage = "ViewModelsResourceParametersRemoveParameterMessage";
-    		}
-    		
-    		public static partial class ResourceValueModel
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: '{0}' value was automatically translated by translator service
-    			/// </summary>
-    			public const string AutoTranslatedTooltip = "ViewModelsResourceValueModelAutoTranslatedTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Actions with '{0}' translation
-    			/// </summary>
-    			public const string BurgerMenuHeader = "ViewModelsResourceValueModelBurgerMenuHeader";
-    			/// <summary>
-    			/// Gets localized string similar to: '{0}' translation is locked for edits
-    			/// </summary>
-    			public const string LockIconTooltipIsLocked = "ViewModelsResourceValueModelLockIconTooltipIsLocked";
-    			/// <summary>
-    			/// Gets localized string similar to: '{0}' translation is not locked for edits
-    			/// </summary>
-    			public const string LockIconTooltipIsNotLocked = "ViewModelsResourceValueModelLockIconTooltipIsNotLocked";
-    			/// <summary>
-    			/// Gets localized string similar to: Lock '{0}' translation
-    			/// </summary>
-    			public const string LockMenuHeader = "ViewModelsResourceValueModelLockMenuHeader";
-    			/// <summary>
-    			/// Gets localized string similar to: Click to lock '{0}' translation
-    			/// </summary>
-    			public const string LockMenuTooltip = "ViewModelsResourceValueModelLockMenuTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was unmarked as auto-translated.
-    			/// </summary>
-    			public const string PropertyAutoTranslatedIsFalse = "ViewModelsResourceValueModelPropertyAutoTranslatedIsFalse";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was marked as auto-translated.
-    			/// </summary>
-    			public const string PropertyAutoTranslatedIsTrue = "ViewModelsResourceValueModelPropertyAutoTranslatedIsTrue";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was unlocked.
-    			/// </summary>
-    			public const string PropertyLockedIsFalse = "ViewModelsResourceValueModelPropertyLockedIsFalse";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was locked.
-    			/// </summary>
-    			public const string PropertyLockedIsTrue = "ViewModelsResourceValueModelPropertyLockedIsTrue";
-    			/// <summary>
-    			/// Gets localized string similar to: Translate '{0}' value
-    			/// </summary>
-    			public const string TranslateMenuHeader = "ViewModelsResourceValueModelTranslateMenuHeader";
-    			/// <summary>
-    			/// Gets localized string similar to: Unlock '{0}' translation
-    			/// </summary>
-    			public const string UnlockMenuHeader = "ViewModelsResourceValueModelUnlockMenuHeader";
-    			/// <summary>
-    			/// Gets localized string similar to: Click to unlock '{0}' translation
-    			/// </summary>
-    			public const string UnlockMenuTooltip = "ViewModelsResourceValueModelUnlockMenuTooltip";
-    		}
-    		
-    		public static partial class RootModel
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Change primary language
-    			/// </summary>
-    			public const string ChangePrimaryLanguageConfirmCaption = "ViewModelsRootModelChangePrimaryLanguageConfirmCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to change primary language to '{0}' ?
-    			/// </summary>
-    			public const string ChangePrimaryLanguageConfirmMessage = "ViewModelsRootModelChangePrimaryLanguageConfirmMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Edit model name
-    			/// </summary>
-    			public const string EditModelNameCaption = "ViewModelsRootModelEditModelNameCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Enter new model name
-    			/// </summary>
-    			public const string EditModelNameMessage = "ViewModelsRootModelEditModelNameMessage";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to continue renaming model name ?
-    			/// </summary>
-    			public const string EditModelNameWarningDetail = "ViewModelsRootModelEditModelNameWarningDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: Changing model name will regenerate associated files with this new name....
-    			/// </summary>
-    			public const string EditModelNameWarningMessage = "ViewModelsRootModelEditModelNameWarningMessage";
-    		}
-    		
-    		public static partial class StatusBar
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Application version:
-    			/// </summary>
-    			public const string AppVersion = "ViewModelsStatusBarAppVersion";
-    			/// <summary>
-    			/// Gets localized string similar to: Code Generator:
-    			/// </summary>
-    			public const string CodeGenerator = "ViewModelsStatusBarCodeGenerator";
-    			/// <summary>
-    			/// Gets localized string similar to: Click to change Code Generator settings...
-    			/// </summary>
-    			public const string CodeGeneratorTooltip = "ViewModelsStatusBarCodeGeneratorTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Selected: {0}
-    			/// </summary>
-    			public const string SelectedElement = "ViewModelsStatusBarSelectedElement";
-    		}
+			public static partial class AppSettings
+			{
+				public static partial class PageGeneral
+				{
+					/// <summary>
+					/// Gets localized string similar to: Default language for new projects
+					/// </summary>
+					public const string DefaultLanguageValidationCaption = "ViewModelsAppSettingsPageGeneralDefaultLanguageValidationCaption";
+					/// <summary>
+					/// Gets localized string similar to: Default language for new projects must be selected!
+					/// </summary>
+					public const string DefaultLanguageValidationMessage = "ViewModelsAppSettingsPageGeneralDefaultLanguageValidationMessage";
+					/// <summary>
+					/// Gets localized string similar to: General
+					/// </summary>
+					public const string PageTitle = "ViewModelsAppSettingsPageGeneralPageTitle";
+				}
+				
+				public static partial class PagePlugins
+				{
+					/// <summary>
+					/// Gets localized string similar to: Configure plugin - {0}
+					/// </summary>
+					public const string ConfigurePluginTitle = "ViewModelsAppSettingsPagePluginsConfigurePluginTitle";
+					/// <summary>
+					/// Gets localized string similar to: Plugins
+					/// </summary>
+					public const string PageTitle = "ViewModelsAppSettingsPagePluginsPageTitle";
+					/// <summary>
+					/// Gets localized string similar to: Reset to defaults
+					/// </summary>
+					public const string ResetPluginToDefaultsCaption = "ViewModelsAppSettingsPagePluginsResetPluginToDefaultsCaption";
+					/// <summary>
+					/// Gets localized string similar to: Reset plugin '{0}' to default settings?
+					/// </summary>
+					public const string ResetPluginToDefaultsMessage = "ViewModelsAppSettingsPagePluginsResetPluginToDefaultsMessage";
+				}
+				
+				public static partial class PageTranslator
+				{
+					/// <summary>
+					/// Gets localized string similar to: Translator
+					/// </summary>
+					public const string PageTitle = "ViewModelsAppSettingsPageTranslatorPageTitle";
+					/// <summary>
+					/// Gets localized string similar to: Testing '{0}' failed.
+					/// </summary>
+					public const string TestingProviderFailed = "ViewModelsAppSettingsPageTranslatorTestingProviderFailed";
+					/// <summary>
+					/// Gets localized string similar to: Translator must be selected when translation is enabled.
+					/// </summary>
+					public const string TranslatorMustBeSelected = "ViewModelsAppSettingsPageTranslatorTranslatorMustBeSelected";
+				}
+				/// <summary>
+				/// Gets localized string similar to: Reset settings to defaults
+				/// </summary>
+				public const string ResetSettingsToDefaultsCaption = "ViewModelsAppSettingsResetSettingsToDefaultsCaption";
+				/// <summary>
+				/// Gets localized string similar to: Plugins settings will not reset to defaults....
+				/// </summary>
+				public const string ResetSettingsToDefaultsDetail = "ViewModelsAppSettingsResetSettingsToDefaultsDetail";
+				/// <summary>
+				/// Gets localized string similar to: Reset settings to defaults?
+				/// </summary>
+				public const string ResetSettingsToDefaultsMessage = "ViewModelsAppSettingsResetSettingsToDefaultsMessage";
+			}
+			
+			public static partial class ChangePassword
+			{
+				/// <summary>
+				/// Gets localized string similar to: Confirmation of new password must be same as new password.
+				/// </summary>
+				public const string ConfirmPasswordIsWrong = "ViewModelsChangePasswordConfirmPasswordIsWrong";
+				/// <summary>
+				/// Gets localized string similar to: Current password is required.
+				/// </summary>
+				public const string CurrentPasswordIsRequired = "ViewModelsChangePasswordCurrentPasswordIsRequired";
+				/// <summary>
+				/// Gets localized string similar to: Email address is required.
+				/// </summary>
+				public const string EmailAddressIsRequired = "ViewModelsChangePasswordEmailAddressIsRequired";
+				/// <summary>
+				/// Gets localized string similar to: New password confirm is required.
+				/// </summary>
+				public const string NewPasswordConfirmIsRequired = "ViewModelsChangePasswordNewPasswordConfirmIsRequired";
+				/// <summary>
+				/// Gets localized string similar to: New password is required.
+				/// </summary>
+				public const string NewPasswordIsRequired = "ViewModelsChangePasswordNewPasswordIsRequired";
+				/// <summary>
+				/// Gets localized string similar to: Password was successfully changed!
+				/// </summary>
+				public const string PasswordSuccessfullyChanged = "ViewModelsChangePasswordPasswordSuccessfullyChanged";
+			}
+			
+			public static partial class DeleteElements
+			{
+				/// <summary>
+				/// Gets localized string similar to: Delete {0}
+				/// </summary>
+				public const string ConfirmCaption = "ViewModelsDeleteElementsConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to delete {0}?
+				/// </summary>
+				public const string ConfirmMessage = "ViewModelsDeleteElementsConfirmMessage";
+				/// <summary>
+				/// Gets localized string similar to: Delete {0}:
+				/// </summary>
+				public const string SelectedText = "ViewModelsDeleteElementsSelectedText";
+			}
+			
+			public static partial class EditParameter
+			{
+				/// <summary>
+				/// Gets localized string similar to: Add resources parameter
+				/// </summary>
+				public const string AddTitle = "ViewModelsEditParameterAddTitle";
+				/// <summary>
+				/// Gets localized string similar to: Edit resource parameter
+				/// </summary>
+				public const string EditTitle = "ViewModelsEditParameterEditTitle";
+				/// <summary>
+				/// Gets localized string similar to: Parameter with same name already exist!
+				/// </summary>
+				public const string ParameterWithSameNameExist = "ViewModelsEditParameterParameterWithSameNameExist";
+			}
+			
+			public static partial class HintPanel
+			{
+				public static partial class CodeGenerator
+				{
+					/// <summary>
+					/// Gets localized string similar to: When you save changes (Ctrl+S or save icon in toolbar) an associated code genera...
+					/// </summary>
+					public const string HintText = "ViewModelsHintPanelCodeGeneratorHintText";
+					/// <summary>
+					/// Gets localized string similar to: Code generation works only within Visual Studio!
+					/// </summary>
+					public const string HintTextOnlyInVS = "ViewModelsHintPanelCodeGeneratorHintTextOnlyInVS";
+					/// <summary>
+					/// Gets localized string similar to: Read more about code generator templates...
+					/// </summary>
+					public const string HintTextReadMore = "ViewModelsHintPanelCodeGeneratorHintTextReadMore";
+				}
+			}
+			
+			public static partial class Import
+			{
+				/// <summary>
+				/// Gets localized string similar to: Import resources
+				/// </summary>
+				public const string PageTitle = "ViewModelsImportPageTitle";
+				/// <summary>
+				/// Gets localized string similar to: Please select file(s) to import.
+				/// </summary>
+				public const string PleaseSelectFilesToImport = "ViewModelsImportPleaseSelectFilesToImport";
+				/// <summary>
+				/// Gets localized string similar to: Please select importer!
+				/// </summary>
+				public const string PleaseSelectImporter = "ViewModelsImportPleaseSelectImporter";
+				/// <summary>
+				/// Gets localized string similar to: Please select import mode!
+				/// </summary>
+				public const string PleaseSelectImportMode = "ViewModelsImportPleaseSelectImportMode";
+				/// <summary>
+				/// Gets localized string similar to: Importer '{0}' does not support those extensions:...
+				/// </summary>
+				public const string UnsupportedFileExtensionsDetail = "ViewModelsImportUnsupportedFileExtensionsDetail";
+				/// <summary>
+				/// Gets localized string similar to: Selected file(s) has unsupported extension(s).
+				/// </summary>
+				public const string UnsupportedFileExtensionsMessage = "ViewModelsImportUnsupportedFileExtensionsMessage";
+			}
+			
+			public static partial class LanguageSettings
+			{
+				/// <summary>
+				/// Gets localized string similar to: Remove language
+				/// </summary>
+				public const string ButtonRemoveTooltip = "ViewModelsLanguageSettingsButtonRemoveTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Set as primary
+				/// </summary>
+				public const string ButtonSetAsPrimary = "ViewModelsLanguageSettingsButtonSetAsPrimary";
+				/// <summary>
+				/// Gets localized string similar to: Sets language as primary
+				/// </summary>
+				public const string ButtonSetAsPrimaryToolip = "ViewModelsLanguageSettingsButtonSetAsPrimaryToolip";
+				/// <summary>
+				/// Gets localized string similar to: Change primary language
+				/// </summary>
+				public const string ChangePrimaryLanguageConfirmCaption = "ViewModelsLanguageSettingsChangePrimaryLanguageConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you really want to set language '{0}' as primary?
+				/// </summary>
+				public const string ChangePrimaryLanguageConfirmDetail = "ViewModelsLanguageSettingsChangePrimaryLanguageConfirmDetail";
+				/// <summary>
+				/// Gets localized string similar to: You are about to change current primary language '{0}' to language '{1}'.
+				/// </summary>
+				public const string ChangePrimaryLanguageConfirmMessage = "ViewModelsLanguageSettingsChangePrimaryLanguageConfirmMessage";
+				/// <summary>
+				/// Gets localized string similar to: Code
+				/// </summary>
+				public const string ColumnHeaderCode = "ViewModelsLanguageSettingsColumnHeaderCode";
+				/// <summary>
+				/// Gets localized string similar to: English name
+				/// </summary>
+				public const string ColumnHeaderEnglishName = "ViewModelsLanguageSettingsColumnHeaderEnglishName";
+				/// <summary>
+				/// Gets localized string similar to: Primary
+				/// </summary>
+				public const string ColumnHeaderPrimary = "ViewModelsLanguageSettingsColumnHeaderPrimary";
+				/// <summary>
+				/// Gets localized string similar to: Language settings
+				/// </summary>
+				public const string DialogCaption = "ViewModelsLanguageSettingsDialogCaption";
+				/// <summary>
+				/// Gets localized string similar to: Manage list of languages used in current project
+				/// </summary>
+				public const string DialogCaptionHint = "ViewModelsLanguageSettingsDialogCaptionHint";
+				/// <summary>
+				/// Gets localized string similar to: Primary
+				/// </summary>
+				public const string HeaderIsPrimary = "ViewModelsLanguageSettingsHeaderIsPrimary";
+				/// <summary>
+				/// Gets localized string similar to: {0} Languages
+				/// </summary>
+				public const string LabelCountOfLanguage = "ViewModelsLanguageSettingsLabelCountOfLanguage";
+				/// <summary>
+				/// Gets localized string similar to: Languages
+				/// </summary>
+				public const string LabelLanguages = "ViewModelsLanguageSettingsLabelLanguages";
+				/// <summary>
+				/// Gets localized string similar to: Language settings
+				/// </summary>
+				public const string PageTitle = "ViewModelsLanguageSettingsPageTitle";
+				/// <summary>
+				/// Gets localized string similar to: Language is primary language
+				/// </summary>
+				public const string PrimaryLanguage = "ViewModelsLanguageSettingsPrimaryLanguage";
+				/// <summary>
+				/// Gets localized string similar to: Primary language cannot be removed
+				/// </summary>
+				public const string PrimaryLanguageCantBeRemoved = "ViewModelsLanguageSettingsPrimaryLanguageCantBeRemoved";
+				/// <summary>
+				/// Gets localized string similar to: Project languages:
+				/// </summary>
+				public const string ProjectLanguages = "ViewModelsLanguageSettingsProjectLanguages";
+				/// <summary>
+				/// Gets localized string similar to: Remove language '{0}'
+				/// </summary>
+				public const string RemoveLanguageConfirmCaption = "ViewModelsLanguageSettingsRemoveLanguageConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: All resources in this language will be also removed!
+				/// </summary>
+				public const string RemoveLanguageConfirmDetail = "ViewModelsLanguageSettingsRemoveLanguageConfirmDetail";
+				/// <summary>
+				/// Gets localized string similar to: Remove language '{0}' ?
+				/// </summary>
+				public const string RemoveLanguageConfirmMessage = "ViewModelsLanguageSettingsRemoveLanguageConfirmMessage";
+				/// <summary>
+				/// Gets localized string similar to: Replace project language with other language
+				/// </summary>
+				public const string ReplaceLanguageCaption = "ViewModelsLanguageSettingsReplaceLanguageCaption";
+				/// <summary>
+				/// Gets localized string similar to: You are about to change project language from '{0}' to '{1}'. ...
+				/// </summary>
+				public const string ReplaceLanguageDetail = "ViewModelsLanguageSettingsReplaceLanguageDetail";
+				/// <summary>
+				/// Gets localized string similar to: You are about to change project language from '{0}' to '{1}'.
+				/// </summary>
+				public const string ReplaceLanguageMessage = "ViewModelsLanguageSettingsReplaceLanguageMessage";
+				/// <summary>
+				/// Gets localized string similar to: Set as primary language
+				/// </summary>
+				public const string SetAsPrimaryConfirmCaption = "ViewModelsLanguageSettingsSetAsPrimaryConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Set language '{0}' as primary language?
+				/// </summary>
+				public const string SetAsPrimaryConfirmMessage = "ViewModelsLanguageSettingsSetAsPrimaryConfirmMessage";
+			}
+			
+			public static partial class MessageBox
+			{
+				/// <summary>
+				/// Gets localized string similar to: _Cancel
+				/// </summary>
+				public const string LabelCancel = "ViewModelsMessageBoxLabelCancel";
+				/// <summary>
+				/// Gets localized string similar to: _No
+				/// </summary>
+				public const string LabelNo = "ViewModelsMessageBoxLabelNo";
+				/// <summary>
+				/// Gets localized string similar to: _OK
+				/// </summary>
+				public const string LabelOk = "ViewModelsMessageBoxLabelOk";
+				/// <summary>
+				/// Gets localized string similar to: _Yes
+				/// </summary>
+				public const string LabelYes = "ViewModelsMessageBoxLabelYes";
+			}
+			
+			public static partial class MultiSelection
+			{
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to resources within selected categories.
+				/// </summary>
+				public const string ActionsTooltipCategories = "ViewModelsMultiSelectionActionsTooltipCategories";
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to selected resources
+				/// </summary>
+				public const string ActionsTooltipResources = "ViewModelsMultiSelectionActionsTooltipResources";
+				/// <summary>
+				/// Gets localized string similar to: First Level
+				/// </summary>
+				public const string ButtonFirstLevel = "ViewModelsMultiSelectionButtonFirstLevel";
+				/// <summary>
+				/// Gets localized string similar to: Recursive
+				/// </summary>
+				public const string ButtonRecursive = "ViewModelsMultiSelectionButtonRecursive";
+				/// <summary>
+				/// Gets localized string similar to: Selected categories ({0})
+				/// </summary>
+				public const string CategoriesHeader = "ViewModelsMultiSelectionCategoriesHeader";
+				/// <summary>
+				/// Gets localized string similar to: Change resources state
+				/// </summary>
+				public const string ChangeResourcesStateFailedCaption = "ViewModelsMultiSelectionChangeResourcesStateFailedCaption";
+				/// <summary>
+				/// Gets localized string similar to: There are no resources to change state for.
+				/// </summary>
+				public const string ChangeResourcesStateFailedDetail = "ViewModelsMultiSelectionChangeResourcesStateFailedDetail";
+				/// <summary>
+				/// Gets localized string similar to: Could not change resources state to '{0}'.
+				/// </summary>
+				public const string ChangeResourcesStateFailedMessage = "ViewModelsMultiSelectionChangeResourcesStateFailedMessage";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to change resources state from all categories to '{0}'?
+				/// </summary>
+				public const string ChangeStateAllResourcesRecursive = "ViewModelsMultiSelectionChangeStateAllResourcesRecursive";
+				/// <summary>
+				/// Gets localized string similar to: Change state to 'Edited'
+				/// </summary>
+				public const string ChangeStateToEdited = "ViewModelsMultiSelectionChangeStateToEdited";
+				/// <summary>
+				/// Gets localized string similar to: Change state to 'Final'
+				/// </summary>
+				public const string ChangeStateToFinal = "ViewModelsMultiSelectionChangeStateToFinal";
+				/// <summary>
+				/// Gets localized string similar to: Change state to 'Needs review'
+				/// </summary>
+				public const string ChangeStateToNeedsReview = "ViewModelsMultiSelectionChangeStateToNeedsReview";
+				/// <summary>
+				/// Gets localized string similar to: Change state to 'New'
+				/// </summary>
+				public const string ChangeStateToNew = "ViewModelsMultiSelectionChangeStateToNew";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to export resources from all categories?
+				/// </summary>
+				public const string ExportAllResourcesRecursive = "ViewModelsMultiSelectionExportAllResourcesRecursive";
+				/// <summary>
+				/// Gets localized string similar to: There are no resources to be exported to file.
+				/// </summary>
+				public const string ExportResourcesFailedDetail = "ViewModelsMultiSelectionExportResourcesFailedDetail";
+				/// <summary>
+				/// Gets localized string similar to: Could not export resources to file
+				/// </summary>
+				public const string ExportResourcesFailedMessage = "ViewModelsMultiSelectionExportResourcesFailedMessage";
+				/// <summary>
+				/// Gets localized string similar to: Export resources to file
+				/// </summary>
+				public const string ExportResourcesToFile = "ViewModelsMultiSelectionExportResourcesToFile";
+				/// <summary>
+				/// Gets localized string similar to: Selected resources ({0})
+				/// </summary>
+				public const string ResourcesHeader = "ViewModelsMultiSelectionResourcesHeader";
+				/// <summary>
+				/// Gets localized string similar to: Yes - recursive scan...
+				/// </summary>
+				public const string ScanCategoriesRecursivelyConfirmDetail = "ViewModelsMultiSelectionScanCategoriesRecursivelyConfirmDetail";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to scan categories recursively?
+				/// </summary>
+				public const string ScanCategoriesRecursivelyConfirmMessage = "ViewModelsMultiSelectionScanCategoriesRecursivelyConfirmMessage";
+				/// <summary>
+				/// Gets localized string similar to: Selected project root
+				/// </summary>
+				public const string SelectedProjectRoot = "ViewModelsMultiSelectionSelectedProjectRoot";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to translate resources from all categories?
+				/// </summary>
+				public const string TranslateAllResourcesRecursive = "ViewModelsMultiSelectionTranslateAllResourcesRecursive";
+				/// <summary>
+				/// Gets localized string similar to: Translate resources
+				/// </summary>
+				public const string TranslateResourcesCaption = "ViewModelsMultiSelectionTranslateResourcesCaption";
+				/// <summary>
+				/// Gets localized string similar to: There are no resources to be translated.
+				/// </summary>
+				public const string TranslateResourcesFailedDetail = "ViewModelsMultiSelectionTranslateResourcesFailedDetail";
+				/// <summary>
+				/// Gets localized string similar to: Could not translate resources
+				/// </summary>
+				public const string TranslateResourcesFailedMessage = "ViewModelsMultiSelectionTranslateResourcesFailedMessage";
+			}
+			
+			public static partial class NewElement
+			{
+				/// <summary>
+				/// Gets localized string similar to: Category name:
+				/// </summary>
+				public const string CategoryNameCaption = "ViewModelsNewElementCategoryNameCaption";
+				/// <summary>
+				/// Gets localized string similar to: Category name is required.
+				/// </summary>
+				public const string CategoryNameIsRequired = "ViewModelsNewElementCategoryNameIsRequired";
+				/// <summary>
+				/// Gets localized string similar to: Alllowed characters: a-z A-Z and numbers
+				/// </summary>
+				public const string NameHint = "ViewModelsNewElementNameHint";
+				/// <summary>
+				/// Gets localized string similar to: New category
+				/// </summary>
+				public const string NewCategory = "ViewModelsNewElementNewCategory";
+				/// <summary>
+				/// Gets localized string similar to: Enter category _name:
+				/// </summary>
+				public const string NewCategoryCaptionText = "ViewModelsNewElementNewCategoryCaptionText";
+				/// <summary>
+				/// Gets localized string similar to: category
+				/// </summary>
+				public const string NewCategoryTemplateName = "ViewModelsNewElementNewCategoryTemplateName";
+				/// <summary>
+				/// Gets localized string similar to: New resource
+				/// </summary>
+				public const string NewResource = "ViewModelsNewElementNewResource";
+				/// <summary>
+				/// Gets localized string similar to: Enter resource _name:
+				/// </summary>
+				public const string NewResourceCaptionText = "ViewModelsNewElementNewResourceCaptionText";
+				/// <summary>
+				/// Gets localized string similar to: resource
+				/// </summary>
+				public const string NewResourceTemplateName = "ViewModelsNewElementNewResourceTemplateName";
+				/// <summary>
+				/// Gets localized string similar to: New resource under root model failed
+				/// </summary>
+				public const string NewResourceUnderRootNotAllowedCaption = "ViewModelsNewElementNewResourceUnderRootNotAllowedCaption";
+				/// <summary>
+				/// Gets localized string similar to: Enable option 'Allow resources under root' to add resource ?
+				/// </summary>
+				public const string NewResourceUnderRootNotAllowedDetail = "ViewModelsNewElementNewResourceUnderRootNotAllowedDetail";
+				/// <summary>
+				/// Gets localized string similar to: Could not add new resource under root model.
+				/// </summary>
+				public const string NewResourceUnderRootNotAllowedMessage = "ViewModelsNewElementNewResourceUnderRootNotAllowedMessage";
+				/// <summary>
+				/// Gets localized string similar to: Parent:
+				/// </summary>
+				public const string Parent = "ViewModelsNewElementParent";
+				/// <summary>
+				/// Gets localized string similar to: Parent hierarchy
+				/// </summary>
+				public const string ParentHierarchy = "ViewModelsNewElementParentHierarchy";
+				/// <summary>
+				/// Gets localized string similar to: Resource name:
+				/// </summary>
+				public const string ResourceNameCaption = "ViewModelsNewElementResourceNameCaption";
+				/// <summary>
+				/// Gets localized string similar to: Resource name is required.
+				/// </summary>
+				public const string ResourceNameIsRequired = "ViewModelsNewElementResourceNameIsRequired";
+			}
+			
+			public static partial class NewProject
+			{
+				/// <summary>
+				/// Gets localized string similar to: Code Generator Settings
+				/// </summary>
+				public const string ChangeCodeGeneratorSettingsLink = "ViewModelsNewProjectChangeCodeGeneratorSettingsLink";
+				/// <summary>
+				/// Gets localized string similar to: Code Generator Template
+				/// </summary>
+				public const string CodeGeneratorTemplateTitle = "ViewModelsNewProjectCodeGeneratorTemplateTitle";
+				/// <summary>
+				/// Gets localized string similar to: Common
+				/// </summary>
+				public const string CommonDetails = "ViewModelsNewProjectCommonDetails";
+				/// <summary>
+				/// Gets localized string similar to: Default
+				/// </summary>
+				public const string DefaultModelName = "ViewModelsNewProjectDefaultModelName";
+				/// <summary>
+				/// Gets localized string similar to: Create new project
+				/// </summary>
+				public const string DialogTitle = "ViewModelsNewProjectDialogTitle";
+				/// <summary>
+				/// Gets localized string similar to: New localization file
+				/// </summary>
+				public const string DialogTitleVS = "ViewModelsNewProjectDialogTitleVS";
+				/// <summary>
+				/// Gets localized string similar to: Languages type:
+				/// </summary>
+				public const string LanguagesType = "ViewModelsNewProjectLanguagesType";
+				/// <summary>
+				/// Gets localized string similar to: Neutral language (en)
+				/// </summary>
+				public const string LanguagesTypeNeutral = "ViewModelsNewProjectLanguagesTypeNeutral";
+				/// <summary>
+				/// Gets localized string similar to: Specific language (en-US)
+				/// </summary>
+				public const string LanguagesTypeSpecific = "ViewModelsNewProjectLanguagesTypeSpecific";
+				/// <summary>
+				/// Gets localized string similar to: Open "Language settings" after project created
+				/// </summary>
+				public const string OpenLanguageSettingsAfterCreate = "ViewModelsNewProjectOpenLanguageSettingsAfterCreate";
+				/// <summary>
+				/// Gets localized string similar to: Other translation languages can be added later in "Language settings"
+				/// </summary>
+				public const string OtherLanguagesHint = "ViewModelsNewProjectOtherLanguagesHint";
+				/// <summary>
+				/// Gets localized string similar to: Primary language:
+				/// </summary>
+				public const string PrimaryLanguage = "ViewModelsNewProjectPrimaryLanguage";
+				/// <summary>
+				/// Gets localized string similar to: Primary language is required.
+				/// </summary>
+				public const string PrimaryLanguageIsRequired = "ViewModelsNewProjectPrimaryLanguageIsRequired";
+				/// <summary>
+				/// Gets localized string similar to: Primary language must be selected!
+				/// </summary>
+				public const string PrimaryLanguageValidationMessage = "ViewModelsNewProjectPrimaryLanguageValidationMessage";
+				/// <summary>
+				/// Gets localized string similar to: Project name
+				/// </summary>
+				public const string ProjectName = "ViewModelsNewProjectProjectName";
+				/// <summary>
+				/// Gets localized string similar to: Project name is required.
+				/// </summary>
+				public const string ProjectNameIsRequired = "ViewModelsNewProjectProjectNameIsRequired";
+				/// <summary>
+				/// Gets localized string similar to: Name
+				/// </summary>
+				public const string ProjectNameVS = "ViewModelsNewProjectProjectNameVS";
+				/// <summary>
+				/// Gets localized string similar to: ResX files generator
+				/// </summary>
+				public const string ResxTitle = "ViewModelsNewProjectResxTitle";
+				/// <summary>
+				/// Gets localized string similar to: Show only neutral languages
+				/// </summary>
+				public const string ShowOnlyNeutralLanguages = "ViewModelsNewProjectShowOnlyNeutralLanguages";
+				/// <summary>
+				/// Gets localized string similar to: For more info about associated T4 generator, look at
+				/// </summary>
+				public const string T4TemplateWebHelp = "ViewModelsNewProjectT4TemplateWebHelp";
+			}
+			
+			public static partial class Progress
+			{
+				/// <summary>
+				/// Gets localized string similar to: Progress...
+				/// </summary>
+				public const string DialogTitle = "ViewModelsProgressDialogTitle";
+			}
+			
+			public static partial class ProjectSettings
+			{
+				/// <summary>
+				/// Gets localized string similar to: Project Settings
+				/// </summary>
+				public const string PageTitle = "ViewModelsProjectSettingsPageTitle";
+			}
+			
+			public static partial class ResourceModel
+			{
+				/// <summary>
+				/// Gets localized string similar to: Change resource state to 'Final'
+				/// </summary>
+				public const string FinalStateConfirmCaption = "ViewModelsResourceModelFinalStateConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to lock resource translations?
+				/// </summary>
+				public const string FinalStateConfirmMessageLock = "ViewModelsResourceModelFinalStateConfirmMessageLock";
+				/// <summary>
+				/// Gets localized string similar to: Change resource state to 'Final' will lock resource name, description and parame...
+				/// </summary>
+				public const string FinalStateConfirmMessageNotify = "ViewModelsResourceModelFinalStateConfirmMessageNotify";
+				/// <summary>
+				/// Gets localized string similar to: Later you can change this in settings page
+				/// </summary>
+				public const string FinalStateConfirmRememberHint = "ViewModelsResourceModelFinalStateConfirmRememberHint";
+				/// <summary>
+				/// Gets localized string similar to: Remember current choice for next time
+				/// </summary>
+				public const string FinalStateConfirmRememberText = "ViewModelsResourceModelFinalStateConfirmRememberText";
+				/// <summary>
+				/// Gets localized string similar to: Press Enter for new line...
+				/// </summary>
+				public const string HintText = "ViewModelsResourceModelHintText";
+				/// <summary>
+				/// Gets localized string similar to: Lock all values
+				/// </summary>
+				public const string LockAllValues = "ViewModelsResourceModelLockAllValues";
+				/// <summary>
+				/// Gets localized string similar to: Lock resource
+				/// </summary>
+				public const string LockResource = "ViewModelsResourceModelLockResource";
+				/// <summary>
+				/// Gets localized string similar to: Locked
+				/// </summary>
+				public const string StateLocked = "ViewModelsResourceModelStateLocked";
+				/// <summary>
+				/// Gets localized string similar to: Not locked
+				/// </summary>
+				public const string StateNotLocked = "ViewModelsResourceModelStateNotLocked";
+				/// <summary>
+				/// Gets localized string similar to: Unlock all values
+				/// </summary>
+				public const string UnlockAllValues = "ViewModelsResourceModelUnlockAllValues";
+				/// <summary>
+				/// Gets localized string similar to: Unlock resource
+				/// </summary>
+				public const string UnlockResource = "ViewModelsResourceModelUnlockResource";
+			}
+			
+			public static partial class ResourceParameters
+			{
+				/// <summary>
+				/// Gets localized string similar to: Resource Parameters
+				/// </summary>
+				public const string PageTitle = "ViewModelsResourceParametersPageTitle";
+				/// <summary>
+				/// Gets localized string similar to: Remove parameter
+				/// </summary>
+				public const string RemoveParameterCaption = "ViewModelsResourceParametersRemoveParameterCaption";
+				/// <summary>
+				/// Gets localized string similar to: Remove parameter '{0}' at position {1}?
+				/// </summary>
+				public const string RemoveParameterMessage = "ViewModelsResourceParametersRemoveParameterMessage";
+			}
+			
+			public static partial class ResourceValueModel
+			{
+				/// <summary>
+				/// Gets localized string similar to: '{0}' value was automatically translated by translator service
+				/// </summary>
+				public const string AutoTranslatedTooltip = "ViewModelsResourceValueModelAutoTranslatedTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Actions with '{0}' translation
+				/// </summary>
+				public const string BurgerMenuHeader = "ViewModelsResourceValueModelBurgerMenuHeader";
+				/// <summary>
+				/// Gets localized string similar to: '{0}' translation is locked for edits
+				/// </summary>
+				public const string LockIconTooltipIsLocked = "ViewModelsResourceValueModelLockIconTooltipIsLocked";
+				/// <summary>
+				/// Gets localized string similar to: '{0}' translation is not locked for edits
+				/// </summary>
+				public const string LockIconTooltipIsNotLocked = "ViewModelsResourceValueModelLockIconTooltipIsNotLocked";
+				/// <summary>
+				/// Gets localized string similar to: Lock '{0}' translation
+				/// </summary>
+				public const string LockMenuHeader = "ViewModelsResourceValueModelLockMenuHeader";
+				/// <summary>
+				/// Gets localized string similar to: Click to lock '{0}' translation
+				/// </summary>
+				public const string LockMenuTooltip = "ViewModelsResourceValueModelLockMenuTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was unmarked as auto-translated.
+				/// </summary>
+				public const string PropertyAutoTranslatedIsFalse = "ViewModelsResourceValueModelPropertyAutoTranslatedIsFalse";
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was marked as auto-translated.
+				/// </summary>
+				public const string PropertyAutoTranslatedIsTrue = "ViewModelsResourceValueModelPropertyAutoTranslatedIsTrue";
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was unlocked.
+				/// </summary>
+				public const string PropertyLockedIsFalse = "ViewModelsResourceValueModelPropertyLockedIsFalse";
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was locked.
+				/// </summary>
+				public const string PropertyLockedIsTrue = "ViewModelsResourceValueModelPropertyLockedIsTrue";
+				/// <summary>
+				/// Gets localized string similar to: Translate '{0}' value
+				/// </summary>
+				public const string TranslateMenuHeader = "ViewModelsResourceValueModelTranslateMenuHeader";
+				/// <summary>
+				/// Gets localized string similar to: Unlock '{0}' translation
+				/// </summary>
+				public const string UnlockMenuHeader = "ViewModelsResourceValueModelUnlockMenuHeader";
+				/// <summary>
+				/// Gets localized string similar to: Click to unlock '{0}' translation
+				/// </summary>
+				public const string UnlockMenuTooltip = "ViewModelsResourceValueModelUnlockMenuTooltip";
+			}
+			
+			public static partial class RootModel
+			{
+				/// <summary>
+				/// Gets localized string similar to: Change primary language
+				/// </summary>
+				public const string ChangePrimaryLanguageConfirmCaption = "ViewModelsRootModelChangePrimaryLanguageConfirmCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to change primary language to '{0}' ?
+				/// </summary>
+				public const string ChangePrimaryLanguageConfirmMessage = "ViewModelsRootModelChangePrimaryLanguageConfirmMessage";
+				/// <summary>
+				/// Gets localized string similar to: Edit model name
+				/// </summary>
+				public const string EditModelNameCaption = "ViewModelsRootModelEditModelNameCaption";
+				/// <summary>
+				/// Gets localized string similar to: Enter new model name
+				/// </summary>
+				public const string EditModelNameMessage = "ViewModelsRootModelEditModelNameMessage";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to continue renaming model name ?
+				/// </summary>
+				public const string EditModelNameWarningDetail = "ViewModelsRootModelEditModelNameWarningDetail";
+				/// <summary>
+				/// Gets localized string similar to: Changing model name will regenerate associated files with this new name....
+				/// </summary>
+				public const string EditModelNameWarningMessage = "ViewModelsRootModelEditModelNameWarningMessage";
+			}
+			
+			public static partial class StatusBar
+			{
+				/// <summary>
+				/// Gets localized string similar to: Application version:
+				/// </summary>
+				public const string AppVersion = "ViewModelsStatusBarAppVersion";
+				/// <summary>
+				/// Gets localized string similar to: Code Generator:
+				/// </summary>
+				public const string CodeGenerator = "ViewModelsStatusBarCodeGenerator";
+				/// <summary>
+				/// Gets localized string similar to: Click to change Code Generator settings...
+				/// </summary>
+				public const string CodeGeneratorTooltip = "ViewModelsStatusBarCodeGeneratorTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Selected: {0}
+				/// </summary>
+				public const string SelectedElement = "ViewModelsStatusBarSelectedElement";
+			}
 		}
 		
 		public static partial class Views
 		{
-    		public static partial class CategoryView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to resources under category
-    			/// </summary>
-    			public const string ActionsTooltip = "ViewsCategoryViewActionsTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Category
-    			/// </summary>
-    			public const string Category = "ViewsCategoryViewCategory";
-    			/// <summary>
-    			/// Gets localized string similar to: _Description
-    			/// </summary>
-    			public const string Description = "ViewsCategoryViewDescription";
-    			/// <summary>
-    			/// Gets localized string similar to: Name
-    			/// </summary>
-    			public const string Name = "ViewsCategoryViewName";
-    		}
-    		
-    		public static partial class LanguageSelectorView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Country specific
-    			/// </summary>
-    			public const string CountrySpecific = "ViewsLanguageSelectorViewCountrySpecific";
-    			/// <summary>
-    			/// Gets localized string similar to: Searching by country code - click to search by country name
-    			/// </summary>
-    			public const string FilterTooltipActive = "ViewsLanguageSelectorViewFilterTooltipActive";
-    			/// <summary>
-    			/// Gets localized string similar to: Searching by country name - click to search by country code
-    			/// </summary>
-    			public const string FilterTooltipNotActive = "ViewsLanguageSelectorViewFilterTooltipNotActive";
-    		}
-    		
-    		public static partial class ProjectSettingsView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Allow resources under root
-    			/// </summary>
-    			public const string AllowResourcesUnderRoot = "ViewsProjectSettingsViewAllowResourcesUnderRoot";
-    			/// <summary>
-    			/// Gets localized string similar to: Categories and resources
-    			/// </summary>
-    			public const string CategoriesAndResources = "ViewsProjectSettingsViewCategoriesAndResources";
-    			/// <summary>
-    			/// Gets localized string similar to: Flat structure
-    			/// </summary>
-    			public const string FlatStructure = "ViewsProjectSettingsViewFlatStructure";
-    			/// <summary>
-    			/// Gets localized string similar to: Hierarchical structure
-    			/// </summary>
-    			public const string HierarchicalStructure = "ViewsProjectSettingsViewHierarchicalStructure";
-    			/// <summary>
-    			/// Gets localized string similar to: Resources only
-    			/// </summary>
-    			public const string ResourcesOnly = "ViewsProjectSettingsViewResourcesOnly";
-    		}
-    		
-    		public static partial class ResourceView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to all resource translations.
-    			/// </summary>
-    			public const string ActionsTooltip = "ViewsResourceViewActionsTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: To add another language, click 
-    			/// </summary>
-    			public const string AddLanguageLinkPart1 = "ViewsResourceViewAddLanguageLinkPart1";
-    			/// <summary>
-    			/// Gets localized string similar to: here
-    			/// </summary>
-    			public const string AddLanguageLinkPart2 = "ViewsResourceViewAddLanguageLinkPart2";
-    			/// <summary>
-    			/// Gets localized string similar to: Click add or edit list of languages
-    			/// </summary>
-    			public const string AddLanguageLinkTooltip = "ViewsResourceViewAddLanguageLinkTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Click to show hint...
-    			/// </summary>
-    			public const string ClickToShowHint = "ViewsResourceViewClickToShowHint";
-    			/// <summary>
-    			/// Gets localized string similar to: Define...
-    			/// </summary>
-    			public const string Define = "ViewsResourceViewDefine";
-    			/// <summary>
-    			/// Gets localized string similar to: _Description
-    			/// </summary>
-    			public const string Description = "ViewsResourceViewDescription";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource string is empty, mark it as translated
-    			/// </summary>
-    			public const string Hold = "ViewsResourceViewHold";
-    			/// <summary>
-    			/// Gets localized string similar to: Locked
-    			/// </summary>
-    			public const string Locked = "ViewsResourceViewLocked";
-    			/// <summary>
-    			/// Gets localized string similar to: _Name
-    			/// </summary>
-    			public const string Name = "ViewsResourceViewName";
-    			/// <summary>
-    			/// Gets localized string similar to: _Parameters
-    			/// </summary>
-    			public const string Parameters = "ViewsResourceViewParameters";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource
-    			/// </summary>
-    			public const string Resource = "ViewsResourceViewResource";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was marked as translated.
-    			/// </summary>
-    			public const string ResourceMarkedAsTranslated = "ViewsResourceViewResourceMarkedAsTranslated";
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was unmarked as translated.
-    			/// </summary>
-    			public const string ResourceUnmarkedAsTranslated = "ViewsResourceViewResourceUnmarkedAsTranslated";
-    			/// <summary>
-    			/// Gets localized string similar to: State
-    			/// </summary>
-    			public const string State = "ViewsResourceViewState";
-    			/// <summary>
-    			/// Gets localized string similar to: Translate all values
-    			/// </summary>
-    			public const string TranslateAllValuesMenuHeader = "ViewsResourceViewTranslateAllValuesMenuHeader";
-    			/// <summary>
-    			/// Gets localized string similar to: Translate all values using translator service.
-    			/// </summary>
-    			public const string TranslateAllValuesMenuTooltip = "ViewsResourceViewTranslateAllValuesMenuTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Translate empty values
-    			/// </summary>
-    			public const string TranslateEmptyValuesMenuHeader = "ViewsResourceViewTranslateEmptyValuesMenuHeader";
-    			/// <summary>
-    			/// Gets localized string similar to: Translate only empty values using translator service.
-    			/// </summary>
-    			public const string TranslateEmptyValuesMenuTooltip = "ViewsResourceViewTranslateEmptyValuesMenuTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: _Translation note
-    			/// </summary>
-    			public const string TranslationNote = "ViewsResourceViewTranslationNote";
-    			/// <summary>
-    			/// Gets localized string similar to: Translations
-    			/// </summary>
-    			public const string Translations = "ViewsResourceViewTranslations";
-    			/// <summary>
-    			/// Gets localized string similar to: Press Ctrl+Enter to enter multi-line mode. Key Enter to move to next language tr...
-    			/// </summary>
-    			public const string TranslationsHint = "ViewsResourceViewTranslationsHint";
-    		}
-    		
-    		public static partial class RootView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to all resources within project
-    			/// </summary>
-    			public const string ActionsTooltip = "ViewsRootViewActionsTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Add missing languages '{0}'
-    			/// </summary>
-    			public const string AddMissingLanguages = "ViewsRootViewAddMissingLanguages";
-    			/// <summary>
-    			/// Gets localized string similar to: _Description
-    			/// </summary>
-    			public const string Description = "ViewsRootViewDescription";
-    			/// <summary>
-    			/// Gets localized string similar to: Hold resources:
-    			/// </summary>
-    			public const string HoldResources = "ViewsRootViewHoldResources";
-    			/// <summary>
-    			/// Gets localized string similar to: Languages
-    			/// </summary>
-    			public const string Languages = "ViewsRootViewLanguages";
-    			/// <summary>
-    			/// Gets localized string similar to: Model
-    			/// </summary>
-    			public const string Model = "ViewsRootViewModel";
-    			/// <summary>
-    			/// Gets localized string similar to: Name
-    			/// </summary>
-    			public const string Name = "ViewsRootViewName";
-    			/// <summary>
-    			/// Gets localized string similar to: Language is primary language
-    			/// </summary>
-    			public const string PrimaryLanguage = "ViewsRootViewPrimaryLanguage";
-    			/// <summary>
-    			/// Gets localized string similar to: Search
-    			/// </summary>
-    			public const string SearchTreeText = "ViewsRootViewSearchTreeText";
-    			/// <summary>
-    			/// Gets localized string similar to: Translated resources:
-    			/// </summary>
-    			public const string TranslatedResources = "ViewsRootViewTranslatedResources";
-    			/// <summary>
-    			/// Gets localized string similar to: Untranslated resources:
-    			/// </summary>
-    			public const string UntranslatedResources = "ViewsRootViewUntranslatedResources";
-    		}
-    		
-    		public static partial class ShellView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Resources count:
-    			/// </summary>
-    			public const string AllResourceCount = "ViewsShellViewAllResourceCount";
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language:
-    			/// </summary>
-    			public const string PrimaryLanguage = "ViewsShellViewPrimaryLanguage";
-    		}
-    		
-    		public static partial class TreeView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Can drop here.
-    			/// </summary>
-    			public const string CanDropHere = "ViewsTreeViewCanDropHere";
-    			/// <summary>
-    			/// Gets localized string similar to: Drop is not allowed here.
-    			/// </summary>
-    			public const string DropNotAllowed = "ViewsTreeViewDropNotAllowed";
-    			/// <summary>
-    			/// Gets localized string similar to: Showing only untranslated resources - click to remove filter
-    			/// </summary>
-    			public const string FilterTooltipActive = "ViewsTreeViewFilterTooltipActive";
-    			/// <summary>
-    			/// Gets localized string similar to: Showing all resources - click to show only untranslated
-    			/// </summary>
-    			public const string FilterTooltipNotActive = "ViewsTreeViewFilterTooltipNotActive";
-    			/// <summary>
-    			/// Gets localized string similar to: Complete translation
-    			/// </summary>
-    			public const string LegendCompleteTranslation = "ViewsTreeViewLegendCompleteTranslation";
-    			/// <summary>
-    			/// Gets localized string similar to: Incomplete translation
-    			/// </summary>
-    			public const string LegendIncompleteTranslation = "ViewsTreeViewLegendIncompleteTranslation";
-    			/// <summary>
-    			/// Gets localized string similar to: Red border - resource is not translated into all languages
-    			/// </summary>
-    			public const string RedBorderTooltip = "ViewsTreeViewRedBorderTooltip";
-    			/// <summary>
-    			/// Gets localized string similar to: Show only untranslated
-    			/// </summary>
-    			public const string ShowOnlyUntranslated = "ViewsTreeViewShowOnlyUntranslated";
-    		}
+			public static partial class CategoryView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to resources under category
+				/// </summary>
+				public const string ActionsTooltip = "ViewsCategoryViewActionsTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Category
+				/// </summary>
+				public const string Category = "ViewsCategoryViewCategory";
+				/// <summary>
+				/// Gets localized string similar to: _Description
+				/// </summary>
+				public const string Description = "ViewsCategoryViewDescription";
+				/// <summary>
+				/// Gets localized string similar to: Name
+				/// </summary>
+				public const string Name = "ViewsCategoryViewName";
+			}
+			
+			public static partial class LanguageSelectorView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Country specific
+				/// </summary>
+				public const string CountrySpecific = "ViewsLanguageSelectorViewCountrySpecific";
+				/// <summary>
+				/// Gets localized string similar to: Searching by country code - click to search by country name
+				/// </summary>
+				public const string FilterTooltipActive = "ViewsLanguageSelectorViewFilterTooltipActive";
+				/// <summary>
+				/// Gets localized string similar to: Searching by country name - click to search by country code
+				/// </summary>
+				public const string FilterTooltipNotActive = "ViewsLanguageSelectorViewFilterTooltipNotActive";
+			}
+			
+			public static partial class ProjectSettingsView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Allow resources under root
+				/// </summary>
+				public const string AllowResourcesUnderRoot = "ViewsProjectSettingsViewAllowResourcesUnderRoot";
+				/// <summary>
+				/// Gets localized string similar to: Categories and resources
+				/// </summary>
+				public const string CategoriesAndResources = "ViewsProjectSettingsViewCategoriesAndResources";
+				/// <summary>
+				/// Gets localized string similar to: Flat structure
+				/// </summary>
+				public const string FlatStructure = "ViewsProjectSettingsViewFlatStructure";
+				/// <summary>
+				/// Gets localized string similar to: Hierarchical structure
+				/// </summary>
+				public const string HierarchicalStructure = "ViewsProjectSettingsViewHierarchicalStructure";
+				/// <summary>
+				/// Gets localized string similar to: Resources only
+				/// </summary>
+				public const string ResourcesOnly = "ViewsProjectSettingsViewResourcesOnly";
+			}
+			
+			public static partial class ResourceView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to all resource translations.
+				/// </summary>
+				public const string ActionsTooltip = "ViewsResourceViewActionsTooltip";
+				/// <summary>
+				/// Gets localized string similar to: To add another language, click 
+				/// </summary>
+				public const string AddLanguageLinkPart1 = "ViewsResourceViewAddLanguageLinkPart1";
+				/// <summary>
+				/// Gets localized string similar to: here
+				/// </summary>
+				public const string AddLanguageLinkPart2 = "ViewsResourceViewAddLanguageLinkPart2";
+				/// <summary>
+				/// Gets localized string similar to: Click add or edit list of languages
+				/// </summary>
+				public const string AddLanguageLinkTooltip = "ViewsResourceViewAddLanguageLinkTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Click to show hint...
+				/// </summary>
+				public const string ClickToShowHint = "ViewsResourceViewClickToShowHint";
+				/// <summary>
+				/// Gets localized string similar to: Define...
+				/// </summary>
+				public const string Define = "ViewsResourceViewDefine";
+				/// <summary>
+				/// Gets localized string similar to: _Description
+				/// </summary>
+				public const string Description = "ViewsResourceViewDescription";
+				/// <summary>
+				/// Gets localized string similar to: Resource string is empty, mark it as translated
+				/// </summary>
+				public const string Hold = "ViewsResourceViewHold";
+				/// <summary>
+				/// Gets localized string similar to: Locked
+				/// </summary>
+				public const string Locked = "ViewsResourceViewLocked";
+				/// <summary>
+				/// Gets localized string similar to: _Name
+				/// </summary>
+				public const string Name = "ViewsResourceViewName";
+				/// <summary>
+				/// Gets localized string similar to: _Parameters
+				/// </summary>
+				public const string Parameters = "ViewsResourceViewParameters";
+				/// <summary>
+				/// Gets localized string similar to: Resource
+				/// </summary>
+				public const string Resource = "ViewsResourceViewResource";
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was marked as translated.
+				/// </summary>
+				public const string ResourceMarkedAsTranslated = "ViewsResourceViewResourceMarkedAsTranslated";
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was unmarked as translated.
+				/// </summary>
+				public const string ResourceUnmarkedAsTranslated = "ViewsResourceViewResourceUnmarkedAsTranslated";
+				/// <summary>
+				/// Gets localized string similar to: State
+				/// </summary>
+				public const string State = "ViewsResourceViewState";
+				/// <summary>
+				/// Gets localized string similar to: Translate all values
+				/// </summary>
+				public const string TranslateAllValuesMenuHeader = "ViewsResourceViewTranslateAllValuesMenuHeader";
+				/// <summary>
+				/// Gets localized string similar to: Translate all values using translator service.
+				/// </summary>
+				public const string TranslateAllValuesMenuTooltip = "ViewsResourceViewTranslateAllValuesMenuTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Translate empty values
+				/// </summary>
+				public const string TranslateEmptyValuesMenuHeader = "ViewsResourceViewTranslateEmptyValuesMenuHeader";
+				/// <summary>
+				/// Gets localized string similar to: Translate only empty values using translator service.
+				/// </summary>
+				public const string TranslateEmptyValuesMenuTooltip = "ViewsResourceViewTranslateEmptyValuesMenuTooltip";
+				/// <summary>
+				/// Gets localized string similar to: _Translation note
+				/// </summary>
+				public const string TranslationNote = "ViewsResourceViewTranslationNote";
+				/// <summary>
+				/// Gets localized string similar to: Translations
+				/// </summary>
+				public const string Translations = "ViewsResourceViewTranslations";
+				/// <summary>
+				/// Gets localized string similar to: Press Ctrl+Enter to enter multi-line mode. Key Enter to move to next language tr...
+				/// </summary>
+				public const string TranslationsHint = "ViewsResourceViewTranslationsHint";
+			}
+			
+			public static partial class RootView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to all resources within project
+				/// </summary>
+				public const string ActionsTooltip = "ViewsRootViewActionsTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Add missing languages '{0}'
+				/// </summary>
+				public const string AddMissingLanguages = "ViewsRootViewAddMissingLanguages";
+				/// <summary>
+				/// Gets localized string similar to: _Description
+				/// </summary>
+				public const string Description = "ViewsRootViewDescription";
+				/// <summary>
+				/// Gets localized string similar to: Hold resources:
+				/// </summary>
+				public const string HoldResources = "ViewsRootViewHoldResources";
+				/// <summary>
+				/// Gets localized string similar to: Languages
+				/// </summary>
+				public const string Languages = "ViewsRootViewLanguages";
+				/// <summary>
+				/// Gets localized string similar to: Model
+				/// </summary>
+				public const string Model = "ViewsRootViewModel";
+				/// <summary>
+				/// Gets localized string similar to: Name
+				/// </summary>
+				public const string Name = "ViewsRootViewName";
+				/// <summary>
+				/// Gets localized string similar to: Language is primary language
+				/// </summary>
+				public const string PrimaryLanguage = "ViewsRootViewPrimaryLanguage";
+				/// <summary>
+				/// Gets localized string similar to: Search
+				/// </summary>
+				public const string SearchTreeText = "ViewsRootViewSearchTreeText";
+				/// <summary>
+				/// Gets localized string similar to: Translated resources:
+				/// </summary>
+				public const string TranslatedResources = "ViewsRootViewTranslatedResources";
+				/// <summary>
+				/// Gets localized string similar to: Untranslated resources:
+				/// </summary>
+				public const string UntranslatedResources = "ViewsRootViewUntranslatedResources";
+			}
+			
+			public static partial class ShellView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Resources count:
+				/// </summary>
+				public const string AllResourceCount = "ViewsShellViewAllResourceCount";
+				/// <summary>
+				/// Gets localized string similar to: Primary language:
+				/// </summary>
+				public const string PrimaryLanguage = "ViewsShellViewPrimaryLanguage";
+			}
+			
+			public static partial class TreeView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Can drop here.
+				/// </summary>
+				public const string CanDropHere = "ViewsTreeViewCanDropHere";
+				/// <summary>
+				/// Gets localized string similar to: Drop is not allowed here.
+				/// </summary>
+				public const string DropNotAllowed = "ViewsTreeViewDropNotAllowed";
+				/// <summary>
+				/// Gets localized string similar to: Showing only untranslated resources - click to remove filter
+				/// </summary>
+				public const string FilterTooltipActive = "ViewsTreeViewFilterTooltipActive";
+				/// <summary>
+				/// Gets localized string similar to: Showing all resources - click to show only untranslated
+				/// </summary>
+				public const string FilterTooltipNotActive = "ViewsTreeViewFilterTooltipNotActive";
+				/// <summary>
+				/// Gets localized string similar to: Complete translation
+				/// </summary>
+				public const string LegendCompleteTranslation = "ViewsTreeViewLegendCompleteTranslation";
+				/// <summary>
+				/// Gets localized string similar to: Incomplete translation
+				/// </summary>
+				public const string LegendIncompleteTranslation = "ViewsTreeViewLegendIncompleteTranslation";
+				/// <summary>
+				/// Gets localized string similar to: Red border - resource is not translated into all languages
+				/// </summary>
+				public const string RedBorderTooltip = "ViewsTreeViewRedBorderTooltip";
+				/// <summary>
+				/// Gets localized string similar to: Show only untranslated
+				/// </summary>
+				public const string ShowOnlyUntranslated = "ViewsTreeViewShowOnlyUntranslated";
+			}
 		}
 		
 		public static partial class VsExtension
 		{
-    		public static partial class FirstTimeOpenSettings
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Welcome
-    			/// </summary>
-    			public const string Caption = "VsExtensionFirstTimeOpenSettingsCaption";
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to open the settings?
-    			/// </summary>
-    			public const string Detail = "VsExtensionFirstTimeOpenSettingsDetail";
-    			/// <summary>
-    			/// Gets localized string similar to: This is the first time you use Localization HQ Editor extension.
-    			/// </summary>
-    			public const string Message = "VsExtensionFirstTimeOpenSettingsMessage";
-    		}
+			public static partial class FirstTimeOpenSettings
+			{
+				/// <summary>
+				/// Gets localized string similar to: Welcome
+				/// </summary>
+				public const string Caption = "VsExtensionFirstTimeOpenSettingsCaption";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to open the settings?
+				/// </summary>
+				public const string Detail = "VsExtensionFirstTimeOpenSettingsDetail";
+				/// <summary>
+				/// Gets localized string similar to: This is the first time you use Localization HQ Editor extension.
+				/// </summary>
+				public const string Message = "VsExtensionFirstTimeOpenSettingsMessage";
+			}
 		}
 	}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public partial class Strings
 	{
 		public static partial class App
@@ -3088,122 +3084,122 @@ namespace LHQ.App.Localization
 		
 		public static partial class Common
 		{
-    		public static partial class CountTexts
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public static string Count0Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count0Category);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public static string Count0Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count0Resource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: category
-    			/// </summary>
-    			public static string Count1Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count1Category);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: resource
-    			/// </summary>
-    			public static string Count1Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count1Resource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public static string Count2Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count2Category);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public static string Count2Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count2Resource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public static string Count3Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count3Category);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public static string Count3Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count3Resource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public static string Count4Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count4Category);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public static string Count4Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count4Resource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: categories
-    			/// </summary>
-    			public static string CountMoreCategories => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.CountMoreCategories);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: resources
-    			/// </summary>
-    			public static string CountMoreResources => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.CountMoreResources);
-    
-    		}
-    		
-    		public static partial class Properties
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: description
-    			/// </summary>
-    			public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.Description);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: name
-    			/// </summary>
-    			public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.Name);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: parameters
-    			/// </summary>
-    			public static string Parameters => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.Parameters);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: translation note
-    			/// </summary>
-    			public static string TranslationNote => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.TranslationNote);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: translation state
-    			/// </summary>
-    			public static string TranslationState => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.TranslationState);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: translation
-    			/// </summary>
-    			public static string TranslationValue => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.TranslationValue);
-    
-    		}
-    		
-    		public static partial class Themes
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Automatic selection
-    			/// </summary>
-    			public static string Automatic => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Themes.Automatic);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Dark
-    			/// </summary>
-    			public static string Dark => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Themes.Dark);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Light
-    			/// </summary>
-    			public static string Light => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Themes.Light);
-    
-    		}
+			public static partial class CountTexts
+			{
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public static string Count0Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count0Category);
+	
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public static string Count0Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count0Resource);
+	
+				/// <summary>
+				/// Gets localized string similar to: category
+				/// </summary>
+				public static string Count1Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count1Category);
+	
+				/// <summary>
+				/// Gets localized string similar to: resource
+				/// </summary>
+				public static string Count1Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count1Resource);
+	
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public static string Count2Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count2Category);
+	
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public static string Count2Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count2Resource);
+	
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public static string Count3Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count3Category);
+	
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public static string Count3Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count3Resource);
+	
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public static string Count4Category => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count4Category);
+	
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public static string Count4Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.Count4Resource);
+	
+				/// <summary>
+				/// Gets localized string similar to: categories
+				/// </summary>
+				public static string CountMoreCategories => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.CountMoreCategories);
+	
+				/// <summary>
+				/// Gets localized string similar to: resources
+				/// </summary>
+				public static string CountMoreResources => StringsContext.Instance.GetStringSafely(StringsKeys.Common.CountTexts.CountMoreResources);
+	
+			}
+			
+			public static partial class Properties
+			{
+				/// <summary>
+				/// Gets localized string similar to: description
+				/// </summary>
+				public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.Description);
+	
+				/// <summary>
+				/// Gets localized string similar to: name
+				/// </summary>
+				public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.Name);
+	
+				/// <summary>
+				/// Gets localized string similar to: parameters
+				/// </summary>
+				public static string Parameters => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.Parameters);
+	
+				/// <summary>
+				/// Gets localized string similar to: translation note
+				/// </summary>
+				public static string TranslationNote => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.TranslationNote);
+	
+				/// <summary>
+				/// Gets localized string similar to: translation state
+				/// </summary>
+				public static string TranslationState => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.TranslationState);
+	
+				/// <summary>
+				/// Gets localized string similar to: translation
+				/// </summary>
+				public static string TranslationValue => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Properties.TranslationValue);
+	
+			}
+			
+			public static partial class Themes
+			{
+				/// <summary>
+				/// Gets localized string similar to: Automatic selection
+				/// </summary>
+				public static string Automatic => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Themes.Automatic);
+	
+				/// <summary>
+				/// Gets localized string similar to: Dark
+				/// </summary>
+				public static string Dark => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Themes.Dark);
+	
+				/// <summary>
+				/// Gets localized string similar to: Light
+				/// </summary>
+				public static string Light => StringsContext.Instance.GetStringSafely(StringsKeys.Common.Themes.Light);
+	
+			}
 			/// <summary>
 			/// Gets localized string similar to: Actions
 			/// </summary>
@@ -3363,989 +3359,989 @@ namespace LHQ.App.Localization
 		
 		public static partial class Dialogs
 		{
-    		public static partial class About
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Program version: {0}
-    			/// </summary>
-    			public static string AppVersion(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.About.AppVersion), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Localization HQ Editor - About
-    			/// </summary>
-    			public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.About.DialogTitle);
-    
-    		}
-    		
-    		public static partial class AppSettings
-    		{
-        		public static partial class PageGeneral
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Color theme
-        			/// </summary>
-        			public static string ColorTheme => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageGeneral.ColorTheme);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Default language is required.
-        			/// </summary>
-        			public static string DefaultLanguageIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageGeneral.DefaultLanguageIsRequired);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Lock translations when resource state is changed to Final
-        			/// </summary>
-        			public static string LockTranslationsWithResource => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageGeneral.LockTranslationsWithResource);
-        
-        		}
-        		
-        		public static partial class PagePlugins
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Cannot enable plugin because active license ({0}) has disabled '{1}' feature.
-        			/// </summary>
-        			public static string CannotEnablePluginFeatureIsDisabled0000(object licenseName,object featureName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PagePlugins.CannotEnablePluginFeatureIsDisabled0000), licenseName,featureName);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Installed plugins:
-        			/// </summary>
-        			public static string InstalledPluginsHeader => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PagePlugins.InstalledPluginsHeader);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Plugins
-        			/// </summary>
-        			public static string Title => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PagePlugins.Title);
-        
-        		}
-        		
-        		public static partial class PageTranslator
-        		{
-            		public static partial class Test
-            		{
-            			/// <summary>
-            			/// Gets localized string similar to: Testing '{0}'
-            			/// </summary>
-            			public static string TestingText(object translatorName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.Test.TestingText), translatorName);
-            
-            			/// <summary>
-            			/// Gets localized string similar to: Testing '{0}' succeeded.
-            			/// </summary>
-            			public static string TestSucceed(object translatorName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.Test.TestSucceed), translatorName);
-            
-            			/// <summary>
-            			/// Gets localized string similar to: Test Succeed
-            			/// </summary>
-            			public static string TestSucceedTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.Test.TestSucceedTitle);
-            
-            		}
-        			/// <summary>
-        			/// Gets localized string similar to: Enable translator integration
-        			/// </summary>
-        			public static string EnableTranslation => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.EnableTranslation);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Translator must be configured for integration to work properly.
-        			/// </summary>
-        			public static string ShowConfigureHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.ShowConfigureHint);
-        
-        		}
-        		
-        		public static partial class PluginConfigure
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Plugin Help...
-        			/// </summary>
-        			public static string PluginHelp => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PluginConfigure.PluginHelp);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: version:
-        			/// </summary>
-        			public static string PluginVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PluginConfigure.PluginVersion);
-        
-        		}
-    			/// <summary>
-    			/// Gets localized string similar to: Application lozalization
-    			/// </summary>
-    			public static string ApplicationLocalization => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.ApplicationLocalization);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Check for updates
-    			/// </summary>
-    			public static string ButtonCheckForUpdates => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.ButtonCheckForUpdates);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Change application behavior
-    			/// </summary>
-    			public static string CaptionHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.CaptionHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Check updates when application starts
-    			/// </summary>
-    			public static string CheckUpdatesOnAppStart => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.CheckUpdatesOnAppStart);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Default language for new projects
-    			/// </summary>
-    			public static string DefaultLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.DefaultLanguage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Preferences
-    			/// </summary>
-    			public static string DialogCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.DialogCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Localization HQ Editor - Preferences
-    			/// </summary>
-    			public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.DialogTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Open last project when application starts
-    			/// </summary>
-    			public static string OpenLastProjectOnStartup => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.OpenLastProjectOnStartup);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Show hints
-    			/// </summary>
-    			public static string ShowHints => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.ShowHints);
-    
-    		}
-    		
-    		public static partial class ChangePassword
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Current password:
-    			/// </summary>
-    			public static string CurrentPassword => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.CurrentPassword);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Email:
-    			/// </summary>
-    			public static string Email => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.Email);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New password:
-    			/// </summary>
-    			public static string NewPassword => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.NewPassword);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New password confirm:
-    			/// </summary>
-    			public static string NewPasswordConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.NewPasswordConfirm);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Account - Change Password
-    			/// </summary>
-    			public static string Title => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.Title);
-    
-    		}
-    		
-    		public static partial class CodeGenerator
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Reset To Default
-    			/// </summary>
-    			public static string ButtonResetToDefault => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ButtonResetToDefault);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Reset Settings To Default Values
-    			/// </summary>
-    			public static string ResetConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ResetConfirmCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to reset settings to its default values?
-    			/// </summary>
-    			public static string ResetConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ResetConfirmMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Template id: {0}
-    			/// </summary>
-    			public static string TemplateId(object templateId) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.TemplateId), templateId);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Template name: {0}
-    			/// </summary>
-    			public static string TemplateName(object templateName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.TemplateName), templateName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Code Generator Settings
-    			/// </summary>
-    			public static string Title => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.Title);
-    
-    		}
-    		
-    		public static partial class EditLanguage
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Add language
-    			/// </summary>
-    			public static string DialogCaptionAdd => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogCaptionAdd);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Adds new language to current project
-    			/// </summary>
-    			public static string DialogCaptionAddHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogCaptionAddHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Edit language
-    			/// </summary>
-    			public static string DialogCaptionEdit => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogCaptionEdit);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Edit language
-    			/// </summary>
-    			public static string DialogCaptionEditHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogCaptionEditHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Add language
-    			/// </summary>
-    			public static string DialogTitleAdd => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogTitleAdd);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Edit language
-    			/// </summary>
-    			public static string DialogTitleEdit => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogTitleEdit);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Is primary language?
-    			/// </summary>
-    			public static string IsPrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.IsPrimaryLanguage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Neutral language
-    			/// </summary>
-    			public static string LanguagesTypeNeutral => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.LanguagesTypeNeutral);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Specific language
-    			/// </summary>
-    			public static string LanguagesTypeSpecific => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.LanguagesTypeSpecific);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Languages type:
-    			/// </summary>
-    			public static string LanguageTypeInfo => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.LanguageTypeInfo);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Set as primary language
-    			/// </summary>
-    			public static string SetAsPrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.SetAsPrimaryLanguage);
-    
-    		}
-    		
-    		public static partial class EditParameter
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Description:
-    			/// </summary>
-    			public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditParameter.Description);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Name:
-    			/// </summary>
-    			public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditParameter.Name);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Order:
-    			/// </summary>
-    			public static string Order => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditParameter.Order);
-    
-    		}
-    		
-    		public static partial class ExceptionViewer
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: All Messages
-    			/// </summary>
-    			public static string AllMessages => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.AllMessages);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: App version:
-    			/// </summary>
-    			public static string AppVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.AppVersion);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Copy to clipboard
-    			/// </summary>
-    			public static string CopyToClipboard => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.CopyToClipboard);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Current time:
-    			/// </summary>
-    			public static string CurrentTime => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.CurrentTime);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Unexpected exception occured
-    			/// </summary>
-    			public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.DialogTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Wrap text
-    			/// </summary>
-    			public static string WrapText => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.WrapText);
-    
-    		}
-    		
-    		public static partial class Export
-    		{
-        		public static partial class Columns
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Code
-        			/// </summary>
-        			public static string Code => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Columns.Code);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: English name
-        			/// </summary>
-        			public static string EnglishName => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Columns.EnglishName);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Primary
-        			/// </summary>
-        			public static string Primary => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Columns.Primary);
-        
-        		}
-        		
-        		public static partial class Validations
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: At least two languages must be selected for export!
-        			/// </summary>
-        			public static string MinimumLanguagesMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Validations.MinimumLanguagesMessage);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: File name must be specified.
-        			/// </summary>
-        			public static string MissingFileNameMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Validations.MissingFileNameMessage);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: There are no exporters available.
-        			/// </summary>
-        			public static string NoExportersAvailable => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Validations.NoExportersAvailable);
-        
-        		}
-    			/// <summary>
-    			/// Gets localized string similar to: Available exporters:
-    			/// </summary>
-    			public static string AvailableExporters => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.AvailableExporters);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: All resources
-    			/// </summary>
-    			public static string ExportingAllResources => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportingAllResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: All resources (Recursive)
-    			/// </summary>
-    			public static string ExportingAllResourcesRecursive => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportingAllResourcesRecursive);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting:
-    			/// </summary>
-    			public static string ExportingLabel => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportingLabel);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Selected resources ({0})
-    			/// </summary>
-    			public static string ExportingSelectedResources(object countOfResources) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportingSelectedResources), countOfResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Export resources to file
-    			/// </summary>
-    			public static string ExportResourcesToFile => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportResourcesToFile);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Export to file:
-    			/// </summary>
-    			public static string ExportToFile => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportToFile);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Export resources
-    			/// </summary>
-    			public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.PageTitle);
-    
-    		}
-    		
-    		public static partial class Import
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Allow import of new languages
-    			/// </summary>
-    			public static string AllowImportNewLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.AllowImportNewLanguages);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Available importers:
-    			/// </summary>
-    			public static string AvailableImporters => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.AvailableImporters);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Files to import:
-    			/// </summary>
-    			public static string FilesToImport => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.FilesToImport);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Import mode:
-    			/// </summary>
-    			public static string ImportMode => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ImportMode);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Merge with existing resources
-    			/// </summary>
-    			public static string ModeAutoMerge => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ModeAutoMerge);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Categories and resources imported from file(s) will be merged with existing cate...
-    			/// </summary>
-    			public static string ModeAutoMergeHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ModeAutoMergeHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Categories and resources imported from file(s) will be added into a new category...
-    			/// </summary>
-    			public static string ModeImportAsHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ModeImportAsHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Import into a new category
-    			/// </summary>
-    			public static string ModeImportAsNew => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ModeImportAsNew);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: There are no importers available.
-    			/// </summary>
-    			public static string NoImportersAvailable => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.NoImportersAvailable);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Import resources from file(s)
-    			/// </summary>
-    			public static string Title => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.Title);
-    
-    		}
-    		
-    		public static partial class PasteConfirm
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Select missing languages to be added to model project:
-    			/// </summary>
-    			public static string AddMissingLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PasteConfirm.AddMissingLanguages);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resources translations from clipboard contains missing languages for current mod...
-    			/// </summary>
-    			public static string Caption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PasteConfirm.Caption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Paste from clipboard / missing languages
-    			/// </summary>
-    			public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PasteConfirm.DialogTitle);
-    
-    		}
-    		
-    		public static partial class PluginHelp
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Plugin Help
-    			/// </summary>
-    			public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PluginHelp.DialogTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Plugin '{0}' Help
-    			/// </summary>
-    			public static string Title(object pluginName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PluginHelp.Title), pluginName);
-    
-    		}
-    		
-    		public static partial class ResourceParameters
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Move selected parameter down
-    			/// </summary>
-    			public static string MoveParameterDownTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ResourceParameters.MoveParameterDownTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Move selected parameter up
-    			/// </summary>
-    			public static string MoveParameterUpTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ResourceParameters.MoveParameterUpTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Parameters will be used later when generating source code from current project f...
-    			/// </summary>
-    			public static string ParameterUsage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ResourceParameters.ParameterUsage);
-    
-    		}
-    		
-    		public static partial class UnhandledError
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to report this error to us?...
-    			/// </summary>
-    			public static string Detail => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UnhandledError.Detail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Unexpected error occured!
-    			/// </summary>
-    			public static string Message => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UnhandledError.Message);
-    
-    		}
-    		
-    		public static partial class VsOptions
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Apply Settings Change
-    			/// </summary>
-    			public static string ApplyChangesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.VsOptions.ApplyChangesCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: WARNING: ...
-    			/// </summary>
-    			public static string ApplyChangesDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.VsOptions.ApplyChangesDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to apply settings change?
-    			/// </summary>
-    			public static string ApplyChangesMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.VsOptions.ApplyChangesMessage);
-    
-    		}
+			public static partial class About
+			{
+				/// <summary>
+				/// Gets localized string similar to: Program version: {0}
+				/// </summary>
+				public static string AppVersion(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.About.AppVersion), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: Localization HQ Editor - About
+				/// </summary>
+				public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.About.DialogTitle);
+	
+			}
+			
+			public static partial class AppSettings
+			{
+				public static partial class PageGeneral
+				{
+					/// <summary>
+					/// Gets localized string similar to: Color theme
+					/// </summary>
+					public static string ColorTheme => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageGeneral.ColorTheme);
+		
+					/// <summary>
+					/// Gets localized string similar to: Default language is required.
+					/// </summary>
+					public static string DefaultLanguageIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageGeneral.DefaultLanguageIsRequired);
+		
+					/// <summary>
+					/// Gets localized string similar to: Lock translations when resource state is changed to Final
+					/// </summary>
+					public static string LockTranslationsWithResource => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageGeneral.LockTranslationsWithResource);
+		
+				}
+				
+				public static partial class PagePlugins
+				{
+					/// <summary>
+					/// Gets localized string similar to: Cannot enable plugin because active license ({0}) has disabled '{1}' feature.
+					/// </summary>
+					public static string CannotEnablePluginFeatureIsDisabled0000(object licenseName,object featureName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PagePlugins.CannotEnablePluginFeatureIsDisabled0000), licenseName,featureName);
+		
+					/// <summary>
+					/// Gets localized string similar to: Installed plugins:
+					/// </summary>
+					public static string InstalledPluginsHeader => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PagePlugins.InstalledPluginsHeader);
+		
+					/// <summary>
+					/// Gets localized string similar to: Plugins
+					/// </summary>
+					public static string Title => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PagePlugins.Title);
+		
+				}
+				
+				public static partial class PageTranslator
+				{
+					public static partial class Test
+					{
+						/// <summary>
+						/// Gets localized string similar to: Testing '{0}'
+						/// </summary>
+						public static string TestingText(object translatorName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.Test.TestingText), translatorName);
+			
+						/// <summary>
+						/// Gets localized string similar to: Testing '{0}' succeeded.
+						/// </summary>
+						public static string TestSucceed(object translatorName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.Test.TestSucceed), translatorName);
+			
+						/// <summary>
+						/// Gets localized string similar to: Test Succeed
+						/// </summary>
+						public static string TestSucceedTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.Test.TestSucceedTitle);
+			
+					}
+					/// <summary>
+					/// Gets localized string similar to: Enable translator integration
+					/// </summary>
+					public static string EnableTranslation => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.EnableTranslation);
+		
+					/// <summary>
+					/// Gets localized string similar to: Translator must be configured for integration to work properly.
+					/// </summary>
+					public static string ShowConfigureHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PageTranslator.ShowConfigureHint);
+		
+				}
+				
+				public static partial class PluginConfigure
+				{
+					/// <summary>
+					/// Gets localized string similar to: Plugin Help...
+					/// </summary>
+					public static string PluginHelp => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PluginConfigure.PluginHelp);
+		
+					/// <summary>
+					/// Gets localized string similar to: version:
+					/// </summary>
+					public static string PluginVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.PluginConfigure.PluginVersion);
+		
+				}
+				/// <summary>
+				/// Gets localized string similar to: Application lozalization
+				/// </summary>
+				public static string ApplicationLocalization => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.ApplicationLocalization);
+	
+				/// <summary>
+				/// Gets localized string similar to: Check for updates
+				/// </summary>
+				public static string ButtonCheckForUpdates => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.ButtonCheckForUpdates);
+	
+				/// <summary>
+				/// Gets localized string similar to: Change application behavior
+				/// </summary>
+				public static string CaptionHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.CaptionHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Check updates when application starts
+				/// </summary>
+				public static string CheckUpdatesOnAppStart => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.CheckUpdatesOnAppStart);
+	
+				/// <summary>
+				/// Gets localized string similar to: Default language for new projects
+				/// </summary>
+				public static string DefaultLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.DefaultLanguage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Preferences
+				/// </summary>
+				public static string DialogCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.DialogCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Localization HQ Editor - Preferences
+				/// </summary>
+				public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.DialogTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Open last project when application starts
+				/// </summary>
+				public static string OpenLastProjectOnStartup => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.OpenLastProjectOnStartup);
+	
+				/// <summary>
+				/// Gets localized string similar to: Show hints
+				/// </summary>
+				public static string ShowHints => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.AppSettings.ShowHints);
+	
+			}
+			
+			public static partial class ChangePassword
+			{
+				/// <summary>
+				/// Gets localized string similar to: Current password:
+				/// </summary>
+				public static string CurrentPassword => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.CurrentPassword);
+	
+				/// <summary>
+				/// Gets localized string similar to: Email:
+				/// </summary>
+				public static string Email => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.Email);
+	
+				/// <summary>
+				/// Gets localized string similar to: New password:
+				/// </summary>
+				public static string NewPassword => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.NewPassword);
+	
+				/// <summary>
+				/// Gets localized string similar to: New password confirm:
+				/// </summary>
+				public static string NewPasswordConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.NewPasswordConfirm);
+	
+				/// <summary>
+				/// Gets localized string similar to: Account - Change Password
+				/// </summary>
+				public static string Title => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ChangePassword.Title);
+	
+			}
+			
+			public static partial class CodeGenerator
+			{
+				/// <summary>
+				/// Gets localized string similar to: Reset To Default
+				/// </summary>
+				public static string ButtonResetToDefault => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ButtonResetToDefault);
+	
+				/// <summary>
+				/// Gets localized string similar to: Reset Settings To Default Values
+				/// </summary>
+				public static string ResetConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ResetConfirmCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to reset settings to its default values?
+				/// </summary>
+				public static string ResetConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ResetConfirmMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Template id: {0}
+				/// </summary>
+				public static string TemplateId(object templateId) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.TemplateId), templateId);
+	
+				/// <summary>
+				/// Gets localized string similar to: Template name: {0}
+				/// </summary>
+				public static string TemplateName(object templateName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.TemplateName), templateName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Code Generator Settings
+				/// </summary>
+				public static string Title => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.Title);
+	
+			}
+			
+			public static partial class EditLanguage
+			{
+				/// <summary>
+				/// Gets localized string similar to: Add language
+				/// </summary>
+				public static string DialogCaptionAdd => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogCaptionAdd);
+	
+				/// <summary>
+				/// Gets localized string similar to: Adds new language to current project
+				/// </summary>
+				public static string DialogCaptionAddHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogCaptionAddHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Edit language
+				/// </summary>
+				public static string DialogCaptionEdit => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogCaptionEdit);
+	
+				/// <summary>
+				/// Gets localized string similar to: Edit language
+				/// </summary>
+				public static string DialogCaptionEditHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogCaptionEditHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Add language
+				/// </summary>
+				public static string DialogTitleAdd => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogTitleAdd);
+	
+				/// <summary>
+				/// Gets localized string similar to: Edit language
+				/// </summary>
+				public static string DialogTitleEdit => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.DialogTitleEdit);
+	
+				/// <summary>
+				/// Gets localized string similar to: Is primary language?
+				/// </summary>
+				public static string IsPrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.IsPrimaryLanguage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Neutral language
+				/// </summary>
+				public static string LanguagesTypeNeutral => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.LanguagesTypeNeutral);
+	
+				/// <summary>
+				/// Gets localized string similar to: Specific language
+				/// </summary>
+				public static string LanguagesTypeSpecific => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.LanguagesTypeSpecific);
+	
+				/// <summary>
+				/// Gets localized string similar to: Languages type:
+				/// </summary>
+				public static string LanguageTypeInfo => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.LanguageTypeInfo);
+	
+				/// <summary>
+				/// Gets localized string similar to: Set as primary language
+				/// </summary>
+				public static string SetAsPrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditLanguage.SetAsPrimaryLanguage);
+	
+			}
+			
+			public static partial class EditParameter
+			{
+				/// <summary>
+				/// Gets localized string similar to: Description:
+				/// </summary>
+				public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditParameter.Description);
+	
+				/// <summary>
+				/// Gets localized string similar to: Name:
+				/// </summary>
+				public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditParameter.Name);
+	
+				/// <summary>
+				/// Gets localized string similar to: Order:
+				/// </summary>
+				public static string Order => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.EditParameter.Order);
+	
+			}
+			
+			public static partial class ExceptionViewer
+			{
+				/// <summary>
+				/// Gets localized string similar to: All Messages
+				/// </summary>
+				public static string AllMessages => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.AllMessages);
+	
+				/// <summary>
+				/// Gets localized string similar to: App version:
+				/// </summary>
+				public static string AppVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.AppVersion);
+	
+				/// <summary>
+				/// Gets localized string similar to: Copy to clipboard
+				/// </summary>
+				public static string CopyToClipboard => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.CopyToClipboard);
+	
+				/// <summary>
+				/// Gets localized string similar to: Current time:
+				/// </summary>
+				public static string CurrentTime => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.CurrentTime);
+	
+				/// <summary>
+				/// Gets localized string similar to: Unexpected exception occured
+				/// </summary>
+				public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.DialogTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Wrap text
+				/// </summary>
+				public static string WrapText => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ExceptionViewer.WrapText);
+	
+			}
+			
+			public static partial class Export
+			{
+				public static partial class Columns
+				{
+					/// <summary>
+					/// Gets localized string similar to: Code
+					/// </summary>
+					public static string Code => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Columns.Code);
+		
+					/// <summary>
+					/// Gets localized string similar to: English name
+					/// </summary>
+					public static string EnglishName => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Columns.EnglishName);
+		
+					/// <summary>
+					/// Gets localized string similar to: Primary
+					/// </summary>
+					public static string Primary => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Columns.Primary);
+		
+				}
+				
+				public static partial class Validations
+				{
+					/// <summary>
+					/// Gets localized string similar to: At least two languages must be selected for export!
+					/// </summary>
+					public static string MinimumLanguagesMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Validations.MinimumLanguagesMessage);
+		
+					/// <summary>
+					/// Gets localized string similar to: File name must be specified.
+					/// </summary>
+					public static string MissingFileNameMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Validations.MissingFileNameMessage);
+		
+					/// <summary>
+					/// Gets localized string similar to: There are no exporters available.
+					/// </summary>
+					public static string NoExportersAvailable => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.Validations.NoExportersAvailable);
+		
+				}
+				/// <summary>
+				/// Gets localized string similar to: Available exporters:
+				/// </summary>
+				public static string AvailableExporters => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.AvailableExporters);
+	
+				/// <summary>
+				/// Gets localized string similar to: All resources
+				/// </summary>
+				public static string ExportingAllResources => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportingAllResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: All resources (Recursive)
+				/// </summary>
+				public static string ExportingAllResourcesRecursive => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportingAllResourcesRecursive);
+	
+				/// <summary>
+				/// Gets localized string similar to: Exporting:
+				/// </summary>
+				public static string ExportingLabel => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportingLabel);
+	
+				/// <summary>
+				/// Gets localized string similar to: Selected resources ({0})
+				/// </summary>
+				public static string ExportingSelectedResources(object countOfResources) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportingSelectedResources), countOfResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: Export resources to file
+				/// </summary>
+				public static string ExportResourcesToFile => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportResourcesToFile);
+	
+				/// <summary>
+				/// Gets localized string similar to: Export to file:
+				/// </summary>
+				public static string ExportToFile => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.ExportToFile);
+	
+				/// <summary>
+				/// Gets localized string similar to: Export resources
+				/// </summary>
+				public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Export.PageTitle);
+	
+			}
+			
+			public static partial class Import
+			{
+				/// <summary>
+				/// Gets localized string similar to: Allow import of new languages
+				/// </summary>
+				public static string AllowImportNewLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.AllowImportNewLanguages);
+	
+				/// <summary>
+				/// Gets localized string similar to: Available importers:
+				/// </summary>
+				public static string AvailableImporters => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.AvailableImporters);
+	
+				/// <summary>
+				/// Gets localized string similar to: Files to import:
+				/// </summary>
+				public static string FilesToImport => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.FilesToImport);
+	
+				/// <summary>
+				/// Gets localized string similar to: Import mode:
+				/// </summary>
+				public static string ImportMode => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ImportMode);
+	
+				/// <summary>
+				/// Gets localized string similar to: Merge with existing resources
+				/// </summary>
+				public static string ModeAutoMerge => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ModeAutoMerge);
+	
+				/// <summary>
+				/// Gets localized string similar to: Categories and resources imported from file(s) will be merged with existing cate...
+				/// </summary>
+				public static string ModeAutoMergeHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ModeAutoMergeHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Categories and resources imported from file(s) will be added into a new category...
+				/// </summary>
+				public static string ModeImportAsHint => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ModeImportAsHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Import into a new category
+				/// </summary>
+				public static string ModeImportAsNew => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.ModeImportAsNew);
+	
+				/// <summary>
+				/// Gets localized string similar to: There are no importers available.
+				/// </summary>
+				public static string NoImportersAvailable => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.NoImportersAvailable);
+	
+				/// <summary>
+				/// Gets localized string similar to: Import resources from file(s)
+				/// </summary>
+				public static string Title => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.Import.Title);
+	
+			}
+			
+			public static partial class PasteConfirm
+			{
+				/// <summary>
+				/// Gets localized string similar to: Select missing languages to be added to model project:
+				/// </summary>
+				public static string AddMissingLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PasteConfirm.AddMissingLanguages);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resources translations from clipboard contains missing languages for current mod...
+				/// </summary>
+				public static string Caption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PasteConfirm.Caption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Paste from clipboard / missing languages
+				/// </summary>
+				public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PasteConfirm.DialogTitle);
+	
+			}
+			
+			public static partial class PluginHelp
+			{
+				/// <summary>
+				/// Gets localized string similar to: Plugin Help
+				/// </summary>
+				public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PluginHelp.DialogTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Plugin '{0}' Help
+				/// </summary>
+				public static string Title(object pluginName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.PluginHelp.Title), pluginName);
+	
+			}
+			
+			public static partial class ResourceParameters
+			{
+				/// <summary>
+				/// Gets localized string similar to: Move selected parameter down
+				/// </summary>
+				public static string MoveParameterDownTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ResourceParameters.MoveParameterDownTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Move selected parameter up
+				/// </summary>
+				public static string MoveParameterUpTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ResourceParameters.MoveParameterUpTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Parameters will be used later when generating source code from current project f...
+				/// </summary>
+				public static string ParameterUsage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.ResourceParameters.ParameterUsage);
+	
+			}
+			
+			public static partial class UnhandledError
+			{
+				/// <summary>
+				/// Gets localized string similar to: Do you want to report this error to us?...
+				/// </summary>
+				public static string Detail => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UnhandledError.Detail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Unexpected error occured!
+				/// </summary>
+				public static string Message => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UnhandledError.Message);
+	
+			}
+			
+			public static partial class VsOptions
+			{
+				/// <summary>
+				/// Gets localized string similar to: Apply Settings Change
+				/// </summary>
+				public static string ApplyChangesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.VsOptions.ApplyChangesCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: WARNING: ...
+				/// </summary>
+				public static string ApplyChangesDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.VsOptions.ApplyChangesDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to apply settings change?
+				/// </summary>
+				public static string ApplyChangesMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.VsOptions.ApplyChangesMessage);
+	
+			}
 		}
 		
 		public static partial class Enums
 		{
-    		public static partial class ModelLoadStatus
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Model loading error.
-    			/// </summary>
-    			public static string LoadError => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ModelLoadStatus.LoadError);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: File content is not valid localization projekt.
-    			/// </summary>
-    			public static string ModelSourceInvalid => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ModelLoadStatus.ModelSourceInvalid);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Content of project file has old format version and needs to be upgraded to newer...
-    			/// </summary>
-    			public static string ModelUpgraderRequired => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ModelLoadStatus.ModelUpgraderRequired);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Localization project was loaded successfully.
-    			/// </summary>
-    			public static string Success => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ModelLoadStatus.Success);
-    
-    		}
-    		
-    		public static partial class ProductFeatures
-    		{
-        		public static partial class Descriptions
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Exporting resources to various external formats
-        			/// </summary>
-        			public static string Export => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.Export);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Importing resources from supported external formats
-        			/// </summary>
-        			public static string Import => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.Import);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Multiple Visual Studio instances are allowed to run LHQ Editor at the same time
-        			/// </summary>
-        			public static string MultiInstances => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.MultiInstances);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Plugin system extends then program with various plugins
-        			/// </summary>
-        			public static string Plugins => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.Plugins);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Translation services provide support for translating resources between different...
-        			/// </summary>
-        			public static string TranslationServices => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.TranslationServices);
-        
-        		}
-        		
-        		public static partial class Names
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Export resources
-        			/// </summary>
-        			public static string Export => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.Export);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Import resources
-        			/// </summary>
-        			public static string Import => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.Import);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Application multiple instances
-        			/// </summary>
-        			public static string MultiInstances => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.MultiInstances);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Plugins system
-        			/// </summary>
-        			public static string Plugins => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.Plugins);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Translation services
-        			/// </summary>
-        			public static string TranslationServices => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.TranslationServices);
-        
-        		}
-    		}
-    		
-    		public static partial class ProjectBusyOperationType
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting resources from project...
-    			/// </summary>
-    			public static string Export => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.Export);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Importing resources into project...
-    			/// </summary>
-    			public static string Import => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.Import);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Opening project...
-    			/// </summary>
-    			public static string OpenProject => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.OpenProject);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Saving project...
-    			/// </summary>
-    			public static string SaveProject => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.SaveProject);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Searching...
-    			/// </summary>
-    			public static string TreeSearch => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.TreeSearch);
-    
-    		}
-    		
-    		public static partial class ResourceElementTranslationState
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Edited
-    			/// </summary>
-    			public static string Edited => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ResourceElementTranslationState.Edited);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Final
-    			/// </summary>
-    			public static string Final => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ResourceElementTranslationState.Final);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Review Required
-    			/// </summary>
-    			public static string NeedsReview => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ResourceElementTranslationState.NeedsReview);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New
-    			/// </summary>
-    			public static string New => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ResourceElementTranslationState.New);
-    
-    		}
-    		
-    		public static partial class StartupModelLoadStatus
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Could not open project file '{0}', file does not exist or access denied!
-    			/// </summary>
-    			public static string FileNotFoundOrAccessDenied(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Enums.StartupModelLoadStatus.FileNotFoundOrAccessDenied), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Could not open project file '{0}', file content is invalid!
-    			/// </summary>
-    			public static string ModelLoadError(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Enums.StartupModelLoadStatus.ModelLoadError), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: ModelUpgradeRequired - {0}
-    			/// </summary>
-    			public static string ModelUpgradeRequired(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Enums.StartupModelLoadStatus.ModelUpgradeRequired), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project file '{0}' was loaded successfully.
-    			/// </summary>
-    			public static string Success(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Enums.StartupModelLoadStatus.Success), param0);
-    
-    		}
-    		
-    		public static partial class TreeElementType
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Category
-    			/// </summary>
-    			public static string Category => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.TreeElementType.Category);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Model
-    			/// </summary>
-    			public static string Model => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.TreeElementType.Model);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource
-    			/// </summary>
-    			public static string Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.TreeElementType.Resource);
-    
-    		}
+			public static partial class ModelLoadStatus
+			{
+				/// <summary>
+				/// Gets localized string similar to: Model loading error.
+				/// </summary>
+				public static string LoadError => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ModelLoadStatus.LoadError);
+	
+				/// <summary>
+				/// Gets localized string similar to: File content is not valid localization projekt.
+				/// </summary>
+				public static string ModelSourceInvalid => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ModelLoadStatus.ModelSourceInvalid);
+	
+				/// <summary>
+				/// Gets localized string similar to: Content of project file has old format version and needs to be upgraded to newer...
+				/// </summary>
+				public static string ModelUpgraderRequired => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ModelLoadStatus.ModelUpgraderRequired);
+	
+				/// <summary>
+				/// Gets localized string similar to: Localization project was loaded successfully.
+				/// </summary>
+				public static string Success => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ModelLoadStatus.Success);
+	
+			}
+			
+			public static partial class ProductFeatures
+			{
+				public static partial class Descriptions
+				{
+					/// <summary>
+					/// Gets localized string similar to: Exporting resources to various external formats
+					/// </summary>
+					public static string Export => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.Export);
+		
+					/// <summary>
+					/// Gets localized string similar to: Importing resources from supported external formats
+					/// </summary>
+					public static string Import => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.Import);
+		
+					/// <summary>
+					/// Gets localized string similar to: Multiple Visual Studio instances are allowed to run LHQ Editor at the same time
+					/// </summary>
+					public static string MultiInstances => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.MultiInstances);
+		
+					/// <summary>
+					/// Gets localized string similar to: Plugin system extends then program with various plugins
+					/// </summary>
+					public static string Plugins => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.Plugins);
+		
+					/// <summary>
+					/// Gets localized string similar to: Translation services provide support for translating resources between different...
+					/// </summary>
+					public static string TranslationServices => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Descriptions.TranslationServices);
+		
+				}
+				
+				public static partial class Names
+				{
+					/// <summary>
+					/// Gets localized string similar to: Export resources
+					/// </summary>
+					public static string Export => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.Export);
+		
+					/// <summary>
+					/// Gets localized string similar to: Import resources
+					/// </summary>
+					public static string Import => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.Import);
+		
+					/// <summary>
+					/// Gets localized string similar to: Application multiple instances
+					/// </summary>
+					public static string MultiInstances => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.MultiInstances);
+		
+					/// <summary>
+					/// Gets localized string similar to: Plugins system
+					/// </summary>
+					public static string Plugins => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.Plugins);
+		
+					/// <summary>
+					/// Gets localized string similar to: Translation services
+					/// </summary>
+					public static string TranslationServices => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProductFeatures.Names.TranslationServices);
+		
+				}
+			}
+			
+			public static partial class ProjectBusyOperationType
+			{
+				/// <summary>
+				/// Gets localized string similar to: Exporting resources from project...
+				/// </summary>
+				public static string Export => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.Export);
+	
+				/// <summary>
+				/// Gets localized string similar to: Importing resources into project...
+				/// </summary>
+				public static string Import => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.Import);
+	
+				/// <summary>
+				/// Gets localized string similar to: Opening project...
+				/// </summary>
+				public static string OpenProject => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.OpenProject);
+	
+				/// <summary>
+				/// Gets localized string similar to: Saving project...
+				/// </summary>
+				public static string SaveProject => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.SaveProject);
+	
+				/// <summary>
+				/// Gets localized string similar to: Searching...
+				/// </summary>
+				public static string TreeSearch => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ProjectBusyOperationType.TreeSearch);
+	
+			}
+			
+			public static partial class ResourceElementTranslationState
+			{
+				/// <summary>
+				/// Gets localized string similar to: Edited
+				/// </summary>
+				public static string Edited => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ResourceElementTranslationState.Edited);
+	
+				/// <summary>
+				/// Gets localized string similar to: Final
+				/// </summary>
+				public static string Final => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ResourceElementTranslationState.Final);
+	
+				/// <summary>
+				/// Gets localized string similar to: Review Required
+				/// </summary>
+				public static string NeedsReview => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ResourceElementTranslationState.NeedsReview);
+	
+				/// <summary>
+				/// Gets localized string similar to: New
+				/// </summary>
+				public static string New => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.ResourceElementTranslationState.New);
+	
+			}
+			
+			public static partial class StartupModelLoadStatus
+			{
+				/// <summary>
+				/// Gets localized string similar to: Could not open project file '{0}', file does not exist or access denied!
+				/// </summary>
+				public static string FileNotFoundOrAccessDenied(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Enums.StartupModelLoadStatus.FileNotFoundOrAccessDenied), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: Could not open project file '{0}', file content is invalid!
+				/// </summary>
+				public static string ModelLoadError(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Enums.StartupModelLoadStatus.ModelLoadError), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: ModelUpgradeRequired - {0}
+				/// </summary>
+				public static string ModelUpgradeRequired(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Enums.StartupModelLoadStatus.ModelUpgradeRequired), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project file '{0}' was loaded successfully.
+				/// </summary>
+				public static string Success(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Enums.StartupModelLoadStatus.Success), param0);
+	
+			}
+			
+			public static partial class TreeElementType
+			{
+				/// <summary>
+				/// Gets localized string similar to: Category
+				/// </summary>
+				public static string Category => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.TreeElementType.Category);
+	
+				/// <summary>
+				/// Gets localized string similar to: Model
+				/// </summary>
+				public static string Model => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.TreeElementType.Model);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource
+				/// </summary>
+				public static string Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Enums.TreeElementType.Resource);
+	
+			}
 		}
 		
 		public static partial class Licensing
 		{
-    		public static partial class Enums
-    		{
-        		public static partial class ProductVariantType
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Commercial
-        			/// </summary>
-        			public static string Commercial => StringsContext.Instance.GetStringSafely(StringsKeys.Licensing.Enums.ProductVariantType.Commercial);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Free
-        			/// </summary>
-        			public static string Free => StringsContext.Instance.GetStringSafely(StringsKeys.Licensing.Enums.ProductVariantType.Free);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Trial
-        			/// </summary>
-        			public static string Trial => StringsContext.Instance.GetStringSafely(StringsKeys.Licensing.Enums.ProductVariantType.Trial);
-        
-        		}
-    		}
+			public static partial class Enums
+			{
+				public static partial class ProductVariantType
+				{
+					/// <summary>
+					/// Gets localized string similar to: Commercial
+					/// </summary>
+					public static string Commercial => StringsContext.Instance.GetStringSafely(StringsKeys.Licensing.Enums.ProductVariantType.Commercial);
+		
+					/// <summary>
+					/// Gets localized string similar to: Free
+					/// </summary>
+					public static string Free => StringsContext.Instance.GetStringSafely(StringsKeys.Licensing.Enums.ProductVariantType.Free);
+		
+					/// <summary>
+					/// Gets localized string similar to: Trial
+					/// </summary>
+					public static string Trial => StringsContext.Instance.GetStringSafely(StringsKeys.Licensing.Enums.ProductVariantType.Trial);
+		
+				}
+			}
 		}
 		
 		public static partial class MainMenu
 		{
-    		public static partial class Edit
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _Copy
-    			/// </summary>
-    			public static string Copy => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Copy);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Cu_t
-    			/// </summary>
-    			public static string Cut => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Cut);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Delete
-    			/// </summary>
-    			public static string Delete => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Delete);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Duplicate
-    			/// </summary>
-    			public static string Duplicate => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Duplicate);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Find...
-    			/// </summary>
-    			public static string FindElement => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.FindElement);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Find for category or resource
-    			/// </summary>
-    			public static string FindElementTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.FindElementTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Focus _Navigation
-    			/// </summary>
-    			public static string FocusNavigation => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.FocusNavigation);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Edit
-    			/// </summary>
-    			public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.MenuItem);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New category
-    			/// </summary>
-    			public static string NewCategory => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.NewCategory);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New resource
-    			/// </summary>
-    			public static string NewResource => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.NewResource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Paste
-    			/// </summary>
-    			public static string Paste => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Paste);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Pr_eferences
-    			/// </summary>
-    			public static string Preferences => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Preferences);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Redo
-    			/// </summary>
-    			public static string Redo => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Redo);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Rename
-    			/// </summary>
-    			public static string Rename => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Rename);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Undo
-    			/// </summary>
-    			public static string Undo => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Undo);
-    
-    		}
-    		
-    		public static partial class File
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _Close
-    			/// </summary>
-    			public static string CloseProject => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.CloseProject);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Close current project
-    			/// </summary>
-    			public static string CloseProjectTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.CloseProjectTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: E_xit
-    			/// </summary>
-    			public static string ExitApp => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ExitApp);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Exit application
-    			/// </summary>
-    			public static string ExitAppTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ExitAppTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Export
-    			/// </summary>
-    			public static string Export => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.Export);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Export resources...
-    			/// </summary>
-    			public static string ExportResources => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ExportResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Import
-    			/// </summary>
-    			public static string Import => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.Import);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Import resources...
-    			/// </summary>
-    			public static string ImportResources => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ImportResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Import projet from external translation
-    			/// </summary>
-    			public static string ImportTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ImportTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _File
-    			/// </summary>
-    			public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.MenuItem);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _New project
-    			/// </summary>
-    			public static string NewProject => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.NewProject);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Creates new project
-    			/// </summary>
-    			public static string NewProjectTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.NewProjectTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Open project
-    			/// </summary>
-    			public static string OpenProject => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.OpenProject);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Open project file
-    			/// </summary>
-    			public static string OpenProjectTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.OpenProjectTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project Se_ttings
-    			/// </summary>
-    			public static string ProjectSettings => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ProjectSettings);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Recent projects
-    			/// </summary>
-    			public static string RecentProjects => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.RecentProjects);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: List of recently opened projects
-    			/// </summary>
-    			public static string RecentProjectsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.RecentProjectsTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Save project
-    			/// </summary>
-    			public static string SaveProject => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.SaveProject);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Save project _as...
-    			/// </summary>
-    			public static string SaveProjectAs => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.SaveProjectAs);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Save project changes to new file
-    			/// </summary>
-    			public static string SaveProjectAsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.SaveProjectAsTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Save project changes to file
-    			/// </summary>
-    			public static string SaveProjectTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.SaveProjectTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Settings
-    			/// </summary>
-    			public static string Settings => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.Settings);
-    
-    		}
-    		
-    		public static partial class Help
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _About
-    			/// </summary>
-    			public static string About => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.About);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Help
-    			/// </summary>
-    			public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.MenuItem);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Online Manual
-    			/// </summary>
-    			public static string OnlineManual => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.OnlineManual);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Product Web Page
-    			/// </summary>
-    			public static string ProductWebPage => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.ProductWebPage);
-    
-    		}
-    		
-    		public static partial class Languages
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _Languages
-    			/// </summary>
-    			public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Languages.MenuItem);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Settings
-    			/// </summary>
-    			public static string Settings => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Languages.Settings);
-    
-    		}
+			public static partial class Edit
+			{
+				/// <summary>
+				/// Gets localized string similar to: _Copy
+				/// </summary>
+				public static string Copy => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Copy);
+	
+				/// <summary>
+				/// Gets localized string similar to: Cu_t
+				/// </summary>
+				public static string Cut => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Cut);
+	
+				/// <summary>
+				/// Gets localized string similar to: Delete
+				/// </summary>
+				public static string Delete => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Delete);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Duplicate
+				/// </summary>
+				public static string Duplicate => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Duplicate);
+	
+				/// <summary>
+				/// Gets localized string similar to: Find...
+				/// </summary>
+				public static string FindElement => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.FindElement);
+	
+				/// <summary>
+				/// Gets localized string similar to: Find for category or resource
+				/// </summary>
+				public static string FindElementTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.FindElementTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Focus _Navigation
+				/// </summary>
+				public static string FocusNavigation => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.FocusNavigation);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Edit
+				/// </summary>
+				public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.MenuItem);
+	
+				/// <summary>
+				/// Gets localized string similar to: New category
+				/// </summary>
+				public static string NewCategory => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.NewCategory);
+	
+				/// <summary>
+				/// Gets localized string similar to: New resource
+				/// </summary>
+				public static string NewResource => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.NewResource);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Paste
+				/// </summary>
+				public static string Paste => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Paste);
+	
+				/// <summary>
+				/// Gets localized string similar to: Pr_eferences
+				/// </summary>
+				public static string Preferences => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Preferences);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Redo
+				/// </summary>
+				public static string Redo => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Redo);
+	
+				/// <summary>
+				/// Gets localized string similar to: Rename
+				/// </summary>
+				public static string Rename => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Rename);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Undo
+				/// </summary>
+				public static string Undo => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Edit.Undo);
+	
+			}
+			
+			public static partial class File
+			{
+				/// <summary>
+				/// Gets localized string similar to: _Close
+				/// </summary>
+				public static string CloseProject => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.CloseProject);
+	
+				/// <summary>
+				/// Gets localized string similar to: Close current project
+				/// </summary>
+				public static string CloseProjectTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.CloseProjectTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: E_xit
+				/// </summary>
+				public static string ExitApp => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ExitApp);
+	
+				/// <summary>
+				/// Gets localized string similar to: Exit application
+				/// </summary>
+				public static string ExitAppTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ExitAppTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Export
+				/// </summary>
+				public static string Export => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.Export);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Export resources...
+				/// </summary>
+				public static string ExportResources => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ExportResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Import
+				/// </summary>
+				public static string Import => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.Import);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Import resources...
+				/// </summary>
+				public static string ImportResources => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ImportResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: Import projet from external translation
+				/// </summary>
+				public static string ImportTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ImportTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: _File
+				/// </summary>
+				public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.MenuItem);
+	
+				/// <summary>
+				/// Gets localized string similar to: _New project
+				/// </summary>
+				public static string NewProject => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.NewProject);
+	
+				/// <summary>
+				/// Gets localized string similar to: Creates new project
+				/// </summary>
+				public static string NewProjectTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.NewProjectTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Open project
+				/// </summary>
+				public static string OpenProject => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.OpenProject);
+	
+				/// <summary>
+				/// Gets localized string similar to: Open project file
+				/// </summary>
+				public static string OpenProjectTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.OpenProjectTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project Se_ttings
+				/// </summary>
+				public static string ProjectSettings => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.ProjectSettings);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Recent projects
+				/// </summary>
+				public static string RecentProjects => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.RecentProjects);
+	
+				/// <summary>
+				/// Gets localized string similar to: List of recently opened projects
+				/// </summary>
+				public static string RecentProjectsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.RecentProjectsTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Save project
+				/// </summary>
+				public static string SaveProject => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.SaveProject);
+	
+				/// <summary>
+				/// Gets localized string similar to: Save project _as...
+				/// </summary>
+				public static string SaveProjectAs => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.SaveProjectAs);
+	
+				/// <summary>
+				/// Gets localized string similar to: Save project changes to new file
+				/// </summary>
+				public static string SaveProjectAsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.SaveProjectAsTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Save project changes to file
+				/// </summary>
+				public static string SaveProjectTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.SaveProjectTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Settings
+				/// </summary>
+				public static string Settings => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.File.Settings);
+	
+			}
+			
+			public static partial class Help
+			{
+				/// <summary>
+				/// Gets localized string similar to: _About
+				/// </summary>
+				public static string About => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.About);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Help
+				/// </summary>
+				public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.MenuItem);
+	
+				/// <summary>
+				/// Gets localized string similar to: Online Manual
+				/// </summary>
+				public static string OnlineManual => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.OnlineManual);
+	
+				/// <summary>
+				/// Gets localized string similar to: Product Web Page
+				/// </summary>
+				public static string ProductWebPage => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.ProductWebPage);
+	
+			}
+			
+			public static partial class Languages
+			{
+				/// <summary>
+				/// Gets localized string similar to: _Languages
+				/// </summary>
+				public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Languages.MenuItem);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Settings
+				/// </summary>
+				public static string Settings => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Languages.Settings);
+	
+			}
 			/// <summary>
 			/// Gets localized string similar to: _Translations
 			/// </summary>
@@ -4355,58 +4351,58 @@ namespace LHQ.App.Localization
 		
 		public static partial class Menu
 		{
-    		public static partial class CopySpecialMenu
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Copy as C# code
-    			/// </summary>
-    			public static string CopyAsCSharp => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.CopySpecialMenu.CopyAsCSharp);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Copy as Xaml markup
-    			/// </summary>
-    			public static string CopyAsXamlMarkup => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.CopySpecialMenu.CopyAsXamlMarkup);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Copy Special
-    			/// </summary>
-    			public static string CopySpecial => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.CopySpecialMenu.CopySpecial);
-    
-    		}
-    		
-    		public static partial class Help
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: About
-    			/// </summary>
-    			public static string About => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.About);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Help
-    			/// </summary>
-    			public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.MenuItem);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Online Manual
-    			/// </summary>
-    			public static string OnlineManual => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.OnlineManual);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Preferences
-    			/// </summary>
-    			public static string Preferences => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.Preferences);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Product Web Page
-    			/// </summary>
-    			public static string ProductWebPage => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.ProductWebPage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: What's New?
-    			/// </summary>
-    			public static string WhatsNew => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.WhatsNew);
-    
-    		}
+			public static partial class CopySpecialMenu
+			{
+				/// <summary>
+				/// Gets localized string similar to: Copy as C# code
+				/// </summary>
+				public static string CopyAsCSharp => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.CopySpecialMenu.CopyAsCSharp);
+	
+				/// <summary>
+				/// Gets localized string similar to: Copy as Xaml markup
+				/// </summary>
+				public static string CopyAsXamlMarkup => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.CopySpecialMenu.CopyAsXamlMarkup);
+	
+				/// <summary>
+				/// Gets localized string similar to: Copy Special
+				/// </summary>
+				public static string CopySpecial => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.CopySpecialMenu.CopySpecial);
+	
+			}
+			
+			public static partial class Help
+			{
+				/// <summary>
+				/// Gets localized string similar to: About
+				/// </summary>
+				public static string About => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.About);
+	
+				/// <summary>
+				/// Gets localized string similar to: Help
+				/// </summary>
+				public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.MenuItem);
+	
+				/// <summary>
+				/// Gets localized string similar to: Online Manual
+				/// </summary>
+				public static string OnlineManual => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.OnlineManual);
+	
+				/// <summary>
+				/// Gets localized string similar to: Preferences
+				/// </summary>
+				public static string Preferences => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.Preferences);
+	
+				/// <summary>
+				/// Gets localized string similar to: Product Web Page
+				/// </summary>
+				public static string ProductWebPage => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.ProductWebPage);
+	
+				/// <summary>
+				/// Gets localized string similar to: What's New?
+				/// </summary>
+				public static string WhatsNew => StringsContext.Instance.GetStringSafely(StringsKeys.Menu.Help.WhatsNew);
+	
+			}
 			/// <summary>
 			/// Gets localized string similar to: Collapse All
 			/// </summary>
@@ -4616,167 +4612,167 @@ namespace LHQ.App.Localization
 		
 		public static partial class Model
 		{
-    		public static partial class Tree
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Project root
-    			/// </summary>
-    			public static string ProjectRoot => StringsContext.Instance.GetStringSafely(StringsKeys.Model.Tree.ProjectRoot);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Multiple selection ({0} elements)
-    			/// </summary>
-    			public static string SelectionMultiple(object count) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Model.Tree.SelectionMultiple), count);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: None selected
-    			/// </summary>
-    			public static string SelectionNone => StringsContext.Instance.GetStringSafely(StringsKeys.Model.Tree.SelectionNone);
-    
-    		}
+			public static partial class Tree
+			{
+				/// <summary>
+				/// Gets localized string similar to: Project root
+				/// </summary>
+				public static string ProjectRoot => StringsContext.Instance.GetStringSafely(StringsKeys.Model.Tree.ProjectRoot);
+	
+				/// <summary>
+				/// Gets localized string similar to: Multiple selection ({0} elements)
+				/// </summary>
+				public static string SelectionMultiple(object count) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Model.Tree.SelectionMultiple), count);
+	
+				/// <summary>
+				/// Gets localized string similar to: None selected
+				/// </summary>
+				public static string SelectionNone => StringsContext.Instance.GetStringSafely(StringsKeys.Model.Tree.SelectionNone);
+	
+			}
 		}
 		
 		public static partial class Operations
 		{
-    		public static partial class ExitApp
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Exit application
-    			/// </summary>
-    			public static string ConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ExitApp.ConfirmCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to save changes before exit?
-    			/// </summary>
-    			public static string ConfirmDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ExitApp.ConfirmDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: There are unsaved changes in project.
-    			/// </summary>
-    			public static string ConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ExitApp.ConfirmMessage);
-    
-    		}
-    		
-    		public static partial class Move
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Moved {0}{1}{2} under {3} '{4}'
-    			/// </summary>
-    			public static string MoveChildsUndoUnitCommandName(object param0,object param1,object param2,object param3,object param4) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveChildsUndoUnitCommandName), param0,param1,param2,param3,param4);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Move resources (categories)
-    			/// </summary>
-    			public static string MoveElementsCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveElementsCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Some elements cant be moved because new parent already contains elements with sa...
-    			/// </summary>
-    			public static string MoveElementsSomeDuplicatesDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveElementsSomeDuplicatesDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Some elements will not be moved.
-    			/// </summary>
-    			public static string MoveElementsSomeDuplicatesMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveElementsSomeDuplicatesMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: No elements will be moved because new parent already contains elements with same...
-    			/// </summary>
-    			public static string MoveElementsStoppedErrorMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveElementsStoppedErrorMessage);
-    
-    		}
-    		
-    		public static partial class Project
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Open project
-    			/// </summary>
-    			public static string OpenProjectCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.OpenProjectCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Error loading project file '{0}', reason: {1}
-    			/// </summary>
-    			public static string OpenProjectErrorMessage(object param0,object param1) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.OpenProjectErrorMessage), param0,param1);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Save project error
-    			/// </summary>
-    			public static string ProjectSaveErrorTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.ProjectSaveErrorTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Save project file failed.
-    			/// </summary>
-    			public static string ProjectSaveFailed => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.ProjectSaveFailed);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Save project file failed because file '{0}' is read-only.
-    			/// </summary>
-    			public static string ProjectSaveFailedFileIsReadOnly(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.ProjectSaveFailedFileIsReadOnly), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Open recent project
-    			/// </summary>
-    			public static string RecentProjectDoestNotExistCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.RecentProjectDoestNotExistCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to remove it from recent project list?
-    			/// </summary>
-    			public static string RecentProjectDoestNotExistDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.RecentProjectDoestNotExistDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Recent project '{0}' does not exist or access denied.
-    			/// </summary>
-    			public static string RecentProjectDoestNotExistMessage(object recentFileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.RecentProjectDoestNotExistMessage), recentFileName);
-    
-    		}
-    		
-    		public static partial class ProjectSettings
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Project root contains some resources, could not turn off setting 'Allow resource...
-    			/// </summary>
-    			public static string ValidationError1 => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ProjectSettings.ValidationError1);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project contains some categories, could not change layout to 'Resources'.
-    			/// </summary>
-    			public static string ValidationError2 => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ProjectSettings.ValidationError2);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project settings
-    			/// </summary>
-    			public static string ValidationErrorCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ProjectSettings.ValidationErrorCaption);
-    
-    		}
-    		
-    		public static partial class Validations
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Category name could not be empty.
-    			/// </summary>
-    			public static string CategoryNameCouldNotBeEmpty => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.CategoryNameCouldNotBeEmpty);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Model name could not be empty.
-    			/// </summary>
-    			public static string ModelNameCouldNotBeEmpty => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.ModelNameCouldNotBeEmpty);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Name '{0}' contains disallowed characters, allowed are only a-z A-Z and numbers ...
-    			/// </summary>
-    			public static string NameContainsDisallowedCharacters(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.NameContainsDisallowedCharacters), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Name '{0}' starting with numbers which is not allowed.
-    			/// </summary>
-    			public static string NameStartingWithNumbersNotAllowed(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.NameStartingWithNumbersNotAllowed), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource name could not be empty.
-    			/// </summary>
-    			public static string ResourceNameCouldNotBeEmpty => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.ResourceNameCouldNotBeEmpty);
-    
-    		}
+			public static partial class ExitApp
+			{
+				/// <summary>
+				/// Gets localized string similar to: Exit application
+				/// </summary>
+				public static string ConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ExitApp.ConfirmCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to save changes before exit?
+				/// </summary>
+				public static string ConfirmDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ExitApp.ConfirmDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: There are unsaved changes in project.
+				/// </summary>
+				public static string ConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ExitApp.ConfirmMessage);
+	
+			}
+			
+			public static partial class Move
+			{
+				/// <summary>
+				/// Gets localized string similar to: Moved {0}{1}{2} under {3} '{4}'
+				/// </summary>
+				public static string MoveChildsUndoUnitCommandName(object param0,object param1,object param2,object param3,object param4) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveChildsUndoUnitCommandName), param0,param1,param2,param3,param4);
+	
+				/// <summary>
+				/// Gets localized string similar to: Move resources (categories)
+				/// </summary>
+				public static string MoveElementsCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveElementsCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Some elements cant be moved because new parent already contains elements with sa...
+				/// </summary>
+				public static string MoveElementsSomeDuplicatesDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveElementsSomeDuplicatesDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Some elements will not be moved.
+				/// </summary>
+				public static string MoveElementsSomeDuplicatesMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveElementsSomeDuplicatesMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: No elements will be moved because new parent already contains elements with same...
+				/// </summary>
+				public static string MoveElementsStoppedErrorMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Move.MoveElementsStoppedErrorMessage);
+	
+			}
+			
+			public static partial class Project
+			{
+				/// <summary>
+				/// Gets localized string similar to: Open project
+				/// </summary>
+				public static string OpenProjectCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.OpenProjectCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Error loading project file '{0}', reason: {1}
+				/// </summary>
+				public static string OpenProjectErrorMessage(object param0,object param1) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.OpenProjectErrorMessage), param0,param1);
+	
+				/// <summary>
+				/// Gets localized string similar to: Save project error
+				/// </summary>
+				public static string ProjectSaveErrorTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.ProjectSaveErrorTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Save project file failed.
+				/// </summary>
+				public static string ProjectSaveFailed => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.ProjectSaveFailed);
+	
+				/// <summary>
+				/// Gets localized string similar to: Save project file failed because file '{0}' is read-only.
+				/// </summary>
+				public static string ProjectSaveFailedFileIsReadOnly(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.ProjectSaveFailedFileIsReadOnly), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: Open recent project
+				/// </summary>
+				public static string RecentProjectDoestNotExistCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.RecentProjectDoestNotExistCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to remove it from recent project list?
+				/// </summary>
+				public static string RecentProjectDoestNotExistDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.RecentProjectDoestNotExistDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Recent project '{0}' does not exist or access denied.
+				/// </summary>
+				public static string RecentProjectDoestNotExistMessage(object recentFileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Project.RecentProjectDoestNotExistMessage), recentFileName);
+	
+			}
+			
+			public static partial class ProjectSettings
+			{
+				/// <summary>
+				/// Gets localized string similar to: Project root contains some resources, could not turn off setting 'Allow resource...
+				/// </summary>
+				public static string ValidationError1 => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ProjectSettings.ValidationError1);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project contains some categories, could not change layout to 'Resources'.
+				/// </summary>
+				public static string ValidationError2 => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ProjectSettings.ValidationError2);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project settings
+				/// </summary>
+				public static string ValidationErrorCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.ProjectSettings.ValidationErrorCaption);
+	
+			}
+			
+			public static partial class Validations
+			{
+				/// <summary>
+				/// Gets localized string similar to: Category name could not be empty.
+				/// </summary>
+				public static string CategoryNameCouldNotBeEmpty => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.CategoryNameCouldNotBeEmpty);
+	
+				/// <summary>
+				/// Gets localized string similar to: Model name could not be empty.
+				/// </summary>
+				public static string ModelNameCouldNotBeEmpty => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.ModelNameCouldNotBeEmpty);
+	
+				/// <summary>
+				/// Gets localized string similar to: Name '{0}' contains disallowed characters, allowed are only a-z A-Z and numbers ...
+				/// </summary>
+				public static string NameContainsDisallowedCharacters(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.NameContainsDisallowedCharacters), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: Name '{0}' starting with numbers which is not allowed.
+				/// </summary>
+				public static string NameStartingWithNumbersNotAllowed(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.NameStartingWithNumbersNotAllowed), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource name could not be empty.
+				/// </summary>
+				public static string ResourceNameCouldNotBeEmpty => StringsContext.Instance.GetStringSafely(StringsKeys.Operations.Validations.ResourceNameCouldNotBeEmpty);
+	
+			}
 			/// <summary>
 			/// Gets localized string similar to: Delete
 			/// </summary>
@@ -4816,432 +4812,432 @@ namespace LHQ.App.Localization
 		
 		public static partial class Services
 		{
-    		public static partial class Application
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Backup file was created
-    			/// </summary>
-    			public static string BackupFileCreated => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.BackupFileCreated);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Backup of original file was saved to:{0}{1}
-    			/// </summary>
-    			public static string BackupOfOriginalFileCreated(object newLineChar,object backupFileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.BackupOfOriginalFileCreated), newLineChar,backupFileName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Error creating backup of original file{0}{1}.
-    			/// </summary>
-    			public static string BackupOfOriginalFileFailed(object newLineChar,object backupFileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.BackupOfOriginalFileFailed), newLineChar,backupFileName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Cannot translate resources because active license ({0}) has disabled '{1}' featu...
-    			/// </summary>
-    			public static string CannotTranslateResourcesFeatureIsDisabled(object licenseName,object featureName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.CannotTranslateResourcesFeatureIsDisabled), licenseName,featureName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Save project changes
-    			/// </summary>
-    			public static string DetectedUnsavedChangesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.DetectedUnsavedChangesCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to save project changes ?
-    			/// </summary>
-    			public static string DetectedUnsavedChangesDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.DetectedUnsavedChangesDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: There are unsaved changes in project.
-    			/// </summary>
-    			public static string DetectedUnsavedChangesMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.DetectedUnsavedChangesMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Error saving project file to disk.
-    			/// </summary>
-    			public static string ErrorSavingProjectFileToDiskCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.ErrorSavingProjectFileToDiskCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Error saving project file '{0}' to disk, permission denied?
-    			/// </summary>
-    			public static string ErrorSavingProjectFileToDiskMessage(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.ErrorSavingProjectFileToDiskMessage), fileName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: File compatibility issue
-    			/// </summary>
-    			public static string FileCompatibilityIssueCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project file '{0}' was created in previous version of program.
-    			/// </summary>
-    			public static string FileCompatibilityIssueCreatedInPreviousVersion(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCreatedInPreviousVersion), fileName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: File was created in higher version of program....
-    			/// </summary>
-    			public static string FileCompatibilityIssueCreatedWithHigherVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCreatedWithHigherVersion);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: File must be upgraded to current version to be able to open it....
-    			/// </summary>
-    			public static string FileCompatibilityIssueUpgradeToCurrentVersionConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueUpgradeToCurrentVersionConfirm);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: File {0} was updated to latest version.
-    			/// </summary>
-    			public static string FileUpdatedToLatestVersion(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileUpdatedToLatestVersion), fileName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Open project
-    			/// </summary>
-    			public static string OpenProjectCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.OpenProjectCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Error loading project file ...
-    			/// </summary>
-    			public static string OpenProjectFailed(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.OpenProjectFailed), fileName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project changes could not be saved!
-    			/// </summary>
-    			public static string ProjectChangesCantSaveCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.ProjectChangesCantSaveCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Failed to save project changes, file '{0}' is read-only.
-    			/// </summary>
-    			public static string SaveFailedFileIsReadonly(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.SaveFailedFileIsReadonly), fileName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project contains validations errors.
-    			/// </summary>
-    			public static string SaveFailedProjectContainsValidationErrors => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.SaveFailedProjectContainsValidationErrors);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project layout is 'Resources' but contains some categories (which is not allowed...
-    			/// </summary>
-    			public static string SaveFailedProjectLayout1Error => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.SaveFailedProjectLayout1Error);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project root contains some resources which is not allowed.
-    			/// </summary>
-    			public static string SaveFailedProjectLayout2Error => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.SaveFailedProjectLayout2Error);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translating resources...
-    			/// </summary>
-    			public static string TranslationResourcesInProgress => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationResourcesInProgress);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translation service
-    			/// </summary>
-    			public static string TranslationServiceCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to configure it now?
-    			/// </summary>
-    			public static string TranslationServiceConfigureConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceConfigureConfirm);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to enable and configure now?
-    			/// </summary>
-    			public static string TranslationServiceEnableConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceEnableConfirm);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translation service provider is not configured yet.
-    			/// </summary>
-    			public static string TranslationServiceIsNotConfigured => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceIsNotConfigured);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translation service is not enabled.
-    			/// </summary>
-    			public static string TranslationServiceIsNotEnabled => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceIsNotEnabled);
-    
-    		}
-    		
-    		public static partial class ChangePassword
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Change account password in progress...
-    			/// </summary>
-    			public static string ProgressMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.ChangePassword.ProgressMessage);
-    
-    		}
-    		
-    		public static partial class Dialog
-    		{
-        		public static partial class RestartApp
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Apply theme change
-        			/// </summary>
-        			public static string ApplyThemeCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Dialog.RestartApp.ApplyThemeCaption);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Continue to restart application?
-        			/// </summary>
-        			public static string ApplyThemeDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Dialog.RestartApp.ApplyThemeDetail);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: To apply new visual theme, application must be restarted
-        			/// </summary>
-        			public static string ApplyThemeMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Dialog.RestartApp.ApplyThemeMessage);
-        
-        		}
-    		}
-    		
-    		public static partial class Export
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting resources failed.
-    			/// </summary>
-    			public static string ExportingResourcesFailed => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.ExportingResourcesFailed);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting resources was successfull.
-    			/// </summary>
-    			public static string ExportingResourcesWasSuccessfull => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.ExportingResourcesWasSuccessfull);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Export resources
-    			/// </summary>
-    			public static string ExportResourcesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.ExportResourcesCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Exporting resources...
-    			/// </summary>
-    			public static string ExportResourcesInProgress => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.ExportResourcesInProgress);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: There are no resources to be exported.
-    			/// </summary>
-    			public static string NoResourcesToExport => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.NoResourcesToExport);
-    
-    		}
-    		
-    		public static partial class Import
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Import Resources - Project layout incompatible
-    			/// </summary>
-    			public static string ChangeProjectLayoutConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ChangeProjectLayoutConfirmCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to change project layout to "Categories and Resources" and continue ...
-    			/// </summary>
-    			public static string ChangeProjectLayoutConfirmDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ChangeProjectLayoutConfirmDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: When importing resources, project layout must be "Categories and Resources" but ...
-    			/// </summary>
-    			public static string ChangeProjectLayoutConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ChangeProjectLayoutConfirmMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Selected file(s) does not contains any resources to be imported!
-    			/// </summary>
-    			public static string FilesDoesNotContainResourcesToImport => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.FilesDoesNotContainResourcesToImport);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Imported_{0}
-    			/// </summary>
-    			public static string ImportedFolderName(object nameUniqueValue) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportedFolderName), nameUniqueValue);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Nothing was imported.
-    			/// </summary>
-    			public static string ImportingCategoriesIsNotAllowedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportingCategoriesIsNotAllowedDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Imported file contains categories but current project settings does not allow it...
-    			/// </summary>
-    			public static string ImportingCategoriesIsNotAllowedMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportingCategoriesIsNotAllowedMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Importing resources failed.
-    			/// </summary>
-    			public static string ImportingResourcesFailed => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportingResourcesFailed);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Import resources
-    			/// </summary>
-    			public static string ImportResourcesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportResourcesCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Importing resources...
-    			/// </summary>
-    			public static string ImportResourcesInProgress => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportResourcesInProgress);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: - {0} new resources was added...
-    			/// </summary>
-    			public static string ImportSucceedDetail(object newResourceCount,object newCategoriesCount,object updatedResourcesCount,object updatedCategoriesCount,object newLanguagesCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportSucceedDetail), newResourceCount,newCategoriesCount,updatedResourcesCount,updatedCategoriesCount,newLanguagesCount);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Import successfully completed.{0}
-    			/// </summary>
-    			public static string ImportSucceedMessage(object importedFolderName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportSucceedMessage), importedFolderName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Importing resources was cancelled by user!
-    			/// </summary>
-    			public static string ImportWasCancelledByUser => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportWasCancelledByUser);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resources was imported under category:...
-    			/// </summary>
-    			public static string ResourcesWasImportedUnderElement(object parentElement) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ResourcesWasImportedUnderElement), parentElement);
-    
-    		}
-    		
-    		public static partial class Translation
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Some languages are not supported by {0}....
-    			/// </summary>
-    			public static string SomeLanguagesAreNotSupported(object translatorName,object langs) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.SomeLanguagesAreNotSupported), translatorName,langs);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Testing was cancelled by user!
-    			/// </summary>
-    			public static string TestingWasCancelledByUser => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TestingWasCancelledByUser);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translate Resources
-    			/// </summary>
-    			public static string TranslateResourcesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslateResourcesCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Successfully translated {0} resources.
-    			/// </summary>
-    			public static string TranslationCompletedSuccessfully(object resourceCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationCompletedSuccessfully), resourceCount);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translation completed where {0} resources was successfully translated and {1} re...
-    			/// </summary>
-    			public static string TranslationCompletedWithErrors(object successCount,object failedCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationCompletedWithErrors), successCount,failedCount);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translation failed or no resource to translate.
-    			/// </summary>
-    			public static string TranslationFailedOrNoResources => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationFailedOrNoResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translating resource {0}/{1} ...
-    			/// </summary>
-    			public static string TranslationProgressText(object actual,object total) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationProgressText), actual,total);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translate resources was cancelled by user!
-    			/// </summary>
-    			public static string TranslationWasCancelledByUser => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationWasCancelledByUser);
-    
-    		}
-    		
-    		public static partial class UndoUnits
-    		{
-        		public static partial class AddChilds
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Add {0} under {1} '{2}'
-        			/// </summary>
-        			public static string ActionName(object elementsCount,object parentElementType,object parentName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.AddChilds.ActionName), elementsCount,parentElementType,parentName);
-        
-        		}
-        		
-        		public static partial class AddSortedChild
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Add {0} '{1}' under {2} '{3}'
-        			/// </summary>
-        			public static string ActionName(object childElementType,object childName,object parentElementType,object parentElementName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.AddSortedChild.ActionName), childElementType,childName,parentElementType,parentElementName);
-        
-        		}
-        		
-        		public static partial class AutoTranslateMultiResources
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Update multiple resources translations (retrieved from translation service)
-        			/// </summary>
-        			public static string ActionName => StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.AutoTranslateMultiResources.ActionName);
-        
-        		}
-        		
-        		public static partial class AutoTranslateResource
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Update resource '{0}' translations (retrieved from translation service)
-        			/// </summary>
-        			public static string ActionName(object childName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.AutoTranslateResource.ActionName), childName);
-        
-        		}
-        		
-        		public static partial class ImportResources
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Import resources
-        			/// </summary>
-        			public static string ActionName => StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.ImportResources.ActionName);
-        
-        		}
-        		
-        		public static partial class LockResourceValues
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Lock all localized values for resource '{0}'
-        			/// </summary>
-        			public static string ActionName(object childName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.LockResourceValues.ActionName), childName);
-        
-        		}
-        		
-        		public static partial class MultiSelection
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Action on multiple elements
-        			/// </summary>
-        			public static string ActionName => StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.MultiSelection.ActionName);
-        
-        		}
-    		}
-    		
-    		public static partial class Updates
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Don't check for updates
-    			/// </summary>
-    			public static string DontCheckForUpdatesRememberText => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.DontCheckForUpdatesRememberText);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New version is available!
-    			/// </summary>
-    			public static string NewVersionAvailableCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Please navigate to Main Menu -> Tools -> Extensions and Updates, then "Updates" ...
-    			/// </summary>
-    			public static string NewVersionAvailableDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New version '{0}' is available! Navigate to Main Menu -> Tools -> Extensions and...
-    			/// </summary>
-    			public static string NewVersionAvailableMessage(object version) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableMessage), version);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Read what's new
-    			/// </summary>
-    			public static string ReadWhatsNew => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.ReadWhatsNew);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Update Available
-    			/// </summary>
-    			public static string UpdateAvailable => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.UpdateAvailable);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: What's new in current version?
-    			/// </summary>
-    			public static string WhatsNewInCurrentVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.WhatsNewInCurrentVersion);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: What's new in version {0}
-    			/// </summary>
-    			public static string WhatsNewInVersion(object newVersionNumber) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.WhatsNewInVersion), newVersionNumber);
-    
-    		}
+			public static partial class Application
+			{
+				/// <summary>
+				/// Gets localized string similar to: Backup file was created
+				/// </summary>
+				public static string BackupFileCreated => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.BackupFileCreated);
+	
+				/// <summary>
+				/// Gets localized string similar to: Backup of original file was saved to:{0}{1}
+				/// </summary>
+				public static string BackupOfOriginalFileCreated(object newLineChar,object backupFileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.BackupOfOriginalFileCreated), newLineChar,backupFileName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Error creating backup of original file{0}{1}.
+				/// </summary>
+				public static string BackupOfOriginalFileFailed(object newLineChar,object backupFileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.BackupOfOriginalFileFailed), newLineChar,backupFileName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Cannot translate resources because active license ({0}) has disabled '{1}' featu...
+				/// </summary>
+				public static string CannotTranslateResourcesFeatureIsDisabled(object licenseName,object featureName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.CannotTranslateResourcesFeatureIsDisabled), licenseName,featureName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Save project changes
+				/// </summary>
+				public static string DetectedUnsavedChangesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.DetectedUnsavedChangesCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to save project changes ?
+				/// </summary>
+				public static string DetectedUnsavedChangesDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.DetectedUnsavedChangesDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: There are unsaved changes in project.
+				/// </summary>
+				public static string DetectedUnsavedChangesMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.DetectedUnsavedChangesMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Error saving project file to disk.
+				/// </summary>
+				public static string ErrorSavingProjectFileToDiskCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.ErrorSavingProjectFileToDiskCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Error saving project file '{0}' to disk, permission denied?
+				/// </summary>
+				public static string ErrorSavingProjectFileToDiskMessage(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.ErrorSavingProjectFileToDiskMessage), fileName);
+	
+				/// <summary>
+				/// Gets localized string similar to: File compatibility issue
+				/// </summary>
+				public static string FileCompatibilityIssueCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project file '{0}' was created in previous version of program.
+				/// </summary>
+				public static string FileCompatibilityIssueCreatedInPreviousVersion(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCreatedInPreviousVersion), fileName);
+	
+				/// <summary>
+				/// Gets localized string similar to: File was created in higher version of program....
+				/// </summary>
+				public static string FileCompatibilityIssueCreatedWithHigherVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCreatedWithHigherVersion);
+	
+				/// <summary>
+				/// Gets localized string similar to: File must be upgraded to current version to be able to open it....
+				/// </summary>
+				public static string FileCompatibilityIssueUpgradeToCurrentVersionConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueUpgradeToCurrentVersionConfirm);
+	
+				/// <summary>
+				/// Gets localized string similar to: File {0} was updated to latest version.
+				/// </summary>
+				public static string FileUpdatedToLatestVersion(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileUpdatedToLatestVersion), fileName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Open project
+				/// </summary>
+				public static string OpenProjectCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.OpenProjectCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Error loading project file ...
+				/// </summary>
+				public static string OpenProjectFailed(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.OpenProjectFailed), fileName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project changes could not be saved!
+				/// </summary>
+				public static string ProjectChangesCantSaveCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.ProjectChangesCantSaveCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Failed to save project changes, file '{0}' is read-only.
+				/// </summary>
+				public static string SaveFailedFileIsReadonly(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.SaveFailedFileIsReadonly), fileName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project contains validations errors.
+				/// </summary>
+				public static string SaveFailedProjectContainsValidationErrors => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.SaveFailedProjectContainsValidationErrors);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project layout is 'Resources' but contains some categories (which is not allowed...
+				/// </summary>
+				public static string SaveFailedProjectLayout1Error => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.SaveFailedProjectLayout1Error);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project root contains some resources which is not allowed.
+				/// </summary>
+				public static string SaveFailedProjectLayout2Error => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.SaveFailedProjectLayout2Error);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translating resources...
+				/// </summary>
+				public static string TranslationResourcesInProgress => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationResourcesInProgress);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translation service
+				/// </summary>
+				public static string TranslationServiceCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to configure it now?
+				/// </summary>
+				public static string TranslationServiceConfigureConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceConfigureConfirm);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to enable and configure now?
+				/// </summary>
+				public static string TranslationServiceEnableConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceEnableConfirm);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translation service provider is not configured yet.
+				/// </summary>
+				public static string TranslationServiceIsNotConfigured => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceIsNotConfigured);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translation service is not enabled.
+				/// </summary>
+				public static string TranslationServiceIsNotEnabled => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.TranslationServiceIsNotEnabled);
+	
+			}
+			
+			public static partial class ChangePassword
+			{
+				/// <summary>
+				/// Gets localized string similar to: Change account password in progress...
+				/// </summary>
+				public static string ProgressMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.ChangePassword.ProgressMessage);
+	
+			}
+			
+			public static partial class Dialog
+			{
+				public static partial class RestartApp
+				{
+					/// <summary>
+					/// Gets localized string similar to: Apply theme change
+					/// </summary>
+					public static string ApplyThemeCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Dialog.RestartApp.ApplyThemeCaption);
+		
+					/// <summary>
+					/// Gets localized string similar to: Continue to restart application?
+					/// </summary>
+					public static string ApplyThemeDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Dialog.RestartApp.ApplyThemeDetail);
+		
+					/// <summary>
+					/// Gets localized string similar to: To apply new visual theme, application must be restarted
+					/// </summary>
+					public static string ApplyThemeMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Dialog.RestartApp.ApplyThemeMessage);
+		
+				}
+			}
+			
+			public static partial class Export
+			{
+				/// <summary>
+				/// Gets localized string similar to: Exporting resources failed.
+				/// </summary>
+				public static string ExportingResourcesFailed => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.ExportingResourcesFailed);
+	
+				/// <summary>
+				/// Gets localized string similar to: Exporting resources was successfull.
+				/// </summary>
+				public static string ExportingResourcesWasSuccessfull => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.ExportingResourcesWasSuccessfull);
+	
+				/// <summary>
+				/// Gets localized string similar to: Export resources
+				/// </summary>
+				public static string ExportResourcesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.ExportResourcesCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Exporting resources...
+				/// </summary>
+				public static string ExportResourcesInProgress => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.ExportResourcesInProgress);
+	
+				/// <summary>
+				/// Gets localized string similar to: There are no resources to be exported.
+				/// </summary>
+				public static string NoResourcesToExport => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Export.NoResourcesToExport);
+	
+			}
+			
+			public static partial class Import
+			{
+				/// <summary>
+				/// Gets localized string similar to: Import Resources - Project layout incompatible
+				/// </summary>
+				public static string ChangeProjectLayoutConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ChangeProjectLayoutConfirmCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to change project layout to "Categories and Resources" and continue ...
+				/// </summary>
+				public static string ChangeProjectLayoutConfirmDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ChangeProjectLayoutConfirmDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: When importing resources, project layout must be "Categories and Resources" but ...
+				/// </summary>
+				public static string ChangeProjectLayoutConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ChangeProjectLayoutConfirmMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Selected file(s) does not contains any resources to be imported!
+				/// </summary>
+				public static string FilesDoesNotContainResourcesToImport => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.FilesDoesNotContainResourcesToImport);
+	
+				/// <summary>
+				/// Gets localized string similar to: Imported_{0}
+				/// </summary>
+				public static string ImportedFolderName(object nameUniqueValue) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportedFolderName), nameUniqueValue);
+	
+				/// <summary>
+				/// Gets localized string similar to: Nothing was imported.
+				/// </summary>
+				public static string ImportingCategoriesIsNotAllowedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportingCategoriesIsNotAllowedDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Imported file contains categories but current project settings does not allow it...
+				/// </summary>
+				public static string ImportingCategoriesIsNotAllowedMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportingCategoriesIsNotAllowedMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Importing resources failed.
+				/// </summary>
+				public static string ImportingResourcesFailed => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportingResourcesFailed);
+	
+				/// <summary>
+				/// Gets localized string similar to: Import resources
+				/// </summary>
+				public static string ImportResourcesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportResourcesCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Importing resources...
+				/// </summary>
+				public static string ImportResourcesInProgress => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportResourcesInProgress);
+	
+				/// <summary>
+				/// Gets localized string similar to: - {0} new resources was added...
+				/// </summary>
+				public static string ImportSucceedDetail(object newResourceCount,object newCategoriesCount,object updatedResourcesCount,object updatedCategoriesCount,object newLanguagesCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportSucceedDetail), newResourceCount,newCategoriesCount,updatedResourcesCount,updatedCategoriesCount,newLanguagesCount);
+	
+				/// <summary>
+				/// Gets localized string similar to: Import successfully completed.{0}
+				/// </summary>
+				public static string ImportSucceedMessage(object importedFolderName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportSucceedMessage), importedFolderName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Importing resources was cancelled by user!
+				/// </summary>
+				public static string ImportWasCancelledByUser => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ImportWasCancelledByUser);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resources was imported under category:...
+				/// </summary>
+				public static string ResourcesWasImportedUnderElement(object parentElement) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Import.ResourcesWasImportedUnderElement), parentElement);
+	
+			}
+			
+			public static partial class Translation
+			{
+				/// <summary>
+				/// Gets localized string similar to: Some languages are not supported by {0}....
+				/// </summary>
+				public static string SomeLanguagesAreNotSupported(object translatorName,object langs) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.SomeLanguagesAreNotSupported), translatorName,langs);
+	
+				/// <summary>
+				/// Gets localized string similar to: Testing was cancelled by user!
+				/// </summary>
+				public static string TestingWasCancelledByUser => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TestingWasCancelledByUser);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translate Resources
+				/// </summary>
+				public static string TranslateResourcesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslateResourcesCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Successfully translated {0} resources.
+				/// </summary>
+				public static string TranslationCompletedSuccessfully(object resourceCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationCompletedSuccessfully), resourceCount);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translation completed where {0} resources was successfully translated and {1} re...
+				/// </summary>
+				public static string TranslationCompletedWithErrors(object successCount,object failedCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationCompletedWithErrors), successCount,failedCount);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translation failed or no resource to translate.
+				/// </summary>
+				public static string TranslationFailedOrNoResources => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationFailedOrNoResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translating resource {0}/{1} ...
+				/// </summary>
+				public static string TranslationProgressText(object actual,object total) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationProgressText), actual,total);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translate resources was cancelled by user!
+				/// </summary>
+				public static string TranslationWasCancelledByUser => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Translation.TranslationWasCancelledByUser);
+	
+			}
+			
+			public static partial class UndoUnits
+			{
+				public static partial class AddChilds
+				{
+					/// <summary>
+					/// Gets localized string similar to: Add {0} under {1} '{2}'
+					/// </summary>
+					public static string ActionName(object elementsCount,object parentElementType,object parentName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.AddChilds.ActionName), elementsCount,parentElementType,parentName);
+		
+				}
+				
+				public static partial class AddSortedChild
+				{
+					/// <summary>
+					/// Gets localized string similar to: Add {0} '{1}' under {2} '{3}'
+					/// </summary>
+					public static string ActionName(object childElementType,object childName,object parentElementType,object parentElementName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.AddSortedChild.ActionName), childElementType,childName,parentElementType,parentElementName);
+		
+				}
+				
+				public static partial class AutoTranslateMultiResources
+				{
+					/// <summary>
+					/// Gets localized string similar to: Update multiple resources translations (retrieved from translation service)
+					/// </summary>
+					public static string ActionName => StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.AutoTranslateMultiResources.ActionName);
+		
+				}
+				
+				public static partial class AutoTranslateResource
+				{
+					/// <summary>
+					/// Gets localized string similar to: Update resource '{0}' translations (retrieved from translation service)
+					/// </summary>
+					public static string ActionName(object childName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.AutoTranslateResource.ActionName), childName);
+		
+				}
+				
+				public static partial class ImportResources
+				{
+					/// <summary>
+					/// Gets localized string similar to: Import resources
+					/// </summary>
+					public static string ActionName => StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.ImportResources.ActionName);
+		
+				}
+				
+				public static partial class LockResourceValues
+				{
+					/// <summary>
+					/// Gets localized string similar to: Lock all localized values for resource '{0}'
+					/// </summary>
+					public static string ActionName(object childName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.LockResourceValues.ActionName), childName);
+		
+				}
+				
+				public static partial class MultiSelection
+				{
+					/// <summary>
+					/// Gets localized string similar to: Action on multiple elements
+					/// </summary>
+					public static string ActionName => StringsContext.Instance.GetStringSafely(StringsKeys.Services.UndoUnits.MultiSelection.ActionName);
+		
+				}
+			}
+			
+			public static partial class Updates
+			{
+				/// <summary>
+				/// Gets localized string similar to: Don't check for updates
+				/// </summary>
+				public static string DontCheckForUpdatesRememberText => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.DontCheckForUpdatesRememberText);
+	
+				/// <summary>
+				/// Gets localized string similar to: New version is available!
+				/// </summary>
+				public static string NewVersionAvailableCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Please navigate to Main Menu -> Tools -> Extensions and Updates, then "Updates" ...
+				/// </summary>
+				public static string NewVersionAvailableDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: New version '{0}' is available! Navigate to Main Menu -> Tools -> Extensions and...
+				/// </summary>
+				public static string NewVersionAvailableMessage(object version) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableMessage), version);
+	
+				/// <summary>
+				/// Gets localized string similar to: Read what's new
+				/// </summary>
+				public static string ReadWhatsNew => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.ReadWhatsNew);
+	
+				/// <summary>
+				/// Gets localized string similar to: Update Available
+				/// </summary>
+				public static string UpdateAvailable => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.UpdateAvailable);
+	
+				/// <summary>
+				/// Gets localized string similar to: What's new in current version?
+				/// </summary>
+				public static string WhatsNewInCurrentVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.WhatsNewInCurrentVersion);
+	
+				/// <summary>
+				/// Gets localized string similar to: What's new in version {0}
+				/// </summary>
+				public static string WhatsNewInVersion(object newVersionNumber) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.WhatsNewInVersion), newVersionNumber);
+	
+			}
 		}
 		
 		public static partial class Validations
@@ -5290,1249 +5286,1244 @@ namespace LHQ.App.Localization
 		
 		public static partial class ViewModels
 		{
-    		public static partial class AppSettings
-    		{
-        		public static partial class PageGeneral
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Default language for new projects
-        			/// </summary>
-        			public static string DefaultLanguageValidationCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationCaption);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Default language for new projects must be selected!
-        			/// </summary>
-        			public static string DefaultLanguageValidationMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationMessage);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: General
-        			/// </summary>
-        			public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageGeneral.PageTitle);
-        
-        		}
-        		
-        		public static partial class PagePlugins
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Configure plugin - {0}
-        			/// </summary>
-        			public static string ConfigurePluginTitle(object pluginName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PagePlugins.ConfigurePluginTitle), pluginName);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Plugins
-        			/// </summary>
-        			public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PagePlugins.PageTitle);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Reset to defaults
-        			/// </summary>
-        			public static string ResetPluginToDefaultsCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PagePlugins.ResetPluginToDefaultsCaption);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Reset plugin '{0}' to default settings?
-        			/// </summary>
-        			public static string ResetPluginToDefaultsMessage(object pluginName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PagePlugins.ResetPluginToDefaultsMessage), pluginName);
-        
-        		}
-        		
-        		public static partial class PageTranslator
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: Translator
-        			/// </summary>
-        			public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageTranslator.PageTitle);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Testing '{0}' failed.
-        			/// </summary>
-        			public static string TestingProviderFailed(object translationProviderName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageTranslator.TestingProviderFailed), translationProviderName);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Translator must be selected when translation is enabled.
-        			/// </summary>
-        			public static string TranslatorMustBeSelected => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageTranslator.TranslatorMustBeSelected);
-        
-        		}
-    			/// <summary>
-    			/// Gets localized string similar to: Reset settings to defaults
-    			/// </summary>
-    			public static string ResetSettingsToDefaultsCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.ResetSettingsToDefaultsCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Plugins settings will not reset to defaults....
-    			/// </summary>
-    			public static string ResetSettingsToDefaultsDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.ResetSettingsToDefaultsDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Reset settings to defaults?
-    			/// </summary>
-    			public static string ResetSettingsToDefaultsMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.ResetSettingsToDefaultsMessage);
-    
-    		}
-    		
-    		public static partial class ChangePassword
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Confirmation of new password must be same as new password.
-    			/// </summary>
-    			public static string ConfirmPasswordIsWrong => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.ConfirmPasswordIsWrong);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Current password is required.
-    			/// </summary>
-    			public static string CurrentPasswordIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.CurrentPasswordIsRequired);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Email address is required.
-    			/// </summary>
-    			public static string EmailAddressIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.EmailAddressIsRequired);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New password confirm is required.
-    			/// </summary>
-    			public static string NewPasswordConfirmIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.NewPasswordConfirmIsRequired);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New password is required.
-    			/// </summary>
-    			public static string NewPasswordIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.NewPasswordIsRequired);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Password was successfully changed!
-    			/// </summary>
-    			public static string PasswordSuccessfullyChanged => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.PasswordSuccessfullyChanged);
-    
-    		}
-    		
-    		public static partial class DeleteElements
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Delete {0}
-    			/// </summary>
-    			public static string ConfirmCaption(object elementName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.DeleteElements.ConfirmCaption), elementName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to delete {0}?
-    			/// </summary>
-    			public static string ConfirmMessage(object elementName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.DeleteElements.ConfirmMessage), elementName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Delete {0}:
-    			/// </summary>
-    			public static string SelectedText(object elementName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.DeleteElements.SelectedText), elementName);
-    
-    		}
-    		
-    		public static partial class EditParameter
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Add resources parameter
-    			/// </summary>
-    			public static string AddTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.EditParameter.AddTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Edit resource parameter
-    			/// </summary>
-    			public static string EditTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.EditParameter.EditTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Parameter with same name already exist!
-    			/// </summary>
-    			public static string ParameterWithSameNameExist => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.EditParameter.ParameterWithSameNameExist);
-    
-    		}
-    		
-    		public static partial class HintPanel
-    		{
-        		public static partial class CodeGenerator
-        		{
-        			/// <summary>
-        			/// Gets localized string similar to: When you save changes (Ctrl+S or save icon in toolbar) an associated code genera...
-        			/// </summary>
-        			public static string HintText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.HintPanel.CodeGenerator.HintText);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Code generation works only within Visual Studio!
-        			/// </summary>
-        			public static string HintTextOnlyInVS => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.HintPanel.CodeGenerator.HintTextOnlyInVS);
-        
-        			/// <summary>
-        			/// Gets localized string similar to: Read more about code generator templates...
-        			/// </summary>
-        			public static string HintTextReadMore => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.HintPanel.CodeGenerator.HintTextReadMore);
-        
-        		}
-    		}
-    		
-    		public static partial class Import
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Import resources
-    			/// </summary>
-    			public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.PageTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Please select file(s) to import.
-    			/// </summary>
-    			public static string PleaseSelectFilesToImport => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.PleaseSelectFilesToImport);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Please select importer!
-    			/// </summary>
-    			public static string PleaseSelectImporter => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.PleaseSelectImporter);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Please select import mode!
-    			/// </summary>
-    			public static string PleaseSelectImportMode => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.PleaseSelectImportMode);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Importer '{0}' does not support those extensions:...
-    			/// </summary>
-    			public static string UnsupportedFileExtensionsDetail(object importerDisplayName,object unknownFileExtensions) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.UnsupportedFileExtensionsDetail), importerDisplayName,unknownFileExtensions);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Selected file(s) has unsupported extension(s).
-    			/// </summary>
-    			public static string UnsupportedFileExtensionsMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.UnsupportedFileExtensionsMessage);
-    
-    		}
-    		
-    		public static partial class LanguageSettings
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Remove language
-    			/// </summary>
-    			public static string ButtonRemoveTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ButtonRemoveTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Set as primary
-    			/// </summary>
-    			public static string ButtonSetAsPrimary => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ButtonSetAsPrimary);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Sets language as primary
-    			/// </summary>
-    			public static string ButtonSetAsPrimaryToolip => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ButtonSetAsPrimaryToolip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Change primary language
-    			/// </summary>
-    			public static string ChangePrimaryLanguageConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you really want to set language '{0}' as primary?
-    			/// </summary>
-    			public static string ChangePrimaryLanguageConfirmDetail(object newLanguageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmDetail), newLanguageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: You are about to change current primary language '{0}' to language '{1}'.
-    			/// </summary>
-    			public static string ChangePrimaryLanguageConfirmMessage(object currentPrimaryEnglishName,object newPrimaryEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmMessage), currentPrimaryEnglishName,newPrimaryEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Code
-    			/// </summary>
-    			public static string ColumnHeaderCode => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ColumnHeaderCode);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: English name
-    			/// </summary>
-    			public static string ColumnHeaderEnglishName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ColumnHeaderEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Primary
-    			/// </summary>
-    			public static string ColumnHeaderPrimary => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ColumnHeaderPrimary);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Language settings
-    			/// </summary>
-    			public static string DialogCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.DialogCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Manage list of languages used in current project
-    			/// </summary>
-    			public static string DialogCaptionHint => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.DialogCaptionHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Primary
-    			/// </summary>
-    			public static string HeaderIsPrimary => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.HeaderIsPrimary);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: {0} Languages
-    			/// </summary>
-    			public static string LabelCountOfLanguage(object countOfLanguages) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.LabelCountOfLanguage), countOfLanguages);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Languages
-    			/// </summary>
-    			public static string LabelLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.LabelLanguages);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Language settings
-    			/// </summary>
-    			public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.PageTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Language is primary language
-    			/// </summary>
-    			public static string PrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.PrimaryLanguage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language cannot be removed
-    			/// </summary>
-    			public static string PrimaryLanguageCantBeRemoved => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.PrimaryLanguageCantBeRemoved);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project languages:
-    			/// </summary>
-    			public static string ProjectLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ProjectLanguages);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Remove language '{0}'
-    			/// </summary>
-    			public static string RemoveLanguageConfirmCaption(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.RemoveLanguageConfirmCaption), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: All resources in this language will be also removed!
-    			/// </summary>
-    			public static string RemoveLanguageConfirmDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.RemoveLanguageConfirmDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Remove language '{0}' ?
-    			/// </summary>
-    			public static string RemoveLanguageConfirmMessage(object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.RemoveLanguageConfirmMessage), languageName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Replace project language with other language
-    			/// </summary>
-    			public static string ReplaceLanguageCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ReplaceLanguageCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: You are about to change project language from '{0}' to '{1}'. ...
-    			/// </summary>
-    			public static string ReplaceLanguageDetail(object currentLanguageName,object newLanguageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ReplaceLanguageDetail), currentLanguageName,newLanguageName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: You are about to change project language from '{0}' to '{1}'.
-    			/// </summary>
-    			public static string ReplaceLanguageMessage(object currentLanguageName,object newLanguageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ReplaceLanguageMessage), currentLanguageName,newLanguageName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Set as primary language
-    			/// </summary>
-    			public static string SetAsPrimaryConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.SetAsPrimaryConfirmCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Set language '{0}' as primary language?
-    			/// </summary>
-    			public static string SetAsPrimaryConfirmMessage(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.SetAsPrimaryConfirmMessage), param0);
-    
-    		}
-    		
-    		public static partial class MessageBox
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: _Cancel
-    			/// </summary>
-    			public static string LabelCancel => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MessageBox.LabelCancel);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _No
-    			/// </summary>
-    			public static string LabelNo => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MessageBox.LabelNo);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _OK
-    			/// </summary>
-    			public static string LabelOk => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MessageBox.LabelOk);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Yes
-    			/// </summary>
-    			public static string LabelYes => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MessageBox.LabelYes);
-    
-    		}
-    		
-    		public static partial class MultiSelection
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to resources within selected categories.
-    			/// </summary>
-    			public static string ActionsTooltipCategories => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ActionsTooltipCategories);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to selected resources
-    			/// </summary>
-    			public static string ActionsTooltipResources => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ActionsTooltipResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: First Level
-    			/// </summary>
-    			public static string ButtonFirstLevel => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ButtonFirstLevel);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Recursive
-    			/// </summary>
-    			public static string ButtonRecursive => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ButtonRecursive);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Selected categories ({0})
-    			/// </summary>
-    			public static string CategoriesHeader(object categoriesCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.CategoriesHeader), categoriesCount);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Change resources state
-    			/// </summary>
-    			public static string ChangeResourcesStateFailedCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeResourcesStateFailedCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: There are no resources to change state for.
-    			/// </summary>
-    			public static string ChangeResourcesStateFailedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeResourcesStateFailedDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Could not change resources state to '{0}'.
-    			/// </summary>
-    			public static string ChangeResourcesStateFailedMessage(object newState) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeResourcesStateFailedMessage), newState);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to change resources state from all categories to '{0}'?
-    			/// </summary>
-    			public static string ChangeStateAllResourcesRecursive(object newState) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateAllResourcesRecursive), newState);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Change state to 'Edited'
-    			/// </summary>
-    			public static string ChangeStateToEdited => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateToEdited);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Change state to 'Final'
-    			/// </summary>
-    			public static string ChangeStateToFinal => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateToFinal);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Change state to 'Needs review'
-    			/// </summary>
-    			public static string ChangeStateToNeedsReview => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateToNeedsReview);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Change state to 'New'
-    			/// </summary>
-    			public static string ChangeStateToNew => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateToNew);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to export resources from all categories?
-    			/// </summary>
-    			public static string ExportAllResourcesRecursive => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ExportAllResourcesRecursive);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: There are no resources to be exported to file.
-    			/// </summary>
-    			public static string ExportResourcesFailedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ExportResourcesFailedDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Could not export resources to file
-    			/// </summary>
-    			public static string ExportResourcesFailedMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ExportResourcesFailedMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Export resources to file
-    			/// </summary>
-    			public static string ExportResourcesToFile => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ExportResourcesToFile);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Selected resources ({0})
-    			/// </summary>
-    			public static string ResourcesHeader(object resourcesCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ResourcesHeader), resourcesCount);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Yes - recursive scan...
-    			/// </summary>
-    			public static string ScanCategoriesRecursivelyConfirmDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ScanCategoriesRecursivelyConfirmDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to scan categories recursively?
-    			/// </summary>
-    			public static string ScanCategoriesRecursivelyConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ScanCategoriesRecursivelyConfirmMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Selected project root
-    			/// </summary>
-    			public static string SelectedProjectRoot => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.SelectedProjectRoot);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to translate resources from all categories?
-    			/// </summary>
-    			public static string TranslateAllResourcesRecursive => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.TranslateAllResourcesRecursive);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translate resources
-    			/// </summary>
-    			public static string TranslateResourcesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.TranslateResourcesCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: There are no resources to be translated.
-    			/// </summary>
-    			public static string TranslateResourcesFailedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.TranslateResourcesFailedDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Could not translate resources
-    			/// </summary>
-    			public static string TranslateResourcesFailedMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.TranslateResourcesFailedMessage);
-    
-    		}
-    		
-    		public static partial class NewElement
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Category name:
-    			/// </summary>
-    			public static string CategoryNameCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.CategoryNameCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Category name is required.
-    			/// </summary>
-    			public static string CategoryNameIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.CategoryNameIsRequired);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Alllowed characters: a-z A-Z and numbers
-    			/// </summary>
-    			public static string NameHint => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NameHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New category
-    			/// </summary>
-    			public static string NewCategory => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewCategory);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Enter category _name:
-    			/// </summary>
-    			public static string NewCategoryCaptionText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewCategoryCaptionText);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: category
-    			/// </summary>
-    			public static string NewCategoryTemplateName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewCategoryTemplateName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New resource
-    			/// </summary>
-    			public static string NewResource => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Enter resource _name:
-    			/// </summary>
-    			public static string NewResourceCaptionText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceCaptionText);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: resource
-    			/// </summary>
-    			public static string NewResourceTemplateName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceTemplateName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New resource under root model failed
-    			/// </summary>
-    			public static string NewResourceUnderRootNotAllowedCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceUnderRootNotAllowedCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Set option 'Allow resources under root' in file options to enable this.
-    			/// </summary>
-    			public static string NewResourceUnderRootNotAllowedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceUnderRootNotAllowedDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Associated Code Generator does not support this.
-    			/// </summary>
-    			public static string NewResourceUnderRootNotAllowedDetailByCodeGen => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceUnderRootNotAllowedDetailByCodeGen);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Could not add new resource under root model.
-    			/// </summary>
-    			public static string NewResourceUnderRootNotAllowedMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceUnderRootNotAllowedMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Parent:
-    			/// </summary>
-    			public static string Parent => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.Parent);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Parent hierarchy
-    			/// </summary>
-    			public static string ParentHierarchy => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.ParentHierarchy);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource name:
-    			/// </summary>
-    			public static string ResourceNameCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.ResourceNameCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource name is required.
-    			/// </summary>
-    			public static string ResourceNameIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.ResourceNameIsRequired);
-    
-    		}
-    		
-    		public static partial class NewProject
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Code Generator Settings
-    			/// </summary>
-    			public static string ChangeCodeGeneratorSettingsLink => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ChangeCodeGeneratorSettingsLink);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Code Generator Template
-    			/// </summary>
-    			public static string CodeGeneratorTemplateTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.CodeGeneratorTemplateTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Common
-    			/// </summary>
-    			public static string CommonDetails => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.CommonDetails);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Default
-    			/// </summary>
-    			public static string DefaultModelName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.DefaultModelName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Create new project
-    			/// </summary>
-    			public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.DialogTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: New localization file
-    			/// </summary>
-    			public static string DialogTitleVS => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.DialogTitleVS);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Languages type:
-    			/// </summary>
-    			public static string LanguagesType => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.LanguagesType);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Neutral language (en)
-    			/// </summary>
-    			public static string LanguagesTypeNeutral => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.LanguagesTypeNeutral);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Specific language (en-US)
-    			/// </summary>
-    			public static string LanguagesTypeSpecific => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.LanguagesTypeSpecific);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Open "Language settings" after project created
-    			/// </summary>
-    			public static string OpenLanguageSettingsAfterCreate => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.OpenLanguageSettingsAfterCreate);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Other translation languages can be added later in "Language settings"
-    			/// </summary>
-    			public static string OtherLanguagesHint => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.OtherLanguagesHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language:
-    			/// </summary>
-    			public static string PrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.PrimaryLanguage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language is required.
-    			/// </summary>
-    			public static string PrimaryLanguageIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.PrimaryLanguageIsRequired);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language must be selected!
-    			/// </summary>
-    			public static string PrimaryLanguageValidationMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.PrimaryLanguageValidationMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project name
-    			/// </summary>
-    			public static string ProjectName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ProjectName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Project name is required.
-    			/// </summary>
-    			public static string ProjectNameIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ProjectNameIsRequired);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Name
-    			/// </summary>
-    			public static string ProjectNameVS => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ProjectNameVS);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: ResX files generator
-    			/// </summary>
-    			public static string ResxTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ResxTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Show only neutral languages
-    			/// </summary>
-    			public static string ShowOnlyNeutralLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ShowOnlyNeutralLanguages);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: For more info about associated T4 generator, look at
-    			/// </summary>
-    			public static string T4TemplateWebHelp => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.T4TemplateWebHelp);
-    
-    		}
-    		
-    		public static partial class Progress
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Progress...
-    			/// </summary>
-    			public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Progress.DialogTitle);
-    
-    		}
-    		
-    		public static partial class ProjectSettings
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Project Settings
-    			/// </summary>
-    			public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ProjectSettings.PageTitle);
-    
-    		}
-    		
-    		public static partial class ResourceModel
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Change resource state to 'Final'
-    			/// </summary>
-    			public static string FinalStateConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to lock resource translations?
-    			/// </summary>
-    			public static string FinalStateConfirmMessageLock => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmMessageLock);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Change resource state to 'Final' will lock resource name, description and parame...
-    			/// </summary>
-    			public static string FinalStateConfirmMessageNotify => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmMessageNotify);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Later you can change this in settings page
-    			/// </summary>
-    			public static string FinalStateConfirmRememberHint => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmRememberHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Remember current choice for next time
-    			/// </summary>
-    			public static string FinalStateConfirmRememberText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmRememberText);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Press Enter for new line...
-    			/// </summary>
-    			public static string HintText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.HintText);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Lock all values
-    			/// </summary>
-    			public static string LockAllValues => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.LockAllValues);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Lock resource
-    			/// </summary>
-    			public static string LockResource => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.LockResource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Locked
-    			/// </summary>
-    			public static string StateLocked => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.StateLocked);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Not locked
-    			/// </summary>
-    			public static string StateNotLocked => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.StateNotLocked);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Unlock all values
-    			/// </summary>
-    			public static string UnlockAllValues => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.UnlockAllValues);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Unlock resource
-    			/// </summary>
-    			public static string UnlockResource => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.UnlockResource);
-    
-    		}
-    		
-    		public static partial class ResourceParameters
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Resource Parameters
-    			/// </summary>
-    			public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceParameters.PageTitle);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Remove parameter
-    			/// </summary>
-    			public static string RemoveParameterCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceParameters.RemoveParameterCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Remove parameter '{0}' at position {1}?
-    			/// </summary>
-    			public static string RemoveParameterMessage(object parameterName,object parameterPosition) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceParameters.RemoveParameterMessage), parameterName,parameterPosition);
-    
-    		}
-    		
-    		public static partial class ResourceValueModel
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: '{0}' value was automatically translated by translator service
-    			/// </summary>
-    			public static string AutoTranslatedTooltip(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.AutoTranslatedTooltip), languageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Actions with '{0}' translation
-    			/// </summary>
-    			public static string BurgerMenuHeader(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.BurgerMenuHeader), languageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: '{0}' translation is locked for edits
-    			/// </summary>
-    			public static string LockIconTooltipIsLocked(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.LockIconTooltipIsLocked), languageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: '{0}' translation is not locked for edits
-    			/// </summary>
-    			public static string LockIconTooltipIsNotLocked(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.LockIconTooltipIsNotLocked), languageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Lock '{0}' translation
-    			/// </summary>
-    			public static string LockMenuHeader(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.LockMenuHeader), languageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Click to lock '{0}' translation
-    			/// </summary>
-    			public static string LockMenuTooltip(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.LockMenuTooltip), languageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was unmarked as auto-translated.
-    			/// </summary>
-    			public static string PropertyAutoTranslatedIsFalse(object ownerResourceName,object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.PropertyAutoTranslatedIsFalse), ownerResourceName,languageName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was marked as auto-translated.
-    			/// </summary>
-    			public static string PropertyAutoTranslatedIsTrue(object ownerResourceName,object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.PropertyAutoTranslatedIsTrue), ownerResourceName,languageName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was unlocked.
-    			/// </summary>
-    			public static string PropertyLockedIsFalse(object ownerResourceName,object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.PropertyLockedIsFalse), ownerResourceName,languageName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was locked.
-    			/// </summary>
-    			public static string PropertyLockedIsTrue(object ownerResourceName,object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.PropertyLockedIsTrue), ownerResourceName,languageName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translate '{0}' value
-    			/// </summary>
-    			public static string TranslateMenuHeader(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.TranslateMenuHeader), languageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Unlock '{0}' translation
-    			/// </summary>
-    			public static string UnlockMenuHeader(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.UnlockMenuHeader), languageEnglishName);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Click to unlock '{0}' translation
-    			/// </summary>
-    			public static string UnlockMenuTooltip(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.UnlockMenuTooltip), languageEnglishName);
-    
-    		}
-    		
-    		public static partial class RootModel
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Change primary language
-    			/// </summary>
-    			public static string ChangePrimaryLanguageConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.ChangePrimaryLanguageConfirmCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to change primary language to '{0}' ?
-    			/// </summary>
-    			public static string ChangePrimaryLanguageConfirmMessage(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.ChangePrimaryLanguageConfirmMessage), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Edit model name
-    			/// </summary>
-    			public static string EditModelNameCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.EditModelNameCaption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Enter new model name
-    			/// </summary>
-    			public static string EditModelNameMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.EditModelNameMessage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to continue renaming model name ?
-    			/// </summary>
-    			public static string EditModelNameWarningDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.EditModelNameWarningDetail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Changing model name will regenerate associated files with this new name....
-    			/// </summary>
-    			public static string EditModelNameWarningMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.EditModelNameWarningMessage);
-    
-    		}
-    		
-    		public static partial class StatusBar
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Application version:
-    			/// </summary>
-    			public static string AppVersion => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.StatusBar.AppVersion);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Code Generator:
-    			/// </summary>
-    			public static string CodeGenerator => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.StatusBar.CodeGenerator);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Click to change Code Generator settings...
-    			/// </summary>
-    			public static string CodeGeneratorTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.StatusBar.CodeGeneratorTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Selected: {0}
-    			/// </summary>
-    			public static string SelectedElement(object elementsPath) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.StatusBar.SelectedElement), elementsPath);
-    
-    		}
+			public static partial class AppSettings
+			{
+				public static partial class PageGeneral
+				{
+					/// <summary>
+					/// Gets localized string similar to: Default language for new projects
+					/// </summary>
+					public static string DefaultLanguageValidationCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationCaption);
+		
+					/// <summary>
+					/// Gets localized string similar to: Default language for new projects must be selected!
+					/// </summary>
+					public static string DefaultLanguageValidationMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationMessage);
+		
+					/// <summary>
+					/// Gets localized string similar to: General
+					/// </summary>
+					public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageGeneral.PageTitle);
+		
+				}
+				
+				public static partial class PagePlugins
+				{
+					/// <summary>
+					/// Gets localized string similar to: Configure plugin - {0}
+					/// </summary>
+					public static string ConfigurePluginTitle(object pluginName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PagePlugins.ConfigurePluginTitle), pluginName);
+		
+					/// <summary>
+					/// Gets localized string similar to: Plugins
+					/// </summary>
+					public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PagePlugins.PageTitle);
+		
+					/// <summary>
+					/// Gets localized string similar to: Reset to defaults
+					/// </summary>
+					public static string ResetPluginToDefaultsCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PagePlugins.ResetPluginToDefaultsCaption);
+		
+					/// <summary>
+					/// Gets localized string similar to: Reset plugin '{0}' to default settings?
+					/// </summary>
+					public static string ResetPluginToDefaultsMessage(object pluginName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PagePlugins.ResetPluginToDefaultsMessage), pluginName);
+		
+				}
+				
+				public static partial class PageTranslator
+				{
+					/// <summary>
+					/// Gets localized string similar to: Translator
+					/// </summary>
+					public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageTranslator.PageTitle);
+		
+					/// <summary>
+					/// Gets localized string similar to: Testing '{0}' failed.
+					/// </summary>
+					public static string TestingProviderFailed(object translationProviderName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageTranslator.TestingProviderFailed), translationProviderName);
+		
+					/// <summary>
+					/// Gets localized string similar to: Translator must be selected when translation is enabled.
+					/// </summary>
+					public static string TranslatorMustBeSelected => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.PageTranslator.TranslatorMustBeSelected);
+		
+				}
+				/// <summary>
+				/// Gets localized string similar to: Reset settings to defaults
+				/// </summary>
+				public static string ResetSettingsToDefaultsCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.ResetSettingsToDefaultsCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Plugins settings will not reset to defaults....
+				/// </summary>
+				public static string ResetSettingsToDefaultsDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.ResetSettingsToDefaultsDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Reset settings to defaults?
+				/// </summary>
+				public static string ResetSettingsToDefaultsMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.AppSettings.ResetSettingsToDefaultsMessage);
+	
+			}
+			
+			public static partial class ChangePassword
+			{
+				/// <summary>
+				/// Gets localized string similar to: Confirmation of new password must be same as new password.
+				/// </summary>
+				public static string ConfirmPasswordIsWrong => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.ConfirmPasswordIsWrong);
+	
+				/// <summary>
+				/// Gets localized string similar to: Current password is required.
+				/// </summary>
+				public static string CurrentPasswordIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.CurrentPasswordIsRequired);
+	
+				/// <summary>
+				/// Gets localized string similar to: Email address is required.
+				/// </summary>
+				public static string EmailAddressIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.EmailAddressIsRequired);
+	
+				/// <summary>
+				/// Gets localized string similar to: New password confirm is required.
+				/// </summary>
+				public static string NewPasswordConfirmIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.NewPasswordConfirmIsRequired);
+	
+				/// <summary>
+				/// Gets localized string similar to: New password is required.
+				/// </summary>
+				public static string NewPasswordIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.NewPasswordIsRequired);
+	
+				/// <summary>
+				/// Gets localized string similar to: Password was successfully changed!
+				/// </summary>
+				public static string PasswordSuccessfullyChanged => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ChangePassword.PasswordSuccessfullyChanged);
+	
+			}
+			
+			public static partial class DeleteElements
+			{
+				/// <summary>
+				/// Gets localized string similar to: Delete {0}
+				/// </summary>
+				public static string ConfirmCaption(object elementName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.DeleteElements.ConfirmCaption), elementName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to delete {0}?
+				/// </summary>
+				public static string ConfirmMessage(object elementName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.DeleteElements.ConfirmMessage), elementName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Delete {0}:
+				/// </summary>
+				public static string SelectedText(object elementName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.DeleteElements.SelectedText), elementName);
+	
+			}
+			
+			public static partial class EditParameter
+			{
+				/// <summary>
+				/// Gets localized string similar to: Add resources parameter
+				/// </summary>
+				public static string AddTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.EditParameter.AddTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Edit resource parameter
+				/// </summary>
+				public static string EditTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.EditParameter.EditTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Parameter with same name already exist!
+				/// </summary>
+				public static string ParameterWithSameNameExist => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.EditParameter.ParameterWithSameNameExist);
+	
+			}
+			
+			public static partial class HintPanel
+			{
+				public static partial class CodeGenerator
+				{
+					/// <summary>
+					/// Gets localized string similar to: When you save changes (Ctrl+S or save icon in toolbar) an associated code genera...
+					/// </summary>
+					public static string HintText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.HintPanel.CodeGenerator.HintText);
+		
+					/// <summary>
+					/// Gets localized string similar to: Code generation works only within Visual Studio!
+					/// </summary>
+					public static string HintTextOnlyInVS => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.HintPanel.CodeGenerator.HintTextOnlyInVS);
+		
+					/// <summary>
+					/// Gets localized string similar to: Read more about code generator templates...
+					/// </summary>
+					public static string HintTextReadMore => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.HintPanel.CodeGenerator.HintTextReadMore);
+		
+				}
+			}
+			
+			public static partial class Import
+			{
+				/// <summary>
+				/// Gets localized string similar to: Import resources
+				/// </summary>
+				public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.PageTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Please select file(s) to import.
+				/// </summary>
+				public static string PleaseSelectFilesToImport => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.PleaseSelectFilesToImport);
+	
+				/// <summary>
+				/// Gets localized string similar to: Please select importer!
+				/// </summary>
+				public static string PleaseSelectImporter => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.PleaseSelectImporter);
+	
+				/// <summary>
+				/// Gets localized string similar to: Please select import mode!
+				/// </summary>
+				public static string PleaseSelectImportMode => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.PleaseSelectImportMode);
+	
+				/// <summary>
+				/// Gets localized string similar to: Importer '{0}' does not support those extensions:...
+				/// </summary>
+				public static string UnsupportedFileExtensionsDetail(object importerDisplayName,object unknownFileExtensions) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.UnsupportedFileExtensionsDetail), importerDisplayName,unknownFileExtensions);
+	
+				/// <summary>
+				/// Gets localized string similar to: Selected file(s) has unsupported extension(s).
+				/// </summary>
+				public static string UnsupportedFileExtensionsMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Import.UnsupportedFileExtensionsMessage);
+	
+			}
+			
+			public static partial class LanguageSettings
+			{
+				/// <summary>
+				/// Gets localized string similar to: Remove language
+				/// </summary>
+				public static string ButtonRemoveTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ButtonRemoveTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Set as primary
+				/// </summary>
+				public static string ButtonSetAsPrimary => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ButtonSetAsPrimary);
+	
+				/// <summary>
+				/// Gets localized string similar to: Sets language as primary
+				/// </summary>
+				public static string ButtonSetAsPrimaryToolip => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ButtonSetAsPrimaryToolip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Change primary language
+				/// </summary>
+				public static string ChangePrimaryLanguageConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you really want to set language '{0}' as primary?
+				/// </summary>
+				public static string ChangePrimaryLanguageConfirmDetail(object newLanguageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmDetail), newLanguageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: You are about to change current primary language '{0}' to language '{1}'.
+				/// </summary>
+				public static string ChangePrimaryLanguageConfirmMessage(object currentPrimaryEnglishName,object newPrimaryEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmMessage), currentPrimaryEnglishName,newPrimaryEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Code
+				/// </summary>
+				public static string ColumnHeaderCode => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ColumnHeaderCode);
+	
+				/// <summary>
+				/// Gets localized string similar to: English name
+				/// </summary>
+				public static string ColumnHeaderEnglishName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ColumnHeaderEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Primary
+				/// </summary>
+				public static string ColumnHeaderPrimary => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ColumnHeaderPrimary);
+	
+				/// <summary>
+				/// Gets localized string similar to: Language settings
+				/// </summary>
+				public static string DialogCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.DialogCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Manage list of languages used in current project
+				/// </summary>
+				public static string DialogCaptionHint => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.DialogCaptionHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Primary
+				/// </summary>
+				public static string HeaderIsPrimary => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.HeaderIsPrimary);
+	
+				/// <summary>
+				/// Gets localized string similar to: {0} Languages
+				/// </summary>
+				public static string LabelCountOfLanguage(object countOfLanguages) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.LabelCountOfLanguage), countOfLanguages);
+	
+				/// <summary>
+				/// Gets localized string similar to: Languages
+				/// </summary>
+				public static string LabelLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.LabelLanguages);
+	
+				/// <summary>
+				/// Gets localized string similar to: Language settings
+				/// </summary>
+				public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.PageTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Language is primary language
+				/// </summary>
+				public static string PrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.PrimaryLanguage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Primary language cannot be removed
+				/// </summary>
+				public static string PrimaryLanguageCantBeRemoved => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.PrimaryLanguageCantBeRemoved);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project languages:
+				/// </summary>
+				public static string ProjectLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ProjectLanguages);
+	
+				/// <summary>
+				/// Gets localized string similar to: Remove language '{0}'
+				/// </summary>
+				public static string RemoveLanguageConfirmCaption(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.RemoveLanguageConfirmCaption), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: All resources in this language will be also removed!
+				/// </summary>
+				public static string RemoveLanguageConfirmDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.RemoveLanguageConfirmDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Remove language '{0}' ?
+				/// </summary>
+				public static string RemoveLanguageConfirmMessage(object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.RemoveLanguageConfirmMessage), languageName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Replace project language with other language
+				/// </summary>
+				public static string ReplaceLanguageCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ReplaceLanguageCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: You are about to change project language from '{0}' to '{1}'. ...
+				/// </summary>
+				public static string ReplaceLanguageDetail(object currentLanguageName,object newLanguageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ReplaceLanguageDetail), currentLanguageName,newLanguageName);
+	
+				/// <summary>
+				/// Gets localized string similar to: You are about to change project language from '{0}' to '{1}'.
+				/// </summary>
+				public static string ReplaceLanguageMessage(object currentLanguageName,object newLanguageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.ReplaceLanguageMessage), currentLanguageName,newLanguageName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Set as primary language
+				/// </summary>
+				public static string SetAsPrimaryConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.SetAsPrimaryConfirmCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Set language '{0}' as primary language?
+				/// </summary>
+				public static string SetAsPrimaryConfirmMessage(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.LanguageSettings.SetAsPrimaryConfirmMessage), param0);
+	
+			}
+			
+			public static partial class MessageBox
+			{
+				/// <summary>
+				/// Gets localized string similar to: _Cancel
+				/// </summary>
+				public static string LabelCancel => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MessageBox.LabelCancel);
+	
+				/// <summary>
+				/// Gets localized string similar to: _No
+				/// </summary>
+				public static string LabelNo => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MessageBox.LabelNo);
+	
+				/// <summary>
+				/// Gets localized string similar to: _OK
+				/// </summary>
+				public static string LabelOk => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MessageBox.LabelOk);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Yes
+				/// </summary>
+				public static string LabelYes => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MessageBox.LabelYes);
+	
+			}
+			
+			public static partial class MultiSelection
+			{
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to resources within selected categories.
+				/// </summary>
+				public static string ActionsTooltipCategories => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ActionsTooltipCategories);
+	
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to selected resources
+				/// </summary>
+				public static string ActionsTooltipResources => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ActionsTooltipResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: First Level
+				/// </summary>
+				public static string ButtonFirstLevel => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ButtonFirstLevel);
+	
+				/// <summary>
+				/// Gets localized string similar to: Recursive
+				/// </summary>
+				public static string ButtonRecursive => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ButtonRecursive);
+	
+				/// <summary>
+				/// Gets localized string similar to: Selected categories ({0})
+				/// </summary>
+				public static string CategoriesHeader(object categoriesCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.CategoriesHeader), categoriesCount);
+	
+				/// <summary>
+				/// Gets localized string similar to: Change resources state
+				/// </summary>
+				public static string ChangeResourcesStateFailedCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeResourcesStateFailedCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: There are no resources to change state for.
+				/// </summary>
+				public static string ChangeResourcesStateFailedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeResourcesStateFailedDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Could not change resources state to '{0}'.
+				/// </summary>
+				public static string ChangeResourcesStateFailedMessage(object newState) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeResourcesStateFailedMessage), newState);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to change resources state from all categories to '{0}'?
+				/// </summary>
+				public static string ChangeStateAllResourcesRecursive(object newState) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateAllResourcesRecursive), newState);
+	
+				/// <summary>
+				/// Gets localized string similar to: Change state to 'Edited'
+				/// </summary>
+				public static string ChangeStateToEdited => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateToEdited);
+	
+				/// <summary>
+				/// Gets localized string similar to: Change state to 'Final'
+				/// </summary>
+				public static string ChangeStateToFinal => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateToFinal);
+	
+				/// <summary>
+				/// Gets localized string similar to: Change state to 'Needs review'
+				/// </summary>
+				public static string ChangeStateToNeedsReview => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateToNeedsReview);
+	
+				/// <summary>
+				/// Gets localized string similar to: Change state to 'New'
+				/// </summary>
+				public static string ChangeStateToNew => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ChangeStateToNew);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to export resources from all categories?
+				/// </summary>
+				public static string ExportAllResourcesRecursive => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ExportAllResourcesRecursive);
+	
+				/// <summary>
+				/// Gets localized string similar to: There are no resources to be exported to file.
+				/// </summary>
+				public static string ExportResourcesFailedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ExportResourcesFailedDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Could not export resources to file
+				/// </summary>
+				public static string ExportResourcesFailedMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ExportResourcesFailedMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Export resources to file
+				/// </summary>
+				public static string ExportResourcesToFile => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ExportResourcesToFile);
+	
+				/// <summary>
+				/// Gets localized string similar to: Selected resources ({0})
+				/// </summary>
+				public static string ResourcesHeader(object resourcesCount) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ResourcesHeader), resourcesCount);
+	
+				/// <summary>
+				/// Gets localized string similar to: Yes - recursive scan...
+				/// </summary>
+				public static string ScanCategoriesRecursivelyConfirmDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ScanCategoriesRecursivelyConfirmDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to scan categories recursively?
+				/// </summary>
+				public static string ScanCategoriesRecursivelyConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.ScanCategoriesRecursivelyConfirmMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Selected project root
+				/// </summary>
+				public static string SelectedProjectRoot => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.SelectedProjectRoot);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to translate resources from all categories?
+				/// </summary>
+				public static string TranslateAllResourcesRecursive => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.TranslateAllResourcesRecursive);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translate resources
+				/// </summary>
+				public static string TranslateResourcesCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.TranslateResourcesCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: There are no resources to be translated.
+				/// </summary>
+				public static string TranslateResourcesFailedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.TranslateResourcesFailedDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Could not translate resources
+				/// </summary>
+				public static string TranslateResourcesFailedMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.MultiSelection.TranslateResourcesFailedMessage);
+	
+			}
+			
+			public static partial class NewElement
+			{
+				/// <summary>
+				/// Gets localized string similar to: Category name:
+				/// </summary>
+				public static string CategoryNameCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.CategoryNameCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Category name is required.
+				/// </summary>
+				public static string CategoryNameIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.CategoryNameIsRequired);
+	
+				/// <summary>
+				/// Gets localized string similar to: Alllowed characters: a-z A-Z and numbers
+				/// </summary>
+				public static string NameHint => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NameHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: New category
+				/// </summary>
+				public static string NewCategory => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewCategory);
+	
+				/// <summary>
+				/// Gets localized string similar to: Enter category _name:
+				/// </summary>
+				public static string NewCategoryCaptionText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewCategoryCaptionText);
+	
+				/// <summary>
+				/// Gets localized string similar to: category
+				/// </summary>
+				public static string NewCategoryTemplateName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewCategoryTemplateName);
+	
+				/// <summary>
+				/// Gets localized string similar to: New resource
+				/// </summary>
+				public static string NewResource => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResource);
+	
+				/// <summary>
+				/// Gets localized string similar to: Enter resource _name:
+				/// </summary>
+				public static string NewResourceCaptionText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceCaptionText);
+	
+				/// <summary>
+				/// Gets localized string similar to: resource
+				/// </summary>
+				public static string NewResourceTemplateName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceTemplateName);
+	
+				/// <summary>
+				/// Gets localized string similar to: New resource under root model failed
+				/// </summary>
+				public static string NewResourceUnderRootNotAllowedCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceUnderRootNotAllowedCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Enable option 'Allow resources under root' to add resource ?
+				/// </summary>
+				public static string NewResourceUnderRootNotAllowedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceUnderRootNotAllowedDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Could not add new resource under root model.
+				/// </summary>
+				public static string NewResourceUnderRootNotAllowedMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.NewResourceUnderRootNotAllowedMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Parent:
+				/// </summary>
+				public static string Parent => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.Parent);
+	
+				/// <summary>
+				/// Gets localized string similar to: Parent hierarchy
+				/// </summary>
+				public static string ParentHierarchy => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.ParentHierarchy);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource name:
+				/// </summary>
+				public static string ResourceNameCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.ResourceNameCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource name is required.
+				/// </summary>
+				public static string ResourceNameIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewElement.ResourceNameIsRequired);
+	
+			}
+			
+			public static partial class NewProject
+			{
+				/// <summary>
+				/// Gets localized string similar to: Code Generator Settings
+				/// </summary>
+				public static string ChangeCodeGeneratorSettingsLink => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ChangeCodeGeneratorSettingsLink);
+	
+				/// <summary>
+				/// Gets localized string similar to: Code Generator Template
+				/// </summary>
+				public static string CodeGeneratorTemplateTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.CodeGeneratorTemplateTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Common
+				/// </summary>
+				public static string CommonDetails => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.CommonDetails);
+	
+				/// <summary>
+				/// Gets localized string similar to: Default
+				/// </summary>
+				public static string DefaultModelName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.DefaultModelName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Create new project
+				/// </summary>
+				public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.DialogTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: New localization file
+				/// </summary>
+				public static string DialogTitleVS => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.DialogTitleVS);
+	
+				/// <summary>
+				/// Gets localized string similar to: Languages type:
+				/// </summary>
+				public static string LanguagesType => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.LanguagesType);
+	
+				/// <summary>
+				/// Gets localized string similar to: Neutral language (en)
+				/// </summary>
+				public static string LanguagesTypeNeutral => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.LanguagesTypeNeutral);
+	
+				/// <summary>
+				/// Gets localized string similar to: Specific language (en-US)
+				/// </summary>
+				public static string LanguagesTypeSpecific => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.LanguagesTypeSpecific);
+	
+				/// <summary>
+				/// Gets localized string similar to: Open "Language settings" after project created
+				/// </summary>
+				public static string OpenLanguageSettingsAfterCreate => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.OpenLanguageSettingsAfterCreate);
+	
+				/// <summary>
+				/// Gets localized string similar to: Other translation languages can be added later in "Language settings"
+				/// </summary>
+				public static string OtherLanguagesHint => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.OtherLanguagesHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Primary language:
+				/// </summary>
+				public static string PrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.PrimaryLanguage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Primary language is required.
+				/// </summary>
+				public static string PrimaryLanguageIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.PrimaryLanguageIsRequired);
+	
+				/// <summary>
+				/// Gets localized string similar to: Primary language must be selected!
+				/// </summary>
+				public static string PrimaryLanguageValidationMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.PrimaryLanguageValidationMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project name
+				/// </summary>
+				public static string ProjectName => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ProjectName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Project name is required.
+				/// </summary>
+				public static string ProjectNameIsRequired => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ProjectNameIsRequired);
+	
+				/// <summary>
+				/// Gets localized string similar to: Name
+				/// </summary>
+				public static string ProjectNameVS => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ProjectNameVS);
+	
+				/// <summary>
+				/// Gets localized string similar to: ResX files generator
+				/// </summary>
+				public static string ResxTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ResxTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Show only neutral languages
+				/// </summary>
+				public static string ShowOnlyNeutralLanguages => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.ShowOnlyNeutralLanguages);
+	
+				/// <summary>
+				/// Gets localized string similar to: For more info about associated T4 generator, look at
+				/// </summary>
+				public static string T4TemplateWebHelp => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.NewProject.T4TemplateWebHelp);
+	
+			}
+			
+			public static partial class Progress
+			{
+				/// <summary>
+				/// Gets localized string similar to: Progress...
+				/// </summary>
+				public static string DialogTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.Progress.DialogTitle);
+	
+			}
+			
+			public static partial class ProjectSettings
+			{
+				/// <summary>
+				/// Gets localized string similar to: Project Settings
+				/// </summary>
+				public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ProjectSettings.PageTitle);
+	
+			}
+			
+			public static partial class ResourceModel
+			{
+				/// <summary>
+				/// Gets localized string similar to: Change resource state to 'Final'
+				/// </summary>
+				public static string FinalStateConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to lock resource translations?
+				/// </summary>
+				public static string FinalStateConfirmMessageLock => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmMessageLock);
+	
+				/// <summary>
+				/// Gets localized string similar to: Change resource state to 'Final' will lock resource name, description and parame...
+				/// </summary>
+				public static string FinalStateConfirmMessageNotify => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmMessageNotify);
+	
+				/// <summary>
+				/// Gets localized string similar to: Later you can change this in settings page
+				/// </summary>
+				public static string FinalStateConfirmRememberHint => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmRememberHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Remember current choice for next time
+				/// </summary>
+				public static string FinalStateConfirmRememberText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.FinalStateConfirmRememberText);
+	
+				/// <summary>
+				/// Gets localized string similar to: Press Enter for new line...
+				/// </summary>
+				public static string HintText => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.HintText);
+	
+				/// <summary>
+				/// Gets localized string similar to: Lock all values
+				/// </summary>
+				public static string LockAllValues => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.LockAllValues);
+	
+				/// <summary>
+				/// Gets localized string similar to: Lock resource
+				/// </summary>
+				public static string LockResource => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.LockResource);
+	
+				/// <summary>
+				/// Gets localized string similar to: Locked
+				/// </summary>
+				public static string StateLocked => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.StateLocked);
+	
+				/// <summary>
+				/// Gets localized string similar to: Not locked
+				/// </summary>
+				public static string StateNotLocked => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.StateNotLocked);
+	
+				/// <summary>
+				/// Gets localized string similar to: Unlock all values
+				/// </summary>
+				public static string UnlockAllValues => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.UnlockAllValues);
+	
+				/// <summary>
+				/// Gets localized string similar to: Unlock resource
+				/// </summary>
+				public static string UnlockResource => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceModel.UnlockResource);
+	
+			}
+			
+			public static partial class ResourceParameters
+			{
+				/// <summary>
+				/// Gets localized string similar to: Resource Parameters
+				/// </summary>
+				public static string PageTitle => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceParameters.PageTitle);
+	
+				/// <summary>
+				/// Gets localized string similar to: Remove parameter
+				/// </summary>
+				public static string RemoveParameterCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceParameters.RemoveParameterCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Remove parameter '{0}' at position {1}?
+				/// </summary>
+				public static string RemoveParameterMessage(object parameterName,object parameterPosition) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceParameters.RemoveParameterMessage), parameterName,parameterPosition);
+	
+			}
+			
+			public static partial class ResourceValueModel
+			{
+				/// <summary>
+				/// Gets localized string similar to: '{0}' value was automatically translated by translator service
+				/// </summary>
+				public static string AutoTranslatedTooltip(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.AutoTranslatedTooltip), languageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Actions with '{0}' translation
+				/// </summary>
+				public static string BurgerMenuHeader(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.BurgerMenuHeader), languageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: '{0}' translation is locked for edits
+				/// </summary>
+				public static string LockIconTooltipIsLocked(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.LockIconTooltipIsLocked), languageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: '{0}' translation is not locked for edits
+				/// </summary>
+				public static string LockIconTooltipIsNotLocked(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.LockIconTooltipIsNotLocked), languageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Lock '{0}' translation
+				/// </summary>
+				public static string LockMenuHeader(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.LockMenuHeader), languageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Click to lock '{0}' translation
+				/// </summary>
+				public static string LockMenuTooltip(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.LockMenuTooltip), languageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was unmarked as auto-translated.
+				/// </summary>
+				public static string PropertyAutoTranslatedIsFalse(object ownerResourceName,object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.PropertyAutoTranslatedIsFalse), ownerResourceName,languageName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was marked as auto-translated.
+				/// </summary>
+				public static string PropertyAutoTranslatedIsTrue(object ownerResourceName,object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.PropertyAutoTranslatedIsTrue), ownerResourceName,languageName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was unlocked.
+				/// </summary>
+				public static string PropertyLockedIsFalse(object ownerResourceName,object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.PropertyLockedIsFalse), ownerResourceName,languageName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was locked.
+				/// </summary>
+				public static string PropertyLockedIsTrue(object ownerResourceName,object languageName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.PropertyLockedIsTrue), ownerResourceName,languageName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translate '{0}' value
+				/// </summary>
+				public static string TranslateMenuHeader(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.TranslateMenuHeader), languageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Unlock '{0}' translation
+				/// </summary>
+				public static string UnlockMenuHeader(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.UnlockMenuHeader), languageEnglishName);
+	
+				/// <summary>
+				/// Gets localized string similar to: Click to unlock '{0}' translation
+				/// </summary>
+				public static string UnlockMenuTooltip(object languageEnglishName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.ResourceValueModel.UnlockMenuTooltip), languageEnglishName);
+	
+			}
+			
+			public static partial class RootModel
+			{
+				/// <summary>
+				/// Gets localized string similar to: Change primary language
+				/// </summary>
+				public static string ChangePrimaryLanguageConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.ChangePrimaryLanguageConfirmCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to change primary language to '{0}' ?
+				/// </summary>
+				public static string ChangePrimaryLanguageConfirmMessage(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.ChangePrimaryLanguageConfirmMessage), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: Edit model name
+				/// </summary>
+				public static string EditModelNameCaption => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.EditModelNameCaption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Enter new model name
+				/// </summary>
+				public static string EditModelNameMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.EditModelNameMessage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to continue renaming model name ?
+				/// </summary>
+				public static string EditModelNameWarningDetail => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.EditModelNameWarningDetail);
+	
+				/// <summary>
+				/// Gets localized string similar to: Changing model name will regenerate associated files with this new name....
+				/// </summary>
+				public static string EditModelNameWarningMessage => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.RootModel.EditModelNameWarningMessage);
+	
+			}
+			
+			public static partial class StatusBar
+			{
+				/// <summary>
+				/// Gets localized string similar to: Application version:
+				/// </summary>
+				public static string AppVersion => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.StatusBar.AppVersion);
+	
+				/// <summary>
+				/// Gets localized string similar to: Code Generator:
+				/// </summary>
+				public static string CodeGenerator => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.StatusBar.CodeGenerator);
+	
+				/// <summary>
+				/// Gets localized string similar to: Click to change Code Generator settings...
+				/// </summary>
+				public static string CodeGeneratorTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.StatusBar.CodeGeneratorTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Selected: {0}
+				/// </summary>
+				public static string SelectedElement(object elementsPath) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.ViewModels.StatusBar.SelectedElement), elementsPath);
+	
+			}
 		}
 		
 		public static partial class Views
 		{
-    		public static partial class CategoryView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to resources under category
-    			/// </summary>
-    			public static string ActionsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.CategoryView.ActionsTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Category
-    			/// </summary>
-    			public static string Category => StringsContext.Instance.GetStringSafely(StringsKeys.Views.CategoryView.Category);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Description
-    			/// </summary>
-    			public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Views.CategoryView.Description);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Name
-    			/// </summary>
-    			public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Views.CategoryView.Name);
-    
-    		}
-    		
-    		public static partial class LanguageSelectorView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Country specific
-    			/// </summary>
-    			public static string CountrySpecific => StringsContext.Instance.GetStringSafely(StringsKeys.Views.LanguageSelectorView.CountrySpecific);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Searching by country code - click to search by country name
-    			/// </summary>
-    			public static string FilterTooltipActive => StringsContext.Instance.GetStringSafely(StringsKeys.Views.LanguageSelectorView.FilterTooltipActive);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Searching by country name - click to search by country code
-    			/// </summary>
-    			public static string FilterTooltipNotActive => StringsContext.Instance.GetStringSafely(StringsKeys.Views.LanguageSelectorView.FilterTooltipNotActive);
-    
-    		}
-    		
-    		public static partial class ProjectSettingsView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Allow resources under root
-    			/// </summary>
-    			public static string AllowResourcesUnderRoot => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.AllowResourcesUnderRoot);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Categories and resources
-    			/// </summary>
-    			public static string CategoriesAndResources => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.CategoriesAndResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Flat structure
-    			/// </summary>
-    			public static string FlatStructure => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.FlatStructure);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Hierarchical structure
-    			/// </summary>
-    			public static string HierarchicalStructure => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.HierarchicalStructure);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resources only
-    			/// </summary>
-    			public static string ResourcesOnly => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.ResourcesOnly);
-    
-    		}
-    		
-    		public static partial class ResourceView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to all resource translations.
-    			/// </summary>
-    			public static string ActionsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.ActionsTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: To add another language, click 
-    			/// </summary>
-    			public static string AddLanguageLinkPart1 => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.AddLanguageLinkPart1);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: here
-    			/// </summary>
-    			public static string AddLanguageLinkPart2 => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.AddLanguageLinkPart2);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Click add or edit list of languages
-    			/// </summary>
-    			public static string AddLanguageLinkTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.AddLanguageLinkTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Click to show hint...
-    			/// </summary>
-    			public static string ClickToShowHint => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.ClickToShowHint);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Define...
-    			/// </summary>
-    			public static string Define => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Define);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Description
-    			/// </summary>
-    			public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Description);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource string is empty, mark it as translated
-    			/// </summary>
-    			public static string Hold => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Hold);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Locked
-    			/// </summary>
-    			public static string Locked => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Locked);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Name
-    			/// </summary>
-    			public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Name);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Parameters
-    			/// </summary>
-    			public static string Parameters => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Parameters);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource
-    			/// </summary>
-    			public static string Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Resource);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was marked as translated.
-    			/// </summary>
-    			public static string ResourceMarkedAsTranslated(object param0,object param1) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.ResourceMarkedAsTranslated), param0,param1);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Resource '{0}' translation '{1}' was unmarked as translated.
-    			/// </summary>
-    			public static string ResourceUnmarkedAsTranslated(object param0,object param1) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.ResourceUnmarkedAsTranslated), param0,param1);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: State
-    			/// </summary>
-    			public static string State => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.State);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translate all values
-    			/// </summary>
-    			public static string TranslateAllValuesMenuHeader => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslateAllValuesMenuHeader);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translate all values using translator service.
-    			/// </summary>
-    			public static string TranslateAllValuesMenuTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslateAllValuesMenuTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translate empty values
-    			/// </summary>
-    			public static string TranslateEmptyValuesMenuHeader => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslateEmptyValuesMenuHeader);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translate only empty values using translator service.
-    			/// </summary>
-    			public static string TranslateEmptyValuesMenuTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslateEmptyValuesMenuTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Translation note
-    			/// </summary>
-    			public static string TranslationNote => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslationNote);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translations
-    			/// </summary>
-    			public static string Translations => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Translations);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Press Ctrl+Enter to enter multi-line mode. Key Enter to move to next language tr...
-    			/// </summary>
-    			public static string TranslationsHint => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslationsHint);
-    
-    		}
-    		
-    		public static partial class RootView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Show actions to be applied to all resources within project
-    			/// </summary>
-    			public static string ActionsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.ActionsTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Add missing languages '{0}'
-    			/// </summary>
-    			public static string AddMissingLanguages(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.AddMissingLanguages), param0);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: _Description
-    			/// </summary>
-    			public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.Description);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Hold resources:
-    			/// </summary>
-    			public static string HoldResources => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.HoldResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Languages
-    			/// </summary>
-    			public static string Languages => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.Languages);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Model
-    			/// </summary>
-    			public static string Model => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.Model);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Name
-    			/// </summary>
-    			public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.Name);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Language is primary language
-    			/// </summary>
-    			public static string PrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.PrimaryLanguage);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Search
-    			/// </summary>
-    			public static string SearchTreeText => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.SearchTreeText);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Translated resources:
-    			/// </summary>
-    			public static string TranslatedResources => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.TranslatedResources);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Untranslated resources:
-    			/// </summary>
-    			public static string UntranslatedResources => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.UntranslatedResources);
-    
-    		}
-    		
-    		public static partial class ShellView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Resources count:
-    			/// </summary>
-    			public static string AllResourceCount => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ShellView.AllResourceCount);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Primary language:
-    			/// </summary>
-    			public static string PrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ShellView.PrimaryLanguage);
-    
-    		}
-    		
-    		public static partial class TreeView
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Can drop here.
-    			/// </summary>
-    			public static string CanDropHere => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.CanDropHere);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Drop is not allowed here.
-    			/// </summary>
-    			public static string DropNotAllowed => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.DropNotAllowed);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Showing only untranslated resources - click to remove filter
-    			/// </summary>
-    			public static string FilterTooltipActive => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.FilterTooltipActive);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Showing all resources - click to show only untranslated
-    			/// </summary>
-    			public static string FilterTooltipNotActive => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.FilterTooltipNotActive);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Complete translation
-    			/// </summary>
-    			public static string LegendCompleteTranslation => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.LegendCompleteTranslation);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Incomplete translation
-    			/// </summary>
-    			public static string LegendIncompleteTranslation => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.LegendIncompleteTranslation);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Red border - resource is not translated into all languages
-    			/// </summary>
-    			public static string RedBorderTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.RedBorderTooltip);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Show only untranslated
-    			/// </summary>
-    			public static string ShowOnlyUntranslated => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.ShowOnlyUntranslated);
-    
-    		}
+			public static partial class CategoryView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to resources under category
+				/// </summary>
+				public static string ActionsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.CategoryView.ActionsTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Category
+				/// </summary>
+				public static string Category => StringsContext.Instance.GetStringSafely(StringsKeys.Views.CategoryView.Category);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Description
+				/// </summary>
+				public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Views.CategoryView.Description);
+	
+				/// <summary>
+				/// Gets localized string similar to: Name
+				/// </summary>
+				public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Views.CategoryView.Name);
+	
+			}
+			
+			public static partial class LanguageSelectorView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Country specific
+				/// </summary>
+				public static string CountrySpecific => StringsContext.Instance.GetStringSafely(StringsKeys.Views.LanguageSelectorView.CountrySpecific);
+	
+				/// <summary>
+				/// Gets localized string similar to: Searching by country code - click to search by country name
+				/// </summary>
+				public static string FilterTooltipActive => StringsContext.Instance.GetStringSafely(StringsKeys.Views.LanguageSelectorView.FilterTooltipActive);
+	
+				/// <summary>
+				/// Gets localized string similar to: Searching by country name - click to search by country code
+				/// </summary>
+				public static string FilterTooltipNotActive => StringsContext.Instance.GetStringSafely(StringsKeys.Views.LanguageSelectorView.FilterTooltipNotActive);
+	
+			}
+			
+			public static partial class ProjectSettingsView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Allow resources under root
+				/// </summary>
+				public static string AllowResourcesUnderRoot => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.AllowResourcesUnderRoot);
+	
+				/// <summary>
+				/// Gets localized string similar to: Categories and resources
+				/// </summary>
+				public static string CategoriesAndResources => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.CategoriesAndResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: Flat structure
+				/// </summary>
+				public static string FlatStructure => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.FlatStructure);
+	
+				/// <summary>
+				/// Gets localized string similar to: Hierarchical structure
+				/// </summary>
+				public static string HierarchicalStructure => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.HierarchicalStructure);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resources only
+				/// </summary>
+				public static string ResourcesOnly => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ProjectSettingsView.ResourcesOnly);
+	
+			}
+			
+			public static partial class ResourceView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to all resource translations.
+				/// </summary>
+				public static string ActionsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.ActionsTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: To add another language, click 
+				/// </summary>
+				public static string AddLanguageLinkPart1 => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.AddLanguageLinkPart1);
+	
+				/// <summary>
+				/// Gets localized string similar to: here
+				/// </summary>
+				public static string AddLanguageLinkPart2 => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.AddLanguageLinkPart2);
+	
+				/// <summary>
+				/// Gets localized string similar to: Click add or edit list of languages
+				/// </summary>
+				public static string AddLanguageLinkTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.AddLanguageLinkTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Click to show hint...
+				/// </summary>
+				public static string ClickToShowHint => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.ClickToShowHint);
+	
+				/// <summary>
+				/// Gets localized string similar to: Define...
+				/// </summary>
+				public static string Define => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Define);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Description
+				/// </summary>
+				public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Description);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource string is empty, mark it as translated
+				/// </summary>
+				public static string Hold => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Hold);
+	
+				/// <summary>
+				/// Gets localized string similar to: Locked
+				/// </summary>
+				public static string Locked => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Locked);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Name
+				/// </summary>
+				public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Name);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Parameters
+				/// </summary>
+				public static string Parameters => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Parameters);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource
+				/// </summary>
+				public static string Resource => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Resource);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was marked as translated.
+				/// </summary>
+				public static string ResourceMarkedAsTranslated(object param0,object param1) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.ResourceMarkedAsTranslated), param0,param1);
+	
+				/// <summary>
+				/// Gets localized string similar to: Resource '{0}' translation '{1}' was unmarked as translated.
+				/// </summary>
+				public static string ResourceUnmarkedAsTranslated(object param0,object param1) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.ResourceUnmarkedAsTranslated), param0,param1);
+	
+				/// <summary>
+				/// Gets localized string similar to: State
+				/// </summary>
+				public static string State => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.State);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translate all values
+				/// </summary>
+				public static string TranslateAllValuesMenuHeader => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslateAllValuesMenuHeader);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translate all values using translator service.
+				/// </summary>
+				public static string TranslateAllValuesMenuTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslateAllValuesMenuTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translate empty values
+				/// </summary>
+				public static string TranslateEmptyValuesMenuHeader => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslateEmptyValuesMenuHeader);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translate only empty values using translator service.
+				/// </summary>
+				public static string TranslateEmptyValuesMenuTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslateEmptyValuesMenuTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Translation note
+				/// </summary>
+				public static string TranslationNote => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslationNote);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translations
+				/// </summary>
+				public static string Translations => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.Translations);
+	
+				/// <summary>
+				/// Gets localized string similar to: Press Ctrl+Enter to enter multi-line mode. Key Enter to move to next language tr...
+				/// </summary>
+				public static string TranslationsHint => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ResourceView.TranslationsHint);
+	
+			}
+			
+			public static partial class RootView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Show actions to be applied to all resources within project
+				/// </summary>
+				public static string ActionsTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.ActionsTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Add missing languages '{0}'
+				/// </summary>
+				public static string AddMissingLanguages(object param0) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.AddMissingLanguages), param0);
+	
+				/// <summary>
+				/// Gets localized string similar to: _Description
+				/// </summary>
+				public static string Description => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.Description);
+	
+				/// <summary>
+				/// Gets localized string similar to: Hold resources:
+				/// </summary>
+				public static string HoldResources => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.HoldResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: Languages
+				/// </summary>
+				public static string Languages => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.Languages);
+	
+				/// <summary>
+				/// Gets localized string similar to: Model
+				/// </summary>
+				public static string Model => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.Model);
+	
+				/// <summary>
+				/// Gets localized string similar to: Name
+				/// </summary>
+				public static string Name => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.Name);
+	
+				/// <summary>
+				/// Gets localized string similar to: Language is primary language
+				/// </summary>
+				public static string PrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.PrimaryLanguage);
+	
+				/// <summary>
+				/// Gets localized string similar to: Search
+				/// </summary>
+				public static string SearchTreeText => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.SearchTreeText);
+	
+				/// <summary>
+				/// Gets localized string similar to: Translated resources:
+				/// </summary>
+				public static string TranslatedResources => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.TranslatedResources);
+	
+				/// <summary>
+				/// Gets localized string similar to: Untranslated resources:
+				/// </summary>
+				public static string UntranslatedResources => StringsContext.Instance.GetStringSafely(StringsKeys.Views.RootView.UntranslatedResources);
+	
+			}
+			
+			public static partial class ShellView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Resources count:
+				/// </summary>
+				public static string AllResourceCount => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ShellView.AllResourceCount);
+	
+				/// <summary>
+				/// Gets localized string similar to: Primary language:
+				/// </summary>
+				public static string PrimaryLanguage => StringsContext.Instance.GetStringSafely(StringsKeys.Views.ShellView.PrimaryLanguage);
+	
+			}
+			
+			public static partial class TreeView
+			{
+				/// <summary>
+				/// Gets localized string similar to: Can drop here.
+				/// </summary>
+				public static string CanDropHere => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.CanDropHere);
+	
+				/// <summary>
+				/// Gets localized string similar to: Drop is not allowed here.
+				/// </summary>
+				public static string DropNotAllowed => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.DropNotAllowed);
+	
+				/// <summary>
+				/// Gets localized string similar to: Showing only untranslated resources - click to remove filter
+				/// </summary>
+				public static string FilterTooltipActive => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.FilterTooltipActive);
+	
+				/// <summary>
+				/// Gets localized string similar to: Showing all resources - click to show only untranslated
+				/// </summary>
+				public static string FilterTooltipNotActive => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.FilterTooltipNotActive);
+	
+				/// <summary>
+				/// Gets localized string similar to: Complete translation
+				/// </summary>
+				public static string LegendCompleteTranslation => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.LegendCompleteTranslation);
+	
+				/// <summary>
+				/// Gets localized string similar to: Incomplete translation
+				/// </summary>
+				public static string LegendIncompleteTranslation => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.LegendIncompleteTranslation);
+	
+				/// <summary>
+				/// Gets localized string similar to: Red border - resource is not translated into all languages
+				/// </summary>
+				public static string RedBorderTooltip => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.RedBorderTooltip);
+	
+				/// <summary>
+				/// Gets localized string similar to: Show only untranslated
+				/// </summary>
+				public static string ShowOnlyUntranslated => StringsContext.Instance.GetStringSafely(StringsKeys.Views.TreeView.ShowOnlyUntranslated);
+	
+			}
 		}
 		
 		public static partial class VsExtension
 		{
-    		public static partial class FirstTimeOpenSettings
-    		{
-    			/// <summary>
-    			/// Gets localized string similar to: Welcome
-    			/// </summary>
-    			public static string Caption => StringsContext.Instance.GetStringSafely(StringsKeys.VsExtension.FirstTimeOpenSettings.Caption);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: Do you want to open the settings?
-    			/// </summary>
-    			public static string Detail => StringsContext.Instance.GetStringSafely(StringsKeys.VsExtension.FirstTimeOpenSettings.Detail);
-    
-    			/// <summary>
-    			/// Gets localized string similar to: This is the first time you use Localization HQ Editor extension.
-    			/// </summary>
-    			public static string Message => StringsContext.Instance.GetStringSafely(StringsKeys.VsExtension.FirstTimeOpenSettings.Message);
-    
-    		}
+			public static partial class FirstTimeOpenSettings
+			{
+				/// <summary>
+				/// Gets localized string similar to: Welcome
+				/// </summary>
+				public static string Caption => StringsContext.Instance.GetStringSafely(StringsKeys.VsExtension.FirstTimeOpenSettings.Caption);
+	
+				/// <summary>
+				/// Gets localized string similar to: Do you want to open the settings?
+				/// </summary>
+				public static string Detail => StringsContext.Instance.GetStringSafely(StringsKeys.VsExtension.FirstTimeOpenSettings.Detail);
+	
+				/// <summary>
+				/// Gets localized string similar to: This is the first time you use Localization HQ Editor extension.
+				/// </summary>
+				public static string Message => StringsContext.Instance.GetStringSafely(StringsKeys.VsExtension.FirstTimeOpenSettings.Message);
+	
+			}
 		}
 	}
 }

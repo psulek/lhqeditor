@@ -1,4 +1,8 @@
-﻿2021.6
+﻿2021.7
+- Fixed bug #2 (Option Allow resources under root should be available for all item templates)
+- Fixed bug #3 (Inconsistency of tabs and spaces in generated output C# files)
+
+2021.6
 - Added new project templates for ASP.NET Core NET5 and NET6(only for Visual Studio 2022)
 
 2021.5

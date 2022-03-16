@@ -46,6 +46,11 @@ namespace LHQ.Data
             return FindByNameInternal(name, ignoreCase, cultureInfo);
         }
 
+        public bool ContainsByName(string name, bool ignoreCase, CultureInfo cultureInfo = null)
+        {
+            return ContainsByNameInternal(name, ignoreCase, cultureInfo);
+        }
+
         public LanguageElementList Clone()
         {
             var cloned = new LanguageElementList();

@@ -27,7 +27,6 @@ using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs;
 using LHQ.Data;
 using LHQ.Data.Templating.Templates;
-using LHQ.Utils.Extensions;
 
 namespace LHQ.App.Dialogs
 {
@@ -53,13 +52,6 @@ namespace LHQ.App.Dialogs
                 viewModel.SetVsExtraInfo(vsExtraInfo);
                 viewModel.ModelName = modelName;
                 
-                bool resourcesUnderRootVisible = true;
-                if (shellViewContext.AppContext.RunInVsPackage && viewModel.Template != null)
-                {
-                    resourcesUnderRootVisible = !viewModel.Template.ModelFeatures.IsFlagSet(ModelFeatures.HideResourcesUnderRoot);
-                }
-
-                viewModel.ProjectSettings.ResourcesUnderRootVisible = resourcesUnderRootVisible;
                 bool? dialogResult = DialogShow<NewProjectDialogViewModel, NewProjectDialog>(viewModel);
                 bool submitted = dialogResult == true;
                 if (submitted)

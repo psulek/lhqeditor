@@ -49,10 +49,12 @@ namespace LHQ.Data.CodeGenerator
 
         public DataNode Serialize()
         {
-            var result = new DataNode();
-            result.AddAttribute(AttributeTemplateId, TemplateId);
-            if (Template != null)
+            DataNode result = null;
+            if (!string.IsNullOrEmpty(TemplateId) && Template != null)
             {
+                result = new DataNode();
+                result.AddAttribute(AttributeTemplateId, TemplateId);
+
                 var templateNode = new DataNode(ElementSettings);
                 Template.Serialize(templateNode);
                 result.AddChildren(templateNode);

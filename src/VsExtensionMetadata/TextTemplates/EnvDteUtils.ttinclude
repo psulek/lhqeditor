@@ -682,7 +682,7 @@ public class FileManager: IDisposable
                 throw new ArgumentNullException("Could not obtain hostServiceProvider");
             }
 
-            dte = (EnvDTE.DTE) hostServiceProvider.GetService(typeof (EnvDTE.DTE));
+            dte = (EnvDTE.DTE) hostServiceProvider.GetCOMService(typeof (EnvDTE.DTE));
             if (dte == null)
                 throw new ArgumentNullException("Could not obtain DTE from host");
             templateProjectItem = dte.Solution.FindProjectItem(templateFile);

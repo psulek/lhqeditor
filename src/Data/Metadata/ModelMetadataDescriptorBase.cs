@@ -36,6 +36,8 @@ namespace LHQ.Data.Metadata
 
         public abstract IModelElementMetadata Create();
 
+        public abstract bool AllowEmptyContent { get; }
+
         public virtual bool Deserialize(ModelMetadataDefinition definition, out IModelElementMetadata metadata)
         {
             var result = false;

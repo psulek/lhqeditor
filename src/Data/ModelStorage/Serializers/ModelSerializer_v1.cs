@@ -762,9 +762,12 @@ namespace LHQ.Data.ModelStorage.Serializers
                     WriteMetadata(metadataHolder, definition);
                 }
 
-                string metadataRawJson = DataNodeJsonSerializer.Serialize(metadataHolder, _saveOptions);
+                if (metadataHolder.Children.Count > 0)
+                {
+                    string metadataRawJson = DataNodeJsonSerializer.Serialize(metadataHolder, _saveOptions);
 
-                jsonModel[ElementMetadatas] = new JRaw(metadataRawJson);
+                    jsonModel[ElementMetadatas] = new JRaw(metadataRawJson);
+                }
             }
         }
 
@@ -773,21 +776,25 @@ namespace LHQ.Data.ModelStorage.Serializers
             ArgumentValidator.EnsureArgumentNotNull(parentElementNode, "parentElementNode");
             ArgumentValidator.EnsureArgumentNotNull(definition, "definition");
 
-            // <metadata>
-            DataNode metadataElement = parentElementNode.AddChildren(ElementMetadata, null);
-
-            // elementKey=""
-            // string elementKey = definition.ElementKey.Serialize();
-            // metadataElement.AddAttribute(AttributeKey, elementKey);
-
-            // descriptorUID=""
-            metadataElement.AddAttribute(AttributeDescriptorUID, DataNodeValueHelper.ToString(definition.DescriptorUID));
-
-            if (definition.Content != null)
+            var descriptor = ModelMetadataDescriptorFactory.Instance.Get(definition.DescriptorUID);
+            if (definition.Content != null || descriptor.AllowEmptyContent)
             {
-                // fixup node name in case custom metadata descriptor changed it (by mistake?!)
-                definition.Content.NodeName = ElementContent;
-                metadataElement.AddChildren(definition.Content);
+                // <metadata>
+                DataNode metadataElement = parentElementNode.AddChildren(ElementMetadata, null);
+
+                // elementKey=""
+                // string elementKey = definition.ElementKey.Serialize();
+                // metadataElement.AddAttribute(AttributeKey, elementKey);
+
+                // descriptorUID=""
+                metadataElement.AddAttribute(AttributeDescriptorUID, DataNodeValueHelper.ToString(definition.DescriptorUID));
+
+                if (definition.Content != null)
+                {
+                    // fixup node name in case custom metadata descriptor changed it (by mistake?!)
+                    definition.Content.NodeName = ElementContent;
+                    metadataElement.AddChildren(definition.Content);
+                }
             }
         }
 

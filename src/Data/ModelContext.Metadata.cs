@@ -50,8 +50,7 @@ namespace LHQ.Data
                     if (descriptor != null)
                     {
                         IModelElementMetadata elementMetadata = definition.Metadata;
-                        DataNode contentDataNode = descriptor.Serialize(definition, elementMetadata, this);
-                        definition.Content = contentDataNode;
+                        definition.Content = descriptor.Serialize(definition, elementMetadata, this);
                     }
                     else
                     {
@@ -67,6 +66,9 @@ namespace LHQ.Data
             ModelMetadataList metadata = Model.Metadata;
             if (metadata != null)
             {
+                var alreadyProcessed = new List<Guid>();
+                var metadataToRemove = new List<ModelMetadataDefinition>();
+
                 foreach (ModelMetadataDefinition definition in metadata)
                 {
                     IModelMetadataDescriptor descriptor =
@@ -77,10 +79,22 @@ namespace LHQ.Data
                         bool deserializeResult = descriptor.Deserialize(definition, out var elementMetadata);
                         if (deserializeResult && elementMetadata != null)
                         {
-                            definition.Metadata = elementMetadata;
+                            if (!alreadyProcessed.Contains(definition.DescriptorUID))
+                            {
+                                alreadyProcessed.Add(definition.DescriptorUID);
+                                definition.Metadata = elementMetadata;
+                            }
+                            else
+                            {
+                                metadataToRemove.Add(definition);
+                            }
+
+                            //definition.Metadata = elementMetadata;
                         }
                         else
                         {
+                            metadataToRemove.Add(definition);
+
                             DebugUtils.Error(
                                 "ModelContext, deserialize metadata for model '{0}' failed deserialize metadata using descriptor with UID '{1}'!"
                                     .FormatWith(Model.Key.Serialize(), definition.DescriptorUID));
@@ -91,6 +105,14 @@ namespace LHQ.Data
                         DebugUtils.Error(
                             "ModelContext, deserialize metadata for model '{0}', failed to retrieve metadata descriptor with UID '{1}'!"
                                 .FormatWith(Model.Key.Serialize(), definition.DescriptorUID));
+                    }
+                }
+
+                foreach (var definition in metadataToRemove)
+                {
+                    if (Model.Metadata.Contains(definition))
+                    {
+                        Model.Metadata.Remove(definition);
                     }
                 }
             }

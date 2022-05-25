@@ -41,6 +41,11 @@ namespace LHQ.Data.Interfaces.Metadata
 
         IModelElementMetadata Create();
 
+        /// <summary>
+        /// Flag whenever content can be empty (and thus later serialized)
+        /// </summary>
+        bool AllowEmptyContent { get; }
+
         bool Deserialize(ModelMetadataDefinition definition, out IModelElementMetadata metadata);
 
         // ReSharper disable once UnusedParameter.Global

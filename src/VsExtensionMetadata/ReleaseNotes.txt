@@ -1,4 +1,8 @@
-﻿2022.1
+﻿2022.2
+- Fixed bug #4 (Type 'OAProjectItem' is not marked as serializable in VS2022 on files generation)
+- Implemented feature #5 (Do not serialize "metadatas" when there is no code generator attached)
+
+2022.1
 - Fixed bug #2 (Option Allow resources under root should be available for all item templates)
 - Fixed bug #3 (Inconsistency of tabs and spaces in generated output C# files)
 

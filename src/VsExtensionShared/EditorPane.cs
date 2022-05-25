@@ -247,7 +247,7 @@ namespace LHQ.VsExtension
 
                 try
                 {
-                    t4File = projectItem.Properties.Item("CustomToolNamespace").Value.ToString();
+                    t4File = projectItem.Properties?.Item("CustomToolNamespace")?.Value?.ToString();
                 }
                 catch
                 {

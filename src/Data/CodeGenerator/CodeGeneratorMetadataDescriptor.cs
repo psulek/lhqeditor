@@ -35,6 +35,8 @@ namespace LHQ.Data.CodeGenerator
 
         public override Guid DescriptorUID { get; } = UID;
 
+        public override bool AllowEmptyContent { get; } = false;
+
         public override IModelElementMetadata Create()
         {
             return new CodeGeneratorMetadata();

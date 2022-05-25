@@ -175,18 +175,21 @@ namespace LHQ.App.ViewModels
             if (!ModelContext.HasCodeGeneratorTemplate())
             {
                 CodeGeneratorTemplate template = GetCodeGeneratorTemplate();
-                var metadata = ModelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
-                metadata.TemplateId = template.Id;
-                metadata.Template = template;
-                if (!ShellService.SaveProject(hostEnvironmentSave: true))
+                if (template != null)
                 {
-                    DialogService.ShowError(Strings.Operations.Project.ProjectSaveErrorTitle,
-                        Strings.Operations.Project.ProjectSaveFailed, 
-                        Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName),
-                        displayType: AppMessageDisplayType.HostDialog);
-                }
+                    var metadata = ModelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+                    metadata.TemplateId = template.Id;
+                    metadata.Template = template;
+                    if (!ShellService.SaveProject(hostEnvironmentSave: true))
+                    {
+                        DialogService.ShowError(Strings.Operations.Project.ProjectSaveErrorTitle,
+                            Strings.Operations.Project.ProjectSaveFailed, 
+                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName),
+                            displayType: AppMessageDisplayType.HostDialog);
+                    }
 
-                ModelContext.HasCodeGeneratorTemplate();
+                    ModelContext.HasCodeGeneratorTemplate();
+                }
             }
         }
 

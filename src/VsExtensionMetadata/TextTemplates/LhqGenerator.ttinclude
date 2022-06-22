@@ -15,7 +15,7 @@ public abstract class GeneratorBase
 
 	protected abstract string GeneratorName { get; }
 
-	protected EnvDTE.DTE Dte
+	protected DTE Dte
     {
 		get { return Manager.GetDte(); }
     }

@@ -30,6 +30,6 @@ namespace LHQ.VsExtension
         public const string Id = "1864cfa5-8e63-493a-8f8c-ad935df04a25";
         public const string Name = "LHQ Editor";
         public const string Description = @"Visual Studio editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.";
-        public const string Version = "2022.2";
+        public const string Version = "2022.3";
     }
 }

@@ -243,8 +243,7 @@
       <Link>source.extension.ico</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\VsExtensionMetadata\TextTemplates\EnvDteUtils.ttinclude">
-      <Link>TextTemplates\EnvDteUtils.ttinclude</Link>
+    <Content Include="TextTemplates\EnvDteUtils.ttinclude">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\VsExtensionMetadata\TextTemplates\LhqGenerator.ttinclude">

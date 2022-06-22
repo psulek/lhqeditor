@@ -1,4 +1,7 @@
-﻿2022.2
+﻿2022.3
+- Fixed bug #6, VS2022 bug when generating C# files from T4 template (Type XYZ exists in both EnvDTE and *.Interop)
+
+2022.2
 - Fixed bug #4 (Type 'OAProjectItem' is not marked as serializable in VS2022 on files generation)
 - Implemented feature #5 (Do not serialize "metadatas" when there is no code generator attached)
 

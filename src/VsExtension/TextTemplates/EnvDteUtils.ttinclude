@@ -1311,8 +1311,10 @@ public class DynamicTextTransformation
                                                  {
                                                      typeof (string)
                                                  });
-        _generationEnvironment = type.GetProperty("GenerationEnvironment",
-            BindingFlags.Instance | BindingFlags.NonPublic);
+        _generationEnvironment = type.GetProperty("GenerationEnvironment", BindingFlags.Instance | BindingFlags.NonPublic);
+        if (_generationEnvironment == null) {
+            _generationEnvironment = type.GetProperty("GenerationEnvironment", BindingFlags.Instance | BindingFlags.Public);
+        }
         _host = type.GetProperty("Host");
         _errors = type.GetProperty("Errors");
     }

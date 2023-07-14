@@ -30,6 +30,6 @@ namespace LHQ.VsExtension
         public const string Id = "d5b195f6-4332-4061-9c2b-ce9edf43fb88";
         public const string Name = "LHQ Editor VS2022";
         public const string Description = @"Visual Studio 2022 (64-bit) editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.";
-        public const string Version = "2022.3";
+        public const string Version = "2023.1";
     }
 }

@@ -1,0 +1,44 @@
+﻿<Project Sdk="MSTest.Sdk/3.5.1">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>LHQ.Generators.Tests</AssemblyName>
+        <RootNamespace>LHQ.Generators.Tests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Generators\Generators.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="TestData\Resources\*.resx"/>
+        <None Include="TestData\Resources\*.resx"/>
+        <Compile Remove="TestData\Resources\*.cs" />
+        <None Include="TestData\Resources\*.cs" />
+        <None Update="TestData\Strings.lhq">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0"/>
+        <PackageReference Include="FluentAssertions" Version="6.12.1"/>
+        <PackageReference Include="NUnit" Version="4.2.2"/>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.6.0"/>
+        <PackageReference Include="NUnit.Analyzers" Version="4.3.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Verify" Version="27.0.1" />
+        <PackageReference Include="Verify.NUnit" Version="27.0.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="_shapshots\" />
+    </ItemGroup>
+    
+
+</Project>

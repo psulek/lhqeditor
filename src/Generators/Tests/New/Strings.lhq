@@ -1,0 +1,87 @@
+﻿{
+  "model": {
+    "uid": "6ce4d54c5dbd415c93019d315e278638",
+    "version": 1,
+    "options": {
+      "categories": true,
+      "resources": "Categories"
+    },
+    "name": "Strings",
+    "primaryLanguage": "en"
+  },
+  "languages": [
+    "en",
+    "sk"
+  ],
+  "categories": {
+    "JackpotTemplates": {
+      "resources": {
+        "Description": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Description"
+            }
+          }
+        },
+        "Id": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Id"
+            }
+          }
+        },
+        "Name": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Name"
+            }
+          }
+        }
+      }
+    }
+  },
+  "metadatas": {
+  "childs": [
+    {
+      "name": "metadata",
+      "attrs": {
+        "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
+      },
+      "childs": [
+        {
+          "name": "content",
+          "attrs": {
+            "templateId": "NetCoreResxCsharp01"
+          },
+          "childs": [
+            {
+              "name": "Settings",
+              "childs": [
+                {
+                  "name": "CSharp",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "UseExpressionBodySyntax": "true",
+                    "MissingTranslationFallbackToPrimary": "true",
+                    "RootNamespace": "SynotW.Jackpot.Localization"
+                  }
+                },
+                {
+                  "name": "ResX",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "CultureCodeInFileNameForPrimaryLanguage": "true"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+}

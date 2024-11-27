@@ -31,9 +31,6 @@ using LHQ.Data.CodeGenerator;
 using LHQ.Data.Metadata;
 using LHQ.Data.ModelStorage.Serializers;
 
-[assembly: AssemblyTitle("LHQ Model library")]
-[assembly: AssemblyProduct("Model")]
-
 [assembly: ComVisible(false)]
 
 [assembly: Guid("ee616feb-a683-41ed-95ca-e6a555292239")]

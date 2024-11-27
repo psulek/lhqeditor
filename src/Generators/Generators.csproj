@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>LHQ.Generators</AssemblyName>
+        <RootNamespace>LHQ.Generators</RootNamespace>
+        <OutputType>Exe</OutputType>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="LHQ.Generators.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Data\Data.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="Tests\Original\Resources*.resx"/>
+        <None Include="Tests\Original\Resources\*.resx"/>
+        <Compile Remove="Tests\Original\Resources\*.cs" />
+        <None Include="Tests\Original\Resources\*.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="Tests\New\Resources*.resx"/>
+        <None Include="Tests\New\Resources\*.resx"/>
+        <Compile Remove="Tests\New\Resources\*.cs" />
+        <None Include="Tests\New\Resources\*.cs" />
+    </ItemGroup>
+
+</Project>

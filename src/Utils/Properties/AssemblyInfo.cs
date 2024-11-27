@@ -27,9 +27,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("LHQ Utils library")]
-[assembly: AssemblyProduct("Utils")]
-
 [assembly: ComVisible(false)]
 [assembly: Guid("d0a1fa98-dd8e-40a6-9858-14426c0b5126")]
 

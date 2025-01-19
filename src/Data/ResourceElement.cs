@@ -26,6 +26,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using LHQ.Data.Extensions;
 using LHQ.Utils.Extensions;
 using LHQ.Data.Interfaces;
 using LHQ.Data.Interfaces.Key;
@@ -51,6 +52,8 @@ namespace LHQ.Data
         ///     Gets or sets name of element
         /// </summary>
         public string Name { get; set; }
+
+        public int ParentLevel => this.GetParentLevel();
 
         public string Description { get; set; }
 

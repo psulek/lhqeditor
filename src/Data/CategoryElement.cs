@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2021 Peter ï¿½ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -24,6 +24,7 @@
 #endregion
 
 using System.Text;
+using LHQ.Data.Extensions;
 using LHQ.Data.Interfaces;
 using LHQ.Data.Interfaces.Key;
 // ReSharper disable MemberCanBePrivate.Global
@@ -55,6 +56,8 @@ namespace LHQ.Data
         public CategoryElementList Categories { get; set; }
 
         public ResourceElementList Resources { get; set; }
+        
+        public int ParentLevel => this.GetParentLevel();
 
         public override ModelElementType ElementType => ModelElementType.Category;
 

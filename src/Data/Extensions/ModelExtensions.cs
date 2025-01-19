@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -32,6 +34,7 @@ using LHQ.Utils.GenericTree;
 using LHQ.Utils.Utilities;
 using LHQ.Data.Interfaces;
 using LHQ.Data.Interfaces.Key;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMember.Global
 
@@ -218,7 +221,7 @@ namespace LHQ.Data.Extensions
         }
 
         public static IOrderedEnumerable<T> OrderByName<T>(this IEnumerable<T> source, IComparer<string> comparer)
-                    where T : IModelNamedElement
+            where T : IModelNamedElement
         {
             ArgumentValidator.EnsureArgumentNotNull(source, "source");
 
@@ -281,12 +284,26 @@ namespace LHQ.Data.Extensions
                 {
                     result.Add(parentCategory);
                 }
+
                 parentCategory = parentCategory.Parent;
             }
 
             if (fromRootToCurrent)
             {
                 result.Reverse();
+            }
+
+            return result;
+        }
+        
+        public static int GetParentLevel(this ITreeLikeElement element)
+        {
+            int result = 0;
+            var current = element.Parent;
+            while (current != null)
+            {
+                result++;
+                current = current.Parent;
             }
 
             return result;

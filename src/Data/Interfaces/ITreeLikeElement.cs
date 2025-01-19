@@ -28,5 +28,7 @@ namespace LHQ.Data.Interfaces
     public interface ITreeLikeElement : IModelNamedElement, IModelDescriptionElement
     {
         ITreeLikeElement Parent { get; }
+        
+        int ParentLevel { get; }
     }
 }

@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2021 Peter ï¿½ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -55,6 +55,8 @@ namespace LHQ.Data
         public ResourceElementList Resources { get; internal set; }
 
         public ModelMetadataList Metadata { get; internal set; }
+
+        public int ParentLevel => 0;
 
         public int Version { get; internal set; }
 

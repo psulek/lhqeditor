@@ -1,0 +1,130 @@
+﻿{{{ x-header }}}
+
+{{#with model}}
+namespace {{ @root.host.namespace }}
+{
+    using System;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Resources;
+    using System.Reflection;
+    using System.Globalization;
+    using System.Runtime.CompilerServices;
+    using System.Threading;
+    
+    [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public partial class {{model.name}}Context: INotifyPropertyChanged, IFormattable
+    {
+        private CultureInfo _culture;
+        private CultureInfo _fallbackCulture;
+        private static readonly Lazy<{{model.name}}Context> _instance = new Lazy<{{model.name}}Context>(() => new {{model.name}}Context());
+        private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
+    
+        private StringsContext()
+        {}
+    
+        public static ResourceManager ResourceManager
+        {
+            get
+            {
+                return _resourceManager.Value;
+            }
+        }
+    
+        public const string PrimaryCulture = "{{model.primaryLanguage}}";
+    
+        public string[] AvailableCultures
+        {
+            get
+            {
+                return new string[] { {{x-join languages }} };
+            }
+        }
+    
+        public CultureInfo FallbackCulture
+        {
+            get
+            {
+                if (_fallbackCulture == null)
+                {
+                    _fallbackCulture = new CultureInfo(PrimaryCulture);
+                }
+                return _fallbackCulture;
+            }
+            set
+            {
+                if ((value == null) || !AvailableCultures.Contains(value.Name))
+                {
+                    throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
+                }
+        
+                _fallbackCulture = value;
+            }
+        }
+    
+        public static {{model.name}}Context Instance
+        {
+            get
+            {
+                return _instance.Value;
+            }
+        }
+    
+        public CultureInfo Culture
+        {
+            get
+            {
+                return _culture ?? (_culture = CultureInfo.CurrentUICulture);
+            }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("Culture must not be null");
+                }
+            
+                if (value.Name == Culture.Name)
+                {
+                    return;
+                }
+            
+                _culture = value;
+                Thread.CurrentThread.CurrentUICulture = _culture;
+                OnPropertyChanged(nameof(Culture));
+            }
+        }
+    
+        private static ResourceManager CreateResourceManager()
+        {
+            {{model.primaryLanguage }}
+        }
+    }
+    
+    [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public static partial class {{model.name}}Keys
+    {
+    {{#each categories ~}}
+        {{> category }}
+    {{/each}}
+    }
+}
+{{/with}}
+
+{{#*inline "category"}}
+public static partial class {{@key}}
+{
+{{#each categories ~}}
+    {{> category }}
+{{/each}}
+{{#if resources}}
+{{#each resources}}
+    /// <summary>
+    /// Gets localized string similar to: {{{values.en.value}}}
+    /// </summary>
+    public const string {{@key}} = "{{parent}}{{name}}{{@key}}";
+{{/each}}
+{{/if}}
+}
+{{/inline}}

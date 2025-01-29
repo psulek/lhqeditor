@@ -1,6 +1,5 @@
-import {getNestedPropertyValue, isNullOrEmpty} from "./utils";
-import {LhqModelResourceType, LhqModelType, TemplateRootModel} from "./types";
-import {HostEnv} from "./hostEnv";
+import {getNestedPropertyValue, isNullOrEmpty, sortBy} from "./utils";
+import {LhqModelResourceType, TemplateRootModel} from "./types";
 
 export function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
@@ -19,6 +18,8 @@ helpersList['x-replace'] = replace;
 helpersList['x-trimEnd'] = trimEnd;
 helpersList['x-equals'] = equals;
 helpersList['x-resourceComment'] = resourceComment;
+helpersList['x-merge'] = merge;
+helpersList['x-sortBy'] = sortBy;
 
 function header() {
     return `//------------------------------------------------------------------------------
@@ -155,3 +156,10 @@ function resourceComment(resource: LhqModelResourceType, options: any): string {
     
     return '';
 }
+
+function merge(context: any, options: any) {
+    //HostEnv.debugLog('[merge]>> ' + JSON.stringify(options.hash ?? {}));
+    
+    return Object.assign({}, context, options.hash ?? {});
+}
+

@@ -1,4 +1,10 @@
-import {LhqModelType, ModelDataNode, TemplateRootModel} from "./types";
+import {
+    LhqModelCategoriesCollectionType,
+    LhqModelCategoryType,
+    LhqModelType,
+    ModelDataNode,
+    TemplateRootModel
+} from "./types";
 import {registerHelpers} from "./helpers";
 import {TypescriptJson01Template} from "./templates/typescriptJson";
 import {CodeGeneratorTemplate, CodeGeneratorTemplateConstructor} from "./templates/codeGeneratorTemplate";
@@ -6,6 +12,7 @@ import {NetCoreResxCsharp01Template} from "./templates/netCoreResxCsharp";
 import {NetFwResxCsharp01Template} from "./templates/netFwResxCsharp";
 import {WinFormsResxCsharp01Template} from "./templates/winFormsResxCsharp";
 import {WpfResxCsharp01Template} from "./templates/wpfResxCsharp";
+import {sortBy} from "./utils";
 
 const CodeGenUID = 'b40c8a1d-23b7-4f78-991b-c24898596dd2';
 
@@ -26,20 +33,27 @@ export class TemplateManager {
     }
     
     public static runTemplate(lhqModelJson: string, hostData: string): void {
-        const lhqModel = JSON.parse(lhqModelJson) as LhqModelType;
-        const {template, templateId, settingsNode} = TemplateManager.loadTemplate(lhqModel as LhqModelType)
-        let settings = template.loadSettings(settingsNode);
-        let host = {};
-        if (hostData) {
-            host = JSON.parse(hostData) as Record<string, unknown>;
+        let lhqModel = JSON.parse(lhqModelJson) as LhqModelType;
+        if (lhqModel) {
+            lhqModel = TemplateManager.sortByNameModel(lhqModel); 
+            
+            const {template, templateId, settingsNode} = TemplateManager.loadTemplate(lhqModel as LhqModelType);
+            let settings = template.loadSettings(settingsNode);
+            let host = {};
+            if (hostData) {
+                host = JSON.parse(hostData) as Record<string, unknown>;
+            }
+            const rootModel: TemplateRootModel = {
+                model: lhqModel,
+                settings: settings,
+                host: host
+            };
+
+            template.generate(rootModel, TemplateManager.handlebarFiles);
         }
-        const rootModel: TemplateRootModel = {
-            model: lhqModel,
-            settings: settings,
-            host: host
-        };
-        
-        template.generate(rootModel, TemplateManager.handlebarFiles);
+        else {
+            throw new Error(`Unable to deserialize LHQ model !`);
+        }
     }
 
     private static loadTemplate(model: LhqModelType): {
@@ -71,5 +85,15 @@ export class TemplateManager {
         }
 
         throw new Error(`Template '${templateId}' not found !`);
+    }
+
+    private static sortByNameModel(lhqModel: LhqModelType): LhqModelType {
+        function recursiveCategories(parent: LhqModelCategoryType, categories?: LhqModelCategoriesCollectionType) {
+            if (categories) {
+                parent.categories = sortBy(categories, )
+            }
+        }
+        
+        recursiveCategories(lhqModel, lhqModel.categories);
     }
 }

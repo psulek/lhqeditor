@@ -161,9 +161,13 @@ namespace {{ @root.host.namespace }}
     public static partial class {{model.name}}Keys
     {
     {{#each categories ~}}
+        {{#with (x-merge this _resourceRenderValue="key")}}
         {{> category _parent='' }}
+        {{/with}}
     {{/each}}
+    {{#with (x-merge this _resourceRenderValue="key")}}
     {{> resources }}
+    {{/with}}
     }
 
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -178,13 +182,17 @@ namespace {{ @root.host.namespace }}
 public static partial class {{@key}}
 {
 {{#each categories ~}}
+    // _resourceRenderValue0 > {{../_resourceRenderValue}}
+    {{#with (x-merge this _resourceRenderValue=../_resourceRenderValue) }}
     {{> category _parent=(x-concat @../_parent.key  @../key sep="") }}
+    {{/with}}
 {{/each}}
 {{> resources }}
 }
 
 {{/inline}}
 {{#*inline "resources"}}
+    // _resourceRenderValue1 > {{_resourceRenderValue}}
 {{#if resources}}
 {{#each resources}}
     /// <summary>

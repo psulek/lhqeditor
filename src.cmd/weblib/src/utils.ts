@@ -27,3 +27,14 @@ export function getNestedPropertyValue<T, U>(obj: T, path: string): U {
 export function isNullOrEmpty<T>(value: T | null | undefined | ''): value is undefined | null | '' {
     return value === null || value === undefined || value === '';
 }
+
+export function sortBy<T>(source: T[], propName: string, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
+    return source.concat([]).sort((a, b) => {
+        // @ts-ignore
+        const v1 = propName === undefined ? a : a[propName];
+        // @ts-ignore
+        const v2 = propName === undefined ? b : b[propName]
+        const res = v1 > v2 ? 1 : ((v2 > v1) ? -1 : 0);
+        return sortOrder === 'asc' ? res : res * -1;
+    });
+}

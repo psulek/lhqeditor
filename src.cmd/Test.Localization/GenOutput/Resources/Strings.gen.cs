@@ -163,45 +163,56 @@ namespace test.localization
     public static partial class StringsKeys
     {
         public static partial class Cars
-        { >> 
+        {
+        // _resourceRenderValue0 > key
             public static partial class Diesel
-            { >> 
+            {
+            // _resourceRenderValue0 > key
                 public static partial class Old
-                { >> 
+                {
+                    // _resourceRenderValue1 > key
                     /// <summary>
                     /// Gets localized string similar to: Old_ kia EN
                     /// </summary>
                     public const string Old_Kia = "CarsDieselOldOld_Kia";
                 }
                 
+                // _resourceRenderValue1 > key
                 /// <summary>
                 /// Gets localized string similar to: Mercedes EN
                 /// </summary>
                 public const string Mercedes = "CarsDieselMercedes";
             }
             
+        // _resourceRenderValue0 > key
             public static partial class Electric
-            { >> 
+            {
+                // _resourceRenderValue1 > key
                 /// <summary>
                 /// Gets localized string similar to: toyota EN
                 /// </summary>
                 public const string ToyotaEV = "CarsElectricToyotaEV";
             }
             
+            // _resourceRenderValue1 > key
         }
         
         public static partial class Messages
-        { >> 
+        {
+        // _resourceRenderValue0 > key
             public static partial class Empty
-            { >> 
+            {
+                // _resourceRenderValue1 > key
             }
             
+            // _resourceRenderValue1 > key
             /// <summary>
             /// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2}
             /// </summary>
             public const string Title = "MessagesTitle";
         }
         
+        // _resourceRenderValue1 > key
         /// <summary>
         /// Gets localized string similar to: Welcome {0} in this {1} !
         /// </summary>

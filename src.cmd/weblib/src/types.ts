@@ -10,10 +10,16 @@ export type LhqModelType = Record<string, unknown> & {
         primaryLanguage: string
     },
     languages: string[],
-    resources: Record<string, LhqModelResourceType>;
     metadatas: {
         childs: ModelDataNode[];
     }
+} & LhqModelCategoryType;
+
+export type LhqModelCategoriesCollectionType = Record<string, LhqModelCategoryType>; 
+
+export type LhqModelCategoryType = {
+    categories?: LhqModelCategoriesCollectionType;
+    resources?: Record<string, LhqModelResourceType>;
 }
 
 export type LhqModelResourceType = {

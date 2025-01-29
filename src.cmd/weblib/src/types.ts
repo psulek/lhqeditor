@@ -15,22 +15,12 @@ export type LhqModelType = Record<string, unknown> & {
     }
 } & LhqModelCategoryType;
 
-export type LhqCategoriesAndResourcesType = {
-    categories?: Array<LhqModelCategoryWithNameType>;
-    resources?: Array<LhqModelResourceWithNameType>;
-}
-
-export type LhqModelCategoryWithNameType = LhqCategoriesAndResourcesType & { name: string; }
-
 export type LhqModelCategoriesCollectionType = Record<string, LhqModelCategoryType>; 
-export type LhqModelResourcesCollectionType = Record<string, LhqModelResourceType>; 
 
 export type LhqModelCategoryType = {
     categories?: LhqModelCategoriesCollectionType;
-    resources?: LhqModelResourcesCollectionType;
+    resources?: Record<string, LhqModelResourceType>;
 }
-
-export type LhqModelResourceWithNameType = LhqModelResourceType & {name: string};
 
 export type LhqModelResourceType = {
     state: string;

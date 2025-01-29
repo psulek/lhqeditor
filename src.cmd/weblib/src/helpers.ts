@@ -1,4 +1,4 @@
-import {getNestedPropertyValue, isNullOrEmpty, arraySort} from "./utils";
+import {getNestedPropertyValue, isNullOrEmpty, sortBy} from "./utils";
 import {LhqModelResourceType, TemplateRootModel} from "./types";
 
 export function registerHelpers() {
@@ -19,7 +19,7 @@ helpersList['x-trimEnd'] = trimEnd;
 helpersList['x-equals'] = equals;
 helpersList['x-resourceComment'] = resourceComment;
 helpersList['x-merge'] = merge;
-//helpersList['x-sortBy'] = arraySort;
+helpersList['x-sortBy'] = sortBy;
 
 function header() {
     return `//------------------------------------------------------------------------------

@@ -97,8 +97,63 @@ namespace {{ @root.host.namespace }}
     
         private static ResourceManager CreateResourceManager()
         {
-            {{model.primaryLanguage }}
+            return new ResourceManager("{{ x-concat @root.host.namespace (x-trimEnd @root.settings.CSharp.OutputFolder "[\\/]") model.name sep="." }}",
+                typeof({{x-concat @root.host.namespace model.name sep="."}}).Assembly);
         }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return GetStringSafely(format);
+		}
+
+		public string GetStringSafely(string name)
+		{
+			if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
+			string result = GetStringSafely(name, Culture);
+			if (result == null)
+			{
+                {{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true") }}
+				if (FallbackCulture != null)
+				{
+					result = GetStringSafely(name, FallbackCulture);
+					if (result == null)
+					{
+						result = string.Format("???{0}.{1}???", name, FallbackCulture == null ? string.Empty : FallbackCulture.Name);
+					}
+				}
+                {{else}}
+                result = string.Format("???{0}.{1}???", name, Culture == null ? string.Empty : Culture.Name);
+                {{/if}}
+			}
+
+			return result;
+		}
+
+		private string GetStringSafely(string name, CultureInfo culture)
+		{
+			string result = null;
+			try
+			{
+				result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
+			}
+			catch (MissingManifestResourceException)
+			{
+				// Resource does not exist
+			}
+
+			return result;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void OnPropertyChanged(string property)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+		}
     }
     
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -106,8 +161,15 @@ namespace {{ @root.host.namespace }}
     public static partial class {{model.name}}Keys
     {
     {{#each categories ~}}
-        {{> category }}
+        {{> category _parent='' }}
     {{/each}}
+    {{> resources }}
+    }
+
+    [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public partial class {{model.name}}
+    {
     }
 }
 {{/with}}
@@ -116,15 +178,19 @@ namespace {{ @root.host.namespace }}
 public static partial class {{@key}}
 {
 {{#each categories ~}}
-    {{> category }}
+    {{> category _parent=(x-concat @../_parent.key  @../key sep="") }}
 {{/each}}
+{{> resources }}
+}
+
+{{/inline}}
+{{#*inline "resources"}}
 {{#if resources}}
 {{#each resources}}
     /// <summary>
-    /// Gets localized string similar to: {{{values.en.value}}}
+    /// Gets localized string similar to: {{ x-resourceComment this root=@root }}
     /// </summary>
-    public const string {{@key}} = "{{parent}}{{name}}{{@key}}";
+    public const string {{@key}} = "{{x-concat ../_parent @../key @key}}";
 {{/each}}
 {{/if}}
-}
 {{/inline}}

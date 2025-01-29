@@ -19,15 +19,19 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
     generate(rootModel: TemplateRootModel) {
         const modelName = rootModel.model.model.name;
 
-        const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
-        const csfileContent = this.compile(csharpTemplateFile, rootModel);
-        const csFileName = this.prepareFilePath(modelName + '.gen.cs', rootModel, this._settings.CSharp);
-        HostEnv.addResultFile(csFileName, csfileContent);
-        
-        const resxTemplateFile = this.getHandlebarFile('resx');
-        const resxfileContent = this.compile(resxTemplateFile, rootModel);
-        const resxfileName = this.prepareFilePath(modelName + '.en.resx', rootModel, this._settings.ResX);
-        HostEnv.addResultFile(resxfileName, resxfileContent);
+        if (this._settings.CSharp.Enabled) {
+            const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
+            const csfileContent = this.compile(csharpTemplateFile, rootModel);
+            const csFileName = this.prepareFilePath(modelName + '.gen.cs', rootModel, this._settings.CSharp);
+            HostEnv.addResultFile(csFileName, csfileContent);
+        }
+
+        if (this._settings.ResX.Enabled) {
+            const resxTemplateFile = this.getHandlebarFile('resx');
+            const resxfileContent = this.compile(resxTemplateFile, rootModel);
+            const resxfileName = this.prepareFilePath(modelName + '.en.resx', rootModel, this._settings.ResX);
+            HostEnv.addResultFile(resxfileName, resxfileContent);
+        }
     }
 
     loadSettings(node: ModelDataNode): Settings<TCSharpSettings> {
@@ -55,6 +59,9 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         if (result.ResX === undefined) {
             throw new Error('ResX settings not found !');
         }
+
+        result.CSharp.Enabled = result.CSharp.Enabled ?? true;
+        result.ResX.Enabled = result.ResX.Enabled ?? true;
 
         this._settings = result;
         return result;

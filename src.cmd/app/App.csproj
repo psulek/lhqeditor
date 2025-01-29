@@ -6,11 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+        <AssemblyName>lhqcmd</AssemblyName>
+        <RootNamespace>LHQ.Cmd</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.27.3" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup>

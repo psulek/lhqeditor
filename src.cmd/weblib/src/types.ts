@@ -10,9 +10,22 @@ export type LhqModelType = Record<string, unknown> & {
         primaryLanguage: string
     },
     languages: string[],
+    resources: Record<string, LhqModelResourceType>;
     metadatas: {
         childs: ModelDataNode[];
     }
+}
+
+export type LhqModelResourceType = {
+    state: string;
+    description: string;
+    parameters: Record<string, {
+        description: string;
+        order: number;
+    }>;
+    values: Record<string, {
+        value: string;
+    }>;
 }
 
 export type TemplateRootModel = {

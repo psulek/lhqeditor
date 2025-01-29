@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Items", "_Items", "{9EA472
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmdGen", "app\CmdGen.csproj", "{1DFE5050-FB86-4095-A288-2CC3A08B15CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "app\App.csproj", "{1DFE5050-FB86-4095-A288-2CC3A08B15CE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Localization", "Test.Localization\Test.Localization.csproj", "{B5EAA296-A41D-47D5-A502-362A95C82A3D}"
 EndProject

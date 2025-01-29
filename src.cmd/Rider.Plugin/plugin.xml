@@ -1,0 +1,34 @@
+<idea-plugin>
+    <id>com.scalehqsolutions.LHQRiderPlugin.LhqFileAction</id>
+    <name>LHQ Rider Plugin</name>
+    <version>1.0.0</version>
+    <vendor>ScaleHQ Solutions</vendor>
+
+    <description>
+        Run LHQ generators for *.lhq files.
+    </description>
+
+<!--    <depends>com.intellij.modules.rider</depends>-->
+    <depends>com.jetbrains.rider</depends>
+    <depends>com.jetbrains.resharper</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Registering your action -->
+        <action id="LHQRiderPlugin.LhqFileAction"
+                class="LhqFileAction"
+                text="Process LHQ File"
+                description="Process files with .lhq extension">
+            <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>
+        </action>
+    </extensions>
+
+    <actions>
+        <!-- Registering the action in the actions section -->
+        <action id="LHQRiderPlugin.LhqFileAction"
+                class="LhqFileAction"
+                text="Process LHQ File"
+                description="Process files with .lhq extension">
+            <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>

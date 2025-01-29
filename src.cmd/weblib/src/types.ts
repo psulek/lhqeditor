@@ -22,13 +22,15 @@ export type LhqModelCategoryType = {
     resources?: Record<string, LhqModelResourceType>;
 }
 
+export type LhqModelResourceParameterType = {
+    description: string;
+    order: number;
+}
+
 export type LhqModelResourceType = {
     state: string;
     description: string;
-    parameters: Record<string, {
-        description: string;
-        order: number;
-    }>;
+    parameters: Record<string, LhqModelResourceParameterType>;
     values: Record<string, {
         value: string;
     }>;

@@ -12,7 +12,8 @@ import {NetCoreResxCsharp01Template} from "./templates/netCoreResxCsharp";
 import {NetFwResxCsharp01Template} from "./templates/netFwResxCsharp";
 import {WinFormsResxCsharp01Template} from "./templates/winFormsResxCsharp";
 import {WpfResxCsharp01Template} from "./templates/wpfResxCsharp";
-import {sortBy} from "./utils";
+import {iterateObject, sortBy, sortObjectByKey, sortObjectByValue} from "./utils";
+import {HostEnv} from "./hostEnv";
 
 const CodeGenUID = 'b40c8a1d-23b7-4f78-991b-c24898596dd2';
 
@@ -35,7 +36,7 @@ export class TemplateManager {
     public static runTemplate(lhqModelJson: string, hostData: string): void {
         let lhqModel = JSON.parse(lhqModelJson) as LhqModelType;
         if (lhqModel) {
-            lhqModel = TemplateManager.sortByNameModel(lhqModel); 
+            lhqModel = TemplateManager.sortByNameModel(lhqModel);
             
             const {template, templateId, settingsNode} = TemplateManager.loadTemplate(lhqModel as LhqModelType);
             let settings = template.loadSettings(settingsNode);
@@ -88,12 +89,23 @@ export class TemplateManager {
     }
 
     private static sortByNameModel(lhqModel: LhqModelType): LhqModelType {
-        function recursiveCategories(parent: LhqModelCategoryType, categories?: LhqModelCategoriesCollectionType) {
-            if (categories) {
-                parent.categories = sortBy(categories, )
+        function recursiveCategories(parent: LhqModelCategoryType) {
+            if (parent.categories) {
+                parent.categories = sortObjectByKey(parent.categories);
+                iterateObject(parent.categories, (_, item) => recursiveCategories(item));
+            }
+            if (parent.resources) {
+                parent.resources = sortObjectByKey(parent.resources);
+                
+                iterateObject(parent.resources, (_, item) => {
+                    if (item.parameters) {
+                        item.parameters = sortObjectByValue(item.parameters, x => x.order);
+                    }
+                });
             }
         }
-        
-        recursiveCategories(lhqModel, lhqModel.categories);
+
+        recursiveCategories(lhqModel);
+        return lhqModel;
     }
 }

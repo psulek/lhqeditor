@@ -1,5 +1,6 @@
-import {getNestedPropertyValue, isNullOrEmpty, sortBy} from "./utils";
+import {getNestedPropertyValue, isNullOrEmpty, iterateObject, sortBy, sortObjectByKey} from "./utils";
 import {LhqModelResourceType, TemplateRootModel} from "./types";
+import {HostEnv} from "./hostEnv";
 
 export function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
@@ -18,8 +19,12 @@ helpersList['x-replace'] = replace;
 helpersList['x-trimEnd'] = trimEnd;
 helpersList['x-equals'] = equals;
 helpersList['x-resourceComment'] = resourceComment;
+helpersList['x-resourceParamNames'] = resourceParamNames;
 helpersList['x-merge'] = merge;
 helpersList['x-sortBy'] = sortBy;
+helpersList['x-sortObject'] = sortObjectByKeyHelper;
+helpersList['x-objCount'] = objCount;
+//helpersList['x-each'] = eachsorted;
 
 function header() {
     return `//------------------------------------------------------------------------------
@@ -151,7 +156,20 @@ function resourceComment(resource: LhqModelResourceType, options: any): string {
             }
             // @ts-ignore
             return new Handlebars.SafeString(propertyComment);
-        } 
+        }
+    }
+
+    return '';
+}
+
+function resourceParamNames(resource: LhqModelResourceType, options: any): string {
+    //HostEnv.debugLog('resourceParamNames>> ' + JSON.stringify(resource))
+    if (typeof resource === 'object' && resource.parameters) {
+        const withTypes = options?.hash?.withTypes ?? false;
+        
+        return Object.keys(resource.parameters).map(key => {
+            return  withTypes ? `object ${key}`: key; 
+        }).join(',');
     }
     
     return '';
@@ -159,7 +177,49 @@ function resourceComment(resource: LhqModelResourceType, options: any): string {
 
 function merge(context: any, options: any) {
     //HostEnv.debugLog('[merge]>> ' + JSON.stringify(options.hash ?? {}));
-    
+
     return Object.assign({}, context, options.hash ?? {});
 }
 
+function sortObjectByKeyHelper(obj: Record<string, unknown>, options: any) {
+    const sortOrder = options?.hash?.sortOrder ?? 'asc';
+    return sortObjectByKey(obj, sortOrder);
+}
+
+function objCount(obj: Record<string, unknown>): number {
+    return isNullOrEmpty(obj) ? 0 : Object.keys(obj).length;
+}
+
+/*
+function eachsorted(context: any, options: any) {
+    // Get the sort order from the helper's hash (default to 'asc')
+    const sortOrder = options.hash.sortOrder || 'asc';
+
+    // Sort the object by keys
+    let result = '';
+    if (context) {
+        try {
+            // @ts-ignore
+            //HostEnv.debugLog('sortObjectByKey begin, for >> ' + JSON.stringify(this));
+            const sortedObj = sortObjectByKey(context, sortOrder);
+
+            // Use the built-in #each block to iterate over the sorted object
+            for (const key in sortedObj) {
+                if (sortedObj.hasOwnProperty(key)) {
+                    // Create a new context with the current key and value
+                    const context = {
+                        key: key,
+                        value: sortedObj[key]
+                    };
+                    // Render the block with the current context
+                    result += options.fn(context);
+                }
+            }
+        } catch (e) {
+            HostEnv.debugLog('sortObjectByKey err, for >> ' + JSON.stringify(context));
+        }
+    }
+
+    return result;
+}
+ */

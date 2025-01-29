@@ -28,6 +28,31 @@ export function isNullOrEmpty<T>(value: T | null | undefined | ''): value is und
     return value === null || value === undefined || value === '';
 }
 
+export function sortObjectByKey<T>(obj: Record<string, T>, sortOrder: 'asc' | 'desc' = 'asc'): Record<string, T> {
+    return Object.fromEntries(
+        Object.entries(obj).sort(([a], [b]) =>
+            sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a)
+        )
+    );
+}
+
+export function sortObjectByValue<T>(obj: Record<string, T>, predicate: (item: T) => number | string,  
+                               sortOrder: 'asc' | 'desc' = 'asc'): Record<string, T> {
+
+    return Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => {
+        const aValue = predicate(a);
+        const bValue = predicate(b);
+
+        if (aValue < bValue) {
+            return sortOrder === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+            return sortOrder === 'asc' ? 1 : -1;
+        }
+        return 0;
+    }));
+}
+
 export function sortBy<T>(source: T[], propName: string, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
     return source.concat([]).sort((a, b) => {
         // @ts-ignore
@@ -37,4 +62,10 @@ export function sortBy<T>(source: T[], propName: string, sortOrder: 'asc' | 'des
         const res = v1 > v2 ? 1 : ((v2 > v1) ? -1 : 0);
         return sortOrder === 'asc' ? res : res * -1;
     });
+}
+
+export function iterateObject<T>(obj: Record<string, T>, callback: (key: string, value: T) => void) {
+    for (const [key, value] of Object.entries(obj)) {
+        callback(key, value);
+    }
 }

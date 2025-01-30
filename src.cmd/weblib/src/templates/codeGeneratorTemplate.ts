@@ -6,6 +6,13 @@ export interface CodeGeneratorTemplateConstructor {
     new(handlebarFiles: Record<string, string>): CodeGeneratorTemplate;
 }
 
+export class HostDataKeys {
+    //public static get outDir(): string { return 'outDir'; };
+    public static get namespace(): string {
+        return 'namespace';
+    };
+}
+
 export abstract class CodeGeneratorTemplate {
     private handlebarFiles: Record<string, string>;
 
@@ -21,19 +28,9 @@ export abstract class CodeGeneratorTemplate {
         return file;
     }
 
-    protected prepareFilePath(fileName: string, templateRootModel: TemplateRootModel, outputSettings: OutputSettings): string {
-        const rootOutputFolder = templateRootModel.host?.['rootOutputFolder'] as string;
+    protected prepareFilePath(fileName: string, outputSettings: OutputSettings): string {
         const outputFolder = outputSettings.OutputFolder;
-
-        if (!isNullOrEmpty(outputFolder)) {
-            return isNullOrEmpty(rootOutputFolder)
-                ? HostEnv.pathCombine(outputFolder, fileName)
-                : HostEnv.pathCombine(HostEnv.pathCombine(rootOutputFolder, outputFolder), fileName);
-        }
-
-        return isNullOrEmpty(rootOutputFolder)
-            ?  fileName
-            : HostEnv.pathCombine(rootOutputFolder, fileName);
+        return isNullOrEmpty(outputFolder) ? fileName : HostEnv.pathCombine(outputFolder, fileName);
     }
 
     public abstract loadSettings(node: ModelDataNode): Object;

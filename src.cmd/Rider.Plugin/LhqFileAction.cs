@@ -9,6 +9,7 @@ using JetBrains.Util;
 public class LhqFileAction : IExecutableAction
 {
     //https://github.com/JetBrains/resharper-rider-plugin
+    //https://medium.com/@dench327/rider-plugin-development-basics-3a246b8a1a31
     public bool Update(IDataContext context, ActionPresentation presentation, DelegateUpdate nextUpdate)
     {
         // Get the selected files from the data context

@@ -22,14 +22,14 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         if (this._settings.CSharp.Enabled) {
             const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
             const csfileContent = this.compile(csharpTemplateFile, rootModel);
-            const csFileName = this.prepareFilePath(modelName + '.gen.cs', rootModel, this._settings.CSharp);
+            const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
             HostEnv.addResultFile(csFileName, csfileContent);
         }
 
         if (this._settings.ResX.Enabled) {
             const resxTemplateFile = this.getHandlebarFile('resx');
             const resxfileContent = this.compile(resxTemplateFile, rootModel);
-            const resxfileName = this.prepareFilePath(modelName + '.en.resx', rootModel, this._settings.ResX);
+            const resxfileName = this.prepareFilePath(modelName + '.en.resx', this._settings.ResX);
             HostEnv.addResultFile(resxfileName, resxfileContent);
         }
     }

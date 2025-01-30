@@ -369,12 +369,20 @@ TemplateManager.generators = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   CodeGeneratorTemplate: () => (/* binding */ CodeGeneratorTemplate)
+/* harmony export */   CodeGeneratorTemplate: () => (/* binding */ CodeGeneratorTemplate),
+/* harmony export */   HostDataKeys: () => (/* binding */ HostDataKeys)
 /* harmony export */ });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/utils.ts");
 /* harmony import */ var _hostEnv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hostEnv */ "./src/hostEnv.ts");
 
 
+class HostDataKeys {
+    //public static get outDir(): string { return 'outDir'; };
+    static get namespace() {
+        return 'namespace';
+    }
+    ;
+}
 class CodeGeneratorTemplate {
     constructor(handlebarFiles) {
         this.handlebarFiles = handlebarFiles;
@@ -386,18 +394,9 @@ class CodeGeneratorTemplate {
         }
         return file;
     }
-    prepareFilePath(fileName, templateRootModel, outputSettings) {
-        var _a;
-        const rootOutputFolder = (_a = templateRootModel.host) === null || _a === void 0 ? void 0 : _a['rootOutputFolder'];
+    prepareFilePath(fileName, outputSettings) {
         const outputFolder = outputSettings.OutputFolder;
-        if (!(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(outputFolder)) {
-            return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(rootOutputFolder)
-                ? _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.pathCombine(outputFolder, fileName)
-                : _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.pathCombine(_hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.pathCombine(rootOutputFolder, outputFolder), fileName);
-        }
-        return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(rootOutputFolder)
-            ? fileName
-            : _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.pathCombine(rootOutputFolder, fileName);
+        return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(outputFolder) ? fileName : _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.pathCombine(outputFolder, fileName);
     }
     compile(handlebarsTemplate, data) {
         // @ts-ignore
@@ -432,13 +431,13 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
         if (this._settings.CSharp.Enabled) {
             const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
             const csfileContent = this.compile(csharpTemplateFile, rootModel);
-            const csFileName = this.prepareFilePath(modelName + '.gen.cs', rootModel, this._settings.CSharp);
+            const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(csFileName, csfileContent);
         }
         if (this._settings.ResX.Enabled) {
             const resxTemplateFile = this.getHandlebarFile('resx');
             const resxfileContent = this.compile(resxTemplateFile, rootModel);
-            const resxfileName = this.prepareFilePath(modelName + '.en.resx', rootModel, this._settings.ResX);
+            const resxfileName = this.prepareFilePath(modelName + '.en.resx', this._settings.ResX);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(resxfileName, resxfileContent);
         }
     }

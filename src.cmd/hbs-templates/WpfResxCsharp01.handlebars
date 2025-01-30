@@ -21,7 +21,7 @@ namespace {{ @root.host.namespace }}
         private static readonly Lazy<{{model.name}}Context> _instance = new Lazy<{{model.name}}Context>(() => new {{model.name}}Context());
         private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
     
-        private StringsContext()
+        private {{model.name}}Context()
         {}
     
         public static ResourceManager ResourceManager
@@ -210,9 +210,9 @@ public static partial class {{@key}}
     {{#if (x-equals (x-objCount parameters) 0)}}
     public static string {{@key}} => {{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}});
     {{else}}
-        public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) 
-            => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+        public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
     {{/if}}
+
     {{/if}}
 {{/each}}
 {{/if}}

@@ -29,6 +29,15 @@ export class TemplateManager {
     };
     
     public static intialize(handlebarFiles: string): void {
+        // const xx = {
+        //     CallServiceStoped: 1,
+        //     CheckSumValidationFailed: 2,
+        //     ConnectionToTheServerWasLost: 3
+        // };
+        //
+        // const ss = sortObjectByKey(xx);
+        // HostEnv.debugLog('sorted: ' + JSON.stringify(ss));
+        
         TemplateManager.handlebarFiles = JSON.parse(handlebarFiles) as Record<string, string>;
         registerHelpers();
     }

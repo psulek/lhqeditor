@@ -135,6 +135,28 @@ function equals(input, value, block) {
     const val2 = typeof value === "string" ? value : ((_b = value === null || value === void 0 ? void 0 : value.toString()) !== null && _b !== void 0 ? _b : '');
     return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
 }
+function trimComment(value) {
+    let trimmed = false;
+    var idxNewLine = value.indexOf('\r\n');
+    if (idxNewLine == -1) {
+        idxNewLine = value.indexOf('\n');
+    }
+    if (idxNewLine == -1) {
+        idxNewLine = value.indexOf('\r');
+    }
+    if (idxNewLine > -1) {
+        value = value.substring(0, idxNewLine);
+        trimmed = true;
+    }
+    if (value.length > 80) {
+        value = value.substring(0, 80);
+        trimmed = true;
+    }
+    if (trimmed) {
+        value += "...";
+    }
+    return value.replace('\t', ' ');
+}
 function resourceComment(resource, options) {
     var _a, _b, _c;
     if (typeof resource === 'object') {
@@ -143,11 +165,12 @@ function resourceComment(resource, options) {
         if (!(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(primaryLanguage) && resource.values) {
             const resourceValue = (_c = resource.values[primaryLanguage]) === null || _c === void 0 ? void 0 : _c.value;
             let propertyComment = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(resourceValue) ? resource.description : resourceValue;
-            propertyComment = propertyComment.replace(/[\n\r]/g, '');
-            propertyComment = propertyComment.replace(/\t/g, ' ');
-            if (propertyComment.length > 80) {
-                propertyComment = propertyComment.substring(0, 80);
-            }
+            propertyComment = trimComment(propertyComment);
+            // propertyComment = propertyComment.replace(/[\n\r]/g, '');
+            // propertyComment = propertyComment.replace(/\t/g, ' ');
+            // if (propertyComment.length > 80) {
+            //     propertyComment = propertyComment.substring(0, 80);
+            // }
             // @ts-ignore
             return new Handlebars.SafeString(propertyComment);
         }
@@ -284,6 +307,14 @@ __webpack_require__.r(__webpack_exports__);
 const CodeGenUID = 'b40c8a1d-23b7-4f78-991b-c24898596dd2';
 class TemplateManager {
     static intialize(handlebarFiles) {
+        // const xx = {
+        //     CallServiceStoped: 1,
+        //     CheckSumValidationFailed: 2,
+        //     ConnectionToTheServerWasLost: 3
+        // };
+        //
+        // const ss = sortObjectByKey(xx);
+        // HostEnv.debugLog('sorted: ' + JSON.stringify(ss));
         TemplateManager.handlebarFiles = JSON.parse(handlebarFiles);
         (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.registerHelpers)();
     }
@@ -662,7 +693,7 @@ function isNullOrEmpty(value) {
     return value === null || value === undefined || value === '';
 }
 function sortObjectByKey(obj, sortOrder = 'asc') {
-    return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a)));
+    return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => sortOrder === 'asc' ? a.localeCompare(b, 'en') : b.localeCompare(a, 'en')));
 }
 function sortObjectByValue(obj, predicate, sortOrder = 'asc') {
     return Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => {

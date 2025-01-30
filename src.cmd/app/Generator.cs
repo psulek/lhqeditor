@@ -89,16 +89,6 @@ public class Generator : IDisposable
                 var doc = XDocument.Parse(File.ReadAllText(csProjectFileName));
                 var ns = doc.Root?.GetDefaultNamespace() ?? XNamespace.None;
             
-                // rootNamespace = doc
-                //     .Descendants(ns + "PropertyGroup")
-                //     .Select(e => e.Element(ns + "RootNamespace")?.Value)
-                //     .FirstOrDefault(x => x != null);
-            
-                // var customToolNamespace = doc.Descendants(ns + "Content")
-                //     .Where(e => e.Attribute("Include") != null && e.Attribute("Include")!.Value.Equals(lhqFile, StringComparison.InvariantCultureIgnoreCase))
-                //     .Select(e => e.Element(ns + "CustomToolNamespace")?.Value)
-                //     .FirstOrDefault();
-                
                 var manager = new XmlNamespaceManager(new NameTable());
                 manager.AddNamespace("ns", ns.NamespaceName);
 
@@ -162,7 +152,7 @@ public class Generator : IDisposable
 
         if (string.IsNullOrEmpty(rootNamespace))
         {
-            throw new Exception($"Missing parameter '{DataKeys.Namespace}' value!");
+            throw new Exception($"Missing parameter '{DataKeys.Namespace}' !");
         }
 
         _engine.SetVariableValue("__model", File.ReadAllText(lhqModelFileName));

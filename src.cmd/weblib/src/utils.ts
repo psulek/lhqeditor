@@ -31,7 +31,7 @@ export function isNullOrEmpty<T>(value: T | null | undefined | ''): value is und
 export function sortObjectByKey<T>(obj: Record<string, T>, sortOrder: 'asc' | 'desc' = 'asc'): Record<string, T> {
     return Object.fromEntries(
         Object.entries(obj).sort(([a], [b]) =>
-            sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a)
+            sortOrder === 'asc' ? a.localeCompare(b, 'en') : b.localeCompare(a, 'en')
         )
     );
 }

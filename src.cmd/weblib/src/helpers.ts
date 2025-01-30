@@ -142,6 +142,40 @@ function equals(input: any, value: any, block: any): boolean {
     return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
 }
 
+function trimComment(value: string): string {
+    let trimmed = false;
+    var idxNewLine = value.indexOf('\r\n');
+
+    if (idxNewLine == -1)
+    {
+        idxNewLine = value.indexOf('\n');
+    }
+
+    if (idxNewLine == -1)
+    {
+        idxNewLine = value.indexOf('\r');
+    }
+
+    if (idxNewLine > -1)
+    {
+        value = value.substring(0, idxNewLine);
+        trimmed = true;
+    }
+
+    if (value.length > 80)
+    {
+        value = value.substring(0, 80);
+        trimmed = true;
+    }
+
+    if (trimmed)
+    {
+        value += "...";
+    }
+
+    return value.replace('\t', ' ');
+}
+
 function resourceComment(resource: LhqModelResourceType, options: any): string {
     if (typeof resource === 'object') {
         const model = (options.hash.root as TemplateRootModel).model;
@@ -149,11 +183,12 @@ function resourceComment(resource: LhqModelResourceType, options: any): string {
         if (!isNullOrEmpty(primaryLanguage) && resource.values) {
             const resourceValue = resource.values[primaryLanguage]?.value;
             let propertyComment = isNullOrEmpty(resourceValue) ? resource.description : resourceValue;
-            propertyComment = propertyComment.replace(/[\n\r]/g, '');
-            propertyComment = propertyComment.replace(/\t/g, ' ');
-            if (propertyComment.length > 80) {
-                propertyComment = propertyComment.substring(0, 80);
-            }
+            propertyComment = trimComment(propertyComment);
+            // propertyComment = propertyComment.replace(/[\n\r]/g, '');
+            // propertyComment = propertyComment.replace(/\t/g, ' ');
+            // if (propertyComment.length > 80) {
+            //     propertyComment = propertyComment.substring(0, 80);
+            // }
             // @ts-ignore
             return new Handlebars.SafeString(propertyComment);
         }

@@ -2,23 +2,33 @@
 using LHQ.Cmd;
 using Pastel;
 
+Test();
+
+
 string Grey(string msg) => msg.Pastel(ConsoleColor.Gray);
 string White(string msg) => msg.Pastel(ConsoleColor.White);
 string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
 //args = ["--help"];
 
-var testDataFolder = Path.GetFullPath("..\\..\\..\\Test.Localization");
-// var extraData = new Dictionary<string, object>
-// {
-//     { "outDir", Path.Combine(testDataFolder, "GenOutput") },
-//     { "namespace", "test.localization" }
-// };
-//
+//var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
+//var csProjName = "Test.Localization.csproj";
 
-var csProj = Path.Combine(testDataFolder, "Test.Localization.csproj");
-var modelFile = Path.Combine(testDataFolder, "Strings.lhq");
-args = [modelFile, csProj];
+// var lhqFullPath = "C:\\Users\\peter.sulek\\source\\repos\\ScaleHQ.Windows.WPF1\\ScaleHQ.Windows.WPF1\\Strings.lhq";
+// var csProjName = "ScaleHQ.Windows.WPF1.csproj";
+
+var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
+var csProjName = "Localization.Common.csproj";
+
+var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "GenOutput");
+var testDataFolder = Path.GetDirectoryName(lhqFullPath)!;
+
+args =
+[
+    lhqFullPath,
+    Path.Combine(testDataFolder, csProjName),
+    outputDir
+];
 
 
 var missingParams = args.Length < 2;
@@ -181,4 +191,46 @@ void WriteHelp()
                - xml element {White($"/Project/ItemGroup/Content[@Include='{param_lhq}']/CustomToolNamespace")}
                     
          """);
+}
+
+
+void Test()
+{
+    var propertyComment =
+        """
+        Date and time changed.
+        From {0} at time zone {1} with daylight saving time {2},
+        to {3} at time zone {4} with daylight saving time {5}.
+        """;
+    bool trimmed = false;
+    var idxNewLine = propertyComment.IndexOf(Environment.NewLine);
+    
+    if (idxNewLine == -1)
+    {
+        idxNewLine = propertyComment.IndexOf('\n');
+    }
+
+    if (idxNewLine == -1)
+    {
+        idxNewLine = propertyComment.IndexOf('\r');
+    }
+
+    if (idxNewLine > -1)
+    {
+        propertyComment = propertyComment.Substring(0, idxNewLine);
+        trimmed = true;
+    }
+
+    if (propertyComment.Length > 80)
+    {
+        propertyComment = propertyComment.Substring(0, 80);
+        trimmed = true;
+    }
+
+    if (trimmed)
+    {
+        propertyComment += "...";
+    }
+
+    propertyComment = propertyComment.Replace('\t', ' ');
 }

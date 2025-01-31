@@ -19,11 +19,13 @@ helpersList['x-replace'] = replace;
 helpersList['x-trimEnd'] = trimEnd;
 helpersList['x-equals'] = equals;
 helpersList['x-resourceComment'] = resourceComment;
+helpersList['x-resourceValue'] = resourceValue;
 helpersList['x-resourceParamNames'] = resourceParamNames;
 helpersList['x-merge'] = merge;
 helpersList['x-sortBy'] = sortBy;
 helpersList['x-sortObject'] = sortObjectByKeyHelper;
 helpersList['x-objCount'] = objCount;
+
 //helpersList['x-each'] = eachsorted;
 
 function header() {
@@ -146,30 +148,25 @@ function trimComment(value: string): string {
     let trimmed = false;
     var idxNewLine = value.indexOf('\r\n');
 
-    if (idxNewLine == -1)
-    {
+    if (idxNewLine == -1) {
         idxNewLine = value.indexOf('\n');
     }
 
-    if (idxNewLine == -1)
-    {
+    if (idxNewLine == -1) {
         idxNewLine = value.indexOf('\r');
     }
 
-    if (idxNewLine > -1)
-    {
+    if (idxNewLine > -1) {
         value = value.substring(0, idxNewLine);
         trimmed = true;
     }
 
-    if (value.length > 80)
-    {
+    if (value.length > 80) {
         value = value.substring(0, 80);
         trimmed = true;
     }
 
-    if (trimmed)
-    {
+    if (trimmed) {
         value += "...";
     }
 
@@ -184,13 +181,25 @@ function resourceComment(resource: LhqModelResourceType, options: any): string {
             const resourceValue = resource.values[primaryLanguage]?.value;
             let propertyComment = isNullOrEmpty(resourceValue) ? resource.description : resourceValue;
             propertyComment = trimComment(propertyComment);
-            // propertyComment = propertyComment.replace(/[\n\r]/g, '');
-            // propertyComment = propertyComment.replace(/\t/g, ' ');
-            // if (propertyComment.length > 80) {
-            //     propertyComment = propertyComment.substring(0, 80);
-            // }
             // @ts-ignore
             return new Handlebars.SafeString(propertyComment);
+        }
+    }
+
+    return '';
+}
+
+function resourceValue(resource: LhqModelResourceType, options: any): string {
+    if (typeof resource === 'object') {
+        const lang = options.hash.lang ?? '';
+        //HostEnv.debugLog(`lang: ${lang}, res: ` + JSON.stringify(resource));
+        
+        if (!isNullOrEmpty(lang)) {
+            const resValue = resource?.values?.[lang]?.value ?? '';
+            // @ts-ignore
+            //return new Handlebars.SafeString(resValue);
+            return Handlebars.Utils.escapeExpression(resValue);
+            //return resValue;
         }
     }
 
@@ -201,12 +210,12 @@ function resourceParamNames(resource: LhqModelResourceType, options: any): strin
     //HostEnv.debugLog('resourceParamNames>> ' + JSON.stringify(resource))
     if (typeof resource === 'object' && resource.parameters) {
         const withTypes = options?.hash?.withTypes ?? false;
-        
+
         return Object.keys(resource.parameters).map(key => {
-            return  withTypes ? `object ${key}`: key; 
+            return withTypes ? `object ${key}` : key;
         }).join(',');
     }
-    
+
     return '';
 }
 

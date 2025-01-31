@@ -29,15 +29,6 @@ export class TemplateManager {
     };
     
     public static intialize(handlebarFiles: string): void {
-        // const xx = {
-        //     CallServiceStoped: 1,
-        //     CheckSumValidationFailed: 2,
-        //     ConnectionToTheServerWasLost: 3
-        // };
-        //
-        // const ss = sortObjectByKey(xx);
-        // HostEnv.debugLog('sorted: ' + JSON.stringify(ss));
-        
         TemplateManager.handlebarFiles = JSON.parse(handlebarFiles) as Record<string, string>;
         registerHelpers();
     }
@@ -53,13 +44,15 @@ export class TemplateManager {
             if (hostData) {
                 host = JSON.parse(hostData) as Record<string, unknown>;
             }
+            
             const rootModel: TemplateRootModel = {
                 model: lhqModel,
                 settings: settings,
-                host: host
+                host: host,
+                extra: {}
             };
 
-            template.generate(rootModel, TemplateManager.handlebarFiles);
+            template.generate(rootModel);
         }
         else {
             throw new Error(`Unable to deserialize LHQ model !`);
@@ -83,11 +76,6 @@ export class TemplateManager {
         }
 
         if (node && templateId !== undefined && template !== '') {
-            // const handlebarsTemplate = TemplateManager.handlebarFiles[templateId];
-            // if (handlebarsTemplate === undefined || handlebarsTemplate === '') {
-            //     throw new Error(`Handlebar file for template '${templateId}' not found !`);
-            // }
-            
             const ctor = TemplateManager.generators[templateId];
             template = (ctor && new ctor(TemplateManager.handlebarFiles)) || undefined;
             

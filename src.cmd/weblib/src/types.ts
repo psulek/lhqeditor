@@ -39,9 +39,16 @@ export type LhqModelResourceType = {
 export type TemplateRootModel = {
     model: LhqModelType;
     settings: unknown;
+    
+    /*
+     * data from host environment
+     */
     host: Record<string, unknown>;
-    // multiple stages for 1 handlebars template
-    //stage?: string;
+    
+    /*
+     * extra data defined dynamically by template
+     */
+    extra: Record<string, unknown>;
 };
 
 export interface OutputSettings {

@@ -9,6 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "he": "^1.2.0"
+  },
   "devDependencies": {
     "@types/node": "^22.10.10",
     "rimraf": "^4.4.1",

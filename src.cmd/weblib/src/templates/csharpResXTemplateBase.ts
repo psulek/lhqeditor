@@ -1,6 +1,7 @@
 import {CSharpGeneratorSettings, ModelDataNode, ResXGeneratorSettings, TemplateRootModel} from "../types";
 import {CodeGeneratorTemplate} from "./codeGeneratorTemplate";
 import {HostEnv} from "../hostEnv";
+import {isNullOrEmpty} from "../utils";
 
 type Settings<TCSharpSettings extends CSharpGeneratorSettings> = {
     CSharp: TCSharpSettings;
@@ -16,10 +17,11 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
 
     protected abstract get csharpTemplateName(): string;
 
-    generate(rootModel: TemplateRootModel) {
+    public generate(rootModel: TemplateRootModel) {
         const modelName = rootModel.model.model.name;
 
         if (this._settings.CSharp.Enabled) {
+            rootModel.extra = {};
             const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
             const csfileContent = this.compile(csharpTemplateFile, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
@@ -28,9 +30,16 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
 
         if (this._settings.ResX.Enabled) {
             const resxTemplateFile = this.getHandlebarFile('resx');
-            const resxfileContent = this.compile(resxTemplateFile, rootModel);
-            const resxfileName = this.prepareFilePath(modelName + '.en.resx', this._settings.ResX);
-            HostEnv.addResultFile(resxfileName, resxfileContent);
+            rootModel.extra = {};
+            
+            rootModel.model.languages?.forEach(lang => {
+                if (!isNullOrEmpty(lang)) {
+                    rootModel.extra['lang'] = lang;
+                    const resxfileContent = this.compile(resxTemplateFile, rootModel);
+                    const resxfileName = this.prepareFilePath(`${modelName}.${lang}.resx`, this._settings.ResX);
+                    HostEnv.addResultFile(resxfileName, resxfileContent);
+                }
+            });
         }
     }
 

@@ -1,3 +1,9 @@
+const he = require('he');
+
+export function htmlEncode(value: string, options: any): string {
+    return he.encode(value, options);
+}
+
 export function getNestedPropertyValue<T, U>(obj: T, path: string): U {
     return path.split('.').reduce((acc, part) => {
         if (acc === undefined) return undefined;

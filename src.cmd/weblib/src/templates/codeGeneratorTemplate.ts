@@ -35,7 +35,7 @@ export abstract class CodeGeneratorTemplate {
 
     public abstract loadSettings(node: ModelDataNode): Object;
 
-    public abstract generate(rootModel: TemplateRootModel, handlebarFiles: Record<string, string>): void;
+    public abstract generate(rootModel: TemplateRootModel): void;
 
     protected compile(handlebarsTemplate: string, data: unknown): string {
         // @ts-ignore

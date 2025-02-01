@@ -1,0 +1,1210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BusinessEventsApplicationAllKeysDeleted" xml:space="preserve">
+    <value>Mindegyik dallas-kulcs hozz&#225;rendel&#233;se megszűnt.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationInitialized" xml:space="preserve">
+    <value>Alkalmaz&#225;s megkezdve.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationShutdown" xml:space="preserve">
+    <value>Alkalmaz&#225;s le&#225;ll&#237;t&#225;sa.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationStarted" xml:space="preserve">
+    <value>Alkalmaz&#225;s elind&#237;tva.</value>
+  </data>
+  <data name="BusinessEventsApplicationCallServiceStarted" xml:space="preserve">
+    <value>H&#237;v&#225;sszolg&#225;ltat&#225;s elind&#237;tva.</value>
+  </data>
+  <data name="BusinessEventsApplicationCallServiceStoped" xml:space="preserve">
+    <value>H&#237;v&#225;sszolg&#225;ltat&#225;s le&#225;ll&#237;tva.</value>
+  </data>
+  <data name="BusinessEventsApplicationCheckSumValidationFailed" xml:space="preserve">
+    <value>Ellenőrző &#246;sszeg &#233;rv&#233;nyess&#233;ge hib&#225;s.</value>
+  </data>
+  <data name="BusinessEventsApplicationConnectionToTheServerWasLost" xml:space="preserve">
+    <value>A kapcsolat a szerverrel elveszett.</value>
+  </data>
+  <data name="BusinessEventsApplicationConnectionToTheServerWasRecovered" xml:space="preserve">
+    <value>A kapcsolat a szerverrel helyre&#225;llt.</value>
+  </data>
+  <data name="BusinessEventsApplicationContentHostFatallyCrashed" xml:space="preserve">
+    <value>A ContentHost teljesen &#246;sszeomlott.</value>
+  </data>
+  <data name="BusinessEventsApplicationDetail" xml:space="preserve">
+    <value>R&#233;szlet</value>
+  </data>
+  <data name="BusinessEventsApplicationError" xml:space="preserve">
+    <value>Belső hiba</value>
+  </data>
+  <data name="BusinessEventsApplicationFirstOwnerKeyRegistered" xml:space="preserve">
+    <value>Az 1. tulajdonosi kulcsot regisztr&#225;lt&#225;k.</value>
+  </data>
+  <data name="BusinessEventsApplicationForgottenKeyDuringStartUp" xml:space="preserve">
+    <value>Elfelejtett kulcs a g&#233;pben. H&#250;zza ki a kulcsot.</value>
+  </data>
+  <data name="BusinessEventsApplicationGameMachineSoftMetersReset" xml:space="preserve">
+    <value>A j&#225;t&#233;kg&#233;p puha &#233;rz&#233;kelője vissza lett &#225;ll&#237;tva null&#225;ra.</value>
+  </data>
+  <data name="BusinessEventsApplicationInitializationFailed" xml:space="preserve">
+    <value>Ind&#237;t&#225;s sikertelen.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineLocked" xml:space="preserve">
+    <value>A g&#233;pet lez&#225;rt&#225;k.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineReset" xml:space="preserve">
+    <value>A g&#233;pet vissza&#225;ll&#237;tott&#225;k a gy&#225;ri be&#225;ll&#237;t&#225;sokra.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineUnlocked" xml:space="preserve">
+    <value>A g&#233;pet kinyitott&#225;k.</value>
+  </data>
+  <data name="BusinessEventsApplicationNewVersionOfSoftwareWasActivated" xml:space="preserve">
+    <value>A szoftver &#250;j verzi&#243;j&#225;t aktiv&#225;lt&#225;k.</value>
+  </data>
+  <data name="BusinessEventsApplicationNewVersionOfSoftwareWasInstalled" xml:space="preserve">
+    <value>A szoftver &#250;j verzi&#243;j&#225;t telep&#237;tett&#233;k.</value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHourBegins" xml:space="preserve">
+    <value>Nyitvatart&#225;s kezdete.</value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHoursEndIsApproaching" xml:space="preserve">
+    <value>Nyitvatart&#225;s a v&#233;g&#233;hez k&#246;zeledik.</value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHoursEnds" xml:space="preserve">
+    <value>Nyitvatart&#225;s v&#233;ge.</value>
+  </data>
+  <data name="BusinessEventsApplicationPlayerGoesToIdleState" xml:space="preserve">
+    <value>J&#225;t&#233;kos t&#233;tlen &#225;llapotba ker&#252;l.</value>
+  </data>
+  <data name="BusinessEventsApplicationRequestToChangeProjectorApplicationOccured" xml:space="preserve">
+    <value>K&#233;r&#233;s, hogy megv&#225;ltoztassa a projektor alkalmaz&#225;s&#225;t.</value>
+  </data>
+  <data name="BusinessEventsApplicationResetOwnerKey" xml:space="preserve">
+    <value>A &quot;T&#246;r&#246;lj&#246;n minden kirendelt kulcsot&quot; oldalra l&#233;pett.</value>
+  </data>
+  <data name="BusinessEventsApplicationSoftMetersReset" xml:space="preserve">
+    <value>A puha m&#233;rőket vissza&#225;ll&#237;tott&#225;k null&#225;ra.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersErrorBlockedState" xml:space="preserve">
+    <value>A termin&#225;l bel&#233;p a Hiba/Blokkolt &#225;llapotba.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersLobby" xml:space="preserve">
+    <value>A termin&#225;l bel&#233;p a lobbyba.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersServiceMenu" xml:space="preserve">
+    <value>A termin&#225;l bel&#233;p a szolg&#225;ltat&#225;s men&#252;be.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersShutdown" xml:space="preserve">
+    <value>A termin&#225;l le&#225;ll.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalWasDisabledByHost" xml:space="preserve">
+    <value>A h&#225;zigazda kikapcsolta a termin&#225;lt.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalWasEnabledByHost" xml:space="preserve">
+    <value>A h&#225;zigazda bekapcsolta a termin&#225;lt.</value>
+  </data>
+  <data name="BusinessEventsApplicationUnfinishedProcessing" xml:space="preserve">
+    <value>Befejezetlen folyamatok &#233;rz&#233;kelve &#233;s helyre&#225;ll&#237;tva.</value>
+  </data>
+  <data name="BusinessEventsApplicationWorkflowFinished" xml:space="preserve">
+    <value>{0} munkamenet befejezve.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationAuthenticationDeviceWasInserted" xml:space="preserve">
+    <value>J&#243;v&#225;hagy&#225;si eszk&#246;z behelyezve.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationAuthenticationDeviceWasRemoved" xml:space="preserve">
+    <value>J&#243;v&#225;hagy&#225;si eszk&#246;z elt&#225;vol&#237;tva.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationCardWasInsertedIntoCardReader" xml:space="preserve">
+    <value>K&#225;rty&#225;t helyeztek a k&#225;rtyaolvas&#243;ba.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationCardWasRemovedFromCardReader" xml:space="preserve">
+    <value>Elt&#225;vol&#237;tott&#225;k a k&#225;rty&#225;t a k&#225;rtyaolvas&#243;b&#243;l.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationDevice" xml:space="preserve">
+    <value>Eszk&#246;z {0}, #{1}</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedDescription" xml:space="preserve">
+    <value>{0} jegy {1} elfogadva</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeCash" xml:space="preserve">
+    <value>K&#233;szp&#233;nz</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeNonRestricted" xml:space="preserve">
+    <value>Nem korl&#225;tozott</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeRestricted" xml:space="preserve">
+    <value>Korl&#225;tozott</value>
+  </data>
+  <data name="BusinessEventsBillTicketInRejectedDescriptionWithNumber" xml:space="preserve">
+    <value>Jegy {0} elutas&#237;tva</value>
+  </data>
+  <data name="BusinessEventsBillTicketInRejectedDescriptionWithoutNumber" xml:space="preserve">
+    <value>Jegy elutas&#237;tva</value>
+  </data>
+  <data name="BusinessEventsBillBillAcceptorDisconnected" xml:space="preserve">
+    <value>Bankjegy elfogad&#243; sz&#233;tkapcsolva</value>
+  </data>
+  <data name="BusinessEventsBillBillIn" xml:space="preserve">
+    <value>Bankjegy behelyezve</value>
+  </data>
+  <data name="BusinessEventsBillBillInAccepted" xml:space="preserve">
+    <value>Bankjegy elfogadva</value>
+  </data>
+  <data name="BusinessEventsBillBillInJam" xml:space="preserve">
+    <value>Bankjegy elakad&#225;s</value>
+  </data>
+  <data name="BusinessEventsBillBillMayNotAccepted" xml:space="preserve">
+    <value>Egy bankjegy/jegy nem lett elfogadva.</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerDoorClosed" xml:space="preserve">
+    <value>Bankjegy &#250;jrahasznos&#237;t&#243; ajt&#243; z&#225;rva</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerDoorOpened" xml:space="preserve">
+    <value>Bankjegy &#250;jrahasznos&#237;t&#243; ajt&#243; nyitva</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerEmpty" xml:space="preserve">
+    <value>bankjegy &#250;jrahasznos&#237;t&#243; &#252;res</value>
+  </data>
+  <data name="BusinessEventsBillBillRefilled" xml:space="preserve">
+    <value>Bankjegy &#250;jrat&#246;ltve</value>
+  </data>
+  <data name="BusinessEventsBillBillRejected" xml:space="preserve">
+    <value>bankjegy elutas&#237;tva</value>
+  </data>
+  <data name="BusinessEventsBillBillStackerFull" xml:space="preserve">
+    <value>Bankjegy &#233;rv&#233;nyes&#237;t&#233;s hiba</value>
+  </data>
+  <data name="BusinessEventsBillBillStackerJam" xml:space="preserve">
+    <value>Bankjegy k&#246;tegelő elakad&#225;s</value>
+  </data>
+  <data name="BusinessEventsBillBillValidatorId" xml:space="preserve">
+    <value>Bankjegy &#233;rv&#233;nyes&#237;tő azonos&#237;t&#243;</value>
+  </data>
+  <data name="BusinessEventsBillChannel" xml:space="preserve">
+    <value>Csatorna</value>
+  </data>
+  <data name="BusinessEventsBillCoinAcceptorDisconnected" xml:space="preserve">
+    <value>&#201;rmefogad&#243; sz&#233;tkapcsolva</value>
+  </data>
+  <data name="BusinessEventsBillCoinInJam" xml:space="preserve">
+    <value>&#201;rme be elakad&#225;s</value>
+  </data>
+  <data name="BusinessEventsBillCoinInTooFast" xml:space="preserve">
+    <value>Az &#233;rm&#233;t t&#250;l gyorsan ismerte fel</value>
+  </data>
+  <data name="BusinessEventsBillCoinInTooSlow" xml:space="preserve">
+    <value>Az &#233;rm&#233;t t&#250;l lassan ismerte fel</value>
+  </data>
+  <data name="BusinessEventsBillCoinWasInserted" xml:space="preserve">
+    <value>Behelyeztek egy &#233;rm&#233;t.</value>
+  </data>
+  <data name="BusinessEventsBillCoinWasRejectedWithCode" xml:space="preserve">
+    <value>&#233;rme el lett utas&#237;tva k&#243;ddal</value>
+  </data>
+  <data name="BusinessEventsBillErrorInvalidTicketType" xml:space="preserve">
+    <value>hiba: &#233;rv&#233;nytelen jegy t&#237;pus</value>
+  </data>
+  <data name="BusinessEventsBillInsertedBillStacker" xml:space="preserve">
+    <value>Bankjegy k&#246;tegelő behelyezve</value>
+  </data>
+  <data name="BusinessEventsBillInvalidTicketStacked" xml:space="preserve">
+    <value>&#201;rv&#233;nytelen jegyet {0} helyeztek be</value>
+  </data>
+  <data name="BusinessEventsBillInvalidTicketTypeErrorCode" xml:space="preserve">
+    <value>k&#243;d</value>
+  </data>
+  <data name="BusinessEventsBillLocation" xml:space="preserve">
+    <value>Helysz&#237;n</value>
+  </data>
+  <data name="BusinessEventsBillNoteWasReturned" xml:space="preserve">
+    <value>Megjegyz&#233;s visszak&#252;ldve.</value>
+  </data>
+  <data name="BusinessEventsBillRemoteIn" xml:space="preserve">
+    <value>Szem&#233;lyzet &#225;ltal hozz&#225;adott kredit</value>
+  </data>
+  <data name="BusinessEventsBillRemoteInFailed" xml:space="preserve">
+    <value>Szem&#233;lyzet &#225;ltal sikertelen kredit hozz&#225;ad&#225;s.</value>
+  </data>
+  <data name="BusinessEventsBillRemovedBillStacker" xml:space="preserve">
+    <value>Bankjegy k&#246;tegelő elt&#225;vol&#237;tva</value>
+  </data>
+  <data name="BusinessEventsBillReverseBillDetected" xml:space="preserve">
+    <value>Ford&#237;tott bankjegy &#233;szlelve</value>
+  </data>
+  <data name="BusinessEventsBillReversedCoin" xml:space="preserve">
+    <value>Hamis &#233;rme &#233;szlelve</value>
+  </data>
+  <data name="BusinessEventsBillRmsBillAcceptorDisabled" xml:space="preserve">
+    <value>A bankjegy-elfogad&#243; k&#252;lsőleg ki van kapcsolva</value>
+  </data>
+  <data name="BusinessEventsBillRmsBillAcceptorEnabled" xml:space="preserve">
+    <value>A bankjegy-elfogad&#243; k&#252;lsőleg enged&#233;lyezve van</value>
+  </data>
+  <data name="BusinessEventsBillTicketIn" xml:space="preserve">
+    <value>Jegy {0} behelyezve</value>
+  </data>
+  <data name="BusinessEventsConfigurationConfigurationTypeFullname" xml:space="preserve">
+    <value>Konfigur&#225;l&#225;s t&#237;pus&#225;nak teljes neve</value>
+  </data>
+  <data name="BusinessEventsConfigurationConfigurationWasChanged" xml:space="preserve">
+    <value>Konfigur&#225;l&#225;s megv&#225;ltozott.</value>
+  </data>
+  <data name="BusinessEventsConfigurationRoleText" xml:space="preserve">
+    <value>Szerep</value>
+  </data>
+  <data name="BusinessEventsDevicesDeviceStatusChanged" xml:space="preserve">
+    <value>Az eszk&#246;z {0} &#225;llapota megv&#225;ltozott.</value>
+  </data>
+  <data name="BusinessEventsDevicesDongleDetected" xml:space="preserve">
+    <value>Hardverrkulcs &#233;szlelve.</value>
+  </data>
+  <data name="BusinessEventsDevicesDongleNotFound" xml:space="preserve">
+    <value>Hardverkulcs nem tal&#225;lhat&#243;</value>
+  </data>
+  <data name="BusinessEventsDevicesLCDMonitorError" xml:space="preserve">
+    <value>Monitor sz&#233;tkapcsolva. K&#233;rj&#252;k, h&#237;vja a szem&#233;lyzetet.</value>
+  </data>
+  <data name="BusinessEventsDevicesSoftwareButtonPressed" xml:space="preserve">
+    <value>A szoftver gombot {0} megnyomt&#225;k</value>
+  </data>
+  <data name="BusinessEventsDevicesWrongDongle" xml:space="preserve">
+    <value>Hib&#225;s hardverkulcs.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBackDoorClosed" xml:space="preserve">
+    <value>H&#225;ts&#243; ajt&#243; bez&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBackDoorOpened" xml:space="preserve">
+    <value>H&#225;ts&#243; ajt&#243; kinyitva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBellyDoorClosed" xml:space="preserve">
+    <value>Első ajt&#243; bez&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBellyDoorOpened" xml:space="preserve">
+    <value>H&#225;ts&#243; ajt&#243; kinyitva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillStackerDoorClosed" xml:space="preserve">
+    <value>Bankjegy k&#246;tegelő ajt&#243; bez&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillStackerDoorOpened" xml:space="preserve">
+    <value>Bankjegy k&#246;tegelő ajt&#243; kinyitva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillValidatorDoorClosed" xml:space="preserve">
+    <value>Bankjegy &#233;rv&#233;nyes&#237;tő ajt&#243; bez&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillValidatorDoorOpened" xml:space="preserve">
+    <value>Bankjegy &#233;rv&#233;nyes&#237;tő ajt&#243; kinyitva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchButtonWasPressed" xml:space="preserve">
+    <value>{0} gombot megnyomt&#225;k.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchButtonWasReleased" xml:space="preserve">
+    <value>{0} gombot elengedt&#233;k.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchClosed" xml:space="preserve">
+    <value>Z&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor1Closed" xml:space="preserve">
+    <value>Ejt&#233;s 1-es ajt&#243; bez&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor1Opened" xml:space="preserve">
+    <value>Ejt&#233;s 1-es ajt&#243; kinyitva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor2Closed" xml:space="preserve">
+    <value>Ejt&#233;s 2-es ajt&#243; bez&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor2Opened" xml:space="preserve">
+    <value>Ejt&#233;s 2-es ajt&#243; kinyitva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchLogicDoorClosed" xml:space="preserve">
+    <value>Logika ajt&#243; bez&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchLogicDoorOpened" xml:space="preserve">
+    <value>Logika ajt&#243; kinyitva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchOpened" xml:space="preserve">
+    <value>Nyitva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchServiceDoorClosed" xml:space="preserve">
+    <value>Szolg&#225;ltat&#225;s ajt&#243; bez&#225;rva</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchServiceDoorOpened" xml:space="preserve">
+    <value>Szolg&#225;ltat&#225;s ajt&#243; kinyitva</value>
+  </data>
+  <data name="BusinessEventsElectronicCountersElectronicCountersConnected" xml:space="preserve">
+    <value>Elektromos sz&#225;ml&#225;l&#243;k csatlakoztatva</value>
+  </data>
+  <data name="BusinessEventsElectronicCountersElectronicCountersDisconnected" xml:space="preserve">
+    <value>Elektromos sz&#225;ml&#225;l&#243;k sz&#233;tkapcsolva</value>
+  </data>
+  <data name="BusinessEventsFinanceAftAwarded" xml:space="preserve">
+    <value>{0} jutalmazva</value>
+  </data>
+  <data name="BusinessEventsFinanceAftBonusCoinWinTransfer" xml:space="preserve">
+    <value>B&#243;nusz &#233;rme ki nyerem&#233;ny utal&#225;s</value>
+  </data>
+  <data name="BusinessEventsFinanceAftBonusJackpotWinTransfer" xml:space="preserve">
+    <value>B&#243;nusz jackpot nyerem&#233;ny utal&#225;s</value>
+  </data>
+  <data name="BusinessEventsFinanceAftCancelledByHost" xml:space="preserve">
+    <value>{0} t&#246;r&#246;lve a h&#225;zigazda &#225;ltal</value>
+  </data>
+  <data name="BusinessEventsFinanceAftCash" xml:space="preserve">
+    <value>C {0}  </value>
+  </data>
+  <data name="BusinessEventsFinanceAftCompleted" xml:space="preserve">
+    <value>{0} teljes&#237;tve</value>
+  </data>
+  <data name="BusinessEventsFinanceAftDebitTransferFromHost" xml:space="preserve">
+    <value>Terhel&#233;s utal&#225;s a h&#225;zigazd&#225;t&#243;l</value>
+  </data>
+  <data name="BusinessEventsFinanceAftDebitTransferToTicket" xml:space="preserve">
+    <value>Terhel&#233;s &#246;sszege a h&#225;zigazd&#225;t&#243;l jegyre</value>
+  </data>
+  <data name="BusinessEventsFinanceAftFailed" xml:space="preserve">
+    <value>{0} sikertelen</value>
+  </data>
+  <data name="BusinessEventsFinanceAftHostRequestedCashout" xml:space="preserve">
+    <value>H&#225;zigazda k&#233;szp&#233;nz kifizet&#233;st k&#233;rt</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHosueTransferToTicket" xml:space="preserve">
+    <value>H&#225;zon bel&#252;li &#246;sszeg h&#225;zigazd&#225;t&#243;l jegyre</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseInTransfer" xml:space="preserve">
+    <value>H&#225;zon bel&#252;li be AFT utal&#225;s</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseTransferToHost" xml:space="preserve">
+    <value>H&#225;zon bel&#252;li ki AFT utal&#225;s</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseWinTransferToHost" xml:space="preserve">
+    <value>Nyerem&#233;ny&#246;sszeg h&#225;zigazda utal&#225;shoz</value>
+  </data>
+  <data name="BusinessEventsFinanceAftNonRestricted" xml:space="preserve">
+    <value>N {0}  </value>
+  </data>
+  <data name="BusinessEventsFinanceAftProcessing" xml:space="preserve">
+    <value>{0} feldolgoz&#225;s</value>
+  </data>
+  <data name="BusinessEventsFinanceAftReceived" xml:space="preserve">
+    <value>{0} &#225;tv&#233;ve</value>
+  </data>
+  <data name="BusinessEventsFinanceAftRestricted" xml:space="preserve">
+    <value>R {0}  </value>
+  </data>
+  <data name="BusinessEventsFinanceAftTotal" xml:space="preserve">
+    <value>Teljes {0}</value>
+  </data>
+  <data name="BusinessEventsFinanceAftTransferCancelRequested" xml:space="preserve">
+    <value>Utal&#225;s t&#246;rl&#233;s k&#233;relmezve</value>
+  </data>
+  <data name="BusinessEventsFinanceAftUnknownTransfer" xml:space="preserve">
+    <value>Ismeretlen utal&#225;s</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxCashout" xml:space="preserve">
+    <value>Bankjegy az &#250;jrahasznos&#237;t&#243;b&#243;l a k&#246;tegelőbe helyezve (k&#233;szp&#233;nz kifizet&#233;s)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxDump" xml:space="preserve">
+    <value>Bankjegy az &#250;jrahasznos&#237;t&#243;b&#243;l a k&#246;tegelőbe helyezve (ejt&#233;s)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxForceCollect" xml:space="preserve">
+    <value>Bankjegy az &#250;jrahasznos&#237;t&#243;b&#243;l a k&#246;tegelőbe helyezve (k&#233;nyszer&#237;tett &#246;sszegyűjt&#233;s)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillOutBegin" xml:space="preserve">
+    <value>Kiad&#243; k&#233;szp&#233;nz kifizet&#233;s kezdem&#233;nyezve</value>
+  </data>
+  <data name="BusinessEventsFinanceBillOutEnd" xml:space="preserve">
+    <value>Kiad&#243; k&#233;szp&#233;nz kifizet&#233;s befejezve</value>
+  </data>
+  <data name="BusinessEventsFinanceCashableAftTicket" xml:space="preserve">
+    <value>P&#233;nzre v&#225;lthat&#243; AFT jegy</value>
+  </data>
+  <data name="BusinessEventsFinanceCashableTicket" xml:space="preserve">
+    <value>P&#233;nzre v&#225;lthat&#243; jegy</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOut" xml:space="preserve">
+    <value>K&#233;szp&#233;nz kifizet&#233;s j&#243;v&#225;hagy&#225;s p&#225;rbesz&#233;dpanel mutat&#225;sa</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOutCancelled" xml:space="preserve">
+    <value>K&#233;szp&#233;nz kifizet&#233;s t&#246;r&#246;lve</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOutConfirmed" xml:space="preserve">
+    <value>K&#233;szp&#233;nz kifizet&#233;s j&#243;v&#225;hagyva j&#225;t&#233;kos &#225;ltal</value>
+  </data>
+  <data name="BusinessEventsFinanceCashoutReceipt" xml:space="preserve">
+    <value>K&#233;szp&#233;nz kifizet&#233;s nyugta</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinOutBegin" xml:space="preserve">
+    <value>T&#246;ltőgarat k&#233;szp&#233;nz kifizet&#233;s kezdem&#233;nyezve</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinOutEnd" xml:space="preserve">
+    <value>T&#246;ltőgarat k&#233;szp&#233;nz kifizet&#233;s teljes&#237;tve</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinSorterMalfunction" xml:space="preserve">
+    <value>V&#225;logat&#243; meghib&#225;sod&#225;sa</value>
+  </data>
+  <data name="BusinessEventsFinanceDebitAftTicket" xml:space="preserve">
+    <value>AFT terhel&#233;si jegy</value>
+  </data>
+  <data name="BusinessEventsFinanceDescriptionNotPrinted" xml:space="preserve">
+    <value>{0} nem lett kinyomtatva</value>
+  </data>
+  <data name="BusinessEventsFinanceDescriptionPrinted" xml:space="preserve">
+    <value>{0} kinyomtatva</value>
+  </data>
+  <data name="BusinessEventsFinanceExternalBonusAwarded" xml:space="preserve">
+    <value>K&#252;lső b&#243;nusz jutalom</value>
+  </data>
+  <data name="BusinessEventsFinanceExternalBonusReceived" xml:space="preserve">
+    <value>K&#252;lső b&#243;nusz &#225;tv&#233;ve</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayCancelled" xml:space="preserve">
+    <value>Manu&#225;lis kifizet&#233;s t&#246;r&#246;lve</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayCompleted" xml:space="preserve">
+    <value>Manu&#225;lis kifizet&#233;s teljes&#237;tve</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayPending" xml:space="preserve">
+    <value>Manu&#225;lis kifizet&#233;s sz&#252;ks&#233;ges</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayValidated" xml:space="preserve">
+    <value>K&#233;zi kifizet&#233;s valid&#225;lva</value>
+  </data>
+  <data name="BusinessEventsFinanceHostCashOutFailed" xml:space="preserve">
+    <value> H&#225;zigazda k&#233;szp&#233;nz kifizet&#233;s sikertelen</value>
+  </data>
+  <data name="BusinessEventsFinanceHostCashOutPending" xml:space="preserve">
+    <value>H&#225;zigazda k&#233;szp&#233;nz kifizet&#233;s f&#252;ggőben</value>
+  </data>
+  <data name="BusinessEventsFinanceJackpotReceipt" xml:space="preserve">
+    <value>Jackpot sz&#225;mla</value>
+  </data>
+  <data name="BusinessEventsFinanceRemoteHandpayResetOccured" xml:space="preserve">
+    <value>T&#225;voli manu&#225;lis kifizet&#233;s vissza&#225;ll&#237;t&#225;sa megt&#246;rt&#233;nt</value>
+  </data>
+  <data name="BusinessEventsFinanceRestrictedAftTicket" xml:space="preserve">
+    <value>Korl&#225;tozott AFT jegy</value>
+  </data>
+  <data name="BusinessEventsFinanceRestrictedTicket" xml:space="preserve">
+    <value>Korl&#225;tozott jegy</value>
+  </data>
+  <data name="BusinessEventsFinanceStartupCredit" xml:space="preserve">
+    <value>A g&#233;p kredittel kezd.</value>
+  </data>
+  <data name="BusinessEventsFinanceTicketOutId" xml:space="preserve">
+    <value>Azonos&#237;t&#243; : {0}</value>
+  </data>
+  <data name="BusinessEventsFinanceTicketOutPending" xml:space="preserve">
+    <value>{0} nyomtat</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockLocked" xml:space="preserve">
+    <value>P&#233;nz n&#233;lk&#252;li utal&#225;s z&#225;rolva</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockRequestLock" xml:space="preserve">
+    <value>P&#233;nz n&#233;lk&#252;li utal&#225;s z&#225;rol&#225;sa k&#233;relmezve</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockRequestUnlock" xml:space="preserve">
+    <value>P&#233;nz n&#233;lk&#252;li utal&#225;s felszabad&#237;t&#225;s&#225;nak k&#233;relme</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockUnlocked" xml:space="preserve">
+    <value>P&#233;nz n&#233;lk&#252;li utal&#225;s felszabad&#237;tva</value>
+  </data>
+  <data name="BusinessEventsGameAttemptToStartTheGameFailed" xml:space="preserve">
+    <value>A j&#225;t&#233;k elind&#237;t&#225;s&#225;ra tett k&#237;s&#233;rlet sikertelen volt.</value>
+  </data>
+  <data name="BusinessEventsGameDenominationSelected" xml:space="preserve">
+    <value>C&#237;mlet kiv&#225;lasztva.</value>
+  </data>
+  <data name="BusinessEventsGameGambleEntered" xml:space="preserve">
+    <value>Rizik&#243;ba l&#233;pett</value>
+  </data>
+  <data name="BusinessEventsGameGambleExited" xml:space="preserve">
+    <value>Rizik&#243;b&#243;l kil&#233;pett</value>
+  </data>
+  <data name="BusinessEventsGameGameDisabledByHost" xml:space="preserve">
+    <value>{0} j&#225;t&#233;kot a h&#225;zigazda kikapcsolta.</value>
+  </data>
+  <data name="BusinessEventsGameGameDisabledByOperator" xml:space="preserve">
+    <value>{0} j&#225;t&#233;kot a szolg&#225;ltat&#225;s men&#252;ben kikapcsolt&#225;k.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnabledByHost" xml:space="preserve">
+    <value>{0} j&#225;t&#233;kot a h&#225;zigazda bekapcsolta.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnabledByOperator" xml:space="preserve">
+    <value>{0} j&#225;t&#233;kot a szolg&#225;ltat&#225;s men&#252;ben bekapcsolt&#225;k.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnded" xml:space="preserve">
+    <value>J&#225;t&#233;k v&#233;get &#233;rt {0}</value>
+  </data>
+  <data name="BusinessEventsGameGameEndedData" xml:space="preserve">
+    <value>Nyerem&#233;ny {0}</value>
+  </data>
+  <data name="BusinessEventsGameGameEntersIdleState" xml:space="preserve">
+    <value>J&#225;t&#233;k t&#233;tlen &#252;zemm&#243;dba l&#233;p.</value>
+  </data>
+  <data name="BusinessEventsGameGameIsNotResponding" xml:space="preserve">
+    <value>J&#225;t&#233;k nem v&#225;laszol.</value>
+  </data>
+  <data name="BusinessEventsGameGamePlayDisabled" xml:space="preserve">
+    <value>J&#225;t&#233;k kikapcsolva</value>
+  </data>
+  <data name="BusinessEventsGameGamePlayEnabled" xml:space="preserve">
+    <value>J&#225;t&#233;k bekapcsolva</value>
+  </data>
+  <data name="BusinessEventsGameGameReportDisplayed" xml:space="preserve">
+    <value>{0} j&#225;t&#233;k visszah&#237;v&#225;s bejegyz&#233;s megjelen&#237;tve.</value>
+  </data>
+  <data name="BusinessEventsGameGameSelected" xml:space="preserve">
+    <value>J&#225;t&#233;k kiv&#225;lasztva</value>
+  </data>
+  <data name="BusinessEventsGameGameStarted" xml:space="preserve">
+    <value>J&#225;t&#233;k elkezdve {0} </value>
+  </data>
+  <data name="BusinessEventsGameGameStartedData" xml:space="preserve">
+    <value>T&#233;t {0}</value>
+  </data>
+  <data name="BusinessEventsGameHostAutoplayModeDisabled" xml:space="preserve">
+    <value>Az automatikus j&#225;t&#233;k m&#243;dot kikapcsolta a h&#225;zigazda.</value>
+  </data>
+  <data name="BusinessEventsGameHostAutoplayModeEnabled" xml:space="preserve">
+    <value>Az automatikus j&#225;t&#233;k m&#243;dot bekapcsolta a h&#225;zigazda.</value>
+  </data>
+  <data name="BusinessEventsGameLobby" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="BusinessEventsGameNewGameVersionInstalled" xml:space="preserve">
+    <value>A j&#225;t&#233;k &#250;j verzi&#243;j&#225;t telep&#237;tett&#233;k.</value>
+  </data>
+  <data name="BusinessEventsGameNewVersionOfGameWasActivated" xml:space="preserve">
+    <value>A j&#225;t&#233;k &#250;j verzi&#243;j&#225;t aktiv&#225;lt&#225;k.</value>
+  </data>
+  <data name="BusinessEventsGameTerminalEntersGamePlayState" xml:space="preserve">
+    <value>A termin&#225;l bel&#233;p a j&#225;t&#233;k &#225;llapotba.</value>
+  </data>
+  <data name="BusinessEventsHopperAll" xml:space="preserve">
+    <value>&#214;sszes</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDisconnected" xml:space="preserve">
+    <value>T&#246;ltőgarat sz&#233;tkapcsolva</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDumpWasFinished" xml:space="preserve">
+    <value>T&#246;ltőgarat ejt&#233;s befejezve</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDumpWasRequestedBy" xml:space="preserve">
+    <value>T&#246;ltőgarat ejt&#233;st k&#233;rte:</value>
+  </data>
+  <data name="BusinessEventsHopperHopperEmpty" xml:space="preserve">
+    <value>&#220;res t&#246;ltőgarat</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFraud" xml:space="preserve">
+    <value>T&#246;ltőgarat hiba</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFraudData" xml:space="preserve">
+    <value>Lehets&#233;ges hamis&#237;t&#225;s</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFull" xml:space="preserve">
+    <value>Teljes t&#246;ltőgarat &#233;szlelve</value>
+  </data>
+  <data name="BusinessEventsHopperHopperInserted" xml:space="preserve">
+    <value>Extra &#233;rme bedobva</value>
+  </data>
+  <data name="BusinessEventsHopperHopperJam" xml:space="preserve">
+    <value>T&#246;ltőgarat elakad&#225;s</value>
+  </data>
+  <data name="BusinessEventsHopperHopperLevelLow" xml:space="preserve">
+    <value>T&#246;ltőgarat szintje alacsony</value>
+  </data>
+  <data name="BusinessEventsHopperHopperRefill" xml:space="preserve">
+    <value>T&#246;ltőgarat &#250;jrat&#246;lt&#233;se</value>
+  </data>
+  <data name="BusinessEventsMetersElectronicCountersTest" xml:space="preserve">
+    <value>Elektronikus sz&#225;ml&#225;l&#243;k tesztel&#233;se</value>
+  </data>
+  <data name="BusinessEventsMetersMechanicalCountersTest" xml:space="preserve">
+    <value>Mechanikus sz&#225;ml&#225;l&#243;k tesztel&#233;se.</value>
+  </data>
+  <data name="BusinessEventsMotherboardBatteryLow" xml:space="preserve">
+    <value>{0} jelenti, hogy az akkumul&#225;tor t&#246;lt&#246;tts&#233;gi szintje alacsony </value>
+  </data>
+  <data name="BusinessEventsMotherboardDuringPowerOff" xml:space="preserve">
+    <value> &#225;ram lekapcsol&#225;s időtartama alatt</value>
+  </data>
+  <data name="BusinessEventsMotherboardErrorMessage" xml:space="preserve">
+    <value>Hiba&#252;zenet</value>
+  </data>
+  <data name="BusinessEventsMotherboardErrorType" xml:space="preserve">
+    <value>Hiba t&#237;pusa</value>
+  </data>
+  <data name="BusinessEventsMotherboardIndex" xml:space="preserve">
+    <value>Jelz&#233;s</value>
+  </data>
+  <data name="BusinessEventsMotherboardIntrusionCommunicationError" xml:space="preserve">
+    <value>Befel&#233; ir&#225;nyul&#243; kommunik&#225;ci&#243;s hiba</value>
+  </data>
+  <data name="BusinessEventsMotherboardIntrusionCommunicationRestored" xml:space="preserve">
+    <value>Befel&#233; ir&#225;nyul&#243; kommunik&#225;ci&#243; helyre&#225;ll&#237;tva</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterConnected" xml:space="preserve">
+    <value>Mechanikus sz&#225;ml&#225;l&#243;k csatlakoztatva</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterDisconnected" xml:space="preserve">
+    <value>Mechanikus sz&#225;ml&#225;l&#243; sz&#233;tkapcsolva</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterNotIncremented" xml:space="preserve">
+    <value>A mechanikus sz&#225;ml&#225;l&#243; nem n&#246;vekszik</value>
+  </data>
+  <data name="BusinessEventsMotherboardName" xml:space="preserve">
+    <value>N&#233;v</value>
+  </data>
+  <data name="BusinessEventsMotherboardNvRamError" xml:space="preserve">
+    <value>Nem v&#225;ltoz&#243; ram hiba</value>
+  </data>
+  <data name="BusinessEventsMotherboardNvRamErrorFormattedData" xml:space="preserve">
+    <value>Hiba t&#237;pusa:{0}, Hiba&#252;zenet:{1}</value>
+  </data>
+  <data name="BusinessEventsMotherboardPowerDown" xml:space="preserve">
+    <value>A hűt&#233;s teljes&#237;tm&#233;nye elveszett egy j&#225;t&#233;kg&#233;p miatt</value>
+  </data>
+  <data name="BusinessEventsMotherboardPowerUp" xml:space="preserve">
+    <value>A hűt&#233;s teljes&#237;tm&#233;ny&#233;t egy j&#225;t&#233;kg&#233;phez adt&#225;k</value>
+  </data>
+  <data name="BusinessEventsMotherboardTemperatureHigh" xml:space="preserve">
+    <value>Belső hőm&#233;rs&#233;klet magas </value>
+  </data>
+  <data name="BusinessEventsMotherboardVoltage" xml:space="preserve">
+    <value>Fesz&#252;lts&#233;g</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterDisconnected" xml:space="preserve">
+    <value>Nyomtat&#243; sz&#233;tkapcsolva</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterJamPaper" xml:space="preserve">
+    <value>Nyomtat&#243; elakad&#225;si hiba</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterLowPaper" xml:space="preserve">
+    <value>Kev&#233;s a pap&#237;r a nyomtat&#243;ban</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterOpenChassis" xml:space="preserve">
+    <value>A nyomtat&#243; g&#233;ph&#225;za felnyitva</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterOutOfPaper" xml:space="preserve">
+    <value>Nyomtat&#243; hiba, kifogyott a pap&#237;r</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPaperOutClearable" xml:space="preserve">
+    <value>Kifogyott a nyomtat&#243; pap&#237;rja. T&#246;r&#246;lje a hib&#225;t kulccsal.</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPaperOutNonClearable" xml:space="preserve">
+    <value>Kifogyott a nyomtat&#243; pap&#237;rja. T&#246;ltse be &#250;jra a pap&#237;rt.</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPowerOff" xml:space="preserve">
+    <value>Nyomtat&#243; lekapcsolva</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPowerOn" xml:space="preserve">
+    <value>Nyomtat&#243; kapcsol&#243;dva</value>
+  </data>
+  <data name="BusinessEventsSecurityClockTampered" xml:space="preserve">
+    <value>&#211;ra hamis&#237;t&#225;s &#233;szlelve</value>
+  </data>
+  <data name="BusinessEventsSecurityDisplayMetersAttendantMenuEnter" xml:space="preserve">
+    <value>A m&#233;rők kijelzőj&#233;re vagy a szem&#233;lyzeti men&#252;be bel&#233;ptek</value>
+  </data>
+  <data name="BusinessEventsSecurityDisplayMetersAttendantMenuExit" xml:space="preserve">
+    <value>A m&#233;rők kijelzőj&#233;ből vagy a szem&#233;lyzeti men&#252;ből kil&#233;ptek</value>
+  </data>
+  <data name="BusinessEventsSecurityPlayerLoggedIn" xml:space="preserve">
+    <value>J&#225;t&#233;kos bejelentkezett.</value>
+  </data>
+  <data name="BusinessEventsSecurityPlayerLoggedOut" xml:space="preserve">
+    <value>J&#225;t&#233;kos kijelentkezett.</value>
+  </data>
+  <data name="BusinessEventsSecuritySelfTestOperatorMenuEnter" xml:space="preserve">
+    <value>Bel&#233;ptek az &#246;ntesztel&#233;s vagy a kezelői men&#252;be.</value>
+  </data>
+  <data name="BusinessEventsSecuritySelfTestOperatorMenuExit" xml:space="preserve">
+    <value>Kil&#233;ptek az &#246;ntesztel&#233;s vagy a kezelői men&#252;ből.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoggedIn" xml:space="preserve">
+    <value>{0} felhaszn&#225;l&#243; bejelentkezett.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoggedOut" xml:space="preserve">
+    <value>{0} felhaszn&#225;l&#243; kijelentkezett.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoginFailed" xml:space="preserve">
+    <value>Felhaszn&#225;l&#243; bejelentkez&#233;se sikertelen.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedFromToVersion" xml:space="preserve">
+    <value>&#211;ra hamis&#237;t&#225;sa</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedNotUpdated" xml:space="preserve">
+    <value>Licenc aktiv&#225;lva</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedReverted" xml:space="preserve">
+    <value>Lej&#225;rt licence</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedToVersion" xml:space="preserve">
+    <value>Nem tal&#225;lhat&#243; licenc</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedClockTampering" xml:space="preserve">
+    <value>&#211;ra hamis&#237;t&#225;sa</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedLicenseActivated" xml:space="preserve">
+    <value>Licenc aktiv&#225;lva</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedLicenseExpired" xml:space="preserve">
+    <value>Lej&#225;rt licence</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedNoLicense" xml:space="preserve">
+    <value>Nem tal&#225;lhat&#243; licenc</value>
+  </data>
+  <data name="BusinessEventsSystemMaintenanceModeMaintenanceModeEntered" xml:space="preserve">
+    <value>Bel&#233;pett a karbantart&#243;i &#252;zemm&#243;dba</value>
+  </data>
+  <data name="BusinessEventsSystemMaintenanceModeMaintenanceModeExited" xml:space="preserve">
+    <value>Kil&#233;pett a karbantart&#243;i &#252;zemm&#243;db&#243;l</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusDown" xml:space="preserve">
+    <value>A SAS link kommunik&#225;ci&#243;s linkje lejjebb.</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusSasDongleMissing" xml:space="preserve">
+    <value>A SAS hardverkulcsa hi&#225;nyzik!</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusUp" xml:space="preserve">
+    <value>A SAS kommunik&#225;ci&#243;s linkje műk&#246;dik.</value>
+  </data>
+  <data name="BusinessEventsSystemAnyDisplayMonitorFailed" xml:space="preserve">
+    <value>Monitor kijelzője meghib&#225;sodott.</value>
+  </data>
+  <data name="BusinessEventsSystemConnectionEstablished" xml:space="preserve">
+    <value>Kapcsolat l&#233;trehozva.</value>
+  </data>
+  <data name="BusinessEventsSystemConnectionLost" xml:space="preserve">
+    <value>A kapcsolat elveszett.</value>
+  </data>
+  <data name="BusinessEventsSystemDateAndTimeChanged" xml:space="preserve">
+    <value>D&#225;tum &#233;s idő megv&#225;ltoztatva.
+A {0} -t&#243;l az {1} időz&#243;n&#225;ban ny&#225;ri idősz&#225;m&#237;t&#225;ssal {2},
+a {3} -ig az {4} időzn&#225;ig ny&#225;ri idősz&#225;m&#237;t&#225;ssal {5}.</value>
+  </data>
+  <data name="BusinessEventsSystemDateAndTimeChangedFromSas" xml:space="preserve">
+    <value>A SAS megv&#225;ltoztatja a d&#225;tumot &#233;s az időt.
+A {0} -t&#243;l az {1} időz&#243;n&#225;ban ny&#225;ri idősz&#225;m&#237;t&#225;ssal {2},
+a {3} -ig az {4} időz&#243;n&#225;ig ny&#225;ri idősz&#225;m&#237;t&#225;ssal {5}.</value>
+  </data>
+  <data name="BusinessEventsSystemDisplayMonitorsAreOK" xml:space="preserve">
+    <value>Az &#246;sszes kijelző monitor rendben van.</value>
+  </data>
+  <data name="BusinessEventsSystemDtsDisabled" xml:space="preserve">
+    <value>Kikapcsolva</value>
+  </data>
+  <data name="BusinessEventsSystemDtsEnabled" xml:space="preserve">
+    <value>Bekapcsolva</value>
+  </data>
+  <data name="BusinessEventsSystemUnhandledExceptionInBusinessProcess" xml:space="preserve">
+    <value>Nem kezelt kiv&#233;tel az &#252;zleti folyamatokban : {0}</value>
+  </data>
+  <data name="BusinessEventsSystemValidationIdConfigured" xml:space="preserve">
+    <value>Azonos&#237;t&#243; &#233;rv&#233;nyes&#237;t&#233;s konfigur&#225;lva</value>
+  </data>
+  <data name="BusinessEventsSystemValidationIdNotConfigured" xml:space="preserve">
+    <value>Azonos&#237;t&#243; &#233;rv&#233;nyes&#237;t&#233;s nincs konfigur&#225;lva</value>
+  </data>
+  <data name="BusinessEventsUnknownEvent" xml:space="preserve">
+    <value>Ismeretlen esem&#233;ny.</value>
+  </data>
+  <data name="ConfigurationsLightStateFlashFast" xml:space="preserve">
+    <value>Gyors villog&#225;s</value>
+  </data>
+  <data name="ConfigurationsLightStateFlashSlow" xml:space="preserve">
+    <value>Lass&#250; villog&#225;s</value>
+  </data>
+  <data name="ConfigurationsLightStateOff" xml:space="preserve">
+    <value>Ki</value>
+  </data>
+  <data name="ConfigurationsLightStateOn" xml:space="preserve">
+    <value>Be</value>
+  </data>
+  <data name="ConfigurationsValidatorsValueMustBeGreaterThanLimit" xml:space="preserve">
+    <value>{0} magasabb kell, hogy legyen, mint {1}</value>
+  </data>
+  <data name="EnumsAutoplayAutostartDisabled" xml:space="preserve">
+    <value>Kikapcsolva</value>
+  </data>
+  <data name="EnumsAutoplayModeSpeedFast" xml:space="preserve">
+    <value>Gyors</value>
+  </data>
+  <data name="EnumsAutoplayModeSpeedStandard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="EnumsCalculatingTypeInit" xml:space="preserve">
+    <value>Elindult</value>
+  </data>
+  <data name="EnumsCalculatingTypeOnDemand" xml:space="preserve">
+    <value>Lek&#233;rhető</value>
+  </data>
+  <data name="EnumsCalculatingTypePeriod" xml:space="preserve">
+    <value>Időszak</value>
+  </data>
+  <data name="EnumsCalculatingTypeSignificantEvent" xml:space="preserve">
+    <value>Jelentős esem&#233;ny</value>
+  </data>
+  <data name="EnumsCashoutModeAttendant" xml:space="preserve">
+    <value>Szem&#233;lyzet</value>
+  </data>
+  <data name="EnumsCashoutModeDispenser" xml:space="preserve">
+    <value>Kiad&#243;</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserAttendant" xml:space="preserve">
+    <value>Kiad&#243;/Szem&#233;lyzet</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserPrinter" xml:space="preserve">
+    <value>Kiad&#243;/Nyomtat&#243;</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserPrinterAttendant" xml:space="preserve">
+    <value>Kiad&#243;/Nyomtat&#243;/Szem&#233;lyzet</value>
+  </data>
+  <data name="EnumsCashoutModeHopper" xml:space="preserve">
+    <value>T&#246;ltőgarat</value>
+  </data>
+  <data name="EnumsCashoutModeHopperAttendant" xml:space="preserve">
+    <value>T&#246;ltőgarat/Szem&#233;lyzet</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenser" xml:space="preserve">
+    <value>T&#246;ltőgarat/Kiad&#243;</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserAttendant" xml:space="preserve">
+    <value>T&#246;ltőgarat/Kiad&#243;/Szem&#233;lyzet</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserPrinter" xml:space="preserve">
+    <value>T&#246;ltőgarat/Kiad&#243;/Nyomtat&#243;</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserPrinterAttendant" xml:space="preserve">
+    <value>T&#246;ltőgarat/Kiad&#243;/Nyomtat&#243;/Szem&#233;lyzet</value>
+  </data>
+  <data name="EnumsCashoutModeHopperPrinter" xml:space="preserve">
+    <value>T&#246;ltőgarat/Nyomtat&#243;</value>
+  </data>
+  <data name="EnumsCashoutModeHopperPrinterAttendant" xml:space="preserve">
+    <value>T&#246;ltőgarat/Nyomtat&#243;/Szem&#233;lyzet</value>
+  </data>
+  <data name="EnumsCashoutModePrinter" xml:space="preserve">
+    <value>Nyomtat&#243;</value>
+  </data>
+  <data name="EnumsCashoutModePrinterAttendant" xml:space="preserve">
+    <value>Nyomtat&#243;/Szem&#233;lyzet</value>
+  </data>
+  <data name="EnumsCashOutToHostControlDisabled" xml:space="preserve">
+    <value>Kikapcsolva</value>
+  </data>
+  <data name="EnumsCashOutToHostControlHard" xml:space="preserve">
+    <value>Kem&#233;ny</value>
+  </data>
+  <data name="EnumsCashOutToHostControlHostControlled" xml:space="preserve">
+    <value>H&#225;zigazda &#225;ltal ellenőrizve</value>
+  </data>
+  <data name="EnumsCashOutToHostControlSoft" xml:space="preserve">
+    <value>Puha</value>
+  </data>
+  <data name="EnumsChannelsBoth" xml:space="preserve">
+    <value>Mindkettő</value>
+  </data>
+  <data name="EnumsChannelsChannel1" xml:space="preserve">
+    <value>1-es csatorna</value>
+  </data>
+  <data name="EnumsChannelsChannel2" xml:space="preserve">
+    <value>2-es csatorna</value>
+  </data>
+  <data name="EnumsChannelsDisabled" xml:space="preserve">
+    <value>Kikapcsolva</value>
+  </data>
+  <data name="EnumsCheckboxStateDisabled" xml:space="preserve">
+    <value>Kikapcsolva</value>
+  </data>
+  <data name="EnumsCheckboxStateEnabled" xml:space="preserve">
+    <value>Bekapcsolva</value>
+  </data>
+  <data name="EnumsCheckboxStateNotSet" xml:space="preserve">
+    <value>Nincs be&#225;ll&#237;tva</value>
+  </data>
+  <data name="EnumsCounterInUiCounter1" xml:space="preserve">
+    <value>1-es sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter10" xml:space="preserve">
+    <value>10-es sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter2" xml:space="preserve">
+    <value>2-es sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter3" xml:space="preserve">
+    <value>3-as sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter4" xml:space="preserve">
+    <value>4-es sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter5" xml:space="preserve">
+    <value>5-&#246;s sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter6" xml:space="preserve">
+    <value>6-os sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter7" xml:space="preserve">
+    <value>7-es sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter8" xml:space="preserve">
+    <value>8-as sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiCounter9" xml:space="preserve">
+    <value>9-es sz&#225;ml&#225;l&#243;</value>
+  </data>
+  <data name="EnumsCounterInUiNone" xml:space="preserve">
+    <value>Nincs</value>
+  </data>
+  <data name="EnumsFeatureAutoenterDisabled" xml:space="preserve">
+    <value>Kikapcsolva</value>
+  </data>
+  <data name="EnumsFeatureAutoenterEnabled" xml:space="preserve">
+    <value>Bekapcsolva</value>
+  </data>
+  <data name="EnumsFeatureAutoplayAutostartDisabled" xml:space="preserve">
+    <value>Kikapcsolva</value>
+  </data>
+  <data name="EnumsGamePlayModeCurrency" xml:space="preserve">
+    <value>P&#233;nznem</value>
+  </data>
+  <data name="EnumsGamePlayModeDenomination" xml:space="preserve">
+    <value>C&#237;mlet</value>
+  </data>
+  <data name="EnumsGamePlaySpeedStandard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyAutomatic" xml:space="preserve">
+    <value>Automatikus</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyDisabled" xml:space="preserve">
+    <value>Kikapcsolva</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyStartedByPlayer" xml:space="preserve">
+    <value>J&#225;t&#233;kos &#225;ltal elkezdve</value>
+  </data>
+  <data name="EnumsLockedUnlockedModeLocked" xml:space="preserve">
+    <value>Z&#225;rva</value>
+  </data>
+  <data name="EnumsLockedUnlockedModeUnlocked" xml:space="preserve">
+    <value>Kinyitva</value>
+  </data>
+  <data name="EnumsMaxGambleAttemptsUnlimited" xml:space="preserve">
+    <value>Korl&#225;tlan</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_0_01" xml:space="preserve">
+    <value>1 ketyeg&#233;s 0,01-re</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_0_10" xml:space="preserve">
+    <value>1 ketyeg&#233;s 0,10-re</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_1_00" xml:space="preserve">
+    <value>1 ketyeg&#233;s 1,00-re</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_10_00" xml:space="preserve">
+    <value>1 ketyeg&#233;s 10,00-re</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_100_00" xml:space="preserve">
+    <value>1 ketyeg&#233;s 100,00-ra</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_1000_00" xml:space="preserve">
+    <value>1 ketyeg&#233;s 1 000,00-re</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_10000_00" xml:space="preserve">
+    <value>1 ketyeg&#233;s 10 000,00-re</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_100000_00" xml:space="preserve">
+    <value>1 ketyeg&#233;s 100 000,00-re</value>
+  </data>
+  <data name="EnumsQuickStopAllowedInstantly" xml:space="preserve">
+    <value>Azonnal</value>
+  </data>
+  <data name="EnumsQuickStopAllowedNever" xml:space="preserve">
+    <value>Soha</value>
+  </data>
+  <data name="EnumsRouletteTableColorBlue" xml:space="preserve">
+    <value>K&#233;k</value>
+  </data>
+  <data name="EnumsRouletteTableColorGray" xml:space="preserve">
+    <value>Sz&#252;rke</value>
+  </data>
+  <data name="EnumsRouletteTableColorGreen" xml:space="preserve">
+    <value>Z&#246;ld</value>
+  </data>
+  <data name="EnumsRouletteTableColorPurple" xml:space="preserve">
+    <value>Lila</value>
+  </data>
+  <data name="EnumsSasValidationEnhanced" xml:space="preserve">
+    <value>Fejlesztett</value>
+  </data>
+  <data name="EnumsSasValidationNoValidation" xml:space="preserve">
+    <value>Nincs &#233;rv&#233;nyes&#237;t&#233;s</value>
+  </data>
+  <data name="EnumsSasValidationStandard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="EnumsSasValidationSystem" xml:space="preserve">
+    <value>Rendszer</value>
+  </data>
+  <data name="EnumsSoftwareButtonAutoplay" xml:space="preserve">
+    <value>Automatikus j&#225;t&#233;k</value>
+  </data>
+  <data name="EnumsSoftwareButtonSpin" xml:space="preserve">
+    <value>P&#246;rget&#233;s</value>
+  </data>
+  <data name="ServicesForgeryLastResult" xml:space="preserve">
+    <value>Utols&#243; eredm&#233;ny: {0}</value>
+  </data>
+  <data name="ServicesForgeryPartitonHashCalculating" xml:space="preserve">
+    <value>Sz&#225;m&#237;t&#225;s folyamatban...</value>
+  </data>
+  <data name="ValidationsMessagesBetweenMinMax" xml:space="preserve">
+    <value>Az &#233;rt&#233;knek {0} &#233;s {1} k&#246;z&#233; kell esnie.</value>
+  </data>
+  <data name="ValidationsMessagesCurrencyCodeWrongFormat" xml:space="preserve">
+    <value>HU??_Wrong currency code format! Only 3 letter alphabetic code is allowed.</value>
+  </data>
+  <data name="ValidationsMessagesFieldRequiresNonDefaultValue" xml:space="preserve">
+    <value>A(z) {0} mezőh&#246;z sz&#252;ks&#233;ges egy nem alap&#233;rtelmezett &#233;rt&#233;k.</value>
+  </data>
+  <data name="ValidationsMessagesNotEmptyGuid" xml:space="preserve">
+    <value>A GUID nem lehet &#252;res.</value>
+  </data>
+  <data name="ValidationsMessagesNotValidNumber" xml:space="preserve">
+    <value>Az &#233;rt&#233;k nem &#233;rv&#233;nyes sz&#225;m.</value>
+  </data>
+  <data name="ValidationsMessagesRangeError" xml:space="preserve">
+    <value>{0} mezőnek {1} &#233;s {2} k&#246;z&#246;tt kell lennie.</value>
+  </data>
+  <data name="ValidationsMessagesRequiredNotSet" xml:space="preserve">
+    <value>N&#233;h&#225;ny tulajdons&#225;g nincs meghat&#225;rozva!</value>
+  </data>
+  <data name="ValidationsMessagesValidationForFailed" xml:space="preserve">
+    <value>{0} &#233;rv&#233;nyes&#237;t&#233;se sikertelen!</value>
+  </data>
+  <data name="ValidationsAttendantAddCreditLimit" xml:space="preserve">
+    <value>A szem&#233;lyzet &#225;ltal hozz&#225;adott kredit limit kisebb vagy egyenlő kell, hogy legyen, mint a kredit limit.</value>
+  </data>
+  <data name="ValidationsErrors" xml:space="preserve">
+    <value>Hib&#225;k:</value>
+  </data>
+  <data name="ValidationsUpperJackpotLimit" xml:space="preserve">
+    <value>A felső Jackpot limit nagyobb vagy egyenlő kell, hogy legyen, mint a jackpot limit.</value>
+  </data>
+</root>

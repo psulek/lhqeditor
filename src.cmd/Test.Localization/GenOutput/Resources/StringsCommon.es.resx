@@ -1,0 +1,1397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BusinessEventsApplicationAllKeysDeleted" xml:space="preserve">
+    <value>No se han asignado todas las claves dallas.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationInitialized" xml:space="preserve">
+    <value>Se ha iniciado la aplicaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationShutdown" xml:space="preserve">
+    <value>Se ha cerrado la aplicaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationStarted" xml:space="preserve">
+    <value>Se ha iniciado la aplicaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsApplicationCallServiceStarted" xml:space="preserve">
+    <value>Llamada al servicio iniciada.</value>
+  </data>
+  <data name="BusinessEventsApplicationCallServiceStoped" xml:space="preserve">
+    <value>Llamada al servicio detenida.</value>
+  </data>
+  <data name="BusinessEventsApplicationCheckSumValidationFailed" xml:space="preserve">
+    <value>Error al validar la suma de comprobaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsApplicationConnectionToTheServerWasLost" xml:space="preserve">
+    <value>Se ha perdido la conexi&#243;n con el servidor.</value>
+  </data>
+  <data name="BusinessEventsApplicationConnectionToTheServerWasRecovered" xml:space="preserve">
+    <value>Se ha restablecido la conexi&#243;n al servidor.</value>
+  </data>
+  <data name="BusinessEventsApplicationContentHostFatallyCrashed" xml:space="preserve">
+    <value>Error fatal de ContentHost.</value>
+  </data>
+  <data name="BusinessEventsApplicationDetail" xml:space="preserve">
+    <value>Detalles</value>
+  </data>
+  <data name="BusinessEventsApplicationError" xml:space="preserve">
+    <value>Error interno</value>
+  </data>
+  <data name="BusinessEventsApplicationFirstOwnerKeyRegistered" xml:space="preserve">
+    <value>Se ha registrado la primera Clave del propietario.</value>
+  </data>
+  <data name="BusinessEventsApplicationForgottenKeyDuringStartUp" xml:space="preserve">
+    <value>Se ha olvidado la llave en la m&#225;quina. Retire la llave</value>
+  </data>
+  <data name="BusinessEventsApplicationGameMachineSoftMetersReset" xml:space="preserve">
+    <value>Los medidores suaves de las m&#225;quinas de juegos se restablecen a cero.</value>
+  </data>
+  <data name="BusinessEventsApplicationInitializationFailed" xml:space="preserve">
+    <value>Error de inicializaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineLocked" xml:space="preserve">
+    <value>El equipo se ha bloqueado.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineReset" xml:space="preserve">
+    <value>Se ha restablecido el equipo a la configuraci&#243;n predeterminada.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineUnlocked" xml:space="preserve">
+    <value>El equipo se ha desbloqueado.</value>
+  </data>
+  <data name="BusinessEventsApplicationNewVersionOfSoftwareWasActivated" xml:space="preserve">
+    <value>Se ha activado la nueva versi&#243;n del software.</value>
+  </data>
+  <data name="BusinessEventsApplicationNewVersionOfSoftwareWasInstalled" xml:space="preserve">
+    <value>Se ha instalado una nueva versi&#243;n de software.</value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHourBegins" xml:space="preserve">
+    <value>Comienza el horario de apertura.</value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHoursEndIsApproaching" xml:space="preserve">
+    <value>El fin horario de apertura se est&#225; aproximando.</value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHoursEnds" xml:space="preserve">
+    <value>Finaliza el horario de apertura.</value>
+  </data>
+  <data name="BusinessEventsApplicationPlayerGoesToIdleState" xml:space="preserve">
+    <value>El reproductor pasa al estado de reposo.</value>
+  </data>
+  <data name="BusinessEventsApplicationRequestToChangeProjectorApplicationOccured" xml:space="preserve">
+    <value>Hubo una solicitud para cambiar la aplicaci&#243;n del proyector.</value>
+  </data>
+  <data name="BusinessEventsApplicationResetOwnerKey" xml:space="preserve">
+    <value>Se ha introducido la p&#225;gina &quot;Eliminar todas las claves asignadas&quot;.</value>
+  </data>
+  <data name="BusinessEventsApplicationSoftMetersReset" xml:space="preserve">
+    <value>Los medidores suaves se restablecen a cero.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersErrorBlockedState" xml:space="preserve">
+    <value>El terminal pasa al estado Error/Bloqueado.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersLobby" xml:space="preserve">
+    <value>El terminal entra en el Lobby.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersServiceMenu" xml:space="preserve">
+    <value>El terminal entra en el men&#250; de servicio.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersShutdown" xml:space="preserve">
+    <value>El terminal entra en apagado.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalWasDisabledByHost" xml:space="preserve">
+    <value>El host ha deshabilitado el terminal.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalWasEnabledByHost" xml:space="preserve">
+    <value>El host ha activado el terminal.</value>
+  </data>
+  <data name="BusinessEventsApplicationUnfinishedProcessing" xml:space="preserve">
+    <value>Se ha detectado un procesamiento sin finalizar y se ha reanudado.</value>
+  </data>
+  <data name="BusinessEventsApplicationWorkflowFinished" xml:space="preserve">
+    <value>Flujo de trabajo {0} terminado.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationAuthenticationDeviceWasInserted" xml:space="preserve">
+    <value>Se ha insertado el dispositivo de autenticaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationAuthenticationDeviceWasRemoved" xml:space="preserve">
+    <value>Se ha eliminado el dispositivo de autenticaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationCardWasInsertedIntoCardReader" xml:space="preserve">
+    <value>Se ha insertado la tarjeta en el lector de tarjetas.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationCardWasRemovedFromCardReader" xml:space="preserve">
+    <value>La tarjeta se ha retirado la tarjeta del lector de tarjetas.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationDevice" xml:space="preserve">
+    <value>Dispositivo {0}, #{1}</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedDescription" xml:space="preserve">
+    <value>{0} tiquete {1} aceptado</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeCash" xml:space="preserve">
+    <value>Dinero en efectivo</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeNonRestricted" xml:space="preserve">
+    <value>Sin restricciones</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeRestricted" xml:space="preserve">
+    <value>Restringido</value>
+  </data>
+  <data name="BusinessEventsBillTicketInRejectedDescriptionWithNumber" xml:space="preserve">
+    <value>Tiquete {0} rechazado</value>
+  </data>
+  <data name="BusinessEventsBillTicketInRejectedDescriptionWithoutNumber" xml:space="preserve">
+    <value>Tiquete rechazado</value>
+  </data>
+  <data name="BusinessEventsBillBillAcceptorDisconnected" xml:space="preserve">
+    <value>El aceptador de billetes se ha desconectado</value>
+  </data>
+  <data name="BusinessEventsBillBillIn" xml:space="preserve">
+    <value>Billete insertado</value>
+  </data>
+  <data name="BusinessEventsBillBillInAccepted" xml:space="preserve">
+    <value>Billete aceptado</value>
+  </data>
+  <data name="BusinessEventsBillBillInJam" xml:space="preserve">
+    <value>Atasco de billetes</value>
+  </data>
+  <data name="BusinessEventsBillBillMayHaveNotBeenAccepted" xml:space="preserve">
+    <value>Es posible que no se haya aceptado un billete o un tiquete. &#161;Llame al asistente!</value>
+  </data>
+  <data name="BusinessEventsBillBillMayHaveNotBeenDispensed" xml:space="preserve">
+    <value>Es posible que no se haya entregado un billete.</value>
+  </data>
+  <data name="BusinessEventsBillBillMayNotAccepted" xml:space="preserve">
+    <value>Es posible que no se haya aceptado una billete o un tiquete.</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerDoorClosed" xml:space="preserve">
+    <value>Puerta de reciclaje de billetes cerrada</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerDoorOpened" xml:space="preserve">
+    <value>Puerta de reciclaje de billetes abierta</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerEmpty" xml:space="preserve">
+    <value>Reciclador de billetes vac&#237;o</value>
+  </data>
+  <data name="BusinessEventsBillBillRefilled" xml:space="preserve">
+    <value>Billete rellenado</value>
+  </data>
+  <data name="BusinessEventsBillBillRejected" xml:space="preserve">
+    <value>Billete rechazado</value>
+  </data>
+  <data name="BusinessEventsBillBillStackerFull" xml:space="preserve">
+    <value>Fallo del validador de billetes</value>
+  </data>
+  <data name="BusinessEventsBillBillStackerJam" xml:space="preserve">
+    <value>Atasco del apilador de billetes</value>
+  </data>
+  <data name="BusinessEventsBillBillValidatorId" xml:space="preserve">
+    <value>ID del validador de billetes</value>
+  </data>
+  <data name="BusinessEventsBillChannel" xml:space="preserve">
+    <value>Canal</value>
+  </data>
+  <data name="BusinessEventsBillCoinAcceptorDisconnected" xml:space="preserve">
+    <value>El aceptador de monedas se ha desconectado</value>
+  </data>
+  <data name="BusinessEventsBillCoinInJam" xml:space="preserve">
+    <value>Moneda atascada</value>
+  </data>
+  <data name="BusinessEventsBillCoinInTooFast" xml:space="preserve">
+    <value>La moneda se detecta demasiado r&#225;pido</value>
+  </data>
+  <data name="BusinessEventsBillCoinInTooSlow" xml:space="preserve">
+    <value>La moneda se detecta demasiado lento</value>
+  </data>
+  <data name="BusinessEventsBillCoinWasInserted" xml:space="preserve">
+    <value>Se ha insertado una moneda.</value>
+  </data>
+  <data name="BusinessEventsBillCoinWasRejectedWithCode" xml:space="preserve">
+    <value>La moneda ha sido rechazada con el c&#243;digo</value>
+  </data>
+  <data name="BusinessEventsBillErrorInvalidTicketType" xml:space="preserve">
+    <value>error: tipo de tiquete no v&#225;lido</value>
+  </data>
+  <data name="BusinessEventsBillInsertedBillStacker" xml:space="preserve">
+    <value>Apilador de billetes insertado</value>
+  </data>
+  <data name="BusinessEventsBillInvalidTicketStacked" xml:space="preserve">
+    <value>Se ha apilado un tiquete no v&#225;lido {0}.</value>
+  </data>
+  <data name="BusinessEventsBillInvalidTicketTypeErrorCode" xml:space="preserve">
+    <value>c&#243;digo</value>
+  </data>
+  <data name="BusinessEventsBillLocation" xml:space="preserve">
+    <value>Ubicaci&#243;n</value>
+  </data>
+  <data name="BusinessEventsBillNoteWasReturned" xml:space="preserve">
+    <value>Se ha devuelto el billete.</value>
+  </data>
+  <data name="BusinessEventsBillRemoteIn" xml:space="preserve">
+    <value>Cr&#233;dito a&#241;adido por el operador</value>
+  </data>
+  <data name="BusinessEventsBillRemoteInFailed" xml:space="preserve">
+    <value>Error al a&#241;adir el cr&#233;dito por parte del operador.</value>
+  </data>
+  <data name="BusinessEventsBillRemovedBillStacker" xml:space="preserve">
+    <value>Apilador de billetes eliminado</value>
+  </data>
+  <data name="BusinessEventsBillReverseBillDetected" xml:space="preserve">
+    <value>Billete invertido detectado</value>
+  </data>
+  <data name="BusinessEventsBillReversedCoin" xml:space="preserve">
+    <value>Se ha detectado fraude con monedas</value>
+  </data>
+  <data name="BusinessEventsBillRmsBillAcceptorDisabled" xml:space="preserve">
+    <value>El aceptador de billetes ha diso deshabilitado externamente</value>
+  </data>
+  <data name="BusinessEventsBillRmsBillAcceptorEnabled" xml:space="preserve">
+    <value>El aceptador de billetes ha diso habilitado externamente</value>
+  </data>
+  <data name="BusinessEventsBillTicketIn" xml:space="preserve">
+    <value>Tiquete {0} insertado</value>
+  </data>
+  <data name="BusinessEventsConfigurationConfigurationTypeFullname" xml:space="preserve">
+    <value>Nombre completo del tipo de configuraci&#243;n</value>
+  </data>
+  <data name="BusinessEventsConfigurationConfigurationWasChanged" xml:space="preserve">
+    <value>Se ha cambiado la configuraci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsConfigurationRoleText" xml:space="preserve">
+    <value>Funci&#243;n</value>
+  </data>
+  <data name="BusinessEventsDevicesBillMayNotHaveBeenDispensed" xml:space="preserve">
+    <value>&#161;Es posible que no se haya entregado un billete! &#161;Reinicie el equipo y revise el dispensador!</value>
+  </data>
+  <data name="BusinessEventsDevicesDeviceStatusChanged" xml:space="preserve">
+    <value>El estado del dispositivo {0} ha cambiado.</value>
+  </data>
+  <data name="BusinessEventsDevicesDongleDetected" xml:space="preserve">
+    <value>Se ha detectado un dongle.</value>
+  </data>
+  <data name="BusinessEventsDevicesDongleNotFound" xml:space="preserve">
+    <value>Dongle no encontrado.</value>
+  </data>
+  <data name="BusinessEventsDevicesLCDMonitorError" xml:space="preserve">
+    <value>El monitor se ha desconectado. Llame al operador.</value>
+  </data>
+  <data name="BusinessEventsDevicesSoftwareButtonPressed" xml:space="preserve">
+    <value>Se ha pulsado el bot&#243;n de software {0}</value>
+  </data>
+  <data name="BusinessEventsDevicesWrongDongle" xml:space="preserve">
+    <value>Dongle incorrecto.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBackDoorClosed" xml:space="preserve">
+    <value>Se ha cerrado la puerta trasera.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBackDoorOpened" xml:space="preserve">
+    <value>Se ha cerrado la puerta trasera.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBellyDoorClosed" xml:space="preserve">
+    <value>Se ha cerrado la puerta delantera.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBellyDoorOpened" xml:space="preserve">
+    <value>Se ha cerrado la puerta delantera.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillStackerDoorClosed" xml:space="preserve">
+    <value>Se ha cerrado la puerta del apilador 2</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillStackerDoorOpened" xml:space="preserve">
+    <value>Se ha abierto la puerta del apilador 2</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillValidatorDoorClosed" xml:space="preserve">
+    <value>Se ha cerrado la puerta del apilador 1</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillValidatorDoorOpened" xml:space="preserve">
+    <value>Se ha abierto la puerta del apilador 1</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchButtonWasPressed" xml:space="preserve">
+    <value>Se ha pulsado el bot&#243;n {0}.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchButtonWasReleased" xml:space="preserve">
+    <value>Se ha liberado el bot&#243;n {0}.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchClosed" xml:space="preserve">
+    <value>Cerrado</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor1Closed" xml:space="preserve">
+    <value>Se ha cerrado la puerta de la caja de efectivo 1 .</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor1Opened" xml:space="preserve">
+    <value>Se ha abierto la puerta de la caja de efectivo 1.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor2Closed" xml:space="preserve">
+    <value>Se ha cerrado la puerta de la caja de efectivo 2.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor2Opened" xml:space="preserve">
+    <value>Se ha abierto la puerta de la caja de efectivo 2.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchLogicDoorClosed" xml:space="preserve">
+    <value>Se ha cerrado la puerta l&#243;gica.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchLogicDoorOpened" xml:space="preserve">
+    <value>Se ha abierto la puerta l&#243;gica</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchOpened" xml:space="preserve">
+    <value>Abierto</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchServiceDoorClosed" xml:space="preserve">
+    <value>Se ha cerrado la puerta de servicio.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchServiceDoorOpened" xml:space="preserve">
+    <value>Se ha abierto la puerta de servicio.</value>
+  </data>
+  <data name="BusinessEventsElectronicCountersElectronicCountersConnected" xml:space="preserve">
+    <value>Contadores electr&#243;nicos conectados</value>
+  </data>
+  <data name="BusinessEventsElectronicCountersElectronicCountersDisconnected" xml:space="preserve">
+    <value>Contadores electr&#243;nicos desconectados</value>
+  </data>
+  <data name="BusinessEventsElectronicCountersElectronicCountersInstalled" xml:space="preserve">
+    <value>Nuevos dispositivos de contadores electr&#243;nicos instalados</value>
+  </data>
+  <data name="BusinessEventsFinanceAftAwarded" xml:space="preserve">
+    <value>{0} otorgado</value>
+  </data>
+  <data name="BusinessEventsFinanceAftBonusCoinWinTransfer" xml:space="preserve">
+    <value>Transferencia de ganancia de bonificaci&#243;n de moneda saliente</value>
+  </data>
+  <data name="BusinessEventsFinanceAftBonusJackpotWinTransfer" xml:space="preserve">
+    <value>Transferencia de ganancia de bonificaci&#243;n de premio mayor</value>
+  </data>
+  <data name="BusinessEventsFinanceAftCancelledByHost" xml:space="preserve">
+    <value>{0} cancelado por el host</value>
+  </data>
+  <data name="BusinessEventsFinanceAftCash" xml:space="preserve">
+    <value>C {0} </value>
+  </data>
+  <data name="BusinessEventsFinanceAftCompleted" xml:space="preserve">
+    <value>{0} completado</value>
+  </data>
+  <data name="BusinessEventsFinanceAftDebitTransferFromHost" xml:space="preserve">
+    <value>Transferencia de d&#233;bito del host</value>
+  </data>
+  <data name="BusinessEventsFinanceAftDebitTransferToTicket" xml:space="preserve">
+    <value>Importe de d&#233;bito de host a tiquete</value>
+  </data>
+  <data name="BusinessEventsFinanceAftFailed" xml:space="preserve">
+    <value>{0} no exitoso</value>
+  </data>
+  <data name="BusinessEventsFinanceAftHostRequestedCashout" xml:space="preserve">
+    <value>El host ha solicitado un pago</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHosueTransferToTicket" xml:space="preserve">
+    <value>Importe interno de host a tiquete</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseInTransfer" xml:space="preserve">
+    <value>Transferencia de AFT interna  entrante</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseTransferToHost" xml:space="preserve">
+    <value>Transferencia de AFT interna saliente</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseWinTransferToHost" xml:space="preserve">
+    <value>Importe de la ganancia para transferencia por host</value>
+  </data>
+  <data name="BusinessEventsFinanceAftNonRestricted" xml:space="preserve">
+    <value>N {0}  </value>
+  </data>
+  <data name="BusinessEventsFinanceAftProcessing" xml:space="preserve">
+    <value>{0} procesando</value>
+  </data>
+  <data name="BusinessEventsFinanceAftReceived" xml:space="preserve">
+    <value>{0} recibido</value>
+  </data>
+  <data name="BusinessEventsFinanceAftRestricted" xml:space="preserve">
+    <value>R {0}  </value>
+  </data>
+  <data name="BusinessEventsFinanceAftTotal" xml:space="preserve">
+    <value>Total {0}</value>
+  </data>
+  <data name="BusinessEventsFinanceAftTransferCancelRequested" xml:space="preserve">
+    <value>Se ha solicitado la cancelaci&#243;n de la transferencia</value>
+  </data>
+  <data name="BusinessEventsFinanceAftUnknownTransfer" xml:space="preserve">
+    <value>Transferencia desconocida</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxCashout" xml:space="preserve">
+    <value>Se ha pasado un billete del reciclador al apilador (Pago)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxDump" xml:space="preserve">
+    <value>Se ha pasado un billete del reciclador al apilador (Dep&#243;sito)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxForceCollect" xml:space="preserve">
+    <value>Se ha pasado un billete del reciclador al apilador (cobro forzado)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillOutBegin" xml:space="preserve">
+    <value>Pago de dispensador iniciado</value>
+  </data>
+  <data name="BusinessEventsFinanceBillOutEnd" xml:space="preserve">
+    <value>Pago de dispensador completado</value>
+  </data>
+  <data name="BusinessEventsFinanceCashableAftTicket" xml:space="preserve">
+    <value>Tiquete AFT canjeable</value>
+  </data>
+  <data name="BusinessEventsFinanceCashableTicket" xml:space="preserve">
+    <value>Tiquete canjeable</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOut" xml:space="preserve">
+    <value>Se muestra el cuadro de di&#225;logo de confirmaci&#243;n del pago</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOutCancelled" xml:space="preserve">
+    <value>Pago cancelado</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOutConfirmed" xml:space="preserve">
+    <value>Pago confirmado por el jugador</value>
+  </data>
+  <data name="BusinessEventsFinanceCashoutReceipt" xml:space="preserve">
+    <value>Recibo de pago</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinOutBegin" xml:space="preserve">
+    <value>Pago por aceptador iniciado</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinOutEnd" xml:space="preserve">
+    <value>Pago por aceptador completado</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinSorterMalfunction" xml:space="preserve">
+    <value>Mal funcionamiento del clasificador</value>
+  </data>
+  <data name="BusinessEventsFinanceDebitAftTicket" xml:space="preserve">
+    <value>D&#233;bito de tiquete AFT</value>
+  </data>
+  <data name="BusinessEventsFinanceDescriptionNotPrinted" xml:space="preserve">
+    <value>{0} no se ha imprimido</value>
+  </data>
+  <data name="BusinessEventsFinanceDescriptionPrinted" xml:space="preserve">
+    <value>{0} se ha imprimido</value>
+  </data>
+  <data name="BusinessEventsFinanceExternalBonusAwarded" xml:space="preserve">
+    <value>Bonificaci&#243;n externa otorgada</value>
+  </data>
+  <data name="BusinessEventsFinanceExternalBonusReceived" xml:space="preserve">
+    <value>Bonificaci&#243;n externa recibida</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayCancelled" xml:space="preserve">
+    <value>Pago manual cancelado</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayCompleted" xml:space="preserve">
+    <value>Pago manual completado</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayPending" xml:space="preserve">
+    <value>Se requiere un pago manual</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayValidated" xml:space="preserve">
+    <value>Pago manual validado</value>
+  </data>
+  <data name="BusinessEventsFinanceHostCashOutFailed" xml:space="preserve">
+    <value>Error al realizar pago por host</value>
+  </data>
+  <data name="BusinessEventsFinanceHostCashOutPending" xml:space="preserve">
+    <value>El pago por host est&#225; pendiente</value>
+  </data>
+  <data name="BusinessEventsFinanceJackpotReceipt" xml:space="preserve">
+    <value>Recibo de premio mayor</value>
+  </data>
+  <data name="BusinessEventsFinanceRemoteHandpayResetOccured" xml:space="preserve">
+    <value>Se ha restablecido el pago manual remoto.</value>
+  </data>
+  <data name="BusinessEventsFinanceRestrictedAftTicket" xml:space="preserve">
+    <value>Tiquete AFT restringido</value>
+  </data>
+  <data name="BusinessEventsFinanceRestrictedTicket" xml:space="preserve">
+    <value>Tiquete restringido</value>
+  </data>
+  <data name="BusinessEventsFinanceStartupCredit" xml:space="preserve">
+    <value>La m&#225;quina inicia con cr&#233;dito.</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotApiError" xml:space="preserve">
+    <value>Error de API de premio mayor ({0} API {1} </value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotApiServerConnectionNotStartedOrLost" xml:space="preserve">
+    <value>La conexi&#243;n al servidor API de premio mayor no se inici&#243; o se perdi&#243;</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotApiServerConnectionStartedOrRecovered" xml:space="preserve">
+    <value>Conexi&#243;n del servidor API de premio mayor iniciada o recuperada</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotBonusAwarded" xml:space="preserve">
+    <value>Bono de premio mayor de Synot otorgado</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotBonusReceived" xml:space="preserve">
+    <value>Bono de premio mayor de Synot recibido</value>
+  </data>
+  <data name="BusinessEventsFinanceTicketOutId" xml:space="preserve">
+    <value>ID: {0}</value>
+  </data>
+  <data name="BusinessEventsFinanceTicketOutPending" xml:space="preserve">
+    <value>{0} se est&#225; imprimiendo</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockLocked" xml:space="preserve">
+    <value>Transferencia sin efectivo bloqueada</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockRequestLock" xml:space="preserve">
+    <value>Se ha solicitado el bloqueo de transferencia sin efectivo</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockRequestUnlock" xml:space="preserve">
+    <value>Se ha solicitado el desbloqueo de transferencia sin efectivo</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockUnlocked" xml:space="preserve">
+    <value>Transferencia sin efectivo desbloqueada</value>
+  </data>
+  <data name="BusinessEventsGameAttemptToStartTheGameFailed" xml:space="preserve">
+    <value>Error al intentar iniciar el juego.</value>
+  </data>
+  <data name="BusinessEventsGameDenominationSelected" xml:space="preserve">
+    <value>Se ha seleccionado una denominaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsGameGambleEntered" xml:space="preserve">
+    <value>Ha entrado en la funci&#243;n de Riesgo</value>
+  </data>
+  <data name="BusinessEventsGameGambleExited" xml:space="preserve">
+    <value>Ha salido de la funci&#243;n de Riesgo</value>
+  </data>
+  <data name="BusinessEventsGameGameDisabledByHost" xml:space="preserve">
+    <value>El juego {0} fue desactivado por el host.</value>
+  </data>
+  <data name="BusinessEventsGameGameDisabledByOperator" xml:space="preserve">
+    <value>El juego {0} fue desactivado en el men&#250; de servicio.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnabledByHost" xml:space="preserve">
+    <value>El juego {0} fue activado por el host.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnabledByOperator" xml:space="preserve">
+    <value>El juego {0} fue activado en el men&#250; de servicio.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnded" xml:space="preserve">
+    <value>Juego terminado {0}</value>
+  </data>
+  <data name="BusinessEventsGameGameEndedData" xml:space="preserve">
+    <value>Ganancia {0}</value>
+  </data>
+  <data name="BusinessEventsGameGameEntersIdleState" xml:space="preserve">
+    <value>El juego entra en estado de reposo.</value>
+  </data>
+  <data name="BusinessEventsGameGameIsNotResponding" xml:space="preserve">
+    <value>El juego no responde.</value>
+  </data>
+  <data name="BusinessEventsGameGamePlayDisabled" xml:space="preserve">
+    <value>Reproducci&#243;n de juego desactivada</value>
+  </data>
+  <data name="BusinessEventsGameGamePlayEnabled" xml:space="preserve">
+    <value>Reproducci&#243;n de juego activada</value>
+  </data>
+  <data name="BusinessEventsGameGameReportDisplayed" xml:space="preserve">
+    <value>Se muestra la entrada de retiro del juego {0}.</value>
+  </data>
+  <data name="BusinessEventsGameGameSelected" xml:space="preserve">
+    <value>Juego seleccionado</value>
+  </data>
+  <data name="BusinessEventsGameGameStarted" xml:space="preserve">
+    <value>Juego iniciado {0} </value>
+  </data>
+  <data name="BusinessEventsGameGameStartedData" xml:space="preserve">
+    <value>Apuesta {0}</value>
+  </data>
+  <data name="BusinessEventsGameHostAutoplayModeDisabled" xml:space="preserve">
+    <value>El modo de reproducci&#243;n autom&#225;tica ha sido desactivado por el host.</value>
+  </data>
+  <data name="BusinessEventsGameHostAutoplayModeEnabled" xml:space="preserve">
+    <value>El modo de reproducci&#243;n autom&#225;tica ha sido activado por el host.</value>
+  </data>
+  <data name="BusinessEventsGameLobby" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="BusinessEventsGameNewGameVersionInstalled" xml:space="preserve">
+    <value>Se ha instalado una nueva versi&#243;n del juego.</value>
+  </data>
+  <data name="BusinessEventsGameNewVersionOfGameWasActivated" xml:space="preserve">
+    <value>Se ha activado una nueva versi&#243;n del juego.</value>
+  </data>
+  <data name="BusinessEventsGameTerminalEntersGamePlayState" xml:space="preserve">
+    <value>El terminal pasa al estado de juego o reproducci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsHopperAll" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDisconnected" xml:space="preserve">
+    <value>Aceptador desconectado</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDumpWasFinished" xml:space="preserve">
+    <value>El dep&#243;sito del aceptador ha terminado</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDumpWasRequestedBy" xml:space="preserve">
+    <value>El dep&#243;sito del aceptador fue solicitado por</value>
+  </data>
+  <data name="BusinessEventsHopperHopperEmpty" xml:space="preserve">
+    <value>Aceptador vac&#237;o</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFraud" xml:space="preserve">
+    <value>Error del aceptador</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFraudData" xml:space="preserve">
+    <value>Posible fraude</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFull" xml:space="preserve">
+    <value>Aceptador detectado completo</value>
+  </data>
+  <data name="BusinessEventsHopperHopperInserted" xml:space="preserve">
+    <value>Se pag&#243; una moneda extra</value>
+  </data>
+  <data name="BusinessEventsHopperHopperJam" xml:space="preserve">
+    <value>Atasco del aceptador</value>
+  </data>
+  <data name="BusinessEventsHopperHopperLevelLow" xml:space="preserve">
+    <value>El nivel del aceptador es bajo </value>
+  </data>
+  <data name="BusinessEventsHopperHopperRefill" xml:space="preserve">
+    <value>Recarga del aceptador</value>
+  </data>
+  <data name="BusinessEventsJackpotInvalidJackpotConfiguration" xml:space="preserve">
+    <value>Configuraci&#243;n no v&#225;lida</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotConfigurationIsNotValid" xml:space="preserve">
+    <value>La configuraci&#243;n del premio mayor no coincide</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotFeatureAvailable" xml:space="preserve">
+    <value>Funci&#243;n de premio mayor disponible</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Funci&#243;n de premio mayor no disponible</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServer" xml:space="preserve">
+    <value>Servidor de premio mayor: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServerError" xml:space="preserve">
+    <value>&#161;Error del servidor del premio mayor!</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServerUnavailable" xml:space="preserve">
+    <value>El servidor de premio mayor no est&#225; disponible.</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServerVersionCheckError" xml:space="preserve">
+    <value>Error de verificaci&#243;n de la versi&#243;n del servidor de premio mayor.</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServerVersionCheckOk" xml:space="preserve">
+    <value>Verificaci&#243;n de la versi&#243;n del servidor de premio mayor exitosa.</value>
+  </data>
+  <data name="BusinessEventsJackpotLinkedJackpotFeatureAvailable" xml:space="preserve">
+    <value>Funci&#243;n de bote vinculado disponible.</value>
+  </data>
+  <data name="BusinessEventsJackpotLinkedJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Funci&#243;n de bote vinculado no est&#225; disponible.</value>
+  </data>
+  <data name="BusinessEventsJackpotLinkJackpot" xml:space="preserve">
+    <value>Bote vinculado: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotLinkJackpotConfiguration" xml:space="preserve">
+    <value>Configuraci&#243;n del bote vinculado: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotMysteryJackpot" xml:space="preserve">
+    <value>Bote misterioso: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotMysteryJackpotConfiguration" xml:space="preserve">
+    <value>Configuraci&#243;n del bote misterioso: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotMysteryJackpotFeatureAvailable" xml:space="preserve">
+    <value>Funci&#243;n de bote misterioso disponible.</value>
+  </data>
+  <data name="BusinessEventsJackpotMysteryJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Funci&#243;n de bote misterioso no est&#225; disponible.</value>
+  </data>
+  <data name="BusinessEventsJackpotNotValid" xml:space="preserve">
+    <value>No v&#225;lido</value>
+  </data>
+  <data name="BusinessEventsJackpotUnavailable" xml:space="preserve">
+    <value>Indisponible</value>
+  </data>
+  <data name="BusinessEventsJackpotValid" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="BusinessEventsMetersElectronicCountersTest" xml:space="preserve">
+    <value>Prueba de contadores electr&#243;nicos</value>
+  </data>
+  <data name="BusinessEventsMetersMechanicalCountersTest" xml:space="preserve">
+    <value>Prueba de contadores mec&#225;nicos.</value>
+  </data>
+  <data name="BusinessEventsMotherboardBatteryLow" xml:space="preserve">
+    <value>{0} indica que la bater&#237;a est&#225; baja </value>
+  </data>
+  <data name="BusinessEventsMotherboardDuringPowerOff" xml:space="preserve">
+    <value>durante el apagado</value>
+  </data>
+  <data name="BusinessEventsMotherboardErrorMessage" xml:space="preserve">
+    <value>Mensaje de error</value>
+  </data>
+  <data name="BusinessEventsMotherboardErrorType" xml:space="preserve">
+    <value>Tipo de error</value>
+  </data>
+  <data name="BusinessEventsMotherboardIndex" xml:space="preserve">
+    <value>&#205;ndice</value>
+  </data>
+  <data name="BusinessEventsMotherboardIntrusionCommunicationError" xml:space="preserve">
+    <value>Error de intromisi&#243;n en comunicaci&#243;n</value>
+  </data>
+  <data name="BusinessEventsMotherboardIntrusionCommunicationRestored" xml:space="preserve">
+    <value>Intromisi&#243;n en comunicaci&#243;n restaurada</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterConnected" xml:space="preserve">
+    <value>Contador mec&#225;nico conectado</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterDisconnected" xml:space="preserve">
+    <value>Contador mec&#225;nico desconectado</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterNotIncremented" xml:space="preserve">
+    <value>Contador mec&#225;nico no incrementado</value>
+  </data>
+  <data name="BusinessEventsMotherboardName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="BusinessEventsMotherboardNvRamError" xml:space="preserve">
+    <value>Error de RAM no vol&#225;til</value>
+  </data>
+  <data name="BusinessEventsMotherboardNvRamErrorFormattedData" xml:space="preserve">
+    <value>Tipo de error:{0}, Mensaje de error: {1}</value>
+  </data>
+  <data name="BusinessEventsMotherboardPowerDown" xml:space="preserve">
+    <value>Se ha perdido la alimentaci&#243;n AC en la m&#225;quina de juego</value>
+  </data>
+  <data name="BusinessEventsMotherboardPowerUp" xml:space="preserve">
+    <value>Se aplic&#243; alimentaci&#243;n AC a las m&#225;quinas de juego</value>
+  </data>
+  <data name="BusinessEventsMotherboardTemperatureHigh" xml:space="preserve">
+    <value>Temperatura alta en </value>
+  </data>
+  <data name="BusinessEventsMotherboardVoltage" xml:space="preserve">
+    <value>Voltaje</value>
+  </data>
+  <data name="BusinessEventsMotherboardWebGLCrash" xml:space="preserve">
+    <value>Fallo de la biblioteca WebGL. Cliente recargado.</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterDisconnected" xml:space="preserve">
+    <value>Impresora desconectada</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterJamPaper" xml:space="preserve">
+    <value>Error de atasco de la impresora</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterLowPaper" xml:space="preserve">
+    <value>Papel de impresi&#243;n bajo</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterOpenChassis" xml:space="preserve">
+    <value>El chasis de la impresora est&#225; abierto</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterOutOfPaper" xml:space="preserve">
+    <value>Error de impresi&#243;n en papel saliente</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPaperOutClearable" xml:space="preserve">
+    <value>Falta papel de impresora. Borrar error con clave.</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPaperOutNonClearable" xml:space="preserve">
+    <value>Falta papel de impresora. Recarga el papel.</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPowerOff" xml:space="preserve">
+    <value>Apagado de la impresora</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPowerOn" xml:space="preserve">
+    <value>Impresora conectada</value>
+  </data>
+  <data name="BusinessEventsSecurityClockTampered" xml:space="preserve">
+    <value>Alteraci&#243;n del reloj detectada</value>
+  </data>
+  <data name="BusinessEventsSecurityDisplayMetersAttendantMenuEnter" xml:space="preserve">
+    <value>Se ha ingresado a los medidores de pantalla o el men&#250; del operador</value>
+  </data>
+  <data name="BusinessEventsSecurityDisplayMetersAttendantMenuExit" xml:space="preserve">
+    <value>Se ha salido de los medidores de pantalla o el men&#250; del operador</value>
+  </data>
+  <data name="BusinessEventsSecurityPlayerLoggedIn" xml:space="preserve">
+    <value>El jugador ha iniciado sesi&#243;n.</value>
+  </data>
+  <data name="BusinessEventsSecurityPlayerLoggedOut" xml:space="preserve">
+    <value>El jugador ha cerrado la sesi&#243;n.</value>
+  </data>
+  <data name="BusinessEventsSecuritySelfTestOperatorMenuEnter" xml:space="preserve">
+    <value>Men&#250; de prueba autom&#225;tico o se ha ingressado al men&#250; del operador.</value>
+  </data>
+  <data name="BusinessEventsSecuritySelfTestOperatorMenuExit" xml:space="preserve">
+    <value>Men&#250; de prueba autom&#225;tico o se ha salido del men&#250; del operador.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoggedIn" xml:space="preserve">
+    <value>El usuario {0} ha iniciado sesi&#243;n.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoggedOut" xml:space="preserve">
+    <value>El usuario {0} ha cerrado la sesi&#243;n.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoginFailed" xml:space="preserve">
+    <value>Error al iniciar sesi&#243;n del usuario.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedFromToVersion" xml:space="preserve">
+    <value>Desde la versi&#243;n: {0}
+A la versi&#243;n: {1}</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedNotUpdated" xml:space="preserve">
+    <value>Terminal no actualizado.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedReverted" xml:space="preserve">
+    <value>Terminal revertido.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedToVersion" xml:space="preserve">
+    <value>Para la versi&#243;n: {0}</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedUnexpected" xml:space="preserve">
+    <value>Estado {0} de actualizaci&#243;n de terminal no esperado.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedUpdated" xml:space="preserve">
+    <value>Terminal actualizado.</value>
+  </data>
+  <data name="BusinessEventsSWManagementDownloaderServiceRestarted" xml:space="preserve">
+    <value>ES??_Downloader service restarted.</value>
+  </data>
+  <data name="BusinessEventsSWManagementMountUsbPressed" xml:space="preserve">
+    <value>Montaje iniciado para actualizaci&#243;n sin conexi&#243;n</value>
+  </data>
+  <data name="BusinessEventsSWManagementOfflineTerminalUpdatePrepared" xml:space="preserve">
+    <value>ES??_Sin conexi&#243;n actualizaci&#243;n de terminal preparada.</value>
+  </data>
+  <data name="BusinessEventsSWManagementOfflineVersionCheckError" xml:space="preserve">
+    <value>Error de verificaci&#243;n de versi&#243;n despu&#233;s del montaje para actualizaci&#243;n sin conexi&#243;n</value>
+  </data>
+  <data name="BusinessEventsSWManagementOnlineTerminalUpdatePrepared" xml:space="preserve">
+    <value>ES??_En l&#237;nea actualizaci&#243;n de terminal preparada.</value>
+  </data>
+  <data name="BusinessEventsSWManagementOnlineVersionCheckError" xml:space="preserve">
+    <value>Error de verificaci&#243;n de versi&#243;n en l&#237;nea</value>
+  </data>
+  <data name="BusinessEventsSWManagementPrepareOfflinePressed" xml:space="preserve">
+    <value>Preparar la actualizaci&#243;n iniciada para la actualizaci&#243;n sin conexi&#243;n</value>
+  </data>
+  <data name="BusinessEventsSWManagementTerminalOnlineUpdateCanceled" xml:space="preserve">
+    <value>ES??_Terminal update canceled.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingFailed" xml:space="preserve">
+    <value>ES??_Downloading of update failed.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingFinished" xml:space="preserve">
+    <value>ES??_Downloading of update finished.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingPaused" xml:space="preserve">
+    <value>ES??_Downloading of update paused.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingResumed" xml:space="preserve">
+    <value>ES??_Downloading of update resumed.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingStarted" xml:space="preserve">
+    <value>ES??_Downloading of update started.</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedClockTampering" xml:space="preserve">
+    <value>Alteraci&#243;n del reloj</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedLicenseActivated" xml:space="preserve">
+    <value>Licencia activada</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedLicenseExpired" xml:space="preserve">
+    <value>Licencia caducada</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedNoLicense" xml:space="preserve">
+    <value>No se ha encontrado ninguna licencia</value>
+  </data>
+  <data name="BusinessEventsSystemMaintenanceModeMaintenanceModeEntered" xml:space="preserve">
+    <value>Modo de mantenimiento activado</value>
+  </data>
+  <data name="BusinessEventsSystemMaintenanceModeMaintenanceModeExited" xml:space="preserve">
+    <value>El modo de mantenimiento desactivado</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusDown" xml:space="preserve">
+    <value>Se ha desconectado la comunicaci&#243;n de enlace con SAS.</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusSasDongleMissing" xml:space="preserve">
+    <value>&#161;Falta el dongle SAS!</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusUp" xml:space="preserve">
+    <value>Se ha conectado la comunicaci&#243;n de enlace con SAS.</value>
+  </data>
+  <data name="BusinessEventsSystemAnyDisplayMonitorFailed" xml:space="preserve">
+    <value>Error de la pantalla.</value>
+  </data>
+  <data name="BusinessEventsSystemClientRequestFailed" xml:space="preserve">
+    <value>La solicitud del cliente fall&#243;.</value>
+  </data>
+  <data name="BusinessEventsSystemConnectionEstablished" xml:space="preserve">
+    <value>Se ha establecido la conexi&#243;n.</value>
+  </data>
+  <data name="BusinessEventsSystemConnectionLost" xml:space="preserve">
+    <value>Se ha perdido la conexi&#243;n.</value>
+  </data>
+  <data name="BusinessEventsSystemDateAndTimeChanged" xml:space="preserve">
+    <value>Han ocurrido cambios en la fecha y hora.
+De {0} en la zona horaria {1} con el horario de verano {2},
+a {3} en la zona horaria {4} con el horario de verano {5}.</value>
+  </data>
+  <data name="BusinessEventsSystemDateAndTimeChangedFromSas" xml:space="preserve">
+    <value>La fecha y hora han sido cambiadas desde SAS.
+De {0} en la zona horaria {1} con el horario de verano {2},
+a {3} en la zona horaria {4} con el horario de verano {5}.</value>
+  </data>
+  <data name="BusinessEventsSystemDisplayMonitorsAreOK" xml:space="preserve">
+    <value>Todas las pantalla est&#225;n bien.</value>
+  </data>
+  <data name="BusinessEventsSystemDtsDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="BusinessEventsSystemDtsEnabled" xml:space="preserve">
+    <value>Activado</value>
+  </data>
+  <data name="BusinessEventsSystemUnhandledExceptionInBusinessProcess" xml:space="preserve">
+    <value>Excepci&#243;n no gestionada en el proceso empresarial: {0}</value>
+  </data>
+  <data name="BusinessEventsSystemValidationIdConfigured" xml:space="preserve">
+    <value>Se ha configurado un ID de validaci&#243;n.</value>
+  </data>
+  <data name="BusinessEventsSystemValidationIdNotConfigured" xml:space="preserve">
+    <value>El ID de validaci&#243;n no est&#225; configurado.</value>
+  </data>
+  <data name="BusinessEventsUnknownEvent" xml:space="preserve">
+    <value>Evento desconocido.</value>
+  </data>
+  <data name="ConfigurationsLightStateFlashFast" xml:space="preserve">
+    <value>Flash r&#225;pido</value>
+  </data>
+  <data name="ConfigurationsLightStateFlashSlow" xml:space="preserve">
+    <value>Flash lento</value>
+  </data>
+  <data name="ConfigurationsLightStateOff" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="ConfigurationsLightStateOn" xml:space="preserve">
+    <value>Activado</value>
+  </data>
+  <data name="ConfigurationsValidatorsValueMustBeGreaterThanLimit" xml:space="preserve">
+    <value>{0} debe ser superior a {1}</value>
+  </data>
+  <data name="EnumsAutoplayAutostartDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="EnumsAutoplayModeSpeedFast" xml:space="preserve">
+    <value>R&#225;pido</value>
+  </data>
+  <data name="EnumsAutoplayModeSpeedStandard" xml:space="preserve">
+    <value>Est&#225;ndar</value>
+  </data>
+  <data name="EnumsBetButtonsBehaviorNotPlay" xml:space="preserve">
+    <value>No jugar despu&#233;s</value>
+  </data>
+  <data name="EnumsBetButtonsBehaviorPlay" xml:space="preserve">
+    <value>Jugar despu&#233;s</value>
+  </data>
+  <data name="EnumsCalculatingTypeInit" xml:space="preserve">
+    <value>Iniciado</value>
+  </data>
+  <data name="EnumsCalculatingTypeOnDemand" xml:space="preserve">
+    <value>Bajo demanda</value>
+  </data>
+  <data name="EnumsCalculatingTypePeriod" xml:space="preserve">
+    <value>Periodo</value>
+  </data>
+  <data name="EnumsCalculatingTypeSignificantEvent" xml:space="preserve">
+    <value>Evento significativo</value>
+  </data>
+  <data name="EnumsCashoutModeAttendant" xml:space="preserve">
+    <value>Operador</value>
+  </data>
+  <data name="EnumsCashoutModeDispenser" xml:space="preserve">
+    <value>Dispensador</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserAttendant" xml:space="preserve">
+    <value>Dispensador/Operador</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserPrinter" xml:space="preserve">
+    <value>Dispensador/Impresora</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserPrinterAttendant" xml:space="preserve">
+    <value>Dispensador/Impresora/Operador</value>
+  </data>
+  <data name="EnumsCashoutModeHopper" xml:space="preserve">
+    <value>Aceptador</value>
+  </data>
+  <data name="EnumsCashoutModeHopperAttendant" xml:space="preserve">
+    <value>Aceptador/Operador</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenser" xml:space="preserve">
+    <value>Aceptador/Dispensador</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserAttendant" xml:space="preserve">
+    <value>Aceptador/Dispensador/Operador</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserPrinter" xml:space="preserve">
+    <value>Aceptador/Dispensador/Impresora</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserPrinterAttendant" xml:space="preserve">
+    <value>Aceptador/Dispensador/Impresora/Operador</value>
+  </data>
+  <data name="EnumsCashoutModeHopperPrinter" xml:space="preserve">
+    <value>Aceptador/Impresora</value>
+  </data>
+  <data name="EnumsCashoutModeHopperPrinterAttendant" xml:space="preserve">
+    <value>Aceptador/Impresora/Operador</value>
+  </data>
+  <data name="EnumsCashoutModePrinter" xml:space="preserve">
+    <value>Impresora</value>
+  </data>
+  <data name="EnumsCashoutModePrinterAttendant" xml:space="preserve">
+    <value>Impresora/Operador</value>
+  </data>
+  <data name="EnumsCashOutToHostControlDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="EnumsCashOutToHostControlHard" xml:space="preserve">
+    <value>Duro</value>
+  </data>
+  <data name="EnumsCashOutToHostControlHostControlled" xml:space="preserve">
+    <value>Controlado por el Host</value>
+  </data>
+  <data name="EnumsCashOutToHostControlSoft" xml:space="preserve">
+    <value>Suave</value>
+  </data>
+  <data name="EnumsChannelsBoth" xml:space="preserve">
+    <value>Ambos</value>
+  </data>
+  <data name="EnumsChannelsChannel1" xml:space="preserve">
+    <value>Canal 1</value>
+  </data>
+  <data name="EnumsChannelsChannel2" xml:space="preserve">
+    <value>Canal 2</value>
+  </data>
+  <data name="EnumsChannelsDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="EnumsChannelsJackpotAPI" xml:space="preserve">
+    <value>API de premio mayor</value>
+  </data>
+  <data name="EnumsCheckboxStateDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="EnumsCheckboxStateEnabled" xml:space="preserve">
+    <value>Activado</value>
+  </data>
+  <data name="EnumsCheckboxStateNotSet" xml:space="preserve">
+    <value>No se ha establecido</value>
+  </data>
+  <data name="EnumsCounterInUiCounter1" xml:space="preserve">
+    <value>Contador1</value>
+  </data>
+  <data name="EnumsCounterInUiCounter10" xml:space="preserve">
+    <value>Contador10</value>
+  </data>
+  <data name="EnumsCounterInUiCounter2" xml:space="preserve">
+    <value>Contador2</value>
+  </data>
+  <data name="EnumsCounterInUiCounter3" xml:space="preserve">
+    <value>Contador3</value>
+  </data>
+  <data name="EnumsCounterInUiCounter4" xml:space="preserve">
+    <value>Contador4</value>
+  </data>
+  <data name="EnumsCounterInUiCounter5" xml:space="preserve">
+    <value>Contador5</value>
+  </data>
+  <data name="EnumsCounterInUiCounter6" xml:space="preserve">
+    <value>Contador6</value>
+  </data>
+  <data name="EnumsCounterInUiCounter7" xml:space="preserve">
+    <value>Contador7</value>
+  </data>
+  <data name="EnumsCounterInUiCounter8" xml:space="preserve">
+    <value>Contador8</value>
+  </data>
+  <data name="EnumsCounterInUiCounter9" xml:space="preserve">
+    <value>Contador9</value>
+  </data>
+  <data name="EnumsCounterInUiNone" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
+  <data name="EnumsFeatureAutoenterDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="EnumsFeatureAutoenterEnabled" xml:space="preserve">
+    <value>Activado</value>
+  </data>
+  <data name="EnumsFeatureAutoplayAutostartDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="EnumsGambleModeCards" xml:space="preserve">
+    <value>Naipes</value>
+  </data>
+  <data name="EnumsGambleModeLadder" xml:space="preserve">
+    <value>Escalera</value>
+  </data>
+  <data name="EnumsGambleModePlayersChoice" xml:space="preserve">
+    <value>Elecci&#243;n del jugador</value>
+  </data>
+  <data name="EnumsGameActiveTypeDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="EnumsGameActiveTypeNo" xml:space="preserve">
+    <value>No v&#225;lido</value>
+  </data>
+  <data name="EnumsGameActiveTypeYes" xml:space="preserve">
+    <value>S&#205;</value>
+  </data>
+  <data name="EnumsGamePlayModeCurrency" xml:space="preserve">
+    <value>Divisa</value>
+  </data>
+  <data name="EnumsGamePlayModeDenomination" xml:space="preserve">
+    <value>Denominaci&#243;n</value>
+  </data>
+  <data name="EnumsGamePlaySpeedStandard" xml:space="preserve">
+    <value>Est&#225;ndar</value>
+  </data>
+  <data name="EnumsJackpotServerVersionVersion_1_0" xml:space="preserve">
+    <value>Versi&#243;n JS 1.0</value>
+  </data>
+  <data name="EnumsJackpotServerVersionVersion_2_0" xml:space="preserve">
+    <value>Versi&#243;n JS 2.0</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyAutomatic" xml:space="preserve">
+    <value>Autom&#225;tico</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyDisabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyStartedByPlayer" xml:space="preserve">
+    <value>Comenzado por el jugador</value>
+  </data>
+  <data name="EnumsLEDStripeColorIntensityHigh" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="EnumsLEDStripeColorIntensityLow" xml:space="preserve">
+    <value>Baja</value>
+  </data>
+  <data name="EnumsLEDStripeColorIntensityNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="EnumsLockedUnlockedModeLocked" xml:space="preserve">
+    <value>Bloqueado</value>
+  </data>
+  <data name="EnumsLockedUnlockedModeUnlocked" xml:space="preserve">
+    <value>Desbloqueado</value>
+  </data>
+  <data name="EnumsMaxGambleAttemptsUnlimited" xml:space="preserve">
+    <value>Ilimitado</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_0_01" xml:space="preserve">
+    <value>1 tic por 0,01</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_0_10" xml:space="preserve">
+    <value>1 tic por 0,10</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_1_00" xml:space="preserve">
+    <value>1 tic por 1,00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_10_00" xml:space="preserve">
+    <value>1 tic por 10,00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_100_00" xml:space="preserve">
+    <value>1 tic por 100,00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_1000_00" xml:space="preserve">
+    <value>1 tic por 1000.00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_10000_00" xml:space="preserve">
+    <value>1 tic por 10 000.00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_100000_00" xml:space="preserve">
+    <value>1 tic por 100 000.00</value>
+  </data>
+  <data name="EnumsQuickStopAllowedInstantly" xml:space="preserve">
+    <value>Instant&#225;neamente</value>
+  </data>
+  <data name="EnumsQuickStopAllowedNever" xml:space="preserve">
+    <value>Nunca</value>
+  </data>
+  <data name="EnumsRouletteTableColorBlue" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="EnumsRouletteTableColorGray" xml:space="preserve">
+    <value>Gris</value>
+  </data>
+  <data name="EnumsRouletteTableColorGreen" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="EnumsRouletteTableColorPurple" xml:space="preserve">
+    <value>Morado</value>
+  </data>
+  <data name="EnumsSasValidationEnhanced" xml:space="preserve">
+    <value>Reforzado</value>
+  </data>
+  <data name="EnumsSasValidationNoValidation" xml:space="preserve">
+    <value>Sin validaci&#243;n</value>
+  </data>
+  <data name="EnumsSasValidationStandard" xml:space="preserve">
+    <value>Est&#225;ndar</value>
+  </data>
+  <data name="EnumsSasValidationSystem" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="EnumsSoftwareButtonAutoplay" xml:space="preserve">
+    <value>Reproducci&#243;n autom&#225;tica</value>
+  </data>
+  <data name="EnumsSoftwareButtonSpin" xml:space="preserve">
+    <value>Girar</value>
+  </data>
+  <data name="EnumsStartDownloadTerminalStateAlways" xml:space="preserve">
+    <value>Siempre</value>
+  </data>
+  <data name="EnumsStartDownloadTerminalStateNotInGame" xml:space="preserve">
+    <value>No en el juego</value>
+  </data>
+  <data name="ServicesForgeryLastResult" xml:space="preserve">
+    <value>Ultimo resultado: {0}</value>
+  </data>
+  <data name="ServicesForgeryPartitonHashCalculating" xml:space="preserve">
+    <value>Calculo en progreso...</value>
+  </data>
+  <data name="ValidationsMessagesBetweenMinMax" xml:space="preserve">
+    <value>El valor debe estar entre {0} y {1}.</value>
+  </data>
+  <data name="ValidationsMessagesCurrencyCodeWrongFormat" xml:space="preserve">
+    <value>ES??_Wrong currency code format! Only 3 letter alphabetic code is allowed.</value>
+  </data>
+  <data name="ValidationsMessagesFieldRequiresNonDefaultValue" xml:space="preserve">
+    <value>El campo {0} requiere un valor no predeterminado.</value>
+  </data>
+  <data name="ValidationsMessagesNotEmptyGuid" xml:space="preserve">
+    <value>El valor GUID no puede estar vac&#237;o.</value>
+  </data>
+  <data name="ValidationsMessagesNotValidNumber" xml:space="preserve">
+    <value>El valor no es un n&#250;mero v&#225;lido.</value>
+  </data>
+  <data name="ValidationsMessagesRangeError" xml:space="preserve">
+    <value>El campo {0} debe estar entre {1} y {2}</value>
+  </data>
+  <data name="ValidationsMessagesRequiredNotSet" xml:space="preserve">
+    <value>&#161;Algunas de las propiedades obligatorias no est&#225;n establecidas!</value>
+  </data>
+  <data name="ValidationsMessagesValidationForFailed" xml:space="preserve">
+    <value>&#161;Error al validar {0} !</value>
+  </data>
+  <data name="ValidationsAttendantAddCreditLimit" xml:space="preserve">
+    <value>El l&#237;mite de cr&#233;dito a&#241;adido por el operador debe ser menor o igual que el l&#237;mite de cr&#233;dito.</value>
+  </data>
+  <data name="ValidationsErrors" xml:space="preserve">
+    <value>Errores:</value>
+  </data>
+  <data name="ValidationsUpperJackpotLimit" xml:space="preserve">
+    <value>El l&#237;mite superior del premio mayor debe ser mayor o igual que el l&#237;mite del premio mayor.</value>
+  </data>
+</root>

@@ -1,0 +1,1475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BusinessEventsApplicationAllKeysDeleted" xml:space="preserve">
+    <value>All dallas keys were unassigned.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationInitialized" xml:space="preserve">
+    <value>Application initialized.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationShutdown" xml:space="preserve">
+    <value>Application shutdown.</value>
+  </data>
+  <data name="BusinessEventsApplicationApplicationStarted" xml:space="preserve">
+    <value>Application started.</value>
+  </data>
+  <data name="BusinessEventsApplicationCallServiceStarted" xml:space="preserve">
+    <value>Call Service Started.</value>
+  </data>
+  <data name="BusinessEventsApplicationCallServiceStoped" xml:space="preserve">
+    <value>Call Service Stoped.</value>
+  </data>
+  <data name="BusinessEventsApplicationCheckSumValidationFailed" xml:space="preserve">
+    <value>Checksum validation failed.</value>
+  </data>
+  <data name="BusinessEventsApplicationConnectionToTheServerWasLost" xml:space="preserve">
+    <value>Connection to the server was lost.</value>
+  </data>
+  <data name="BusinessEventsApplicationConnectionToTheServerWasRecovered" xml:space="preserve">
+    <value>Connection to the server was recovered.</value>
+  </data>
+  <data name="BusinessEventsApplicationContentHostFatallyCrashed" xml:space="preserve">
+    <value>ContentHost fatally crashed.</value>
+  </data>
+  <data name="BusinessEventsApplicationDetail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="BusinessEventsApplicationError" xml:space="preserve">
+    <value>Internal error</value>
+  </data>
+  <data name="BusinessEventsApplicationFirstOwnerKeyRegistered" xml:space="preserve">
+    <value>1st Owner key was registered.</value>
+  </data>
+  <data name="BusinessEventsApplicationForgottenKeyDuringStartUp" xml:space="preserve">
+    <value>Forgotten key in machine. Pull out the key</value>
+  </data>
+  <data name="BusinessEventsApplicationGameMachineSoftMetersReset" xml:space="preserve">
+    <value>Gaming machine soft meters reset to zero.</value>
+  </data>
+  <data name="BusinessEventsApplicationInitializationFailed" xml:space="preserve">
+    <value>Initialization failed.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineLocked" xml:space="preserve">
+    <value>Machine was locked.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineReset" xml:space="preserve">
+    <value>Machine was reset to factory settings.</value>
+  </data>
+  <data name="BusinessEventsApplicationMachineUnlocked" xml:space="preserve">
+    <value>Machine was unlocked.</value>
+  </data>
+  <data name="BusinessEventsApplicationNewDeviceConfirmed" xml:space="preserve">
+    <value>Device was changed. </value>
+  </data>
+  <data name="BusinessEventsApplicationNewDeviceConfirmedData" xml:space="preserve">
+    <value>New Device - Model: {0}, Serial Number: {1}, Firmware: {2} </value>
+  </data>
+  <data name="BusinessEventsApplicationNewVersionOfSoftwareWasActivated" xml:space="preserve">
+    <value>New version of software was activated.</value>
+  </data>
+  <data name="BusinessEventsApplicationNewVersionOfSoftwareWasInstalled" xml:space="preserve">
+    <value>New version of software was installed.</value>
+  </data>
+  <data name="BusinessEventsApplicationOldDeviceData" xml:space="preserve">
+    <value>Old Device - Model: {0}, Serial Number: {1}, Firmware: {2} </value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHourBegins" xml:space="preserve">
+    <value>Opening hour begins.</value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHoursEndIsApproaching" xml:space="preserve">
+    <value>Opening hours end is approaching.</value>
+  </data>
+  <data name="BusinessEventsApplicationOpeningHoursEnds" xml:space="preserve">
+    <value>Opening hours ends.</value>
+  </data>
+  <data name="BusinessEventsApplicationPlayerGoesToIdleState" xml:space="preserve">
+    <value>Player goes to idle state.</value>
+  </data>
+  <data name="BusinessEventsApplicationRequestToChangeProjectorApplicationOccured" xml:space="preserve">
+    <value>Request to change Projector application occured.</value>
+  </data>
+  <data name="BusinessEventsApplicationResetOwnerKey" xml:space="preserve">
+    <value>Page &#39;Delete All Assigned Keys&#39; entered.</value>
+  </data>
+  <data name="BusinessEventsApplicationSoftMetersReset" xml:space="preserve">
+    <value>Soft meters reset to zero.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersErrorBlockedState" xml:space="preserve">
+    <value>Terminal enters Error/Blocked state.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersLobby" xml:space="preserve">
+    <value>Terminal enters lobby.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersServiceMenu" xml:space="preserve">
+    <value>Terminal enters service menu.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalEntersShutdown" xml:space="preserve">
+    <value>Terminal enters shutdown.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalWasDisabledByHost" xml:space="preserve">
+    <value>Terminal was disabled by host.</value>
+  </data>
+  <data name="BusinessEventsApplicationTerminalWasEnabledByHost" xml:space="preserve">
+    <value>Terminal was enabled by host.</value>
+  </data>
+  <data name="BusinessEventsApplicationUnfinishedProcessing" xml:space="preserve">
+    <value>Unfinished processing detected and resumed.</value>
+  </data>
+  <data name="BusinessEventsApplicationWorkflowFinished" xml:space="preserve">
+    <value>{0} workflow finished.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationAuthenticationDeviceWasInserted" xml:space="preserve">
+    <value>Authentication device was inserted.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationAuthenticationDeviceWasRemoved" xml:space="preserve">
+    <value>Authentication device was removed.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationCardWasInsertedIntoCardReader" xml:space="preserve">
+    <value>Card was inserted into card reader.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationCardWasRemovedFromCardReader" xml:space="preserve">
+    <value>Card was removed from card reader.</value>
+  </data>
+  <data name="BusinessEventsAuthenticationDevice" xml:space="preserve">
+    <value>Device {0}, #{1}</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedDescription" xml:space="preserve">
+    <value>{0} ticket {1} accepted</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeCash" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeNonRestricted" xml:space="preserve">
+    <value>Non restricted</value>
+  </data>
+  <data name="BusinessEventsBillTicketInAcceptedTicketTypeRestricted" xml:space="preserve">
+    <value>Restricted</value>
+  </data>
+  <data name="BusinessEventsBillTicketInRejectedDescriptionWithNumber" xml:space="preserve">
+    <value>Ticket {0} rejected</value>
+  </data>
+  <data name="BusinessEventsBillTicketInRejectedDescriptionWithoutNumber" xml:space="preserve">
+    <value>Ticket rejected</value>
+  </data>
+  <data name="BusinessEventsBillBillAcceptorDisconnected" xml:space="preserve">
+    <value>Bill acceptor disconnected</value>
+  </data>
+  <data name="BusinessEventsBillBillIn" xml:space="preserve">
+    <value>Bill inserted</value>
+  </data>
+  <data name="BusinessEventsBillBillInAccepted" xml:space="preserve">
+    <value>Bill accepted</value>
+  </data>
+  <data name="BusinessEventsBillBillInJam" xml:space="preserve">
+    <value>Bill jam</value>
+  </data>
+  <data name="BusinessEventsBillBillMayHaveNotBeenAccepted" xml:space="preserve">
+    <value>A bill or ticket may have not been accepted. Please call attendant!</value>
+  </data>
+  <data name="BusinessEventsBillBillMayHaveNotBeenDispensed" xml:space="preserve">
+    <value>A bill may have not been dispensed.</value>
+  </data>
+  <data name="BusinessEventsBillBillMayNotAccepted" xml:space="preserve">
+    <value>A bill/ticket may have not been accepted.</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerDoorClosed" xml:space="preserve">
+    <value>Bill recycler door closed</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerDoorOpened" xml:space="preserve">
+    <value>Bill recycler door opened</value>
+  </data>
+  <data name="BusinessEventsBillBillRecyclerEmpty" xml:space="preserve">
+    <value>Bill Recycler Empty</value>
+  </data>
+  <data name="BusinessEventsBillBillRefilled" xml:space="preserve">
+    <value>Bill refilled</value>
+  </data>
+  <data name="BusinessEventsBillBillRejected" xml:space="preserve">
+    <value>Bill rejected</value>
+  </data>
+  <data name="BusinessEventsBillBillStackerFull" xml:space="preserve">
+    <value>Bill validator malfunction</value>
+  </data>
+  <data name="BusinessEventsBillBillStackerJam" xml:space="preserve">
+    <value>Bill stacker jam</value>
+  </data>
+  <data name="BusinessEventsBillBillValidatorId" xml:space="preserve">
+    <value>Bill Validator ID</value>
+  </data>
+  <data name="BusinessEventsBillChannel" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="BusinessEventsBillCoinAcceptorDisconnected" xml:space="preserve">
+    <value>Coin acceptor disconnected</value>
+  </data>
+  <data name="BusinessEventsBillCoinInJam" xml:space="preserve">
+    <value>Coin in jam</value>
+  </data>
+  <data name="BusinessEventsBillCoinInTooFast" xml:space="preserve">
+    <value>Coin too fast detected</value>
+  </data>
+  <data name="BusinessEventsBillCoinInTooSlow" xml:space="preserve">
+    <value>Coin too slow detected</value>
+  </data>
+  <data name="BusinessEventsBillCoinWasInserted" xml:space="preserve">
+    <value>Coin was inserted.</value>
+  </data>
+  <data name="BusinessEventsBillCoinWasRejectedWithCode" xml:space="preserve">
+    <value>Coin was rejected with code</value>
+  </data>
+  <data name="BusinessEventsBillErrorInvalidTicketType" xml:space="preserve">
+    <value>error: invalid ticket type</value>
+  </data>
+  <data name="BusinessEventsBillInsertedBillStacker" xml:space="preserve">
+    <value>Bill stacker inserted</value>
+  </data>
+  <data name="BusinessEventsBillInvalidTicketStacked" xml:space="preserve">
+    <value>Invalid ticket {0} was stacked</value>
+  </data>
+  <data name="BusinessEventsBillInvalidTicketTypeErrorCode" xml:space="preserve">
+    <value>code</value>
+  </data>
+  <data name="BusinessEventsBillLocation" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="BusinessEventsBillNoteWasReturned" xml:space="preserve">
+    <value>Note was returned.</value>
+  </data>
+  <data name="BusinessEventsBillRemoteIn" xml:space="preserve">
+    <value>Credit added by attendant</value>
+  </data>
+  <data name="BusinessEventsBillRemoteInFailed" xml:space="preserve">
+    <value>Credit add by attendant failed.</value>
+  </data>
+  <data name="BusinessEventsBillRemovedBillStacker" xml:space="preserve">
+    <value>Bill stacker removed</value>
+  </data>
+  <data name="BusinessEventsBillReturnedBet" xml:space="preserve">
+    <value>Bet returned.</value>
+  </data>
+  <data name="BusinessEventsBillReverseBillDetected" xml:space="preserve">
+    <value>Reverse bill detected</value>
+  </data>
+  <data name="BusinessEventsBillReversedCoin" xml:space="preserve">
+    <value>Coin fraud detected</value>
+  </data>
+  <data name="BusinessEventsBillRmsBillAcceptorDisabled" xml:space="preserve">
+    <value>Bill Acceptor disabled externally</value>
+  </data>
+  <data name="BusinessEventsBillRmsBillAcceptorEnabled" xml:space="preserve">
+    <value>Bill Acceptor enabled externally</value>
+  </data>
+  <data name="BusinessEventsBillTicketIn" xml:space="preserve">
+    <value>Ticket {0} inserted</value>
+  </data>
+  <data name="BusinessEventsConfigurationConfigurationTypeFullname" xml:space="preserve">
+    <value>Configuration type fullname</value>
+  </data>
+  <data name="BusinessEventsConfigurationConfigurationWasChanged" xml:space="preserve">
+    <value>Configuration was changed.</value>
+  </data>
+  <data name="BusinessEventsConfigurationRoleText" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="BusinessEventsDevicesBillMayNotHaveBeenDispensed" xml:space="preserve">
+    <value>A bill may not have been dispensed! Restart machine and check dispenser!</value>
+  </data>
+  <data name="BusinessEventsDevicesDeviceStatusChanged" xml:space="preserve">
+    <value>Device {0} status changed.</value>
+  </data>
+  <data name="BusinessEventsDevicesDongleDetected" xml:space="preserve">
+    <value>Dongle Detected.</value>
+  </data>
+  <data name="BusinessEventsDevicesDongleNotFound" xml:space="preserve">
+    <value>Dongle not found.</value>
+  </data>
+  <data name="BusinessEventsDevicesLCDMonitorError" xml:space="preserve">
+    <value>Monitor disconnected. Please call attendant.</value>
+  </data>
+  <data name="BusinessEventsDevicesSoftwareButtonPressed" xml:space="preserve">
+    <value>Software button {0} was pressed</value>
+  </data>
+  <data name="BusinessEventsDevicesWrongDongle" xml:space="preserve">
+    <value>Wrong dongle.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBackDoorClosed" xml:space="preserve">
+    <value>Back door was closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBackDoorOpened" xml:space="preserve">
+    <value>Back door was opened</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBellyDoorClosed" xml:space="preserve">
+    <value>Belly door was closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBellyDoorOpened" xml:space="preserve">
+    <value>Belly door was opened</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillStackerDoorClosed" xml:space="preserve">
+    <value>Bill stacker door was closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillStackerDoorOpened" xml:space="preserve">
+    <value>Bill stacker door was opened</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillValidatorDoorClosed" xml:space="preserve">
+    <value>Bill validator door was closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchBillValidatorDoorOpened" xml:space="preserve">
+    <value>Bill validator door was opened</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchButtonWasPressed" xml:space="preserve">
+    <value>Button {0} was pressed.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchButtonWasReleased" xml:space="preserve">
+    <value>Button {0} was released.</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchClosed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor1Closed" xml:space="preserve">
+    <value>Drop door 1 was closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor1Opened" xml:space="preserve">
+    <value>Drop door 1 was opened</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor2Closed" xml:space="preserve">
+    <value>Drop door 2 was closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchDropDoor2Opened" xml:space="preserve">
+    <value>Drop door 2 was opened</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchLogicDoorClosed" xml:space="preserve">
+    <value>Logic door was closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchLogicDoorOpened" xml:space="preserve">
+    <value>Logic door was opened</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchOpened" xml:space="preserve">
+    <value>Opened</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchServiceDoorClosed" xml:space="preserve">
+    <value>Service door was closed</value>
+  </data>
+  <data name="BusinessEventsDoorAndSwitchServiceDoorOpened" xml:space="preserve">
+    <value>Service door was opened</value>
+  </data>
+  <data name="BusinessEventsElectronicCountersElectronicCountersConnected" xml:space="preserve">
+    <value>Electronic counters connected</value>
+  </data>
+  <data name="BusinessEventsElectronicCountersElectronicCountersDisconnected" xml:space="preserve">
+    <value>Electronic counters disconnected</value>
+  </data>
+  <data name="BusinessEventsElectronicCountersElectronicCountersInstalled" xml:space="preserve">
+    <value>New electronic counters installed</value>
+  </data>
+  <data name="BusinessEventsFinanceAftAwarded" xml:space="preserve">
+    <value>{0} awarded</value>
+  </data>
+  <data name="BusinessEventsFinanceAftBonusCoinWinTransfer" xml:space="preserve">
+    <value>Bonus coin out win transfer</value>
+  </data>
+  <data name="BusinessEventsFinanceAftBonusJackpotWinTransfer" xml:space="preserve">
+    <value>Bonus jackpot win transfer</value>
+  </data>
+  <data name="BusinessEventsFinanceAftCancelledByHost" xml:space="preserve">
+    <value>{0} cancelled by host</value>
+  </data>
+  <data name="BusinessEventsFinanceAftCash" xml:space="preserve">
+    <value>C {0}  </value>
+  </data>
+  <data name="BusinessEventsFinanceAftCompleted" xml:space="preserve">
+    <value>{0} completed</value>
+  </data>
+  <data name="BusinessEventsFinanceAftDebitTransferFromHost" xml:space="preserve">
+    <value>Debit transfer from host</value>
+  </data>
+  <data name="BusinessEventsFinanceAftDebitTransferToTicket" xml:space="preserve">
+    <value>Debit amount from host to ticket</value>
+  </data>
+  <data name="BusinessEventsFinanceAftFailed" xml:space="preserve">
+    <value>{0} failed</value>
+  </data>
+  <data name="BusinessEventsFinanceAftHostRequestedCashout" xml:space="preserve">
+    <value>Host requested cashout</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHosueTransferToTicket" xml:space="preserve">
+    <value>In-house amount from host to ticket</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseInTransfer" xml:space="preserve">
+    <value>In-House in AFT transfer</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseTransferToHost" xml:space="preserve">
+    <value>In-House out AFT transfer</value>
+  </data>
+  <data name="BusinessEventsFinanceAftInHouseWinTransferToHost" xml:space="preserve">
+    <value>Win amount to host transfer</value>
+  </data>
+  <data name="BusinessEventsFinanceAftNonRestricted" xml:space="preserve">
+    <value>N {0}  </value>
+  </data>
+  <data name="BusinessEventsFinanceAftProcessing" xml:space="preserve">
+    <value>{0} processing</value>
+  </data>
+  <data name="BusinessEventsFinanceAftReceived" xml:space="preserve">
+    <value>{0} received</value>
+  </data>
+  <data name="BusinessEventsFinanceAftRestricted" xml:space="preserve">
+    <value>R {0}  </value>
+  </data>
+  <data name="BusinessEventsFinanceAftTotal" xml:space="preserve">
+    <value>Total {0}</value>
+  </data>
+  <data name="BusinessEventsFinanceAftTransferCancelRequested" xml:space="preserve">
+    <value>Transfer cancel requested</value>
+  </data>
+  <data name="BusinessEventsFinanceAftUnknownTransfer" xml:space="preserve">
+    <value>Unknown transfer</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxCashout" xml:space="preserve">
+    <value>Bill moved from recycler to stacker (Cashout)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxDump" xml:space="preserve">
+    <value>Bill moved from recycler to stacker (Dump)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillMovedFromRecyclerToCashboxForceCollect" xml:space="preserve">
+    <value>Bill moved from recycler to stacker (Force collect)</value>
+  </data>
+  <data name="BusinessEventsFinanceBillOutBegin" xml:space="preserve">
+    <value>Dispenser cashout initiated</value>
+  </data>
+  <data name="BusinessEventsFinanceBillOutEnd" xml:space="preserve">
+    <value>Dispenser cashout completed</value>
+  </data>
+  <data name="BusinessEventsFinanceCashableAftTicket" xml:space="preserve">
+    <value>Cashable AFT ticket</value>
+  </data>
+  <data name="BusinessEventsFinanceCashableTicket" xml:space="preserve">
+    <value>Cashable ticket</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOut" xml:space="preserve">
+    <value>Cashout confirmation dialog displayed</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOutCancelled" xml:space="preserve">
+    <value>Cashout cancelled</value>
+  </data>
+  <data name="BusinessEventsFinanceCashOutConfirmed" xml:space="preserve">
+    <value>Cashout confirmed by player</value>
+  </data>
+  <data name="BusinessEventsFinanceCashoutReceipt" xml:space="preserve">
+    <value>Cashout receipt</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinOutBegin" xml:space="preserve">
+    <value>Hopper cashout initiated</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinOutEnd" xml:space="preserve">
+    <value>Hopper cashout completed</value>
+  </data>
+  <data name="BusinessEventsFinanceCoinSorterMalfunction" xml:space="preserve">
+    <value>Sorter malfunction</value>
+  </data>
+  <data name="BusinessEventsFinanceDebitAftTicket" xml:space="preserve">
+    <value>Debit AFT ticket</value>
+  </data>
+  <data name="BusinessEventsFinanceDescriptionNotPrinted" xml:space="preserve">
+    <value>{0} not printed</value>
+  </data>
+  <data name="BusinessEventsFinanceDescriptionPrinted" xml:space="preserve">
+    <value>{0} printed</value>
+  </data>
+  <data name="BusinessEventsFinanceExternalBonusAwarded" xml:space="preserve">
+    <value>External bonus awarded</value>
+  </data>
+  <data name="BusinessEventsFinanceExternalBonusReceived" xml:space="preserve">
+    <value>External bonus received</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayCancelled" xml:space="preserve">
+    <value>Handpay cancelled</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayCompleted" xml:space="preserve">
+    <value>Handpay completed</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayPending" xml:space="preserve">
+    <value>Handpay required</value>
+  </data>
+  <data name="BusinessEventsFinanceHandpayValidated" xml:space="preserve">
+    <value>Handpay validated</value>
+  </data>
+  <data name="BusinessEventsFinanceHostCashOutFailed" xml:space="preserve">
+    <value> Host cashout failed</value>
+  </data>
+  <data name="BusinessEventsFinanceHostCashOutPending" xml:space="preserve">
+    <value>Host cashout is pending</value>
+  </data>
+  <data name="BusinessEventsFinanceJackpotReceipt" xml:space="preserve">
+    <value>Jackpot receipt</value>
+  </data>
+  <data name="BusinessEventsFinanceRemoteHandpayResetOccured" xml:space="preserve">
+    <value>Remote handpay reset occured</value>
+  </data>
+  <data name="BusinessEventsFinanceRestrictedAftTicket" xml:space="preserve">
+    <value>Restricted AFT ticket</value>
+  </data>
+  <data name="BusinessEventsFinanceRestrictedTicket" xml:space="preserve">
+    <value>Restricted ticket</value>
+  </data>
+  <data name="BusinessEventsFinanceStartupCredit" xml:space="preserve">
+    <value>Machine starts with credit.</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotApiError" xml:space="preserve">
+    <value>Jackpot API error ({0} API {1} - {2})</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotApiServerConnectionNotStartedOrLost" xml:space="preserve">
+    <value>Jackpot API server connection not started or lost</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotApiServerConnectionStartedOrRecovered" xml:space="preserve">
+    <value>Jackpot API server connection started or recovered</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotBonusAwarded" xml:space="preserve">
+    <value>Synot jackpot bonus awarded</value>
+  </data>
+  <data name="BusinessEventsFinanceSynotJackpotBonusReceived" xml:space="preserve">
+    <value>Synot jackpot bonus received</value>
+  </data>
+  <data name="BusinessEventsFinanceTicketOutId" xml:space="preserve">
+    <value>Id : {0}</value>
+  </data>
+  <data name="BusinessEventsFinanceTicketOutPending" xml:space="preserve">
+    <value>{0} is printing</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockLocked" xml:space="preserve">
+    <value>Cashless transfer locked</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockRequestLock" xml:space="preserve">
+    <value>Requested cashless transfer lock</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockRequestUnlock" xml:space="preserve">
+    <value>Requested cashless transfer unlock</value>
+  </data>
+  <data name="BusinessEventsFinanceTransferLockUnlocked" xml:space="preserve">
+    <value>Cashless transfer unlocked</value>
+  </data>
+  <data name="BusinessEventsGameAttemptToStartTheGameFailed" xml:space="preserve">
+    <value>Attempt to start the game failed.</value>
+  </data>
+  <data name="BusinessEventsGameDenominationSelected" xml:space="preserve">
+    <value>Denomination was selected.</value>
+  </data>
+  <data name="BusinessEventsGameGambleEntered" xml:space="preserve">
+    <value>Gamble entered</value>
+  </data>
+  <data name="BusinessEventsGameGambleExited" xml:space="preserve">
+    <value>Gamble exited</value>
+  </data>
+  <data name="BusinessEventsGameGameDisabledByHost" xml:space="preserve">
+    <value>Game {0} disabled from host.</value>
+  </data>
+  <data name="BusinessEventsGameGameDisabledByOperator" xml:space="preserve">
+    <value>Game {0} disabled in service menu.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnabledByHost" xml:space="preserve">
+    <value>Game {0} enabled from host.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnabledByOperator" xml:space="preserve">
+    <value>Game {0} enabled in service menu.</value>
+  </data>
+  <data name="BusinessEventsGameGameEnded" xml:space="preserve">
+    <value>Game ended {0}</value>
+  </data>
+  <data name="BusinessEventsGameGameEndedData" xml:space="preserve">
+    <value>Win {0}</value>
+  </data>
+  <data name="BusinessEventsGameGameEntersIdleState" xml:space="preserve">
+    <value>Game enters idle state.</value>
+  </data>
+  <data name="BusinessEventsGameGameIsNotResponding" xml:space="preserve">
+    <value>Game is not responding.</value>
+  </data>
+  <data name="BusinessEventsGameGamePlayDisabled" xml:space="preserve">
+    <value>Game play disabled</value>
+  </data>
+  <data name="BusinessEventsGameGamePlayEnabled" xml:space="preserve">
+    <value>Game play enabled</value>
+  </data>
+  <data name="BusinessEventsGameGameReportDisplayed" xml:space="preserve">
+    <value>{0} game recall entry displayed.</value>
+  </data>
+  <data name="BusinessEventsGameGameSelected" xml:space="preserve">
+    <value>Game selected</value>
+  </data>
+  <data name="BusinessEventsGameGameStarted" xml:space="preserve">
+    <value>Game started {0} </value>
+  </data>
+  <data name="BusinessEventsGameGameStartedData" xml:space="preserve">
+    <value>Bet {0}</value>
+  </data>
+  <data name="BusinessEventsGameHostAutoplayModeDisabled" xml:space="preserve">
+    <value>Autoplay mode has been disabled by host.</value>
+  </data>
+  <data name="BusinessEventsGameHostAutoplayModeEnabled" xml:space="preserve">
+    <value>Autoplay mode has been enabled by host.</value>
+  </data>
+  <data name="BusinessEventsGameLobby" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="BusinessEventsGameNewGameVersionInstalled" xml:space="preserve">
+    <value>New version of game was installed.</value>
+  </data>
+  <data name="BusinessEventsGameNewVersionOfGameWasActivated" xml:space="preserve">
+    <value>New version of game was activated.</value>
+  </data>
+  <data name="BusinessEventsGameTerminalEntersGamePlayState" xml:space="preserve">
+    <value>Terminal enters game/play state.</value>
+  </data>
+  <data name="BusinessEventsHopperAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDisconnected" xml:space="preserve">
+    <value>Hopper disconnected</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDumpWasFinished" xml:space="preserve">
+    <value>Hopper dump was finished</value>
+  </data>
+  <data name="BusinessEventsHopperHopperDumpWasRequestedBy" xml:space="preserve">
+    <value>Hopper dump was requested by</value>
+  </data>
+  <data name="BusinessEventsHopperHopperEmpty" xml:space="preserve">
+    <value>Hopper empty</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFraud" xml:space="preserve">
+    <value>Hopper error</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFraudData" xml:space="preserve">
+    <value>Possible fraud</value>
+  </data>
+  <data name="BusinessEventsHopperHopperFull" xml:space="preserve">
+    <value>Hopper full detected</value>
+  </data>
+  <data name="BusinessEventsHopperHopperInserted" xml:space="preserve">
+    <value>Extra coin paid</value>
+  </data>
+  <data name="BusinessEventsHopperHopperJam" xml:space="preserve">
+    <value>Hopper jam</value>
+  </data>
+  <data name="BusinessEventsHopperHopperLevelLow" xml:space="preserve">
+    <value>Hopper level low</value>
+  </data>
+  <data name="BusinessEventsHopperHopperRefill" xml:space="preserve">
+    <value>Hopper Refill</value>
+  </data>
+  <data name="BusinessEventsJackpotAvailable" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="BusinessEventsJackpotInvalidJackpotConfiguration" xml:space="preserve">
+    <value>Invalid configuration - {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotConfigurationIsNotValid" xml:space="preserve">
+    <value>Jackpot configuration mismatch.</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotFeatureAvailable" xml:space="preserve">
+    <value>Jackpot feature available.</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Jackpot feature unavailable.</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServer" xml:space="preserve">
+    <value>Jackpot server: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServerError" xml:space="preserve">
+    <value>Jackpot server error!</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServerUnavailable" xml:space="preserve">
+    <value>Jackpot server unavailable.</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServerVersionCheckError" xml:space="preserve">
+    <value>Jackpot server version check error.</value>
+  </data>
+  <data name="BusinessEventsJackpotJackpotServerVersionCheckOk" xml:space="preserve">
+    <value>Jackpot Server Version Check success.</value>
+  </data>
+  <data name="BusinessEventsJackpotLinkedJackpotFeatureAvailable" xml:space="preserve">
+    <value>Linked jackpot feature available.</value>
+  </data>
+  <data name="BusinessEventsJackpotLinkedJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Linked jackpot feature unavailable.</value>
+  </data>
+  <data name="BusinessEventsJackpotLinkJackpot" xml:space="preserve">
+    <value>Link jackpot: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotLinkJackpotConfiguration" xml:space="preserve">
+    <value>Link jackpot configuration: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotMysteryJackpot" xml:space="preserve">
+    <value>Mystery jackpot: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotMysteryJackpotConfiguration" xml:space="preserve">
+    <value>Mystery jackpot configuration: {0}</value>
+  </data>
+  <data name="BusinessEventsJackpotMysteryJackpotFeatureAvailable" xml:space="preserve">
+    <value>Mystery jackpot feature available</value>
+  </data>
+  <data name="BusinessEventsJackpotMysteryJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Mystery jackpot feature unavailable</value>
+  </data>
+  <data name="BusinessEventsJackpotNotValid" xml:space="preserve">
+    <value>Not valid</value>
+  </data>
+  <data name="BusinessEventsJackpotUnavailable" xml:space="preserve">
+    <value>Unavailable</value>
+  </data>
+  <data name="BusinessEventsJackpotValid" xml:space="preserve">
+    <value>Valid</value>
+  </data>
+  <data name="BusinessEventsMetersElectronicCountersTest" xml:space="preserve">
+    <value>Electronic Counters Test</value>
+  </data>
+  <data name="BusinessEventsMetersMechanicalCountersTest" xml:space="preserve">
+    <value>Mechanical counters test.</value>
+  </data>
+  <data name="BusinessEventsMotherboardBatteryLow" xml:space="preserve">
+    <value>{0} indicates battery low </value>
+  </data>
+  <data name="BusinessEventsMotherboardDuringPowerOff" xml:space="preserve">
+    <value> during power off</value>
+  </data>
+  <data name="BusinessEventsMotherboardErrorMessage" xml:space="preserve">
+    <value>Error Message</value>
+  </data>
+  <data name="BusinessEventsMotherboardErrorType" xml:space="preserve">
+    <value>Error Type</value>
+  </data>
+  <data name="BusinessEventsMotherboardIndex" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="BusinessEventsMotherboardIntrusionCommunicationError" xml:space="preserve">
+    <value>Intrusion communication error</value>
+  </data>
+  <data name="BusinessEventsMotherboardIntrusionCommunicationRestored" xml:space="preserve">
+    <value>Intrusion communication restored</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterConnected" xml:space="preserve">
+    <value>Mechanical counter connected</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterDisconnected" xml:space="preserve">
+    <value>Mechanical counter disconnected</value>
+  </data>
+  <data name="BusinessEventsMotherboardMechanicalCounterNotIncremented" xml:space="preserve">
+    <value>Mechanical counter not incremented</value>
+  </data>
+  <data name="BusinessEventsMotherboardName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="BusinessEventsMotherboardNvRamError" xml:space="preserve">
+    <value>Non volatile ram error</value>
+  </data>
+  <data name="BusinessEventsMotherboardNvRamErrorFormattedData" xml:space="preserve">
+    <value>Error Type:{0}, Error Message:{1}</value>
+  </data>
+  <data name="BusinessEventsMotherboardPowerDown" xml:space="preserve">
+    <value>AC power was lost from gaming machine</value>
+  </data>
+  <data name="BusinessEventsMotherboardPowerUp" xml:space="preserve">
+    <value>AC power was applied to gaming machine</value>
+  </data>
+  <data name="BusinessEventsMotherboardTemperatureHigh" xml:space="preserve">
+    <value>Temperature high in </value>
+  </data>
+  <data name="BusinessEventsMotherboardVoltage" xml:space="preserve">
+    <value>Voltage</value>
+  </data>
+  <data name="BusinessEventsMotherboardWebGLCrash" xml:space="preserve">
+    <value>WebGL library crash. Client reloaded.</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterDisconnected" xml:space="preserve">
+    <value>Printer disconnected</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterJamPaper" xml:space="preserve">
+    <value>Printer jam error</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterLowPaper" xml:space="preserve">
+    <value>Printer paper low</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterOpenChassis" xml:space="preserve">
+    <value>Printer chassis is open</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterOutOfPaper" xml:space="preserve">
+    <value>Printer paper out error</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPaperOutClearable" xml:space="preserve">
+    <value>Printer paper out. Clear error with key.</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPaperOutNonClearable" xml:space="preserve">
+    <value>Printer paper out. Refill the paper.</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPowerOff" xml:space="preserve">
+    <value>Printer power off</value>
+  </data>
+  <data name="BusinessEventsPrinterPrinterPowerOn" xml:space="preserve">
+    <value>Printer connected</value>
+  </data>
+  <data name="BusinessEventsSecurityClockTampered" xml:space="preserve">
+    <value>Clock tampering detected</value>
+  </data>
+  <data name="BusinessEventsSecurityDisplayMetersAttendantMenuEnter" xml:space="preserve">
+    <value>Display meters or attendant menu has been entered</value>
+  </data>
+  <data name="BusinessEventsSecurityDisplayMetersAttendantMenuExit" xml:space="preserve">
+    <value>Display meters or attendant menu has been exited</value>
+  </data>
+  <data name="BusinessEventsSecurityPlayerLoggedIn" xml:space="preserve">
+    <value>Player logged in.</value>
+  </data>
+  <data name="BusinessEventsSecurityPlayerLoggedOut" xml:space="preserve">
+    <value>Player logged out.</value>
+  </data>
+  <data name="BusinessEventsSecuritySelfTestOperatorMenuEnter" xml:space="preserve">
+    <value>Self test or operator menu has been entered.</value>
+  </data>
+  <data name="BusinessEventsSecuritySelfTestOperatorMenuExit" xml:space="preserve">
+    <value>Self test or operator menu has been exited.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoggedIn" xml:space="preserve">
+    <value>User {0} logged in.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoggedOut" xml:space="preserve">
+    <value>User {0} logged out.</value>
+  </data>
+  <data name="BusinessEventsSecurityUserLoginFailed" xml:space="preserve">
+    <value>User login failed.</value>
+  </data>
+  <data name="BusinessEventsSWManagementDownloaderTypeOffline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="BusinessEventsSWManagementDownloaderTypeOnline" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedFromToVersion" xml:space="preserve">
+    <value>From version: {0}
+To version: {1}</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedNotUpdated" xml:space="preserve">
+    <value>Terminal not updated.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedReverted" xml:space="preserve">
+    <value>Terminal reverted.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedToVersion" xml:space="preserve">
+    <value>To version: {0}</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedUnexpected" xml:space="preserve">
+    <value>Unexpected terminal update state {0}.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdaterStateChangedUpdated" xml:space="preserve">
+    <value>Terminal updated.</value>
+  </data>
+  <data name="BusinessEventsSWManagementDownloaderServiceRestarted" xml:space="preserve">
+    <value>Downloader service restarted.</value>
+  </data>
+  <data name="BusinessEventsSWManagementMountUsbPressed" xml:space="preserve">
+    <value>Mount started for offline update</value>
+  </data>
+  <data name="BusinessEventsSWManagementOfflineTerminalUpdatePrepared" xml:space="preserve">
+    <value>Offline terminal update prepared.</value>
+  </data>
+  <data name="BusinessEventsSWManagementOfflineVersionCheckError" xml:space="preserve">
+    <value>Version check error after Mount for offline update</value>
+  </data>
+  <data name="BusinessEventsSWManagementOnlineTerminalUpdatePrepared" xml:space="preserve">
+    <value>Online terminal update prepared.</value>
+  </data>
+  <data name="BusinessEventsSWManagementOnlineVersionCheckError" xml:space="preserve">
+    <value>Online version check error</value>
+  </data>
+  <data name="BusinessEventsSWManagementPrepareOfflinePressed" xml:space="preserve">
+    <value>Prepare update started for offline update</value>
+  </data>
+  <data name="BusinessEventsSWManagementTerminalOnlineUpdateCanceled" xml:space="preserve">
+    <value>Online update of terminal canceled.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingCancelled" xml:space="preserve">
+    <value>{0} downloading of update canceled.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingFailed" xml:space="preserve">
+    <value>Downloading of update failed. ({0})</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingFinished" xml:space="preserve">
+    <value>Downloading of update finished. ({0})</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingPaused" xml:space="preserve">
+    <value>Downloading of update paused.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingResumed" xml:space="preserve">
+    <value>Downloading of update resumed.</value>
+  </data>
+  <data name="BusinessEventsSWManagementUpdateDownloadingStarted" xml:space="preserve">
+    <value>Downloading of update started. ({0})</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedClockTampering" xml:space="preserve">
+    <value>Clock tampering</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedLicenseActivated" xml:space="preserve">
+    <value>License activated</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedLicenseExpired" xml:space="preserve">
+    <value>License expired</value>
+  </data>
+  <data name="BusinessEventsSystemLicenseStateChangedNoLicense" xml:space="preserve">
+    <value>No license found</value>
+  </data>
+  <data name="BusinessEventsSystemMaintenanceModeMaintenanceModeEntered" xml:space="preserve">
+    <value>Maintenance mode entered</value>
+  </data>
+  <data name="BusinessEventsSystemMaintenanceModeMaintenanceModeExited" xml:space="preserve">
+    <value>Maintenance mode exited</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusDown" xml:space="preserve">
+    <value>SAS link communication down.</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusSasDongleMissing" xml:space="preserve">
+    <value>SAS dongle is missing!</value>
+  </data>
+  <data name="BusinessEventsSystemSasLinkStatusUp" xml:space="preserve">
+    <value>SAS link communication up.</value>
+  </data>
+  <data name="BusinessEventsSystemAnyDisplayMonitorFailed" xml:space="preserve">
+    <value>Display monitor failed.</value>
+  </data>
+  <data name="BusinessEventsSystemClientRequestFailed" xml:space="preserve">
+    <value>Client request failed.</value>
+  </data>
+  <data name="BusinessEventsSystemConnectionEstablished" xml:space="preserve">
+    <value>Connection was established.</value>
+  </data>
+  <data name="BusinessEventsSystemConnectionLost" xml:space="preserve">
+    <value>Connection was lost.</value>
+  </data>
+  <data name="BusinessEventsSystemDateAndTimeChanged" xml:space="preserve">
+    <value>Date and time changed.
+From {0} at time zone {1} with daylight saving time {2},
+to {3} at time zone {4} with daylight saving time {5}.</value>
+  </data>
+  <data name="BusinessEventsSystemDateAndTimeChangedFromSas" xml:space="preserve">
+    <value>Date and time changed from SAS.
+From {0} at time zone {1} with daylight saving time {2},
+to {3} at time zone {4} with daylight saving time {5}.</value>
+  </data>
+  <data name="BusinessEventsSystemDisplayMonitorsAreOK" xml:space="preserve">
+    <value>All display monitors are ok.</value>
+  </data>
+  <data name="BusinessEventsSystemDtsDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="BusinessEventsSystemDtsEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="BusinessEventsSystemUnhandledExceptionInBusinessProcess" xml:space="preserve">
+    <value>Unhandled exception in business process : {0}</value>
+  </data>
+  <data name="BusinessEventsSystemValidationIdConfigured" xml:space="preserve">
+    <value>Validation id is configured</value>
+  </data>
+  <data name="BusinessEventsSystemValidationIdNotConfigured" xml:space="preserve">
+    <value>Validation Id is not configured</value>
+  </data>
+  <data name="BusinessEventsUnknownEvent" xml:space="preserve">
+    <value>Unknown event.</value>
+  </data>
+  <data name="CommonFailure" xml:space="preserve">
+    <value>Failure</value>
+  </data>
+  <data name="CommonSuccess" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="ConfigurationsLightStateFlashFast" xml:space="preserve">
+    <value>Flash Fast</value>
+  </data>
+  <data name="ConfigurationsLightStateFlashSlow" xml:space="preserve">
+    <value>Flash Slow</value>
+  </data>
+  <data name="ConfigurationsLightStateOff" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="ConfigurationsLightStateOn" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="ConfigurationsNetworkDefaultGateway" xml:space="preserve">
+    <value>Default Gateway</value>
+  </data>
+  <data name="ConfigurationsNetworkIpAddress" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="ConfigurationsNetworkSubnetMask" xml:space="preserve">
+    <value>Subnet Mask</value>
+  </data>
+  <data name="ConfigurationsValidatorsValueMustBeGreaterThanLimit" xml:space="preserve">
+    <value>{0} must be higher than {1}</value>
+  </data>
+  <data name="EnumsAutoplayAutostartDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnumsAutoplayModeSpeedFast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="EnumsAutoplayModeSpeedStandard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="EnumsBetButtonsBehaviorNotPlay" xml:space="preserve">
+    <value>Not Play</value>
+  </data>
+  <data name="EnumsBetButtonsBehaviorPlay" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="EnumsCalculatingTypeInit" xml:space="preserve">
+    <value>Initiated</value>
+  </data>
+  <data name="EnumsCalculatingTypeOnDemand" xml:space="preserve">
+    <value>On demand</value>
+  </data>
+  <data name="EnumsCalculatingTypePeriod" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="EnumsCalculatingTypeSignificantEvent" xml:space="preserve">
+    <value>Significant event</value>
+  </data>
+  <data name="EnumsCashoutModeAttendant" xml:space="preserve">
+    <value>Attendant</value>
+  </data>
+  <data name="EnumsCashoutModeDispenser" xml:space="preserve">
+    <value>Dispenser</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserAttendant" xml:space="preserve">
+    <value>Dispenser/Attendant</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserPrinter" xml:space="preserve">
+    <value>Dispenser/Printer</value>
+  </data>
+  <data name="EnumsCashoutModeDispenserPrinterAttendant" xml:space="preserve">
+    <value>Dispenser/Printer/Attendant</value>
+  </data>
+  <data name="EnumsCashoutModeHopper" xml:space="preserve">
+    <value>Hopper</value>
+  </data>
+  <data name="EnumsCashoutModeHopperAttendant" xml:space="preserve">
+    <value>Hopper/Attendant</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenser" xml:space="preserve">
+    <value>Hopper/Dispenser</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserAttendant" xml:space="preserve">
+    <value>Hopper/Dispenser/Attendant</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserPrinter" xml:space="preserve">
+    <value>Hopper/Dispenser/Printer</value>
+  </data>
+  <data name="EnumsCashoutModeHopperDispenserPrinterAttendant" xml:space="preserve">
+    <value>Hopper/Dispenser/Printer/Attendant</value>
+  </data>
+  <data name="EnumsCashoutModeHopperPrinter" xml:space="preserve">
+    <value>Hopper/Printer</value>
+  </data>
+  <data name="EnumsCashoutModeHopperPrinterAttendant" xml:space="preserve">
+    <value>Hopper/Printer/Attendant</value>
+  </data>
+  <data name="EnumsCashoutModePrinter" xml:space="preserve">
+    <value>Printer</value>
+  </data>
+  <data name="EnumsCashoutModePrinterAttendant" xml:space="preserve">
+    <value>Printer/Attendant</value>
+  </data>
+  <data name="EnumsCashOutToHostControlDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnumsCashOutToHostControlHard" xml:space="preserve">
+    <value>Hard</value>
+  </data>
+  <data name="EnumsCashOutToHostControlHostControlled" xml:space="preserve">
+    <value>Host Controlled</value>
+  </data>
+  <data name="EnumsCashOutToHostControlSoft" xml:space="preserve">
+    <value>Soft</value>
+  </data>
+  <data name="EnumsChannelsBoth" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="EnumsChannelsChannel1" xml:space="preserve">
+    <value>Channel 1</value>
+  </data>
+  <data name="EnumsChannelsChannel2" xml:space="preserve">
+    <value>Channel 2</value>
+  </data>
+  <data name="EnumsChannelsDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnumsChannelsJackpotAPI" xml:space="preserve">
+    <value>Jackpot API</value>
+  </data>
+  <data name="EnumsCheckboxStateDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnumsCheckboxStateEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="EnumsCheckboxStateNotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
+  <data name="EnumsCounterInUiCounter1" xml:space="preserve">
+    <value>Counter1</value>
+  </data>
+  <data name="EnumsCounterInUiCounter10" xml:space="preserve">
+    <value>Counter10</value>
+  </data>
+  <data name="EnumsCounterInUiCounter2" xml:space="preserve">
+    <value>Counter2</value>
+  </data>
+  <data name="EnumsCounterInUiCounter3" xml:space="preserve">
+    <value>Counter3</value>
+  </data>
+  <data name="EnumsCounterInUiCounter4" xml:space="preserve">
+    <value>Counter4</value>
+  </data>
+  <data name="EnumsCounterInUiCounter5" xml:space="preserve">
+    <value>Counter5</value>
+  </data>
+  <data name="EnumsCounterInUiCounter6" xml:space="preserve">
+    <value>Counter6</value>
+  </data>
+  <data name="EnumsCounterInUiCounter7" xml:space="preserve">
+    <value>Counter7</value>
+  </data>
+  <data name="EnumsCounterInUiCounter8" xml:space="preserve">
+    <value>Counter8</value>
+  </data>
+  <data name="EnumsCounterInUiCounter9" xml:space="preserve">
+    <value>Counter9</value>
+  </data>
+  <data name="EnumsCounterInUiNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="EnumsFeatureAutoenterDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnumsFeatureAutoenterEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="EnumsFeatureAutoplayAutostartDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnumsGambleModeCards" xml:space="preserve">
+    <value>Cards</value>
+  </data>
+  <data name="EnumsGambleModeLadder" xml:space="preserve">
+    <value>Ladder</value>
+  </data>
+  <data name="EnumsGambleModePlayersChoice" xml:space="preserve">
+    <value>Player&#39;s choice</value>
+  </data>
+  <data name="EnumsGameActiveTypeDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnumsGameActiveTypeNo" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="EnumsGameActiveTypeYes" xml:space="preserve">
+    <value>YES</value>
+  </data>
+  <data name="EnumsGameLobbyLayoutTypeClassic" xml:space="preserve">
+    <value>Classic</value>
+  </data>
+  <data name="EnumsGameLobbyLayoutTypeFullPromo" xml:space="preserve">
+    <value>Full Promo</value>
+  </data>
+  <data name="EnumsGameLobbyLayoutTypeMiddlePromo" xml:space="preserve">
+    <value>Middle Promo</value>
+  </data>
+  <data name="EnumsGameLobbyLayoutTypeTopLeftPromo" xml:space="preserve">
+    <value>Top Left Promo</value>
+  </data>
+  <data name="EnumsGameLobbyLayoutTypeTopRightPromo" xml:space="preserve">
+    <value>Top Right Promo</value>
+  </data>
+  <data name="EnumsGamePlayModeCurrency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="EnumsGamePlayModeDenomination" xml:space="preserve">
+    <value>Denomination</value>
+  </data>
+  <data name="EnumsGamePlaySpeedStandard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="EnumsGameSetupTypeBets" xml:space="preserve">
+    <value>bets</value>
+  </data>
+  <data name="EnumsGameSetupTypeChips" xml:space="preserve">
+    <value>chips</value>
+  </data>
+  <data name="EnumsJackpotServerVersionVersion_1_0" xml:space="preserve">
+    <value>JS 1.0 Version</value>
+  </data>
+  <data name="EnumsJackpotServerVersionVersion_2_0" xml:space="preserve">
+    <value>JS 2.0 Version</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyAutomatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnumsJackpotWinToCreditGraduallyStartedByPlayer" xml:space="preserve">
+    <value>Started by player</value>
+  </data>
+  <data name="EnumsLEDStripeColorIntensityHigh" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="EnumsLEDStripeColorIntensityLow" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="EnumsLEDStripeColorIntensityNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="EnumsLockedUnlockedModeLocked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="EnumsLockedUnlockedModeUnlocked" xml:space="preserve">
+    <value>Unlocked</value>
+  </data>
+  <data name="EnumsMaxGambleAttemptsUnlimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_0_01" xml:space="preserve">
+    <value>1 tick per 0.01</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_0_10" xml:space="preserve">
+    <value>1 tick per 0.10</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_1_00" xml:space="preserve">
+    <value>1 tick per 1.00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_10_00" xml:space="preserve">
+    <value>1 tick per 10.00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_100_00" xml:space="preserve">
+    <value>1 tick per 100.00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_1000_00" xml:space="preserve">
+    <value>1 tick per 1 000.00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_10000_00" xml:space="preserve">
+    <value>1 tick per 10 000.00</value>
+  </data>
+  <data name="EnumsMechanicalCounterScaleValuesOne_Tick_Per_100000_00" xml:space="preserve">
+    <value>1 tick per 100 000.00</value>
+  </data>
+  <data name="EnumsQuickStopAllowedInstantly" xml:space="preserve">
+    <value>Instantly</value>
+  </data>
+  <data name="EnumsQuickStopAllowedNever" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="EnumsRouletteTableColorBlue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="EnumsRouletteTableColorGold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="EnumsRouletteTableColorGray" xml:space="preserve">
+    <value>Gray</value>
+  </data>
+  <data name="EnumsRouletteTableColorGreen" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="EnumsRouletteTableColorOrange" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+  <data name="EnumsRouletteTableColorPurple" xml:space="preserve">
+    <value>Purple</value>
+  </data>
+  <data name="EnumsRouletteTableColorRed" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="EnumsSasValidationEnhanced" xml:space="preserve">
+    <value>Enhanced</value>
+  </data>
+  <data name="EnumsSasValidationNoValidation" xml:space="preserve">
+    <value>No Validation</value>
+  </data>
+  <data name="EnumsSasValidationStandard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="EnumsSasValidationSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="EnumsSoftwareButtonAutoplay" xml:space="preserve">
+    <value>Autoplay</value>
+  </data>
+  <data name="EnumsSoftwareButtonSpin" xml:space="preserve">
+    <value>Spin</value>
+  </data>
+  <data name="EnumsStartDownloadTerminalStateAlways" xml:space="preserve">
+    <value>Always</value>
+  </data>
+  <data name="EnumsStartDownloadTerminalStateNotInGame" xml:space="preserve">
+    <value>Not In Game</value>
+  </data>
+  <data name="EnumsVoiceGenderFemale" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="EnumsVoiceGenderMale" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="ServicesForgeryLastResult" xml:space="preserve">
+    <value>Last result: {0}</value>
+  </data>
+  <data name="ServicesForgeryPartitonHashCalculating" xml:space="preserve">
+    <value>Calculation in progress…</value>
+  </data>
+  <data name="ValidationsMessagesBetweenMinMax" xml:space="preserve">
+    <value>Value must be between {0} and {1}.</value>
+  </data>
+  <data name="ValidationsMessagesCurrencyCodeWrongFormat" xml:space="preserve">
+    <value>Wrong currency code format! Only 3 letter alphabetic code is allowed.</value>
+  </data>
+  <data name="ValidationsMessagesFieldRequiresNonDefaultValue" xml:space="preserve">
+    <value>The {0} field requires a non-default value.</value>
+  </data>
+  <data name="ValidationsMessagesInvalidDenominationBet" xml:space="preserve">
+    <value>Selected min bet in denomination {0} is higher than min bet in denomination {1}</value>
+  </data>
+  <data name="ValidationsMessagesNotEmptyGuid" xml:space="preserve">
+    <value>GUID must not be empty.</value>
+  </data>
+  <data name="ValidationsMessagesNotValidNumber" xml:space="preserve">
+    <value>Value is not a valid number.</value>
+  </data>
+  <data name="ValidationsMessagesRangeError" xml:space="preserve">
+    <value>The field {0} must be between {1} and {2}</value>
+  </data>
+  <data name="ValidationsMessagesRequiredNotSet" xml:space="preserve">
+    <value>Some of required properties are not set!</value>
+  </data>
+  <data name="ValidationsMessagesValidationForFailed" xml:space="preserve">
+    <value>Validation for {0} failed!</value>
+  </data>
+  <data name="ValidationsAttendantAddCreditLimit" xml:space="preserve">
+    <value>Attendant Add Credit Limit must be smaller than or equal to Credit Limit.</value>
+  </data>
+  <data name="ValidationsErrors" xml:space="preserve">
+    <value>Errors:</value>
+  </data>
+  <data name="ValidationsUpperJackpotLimit" xml:space="preserve">
+    <value>Upper Jackpot Limit must be greater than or equal to Jackpot Limit.</value>
+  </data>
+</root>

@@ -1,7 +1,7 @@
 export type LhqModelType = Record<string, unknown> & {
     model: {
         uid: string,
-        version: 1,
+        version: number,
         options: {
             categories: boolean,
             resources: 'All' | 'Categories'

@@ -1,13 +1,20 @@
 ﻿using System.Drawing;
+using System.Text;
+using JavaScriptEngineSwitcher.Core;
+using Jint;
+using Jint.Runtime;
 using LHQ.Cmd;
 using Pastel;
-
-Test();
-
 
 string Grey(string msg) => msg.Pastel(ConsoleColor.Gray);
 string White(string msg) => msg.Pastel(ConsoleColor.White);
 string Error(string msg) => msg.Pastel(ConsoleColor.Red);
+
+// var input = """
+//             +ľščťžýáíé=´ˇúäň§ô-.,/()!_:?;ó<>|{}[]~!@#$%^&*()_+
+//             """;
+// File.WriteAllText(@"C:\tmp\htmlencode_net8_input.txt", input, Encoding.UTF8);
+// File.WriteAllText(@"C:\tmp\htmlencode_net8_output.txt", System.Net.WebUtility.HtmlEncode(input), Encoding.UTF8);
 
 //args = ["--help"];
 
@@ -21,6 +28,16 @@ var csProjName = "Test.Localization.csproj";
 // var csProjName = "Localization.Common.csproj";
 
 var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "GenOutput");
+if (!Directory.Exists(outputDir))
+{
+    Directory.CreateDirectory(outputDir);
+}
+else
+{
+    Directory.Delete(outputDir, true);
+    Directory.CreateDirectory(outputDir);
+}
+
 var testDataFolder = Path.GetDirectoryName(lhqFullPath)!;
 
 args =
@@ -35,7 +52,7 @@ var missingParams = args.Length < 2;
 
 try
 {
-    Console.WriteLine($"{White("LHQ Model Generator")}  " +
+    Console.WriteLine($"{White("LHQ Model Generator")}  " + 
                       Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n"));
 
     if (missingParams)
@@ -75,8 +92,8 @@ try
         {
             throw new Exception("Unable to determine output directory!");
         }
-        
-        Dictionary<string,object> hostData = new();
+
+        Dictionary<string, object> hostData = new();
         if (args.Length > 2)
         {
             int startIdx = args[2].StartsWith("--") ? 2 : 3;
@@ -102,32 +119,56 @@ try
 
         using var generator = new Generator();
         var generatedFiles = generator.Generate(lhqFile, csProjFile, hostData);
-        
+
         Console.WriteLine($"Generated {generatedFiles.Count} files:\n");
 
         foreach (var file in generatedFiles)
         {
             string fileName = Path.Combine(outDir, file.Key);
             Console.WriteLine(fileName);
-            
+
             var dir = Path.GetDirectoryName(fileName);
             if (dir != null && !Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
-            
+
             File.WriteAllText(fileName, file.Value);
         }
-
     }
 }
 catch (Exception e)
 {
-    Console.WriteLine(Error("Error: \n") + e.Message);
+    bool genericLog = true;
+    
+    try
+    {
+        if (e is JsRuntimeException jsRuntimeException &&
+            e.InnerException is JavaScriptException jsException)
+        {
+            if (jsRuntimeException.Type == "AppError" )
+            {
+                var message = jsException.Error.Get("message");
+
+                if (!string.IsNullOrEmpty(message?.ToString()))
+                {
+                    Console.Write(Error(message.ToString()));
+                    genericLog = false;
+                }
+            }
+        }
+    }
+    catch
+    {}
+
+    if (genericLog)
+    {
+        Console.WriteLine(Error("Error: \n") + e.Message);
+    }
 }
 finally
 {
-    Console.ReadLine();
+    //Console.ReadLine();
 }
 
 void WriteHelp()
@@ -191,46 +232,4 @@ void WriteHelp()
                - xml element {White($"/Project/ItemGroup/Content[@Include='{param_lhq}']/CustomToolNamespace")}
                     
          """);
-}
-
-
-void Test()
-{
-    var propertyComment =
-        """
-        Date and time changed.
-        From {0} at time zone {1} with daylight saving time {2},
-        to {3} at time zone {4} with daylight saving time {5}.
-        """;
-    bool trimmed = false;
-    var idxNewLine = propertyComment.IndexOf(Environment.NewLine);
-    
-    if (idxNewLine == -1)
-    {
-        idxNewLine = propertyComment.IndexOf('\n');
-    }
-
-    if (idxNewLine == -1)
-    {
-        idxNewLine = propertyComment.IndexOf('\r');
-    }
-
-    if (idxNewLine > -1)
-    {
-        propertyComment = propertyComment.Substring(0, idxNewLine);
-        trimmed = true;
-    }
-
-    if (propertyComment.Length > 80)
-    {
-        propertyComment = propertyComment.Substring(0, 80);
-        trimmed = true;
-    }
-
-    if (trimmed)
-    {
-        propertyComment += "...";
-    }
-
-    propertyComment = propertyComment.Replace('\t', ' ');
 }

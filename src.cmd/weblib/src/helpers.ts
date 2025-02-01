@@ -1,4 +1,9 @@
-import {getNestedPropertyValue, isNullOrEmpty, iterateObject, sortBy, sortObjectByKey} from "./utils";
+import {
+    getNestedPropertyValue,
+    isNullOrEmpty,
+    sortBy,
+    sortObjectByKey, textEncode,
+} from "./utils";
 import {LhqModelResourceType, TemplateRootModel} from "./types";
 import {HostEnv} from "./hostEnv";
 
@@ -20,11 +25,15 @@ helpersList['x-trimEnd'] = trimEnd;
 helpersList['x-equals'] = equals;
 helpersList['x-resourceComment'] = resourceComment;
 helpersList['x-resourceValue'] = resourceValue;
+helpersList['x-resourceHasLang'] = resourceHasLang;
 helpersList['x-resourceParamNames'] = resourceParamNames;
 helpersList['x-merge'] = merge;
 helpersList['x-sortBy'] = sortBy;
 helpersList['x-sortObject'] = sortObjectByKeyHelper;
 helpersList['x-objCount'] = objCount;
+helpersList['x-textEncode'] = textEncodeHelper;
+// helpersList['x-htmlEncode'] = htmlEncodeHelper;
+// helpersList['x-xmlEncode'] = xmlEncodeHelper;
 
 //helpersList['x-each'] = eachsorted;
 
@@ -192,22 +201,28 @@ function resourceComment(resource: LhqModelResourceType, options: any): string {
 function resourceValue(resource: LhqModelResourceType, options: any): string {
     if (typeof resource === 'object') {
         const lang = options.hash.lang ?? '';
-        //HostEnv.debugLog(`lang: ${lang}, res: ` + JSON.stringify(resource));
         
         if (!isNullOrEmpty(lang)) {
-            const resValue = resource?.values?.[lang]?.value ?? '';
-            // @ts-ignore
-            //return new Handlebars.SafeString(resValue);
-            return Handlebars.Utils.escapeExpression(resValue);
-            //return resValue;
+            let resValue = resource?.values?.[lang]?.value ?? '';
+            return resValue;
         }
     }
 
     return '';
 }
 
+function resourceHasLang(resource: LhqModelResourceType, options: any): boolean {
+    if (typeof resource === 'object') {
+        const lang = options.hash.lang ?? '';
+        if (!isNullOrEmpty(lang) && resource.values && resource.values[lang]) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function resourceParamNames(resource: LhqModelResourceType, options: any): string {
-    //HostEnv.debugLog('resourceParamNames>> ' + JSON.stringify(resource))
     if (typeof resource === 'object' && resource.parameters) {
         const withTypes = options?.hash?.withTypes ?? false;
 
@@ -220,8 +235,6 @@ function resourceParamNames(resource: LhqModelResourceType, options: any): strin
 }
 
 function merge(context: any, options: any) {
-    //HostEnv.debugLog('[merge]>> ' + JSON.stringify(options.hash ?? {}));
-
     return Object.assign({}, context, options.hash ?? {});
 }
 
@@ -232,6 +245,14 @@ function sortObjectByKeyHelper(obj: Record<string, unknown>, options: any) {
 
 function objCount(obj: Record<string, unknown>): number {
     return isNullOrEmpty(obj) ? 0 : Object.keys(obj).length;
+}
+
+function textEncodeHelper(str: string, options: any): string {
+    const mode = options?.hash?.mode ?? 'html';
+    const quotes = options?.hash?.quotes ?? false;
+    const s = textEncode(str, {mode: mode, quotes});
+    // @ts-ignore
+    return new Handlebars.SafeString(s);
 }
 
 /*

@@ -194,7 +194,7 @@ namespace test.localization
 			{
 			}
 			/// <summary>
-			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2}
+			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
 			/// </summary>
 			public const string Title = "MessagesTitle";
 		}
@@ -244,7 +244,7 @@ namespace test.localization
 			{
 			}
 			/// <summary>
-			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2}
+			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
 			/// </summary>
 			public static string Title(object userName,object productName,object date) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Messages.Title), userName,productName,date);
 	

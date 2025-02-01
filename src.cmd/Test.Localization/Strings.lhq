@@ -16,21 +16,6 @@
   "categories": {
     "Cars": {
       "categories": {
-        "Electric": {
-          "resources": {
-            "ToyotaEV": {
-              "state": "Edited",
-              "values": {
-                "en": {
-                  "value": "toyota EN"
-                },
-                "sk": {
-                  "value": "toyota SK"
-                }
-              }
-            }
-          }
-        },
         "Diesel": {
           "categories": {
             "Old": {
@@ -62,6 +47,21 @@
               }
             }
           }
+        },
+        "Electric": {
+          "resources": {
+            "ToyotaEV": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "toyota EN"
+                },
+                "sk": {
+                  "value": "toyota SK"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -85,7 +85,7 @@
           },
           "values": {
             "en": {
-              "value": "Hi {0}, we're glad you are using {1} at {2}"
+              "value": "Hi {0}, we're glad you are using {1} at {2} / \\ [ ] < > \" & car <abc> </end>"
             },
             "sk": {
               "value": "Ahoj {0}, sme radi že používate {1} v čase {2}"

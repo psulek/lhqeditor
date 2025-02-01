@@ -6,6 +6,7 @@
 declare function HostDebugLog(msg: string): void;
 declare function HostAddResultFile(name: string, content: string): void;
 declare function HostPathCombine(path1: string, path2: string): string;
+declare function HostWebHtmlEncode(input: string): string;
 
 export class HostEnv {
     public static addResultFile(name: string, content: string) {
@@ -30,5 +31,13 @@ export class HostEnv {
         }
         
         return path1 + '/' + path2;
+    }
+    
+    public static webHtmlEncode(input: string): string {
+        if (HostWebHtmlEncode) {
+            return HostWebHtmlEncode(input);
+        }
+        
+        return input;
     }
 }

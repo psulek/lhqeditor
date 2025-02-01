@@ -1,8 +1,8 @@
-const he = require('he');
+//const he = require('he');
 
-export function htmlEncode(value: string, options: any): string {
-    return he.encode(value, options);
-}
+// export function htmlEncode(value: string, options: any): string {
+//     return he.encode(value, options);
+// }
 
 export function getNestedPropertyValue<T, U>(obj: T, path: string): U {
     return path.split('.').reduce((acc, part) => {
@@ -42,8 +42,8 @@ export function sortObjectByKey<T>(obj: Record<string, T>, sortOrder: 'asc' | 'd
     );
 }
 
-export function sortObjectByValue<T>(obj: Record<string, T>, predicate: (item: T) => number | string,  
-                               sortOrder: 'asc' | 'desc' = 'asc'): Record<string, T> {
+export function sortObjectByValue<T>(obj: Record<string, T>, predicate: (item: T) => number | string,
+                                     sortOrder: 'asc' | 'desc' = 'asc'): Record<string, T> {
 
     return Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => {
         const aValue = predicate(a);
@@ -74,4 +74,52 @@ export function iterateObject<T>(obj: Record<string, T>, callback: (key: string,
     for (const [key, value] of Object.entries(obj)) {
         callback(key, value);
     }
+}
+
+const encodingCharMaps: Record<string, Record<string, string>> = {
+    html: {
+        '>': '&gt;',
+        '<': '&lt;',
+        '"': '&quot;',
+        "'": '&apos;',
+        '&': '&amp;'
+    },
+    xml: {
+        '>': '&gt;',
+        '<': '&lt;',
+        '&': '&amp;'
+    },
+    xml_quotes: {
+        '>': '&gt;',
+        '<': '&lt;',
+        '"': '&quot;',
+        "'": '&apos;',
+        '&': '&amp;'
+    }
+};
+
+export function textEncode(str: string, encoder: { mode: 'html'} | {mode: 'xml', quotes: boolean}): string {
+    if (isNullOrEmpty(str)) {
+        return str;
+    }
+
+    const encodedChars = [];
+    for (let i = 0; i < str.length; i++) {
+        const ch = str.charAt(i);
+        
+        let map: Record<string, string>;
+        if (encoder.mode === 'html') {
+            map = encodingCharMaps.html;
+        } else {
+            map = (encoder.quotes ?? true) ? encodingCharMaps.xml_quotes : encodingCharMaps.xml;
+        }
+
+        if (map.hasOwnProperty(ch)) {
+            encodedChars.push(map[ch]);
+        } else {
+            encodedChars.push(ch);
+        }
+    }
+
+    return encodedChars.join('');
 }

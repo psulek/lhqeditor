@@ -47,9 +47,12 @@ public class Generator : IDisposable
         });
         var hostPathCombine = new Func<string, string, string>(Path.Combine);
 
+        var hostWebHtmlEncode = new Func<string, string>(System.Net.WebUtility.HtmlEncode);
+
         _engine.EmbedHostObject("HostDebugLog", hostDebugLog);
         _engine.EmbedHostObject("HostAddResultFile", hostAddResultFile);
         _engine.EmbedHostObject("HostPathCombine", hostPathCombine);
+        _engine.EmbedHostObject("HostWebHtmlEncode", hostWebHtmlEncode);
         
         var type = typeof(Generator);
         var thisAssembly = type.Assembly;

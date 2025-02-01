@@ -131,6 +131,9 @@
     <value>toyota SK</value>
   </data>
   <data name="MessagesTitle" xml:space="preserve">
-    <value>Ahoj {0}, sme radi že použ&#237;vate {1} v čase {2}</value>
+    <value>Ahoj {0}, sme radi že používate {1} v čase {2}</value>
+  </data>
+  <data name="aaa" xml:space="preserve">
+    <value>+ľščťžýáíé´ň§äú'ď &lt;abc&gt; /\ []</value>
   </data>
 </root>

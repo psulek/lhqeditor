@@ -2,6 +2,7 @@ import {CSharpGeneratorSettings, ModelDataNode, ResXGeneratorSettings, TemplateR
 import {CodeGeneratorTemplate} from "./codeGeneratorTemplate";
 import {HostEnv} from "../hostEnv";
 import {isNullOrEmpty} from "../utils";
+import {AppError} from "../AppError";
 
 type Settings<TCSharpSettings extends CSharpGeneratorSettings> = {
     CSharp: TCSharpSettings;
@@ -18,6 +19,12 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
     protected abstract get csharpTemplateName(): string;
 
     public generate(rootModel: TemplateRootModel) {
+        const modelVersion = rootModel.model.model.version;
+        if (modelVersion < 2) {
+            throw new AppError(`Current LHQ file version (${modelVersion}) is not supported! (min version 2 is supported)`);
+        }
+
+
         const modelName = rootModel.model.model.name;
 
         if (this._settings.CSharp.Enabled) {

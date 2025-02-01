@@ -133,12 +133,14 @@
 {{#*inline "resources"}}
 {{#if resources}}
 {{#each resources}}
+{{#if (x-resourceHasLang this lang=@root.extra.lang) }}
 <data name="{{x-concat ../_parent @../key @key}}" xml:space="preserve">
-  <value>{{ x-resourceValue this lang=@root.extra.lang }}</value>
+  <value>{{ x-textEncode (x-resourceValue this lang=@root.extra.lang) mode="xml" quotes=false }}</value>
   {{#if description}}
   <comment>{{ description }}</comment>
   {{/if}}
 </data>
+{{/if}}
 {{/each}}
 {{/if}}
 {{/inline}}

@@ -177,6 +177,10 @@ namespace test.localization
 				/// Gets localized string similar to: Mercedes EN
 				/// </summary>
 				public const string Mercedes = "CarsDieselMercedes";
+				/// <summary>
+				/// Gets localized string similar to: Skoda EN
+				/// </summary>
+				public const string Skoda = "CarsDieselSkoda";
 			}
 			
 			public static partial class Electric
@@ -225,6 +229,11 @@ namespace test.localization
 				/// Gets localized string similar to: Mercedes EN
 				/// </summary>
 				public static string Mercedes => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Mercedes);
+		
+				/// <summary>
+				/// Gets localized string similar to: Skoda EN
+				/// </summary>
+				public static string Skoda => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Skoda);
 		
 			}
 			

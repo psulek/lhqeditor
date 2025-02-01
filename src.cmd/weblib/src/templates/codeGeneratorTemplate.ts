@@ -40,7 +40,17 @@ export abstract class CodeGeneratorTemplate {
     protected compile(handlebarsTemplate: string, data: unknown): string {
         // @ts-ignore
         const compiled = Handlebars.compile(handlebarsTemplate);
-        return compiled(data);
+        let result = compiled(data) as string;
+        result = result.replace(/\t¤$/gm, "");
+        //result = result.replace(/\t©$/gm, "");
+        
+        // let err = false;
+        // // @ts-ignore
+        // result.replace(/^[\t_]*?(\t_)$/gm, function(match, group) {
+        //    
+        // });
+        
+        return result;
     }
 }
 

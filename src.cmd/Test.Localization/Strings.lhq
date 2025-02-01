@@ -45,6 +45,17 @@
                   "value": "Mercedes SK"
                 }
               }
+            },
+            "Skoda": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Skoda EN"
+                },
+                "sk": {
+                  "value": "Škoda SK"
+                }
+              }
             }
           }
         },
@@ -149,7 +160,7 @@
                   "attrs": {
                     "OutputFolder": "Resources",
                     "CultureCodeInFileNameForPrimaryLanguage": "true",
-                    "CompatibleTextEncoding": "true"
+                    "CompatibleTextEncoding": "false"
                   }
                 }
               ]

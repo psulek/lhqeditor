@@ -129,6 +129,9 @@ na 3 w strefie czasowej 4 z czasem letnim 5.</value>
   <data name="CarsDieselMercedes" xml:space="preserve">
     <value>Mercedes SK</value>
   </data>
+  <data name="CarsDieselSkoda" xml:space="preserve">
+    <value>Škoda SK</value>
+  </data>
   <data name="CarsElectricToyotaEV" xml:space="preserve">
     <value>toyota SK</value>
   </data>

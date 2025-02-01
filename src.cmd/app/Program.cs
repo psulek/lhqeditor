@@ -25,14 +25,14 @@ string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
 //args = ["--help"];
 
-// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
-// var csProjName = "Test.Localization.csproj";
+var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
+var csProjName = "Test.Localization.csproj";
+
+// var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
+// var csProjName = "Localization.Common.csproj";
 
 // var lhqFullPath = "C:\\Users\\peter.sulek\\source\\repos\\ScaleHQ.Windows.WPF1\\ScaleHQ.Windows.WPF1\\Strings.lhq";
 // var csProjName = "ScaleHQ.Windows.WPF1.csproj";
-
-var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
-var csProjName = "Localization.Common.csproj";
 
 var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "GenOutput");
 if (!Directory.Exists(outputDir))
@@ -142,7 +142,7 @@ try
                 Directory.CreateDirectory(dir);
             }
 
-            File.WriteAllText(fileName, file.Value);
+            File.WriteAllText(fileName, file.Value, Encoding.UTF8);
         }
     }
 }

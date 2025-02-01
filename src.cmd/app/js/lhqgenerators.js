@@ -219,7 +219,10 @@ function sortObjectByKeyHelper(obj, options) {
     return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.sortObjectByKey)(obj, sortOrder);
 }
 function objCount(obj) {
-    return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(obj) ? 0 : Object.keys(obj).length;
+    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(obj)) {
+        return 0;
+    }
+    return Array.isArray(obj) ? obj.length : Object.keys(obj).length;
 }
 function textEncodeHelper(str, options) {
     var _a, _b, _c, _d;
@@ -470,7 +473,15 @@ class CodeGeneratorTemplate {
     compile(handlebarsTemplate, data) {
         // @ts-ignore
         const compiled = Handlebars.compile(handlebarsTemplate);
-        return compiled(data);
+        let result = compiled(data);
+        result = result.replace(/\t¤$/gm, "");
+        //result = result.replace(/\t©$/gm, "");
+        // let err = false;
+        // // @ts-ignore
+        // result.replace(/^[\t_]*?(\t_)$/gm, function(match, group) {
+        //    
+        // });
+        return result;
     }
 }
 

@@ -242,8 +242,12 @@ function sortObjectByKeyHelper(obj: Record<string, unknown>, options: any) {
     return sortObjectByKey(obj, sortOrder);
 }
 
-function objCount(obj: Record<string, unknown>): number {
-    return isNullOrEmpty(obj) ? 0 : Object.keys(obj).length;
+function objCount(obj: Record<string, unknown> | Array<unknown>): number {
+    if (isNullOrEmpty(obj)) {
+        return 0;
+    }
+
+    return Array.isArray(obj) ? obj.length : Object.keys(obj).length;
 }
 
 function textEncodeHelper(str: string, options: any): string {

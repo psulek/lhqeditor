@@ -127,6 +127,9 @@
   <data name="CarsDieselMercedes" xml:space="preserve">
     <value>Mercedes EN</value>
   </data>
+  <data name="CarsDieselSkoda" xml:space="preserve">
+    <value>Skoda EN</value>
+  </data>
   <data name="CarsElectricToyotaEV" xml:space="preserve">
     <value>toyota EN</value>
   </data>

@@ -11,21 +11,28 @@ string White(string msg) => msg.Pastel(ConsoleColor.White);
 string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
 // var input = """
-//             +ľščťžýáíé=´ˇúäň§ô-.,/()!_:?;ó<>|{}[]~!@#$%^&*()_+
+//             Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim {2},\nna {3} w strefie czasowej {4} z czasem letnim {5}.
 //             """;
-// File.WriteAllText(@"C:\tmp\htmlencode_net8_input.txt", input, Encoding.UTF8);
-// File.WriteAllText(@"C:\tmp\htmlencode_net8_output.txt", System.Net.WebUtility.HtmlEncode(input), Encoding.UTF8);
+//
+// var xx = """
+//          Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim {2},\nna {3} w strefie czasowej {4} z czasem letnim {5}.
+//          """;
+//
+// var aa = System.Net.WebUtility.HtmlEncode(input);
+// var tempFileName = Path.GetTempFileName();
+// File.WriteAllText(tempFileName, aa, Encoding.UTF8);
+
 
 //args = ["--help"];
 
-var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
-var csProjName = "Test.Localization.csproj";
+// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
+// var csProjName = "Test.Localization.csproj";
 
 // var lhqFullPath = "C:\\Users\\peter.sulek\\source\\repos\\ScaleHQ.Windows.WPF1\\ScaleHQ.Windows.WPF1\\Strings.lhq";
 // var csProjName = "ScaleHQ.Windows.WPF1.csproj";
 
-// var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
-// var csProjName = "Localization.Common.csproj";
+var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
+var csProjName = "Localization.Common.csproj";
 
 var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "GenOutput");
 if (!Directory.Exists(outputDir))
@@ -116,6 +123,8 @@ try
                 }
             }
         }
+        
+        Console.WriteLine($"Generating files from LHQ model {lhqFile.Pastel(ConsoleColor.DarkCyan)} ...");
 
         using var generator = new Generator();
         var generatedFiles = generator.Generate(lhqFile, csProjFile, hostData);
@@ -173,7 +182,7 @@ finally
 
 void WriteHelp()
 {
-    var lhqcmd = "lhqcmd.exe".Pastel(ConsoleColor.Cyan);
+    var lhqcmd = "lhqcmd.exe".Pastel(ConsoleColor.DarkCyan);
     var exam_lhq = White("Strings.lhq");
     var exam_csproj = White("MyProject.csproj");
     var param_lhq = "lhq model file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);

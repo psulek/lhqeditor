@@ -32,8 +32,7 @@ helpersList['x-sortBy'] = sortBy;
 helpersList['x-sortObject'] = sortObjectByKeyHelper;
 helpersList['x-objCount'] = objCount;
 helpersList['x-textEncode'] = textEncodeHelper;
-// helpersList['x-htmlEncode'] = htmlEncodeHelper;
-// helpersList['x-xmlEncode'] = xmlEncodeHelper;
+helpersList['x-host-webHtmlEncode'] = hostWebHtmlEncodeHelper;
 
 //helpersList['x-each'] = eachsorted;
 
@@ -253,6 +252,19 @@ function textEncodeHelper(str: string, options: any): string {
     const s = textEncode(str, {mode: mode, quotes});
     // @ts-ignore
     return new Handlebars.SafeString(s);
+}
+
+function hostWebHtmlEncodeHelper(str: string): string {
+    if (isNullOrEmpty(str)) {
+        return str;
+    }
+
+    const encoded = HostEnv.webHtmlEncode(str);
+    // @ts-ignore
+    //HostEnv.debugLog("[hostWebHtmlEncodeHelper] encoded >> [" + new Handlebars.SafeString(encoded).toString() + "]");
+    
+    // @ts-ignore
+    return new Handlebars.SafeString(encoded);
 }
 
 /*

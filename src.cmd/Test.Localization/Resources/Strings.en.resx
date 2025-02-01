@@ -131,9 +131,6 @@
     <value>toyota EN</value>
   </data>
   <data name="MessagesTitle" xml:space="preserve">
-    <value>Hi {0}, we're glad you are using {1} at {2} / \ [ ] &lt; &gt; " &amp; car &lt;abc&gt; &lt;/end&gt;</value>
-  </data>
-  <data name="aaa" xml:space="preserve">
-    <value>en</value>
+    <value>Hi {0}, we&#39;re glad you are using {1} at {2} / \ [ ] &lt; &gt; &quot; &amp; car &lt;abc&gt; &lt;/end&gt;</value>
   </data>
 </root>

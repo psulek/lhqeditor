@@ -12,6 +12,7 @@ export class HostEnv {
     public static addResultFile(name: string, content: string) {
         if (HostAddResultFile) {
             HostAddResultFile(name, content);
+            //HostEnv.debugLog(`Added file '${name}' with content: ${content}`);
         } else {
             console.log(`Added file '${name}' with content: '${content}'`);
         }

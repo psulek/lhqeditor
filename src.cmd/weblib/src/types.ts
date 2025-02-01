@@ -1,13 +1,21 @@
+export type BoolString = 'true' | 'false';
+
+declare global {
+    interface String {
+        isTrue(): boolean;
+    }
+}
+
 export type LhqModelType = Record<string, unknown> & {
     model: {
-        uid: string,
-        version: number,
+        uid: string;
+        version: number;
         options: {
-            categories: boolean,
+            categories: BoolString;
             resources: 'All' | 'Categories'
-        },
-        name: string,
-        primaryLanguage: string
+        };
+        name: string;
+        primaryLanguage: string;
     },
     languages: string[],
     metadatas: {
@@ -57,23 +65,23 @@ export interface OutputSettings {
 }
 
 export interface GeneratorSettings extends OutputSettings {
-    Enabled: boolean;
+    Enabled: BoolString;
 }
 
 export interface CSharpGeneratorSettings extends GeneratorSettings {
-    UseExpressionBodySyntax: boolean;
+    UseExpressionBodySyntax: BoolString;
     RootNamespace: string;
-    MissingTranslationFallbackToPrimary: boolean;
+    MissingTranslationFallbackToPrimary: BoolString;
 }
 
 export interface CSharpWinFormsGeneratorSettings extends CSharpGeneratorSettings {
-    GenerateParamsMethods: boolean;
+    GenerateParamsMethods: BoolString;
     ParamsMethodsSuffix: string;
 }
 
 export interface JsonGeneratorSettings extends GeneratorSettings {
-    CultureCodeInFileNameForPrimaryLanguage: boolean;
-    WriteEmptyValues: boolean;
+    CultureCodeInFileNameForPrimaryLanguage: BoolString;
+    WriteEmptyValues: BoolString;
     MetadataFileNameSuffix: string;
 }
 
@@ -83,19 +91,9 @@ export interface TypescriptGeneratorSettings extends GeneratorSettings {
 }
 
 export interface ResXGeneratorSettings extends GeneratorSettings {
-    CultureCodeInFileNameForPrimaryLanguage: boolean;
+    CultureCodeInFileNameForPrimaryLanguage: BoolString;
+    CompatibleTextEncoding: BoolString;
 }
-
-// export type ModelSettings = {
-//     templateId: string;
-//     CSharp: {};
-//     ResX: {
-//         Enabled: boolean;
-//         OutputFolder: string;
-//         OutputProjectName: string;
-//         CultureCodeInFileNameForPrimaryLanguage: boolean;
-//     }
-// }
 
 export type ModelDataNode = {
     name: string;

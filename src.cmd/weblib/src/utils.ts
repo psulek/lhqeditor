@@ -123,3 +123,7 @@ export function textEncode(str: string, encoder: { mode: 'html'} | {mode: 'xml',
 
     return encodedChars.join('');
 }
+
+export function toBoolean(value: string): boolean {
+    return value.toLowerCase() === 'true';
+}

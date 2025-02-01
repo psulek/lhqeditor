@@ -25,6 +25,7 @@
 
 using LHQ.Data.Support;
 using LHQ.Utils.Extensions;
+using LHQ.Utils.Utilities;
 
 namespace LHQ.Data.Templating.Settings.ResX
 {
@@ -37,6 +38,12 @@ namespace LHQ.Data.Templating.Settings.ResX
 
         public bool CultureCodeInFileNameForPrimaryLanguage { get; set; }
 
+        /// <summary>
+        /// CompatibleTextEncoding - when true - 'System.Web.HttpUtility.HtmlEncode()' is used on translated string to be written to resx <c>value</c> element,
+        /// when false - new 'modern' encoding is used to only encode minimum chars which cannot be in XML element (using <see cref="XmlValueEncode"/>).
+        /// </summary>
+        public bool CompatibleTextEncoding { get; set; } = true;
+
         public override void AssignFrom(GeneratorSettingsBase other)
         {
             base.AssignFrom(other);
@@ -44,6 +51,7 @@ namespace LHQ.Data.Templating.Settings.ResX
             if (other is ResXGeneratorSettings otherResx)
             {
                 CultureCodeInFileNameForPrimaryLanguage = otherResx.CultureCodeInFileNameForPrimaryLanguage;
+                CompatibleTextEncoding = otherResx.CompatibleTextEncoding;
             }
         }
 
@@ -52,6 +60,7 @@ namespace LHQ.Data.Templating.Settings.ResX
             base.Serialize(node);
 
             node.AddAttribute(nameof(CultureCodeInFileNameForPrimaryLanguage), DataNodeValueHelper.ToString(CultureCodeInFileNameForPrimaryLanguage));
+            node.AddAttribute(nameof(CompatibleTextEncoding), DataNodeValueHelper.ToString(CompatibleTextEncoding));
         }
 
         public override bool Deserialize(DataNode node)
@@ -66,6 +75,15 @@ namespace LHQ.Data.Templating.Settings.ResX
                     if (!attrCultureCodeInFileNameForPrimaryLanguage.Value.IsNullOrEmpty())
                     {
                         CultureCodeInFileNameForPrimaryLanguage = DataNodeValueHelper.FromString(attrCultureCodeInFileNameForPrimaryLanguage.Value, false);
+                    }
+                }
+
+                if (node.Attributes.Contains(nameof(CompatibleTextEncoding)))
+                {
+                    var attrCompatibleTextEncoding = node.Attributes[nameof(CompatibleTextEncoding)];
+                    if (!attrCompatibleTextEncoding.Value.IsNullOrEmpty())
+                    {
+                        CompatibleTextEncoding = DataNodeValueHelper.FromString(attrCompatibleTextEncoding.Value, true);
                     }
                 }
             }

@@ -30,6 +30,12 @@ export class TemplateManager {
     
     public static intialize(handlebarFiles: string): void {
         TemplateManager.handlebarFiles = JSON.parse(handlebarFiles) as Record<string, string>;
+
+        // @ts-ignore
+        String.prototype.isTrue = function () {
+            return this.toLowerCase() === "true";
+        };
+        
         registerHelpers();
     }
     

@@ -3,34 +3,6 @@ var LhqGenerators;
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/AppError.ts":
-/*!*************************!*\
-  !*** ./src/AppError.ts ***!
-  \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   AppError: () => (/* binding */ AppError)
-/* harmony export */ });
-class AppError extends Error {
-    constructor(message, stack) {
-        super(message);
-        this.message = message;
-        this.name = 'AppError';
-        // Maintains proper stack trace for where our error was thrown (only available on V8)
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, AppError);
-        }
-        if (stack !== undefined && stack !== null) {
-            this.stack = stack;
-        }
-    }
-}
-
-
-/***/ }),
-
 /***/ "./src/helpers.ts":
 /*!************************!*\
   !*** ./src/helpers.ts ***!
@@ -42,6 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   registerHelpers: () => (/* binding */ registerHelpers)
 /* harmony export */ });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils.ts");
+/* harmony import */ var _hostEnv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hostEnv */ "./src/hostEnv.ts");
+
 
 function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
@@ -67,8 +41,7 @@ helpersList['x-sortBy'] = _utils__WEBPACK_IMPORTED_MODULE_0__.sortBy;
 helpersList['x-sortObject'] = sortObjectByKeyHelper;
 helpersList['x-objCount'] = objCount;
 helpersList['x-textEncode'] = textEncodeHelper;
-// helpersList['x-htmlEncode'] = htmlEncodeHelper;
-// helpersList['x-xmlEncode'] = xmlEncodeHelper;
+helpersList['x-host-webHtmlEncode'] = hostWebHtmlEncodeHelper;
 //helpersList['x-each'] = eachsorted;
 function header() {
     return `//------------------------------------------------------------------------------
@@ -256,6 +229,16 @@ function textEncodeHelper(str, options) {
     // @ts-ignore
     return new Handlebars.SafeString(s);
 }
+function hostWebHtmlEncodeHelper(str) {
+    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(str)) {
+        return str;
+    }
+    const encoded = _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.webHtmlEncode(str);
+    // @ts-ignore
+    //HostEnv.debugLog("[hostWebHtmlEncodeHelper] encoded >> [" + new Handlebars.SafeString(encoded).toString() + "]");
+    // @ts-ignore
+    return new Handlebars.SafeString(encoded);
+}
 /*
 function eachsorted(context: any, options: any) {
     // Get the sort order from the helper's hash (default to 'asc')
@@ -311,6 +294,7 @@ class HostEnv {
     static addResultFile(name, content) {
         if (HostAddResultFile) {
             HostAddResultFile(name, content);
+            //HostEnv.debugLog(`Added file '${name}' with content: ${content}`);
         }
         else {
             console.log(`Added file '${name}' with content: '${content}'`);
@@ -329,6 +313,12 @@ class HostEnv {
             return HostPathCombine(path1, path2);
         }
         return path1 + '/' + path2;
+    }
+    static webHtmlEncode(input) {
+        if (HostWebHtmlEncode) {
+            return HostWebHtmlEncode(input);
+        }
+        return input;
     }
 }
 
@@ -363,6 +353,10 @@ const CodeGenUID = 'b40c8a1d-23b7-4f78-991b-c24898596dd2';
 class TemplateManager {
     static intialize(handlebarFiles) {
         TemplateManager.handlebarFiles = JSON.parse(handlebarFiles);
+        // @ts-ignore
+        String.prototype.isTrue = function () {
+            return this.toLowerCase() === "true";
+        };
         (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.registerHelpers)();
     }
     static runTemplate(lhqModelJson, hostData) {
@@ -496,8 +490,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _codeGeneratorTemplate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./codeGeneratorTemplate */ "./src/templates/codeGeneratorTemplate.ts");
 /* harmony import */ var _hostEnv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hostEnv */ "./src/hostEnv.ts");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/utils.ts");
-/* harmony import */ var _AppError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../AppError */ "./src/AppError.ts");
-
 
 
 
@@ -508,20 +500,26 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
     generate(rootModel) {
         var _a;
         const modelVersion = rootModel.model.model.version;
-        if (modelVersion < 2) {
-            throw new _AppError__WEBPACK_IMPORTED_MODULE_3__.AppError(`Current LHQ file version (${modelVersion}) is not supported! (min version 2 is supported)`);
-        }
+        // if (modelVersion < 2) {
+        //     throw new AppError(`Current LHQ file version (${modelVersion}) is not supported! (min version 2 is supported)`);
+        // }
+        const defaultCompatibleTextEncoding = modelVersion < 2;
         const modelName = rootModel.model.model.name;
-        if (this._settings.CSharp.Enabled) {
+        if (this._settings.CSharp.Enabled.isTrue()) {
             rootModel.extra = {};
             const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
             const csfileContent = this.compile(csharpTemplateFile, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(csFileName, csfileContent);
         }
-        if (this._settings.ResX.Enabled) {
+        if (this._settings.ResX.Enabled.isTrue()) {
+            //HostEnv.debugLog("[this._settings.ResX]: " + JSON.stringify(this._settings.ResX));
             const resxTemplateFile = this.getHandlebarFile('resx');
             rootModel.extra = {};
+            rootModel.extra['useHostWebHtmlEncode'] = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(this._settings.ResX.CompatibleTextEncoding)
+                ? defaultCompatibleTextEncoding
+                : this._settings.ResX.CompatibleTextEncoding.isTrue();
+            //HostEnv.debugLog("rootModel.extra['useHostWebHtmlEncode'] = " + rootModel.extra['useHostWebHtmlEncode']);
             (_a = rootModel.model.languages) === null || _a === void 0 ? void 0 : _a.forEach(lang => {
                 if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(lang)) {
                     rootModel.extra['lang'] = lang;
@@ -555,8 +553,8 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
         if (result.ResX === undefined) {
             throw new Error('ResX settings not found !');
         }
-        result.CSharp.Enabled = (_b = result.CSharp.Enabled) !== null && _b !== void 0 ? _b : true;
-        result.ResX.Enabled = (_c = result.ResX.Enabled) !== null && _c !== void 0 ? _c : true;
+        result.CSharp.Enabled = (_b = result.CSharp.Enabled) !== null && _b !== void 0 ? _b : true.toString();
+        result.ResX.Enabled = (_c = result.ResX.Enabled) !== null && _c !== void 0 ? _c : true.toString();
         this._settings = result;
         return result;
     }
@@ -725,7 +723,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   sortBy: () => (/* binding */ sortBy),
 /* harmony export */   sortObjectByKey: () => (/* binding */ sortObjectByKey),
 /* harmony export */   sortObjectByValue: () => (/* binding */ sortObjectByValue),
-/* harmony export */   textEncode: () => (/* binding */ textEncode)
+/* harmony export */   textEncode: () => (/* binding */ textEncode),
+/* harmony export */   toBoolean: () => (/* binding */ toBoolean)
 /* harmony export */ });
 //const he = require('he');
 // export function htmlEncode(value: string, options: any): string {
@@ -832,6 +831,9 @@ function textEncode(str, encoder) {
         }
     }
     return encodedChars.join('');
+}
+function toBoolean(value) {
+    return value.toLowerCase() === 'true';
 }
 
 

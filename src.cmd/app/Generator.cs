@@ -10,7 +10,7 @@ public class Generator : IDisposable
 {
     private bool _disposed;
     private readonly JintJsEngine _engine;
-    private readonly Dictionary<string,string> _generatedFiles = [];
+    private readonly Dictionary<string, string> _generatedFiles = [];
 
     private static readonly string[] JsFiles =
     [
@@ -19,13 +19,16 @@ public class Generator : IDisposable
     ];
 
     private const string XpathRootNamespace = "//ns:Project/ns:PropertyGroup/ns:RootNamespace";
-    private const string XpathCustomToolNamespace1 = "//ns:Project/ns:ItemGroup/ns:Content[@Include='##MODELT4##']/ns:CustomToolNamespace";
-    private const string XpathCustomToolNamespace2 = "//ns:Project/ns:ItemGroup/ns:None[@Update='##MODELT4##']/ns:CustomToolNamespace";
+
+    private static readonly string[] ItemGroupTypes = ["Content", "None"];
+    private static readonly string[] ItemGroupTypesAttrs = ["Include", "Update"];
+
+    private const string CsProjectXPath =
+        "//ns:Project/ns:ItemGroup/ns:##TYPE##[@##ATTR##='##FILE##']";
 
     private static class DataKeys
     {
         public const string Namespace = "namespace";
-        //public const string OutDir = "outDir";
     }
 
     public Generator()
@@ -35,16 +38,13 @@ public class Generator : IDisposable
             AllowReflection = false,
             EnableDebugging = true,
         });
-        
+
         var hostDebugLog = new Action<string, string?>((msg, lvl) =>
-        {   
+        {
             Console.WriteLine($"[{(lvl ?? "DEBUG")}] {msg}");
         });
 
-        var hostAddResultFile = new Action<string, string>((file, content) =>
-        {
-            _generatedFiles.Add(file, content);
-        });
+        var hostAddResultFile = new Action<string, string>((file, content) => { _generatedFiles.Add(file, content); });
         var hostPathCombine = new Func<string, string, string>(Path.Combine);
 
         var hostWebHtmlEncode = new Func<string, string>(System.Net.WebUtility.HtmlEncode);
@@ -53,7 +53,7 @@ public class Generator : IDisposable
         _engine.EmbedHostObject("HostAddResultFile", hostAddResultFile);
         _engine.EmbedHostObject("HostPathCombine", hostPathCombine);
         _engine.EmbedHostObject("HostWebHtmlEncode", hostWebHtmlEncode);
-        
+
         var type = typeof(Generator);
         var thisAssembly = type.Assembly;
         var rootNamespace = type.Namespace;
@@ -65,77 +65,96 @@ public class Generator : IDisposable
         }
 
         var handlebarFiles = new Dictionary<string, string>();
-        
+
         foreach (var file in Directory.GetFiles("hbs", "*.handlebars", SearchOption.TopDirectoryOnly))
         {
             var key = Path.GetFileNameWithoutExtension(file);
             handlebarFiles.Add(key, File.ReadAllText(file));
-        } 
+        }
 
         _engine.SetVariableValue("__handlebarFiles", JsonSerializer.Serialize(handlebarFiles));
         _engine.Execute("LhqGenerators.TemplateManager.intialize(__handlebarFiles);");
     }
 
-    private string GetRootNamespace(string lhqModelFileName, string csProjectFileName)
+    public static string GetRootNamespace(string lhqModelFileName, string? csProjectFileName)
     {
-        //var modelDir = Path.GetDirectoryName(lhqModelFileName);
-        //var csProjFile = Directory.GetFiles(modelDir, "*.csproj", SearchOption.TopDirectoryOnly).FirstOrDefault();
-
-        var lhqFileT4 = Path.GetFileName(lhqModelFileName) + ".tt";
-
-        string? rootNamespace = null;
-
-        if (!string.IsNullOrEmpty(csProjectFileName))
+        if (string.IsNullOrEmpty(csProjectFileName) || !File.Exists(csProjectFileName))
         {
-            try
+            return string.Empty;
+        }
+
+        lhqModelFileName = Path.GetFileName(lhqModelFileName); 
+        var lhqFileT4 = lhqModelFileName + ".tt";
+
+        string? rootNamespace;
+
+        try
+        {
+            var doc = XDocument.Parse(File.ReadAllText(csProjectFileName));
+            var ns = doc.Root?.GetDefaultNamespace() ?? XNamespace.None;
+
+            var manager = new XmlNamespaceManager(new NameTable());
+            manager.AddNamespace("ns", ns.NamespaceName);
+
+            XElement? FindFileElement(string fileName)
             {
-                var doc = XDocument.Parse(File.ReadAllText(csProjectFileName));
-                var ns = doc.Root?.GetDefaultNamespace() ?? XNamespace.None;
-            
-                var manager = new XmlNamespaceManager(new NameTable());
-                manager.AddNamespace("ns", ns.NamespaceName);
-
-                var rootNamespaceElem = doc.XPathSelectElement(XpathRootNamespace, manager);
-                rootNamespace = rootNamespaceElem?.Value;
-
-                var customToolNamespaceElem = doc.XPathSelectElement(XpathCustomToolNamespace1.Replace("##MODELT4##", lhqFileT4), manager);
-                if (customToolNamespaceElem == null)
+                foreach (var itemGroupType in ItemGroupTypes)
                 {
-                    customToolNamespaceElem = doc.XPathSelectElement(XpathCustomToolNamespace2.Replace("##MODELT4##", lhqFileT4), manager);
+                    foreach (var attr in ItemGroupTypesAttrs)
+                    {
+                        var xpath = CsProjectXPath.Replace("##TYPE##", itemGroupType)
+                            .Replace("##ATTR##", attr).Replace("##FILE##", fileName);
+                        
+                        var element = doc.XPathSelectElement(xpath, manager);
+                        if (element != null)
+                        {
+                            return element;
+                        }
+                    }
                 }
 
-                var customToolNamespace = customToolNamespaceElem?.Value;
-                if (!string.IsNullOrEmpty(customToolNamespace))
+                return null;
+            }
+
+            var rootNamespaceElem = doc.XPathSelectElement(XpathRootNamespace, manager);
+            rootNamespace = rootNamespaceElem?.Value;
+
+            // if csproj has imported lhq file (lhqModelFileName) explicitly eg: /ItemGroup/None[@Update="Strings.lhq"] (and other variants)
+            // we can look at CustomToolNamespace element under '{lhqModelFileName}.tt' element (if it exists) 
+            if (FindFileElement(lhqModelFileName) != null)
+            {
+                var t4FileElement = FindFileElement(lhqFileT4);
+                //CustomToolNamespace
+                if (t4FileElement != null)
                 {
-                    rootNamespace = customToolNamespace;
+                    var customToolNamespace = t4FileElement.Descendants(ns+"CustomToolNamespace").FirstOrDefault()?.Value;
+
+                    if (!string.IsNullOrEmpty(customToolNamespace))
+                    {
+                        rootNamespace = customToolNamespace;
+                    }
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                rootNamespace = null;
-            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            rootNamespace = null;
         }
 
         return rootNamespace ?? string.Empty;
     }
 
-    public Dictionary<string, string> Generate(string lhqModelFileName, string csProjectFileName, 
+    public Dictionary<string, string> Generate(string lhqModelFileName, string? csProjectFileName,
         Dictionary<string, object>? hostData = null)
     {
         ArgumentException.ThrowIfNullOrEmpty(lhqModelFileName);
-        ArgumentException.ThrowIfNullOrEmpty(csProjectFileName);
-        
+
         if (!File.Exists(lhqModelFileName))
         {
             throw new FileNotFoundException($"LhQ model file '{lhqModelFileName}' was not found!");
         }
-
-        if (!File.Exists(csProjectFileName))
-        {
-            throw new FileNotFoundException($"C# Project file '{csProjectFileName}' was not found!");
-        }
-
+        
         _generatedFiles.Clear();
 
         hostData ??= new Dictionary<string, object>();
@@ -146,7 +165,7 @@ public class Generator : IDisposable
         {
             rootNamespace = @namespace as string ?? string.Empty;
         }
-        
+
         if (string.IsNullOrEmpty(rootNamespace))
         {
             rootNamespace = GetRootNamespace(lhqModelFileName, csProjectFileName);
@@ -155,14 +174,25 @@ public class Generator : IDisposable
 
         if (string.IsNullOrEmpty(rootNamespace))
         {
-            throw new Exception($"Missing parameter '{DataKeys.Namespace}' !");
+            throw new Exception(
+                $"""
+                 Missing value for parameter '{DataKeys.Namespace}' ! 
+                 Provide valid path to *.csproj which uses required lhq model or 
+                 provide value for parameter '{DataKeys.Namespace}' in cmd data parameters.
+                 """);
         }
 
         _engine.SetVariableValue("__model", File.ReadAllText(lhqModelFileName));
         var hostDataStr = JsonSerializer.Serialize(hostData);
-        
+
         _engine.SetVariableValue("__hostData", hostDataStr);
         _engine.Execute("LhqGenerators.TemplateManager.runTemplate(__model, __hostData)");
+
+        if (_generatedFiles.Count != _generatedFiles.DistinctBy(x => x.Key).Count())
+        {
+            var duplicateFiles = _generatedFiles.Except(_generatedFiles.DistinctBy(x => x.Key)).Select(x=>x.Key).ToArray();
+            throw new Exception("Duplicated generated files: " + string.Join(", ", duplicateFiles));
+        }
 
         return _generatedFiles;
     }

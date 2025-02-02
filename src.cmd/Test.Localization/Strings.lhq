@@ -160,7 +160,7 @@
                   "attrs": {
                     "OutputFolder": "Resources",
                     "CultureCodeInFileNameForPrimaryLanguage": "true",
-                    "CompatibleTextEncoding": "false"
+                    "CompatibleTextEncoding": "true"
                   }
                 }
               ]

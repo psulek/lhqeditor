@@ -14,14 +14,14 @@ namespace {{ @root.host.namespace }}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public partial class {{model.name}}Context: INotifyPropertyChanged, IFormattable
+	public partial class {{@root.extra.rootClassName}}: INotifyPropertyChanged, IFormattable
 	{
 		private CultureInfo _culture;
 		private CultureInfo _fallbackCulture;
-		private static readonly Lazy<{{model.name}}Context> _instance = new Lazy<{{model.name}}Context>(() => new {{model.name}}Context());
+		private static readonly Lazy<{{@root.extra.rootClassName}}> _instance = new Lazy<{{@root.extra.rootClassName}}>(() => new {{@root.extra.rootClassName}}());
 		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
 
-		private {{model.name}}Context()
+		private {{@root.extra.rootClassName}}()
 		{}
 
 		public static ResourceManager ResourceManager
@@ -63,7 +63,7 @@ namespace {{ @root.host.namespace }}
 			}
 		}
 
-		public static {{model.name}}Context Instance
+		public static {{@root.extra.rootClassName}} Instance
 		{
 			get
 			{
@@ -116,7 +116,7 @@ namespace {{ @root.host.namespace }}
 			string result = GetStringSafely(name, Culture);
 			if (result == null)
 			{
-				{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true") }}
+				{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
 				if (FallbackCulture != null)
 				{
 					result = GetStringSafely(name, FallbackCulture);

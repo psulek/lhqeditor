@@ -1,4 +1,4 @@
-import {CSharpGeneratorSettings} from "../types";
+import {CSharpGeneratorSettings, TemplateRootModel} from "../types";
 import {CSharpResXTemplateBase} from "./csharpResXTemplateBase";
 
 export class WpfResxCsharp01Template extends CSharpResXTemplateBase<CSharpGeneratorSettings> {
@@ -8,5 +8,9 @@ export class WpfResxCsharp01Template extends CSharpResXTemplateBase<CSharpGenera
 
     public get csharpTemplateName(): string {
         return WpfResxCsharp01Template.Id;
+    }
+    
+    public getRootCsharpClassName(rootModel: TemplateRootModel): string {
+        return rootModel.model.model.name + 'Context';
     }
 }

@@ -1,4 +1,4 @@
-import {CSharpGeneratorSettings} from "../types";
+import {CSharpGeneratorSettings, TemplateRootModel} from "../types";
 import {CSharpResXTemplateBase} from "./csharpResXTemplateBase";
 
 export class NetFwResxCsharp01Template extends CSharpResXTemplateBase<CSharpGeneratorSettings> {
@@ -8,5 +8,9 @@ export class NetFwResxCsharp01Template extends CSharpResXTemplateBase<CSharpGene
 
     public get csharpTemplateName(): string {
         return NetFwResxCsharp01Template.Id;
+    }
+
+    public getRootCsharpClassName(rootModel: TemplateRootModel): string {
+        return rootModel.model.model.name + 'Context';
     }
 }

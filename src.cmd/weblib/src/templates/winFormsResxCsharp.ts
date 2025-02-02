@@ -1,4 +1,4 @@
-import {CSharpWinFormsGeneratorSettings} from "../types";
+import {CSharpWinFormsGeneratorSettings, TemplateRootModel} from "../types";
 import {CSharpResXTemplateBase} from "./csharpResXTemplateBase";
 
 export class WinFormsResxCsharp01Template extends CSharpResXTemplateBase<CSharpWinFormsGeneratorSettings> {
@@ -8,5 +8,9 @@ export class WinFormsResxCsharp01Template extends CSharpResXTemplateBase<CSharpW
 
     public get csharpTemplateName(): string {
         return WinFormsResxCsharp01Template.Id;
+    }
+
+    public getRootCsharpClassName(rootModel: TemplateRootModel): string {
+        return rootModel.model.model.name + 'Context';
     }
 }

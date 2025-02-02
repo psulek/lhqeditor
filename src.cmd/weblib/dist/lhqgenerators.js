@@ -518,19 +518,18 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
         const modelName = rootModel.model.model.name;
         if (this._settings.CSharp.Enabled.isTrue()) {
             rootModel.extra = {};
+            rootModel.extra['rootClassName'] = this.getRootCsharpClassName(rootModel);
             const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
             const csfileContent = this.compile(csharpTemplateFile, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(csFileName, csfileContent);
         }
         if (this._settings.ResX.Enabled.isTrue()) {
-            //HostEnv.debugLog("[this._settings.ResX]: " + JSON.stringify(this._settings.ResX));
             const resxTemplateFile = this.getHandlebarFile('resx');
             rootModel.extra = {};
             rootModel.extra['useHostWebHtmlEncode'] = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
                 : this._settings.ResX.CompatibleTextEncoding.isTrue();
-            //HostEnv.debugLog("rootModel.extra['useHostWebHtmlEncode'] = " + rootModel.extra['useHostWebHtmlEncode']);
             (_a = rootModel.model.languages) === null || _a === void 0 ? void 0 : _a.forEach(lang => {
                 if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(lang)) {
                     rootModel.extra['lang'] = lang;
@@ -593,6 +592,9 @@ class NetCoreResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPOR
     get csharpTemplateName() {
         return NetCoreResxCsharp01Template.Id;
     }
+    getRootCsharpClassName(rootModel) {
+        return rootModel.model.model.name + 'Localizer';
+    }
 }
 
 
@@ -616,6 +618,9 @@ class NetFwResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPORTE
     }
     get csharpTemplateName() {
         return NetFwResxCsharp01Template.Id;
+    }
+    getRootCsharpClassName(rootModel) {
+        return rootModel.model.model.name + 'Context';
     }
 }
 
@@ -691,6 +696,9 @@ class WinFormsResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPO
     get csharpTemplateName() {
         return WinFormsResxCsharp01Template.Id;
     }
+    getRootCsharpClassName(rootModel) {
+        return rootModel.model.model.name + 'Context';
+    }
 }
 
 
@@ -714,6 +722,9 @@ class WpfResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPORTED_
     }
     get csharpTemplateName() {
         return WpfResxCsharp01Template.Id;
+    }
+    getRootCsharpClassName(rootModel) {
+        return rootModel.model.model.name + 'Context';
     }
 }
 

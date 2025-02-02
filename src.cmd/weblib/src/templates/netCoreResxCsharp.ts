@@ -1,4 +1,4 @@
-import {CSharpGeneratorSettings} from "../types";
+import {CSharpGeneratorSettings, TemplateRootModel} from "../types";
 import {CSharpResXTemplateBase} from "./csharpResXTemplateBase";
 
 export class NetCoreResxCsharp01Template extends CSharpResXTemplateBase<CSharpGeneratorSettings> {
@@ -8,5 +8,9 @@ export class NetCoreResxCsharp01Template extends CSharpResXTemplateBase<CSharpGe
     
     public get csharpTemplateName(): string {
         return NetCoreResxCsharp01Template.Id;
+    }
+
+    public getRootCsharpClassName(rootModel: TemplateRootModel): string {
+        return rootModel.model.model.name + 'Localizer';
     }
 }

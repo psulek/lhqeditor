@@ -1,4 +1,4 @@
-import {CSharpGeneratorSettings, ModelDataNode, ResXGeneratorSettings, TemplateRootModel} from "../types";
+import {CSharpGeneratorSettings, LhqModelType, ModelDataNode, ResXGeneratorSettings, TemplateRootModel} from "../types";
 import {CodeGeneratorTemplate} from "./codeGeneratorTemplate";
 import {HostEnv} from "../hostEnv";
 import {isNullOrEmpty} from "../utils";
@@ -16,6 +16,8 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
     }
 
     protected abstract get csharpTemplateName(): string;
+    
+    protected abstract getRootCsharpClassName(rootModel: TemplateRootModel): string;
 
     public generate(rootModel: TemplateRootModel) {
         const modelVersion = rootModel.model.model.version;
@@ -28,6 +30,8 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
 
         if (this._settings.CSharp.Enabled.isTrue()) {
             rootModel.extra = {};
+            rootModel.extra['rootClassName'] = this.getRootCsharpClassName(rootModel);
+            
             const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
             const csfileContent = this.compile(csharpTemplateFile, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
@@ -35,16 +39,12 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         }
 
         if (this._settings.ResX.Enabled.isTrue()) {
-            //HostEnv.debugLog("[this._settings.ResX]: " + JSON.stringify(this._settings.ResX));
-            
             const resxTemplateFile = this.getHandlebarFile('resx');
             rootModel.extra = {};
             rootModel.extra['useHostWebHtmlEncode'] = isNullOrEmpty(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
                 : this._settings.ResX.CompatibleTextEncoding.isTrue();
             
-            //HostEnv.debugLog("rootModel.extra['useHostWebHtmlEncode'] = " + rootModel.extra['useHostWebHtmlEncode']);
-
             rootModel.model.languages?.forEach(lang => {
                 if (!isNullOrEmpty(lang)) {
                     rootModel.extra['lang'] = lang;

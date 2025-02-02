@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ScaleHQ.AspNetCore.LHQ" Version="1.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Strings.lhq.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <DependentUpon>Strings.lhq</DependentUpon>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DataAnnotations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Shared\_SelectLanguagePartial.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Shared\_SelectLanguagePartial.cshtml" />
+    </ItemGroup>
+
+</Project>

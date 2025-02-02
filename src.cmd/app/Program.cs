@@ -10,29 +10,19 @@ string Grey(string msg) => msg.Pastel(ConsoleColor.Gray);
 string White(string msg) => msg.Pastel(ConsoleColor.White);
 string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
-// var input = """
-//             Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim {2},\nna {3} w strefie czasowej {4} z czasem letnim {5}.
-//             """;
-//
-// var xx = """
-//          Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim {2},\nna {3} w strefie czasowej {4} z czasem letnim {5}.
-//          """;
-//
-// var aa = System.Net.WebUtility.HtmlEncode(input);
-// var tempFileName = Path.GetTempFileName();
-// File.WriteAllText(tempFileName, aa, Encoding.UTF8);
-
-
 //args = ["--help"];
 
-var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
-var csProjName = "Test.Localization.csproj";
+// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
+// var csProjName = "Test.Localization.csproj";
 
 // var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
 // var csProjName = "Localization.Common.csproj";
 
 // var lhqFullPath = "C:\\Users\\peter.sulek\\source\\repos\\ScaleHQ.Windows.WPF1\\ScaleHQ.Windows.WPF1\\Strings.lhq";
 // var csProjName = "ScaleHQ.Windows.WPF1.csproj";
+
+var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v2\\Strings.lhq";
+var csProjName = "WpfResxCsharp01v2.csproj";
 
 var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "GenOutput");
 if (!Directory.Exists(outputDir))

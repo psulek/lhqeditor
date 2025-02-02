@@ -1,0 +1,3 @@
+﻿Resources\Strings.en.resx
+Resources\Strings.gen.cs
+Resources\Strings.sk.resx

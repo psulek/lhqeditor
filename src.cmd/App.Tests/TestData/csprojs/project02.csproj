@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>RootNamespace01</RootNamespace>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Update="Strings.lhq">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Strings.lhq.tt">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CustomToolNamespace>CustomToolNamespace01</CustomToolNamespace>
+        </None>
+    </ItemGroup>
+</Project>

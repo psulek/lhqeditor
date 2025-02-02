@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="JackpotTemplatesDescription" xml:space="preserve">
-    <value>Description</value>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome {0} in this {1} !</value>
   </data>
-  <data name="JackpotTemplatesId" xml:space="preserve">
-    <value>Id</value>
+  <data name="CarsDieselOldOld_Kia" xml:space="preserve">
+    <value>Old_ kia EN</value>
   </data>
-  <data name="JackpotTemplatesName" xml:space="preserve">
-    <value>Name</value>
+  <data name="CarsDieselMercedes" xml:space="preserve">
+    <value>Mercedes EN</value>
+  </data>
+  <data name="CarsDieselSkoda" xml:space="preserve">
+    <value>Skoda EN</value>
+  </data>
+  <data name="CarsElectricToyotaEV" xml:space="preserve">
+    <value>toyota EN</value>
+  </data>
+  <data name="MessagesTitle" xml:space="preserve">
+    <value>Hi {0}, we&#39;re glad you are using {1} at {2} / \ [ ] &lt; &gt; &quot; &amp; car &lt;abc&gt; &lt;/end&gt;</value>
   </data>
 </root>

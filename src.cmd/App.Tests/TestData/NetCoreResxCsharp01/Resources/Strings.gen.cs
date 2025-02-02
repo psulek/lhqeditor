@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SynotW.Jackpot.Localization
+namespace NetCoreResxCsharp01
 {
 	using System;
 	using System.Resources;
@@ -38,8 +38,8 @@ namespace SynotW.Jackpot.Localization
 
 		private static ResourceManager CreateResourceManager()
 		{
-			return new ResourceManager("SynotW.Jackpot.Localization.Resources.Strings",
-					typeof(SynotW.Jackpot.Localization.Strings).GetTypeInfo().Assembly);
+			return new ResourceManager("NetCoreResxCsharp01.Resources.Strings",
+					typeof(NetCoreResxCsharp01.Strings).GetTypeInfo().Assembly);
 		}
 
 		public CultureInfo FallbackCulture
@@ -138,21 +138,48 @@ namespace SynotW.Jackpot.Localization
 
 	public static class StringsKeys
 	{
-		public static class JackpotTemplates
+		public static class Cars
+		{
+			public static class Diesel
+			{
+				public static class Old
+				{
+					/// <summary>
+					/// Gets localized string similar to: Old_ kia EN
+					/// </summary>
+					public const string Old_Kia = "CarsDieselOldOld_Kia";
+				}
+				/// <summary>
+				/// Gets localized string similar to: Mercedes EN
+				/// </summary>
+				public const string Mercedes = "CarsDieselMercedes";
+				/// <summary>
+				/// Gets localized string similar to: Skoda EN
+				/// </summary>
+				public const string Skoda = "CarsDieselSkoda";
+			}
+			
+			public static class Electric
+			{
+				/// <summary>
+				/// Gets localized string similar to: toyota EN
+				/// </summary>
+				public const string ToyotaEV = "CarsElectricToyotaEV";
+			}
+		}
+		
+		public static class Messages
 		{
 			/// <summary>
-			/// Gets localized string similar to: Description
+			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
 			/// </summary>
-			public const string Description = "JackpotTemplatesDescription";
-			/// <summary>
-			/// Gets localized string similar to: Id
-			/// </summary>
-			public const string Id = "JackpotTemplatesId";
-			/// <summary>
-			/// Gets localized string similar to: Name
-			/// </summary>
-			public const string Name = "JackpotTemplatesName";
+			public const string Title = "MessagesTitle";
 		}
+		
+		/// <summary>
+		/// Gets localized string similar to: Welcome {0} in this {1} !
+		/// </summary>
+		public const string Welcome = "Welcome";
 	}
 
 	public partial class Strings
@@ -167,23 +194,53 @@ namespace SynotW.Jackpot.Localization
 
 		public static string[] AvailableCultures => new string[] { "en","sk" };
 
-		public static partial class JackpotTemplates
+		public static partial class Cars
+		{
+			public static partial class Diesel
+			{
+				public static partial class Old
+				{
+					/// <summary>
+					/// Gets localized string similar to: Old_ kia EN
+					/// </summary>
+					public static string Old_Kia => _localizer[StringsKeys.Cars.Diesel.Old.Old_Kia];
+			
+				}
+				/// <summary>
+				/// Gets localized string similar to: Mercedes EN
+				/// </summary>
+				public static string Mercedes => _localizer[StringsKeys.Cars.Diesel.Mercedes];
+		
+				/// <summary>
+				/// Gets localized string similar to: Skoda EN
+				/// </summary>
+				public static string Skoda => _localizer[StringsKeys.Cars.Diesel.Skoda];
+		
+			}
+			
+			public static partial class Electric
+			{
+				/// <summary>
+				/// Gets localized string similar to: toyota EN
+				/// </summary>
+				public static string ToyotaEV => _localizer[StringsKeys.Cars.Electric.ToyotaEV];
+		
+			}
+		}
+		
+		public static partial class Messages
 		{
 			/// <summary>
-			/// Gets localized string similar to: Description
+			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
 			/// </summary>
-			public static string Description => _localizer[StringsKeys.JackpotTemplates.Description];
-	
-			/// <summary>
-			/// Gets localized string similar to: Id
-			/// </summary>
-			public static string Id => _localizer[StringsKeys.JackpotTemplates.Id];
-	
-			/// <summary>
-			/// Gets localized string similar to: Name
-			/// </summary>
-			public static string Name => _localizer[StringsKeys.JackpotTemplates.Name];
+			public static string Title => _localizer[StringsKeys.Messages.Title];
 	
 		}
+		
+		/// <summary>
+		/// Gets localized string similar to: Welcome {0} in this {1} !
+		/// </summary>
+		public static string Welcome => _localizer[StringsKeys.Welcome];
+
 	}
 }

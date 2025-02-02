@@ -42,6 +42,7 @@ helpersList['x-sortObject'] = sortObjectByKeyHelper;
 helpersList['x-objCount'] = objCount;
 helpersList['x-textEncode'] = textEncodeHelper;
 helpersList['x-host-webHtmlEncode'] = hostWebHtmlEncodeHelper;
+helpersList['x-render'] = renderHelper;
 //helpersList['x-each'] = eachsorted;
 function header() {
     return `//------------------------------------------------------------------------------
@@ -238,43 +239,14 @@ function hostWebHtmlEncodeHelper(str) {
     }
     const encoded = _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.webHtmlEncode(str);
     // @ts-ignore
-    //HostEnv.debugLog("[hostWebHtmlEncodeHelper] encoded >> [" + new Handlebars.SafeString(encoded).toString() + "]");
-    // @ts-ignore
     return new Handlebars.SafeString(encoded);
 }
-/*
-function eachsorted(context: any, options: any) {
-    // Get the sort order from the helper's hash (default to 'asc')
-    const sortOrder = options.hash.sortOrder || 'asc';
-
-    // Sort the object by keys
-    let result = '';
-    if (context) {
-        try {
-            // @ts-ignore
-            //HostEnv.debugLog('sortObjectByKey begin, for >> ' + JSON.stringify(this));
-            const sortedObj = sortObjectByKey(context, sortOrder);
-
-            // Use the built-in #each block to iterate over the sorted object
-            for (const key in sortedObj) {
-                if (sortedObj.hasOwnProperty(key)) {
-                    // Create a new context with the current key and value
-                    const context = {
-                        key: key,
-                        value: sortedObj[key]
-                    };
-                    // Render the block with the current context
-                    result += options.fn(context);
-                }
-            }
-        } catch (e) {
-            HostEnv.debugLog('sortObjectByKey err, for >> ' + JSON.stringify(context));
-        }
-    }
-
-    return result;
+function renderHelper(input, options) {
+    var _a, _b;
+    const when = (_b = (_a = options === null || options === void 0 ? void 0 : options.hash) === null || _a === void 0 ? void 0 : _a.when) !== null && _b !== void 0 ? _b : true;
+    // @ts-ignore
+    return when ? input : '';
 }
- */ 
 
 
 /***/ }),

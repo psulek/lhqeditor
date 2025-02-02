@@ -33,6 +33,7 @@ helpersList['x-sortObject'] = sortObjectByKeyHelper;
 helpersList['x-objCount'] = objCount;
 helpersList['x-textEncode'] = textEncodeHelper;
 helpersList['x-host-webHtmlEncode'] = hostWebHtmlEncodeHelper;
+helpersList['x-render'] = renderHelper;
 
 //helpersList['x-each'] = eachsorted;
 
@@ -264,43 +265,14 @@ function hostWebHtmlEncodeHelper(str: string): string {
     }
 
     const encoded = HostEnv.webHtmlEncode(str);
-    // @ts-ignore
-    //HostEnv.debugLog("[hostWebHtmlEncodeHelper] encoded >> [" + new Handlebars.SafeString(encoded).toString() + "]");
     
     // @ts-ignore
     return new Handlebars.SafeString(encoded);
 }
 
-/*
-function eachsorted(context: any, options: any) {
-    // Get the sort order from the helper's hash (default to 'asc')
-    const sortOrder = options.hash.sortOrder || 'asc';
-
-    // Sort the object by keys
-    let result = '';
-    if (context) {
-        try {
-            // @ts-ignore
-            //HostEnv.debugLog('sortObjectByKey begin, for >> ' + JSON.stringify(this));
-            const sortedObj = sortObjectByKey(context, sortOrder);
-
-            // Use the built-in #each block to iterate over the sorted object
-            for (const key in sortedObj) {
-                if (sortedObj.hasOwnProperty(key)) {
-                    // Create a new context with the current key and value
-                    const context = {
-                        key: key,
-                        value: sortedObj[key]
-                    };
-                    // Render the block with the current context
-                    result += options.fn(context);
-                }
-            }
-        } catch (e) {
-            HostEnv.debugLog('sortObjectByKey err, for >> ' + JSON.stringify(context));
-        }
-    }
-
-    return result;
+function renderHelper(input: any, options: any): string {
+    const when = options?.hash?.when ?? true;
+    
+    // @ts-ignore
+    return when ? input : '';
 }
- */

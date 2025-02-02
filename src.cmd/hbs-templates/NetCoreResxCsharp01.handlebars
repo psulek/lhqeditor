@@ -11,11 +11,14 @@ namespace {{ @root.host.namespace }}
 	using System.Globalization;
 	using Microsoft.Extensions.Localization;
 
-	public partial class {{@root.extra.rootClassName}}: IStringLocalizer
+	public class {{@root.extra.rootClassName}} : IStringLocalizer
 	{
-		private CultureInfo _culture;
+		private readonly CultureInfo _culture;
 		{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
 		private CultureInfo _fallbackCulture;
+	
+		{{else}}
+	
 		{{/if}}
 		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
 
@@ -44,7 +47,7 @@ namespace {{ @root.host.namespace }}
 		private static ResourceManager CreateResourceManager()
 		{
 			return new ResourceManager("{{ x-concat @root.host.namespace (x-trimEnd @root.settings.CSharp.OutputFolder "[\\/]") model.name sep="." }}",
-					typeof({{x-concat @root.host.namespace model.name sep="."}}).Assembly);
+					typeof({{x-concat @root.host.namespace model.name sep="."}}).GetTypeInfo().Assembly);
 		}
 
 		{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
@@ -60,7 +63,7 @@ namespace {{ @root.host.namespace }}
 			}
 			set
 			{
-				if ((value == null) || !{{model.name}}AvailableCultures.Contains(value.Name))
+				if ((value == null) || !{{model.name}}.AvailableCultures.Contains(value.Name))
 				{
 					throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
 				}
@@ -68,7 +71,8 @@ namespace {{ @root.host.namespace }}
 				_fallbackCulture = value;
 			}
 		}
-        {{/if}}
+		{{/if}}
+	
 
 		LocalizedString IStringLocalizer.this[string name]
 		{
@@ -145,20 +149,15 @@ namespace {{ @root.host.namespace }}
 					result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
 				}
 				{{else}}
-				else
-				{
-					result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
-				}
-                {{/if}}
+				result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
+				{{/if}}
 			}
 
 			return result;
 		}
 	}
 
-	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
-	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public static partial class {{model.name}}Keys
+	public static class {{model.name}}Keys
 	{
 	{{#each categories ~}}
 		{{#with (x-merge this _resourceRenderValue="key")}}
@@ -185,10 +184,11 @@ namespace {{ @root.host.namespace }}
 			_localizer = localizer;
 		}
 
+
 		{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
-		public string[] AvailableCultures => new string[] { {{x-join languages }} };
+		public static string[] AvailableCultures => new string[] { {{x-join languages }} };
 		{{else}}
-		public string[] AvailableCultures
+		public static string[] AvailableCultures
 		{
 			get
 			{
@@ -215,7 +215,7 @@ namespace {{ @root.host.namespace }}
 }
 {{/with}}
 {{#*inline "category"}}
-public static partial class {{@key}}
+public static{{x-render " partial" when=(x-equals _resourceRenderValue "value") }} class {{@key}}
 {
 {{#each categories }}
 	{{#with (x-merge this _resourceRenderValue=../_resourceRenderValue) }}
@@ -238,9 +238,26 @@ public static partial class {{@key}}
 	public const string {{@key}} = "{{x-concat ../_parent @../key @key}}";
 	{{else}}
 	{{#if (x-equals (x-objCount parameters) 0)}}
-	public static string {{@key}} => {{@root.model.model.name}}_localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}];
+	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+	public static string {{@key}} => _localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}];
 	{{else}}
-	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+	public static string {{@key}}
+	{
+		get
+		{
+			return _localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}];
+		}
+	}
+	{{/if}}
+	{{else}}
+	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) => _localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}, {{ x-resourceParamNames this }}];
+	{{else}}
+	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }})
+	{
+		return _localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}, {{ x-resourceParamNames this }}];
+	}
+	{{/if}}
 	{{/if}}
 ¤
 	{{/if}}

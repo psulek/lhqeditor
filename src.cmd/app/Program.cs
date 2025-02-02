@@ -12,8 +12,17 @@ string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
 //args = ["--help"];
 
-var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
-var csProjName = "Test.Localization.csproj";
+string? customNamespace = null;
+
+// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");
+// var csProjName = "NetCoreResxCsharp01.csproj";
+
+var lhqFullPath = "c:\\Temp\\neo_online\\Neo.Localization\\Strings.lhq";
+var csProjName = "Neo.Localization.csproj";
+customNamespace = "Neo.Localization";
+
+// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
+// var csProjName = "Test.Localization.csproj";
 
 // var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
 // var csProjName = "Localization.Common.csproj";
@@ -24,7 +33,7 @@ var csProjName = "Test.Localization.csproj";
 // var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v2\\Strings.lhq";
 // var csProjName = "WpfResxCsharp01v2.csproj";
 
-var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "GenOutput");
+var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests"), "GenOutput");
 if (!Directory.Exists(outputDir))
 {
     Directory.CreateDirectory(outputDir);
@@ -43,6 +52,11 @@ args =
     Path.Combine(testDataFolder, csProjName),
     outputDir
 ];
+
+if (!string.IsNullOrEmpty(customNamespace))
+{
+    args = args.Append("--namespace=" + customNamespace).ToArray();
+}
 
 
 var missingParams = args.Length < 2;

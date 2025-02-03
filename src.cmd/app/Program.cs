@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Reflection;
 using System.Text;
 using JavaScriptEngineSwitcher.Core;
 using Jint;
@@ -153,6 +154,12 @@ try
 catch (Exception e)
 {
     bool genericLog = true;
+
+    StringBuilder sb = new();
+    FillException(e, sb);
+    
+    var logFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "lhqcmd_log_" + DateTime.Now.Ticks + ".txt");
+    File.WriteAllText(logFile, sb.ToString());
     
     try
     {
@@ -163,7 +170,7 @@ catch (Exception e)
             {
                 var message = jsException.Error.Get("message");
 
-                if (!string.IsNullOrEmpty(message?.ToString()))
+                if (!string.IsNullOrEmpty(message.ToString()))
                 {
                     Console.Write(Error(message.ToString()));
                     genericLog = false;
@@ -183,6 +190,19 @@ finally
 {
     //Console.ReadLine();
 }
+
+
+//sb.AppendLine($"Root: {e.GetType().Name}: {e.Message}");
+void FillException(Exception e, StringBuilder sb, int level = 0)
+{
+    var prefix = level == 0 ? "Root" : $"Inner_{level}";
+    sb.AppendLine($"[{prefix}] {e.GetType().Name} -> {e.Message} , StackTrace: {e.StackTrace}");
+    if (e.InnerException != null)
+    {
+        FillException(e.InnerException, sb, level + 1);
+    }
+}
+
 
 void WriteHelp()
 {

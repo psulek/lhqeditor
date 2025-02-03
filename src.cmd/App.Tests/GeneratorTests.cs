@@ -47,7 +47,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 
     #region Generate
 
-    private Task Generate(string? lhqModelFileName = null, string? csProjectFileName = null,
+    private async Task<VerifyResult> Generate(string? lhqModelFileName = null, string? csProjectFileName = null,
         Dictionary<string, object>? hostData = null, [CallerMemberName] string methodName = "")
     {
         Console.WriteLine($"[Generate] {methodName} at {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}");
@@ -70,7 +70,10 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 
         string allFilesInfo = string.Join(LF,
             generatedFiles.Select(x => x.Key).Order(StringComparer.InvariantCultureIgnoreCase));
-        var result = Verify(allFilesInfo)
+
+        var verifySettings = new VerifySettings(GetVerifySettings("generators"));
+
+        var result = Verify(allFilesInfo, verifySettings)
             .UseDirectory(Path.Combine(ShapshotDir, methodName))
             .UseFileName("file")
             .AutoVerify();
@@ -80,7 +83,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
             result.AppendContentAsFile(FixNewlines(content), name: Path.GetFileName(file));
         }
 
-        return result;
+        return await result;
     }
 
     #endregion

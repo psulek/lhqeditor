@@ -1,18 +1,16 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.Unicode;
 using Shouldly;
+using TestContext = NUnit.Framework.TestContext;
+
 // ReSharper disable InconsistentNaming
 
 namespace LHQ.Cmd.Tests;
 
 [TestFixture]
-public sealed class GeneratorTests : TestBase
+public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 {
-    public GeneratorTests() : base(GetVerifySettings("generators"))
-    {
-    }
-
     private const char LF = '\n';
 
     private static string FixNewlines(string str)
@@ -20,9 +18,40 @@ public sealed class GeneratorTests : TestBase
         return str.Replace("\r\n", "\n").Replace('\r', '\n');
     }
 
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        Console.WriteLine($"[OneTimeSetUp] {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}");
+        
+        if (!Directory.Exists(ShapshotFullDir))
+        {
+            Directory.CreateDirectory(ShapshotFullDir);
+        }
+        
+        var subdirs = Directory.GetDirectories(ShapshotFullDir, "*.*", SearchOption.TopDirectoryOnly);
+        if (subdirs.Length == 0)
+        {
+            var testMethods = GetType().GetMethods()
+                .Where(m => m.GetCustomAttribute<TestAttribute>() != null)
+                .Select(m => m.Name)
+                .ToArray();
+
+            foreach (var testMethod in testMethods)
+            {
+                CreateVerifiedFiles(testMethod);
+            }
+            
+            //throw new Exception($"{nameof(GeneratorTests)} was stopped after initial verification files was created. Please restart unit test(s)!");
+        }
+    }
+
+    #region Generate
+
     private Task Generate(string? lhqModelFileName = null, string? csProjectFileName = null,
         Dictionary<string, object>? hostData = null, [CallerMemberName] string methodName = "")
     {
+        Console.WriteLine($"[Generate] {methodName} at {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}");
+        
         if (lhqModelFileName == null)
         {
             lhqModelFileName = Path.Combine("TestData", methodName, "Strings.lhq");
@@ -33,7 +62,31 @@ public sealed class GeneratorTests : TestBase
             csProjectFileName = Path.Combine("TestData", methodName, $"{methodName}.csproj");
         }
 
-        // create verified files if not exist (based on content from testdata\{methodname}\Resources\...)
+        using var generator = new Generator();
+        var generatedFiles = generator.Generate(lhqModelFileName, csProjectFileName, hostData);
+
+        generatedFiles.ShouldNotBeNull();
+        generatedFiles.ShouldNotBeEmpty();
+
+        string allFilesInfo = string.Join(LF,
+            generatedFiles.Select(x => x.Key).Order(StringComparer.InvariantCultureIgnoreCase));
+        var result = Verify(allFilesInfo)
+            .UseDirectory(Path.Combine(ShapshotDir, methodName))
+            .UseFileName("file")
+            .AutoVerify();
+
+        foreach (var (file, content) in generatedFiles)
+        {
+            result.AppendContentAsFile(FixNewlines(content), name: Path.GetFileName(file));
+        }
+
+        return result;
+    }
+
+    #endregion
+
+    private void CreateVerifiedFiles(string methodName)
+    {
         var verifiedFile = Path.Combine(ShapshotFullDir, methodName, "file.verified.txt");
         if (!File.Exists(verifiedFile))
         {
@@ -67,29 +120,17 @@ public sealed class GeneratorTests : TestBase
                 }
             }
         }
-
-        using var generator = new Generator();
-        var generatedFiles = generator.Generate(lhqModelFileName, csProjectFileName, hostData);
-
-        generatedFiles.ShouldNotBeNull();
-        generatedFiles.ShouldNotBeEmpty();
-
-        string allFilesInfo = string.Join(LF,
-            generatedFiles.Select(x => x.Key).Order(StringComparer.InvariantCultureIgnoreCase));
-        var result = Verify(allFilesInfo).UseDirectory(Path.Combine(ShapshotDir, methodName))
-            .UseFileName("file"); //methodName);
-
-        foreach (var (file, content) in generatedFiles)
-        {
-            result.AppendContentAsFile(FixNewlines(content), name: Path.GetFileName(file));
-        }
-
-        return result;
     }
 
     [Test]
     public Task WpfResxCsharp01() => Generate();
-    
+
     [Test]
     public Task WpfResxCsharp01v2() => Generate();
+
+    [Test]
+    public Task WpfResxCsharp01v3() => Generate();
+
+    [Test]
+    public Task NetCoreResxCsharp01() => Generate();
 }

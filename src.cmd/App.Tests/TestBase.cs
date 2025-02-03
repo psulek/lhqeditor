@@ -1,5 +1,4 @@
 using System.Runtime.CompilerServices;
-using TestContext = NUnit.Framework.TestContext;
 
 namespace LHQ.Cmd.Tests;
 

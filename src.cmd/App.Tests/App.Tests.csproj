@@ -16,6 +16,10 @@
         <None Include="TestData\**\*.*">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+
+        <Compile Remove="GenOutput\**\*.cs" />
+        <EmbeddedResource Remove="GenOutput\**\*" />
+        <None Include="GenOutput\**\*.*" />
     </ItemGroup>
     
     <ItemGroup>
@@ -30,11 +34,6 @@
         <PackageReference Include="Shouldly" Version="4.3.0" />
         <PackageReference Include="Verify" Version="28.9.0" />
         <PackageReference Include="Verify.NUnit" Version="28.9.0" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="_shapshots\" />
-      <Folder Include="_shapshots\namespaces\" />
     </ItemGroup>
     
     <ItemGroup>

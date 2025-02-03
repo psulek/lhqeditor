@@ -59,8 +59,8 @@
                   "name": "Typescript",
                   "attrs": {
                     "OutputFolder": "Typescript",
-                    "AmbientNamespaceName": null,
-                    "InterfacePrefix": null
+                    "AmbientNamespaceName": "amb",
+                    "InterfacePrefix": "IX"
                   }
                 },
                 {

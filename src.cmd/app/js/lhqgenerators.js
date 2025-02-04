@@ -3,6 +3,34 @@ var LhqGenerators;
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/AppError.ts":
+/*!*************************!*\
+  !*** ./src/AppError.ts ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AppError: () => (/* binding */ AppError)
+/* harmony export */ });
+class AppError extends Error {
+    constructor(message, stack) {
+        super(message);
+        this.message = message;
+        this.name = 'AppError';
+        // Maintains proper stack trace for where our error was thrown (only available on V8)
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, AppError);
+        }
+        if (stack !== undefined && stack !== null) {
+            this.stack = stack;
+        }
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/helpers.ts":
 /*!************************!*\
   !*** ./src/helpers.ts ***!
@@ -32,6 +60,8 @@ helpersList['x-concat'] = concat;
 helpersList['x-replace'] = replace;
 helpersList['x-trimEnd'] = trimEnd;
 helpersList['x-equals'] = equals;
+helpersList['x-isTrue'] = isTrueHelper;
+helpersList['x-isFalse'] = isFalseHelper;
 helpersList['x-resourceComment'] = resourceComment;
 helpersList['x-resourceValue'] = resourceValue;
 helpersList['x-resourceHasLang'] = resourceHasLang;
@@ -39,10 +69,16 @@ helpersList['x-resourceParamNames'] = resourceParamNames;
 helpersList['x-merge'] = merge;
 helpersList['x-sortBy'] = _utils__WEBPACK_IMPORTED_MODULE_0__.sortBy;
 helpersList['x-sortObject'] = sortObjectByKeyHelper;
-helpersList['x-objCount'] = objCount;
+helpersList['x-objCount'] = _utils__WEBPACK_IMPORTED_MODULE_0__.objCount;
+helpersList['x-hasItems'] = _utils__WEBPACK_IMPORTED_MODULE_0__.hasItems;
 helpersList['x-textEncode'] = textEncodeHelper;
 helpersList['x-host-webHtmlEncode'] = hostWebHtmlEncodeHelper;
 helpersList['x-render'] = renderHelper;
+helpersList['x-isNullOrEmpty'] = _utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty;
+helpersList['x-isNotNullOrEmpty'] = isNotNullOrEmptyHelper;
+helpersList['x-fn'] = callFunctionHelper;
+helpersList['x-logical'] = logicalOperatorHelper;
+helpersList['x-debugLog'] = debugLogHelper;
 //helpersList['x-each'] = eachsorted;
 function header() {
     return `//------------------------------------------------------------------------------
@@ -99,7 +135,8 @@ function concat(...args) {
     const options = args.pop();
     const sep = options.hash.sep || ''; // Default to empty string if no separator is provided
     // @ts-ignore
-    return args.filter(Boolean).join(sep);
+    //return args.filter(Boolean).join(sep);
+    return args.join(sep);
 }
 function replace(value, block) {
     const what = block.hash.what || '', withStr = block.hash.with || '';
@@ -136,12 +173,40 @@ function trimEnd(input, endPattern) {
 //     }
 // }
 function equals(input, value, block) {
+    /*const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
+    const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
+    const val2 = typeof value === "string" ? value : (value?.toString() ?? '');*/
+    const { cs, val1, val2 } = getDataForCompare(input, value, block);
+    return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
+}
+function isTrueHelper(input) {
+    return input === true;
+}
+function isFalseHelper(input) {
+    return input === false;
+}
+function getDataForCompare(input, value, block) {
     var _a, _b;
     const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
     const val1 = typeof input === "string" ? input : ((_a = input === null || input === void 0 ? void 0 : input.toString()) !== null && _a !== void 0 ? _a : '');
     const val2 = typeof value === "string" ? value : ((_b = value === null || value === void 0 ? void 0 : value.toString()) !== null && _b !== void 0 ? _b : '');
-    return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
+    return { cs: cs, val1, val2 };
 }
+function logicalOperatorHelper(input, value, block) {
+    const op = block.hash.op || 'and';
+    if (op === 'and') {
+        return input === value;
+    }
+    else if (op === 'or') {
+        return input || value;
+    }
+    return false;
+}
+// function compareHelper(input: any, value: any, block: any): boolean {
+//     const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
+//     const {cs, val1, val2} = getDataForCompare(input, value, block)
+//
+// }
 function trimComment(value) {
     let trimmed = false;
     var idxNewLine = value.indexOf('\r\n');
@@ -180,12 +245,13 @@ function resourceComment(resource, options) {
     return '';
 }
 function resourceValue(resource, options) {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     if (typeof resource === 'object') {
         const lang = (_a = options.hash.lang) !== null && _a !== void 0 ? _a : '';
+        const trim = (_b = options.hash.trim) !== null && _b !== void 0 ? _b : false;
         if (!(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(lang)) {
-            let resValue = (_d = (_c = (_b = resource === null || resource === void 0 ? void 0 : resource.values) === null || _b === void 0 ? void 0 : _b[lang]) === null || _c === void 0 ? void 0 : _c.value) !== null && _d !== void 0 ? _d : '';
-            return resValue;
+            const res = (_e = (_d = (_c = resource === null || resource === void 0 ? void 0 : resource.values) === null || _c === void 0 ? void 0 : _c[lang]) === null || _d === void 0 ? void 0 : _d.value) !== null && _e !== void 0 ? _e : '';
+            return trim ? res.trim() : res;
         }
     }
     return '';
@@ -219,12 +285,6 @@ function sortObjectByKeyHelper(obj, options) {
     const sortOrder = (_b = (_a = options === null || options === void 0 ? void 0 : options.hash) === null || _a === void 0 ? void 0 : _a.sortOrder) !== null && _b !== void 0 ? _b : 'asc';
     return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.sortObjectByKey)(obj, sortOrder);
 }
-function objCount(obj) {
-    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(obj)) {
-        return 0;
-    }
-    return Array.isArray(obj) ? obj.length : Object.keys(obj).length;
-}
 function textEncodeHelper(str, options) {
     var _a, _b, _c, _d;
     const mode = (_b = (_a = options === null || options === void 0 ? void 0 : options.hash) === null || _a === void 0 ? void 0 : _a.mode) !== null && _b !== void 0 ? _b : 'html';
@@ -246,6 +306,17 @@ function renderHelper(input, options) {
     const when = (_b = (_a = options === null || options === void 0 ? void 0 : options.hash) === null || _a === void 0 ? void 0 : _a.when) !== null && _b !== void 0 ? _b : true;
     // @ts-ignore
     return when ? input : '';
+}
+function isNotNullOrEmptyHelper(input) {
+    return !(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(input);
+}
+function callFunctionHelper(fn) {
+    // HostEnv.debugLog("[callFunctionHelper] fn: " + typeof fn + " , " + JSON.stringify(fn));
+    return fn();
+}
+function debugLogHelper(...args) {
+    _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(args.join(' '));
+    return '';
 }
 
 
@@ -376,20 +447,39 @@ class TemplateManager {
         throw new Error(`Template '${templateId}' not found !`);
     }
     static sortByNameModel(lhqModel) {
-        function recursiveCategories(parent) {
-            if (parent.categories) {
-                parent.categories = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByKey)(parent.categories);
-                (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(parent.categories, (_, item) => recursiveCategories(item));
+        function recursiveCategories(parentCategory) {
+            if (parentCategory.categories) {
+                parentCategory.categories = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByKey)(parentCategory.categories);
+                (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(parentCategory.categories, (category, _, __, isLastCategory) => {
+                    category.isRoot = () => false;
+                    category.isLast = () => isLastCategory;
+                    category.getParent = () => parentCategory;
+                    category.hasCategories = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(parentCategory.categories);
+                    category.hasResources = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(parentCategory.resources);
+                    recursiveCategories(category);
+                });
             }
-            if (parent.resources) {
-                parent.resources = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByKey)(parent.resources);
-                (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(parent.resources, (_, item) => {
-                    if (item.parameters) {
-                        item.parameters = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByValue)(item.parameters, x => x.order);
+            if (parentCategory.resources) {
+                parentCategory.resources = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByKey)(parentCategory.resources);
+                (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(parentCategory.resources, (resource, _, __, isLastResource) => {
+                    resource.isLast = () => isLastResource;
+                    resource.getParent = () => parentCategory;
+                    resource.hasParameters = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(resource.parameters);
+                    if (resource.parameters) {
+                        resource.parameters = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByValue)(resource.parameters, x => x.order);
+                        (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(resource.parameters, (parameter, _, __, isLastParam) => {
+                            parameter.isLast = () => isLastParam;
+                            parameter.getParent = () => resource;
+                        });
                     }
                 });
             }
         }
+        lhqModel.isRoot = () => true;
+        lhqModel.isLast = () => true;
+        lhqModel.getParent = () => undefined;
+        lhqModel.hasCategories = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(lhqModel.categories);
+        lhqModel.hasResources = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(lhqModel.resources);
         recursiveCategories(lhqModel);
         return lhqModel;
     }
@@ -473,12 +563,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _codeGeneratorTemplate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./codeGeneratorTemplate */ "./src/templates/codeGeneratorTemplate.ts");
 /* harmony import */ var _hostEnv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hostEnv */ "./src/hostEnv.ts");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/utils.ts");
+/* harmony import */ var _AppError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../AppError */ "./src/AppError.ts");
+
 
 
 
 class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MODULE_0__.CodeGeneratorTemplate {
     constructor(handlebarFiles) {
         super(handlebarFiles);
+    }
+    checkHasNamespaceName(rootModel) {
+        const key = 'namespace';
+        if ((0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(rootModel.host[key])) {
+            throw new _AppError__WEBPACK_IMPORTED_MODULE_3__.AppError(`Missing value for parameter '${key}' ! 
+                 Provide valid path to *.csproj which uses required lhq model or 
+                 provide value for parameter '${key}' in cmd data parameters.`);
+        }
     }
     generate(rootModel) {
         var _a;
@@ -489,6 +589,7 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
         const defaultCompatibleTextEncoding = modelVersion < 2;
         const modelName = rootModel.model.model.name;
         if (this._settings.CSharp.Enabled.isTrue()) {
+            this.checkHasNamespaceName(rootModel);
             rootModel.extra = {};
             rootModel.extra['rootClassName'] = this.getRootCsharpClassName(rootModel);
             const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
@@ -497,7 +598,7 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(csFileName, csfileContent);
         }
         if (this._settings.ResX.Enabled.isTrue()) {
-            const resxTemplateFile = this.getHandlebarFile('resx');
+            const resxTemplateFile = this.getHandlebarFile('SharedResx');
             rootModel.extra = {};
             rootModel.extra['useHostWebHtmlEncode'] = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
@@ -610,16 +711,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   TypescriptJson01Template: () => (/* binding */ TypescriptJson01Template)
 /* harmony export */ });
 /* harmony import */ var _codeGeneratorTemplate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./codeGeneratorTemplate */ "./src/templates/codeGeneratorTemplate.ts");
+/* harmony import */ var _hostEnv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hostEnv */ "./src/hostEnv.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/utils.ts");
+
+
 
 class TypescriptJson01Template extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MODULE_0__.CodeGeneratorTemplate {
     generate(rootModel) {
-        const handlebarFile = this.getHandlebarFile(TypescriptJson01Template.Id);
-        const tsFileContent = this.compile(handlebarFile, rootModel);
-        // const csFileName = this.prepareFilePath(modelName + '.gen.cs', rootModel, this._settings.CSharp);
-        // HostEnv.addResultFile(csFileName, csfileContent);
+        var _a;
+        const model = rootModel.model.model;
+        const modelName = model.name;
+        if (this._settings.Typescript.Enabled.isTrue()) {
+            const handlebarFile = this.getHandlebarFile(TypescriptJson01Template.Id);
+            const dtsFileContent = this.compile(handlebarFile, rootModel);
+            const dtsFileName = this.prepareFilePath(modelName + '.d.ts', this._settings.Typescript);
+            _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(dtsFileName, dtsFileContent);
+        }
+        if (this._settings.Json.Enabled.isTrue()) {
+            const metadataFileNameSuffix = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.valueOrDefault)(this._settings.Json.MetadataFileNameSuffix, 'metadata');
+            const metadataObj = {
+                default: model.primaryLanguage,
+                languages: (0,_utils__WEBPACK_IMPORTED_MODULE_2__.sortBy)(rootModel.model.languages, undefined, 'asc')
+            };
+            const metadataContent = JSON.stringify(metadataObj, null, '\t') + '\n';
+            const metadataFileName = this.prepareFilePath(`${modelName}-${metadataFileNameSuffix}.json`, this._settings.Json);
+            _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(metadataFileName, metadataContent);
+            const jsonTemplateFile = this.getHandlebarFile('JsonPerLanguage');
+            rootModel.extra = {};
+            const writeEmptyValues = this._settings.Json.WriteEmptyValues.isTrue();
+            const allFilesHasLangInName = this._settings.Json.CultureCodeInFileNameForPrimaryLanguage.isTrue();
+            (_a = rootModel.model.languages) === null || _a === void 0 ? void 0 : _a.forEach(lang => {
+                if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(lang)) {
+                    const isPrimary = model.primaryLanguage === lang;
+                    const langName = !isPrimary || allFilesHasLangInName ? `.${lang}` : '';
+                    rootModel.extra['lang'] = lang;
+                    rootModel.extra['writeEmptyValues'] = writeEmptyValues;
+                    const jsonFileContent = this.compile(jsonTemplateFile, rootModel);
+                    const jsonfileName = this.prepareFilePath(`${modelName}${langName}.json`, this._settings.Json);
+                    _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(jsonfileName, jsonFileContent);
+                }
+            });
+        }
     }
     loadSettings(node) {
-        var _a;
+        var _a, _b, _c;
         const result = { Typescript: undefined, Json: undefined };
         (_a = node.childs) === null || _a === void 0 ? void 0 : _a.forEach(x => {
             const attrs = x.attrs;
@@ -638,6 +773,8 @@ class TypescriptJson01Template extends _codeGeneratorTemplate__WEBPACK_IMPORTED_
         if (result.Json === undefined) {
             throw new Error('Json settings not found !');
         }
+        result.Typescript.Enabled = (_b = result.Typescript.Enabled) !== null && _b !== void 0 ? _b : true.toString();
+        result.Json.Enabled = (_c = result.Json.Enabled) !== null && _c !== void 0 ? _c : true.toString();
         this._settings = result;
         return result;
     }
@@ -712,13 +849,17 @@ class WpfResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPORTED_
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getNestedPropertyValue: () => (/* binding */ getNestedPropertyValue),
+/* harmony export */   hasItems: () => (/* binding */ hasItems),
 /* harmony export */   isNullOrEmpty: () => (/* binding */ isNullOrEmpty),
 /* harmony export */   iterateObject: () => (/* binding */ iterateObject),
+/* harmony export */   objCount: () => (/* binding */ objCount),
 /* harmony export */   sortBy: () => (/* binding */ sortBy),
 /* harmony export */   sortObjectByKey: () => (/* binding */ sortObjectByKey),
 /* harmony export */   sortObjectByValue: () => (/* binding */ sortObjectByValue),
 /* harmony export */   textEncode: () => (/* binding */ textEncode),
-/* harmony export */   toBoolean: () => (/* binding */ toBoolean)
+/* harmony export */   toBoolean: () => (/* binding */ toBoolean),
+/* harmony export */   valueAsBool: () => (/* binding */ valueAsBool),
+/* harmony export */   valueOrDefault: () => (/* binding */ valueOrDefault)
 /* harmony export */ });
 //const he = require('he');
 // export function htmlEncode(value: string, options: any): string {
@@ -777,8 +918,15 @@ function sortBy(source, propName, sortOrder = 'asc') {
     });
 }
 function iterateObject(obj, callback) {
-    for (const [key, value] of Object.entries(obj)) {
-        callback(key, value);
+    const entries = Object.entries(obj);
+    if (entries.length > 0) {
+        const lastIndex = entries.length - 1;
+        let index = -1;
+        for (const [key, value] of entries) {
+            index++;
+            const isLast = index == lastIndex;
+            callback(value, key, index, isLast);
+        }
     }
 }
 const encodingCharMaps = {
@@ -800,6 +948,15 @@ const encodingCharMaps = {
         '"': '&quot;',
         "'": '&apos;',
         '&': '&amp;'
+    },
+    json: {
+        '\\': '\\\\',
+        '"': '\\"',
+        '\b': '\\b',
+        '\f': '\\f',
+        '\n': '\\n',
+        '\r': '\\r',
+        '\t': '\\t'
     }
 };
 function textEncode(str, encoder) {
@@ -810,12 +967,15 @@ function textEncode(str, encoder) {
     const encodedChars = [];
     for (let i = 0; i < str.length; i++) {
         const ch = str.charAt(i);
-        let map;
+        let map = undefined;
         if (encoder.mode === 'html') {
             map = encodingCharMaps.html;
         }
-        else {
+        else if (encoder.mode === 'xml') {
             map = ((_a = encoder.quotes) !== null && _a !== void 0 ? _a : true) ? encodingCharMaps.xml_quotes : encodingCharMaps.xml;
+        }
+        else {
+            map = encodingCharMaps.json;
         }
         if (map.hasOwnProperty(ch)) {
             encodedChars.push(map[ch]);
@@ -826,8 +986,44 @@ function textEncode(str, encoder) {
     }
     return encodedChars.join('');
 }
+function valueOrDefault(value, defaultValue) {
+    let result = isNullOrEmpty(value)
+        ? defaultValue
+        : value;
+    if (typeof defaultValue === 'boolean') {
+        result = valueAsBool(value);
+    }
+    return result;
+}
+function valueAsBool(value) {
+    switch (typeof value) {
+        case 'boolean':
+            return value;
+        case 'number':
+            return value > 0;
+        case 'string':
+            return value.toLowerCase() === 'true';
+        default:
+            return false;
+    }
+}
 function toBoolean(value) {
     return value.toLowerCase() === 'true';
+}
+function hasItems(obj) {
+    return objCount(obj) > 0;
+}
+function objCount(obj) {
+    if (isNullOrEmpty(obj)) {
+        return 0;
+    }
+    if (Array.isArray(obj)) {
+        return obj.length;
+    }
+    if (typeof obj === 'object') {
+        return Object.keys(obj).length;
+    }
+    return 0;
 }
 
 

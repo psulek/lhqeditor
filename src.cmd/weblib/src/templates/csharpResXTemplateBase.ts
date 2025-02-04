@@ -1,7 +1,8 @@
-import {CSharpGeneratorSettings, LhqModelType, ModelDataNode, ResXGeneratorSettings, TemplateRootModel} from "../types";
+import {CSharpGeneratorSettings, ModelDataNode, ResXGeneratorSettings, TemplateRootModel} from "../types";
 import {CodeGeneratorTemplate} from "./codeGeneratorTemplate";
 import {HostEnv} from "../hostEnv";
 import {isNullOrEmpty} from "../utils";
+import {AppError} from "../AppError";
 
 type Settings<TCSharpSettings extends CSharpGeneratorSettings> = {
     CSharp: TCSharpSettings;
@@ -16,8 +17,17 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
     }
 
     protected abstract get csharpTemplateName(): string;
-    
+
     protected abstract getRootCsharpClassName(rootModel: TemplateRootModel): string;
+
+    private checkHasNamespaceName(rootModel: TemplateRootModel): void {
+        const key = 'namespace';
+        if (isNullOrEmpty(rootModel.host[key])) {
+            throw new AppError(`Missing value for parameter '${key}' ! 
+                 Provide valid path to *.csproj which uses required lhq model or 
+                 provide value for parameter '${key}' in cmd data parameters.`);
+        }
+    }
 
     public generate(rootModel: TemplateRootModel) {
         const modelVersion = rootModel.model.model.version;
@@ -29,9 +39,10 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         const modelName = rootModel.model.model.name;
 
         if (this._settings.CSharp.Enabled.isTrue()) {
+            this.checkHasNamespaceName(rootModel);
             rootModel.extra = {};
             rootModel.extra['rootClassName'] = this.getRootCsharpClassName(rootModel);
-            
+
             const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
             const csfileContent = this.compile(csharpTemplateFile, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
@@ -39,12 +50,12 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         }
 
         if (this._settings.ResX.Enabled.isTrue()) {
-            const resxTemplateFile = this.getHandlebarFile('resx');
+            const resxTemplateFile = this.getHandlebarFile('SharedResx');
             rootModel.extra = {};
             rootModel.extra['useHostWebHtmlEncode'] = isNullOrEmpty(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
                 : this._settings.ResX.CompatibleTextEncoding.isTrue();
-            
+
             rootModel.model.languages?.forEach(lang => {
                 if (!isNullOrEmpty(lang)) {
                     rootModel.extra['lang'] = lang;
@@ -84,7 +95,7 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
 
         result.CSharp.Enabled = result.CSharp.Enabled ?? true.toString();
         result.ResX.Enabled = result.ResX.Enabled ?? true.toString();
-        
+
         this._settings = result;
         return result;
     }

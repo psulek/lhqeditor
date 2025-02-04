@@ -1,9 +1,22 @@
 declare namespace amb {
 	export interface IXStrings {
+		Cars: {
+			Diesel: {
+				Old: {
+					Old_Kia: string;
+				},
+				Mercedes: string;
+				Skoda: string;
+			},
+			Electric: {
+				ToyotaEV: string;
+			}
+		},
 		Messages: {
-			SampleText: string;
-			Welcome: string;
-		}
+			Empty: string;
+			Title: string;
+		},
+		Welcome: string;
 	}
 	
 	export interface IXStringsMetadata {

@@ -1,4 +1,4 @@
-{
+﻿{
   "model": {
     "uid": "6ce4d54c5dbd415c93019d315e278638",
     "version": 1,
@@ -26,7 +26,6 @@
     "no",
     "pl",
     "pt",
-    "pt-BR",
     "ro",
     "ru",
     "hr",
@@ -40,6 +39,7 @@
     "vi",
     "mk",
     "ka",
+    "pt-BR",
     "zh",
     "bs",
     "sr"
@@ -11078,214 +11078,6 @@
         }
       }
     },
-    "FRB_AVAILABLE": {
-      "state": "Edited",
-      "values": {
-        "bg": {
-          "value": "<b>Имате <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "bs": {
-          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "cs": {
-          "value": "<b>Máte <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "da": {
-          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "de": {
-          "value": "<b>Sie haben <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "el": {
-          "value": "<b>Έχετε <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "en": {
-          "value": "<b>You have <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "es": {
-          "value": "<b>¡Tiene <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "et": {
-          "value": "<b>Sul on <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "fi": {
-          "value": "<b>Sinulla on <strong class=\"frbNumber\">%s</strong> Free Rounds-kierrosta!</b>"
-        },
-        "fr": {
-          "value": "<b>Vous avez <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "hr": {
-          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "hu": {
-          "value": "<b>Önnek <strong class=\"frbNumber\">%s</strong> köre van!</b>"
-        },
-        "it": {
-          "value": "<b>Hai <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "ja": {
-          "value": "<b><strong class=\"frbNumber\">%s</strong>の無料ラウンドは残っています!</b>"
-        },
-        "ka": {
-          "value": "<b>თქვენ გაქვთ <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "lt": {
-          "value": "<b>Turite <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "lv": {
-          "value": "<b>Jums ir <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "mk": {
-          "value": "<b>Имате <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "nl": {
-          "value": "<b>Je hebt <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "no": {
-          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "pl": {
-          "value": "<b>Masz <strong class=\"frbNumber\">%s</strong> Free Spins!</b>"
-        },
-        "pt": {
-          "value": "<b>Tem <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "pt-BR": {
-          "value": "<b>Você tem <strong class=\"frbNumber\">%s </strong> Free Rounds!</b>"
-        },
-        "ro": {
-          "value": "<b>Aveți <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "ru": {
-          "value": "<b>У вас <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "sk": {
-          "value": "<b>Máte <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "sr": {
-          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "sv": {
-          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
-        },
-        "tr": {
-          "value": "<b><strong class=\"frbNumber\">%s</strong> Free Rounds var!</b>"
-        },
-        "uk": {
-          "value": "<b>У вас <strong class = \"frbnumber\">%s</strong> Free Rounds! </b>"
-        },
-        "vi": {
-          "value": "<b>Bạn có <strong class=\"frbNumber\">%s</strong> lượt Free Rounds!</b>"
-        },
-        "zh": {
-          "value": "<b>您有 <strong class=\"frbNumber\">%s</strong> Free Rounds！</b>"
-        }
-      }
-    },
-    "FRB_AVAILABLE_FEATURE": {
-      "state": "Edited",
-      "values": {
-        "bg": {
-          "value": "<b>Имате <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "bs": {
-          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "cs": {
-          "value": "<b>Máte <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "da": {
-          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "de": {
-          "value": "<b>Sie haben <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "el": {
-          "value": "<b>Έχετε <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "en": {
-          "value": "<b>You have <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "es": {
-          "value": "<b>¡Tiene <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "et": {
-          "value": "<b>Sul on <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "fi": {
-          "value": "<b>Sinulla on <strong class=\"frbNumber\">%s</strong> Feature Free Rounds-kierrosta!</b>"
-        },
-        "fr": {
-          "value": "<b>Vous avez <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "hr": {
-          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "hu": {
-          "value": "<b>Önnek <strong class=\"frbNumber\">%s</strong> Feature ingyenes köre van!</b>"
-        },
-        "it": {
-          "value": "<b>Hai <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "ja": {
-          "value": "<b><strong class=\"frbNumber\">%s</strong>のFeature無料ラウンドは残っています!</b>"
-        },
-        "ka": {
-          "value": "<b>თქვენ გაქვთ <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "lt": {
-          "value": "<b>Turite <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "lv": {
-          "value": "<b>Jums ir <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "mk": {
-          "value": "<b>Имате <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "nl": {
-          "value": "<b>Je hebt <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "no": {
-          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "pl": {
-          "value": "<b>Masz <strong class=\"frbNumber\">%s</strong> Feature Free Spins!</b>"
-        },
-        "pt": {
-          "value": "<b>Tem <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "pt-BR": {
-          "value": "<b>Você tem <strong class=\"frbNumber\">%s </strong> Feature Free Rounds!</b>"
-        },
-        "ro": {
-          "value": "<b>Aveți <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "ru": {
-          "value": "<b>У вас <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "sk": {
-          "value": "<b>Máte <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "sr": {
-          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "sv": {
-          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
-        },
-        "tr": {
-          "value": "<b><strong class=\"frbNumber\">%s</strong> Feature Free Rounds var!</b>"
-        },
-        "uk": {
-          "value": "<b>У вас <strong class=\"frbnumber\">%s</strong> Feature Free Rounds! </b>"
-        },
-        "vi": {
-          "value": "<b>Bạn có <strong class=\"frbNumber\">%s</strong> lượt Feature Free Rounds!</b>"
-        },
-        "zh": {
-          "value": "<b>您有 <strong class=\"frbNumber\">%s</strong> Feature Free Rounds！</b>"
-        }
-      }
-    },
     "FRB_ACTIVE_FEATURE_ONE": {
       "state": "Edited",
       "values": {
@@ -11491,6 +11283,214 @@
         },
         "zh": {
           "value": "<b>您只剩 <strong class=\"frbNumber\">%s</strong> Free Round！</b>"
+        }
+      }
+    },
+    "FRB_AVAILABLE": {
+      "state": "Edited",
+      "values": {
+        "bg": {
+          "value": "<b>Имате <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "bs": {
+          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "cs": {
+          "value": "<b>Máte <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "da": {
+          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "de": {
+          "value": "<b>Sie haben <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "el": {
+          "value": "<b>Έχετε <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "en": {
+          "value": "<b>You have <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "es": {
+          "value": "<b>¡Tiene <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "et": {
+          "value": "<b>Sul on <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "fi": {
+          "value": "<b>Sinulla on <strong class=\"frbNumber\">%s</strong> Free Rounds-kierrosta!</b>"
+        },
+        "fr": {
+          "value": "<b>Vous avez <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "hr": {
+          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "hu": {
+          "value": "<b>Önnek <strong class=\"frbNumber\">%s</strong> köre van!</b>"
+        },
+        "it": {
+          "value": "<b>Hai <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "ja": {
+          "value": "<b><strong class=\"frbNumber\">%s</strong>の無料ラウンドは残っています!</b>"
+        },
+        "ka": {
+          "value": "<b>თქვენ გაქვთ <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "lt": {
+          "value": "<b>Turite <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "lv": {
+          "value": "<b>Jums ir <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "mk": {
+          "value": "<b>Имате <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "nl": {
+          "value": "<b>Je hebt <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "no": {
+          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "pl": {
+          "value": "<b>Masz <strong class=\"frbNumber\">%s</strong> Free Spins!</b>"
+        },
+        "pt": {
+          "value": "<b>Tem <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "pt-BR": {
+          "value": "<b>Você tem <strong class=\"frbNumber\">%s </strong> Free Rounds!</b>"
+        },
+        "ro": {
+          "value": "<b>Aveți <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "ru": {
+          "value": "<b>У вас <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "sk": {
+          "value": "<b>Máte <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "sr": {
+          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "sv": {
+          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Free Rounds!</b>"
+        },
+        "tr": {
+          "value": "<b><strong class=\"frbNumber\">%s</strong> Free Rounds var!</b>"
+        },
+        "uk": {
+          "value": "<b>У вас <strong class = \"frbnumber\">%s</strong> Free Rounds! </b>"
+        },
+        "vi": {
+          "value": "<b>Bạn có <strong class=\"frbNumber\">%s</strong> lượt Free Rounds!</b>"
+        },
+        "zh": {
+          "value": "<b>您有 <strong class=\"frbNumber\">%s</strong> Free Rounds！</b>"
+        }
+      }
+    },
+    "FRB_AVAILABLE_FEATURE": {
+      "state": "Edited",
+      "values": {
+        "bg": {
+          "value": "<b>Имате <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "bs": {
+          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "cs": {
+          "value": "<b>Máte <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "da": {
+          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "de": {
+          "value": "<b>Sie haben <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "el": {
+          "value": "<b>Έχετε <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "en": {
+          "value": "<b>You have <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "es": {
+          "value": "<b>¡Tiene <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "et": {
+          "value": "<b>Sul on <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "fi": {
+          "value": "<b>Sinulla on <strong class=\"frbNumber\">%s</strong> Feature Free Rounds-kierrosta!</b>"
+        },
+        "fr": {
+          "value": "<b>Vous avez <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "hr": {
+          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "hu": {
+          "value": "<b>Önnek <strong class=\"frbNumber\">%s</strong> Feature ingyenes köre van!</b>"
+        },
+        "it": {
+          "value": "<b>Hai <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "ja": {
+          "value": "<b><strong class=\"frbNumber\">%s</strong>のFeature無料ラウンドは残っています!</b>"
+        },
+        "ka": {
+          "value": "<b>თქვენ გაქვთ <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "lt": {
+          "value": "<b>Turite <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "lv": {
+          "value": "<b>Jums ir <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "mk": {
+          "value": "<b>Имате <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "nl": {
+          "value": "<b>Je hebt <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "no": {
+          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "pl": {
+          "value": "<b>Masz <strong class=\"frbNumber\">%s</strong> Feature Free Spins!</b>"
+        },
+        "pt": {
+          "value": "<b>Tem <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "pt-BR": {
+          "value": "<b>Você tem <strong class=\"frbNumber\">%s </strong> Feature Free Rounds!</b>"
+        },
+        "ro": {
+          "value": "<b>Aveți <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "ru": {
+          "value": "<b>У вас <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "sk": {
+          "value": "<b>Máte <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "sr": {
+          "value": "<b>Imate <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "sv": {
+          "value": "<b>Du har <strong class=\"frbNumber\">%s</strong> Feature Free Rounds!</b>"
+        },
+        "tr": {
+          "value": "<b><strong class=\"frbNumber\">%s</strong> Feature Free Rounds var!</b>"
+        },
+        "uk": {
+          "value": "<b>У вас <strong class=\"frbnumber\">%s</strong> Feature Free Rounds! </b>"
+        },
+        "vi": {
+          "value": "<b>Bạn có <strong class=\"frbNumber\">%s</strong> lượt Feature Free Rounds!</b>"
+        },
+        "zh": {
+          "value": "<b>您有 <strong class=\"frbNumber\">%s</strong> Feature Free Rounds！</b>"
         }
       }
     },
@@ -31577,45 +31577,45 @@
     }
   },
   "metadatas": {
-    "childs": [
-      {
-        "name": "metadata",
-        "attrs": {
-          "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
-        },
-        "childs": [
-          {
-            "name": "content",
-            "attrs": {
-              "templateId": "TypescriptJson01"
-            },
-            "childs": [
-              {
-                "name": "Settings",
-                "childs": [
-                  {
-                    "name": "Typescript",
-                    "attrs": {
-                      "OutputFolder": "typings",
-                      "AmbientNamespaceName": null,
-                      "InterfacePrefix": null
-                    }
-                  },
-                  {
-                    "name": "Json",
-                    "attrs": {
-                      "OutputFolder": "wwwroot\\Resources",
-                      "CultureCodeInFileNameForPrimaryLanguage": "true",
-                      "MetadataFileNameSuffix": "metadata",
-                      "WriteEmptyValues": "true"
-                    }
+  "childs": [
+    {
+      "name": "metadata",
+      "attrs": {
+        "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
+      },
+      "childs": [
+        {
+          "name": "content",
+          "attrs": {
+            "templateId": "TypescriptJson01"
+          },
+          "childs": [
+            {
+              "name": "Settings",
+              "childs": [
+                {
+                  "name": "Typescript",
+                  "attrs": {
+                    "OutputFolder": "typings",
+                    "AmbientNamespaceName": null,
+                    "InterfacePrefix": null
                   }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+                },
+                {
+                  "name": "Json",
+                  "attrs": {
+                    "OutputFolder": "wwwroot\\Resources",
+                    "CultureCodeInFileNameForPrimaryLanguage": "true",
+                    "MetadataFileNameSuffix": "metadata",
+                    "WriteEmptyValues": "true"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
 }

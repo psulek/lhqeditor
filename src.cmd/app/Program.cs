@@ -13,14 +13,21 @@ string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
 //args = ["--help"];
 
+var logFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "lhqcmd.log");
+
+AddToLogFile("Program lhqcmd.exe started.");
+
 string? customNamespace = null;
+
+var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01v2\\Strings.lhq";
+var csProjName = "";
 
 // var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");
 // var csProjName = "NetCoreResxCsharp01.csproj";
 
-var lhqFullPath = "c:\\Temp\\neo_online\\Neo.Localization\\Strings.lhq";
-var csProjName = "Neo.Localization.csproj";
-customNamespace = "Neo.Localization";
+// var lhqFullPath = "c:\\Temp\\neo_online\\Neo.Localization\\Strings.lhq";
+// var csProjName = "Neo.Localization.csproj";
+// customNamespace = "Neo.Localization";
 
 // var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
 // var csProjName = "Test.Localization.csproj";
@@ -50,7 +57,7 @@ var testDataFolder = Path.GetDirectoryName(lhqFullPath)!;
 args =
 [
     lhqFullPath,
-    Path.Combine(testDataFolder, csProjName),
+    string.IsNullOrEmpty(csProjName) ? csProjName : Path.Combine(testDataFolder, csProjName),
     outputDir
 ];
 
@@ -64,6 +71,8 @@ var missingParams = args.Length < 2;
 
 try
 {
+    Console.OutputEncoding = Encoding.UTF8;
+    
     Console.WriteLine($"{White("LHQ Model Generator")}  " + 
                       Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n"));
 
@@ -78,12 +87,12 @@ try
 
         if (string.IsNullOrEmpty(lhqFile) || !File.Exists(lhqFile))
         {
-            throw new Exception($"LhQ model file {White(lhqFile)} was not found!");
+            throw new Exception($"LhQ model file '{lhqFile}' was not found!");
         }
 
-        if (string.IsNullOrEmpty(csProjFile) || !File.Exists(csProjFile))
+        if (!string.IsNullOrEmpty(csProjFile) && !File.Exists(csProjFile))
         {
-            throw new Exception($"C# project file {White(csProjFile)} was not found!");
+            throw new Exception($"C# project file '{csProjFile}' was not found!");
         }
 
         string outDir = args.Length > 2 ? args[2] : string.Empty;
@@ -91,13 +100,15 @@ try
         {
             if (!Directory.Exists(outDir))
             {
-                throw new DirectoryNotFoundException($"Output directory {White(outDir)} was not found!");
+                throw new DirectoryNotFoundException($"Output directory '{outDir}' was not found!");
             }
         }
 
         if (string.IsNullOrEmpty(outDir))
         {
-            outDir = Path.GetDirectoryName(csProjFile)!;
+            outDir = !string.IsNullOrEmpty(csProjFile) 
+                ? Path.GetDirectoryName(csProjFile)!
+                : Path.GetDirectoryName(lhqFile)!;
         }
 
         if (string.IsNullOrEmpty(outDir))
@@ -158,8 +169,7 @@ catch (Exception e)
     StringBuilder sb = new();
     FillException(e, sb);
     
-    var logFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "lhqcmd_log_" + DateTime.Now.Ticks + ".txt");
-    File.WriteAllText(logFile, sb.ToString());
+    AddToLogFile(sb.ToString());
     
     try
     {
@@ -188,7 +198,7 @@ catch (Exception e)
 }
 finally
 {
-    //Console.ReadLine();
+    AddToLogFile("Program lhqcmd.exe finished.");
 }
 
 
@@ -265,4 +275,9 @@ void WriteHelp()
                - xml element {White($"/Project/ItemGroup/Content[@Include='{param_lhq}']/CustomToolNamespace")}
                     
          """);
+}
+
+void AddToLogFile(params string[] lines)
+{
+    File.AppendAllLines(logFile, lines.Select(x => $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}: {x}"));
 }

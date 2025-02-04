@@ -153,11 +153,11 @@
     <Content Include="Scripts\App.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Resources\Strings-metadata.json" />
-    <Content Include="Resources\Strings.en.json" />
-    <Content Include="Resources\Strings.sk.json" />
     <Content Include="Scripts\App.js.map" />
     <Content Include="readme.md" />
+    <Content Include="Resources\Strings-metadata.json" />
+    <Content Include="Resources\Strings.json" />
+    <Content Include="Resources\Strings.en.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

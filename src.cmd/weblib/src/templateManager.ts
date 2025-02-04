@@ -1,5 +1,4 @@
 import {
-    LhqModelCategoriesCollectionType,
     LhqModelCategoryType,
     LhqModelType,
     ModelDataNode,
@@ -12,8 +11,7 @@ import {NetCoreResxCsharp01Template} from "./templates/netCoreResxCsharp";
 import {NetFwResxCsharp01Template} from "./templates/netFwResxCsharp";
 import {WinFormsResxCsharp01Template} from "./templates/winFormsResxCsharp";
 import {WpfResxCsharp01Template} from "./templates/wpfResxCsharp";
-import {iterateObject, sortBy, sortObjectByKey, sortObjectByValue} from "./utils";
-import {HostEnv} from "./hostEnv";
+import {hasItems, iterateObject, sortObjectByKey, sortObjectByValue} from "./utils";
 
 const CodeGenUID = 'b40c8a1d-23b7-4f78-991b-c24898596dd2';
 
@@ -92,22 +90,44 @@ export class TemplateManager {
     }
 
     private static sortByNameModel(lhqModel: LhqModelType): LhqModelType {
-        function recursiveCategories(parent: LhqModelCategoryType) {
-            if (parent.categories) {
-                parent.categories = sortObjectByKey(parent.categories);
-                iterateObject(parent.categories, (_, item) => recursiveCategories(item));
+        function recursiveCategories(parentCategory: LhqModelCategoryType) {
+            if (parentCategory.categories) {
+                parentCategory.categories = sortObjectByKey(parentCategory.categories);
+                iterateObject(parentCategory.categories, (category, _, __, isLastCategory) => {
+                    category.isRoot = () => false;
+                    category.isLast = () => isLastCategory;
+                    category.getParent = () => parentCategory;
+                    category.hasCategories = () => hasItems(parentCategory.categories);
+                    category.hasResources = () => hasItems(parentCategory.resources);
+
+                    recursiveCategories(category);
+                });
             }
-            if (parent.resources) {
-                parent.resources = sortObjectByKey(parent.resources);
+            if (parentCategory.resources) {
+                parentCategory.resources = sortObjectByKey(parentCategory.resources);
                 
-                iterateObject(parent.resources, (_, item) => {
-                    if (item.parameters) {
-                        item.parameters = sortObjectByValue(item.parameters, x => x.order);
+                iterateObject(parentCategory.resources, (resource, _, __, isLastResource) => {
+                    resource.isLast = () => isLastResource;
+                    resource.getParent = () => parentCategory;
+                    resource.hasParameters = () => hasItems(resource.parameters);
+
+                    if (resource.parameters) {
+                        resource.parameters = sortObjectByValue(resource.parameters, x => x.order);
+                        
+                        iterateObject(resource.parameters, (parameter, _, __, isLastParam) => {
+                            parameter.isLast = () => isLastParam;
+                            parameter.getParent = () => resource;
+                        })
                     }
                 });
             }
         }
 
+        lhqModel.isRoot = () => true;
+        lhqModel.isLast = () => true;
+        lhqModel.getParent = () => undefined;
+        lhqModel.hasCategories = () => hasItems(lhqModel.categories);
+        lhqModel.hasResources = () => hasItems(lhqModel.resources);
         recursiveCategories(lhqModel);
         return lhqModel;
     }

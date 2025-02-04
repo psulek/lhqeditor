@@ -20,6 +20,12 @@
         <Compile Remove="GenOutput\**\*.cs" />
         <EmbeddedResource Remove="GenOutput\**\*" />
         <None Include="GenOutput\**\*.*" />
+        <None Update="TestData\WpfResxCsharp01v3\Strings2.lhq">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="TestData\TypescriptJson01v3\Strings2.lhq">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
     
     <ItemGroup>

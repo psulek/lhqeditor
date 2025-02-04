@@ -159,7 +159,7 @@
 	"HLP_AD_INFO_GAME_RESOLVE": "Os jogos incompletos serão encerrados automaticamente após %s horas. Qualquer prémio resultante de um encerramento automático será pago na conta do jogador.",
 	"HLP_AD_INFO_GAME_VERSION": "Versão do jogo: %s",
 	"HLP_AD_INFO_MAX_BET": "A aposta máxima é %s.",
-	"HLP_AD_INFO_MAX_PAYOUT_FREQUENCY": "Maior hipótese de ganhar %s.<br> A probabilidade de prémio mais alta é calculada para o jogo base.<br> As funcionalidades ativadas no jogo podem resultar em prémios mais altos adicionais na frequência de %s.",
+	"HLP_AD_INFO_MAX_PAYOUT_FREQUENCY": "Maior hipótese de ganhar %s.<br> A probabilidade de prémio mais alta é calculada pentru o jogo base.<br> As funcionalidades ativadas no jogo podem resultar em prémios mais altos adicionais na frequência de %s.",
 	"HLP_AD_INFO_MAX_PAYOUT_PROBABILITY": "Maior hipótese de ganhar %s.<br> A probabilidade de prémio mais alta é calculada para o jogo base.<br> As funcionalidades ativadas no jogo base podem resultar em prémios mais altos adicionais com uma probabilidade inferior.",
 	"HLP_AD_INFO_MIN_BET": "A aposta mínima é %s.",
 	"HLP_AD_INFO_RTP": "O retorno teórico para o jogador é em média %s %.",

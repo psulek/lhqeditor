@@ -1,22 +1,56 @@
 import {JsonGeneratorSettings, ModelDataNode, TemplateRootModel, TypescriptGeneratorSettings} from '../types';
 import {CodeGeneratorTemplate} from "./codeGeneratorTemplate";
 import {HostEnv} from "../hostEnv";
+import {isNullOrEmpty, sortBy, sortObjectByValue, valueOrDefault} from "../utils";
 
 type Settings = { Typescript: TypescriptGeneratorSettings, Json: JsonGeneratorSettings };
 
 export class TypescriptJson01Template extends CodeGeneratorTemplate {
     private _settings!: Settings;
-    
-    generate(rootModel: TemplateRootModel) {
-        const handlebarFile = this.getHandlebarFile(TypescriptJson01Template.Id);
-        const tsFileContent = this.compile(handlebarFile, rootModel);
-        // const csFileName = this.prepareFilePath(modelName + '.gen.cs', rootModel, this._settings.CSharp);
-        // HostEnv.addResultFile(csFileName, csfileContent);
 
+    generate(rootModel: TemplateRootModel) {
+        const model = rootModel.model.model;
+        const modelName = model.name;
+
+        if (this._settings.Typescript.Enabled.isTrue()) {
+            const handlebarFile = this.getHandlebarFile(TypescriptJson01Template.Id);
+            const dtsFileContent = this.compile(handlebarFile, rootModel);
+            const dtsFileName = this.prepareFilePath(modelName + '.d.ts', this._settings.Typescript);
+            HostEnv.addResultFile(dtsFileName, dtsFileContent);
+        }
+
+        if (this._settings.Json.Enabled.isTrue()) {
+            const metadataFileNameSuffix = valueOrDefault(this._settings.Json.MetadataFileNameSuffix, 'metadata');
+            const metadataObj = {
+                default: model.primaryLanguage,
+                languages: sortBy(rootModel.model.languages, undefined, 'asc')
+            };
+            const metadataContent = JSON.stringify(metadataObj, null, '\t') + '\n';
+
+            const metadataFileName = this.prepareFilePath(`${modelName}-${metadataFileNameSuffix}.json`, this._settings.Json);
+            HostEnv.addResultFile(metadataFileName, metadataContent);
+
+            const jsonTemplateFile = this.getHandlebarFile('JsonPerLanguage');
+            rootModel.extra = {};
+
+            const writeEmptyValues = this._settings.Json.WriteEmptyValues.isTrue();
+            const allFilesHasLangInName = this._settings.Json.CultureCodeInFileNameForPrimaryLanguage.isTrue();
+            rootModel.model.languages?.forEach(lang => {
+                if (!isNullOrEmpty(lang)) {
+                    const isPrimary = model.primaryLanguage === lang;
+                    const langName = !isPrimary || allFilesHasLangInName ? `.${lang}` : '';
+                    rootModel.extra['lang'] = lang;
+                    rootModel.extra['writeEmptyValues'] = writeEmptyValues;
+                    const jsonFileContent = this.compile(jsonTemplateFile, rootModel);
+                    const jsonfileName = this.prepareFilePath(`${modelName}${langName}.json`, this._settings.Json);
+                    HostEnv.addResultFile(jsonfileName, jsonFileContent);
+                }
+            });
+        }
     }
 
     public loadSettings(node: ModelDataNode): Settings {
-        const result: Settings = { Typescript: undefined!, Json: undefined! };
+        const result: Settings = {Typescript: undefined!, Json: undefined!};
 
         node.childs?.forEach(x => {
             const attrs = x.attrs as unknown;
@@ -37,6 +71,9 @@ export class TypescriptJson01Template extends CodeGeneratorTemplate {
         if (result.Json === undefined) {
             throw new Error('Json settings not found !');
         }
+
+        result.Typescript.Enabled = result.Typescript.Enabled ?? true.toString();
+        result.Json.Enabled = result.Json.Enabled ?? true.toString();
 
         this._settings = result;
         return result;

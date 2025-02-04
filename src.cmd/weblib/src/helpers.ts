@@ -1,6 +1,6 @@
 import {
-    getNestedPropertyValue,
-    isNullOrEmpty,
+    getNestedPropertyValue, hasItems,
+    isNullOrEmpty, objCount,
     sortBy,
     sortObjectByKey, textEncode,
 } from "./utils";
@@ -23,6 +23,8 @@ helpersList['x-concat'] = concat;
 helpersList['x-replace'] = replace;
 helpersList['x-trimEnd'] = trimEnd;
 helpersList['x-equals'] = equals;
+helpersList['x-isTrue'] = isTrueHelper;
+helpersList['x-isFalse'] = isFalseHelper;
 helpersList['x-resourceComment'] = resourceComment;
 helpersList['x-resourceValue'] = resourceValue;
 helpersList['x-resourceHasLang'] = resourceHasLang;
@@ -31,9 +33,15 @@ helpersList['x-merge'] = merge;
 helpersList['x-sortBy'] = sortBy;
 helpersList['x-sortObject'] = sortObjectByKeyHelper;
 helpersList['x-objCount'] = objCount;
+helpersList['x-hasItems'] = hasItems;
 helpersList['x-textEncode'] = textEncodeHelper;
 helpersList['x-host-webHtmlEncode'] = hostWebHtmlEncodeHelper;
 helpersList['x-render'] = renderHelper;
+helpersList['x-isNullOrEmpty'] = isNullOrEmpty;
+helpersList['x-isNotNullOrEmpty'] = isNotNullOrEmptyHelper;
+helpersList['x-fn'] = callFunctionHelper;
+helpersList['x-logical'] = logicalOperatorHelper;
+helpersList['x-debugLog'] = debugLogHelper;
 
 //helpersList['x-each'] = eachsorted;
 
@@ -103,7 +111,8 @@ function concat(...args: any[]) {
     const sep = options.hash.sep || ''; // Default to empty string if no separator is provided
 
     // @ts-ignore
-    return args.filter(Boolean).join(sep);
+    //return args.filter(Boolean).join(sep);
+    return args.join(sep);
 }
 
 function replace(value: string, block: any) {
@@ -146,12 +155,45 @@ function trimEnd(input: string, endPattern: string): string {
 // }
 
 function equals(input: any, value: any, block: any): boolean {
+    /*const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
+    const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
+    const val2 = typeof value === "string" ? value : (value?.toString() ?? '');*/
+
+    const {cs, val1, val2} = getDataForCompare(input, value, block)
+    return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
+}
+
+function isTrueHelper(input: any): boolean {
+    return input === true;
+}
+
+function isFalseHelper(input: any): boolean {
+    return input === false
+}
+
+function getDataForCompare(input: any, value: any, block: any): { cs: boolean, val1: string, val2: string } {
     const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
     const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
     const val2 = typeof value === "string" ? value : (value?.toString() ?? '');
-
-    return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
+    return {cs: cs, val1, val2};
 }
+
+function logicalOperatorHelper(input: any, value: any, block: any): boolean {
+    const op = block.hash.op || 'and';
+    if (op === 'and') {
+        return input === value;
+    } else if (op === 'or') {
+        return input || value;
+    }
+
+    return false;
+}
+
+// function compareHelper(input: any, value: any, block: any): boolean {
+//     const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
+//     const {cs, val1, val2} = getDataForCompare(input, value, block)
+//
+// }
 
 function trimComment(value: string): string {
     let trimmed = false;
@@ -201,10 +243,11 @@ function resourceComment(resource: LhqModelResourceType, options: any): string {
 function resourceValue(resource: LhqModelResourceType, options: any): string {
     if (typeof resource === 'object') {
         const lang = options.hash.lang ?? '';
-        
+        const trim = options.hash.trim ?? false;
+
         if (!isNullOrEmpty(lang)) {
-            let resValue = resource?.values?.[lang]?.value ?? '';
-            return resValue;
+            const res = resource?.values?.[lang]?.value ?? '';
+            return trim ? res.trim() : res; 
         }
     }
 
@@ -243,14 +286,6 @@ function sortObjectByKeyHelper(obj: Record<string, unknown>, options: any) {
     return sortObjectByKey(obj, sortOrder);
 }
 
-function objCount(obj: Record<string, unknown> | Array<unknown>): number {
-    if (isNullOrEmpty(obj)) {
-        return 0;
-    }
-
-    return Array.isArray(obj) ? obj.length : Object.keys(obj).length;
-}
-
 function textEncodeHelper(str: string, options: any): string {
     const mode = options?.hash?.mode ?? 'html';
     const quotes = options?.hash?.quotes ?? false;
@@ -265,14 +300,29 @@ function hostWebHtmlEncodeHelper(str: string): string {
     }
 
     const encoded = HostEnv.webHtmlEncode(str);
-    
+
     // @ts-ignore
     return new Handlebars.SafeString(encoded);
 }
 
 function renderHelper(input: any, options: any): string {
     const when = options?.hash?.when ?? true;
-    
+
     // @ts-ignore
     return when ? input : '';
 }
+
+function isNotNullOrEmptyHelper(input: any): boolean {
+    return !isNullOrEmpty(input);
+}
+
+function callFunctionHelper(fn: any): any {
+    // HostEnv.debugLog("[callFunctionHelper] fn: " + typeof fn + " , " + JSON.stringify(fn));
+
+    return fn();
+}
+
+function debugLogHelper(...args: any[]): string {
+    HostEnv.debugLog(args.join(' '));
+    return '';
+} 

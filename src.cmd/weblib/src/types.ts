@@ -28,11 +28,18 @@ export type LhqModelCategoriesCollectionType = Record<string, LhqModelCategoryTy
 export type LhqModelCategoryType = {
     categories?: LhqModelCategoriesCollectionType;
     resources?: Record<string, LhqModelResourceType>;
+    isRoot?: () => boolean;
+    isLast?: () => boolean;
+    getParent?: () => LhqModelCategoryType | undefined  ;
+    hasCategories?: () => boolean;
+    hasResources?: () => boolean;
 }
 
 export type LhqModelResourceParameterType = {
     description: string;
     order: number;
+    isLast?: () => boolean;
+    getParent?: () => LhqModelResourceType;
 }
 
 export type LhqModelResourceType = {
@@ -42,6 +49,9 @@ export type LhqModelResourceType = {
     values: Record<string, {
         value: string;
     }>;
+    isLast?: () => boolean;
+    getParent?: () => LhqModelCategoryType;
+    hasParameters?: () => boolean;
 }
 
 export type TemplateRootModel = {

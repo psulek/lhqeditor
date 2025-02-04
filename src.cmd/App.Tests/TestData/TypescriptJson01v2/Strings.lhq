@@ -14,26 +14,96 @@
     "sk"
   ],
   "categories": {
-    "Messages": {
-      "resources": {
-        "SampleText": {
-          "state": "New",
-          "values": {
-            "en": {
-              "value": "Sample text"
+    "Cars": {
+      "categories": {
+        "Diesel": {
+          "categories": {
+            "Old": {
+              "resources": {
+                "Old_Kia": {
+                  "state": "New",
+                  "values": {
+                    "en": {
+                      "value": "Old_ kia EN"
+                    },
+                    "sk": {
+                      "value": "Old_ kia SK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "resources": {
+            "Mercedes": {
+              "state": "New",
+              "values": {
+                "en": {
+                  "value": "Mercedes EN"
+                },
+                "sk": {
+                  "value": "Mercedes SK"
+                }
+              }
+            },
+            "Skoda": {
+              "state": "New",
+              "values": {
+                "en": {
+                  "value": "Skoda EN"
+                },
+                "sk": {
+                  "value": "Škoda SK"
+                }
+              }
             }
           }
         },
-        "Welcome": {
-          "state": "Edited",
-          "values": {
-            "en": {
-              "value": "Welcome LHQ Editor user"
-            },
-            "sk": {
-              "value": "Vitaj pouzivatel LHQ Editora"
+        "Electric": {
+          "resources": {
+            "ToyotaEV": {
+              "state": "New",
+              "values": {
+                "en": {
+                  "value": "toyota EN"
+                },
+                "sk": {
+                  "value": "toyota SK"
+                }
+              }
             }
           }
+        }
+      }
+    },
+    "Messages": {
+      "resources": {
+        "Empty": {
+          "state": "Edited"
+        },
+        "Title": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Hi {0}, we're glad you are using {1} at {2} / \\ [ ] < > \" & car <abc> </end>"
+            },
+            "sk": {
+              "value": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
+            }
+          }
+        }
+      }
+    }
+  },
+  "resources": {
+    "Welcome": {
+      "state": "New",
+      "values": {
+        "en": {
+          "value": "Welcome {0} in this {1} !"
+        },
+        "sk": {
+          "value": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
         }
       }
     }

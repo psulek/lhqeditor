@@ -59,7 +59,7 @@ export function sortObjectByValue<T>(obj: Record<string, T>, predicate: (item: T
     }));
 }
 
-export function sortBy<T>(source: T[], propName: string, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
+export function sortBy<T>(source: T[], propName?: string, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
     return source.concat([]).sort((a, b) => {
         // @ts-ignore
         const v1 = propName === undefined ? a : a[propName];
@@ -70,9 +70,18 @@ export function sortBy<T>(source: T[], propName: string, sortOrder: 'asc' | 'des
     });
 }
 
-export function iterateObject<T>(obj: Record<string, T>, callback: (key: string, value: T) => void) {
-    for (const [key, value] of Object.entries(obj)) {
-        callback(key, value);
+export function iterateObject<T>(obj: Record<string, T>, callback:
+    (value: T, key: string, index: number, isLast: boolean) => void) {
+
+    const entries = Object.entries(obj);
+    if (entries.length > 0) {
+        const lastIndex = entries.length - 1;
+        let index = -1;
+        for (const [key, value] of entries) {
+            index++;
+            const isLast = index == lastIndex;
+            callback(value, key, index, isLast);
+        }
     }
 }
 
@@ -95,23 +104,39 @@ const encodingCharMaps: Record<string, Record<string, string>> = {
         '"': '&quot;',
         "'": '&apos;',
         '&': '&amp;'
+    },
+    json: {
+        '\\': '\\\\',
+        '"': '\\"',
+        '\b': '\\b',
+        '\f': '\\f',
+        '\n': '\\n',
+        '\r': '\\r',
+        '\t': '\\t'
     }
 };
 
-export function textEncode(str: string, encoder: { mode: 'html'} | {mode: 'xml', quotes: boolean}): string {
+export type TextEncodeOptions =
+    { mode: 'html' } |
+    { mode: 'xml', quotes: boolean } |
+    { mode: 'json' };
+
+export function textEncode(str: string, encoder: TextEncodeOptions): string {
     if (isNullOrEmpty(str)) {
         return str;
     }
-
+    
     const encodedChars = [];
     for (let i = 0; i < str.length; i++) {
         const ch = str.charAt(i);
-        
-        let map: Record<string, string>;
+
+        let map: Record<string, string> = undefined!;
         if (encoder.mode === 'html') {
             map = encodingCharMaps.html;
-        } else {
+        } else if (encoder.mode === 'xml') {
             map = (encoder.quotes ?? true) ? encodingCharMaps.xml_quotes : encodingCharMaps.xml;
+        } else {
+            map = encodingCharMaps.json;
         }
 
         if (map.hasOwnProperty(ch)) {
@@ -124,6 +149,51 @@ export function textEncode(str: string, encoder: { mode: 'html'} | {mode: 'xml',
     return encodedChars.join('');
 }
 
+export function valueOrDefault<T>(value: T | null | undefined | '', defaultValue: T): T {
+    let result = isNullOrEmpty(value)
+        ? defaultValue
+        : value;
+
+    if (typeof defaultValue === 'boolean') {
+        result = (valueAsBool(value) as unknown) as T;
+    }
+
+    return result;
+}
+
+export function valueAsBool(value: unknown): boolean {
+    switch (typeof value) {
+        case 'boolean':
+            return value;
+        case 'number':
+            return value > 0;
+        case 'string':
+            return value.toLowerCase() === 'true';
+        default:
+            return false;
+    }
+}
+
 export function toBoolean(value: string): boolean {
     return value.toLowerCase() === 'true';
+}
+
+export function hasItems<T>(obj: Record<string, T> | Array<T> | undefined): boolean {
+    return objCount(obj) > 0;
+}
+
+export function objCount<T>(obj: Record<string, T> | Array<T> | undefined): number {
+    if (isNullOrEmpty(obj)) {
+        return 0;
+    }
+
+    if (Array.isArray(obj)) {
+        return obj.length;
+    }
+
+    if (typeof obj === 'object') {
+        return Object.keys(obj).length;
+    }
+
+    return 0;
 }

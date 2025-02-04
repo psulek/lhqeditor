@@ -6,24 +6,20 @@ export interface CodeGeneratorTemplateConstructor {
     new(handlebarFiles: Record<string, string>): CodeGeneratorTemplate;
 }
 
-export class HostDataKeys {
-    //public static get outDir(): string { return 'outDir'; };
-    public static get namespace(): string {
-        return 'namespace';
-    };
-}
+type HbsCompiledType = (data: unknown) => string;
 
 export abstract class CodeGeneratorTemplate {
-    private handlebarFiles: Record<string, string>;
+    private readonly handlebarFiles: Record<string, string>;
+    private lastCompiledTemplate: { templateFileName: string, compiled: HbsCompiledType } | undefined;
 
     constructor(handlebarFiles: Record<string, string>) {
         this.handlebarFiles = handlebarFiles;
     }
 
-    protected getHandlebarFile(name: string): string {
-        const file = this.handlebarFiles[name];
+    private getHandlebarFile(templateName: string): string {
+        const file = this.handlebarFiles[templateName];
         if (file === undefined || file === '') {
-            throw new Error(`Handlebar file with name '${name}' not found !`);
+            throw new Error(`Handlebar file with name '${templateName}' not found !`);
         }
         return file;
     }
@@ -37,19 +33,28 @@ export abstract class CodeGeneratorTemplate {
 
     public abstract generate(rootModel: TemplateRootModel): void;
 
-    protected compile(handlebarsTemplate: string, data: unknown): string {
-        // @ts-ignore
-        const compiled = Handlebars.compile(handlebarsTemplate);
-        let result = compiled(data) as string;
+    protected compileAndRun(templateFileName: string, data: unknown): string {
+        let compiled: HbsCompiledType | undefined;
+
+        if (this.lastCompiledTemplate === undefined || this.lastCompiledTemplate.templateFileName.toLowerCase() !== templateFileName.toLowerCase()) {
+            const handlebarsTemplate = this.getHandlebarFile(templateFileName);
+            // @ts-ignore
+            compiled = Handlebars.compile(handlebarsTemplate) as HbsCompiledType;
+
+            this.lastCompiledTemplate = {
+                templateFileName: templateFileName,
+                compiled: compiled
+            };
+        } else {
+            compiled = this.lastCompiledTemplate.compiled;
+        }
+
+        if (isNullOrEmpty(compiled)) {
+            throw new Error(`Template '${templateFileName}' was not found !`);
+        }
+
+        let result = compiled(data);
         result = result.replace(/\t¤$/gm, "");
-        //result = result.replace(/\t©$/gm, "");
-        
-        // let err = false;
-        // // @ts-ignore
-        // result.replace(/^[\t_]*?(\t_)$/gm, function(match, group) {
-        //    
-        // });
-        
         return result;
     }
 }

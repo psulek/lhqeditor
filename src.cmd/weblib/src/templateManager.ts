@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import {
     LhqModelCategoryType,
     LhqModelType,

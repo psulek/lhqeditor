@@ -388,6 +388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _templates_winFormsResxCsharp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./templates/winFormsResxCsharp */ "./src/templates/winFormsResxCsharp.ts");
 /* harmony import */ var _templates_wpfResxCsharp__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./templates/wpfResxCsharp */ "./src/templates/wpfResxCsharp.ts");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils */ "./src/utils.ts");
+// noinspection JSUnusedGlobalSymbols
 
 
 
@@ -521,10 +522,10 @@ class CodeGeneratorTemplate {
     constructor(handlebarFiles) {
         this.handlebarFiles = handlebarFiles;
     }
-    getHandlebarFile(name) {
-        const file = this.handlebarFiles[name];
+    getHandlebarFile(templateName) {
+        const file = this.handlebarFiles[templateName];
         if (file === undefined || file === '') {
-            throw new Error(`Handlebar file with name '${name}' not found !`);
+            throw new Error(`Handlebar file with name '${templateName}' not found !`);
         }
         return file;
     }
@@ -532,17 +533,25 @@ class CodeGeneratorTemplate {
         const outputFolder = outputSettings.OutputFolder;
         return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(outputFolder) ? fileName : _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.pathCombine(outputFolder, fileName);
     }
-    compile(handlebarsTemplate, data) {
-        // @ts-ignore
-        const compiled = Handlebars.compile(handlebarsTemplate);
+    compileAndRun(templateFileName, data) {
+        let compiled;
+        if (this.lastCompiledTemplate === undefined || this.lastCompiledTemplate.templateFileName.toLowerCase() !== templateFileName.toLowerCase()) {
+            const handlebarsTemplate = this.getHandlebarFile(templateFileName);
+            // @ts-ignore
+            compiled = Handlebars.compile(handlebarsTemplate);
+            this.lastCompiledTemplate = {
+                templateFileName: templateFileName,
+                compiled: compiled
+            };
+        }
+        else {
+            compiled = this.lastCompiledTemplate.compiled;
+        }
+        if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(compiled)) {
+            throw new Error(`Template '${templateFileName}' was not found !`);
+        }
         let result = compiled(data);
         result = result.replace(/\t¤$/gm, "");
-        //result = result.replace(/\t©$/gm, "");
-        // let err = false;
-        // // @ts-ignore
-        // result.replace(/^[\t_]*?(\t_)$/gm, function(match, group) {
-        //    
-        // });
         return result;
     }
 }
@@ -592,13 +601,14 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
             this.checkHasNamespaceName(rootModel);
             rootModel.extra = {};
             rootModel.extra['rootClassName'] = this.getRootCsharpClassName(rootModel);
-            const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
-            const csfileContent = this.compile(csharpTemplateFile, rootModel);
+            //const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
+            //const csfileContent = this.compile(csharpTemplateFile, rootModel);
+            const csfileContent = this.compileAndRun(this.csharpTemplateName, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(csFileName, csfileContent);
         }
         if (this._settings.ResX.Enabled.isTrue()) {
-            const resxTemplateFile = this.getHandlebarFile('SharedResx');
+            //const resxTemplateFile = this.getHandlebarFile('SharedResx');
             rootModel.extra = {};
             rootModel.extra['useHostWebHtmlEncode'] = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
@@ -606,7 +616,8 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
             (_a = rootModel.model.languages) === null || _a === void 0 ? void 0 : _a.forEach(lang => {
                 if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(lang)) {
                     rootModel.extra['lang'] = lang;
-                    const resxfileContent = this.compile(resxTemplateFile, rootModel);
+                    //const resxfileContent = this.compile(resxTemplateFile, rootModel);
+                    const resxfileContent = this.compileAndRun('SharedResx', rootModel);
                     const resxfileName = this.prepareFilePath(`${modelName}.${lang}.resx`, this._settings.ResX);
                     _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(resxfileName, resxfileContent);
                 }
@@ -722,8 +733,9 @@ class TypescriptJson01Template extends _codeGeneratorTemplate__WEBPACK_IMPORTED_
         const model = rootModel.model.model;
         const modelName = model.name;
         if (this._settings.Typescript.Enabled.isTrue()) {
-            const handlebarFile = this.getHandlebarFile(TypescriptJson01Template.Id);
-            const dtsFileContent = this.compile(handlebarFile, rootModel);
+            // const handlebarFile = this.getHandlebarFile(TypescriptJson01Template.Id);
+            // const dtsFileContent = this.compile(handlebarFile, rootModel);
+            const dtsFileContent = this.compileAndRun(TypescriptJson01Template.Id, rootModel);
             const dtsFileName = this.prepareFilePath(modelName + '.d.ts', this._settings.Typescript);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(dtsFileName, dtsFileContent);
         }
@@ -736,7 +748,7 @@ class TypescriptJson01Template extends _codeGeneratorTemplate__WEBPACK_IMPORTED_
             const metadataContent = JSON.stringify(metadataObj, null, '\t') + '\n';
             const metadataFileName = this.prepareFilePath(`${modelName}-${metadataFileNameSuffix}.json`, this._settings.Json);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(metadataFileName, metadataContent);
-            const jsonTemplateFile = this.getHandlebarFile('JsonPerLanguage');
+            //const jsonTemplateFile = this.getHandlebarFile('JsonPerLanguage');
             rootModel.extra = {};
             const writeEmptyValues = this._settings.Json.WriteEmptyValues.isTrue();
             const allFilesHasLangInName = this._settings.Json.CultureCodeInFileNameForPrimaryLanguage.isTrue();
@@ -746,7 +758,8 @@ class TypescriptJson01Template extends _codeGeneratorTemplate__WEBPACK_IMPORTED_
                     const langName = !isPrimary || allFilesHasLangInName ? `.${lang}` : '';
                     rootModel.extra['lang'] = lang;
                     rootModel.extra['writeEmptyValues'] = writeEmptyValues;
-                    const jsonFileContent = this.compile(jsonTemplateFile, rootModel);
+                    //const jsonFileContent = this.compile(jsonTemplateFile, rootModel);
+                    const jsonFileContent = this.compileAndRun('JsonPerLanguage', rootModel);
                     const jsonfileName = this.prepareFilePath(`${modelName}${langName}.json`, this._settings.Json);
                     _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(jsonfileName, jsonFileContent);
                 }

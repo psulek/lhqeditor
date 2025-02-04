@@ -50,7 +50,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
     private async Task<VerifyResult> Generate(string? lhqModelFileName = null, string? csProjectFileName = null,
         Dictionary<string, object>? hostData = null, [CallerMemberName] string methodName = "")
     {
-        Console.WriteLine($"[Generate] {methodName} at {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}");
+        //Console.WriteLine($"[Generate] {methodName} at {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}");
         
         if (lhqModelFileName == null)
         {
@@ -125,6 +125,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
         }
     }
 
+    // WPF - start
     [Test]
     public Task WpfResxCsharp01() => Generate();
 
@@ -133,7 +134,19 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 
     [Test]
     public Task WpfResxCsharp01v3() => Generate();
+    // WPF - end
 
+    // NetCore
     [Test]
     public Task NetCoreResxCsharp01() => Generate();
+
+    // Typescript
+    [Test]
+    public Task TypescriptJson01() => Generate();
+
+    [Test]
+    public Task TypescriptJson01v2() => Generate();
+
+    [Test]
+    public Task TypescriptJson01v3() => Generate();
 }

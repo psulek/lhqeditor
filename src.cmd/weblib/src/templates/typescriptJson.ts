@@ -1,7 +1,7 @@
 import {JsonGeneratorSettings, ModelDataNode, TemplateRootModel, TypescriptGeneratorSettings} from '../types';
 import {CodeGeneratorTemplate} from "./codeGeneratorTemplate";
 import {HostEnv} from "../hostEnv";
-import {isNullOrEmpty, sortBy, sortObjectByValue, valueOrDefault} from "../utils";
+import {isNullOrEmpty, sortBy, valueOrDefault} from "../utils";
 
 type Settings = { Typescript: TypescriptGeneratorSettings, Json: JsonGeneratorSettings };
 
@@ -13,8 +13,7 @@ export class TypescriptJson01Template extends CodeGeneratorTemplate {
         const modelName = model.name;
 
         if (this._settings.Typescript.Enabled.isTrue()) {
-            const handlebarFile = this.getHandlebarFile(TypescriptJson01Template.Id);
-            const dtsFileContent = this.compile(handlebarFile, rootModel);
+            const dtsFileContent = this.compileAndRun(TypescriptJson01Template.Id, rootModel);
             const dtsFileName = this.prepareFilePath(modelName + '.d.ts', this._settings.Typescript);
             HostEnv.addResultFile(dtsFileName, dtsFileContent);
         }
@@ -30,7 +29,6 @@ export class TypescriptJson01Template extends CodeGeneratorTemplate {
             const metadataFileName = this.prepareFilePath(`${modelName}-${metadataFileNameSuffix}.json`, this._settings.Json);
             HostEnv.addResultFile(metadataFileName, metadataContent);
 
-            const jsonTemplateFile = this.getHandlebarFile('JsonPerLanguage');
             rootModel.extra = {};
 
             const writeEmptyValues = this._settings.Json.WriteEmptyValues.isTrue();
@@ -41,7 +39,7 @@ export class TypescriptJson01Template extends CodeGeneratorTemplate {
                     const langName = !isPrimary || allFilesHasLangInName ? `.${lang}` : '';
                     rootModel.extra['lang'] = lang;
                     rootModel.extra['writeEmptyValues'] = writeEmptyValues;
-                    const jsonFileContent = this.compile(jsonTemplateFile, rootModel);
+                    const jsonFileContent = this.compileAndRun('JsonPerLanguage', rootModel);
                     const jsonfileName = this.prepareFilePath(`${modelName}${langName}.json`, this._settings.Json);
                     HostEnv.addResultFile(jsonfileName, jsonFileContent);
                 }

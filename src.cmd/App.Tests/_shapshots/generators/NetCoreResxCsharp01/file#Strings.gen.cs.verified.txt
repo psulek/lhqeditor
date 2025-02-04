@@ -209,12 +209,12 @@ namespace NetCoreResxCsharp01
 				/// <summary>
 				/// Gets localized string similar to: Mercedes EN
 				/// </summary>
-				public static string Mercedes => _localizer[StringsKeys.Cars.Diesel.Mercedes];
+				public static string Mercedes => _localizer[StringsKeys..Cars.Diesel.Mercedes];
 		
 				/// <summary>
 				/// Gets localized string similar to: Skoda EN
 				/// </summary>
-				public static string Skoda => _localizer[StringsKeys.Cars.Diesel.Skoda];
+				public static string Skoda => _localizer[StringsKeys..Cars.Diesel.Skoda];
 		
 			}
 			
@@ -223,7 +223,7 @@ namespace NetCoreResxCsharp01
 				/// <summary>
 				/// Gets localized string similar to: toyota EN
 				/// </summary>
-				public static string ToyotaEV => _localizer[StringsKeys.Cars.Electric.ToyotaEV];
+				public static string ToyotaEV => _localizer[StringsKeys..Cars.Electric.ToyotaEV];
 		
 			}
 		}
@@ -233,14 +233,14 @@ namespace NetCoreResxCsharp01
 			/// <summary>
 			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
 			/// </summary>
-			public static string Title => _localizer[StringsKeys.Messages.Title];
+			public static string Title => _localizer[StringsKeys..Messages.Title];
 	
 		}
 		
 		/// <summary>
 		/// Gets localized string similar to: Welcome {0} in this {1} !
 		/// </summary>
-		public static string Welcome => _localizer[StringsKeys.Welcome];
+		public static string Welcome => _localizer[StringsKeys...Welcome];
 
 	}
 }

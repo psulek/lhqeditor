@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 using System.Reflection;
 using System.Text;
 using JavaScriptEngineSwitcher.Core;
@@ -19,7 +20,7 @@ AddToLogFile("Program lhqcmd.exe started.");
 
 string? customNamespace = null;
 
-var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01v2\\Strings.lhq";
+var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01\\Strings.lhq";
 var csProjName = "";
 
 // var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");
@@ -143,14 +144,16 @@ try
         Console.WriteLine($"Generating files from LHQ model {lhqFile.Pastel(ConsoleColor.DarkCyan)} ...");
 
         using var generator = new Generator();
+        var start = Stopwatch.GetTimestamp();
         var generatedFiles = generator.Generate(lhqFile, csProjFile, hostData);
+        var elapsedTime = Stopwatch.GetElapsedTime(start);
 
-        Console.WriteLine($"Generated {generatedFiles.Count} files:\n");
+        Console.WriteLine($"Generated {generatedFiles.Count} files in {elapsedTime:g}\n");
 
         foreach (var file in generatedFiles)
         {
             string fileName = Path.Combine(outDir, file.Key);
-            Console.WriteLine(fileName);
+            //Console.WriteLine(fileName);
 
             var dir = Path.GetDirectoryName(fileName);
             if (dir != null && !Directory.Exists(dir))

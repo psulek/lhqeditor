@@ -171,17 +171,7 @@ public class Generator : IDisposable
             rootNamespace = GetRootNamespace(lhqModelFileName, csProjectFileName);
             hostData[DataKeys.Namespace] = rootNamespace;
         }
-
-//         if (string.IsNullOrEmpty(rootNamespace))
-//         {
-//             throw new Exception(
-//                 $"""
-//                  Missing value for parameter '{DataKeys.Namespace}' ! 
-//                  Provide valid path to *.csproj which uses required lhq model or 
-//                  provide value for parameter '{DataKeys.Namespace}' in cmd data parameters.
-//                  """);
-//         }
-
+        
         _engine.SetVariableValue("__model", File.ReadAllText(lhqModelFileName));
         var hostDataStr = JsonSerializer.Serialize(hostData);
 

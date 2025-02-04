@@ -42,15 +42,12 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
             this.checkHasNamespaceName(rootModel);
             rootModel.extra = {};
             rootModel.extra['rootClassName'] = this.getRootCsharpClassName(rootModel);
-
-            const csharpTemplateFile = this.getHandlebarFile(this.csharpTemplateName);
-            const csfileContent = this.compile(csharpTemplateFile, rootModel);
+            const csfileContent = this.compileAndRun(this.csharpTemplateName, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
             HostEnv.addResultFile(csFileName, csfileContent);
         }
 
         if (this._settings.ResX.Enabled.isTrue()) {
-            const resxTemplateFile = this.getHandlebarFile('SharedResx');
             rootModel.extra = {};
             rootModel.extra['useHostWebHtmlEncode'] = isNullOrEmpty(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
@@ -59,7 +56,7 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
             rootModel.model.languages?.forEach(lang => {
                 if (!isNullOrEmpty(lang)) {
                     rootModel.extra['lang'] = lang;
-                    const resxfileContent = this.compile(resxTemplateFile, rootModel);
+                    const resxfileContent = this.compileAndRun('SharedResx', rootModel);
                     const resxfileName = this.prepareFilePath(`${modelName}.${lang}.resx`, this._settings.ResX);
                     HostEnv.addResultFile(resxfileName, resxfileContent);
                 }

@@ -1,0 +1,19 @@
+﻿{
+	"Cars": {
+		"Diesel": {
+			"Old": {
+				"Old_Kia": "Old_ kia SK"
+			},
+			"Mercedes": "Mercedes SK",
+			"Skoda": "Škoda SK"
+		},
+		"Electric": {
+			"ToyotaEV": "toyota SK"
+		}
+	},
+	"Messages": {
+		"Empty": "",
+		"Title": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
+	},
+	"Welcome": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
+}

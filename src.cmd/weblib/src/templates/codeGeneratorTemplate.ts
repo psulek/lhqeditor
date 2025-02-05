@@ -1,6 +1,7 @@
 import {ModelDataNode, OutputSettings, TemplateRootModel} from "../types";
 import {isNullOrEmpty} from "../utils";
 import {HostEnv} from "../hostEnv";
+import {getKnownHelpers} from "../helpers";
 
 export interface CodeGeneratorTemplateConstructor {
     new(handlebarFiles: Record<string, string>): CodeGeneratorTemplate;
@@ -38,8 +39,9 @@ export abstract class CodeGeneratorTemplate {
 
         if (this.lastCompiledTemplate === undefined || this.lastCompiledTemplate.templateFileName.toLowerCase() !== templateFileName.toLowerCase()) {
             const handlebarsTemplate = this.getHandlebarFile(templateFileName);
+            const options = {knownHelpers: getKnownHelpers()};
             // @ts-ignore
-            compiled = Handlebars.compile(handlebarsTemplate) as HbsCompiledType;
+            compiled = Handlebars.compile(handlebarsTemplate, options) as HbsCompiledType;
 
             this.lastCompiledTemplate = {
                 templateFileName: templateFileName,

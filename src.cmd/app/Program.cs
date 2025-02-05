@@ -20,7 +20,7 @@ AddToLogFile("Program lhqcmd.exe started.");
 
 string? customNamespace = null;
 
-var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01\\Strings.lhq";
+var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01v3\\Strings.lhq";
 var csProjName = "";
 
 // var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");

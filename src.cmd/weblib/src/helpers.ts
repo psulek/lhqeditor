@@ -14,36 +14,39 @@ export function registerHelpers() {
     });
 }
 
-const helpersList: Record<string, Function> = {};
-helpersList['x-header'] = header;
-helpersList['x-value'] = objValue;
-helpersList['x-indent'] = indent;
-helpersList['x-join'] = join;
-helpersList['x-concat'] = concat;
-helpersList['x-replace'] = replace;
-helpersList['x-trimEnd'] = trimEnd;
-helpersList['x-equals'] = equals;
-helpersList['x-isTrue'] = isTrueHelper;
-helpersList['x-isFalse'] = isFalseHelper;
-helpersList['x-resourceComment'] = resourceComment;
-helpersList['x-resourceValue'] = resourceValue;
-helpersList['x-resourceHasLang'] = resourceHasLang;
-helpersList['x-resourceParamNames'] = resourceParamNames;
-helpersList['x-merge'] = merge;
-helpersList['x-sortBy'] = sortBy;
-helpersList['x-sortObject'] = sortObjectByKeyHelper;
-helpersList['x-objCount'] = objCount;
-helpersList['x-hasItems'] = hasItems;
-helpersList['x-textEncode'] = textEncodeHelper;
-helpersList['x-host-webHtmlEncode'] = hostWebHtmlEncodeHelper;
-helpersList['x-render'] = renderHelper;
-helpersList['x-isNullOrEmpty'] = isNullOrEmpty;
-helpersList['x-isNotNullOrEmpty'] = isNotNullOrEmptyHelper;
-helpersList['x-fn'] = callFunctionHelper;
-helpersList['x-logical'] = logicalOperatorHelper;
-helpersList['x-debugLog'] = debugLogHelper;
+const helpersList: Record<string, Function> = {
+    'x-header': header,
+    'x-value': objValue,
+    'x-indent': indent,
+    'x-join': join,
+    'x-concat': concat,
+    'x-replace': replace,
+    'x-trimEnd': trimEnd,
+    'x-equals': equals,
+    'x-isTrue': isTrueHelper,
+    'x-isFalse': isFalseHelper,
+    'x-resourceComment': resourceComment,
+    'x-resourceValue': resourceValue,
+    'x-resourceHasLang': resourceHasLang,
+    'x-resourceParamNames': resourceParamNames,
+    'x-merge': merge,
+    'x-sortBy': sortBy,
+    'x-sortObject': sortObjectByKeyHelper,
+    'x-objCount': objCount,
+    'x-hasItems': hasItems,
+    'x-textEncode': textEncodeHelper,
+    'x-host-webHtmlEncode': hostWebHtmlEncodeHelper,
+    'x-render': renderHelper,
+    'x-isNullOrEmpty': isNullOrEmpty,
+    'x-isNotNullOrEmpty': isNotNullOrEmptyHelper,
+    'x-fn': callFunctionHelper,
+    'x-logical': logicalOperatorHelper,
+    'x-debugLog': debugLogHelper
+};
 
-//helpersList['x-each'] = eachsorted;
+export function getKnownHelpers() {
+    return Object.fromEntries(Object.keys(helpersList).map(key => [key, true]));
+}
 
 function header() {
     return `//------------------------------------------------------------------------------

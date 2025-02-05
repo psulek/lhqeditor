@@ -51,4 +51,7 @@ public sealed class NamespaceTests: TestBase
         var rootNamespace = GetRootNamespace();
         rootNamespace.ShouldBeNullOrEmpty();
     }
+    
+    [Test]
+    public Task Project08_Test() => DoTest();
 }

@@ -18,63 +18,15 @@ var logFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Loc
 
 AddToLogFile("Program lhqcmd.exe started.");
 
-string? customNamespace = null;
-
-var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01v3\\Strings.lhq";
-var csProjName = "";
-
-// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");
-// var csProjName = "NetCoreResxCsharp01.csproj";
-
-// var lhqFullPath = "c:\\Temp\\neo_online\\Neo.Localization\\Strings.lhq";
-// var csProjName = "Neo.Localization.csproj";
-// customNamespace = "Neo.Localization";
-
-// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
-// var csProjName = "Test.Localization.csproj";
-
-// var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
-// var csProjName = "Localization.Common.csproj";
-
-// var lhqFullPath = "C:\\Users\\peter.sulek\\source\\repos\\ScaleHQ.Windows.WPF1\\ScaleHQ.Windows.WPF1\\Strings.lhq";
-// var csProjName = "ScaleHQ.Windows.WPF1.csproj";
-
-// var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v2\\Strings.lhq";
-// var csProjName = "WpfResxCsharp01v2.csproj";
-
-var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests"), "GenOutput");
-if (!Directory.Exists(outputDir))
-{
-    Directory.CreateDirectory(outputDir);
-}
-else
-{
-    Directory.Delete(outputDir, true);
-    Directory.CreateDirectory(outputDir);
-}
-
-var testDataFolder = Path.GetDirectoryName(lhqFullPath)!;
-
-args =
-[
-    lhqFullPath,
-    string.IsNullOrEmpty(csProjName) ? csProjName : Path.Combine(testDataFolder, csProjName),
-    outputDir
-];
-
-if (!string.IsNullOrEmpty(customNamespace))
-{
-    args = args.Append("--namespace=" + customNamespace).ToArray();
-}
-
+RunTestData();
 
 var missingParams = args.Length < 2;
 
 try
 {
     Console.OutputEncoding = Encoding.UTF8;
-    
-    Console.WriteLine($"{White("LHQ Model Generator")}  " + 
+
+    Console.WriteLine($"{White("LHQ Model Generator")}  " +
                       Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n"));
 
     if (missingParams)
@@ -107,7 +59,7 @@ try
 
         if (string.IsNullOrEmpty(outDir))
         {
-            outDir = !string.IsNullOrEmpty(csProjFile) 
+            outDir = !string.IsNullOrEmpty(csProjFile)
                 ? Path.GetDirectoryName(csProjFile)!
                 : Path.GetDirectoryName(lhqFile)!;
         }
@@ -140,8 +92,11 @@ try
                 }
             }
         }
-        
-        Console.WriteLine($"Generating files from LHQ model {lhqFile.Pastel(ConsoleColor.DarkCyan)} ...");
+
+        Console.WriteLine($"LHQ model file: {lhqFile.Pastel(ConsoleColor.DarkCyan)}");
+        Console.WriteLine($"C# project file: {csProjFile.Pastel(ConsoleColor.DarkCyan)}");
+        Console.WriteLine($"Output directory: {outDir.Pastel(ConsoleColor.DarkCyan)}");
+        Console.WriteLine("Generating files from LHQ model started ...");
 
         using var generator = new Generator();
         var start = Stopwatch.GetTimestamp();
@@ -153,7 +108,7 @@ try
         foreach (var file in generatedFiles)
         {
             string fileName = Path.Combine(outDir, file.Key);
-            //Console.WriteLine(fileName);
+            Console.WriteLine($"Generated file: {fileName.Pastel(ConsoleColor.DarkCyan)}");
 
             var dir = Path.GetDirectoryName(fileName);
             if (dir != null && !Directory.Exists(dir))
@@ -161,8 +116,10 @@ try
                 Directory.CreateDirectory(dir);
             }
 
-            File.WriteAllText(fileName, file.Value, Encoding.UTF8);
+            FileHelper.WriteAllText(fileName, file.Value);
         }
+
+        Console.WriteLine($"Successfully saved {generatedFiles.Count} files.");
     }
 }
 catch (Exception e)
@@ -171,15 +128,15 @@ catch (Exception e)
 
     StringBuilder sb = new();
     FillException(e, sb);
-    
+
     AddToLogFile(sb.ToString());
-    
+
     try
     {
         if (e is JsRuntimeException jsRuntimeException &&
             e.InnerException is JavaScriptException jsException)
         {
-            if (jsRuntimeException.Type == "AppError" )
+            if (jsRuntimeException.Type == "AppError")
             {
                 var message = jsException.Error.Get("message");
 
@@ -192,7 +149,8 @@ catch (Exception e)
         }
     }
     catch
-    {}
+    {
+    }
 
     if (genericLog)
     {
@@ -225,7 +183,7 @@ void WriteHelp()
     var param_lhq = "lhq model file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);
     var param_csproj = "C# project file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);
 
-    string oneLineHelp = $"Usage:\n{lhqcmd} <{param_lhq}> <{param_csproj}> {Grey("[output dir]")} {Grey("[data]")}";
+    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> <{param_csproj}> {Grey("[output dir]")} {Grey("[data]")}";
 
     bool requestedHelp = args is ["--help"];
 
@@ -235,7 +193,7 @@ void WriteHelp()
             $"""
              {Error("Missing required parameter(s).")}
 
-             {oneLineHelp}
+             {usageHelp}
 
              Example:
              {lhqcmd} {exam_lhq} {exam_csproj}
@@ -247,7 +205,7 @@ void WriteHelp()
 
     Console.WriteLine(
         $"""
-         {oneLineHelp}
+         {usageHelp}
 
          Example 1: 
            {lhqcmd} {exam_lhq} {exam_csproj}
@@ -283,4 +241,56 @@ void WriteHelp()
 void AddToLogFile(params string[] lines)
 {
     File.AppendAllLines(logFile, lines.Select(x => $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}: {x}"));
+}
+
+void RunTestData()
+{
+    string? customNamespace = null;
+
+    var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WinFormsResxCsharp01\\Strings.lhq";
+    var csProjName = "WinFormsResxCsharp01.csproj";
+
+// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");
+// var csProjName = "NetCoreResxCsharp01.csproj";
+
+// var lhqFullPath = "c:\\Temp\\neo_online\\Neo.Localization\\Strings.lhq";
+// var csProjName = "Neo.Localization.csproj";
+// customNamespace = "Neo.Localization";
+
+// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
+// var csProjName = "Test.Localization.csproj";
+
+// var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
+// var csProjName = "Localization.Common.csproj";
+
+// var lhqFullPath = "C:\\Users\\peter.sulek\\source\\repos\\ScaleHQ.Windows.WPF1\\ScaleHQ.Windows.WPF1\\Strings.lhq";
+// var csProjName = "ScaleHQ.Windows.WPF1.csproj";
+
+// var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v2\\Strings.lhq";
+// var csProjName = "WpfResxCsharp01v2.csproj";
+
+    var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests"), "GenOutput");
+    if (!Directory.Exists(outputDir))
+    {
+        Directory.CreateDirectory(outputDir);
+    }
+    else
+    {
+        Directory.Delete(outputDir, true);
+        Directory.CreateDirectory(outputDir);
+    }
+
+    var testDataFolder = Path.GetDirectoryName(lhqFullPath)!;
+
+    args =
+    [
+        lhqFullPath,
+        string.IsNullOrEmpty(csProjName) ? csProjName : Path.Combine(testDataFolder, csProjName),
+        outputDir
+    ];
+
+    if (!string.IsNullOrEmpty(customNamespace))
+    {
+        args = args.Append("--namespace=" + customNamespace).ToArray();
+    }
 }

@@ -4,13 +4,13 @@ import {HostEnv} from "../hostEnv";
 import {isNullOrEmpty} from "../utils";
 import {AppError} from "../AppError";
 
-type Settings<TCSharpSettings extends CSharpGeneratorSettings> = {
+export type CSharpResXTemplateSettings<TCSharpSettings extends CSharpGeneratorSettings> = {
     CSharp: TCSharpSettings;
     ResX: ResXGeneratorSettings;
 }
 
 export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGeneratorSettings> extends CodeGeneratorTemplate {
-    private _settings!: Settings<TCSharpSettings>;
+    protected _settings!: CSharpResXTemplateSettings<TCSharpSettings>;
 
     constructor(handlebarFiles: Record<string, string>) {
         super(handlebarFiles);
@@ -37,7 +37,7 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
 
         const defaultCompatibleTextEncoding = modelVersion < 2;
         const modelName = rootModel.model.model.name;
-
+        
         if (this._settings.CSharp.Enabled.isTrue()) {
             this.checkHasNamespaceName(rootModel);
             rootModel.extra = {};
@@ -64,8 +64,8 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         }
     }
 
-    loadSettings(node: ModelDataNode): Settings<TCSharpSettings> {
-        const result: Settings<TCSharpSettings> = {
+    loadSettings(node: ModelDataNode): CSharpResXTemplateSettings<TCSharpSettings> {
+        const result: CSharpResXTemplateSettings<TCSharpSettings> = {
             CSharp: undefined!,
             ResX: undefined!
         };

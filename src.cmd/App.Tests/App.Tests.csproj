@@ -40,10 +40,6 @@
       <ProjectReference Include="..\app\App.csproj" />
     </ItemGroup>
     
-    <ItemGroup>
-      <Folder Include="GenOutput\" />
-    </ItemGroup>
-
     <Target Name="CopyFilesBeforeBuild" BeforeTargets="BeforeBuild">
         <ItemGroup>
             <HbsFiles Include="$(MSBuildThisFileDirectory)\..\hbs-templates\*.*" />

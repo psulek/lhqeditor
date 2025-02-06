@@ -222,18 +222,36 @@ namespace test.localization
 					/// <summary>
 					/// Gets localized string similar to: Old_ kia EN
 					/// </summary>
-					public static string Old_Kia => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Old.Old_Kia);
+					public static string Old_Kia
+					{
+						get
+						{
+							return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Old.Old_Kia);
+						}
+					}
 			
 				}
 				/// <summary>
 				/// Gets localized string similar to: Mercedes EN
 				/// </summary>
-				public static string Mercedes => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Mercedes);
+				public static string Mercedes
+				{
+					get
+					{
+						return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Mercedes);
+					}
+				}
 		
 				/// <summary>
 				/// Gets localized string similar to: Skoda EN
 				/// </summary>
-				public static string Skoda => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Skoda);
+				public static string Skoda
+				{
+					get
+					{
+						return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Skoda);
+					}
+				}
 		
 			}
 			
@@ -242,7 +260,13 @@ namespace test.localization
 				/// <summary>
 				/// Gets localized string similar to: toyota EN
 				/// </summary>
-				public static string ToyotaEV => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Electric.ToyotaEV);
+				public static string ToyotaEV
+				{
+					get
+					{
+						return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Electric.ToyotaEV);
+					}
+				}
 		
 			}
 		}
@@ -255,14 +279,20 @@ namespace test.localization
 			/// <summary>
 			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
 			/// </summary>
-			public static string Title(object userName,object productName,object date) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Messages.Title), userName,productName,date);
+			public static string Title(object userName,object productName,object date)
+			{
+				return string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Messages.Title), userName,productName,date);
+			}
 	
 		}
 		
 		/// <summary>
 		/// Gets localized string similar to: Welcome {0} in this {1} !
 		/// </summary>
-		public static string Welcome(object name,object city) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Welcome), name,city);
+		public static string Welcome(object name,object city)
+		{
+			return string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Welcome), name,city);
+		}
 
 	}
 }

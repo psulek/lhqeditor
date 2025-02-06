@@ -13,11 +13,6 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 {
     private const char LF = '\n';
 
-    private static string FixNewlines(string str)
-    {
-        return str.Replace("\r\n", "\n").Replace('\r', '\n');
-    }
-
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
@@ -80,7 +75,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 
         foreach (var (file, content) in generatedFiles)
         {
-            result.AppendContentAsFile(FixNewlines(content), name: Path.GetFileName(file));
+            result.AppendContentAsFile(FileHelper.ToLinuxLineEndings(content), name: Path.GetFileName(file));
         }
 
         return await result;
@@ -109,7 +104,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
                         Directory.CreateDirectory(dir);
                     }
 
-                    File.WriteAllText(verifiedFile, verifiedFileContent, Encoding.UTF8);
+                    FileHelper.WriteAllText(verifiedFile, verifiedFileContent);
 
                     foreach (var file in resourceFiles.OrderBy(x => x))
                     {
@@ -117,7 +112,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
                             $"file#{Path.GetFileName(file)}.verified.txt");
                         if (!File.Exists(verifiedFileName))
                         {
-                            File.WriteAllText(verifiedFileName, FixNewlines(File.ReadAllText(file)), Encoding.UTF8);
+                            FileHelper.WriteAllText(verifiedFileName, File.ReadAllText(file), linuxLineEndings: true);
                         }
                     }
                 }

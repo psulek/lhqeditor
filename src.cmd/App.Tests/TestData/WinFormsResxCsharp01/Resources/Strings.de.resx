@@ -117,27 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Welcome" xml:space="preserve">
-    <value>Zmieniono datę i godzinę.
-Z {0} w strefie czasowej {1} z czasem letnim 2,
-na 3 w strefie czasowej 4 z czasem letnim 5.</value>
-    <comment>Welcome description</comment>
-  </data>
-  <data name="CarsDieselOldOld_Kia" xml:space="preserve">
-    <value>Old_ kia SK</value>
-  </data>
-  <data name="CarsDieselMercedes" xml:space="preserve">
-    <value>Mercedes SK</value>
-  </data>
-  <data name="CarsDieselSkoda" xml:space="preserve">
-    <value>Škoda SK</value>
-  </data>
-  <data name="CarsElectricToyotaEV" xml:space="preserve">
-    <value>toyota SK</value>
-  </data>
-  <data name="MessagesTitle" xml:space="preserve">
-    <value>Zmieniono datę i godzinę.
-Z {0} w strefie czasowej {1} z czasem letnim 2,
-na 3 w strefie czasowej 4 z czasem letnim 5.</value>
-  </data>
 </root>

@@ -4,6 +4,8 @@
 //     return he.encode(value, options);
 // }
 
+import {HostEnv} from "./hostEnv";
+
 export function getNestedPropertyValue<T, U>(obj: T, path: string): U {
     return path.split('.').reduce((acc, part) => {
         if (acc === undefined) return undefined;
@@ -179,7 +181,9 @@ export function toBoolean(value: string): boolean {
 }
 
 export function hasItems<T>(obj: Record<string, T> | Array<T> | undefined): boolean {
-    return objCount(obj) > 0;
+    const result = objCount(obj) > 0;
+    //HostEnv.debugLog(`[hasItems] returns '${result}' for obj: ${JSON.stringify(obj)}`);
+    return result;
 }
 
 export function objCount<T>(obj: Record<string, T> | Array<T> | undefined): number {

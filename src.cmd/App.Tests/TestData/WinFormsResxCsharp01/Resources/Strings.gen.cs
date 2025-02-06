@@ -7,20 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace test.localization
+namespace ScaleHQ.Windows.WinForms1
 {
 	using System;
-	using System.ComponentModel;
 	using System.Linq;
 	using System.Resources;
-	using System.Reflection;
 	using System.Globalization;
-	using System.Runtime.CompilerServices;
 	using System.Threading;
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public partial class StringsContext: INotifyPropertyChanged, IFormattable
+	public partial class StringsContext: ScaleHQ.Windows.WinForms1.BindableObject, IFormattable
 	{
 		private CultureInfo _culture;
 		private CultureInfo _fallbackCulture;
@@ -40,13 +37,9 @@ namespace test.localization
 
 		public const string PrimaryCulture = "en";
 
-		public string[] AvailableCultures
-		{
-			get
-			{
-				return new string[] { "en","sk" };
-			}
-		}
+		public string[] AvailableCultures => new[] {
+			"de","en","sk"
+		};
 
 		public CultureInfo FallbackCulture
 		{
@@ -76,7 +69,7 @@ namespace test.localization
 				return _instance.Value;
 			}
 		}
-		
+
 		public CultureInfo Culture
 		{
 			get
@@ -98,13 +91,15 @@ namespace test.localization
 				_culture = value;
 				Thread.CurrentThread.CurrentUICulture = _culture;
 				OnPropertyChanged(nameof(Culture));
+
+				StringsBindingProxy.Instance.RefreshProperties();
 			}
 		}
 
 		private static ResourceManager CreateResourceManager()
 		{
-			return new ResourceManager("test.localization.Resources.Strings",
-				typeof(test.localization.Strings).Assembly);
+			return new ResourceManager("ScaleHQ.Windows.WinForms1.Resources.Strings",
+				typeof(ScaleHQ.Windows.WinForms1.Strings).Assembly);
 		}
 
 		public string ToString(string format, IFormatProvider formatProvider)
@@ -122,14 +117,7 @@ namespace test.localization
 			string result = GetStringSafely(name, Culture);
 			if (result == null)
 			{
-				if (FallbackCulture != null)
-				{
-					result = GetStringSafely(name, FallbackCulture);
-					if (result == null)
-					{
-						result = string.Format("???{0}.{1}???", name, FallbackCulture == null ? string.Empty : FallbackCulture.Name);
-					}
-				}
+				result = string.Format("???{0}.{1}???", name, Culture == null ? string.Empty : Culture.Name);
 			}
 
 			return result;
@@ -148,13 +136,6 @@ namespace test.localization
 			}
 
 			return result;
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private void OnPropertyChanged(string property)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 		}
 	}
 
@@ -213,56 +194,188 @@ namespace test.localization
 	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public partial class Strings
 	{
-		public static partial class Cars
+		public partial class Cars
 		{
-			public static partial class Diesel
+			public partial class Diesel
 			{
-				public static partial class Old
+				public partial class Old
 				{
 					/// <summary>
 					/// Gets localized string similar to: Old_ kia EN
 					/// </summary>
-					public static string Old_Kia => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Old.Old_Kia);
+					public static string Old_Kia
+					{
+						get
+						{
+							return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Old.Old_Kia);
+						}
+					}
 			
 				}
 				/// <summary>
 				/// Gets localized string similar to: Mercedes EN
 				/// </summary>
-				public static string Mercedes => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Mercedes);
+				public static string Mercedes
+				{
+					get
+					{
+						return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Mercedes);
+					}
+				}
 		
 				/// <summary>
 				/// Gets localized string similar to: Skoda EN
 				/// </summary>
-				public static string Skoda => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Skoda);
+				public static string Skoda
+				{
+					get
+					{
+						return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Skoda);
+					}
+				}
 		
 			}
 			
-			public static partial class Electric
+			public partial class Electric
 			{
 				/// <summary>
 				/// Gets localized string similar to: toyota EN
 				/// </summary>
-				public static string ToyotaEV => StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Electric.ToyotaEV);
+				public static string ToyotaEV
+				{
+					get
+					{
+						return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Electric.ToyotaEV);
+					}
+				}
 		
 			}
 		}
 		
-		public static partial class Messages
+		public partial class Messages
 		{
-			public static partial class Empty
+			public partial class Empty
 			{
 			}
 			/// <summary>
 			/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
 			/// </summary>
-			public static string Title(object userName,object productName,object date) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Messages.Title), userName,productName,date);
+			public static string Title
+			{
+				get
+				{
+					return StringsContext.Instance.GetStringSafely(StringsKeys.Messages.Title);
+				}
+			}
 	
 		}
 		
 		/// <summary>
 		/// Gets localized string similar to: Welcome {0} in this {1} !
 		/// </summary>
-		public static string Welcome(object name,object city) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Welcome), name,city);
+		public static string Welcome
+		{
+			get
+			{
+				return StringsContext.Instance.GetStringSafely(StringsKeys.Welcome);
+			}
+		}
+
+		/// <summary>
+		/// Gets localized string similar to: Welcome {0} in this {1} !
+		/// </summary>
+		public static string WelcomeWithParams(object userName,object productName,object date)
+		{
+			return string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Welcome), userName,productName,date);
+		}
+
+	}
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public partial class StringsBindingProxy: ScaleHQ.Windows.WinForms1.BindableObject
+	{
+		private StringsBindingProxy() 
+		{}
+
+		public static StringsBindingProxy Instance { get; } = new StringsBindingProxy();
+
+				/// <summary>
+				/// Gets localized string similar to: Old_ kia EN
+				/// </summary>
+				public string CarsDieselOldOld_Kia
+				{
+					get
+					{
+						return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Old.Old_Kia);
+					}
+				}
+		
+			/// <summary>
+			/// Gets localized string similar to: Mercedes EN
+			/// </summary>
+			public string CarsDieselMercedes
+			{
+				get
+				{
+					return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Mercedes);
+				}
+			}
+	
+			/// <summary>
+			/// Gets localized string similar to: Skoda EN
+			/// </summary>
+			public string CarsDieselSkoda
+			{
+				get
+				{
+					return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Skoda);
+				}
+			}
+	
+			
+			/// <summary>
+			/// Gets localized string similar to: toyota EN
+			/// </summary>
+			public string CarsElectricToyotaEV
+			{
+				get
+				{
+					return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Electric.ToyotaEV);
+				}
+			}
+	
+		
+		/// <summary>
+		/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
+		/// </summary>
+		public string MessagesTitle
+		{
+			get
+			{
+				return StringsContext.Instance.GetStringSafely(StringsKeys.Messages.Title);
+			}
+		}
+
+		
+		/// <summary>
+		/// Gets localized string similar to: Welcome {0} in this {1} !
+		/// </summary>
+		public static string Welcome
+		{
+			get
+			{
+				return StringsContext.Instance.GetStringSafely(StringsKeys.Welcome);
+			}
+		}
+
+		/// <summary>
+		/// Gets localized string similar to: Welcome {0} in this {1} !
+		/// </summary>
+		public static string WelcomeWithParams(object userName,object productName,object date)
+		{
+			return string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Welcome), userName,productName,date);
+		}
 
 	}
 }

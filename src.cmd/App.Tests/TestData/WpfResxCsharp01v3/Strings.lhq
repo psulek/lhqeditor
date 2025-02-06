@@ -151,7 +151,7 @@
                   "name": "CSharp",
                   "attrs": {
                     "OutputFolder": "Resources",
-                    "UseExpressionBodySyntax": "true",
+                    "UseExpressionBodySyntax": "false",
                     "MissingTranslationFallbackToPrimary": "true"
                   }
                 },

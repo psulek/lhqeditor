@@ -28,6 +28,10 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
                  provide value for parameter '${key}' in cmd data parameters.`);
         }
     }
+    
+    protected debugLog(msg: string) {
+        HostEnv.debugLog(msg);
+    }
 
     public generate(rootModel: TemplateRootModel) {
         const modelVersion = rootModel.model.model.version;
@@ -37,10 +41,11 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
 
         const defaultCompatibleTextEncoding = modelVersion < 2;
         const modelName = rootModel.model.model.name;
-        
+
+        rootModel.extra = rootModel.extra ?? {};
+
         if (this._settings.CSharp.Enabled.isTrue()) {
             this.checkHasNamespaceName(rootModel);
-            rootModel.extra = {};
             rootModel.extra['rootClassName'] = this.getRootCsharpClassName(rootModel);
             const csfileContent = this.compileAndRun(this.csharpTemplateName, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
@@ -48,7 +53,6 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         }
 
         if (this._settings.ResX.Enabled.isTrue()) {
-            rootModel.extra = {};
             rootModel.extra['useHostWebHtmlEncode'] = isNullOrEmpty(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
                 : this._settings.ResX.CompatibleTextEncoding.isTrue();

@@ -1,17 +1,25 @@
 import {
-    getNestedPropertyValue, hasItems,
-    isNullOrEmpty, objCount,
+    copyObject,
+    getNestedPropertyValue,
+    hasItems,
+    isNullOrEmpty,
+    objCount,
     sortBy,
-    sortObjectByKey, textEncode,
+    sortObjectByKey,
+    textEncode,
+    valueAsBool,
 } from "./utils";
 import {LhqModelResourceType, TemplateRootModel} from "./types";
 import {HostEnv} from "./hostEnv";
 
 export function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
+        const fn = helpersList[key];
         // @ts-ignore
-        Handlebars.registerHelper(key, helpersList[key]);
+        Handlebars.registerHelper(key, () => debugLogAndExec(fn, ...arguments));
     });
+
+    clearContext();
 }
 
 const helpersList: Record<string, Function> = {
@@ -40,16 +48,60 @@ const helpersList: Record<string, Function> = {
     'x-isNullOrEmpty': isNullOrEmptyHelper,
     'x-isNotNullOrEmpty': isNotNullOrEmptyHelper,
     'x-fn': callFunctionHelper,
-    'x-logical': logicalOperatorHelper,
-    'x-debugLog': debugLogHelper
+    'x-logical': logicalHelper,
+    'x-debugLog': debugLogHelper,
+    'x-var': returnVarFromTempHelper
 };
 
 export function getKnownHelpers() {
     return Object.fromEntries(Object.keys(helpersList).map(key => [key, true]));
 }
 
-function debugLogAndExec() {
-    //(...arguments);
+type HbsDataContext = {
+    name: string;
+    hash: Record<string, unknown>;
+    data: Record<string, unknown>;
+};
+
+let dbgCounter = 0;
+let globalVarTemp: Record<string, unknown> = {};
+
+export function clearContext() {
+    dbgCounter = 0;
+    globalVarTemp = {};
+}
+
+function debugLogAndExec(fn: Function, ...args: any) {
+    let debug = false;
+    let header = '';
+    let cnt = 0;
+    
+    if (arguments.length > 0) {
+        const ctx = arguments[arguments.length - 1] as HbsDataContext;
+        debug = valueAsBool(ctx.hash?._debug ?? false);
+        if (debug) {
+            cnt = ++dbgCounter;
+            const debugLog = (ctx.hash?._debugLog ?? '').toString();
+            const hash = copyObject(ctx.hash ?? {}, ['_debug', '_debugLog']);
+            const restArgs = Array.from(args).slice(0, -1);
+            header = `[${cnt}#${ctx.name}](${debugLog}) hash: ${JSON.stringify(hash, null, 0)}`;
+            HostEnv.debugLog(`${header} ${JSON.stringify(restArgs, null, 0)}`);
+        }
+    }
+
+    //HostEnv.debugLog(`[debugLogAndExec] fn: ${typeof fn} , arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
+    if (debug) {
+        //HostEnv.debugLog(`${header}, arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
+    }
+    
+    // @ts-ignore
+    const res = fn.call(this, ...args);
+    
+    if (debug) {
+        HostEnv.debugLog(`${header}, result: ${JSON.stringify(res, null, 0)}`);
+    }
+    
+    return res;
 }
 
 function headerHelper() {
@@ -85,23 +137,30 @@ function indentHelper(count: number, options: any) {
 <h1>Jobs</h1>
 {{join jobs delimiter=", " start="1" end="2"}}
 */
-function joinHelper(items: any[], block: any) {
-    var delimiter = block.hash.delimiter || ",",
-        start = block.hash.start || 0,
+function joinHelper(items: any[], options: any) {
+
+    // if (dbgCounter === 0) {
+    //     dbgCounter = 1;
+    //     // @ts-ignore
+    //     HostEnv.debugLog(`[joinHelper] items: ${typeof items}, ${items.name} options: ${JSON.stringify(options)}`);
+    // }
+
+    var delimiter = options.hash.delimiter || ",",
+        start = options.hash.start || 0,
         len = items ? items.length : 0,
-        end = block.hash.end || len,
+        end = options.hash.end || len,
         out = "",
-        decorator = block.hash.decorator || `"`;
+        decorator = options.hash.decorator || `"`;
 
     if (end > len) end = len;
 
-    if ('function' === typeof block) {
+    if ('function' === typeof options) {
         for (let i = start; i < end; i++) {
             if (i > start) out += delimiter;
             if ('string' === typeof items[i])
                 out += items[i];
             else
-                out += block(items[i]);
+                out += options(items[i]);
         }
         return out;
     } else {
@@ -112,26 +171,48 @@ function joinHelper(items: any[], block: any) {
     }
 }
 
-let dbgCounter = 0;
-
 // usage: {{ x-concat 'prop1' 'prop2' 'prop3' sep="," }}
 function concatHelper(...args: any[]) {
     const options = args.pop();
     const sep = options.hash.sep || ''; // Default to empty string if no separator is provided
-    
-    // if (options && dbgCounter === 0) {
-    //     dbgCounter = 1;
-    //     HostEnv.debugLog("[concatHelper] options: " + JSON.stringify(options));
-    // }
 
+    return saveResultToTempData(options, () => args.filter(x => !isNullOrEmpty(x)).join(sep));
+    //return saveResultToTempData(() => args.filter(x => !isNullOrEmpty(x)).join(sep), ...arguments);
+    
     // @ts-ignore
-    //return args.filter(Boolean).join(sep);
-    return args.filter(x => !isNullOrEmpty(x)).join(sep);
+    //return args.filter(x => !isNullOrEmpty(x)).join(sep);
 }
 
-function replaceHelper(value: string, block: any) {
-    const what = block.hash.what || '',
-        withStr = block.hash.with || '';
+function saveResultToTempData(options: any, fn: ()=> any): any {
+    const res = fn();
+    const varName = options?.hash?.var;
+    if (!isNullOrEmpty(varName)) {
+        globalVarTemp[varName] = res;
+    }
+
+    return res;
+}
+
+// function saveResultToTempData(fn: Function, ...args: any): any {
+//     // @ts-ignore
+//     const res = fn.call(this, ...args);
+//     if (arguments.length > 0) {
+//         const ctx = arguments[arguments.length - 1] as HbsDataContext;
+//         const varName = ctx?.hash?.var;
+//
+//         if (!isNullOrEmpty(varName)) {
+//             ctx.data['temp'] = ctx.data['temp'] ?? {};
+//             // @ts-ignore
+//             ctx.data['temp'][varName] = res;
+//         }
+//     }
+//    
+//     return res;
+// }
+
+function replaceHelper(value: string, options: any) {
+    const what = options.hash.what || '',
+        withStr = options.hash.with || '';
 
     if (!what || !withStr || (what === withStr)) {
         return value;
@@ -152,28 +233,8 @@ function trimEndHelper(input: string, endPattern: string): string {
     }
 }
 
-// usage: {{#x-equals 'hello world' 'WorlD' cs="false" }}
-// function ifEquals(input: any, value: any, block: any): boolean {
-//     const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
-//     const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
-//     const val2 = typeof value === "string" ? value : (value?.toString() ?? '');
-//    
-//     const equals = cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
-//     if (equals) {
-//         // @ts-ignore
-//         return block.fn(this);
-//     } else {
-//         // @ts-ignore
-//         return block.inverse(this);
-//     }
-// }
-
-function equalsHelper(input: any, value: any, block: any): boolean {
-    /*const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
-    const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
-    const val2 = typeof value === "string" ? value : (value?.toString() ?? '');*/
-
-    const {cs, val1, val2} = getDataForCompare(input, value, block)
+function equalsHelper(input: any, value: any, options: any): boolean {
+    const {cs, val1, val2} = getDataForCompare(input, value, options)
     return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
 }
 
@@ -185,29 +246,25 @@ function isFalseHelper(input: any): boolean {
     return input === false
 }
 
-function getDataForCompare(input: any, value: any, block: any): { cs: boolean, val1: string, val2: string } {
-    const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
+function getDataForCompare(input: any, value: any, options: any): { cs: boolean, val1: string, val2: string } {
+    const cs = (options.hash.cs || "true").toString().toLowerCase() == "true";
     const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
     const val2 = typeof value === "string" ? value : (value?.toString() ?? '');
     return {cs: cs, val1, val2};
 }
 
-function logicalOperatorHelper(input: any, value: any, block: any): boolean {
-    const op = (block.hash.op || 'and').toLowerCase();
+function logicalHelper(input: any, value: any, options: any): boolean {
+    const op = (options.hash.op || 'and').toLowerCase();
     if (op === 'and') {
-        return input === value;
+        //return input === value;
+        return (input === true) && (value === true);
     } else if (op === 'or') {
-        return input || value;
+        //return input || value;
+        return (input === true) || (value === true);
     }
 
     return false;
 }
-
-// function compareHelper(input: any, value: any, block: any): boolean {
-//     const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
-//     const {cs, val1, val2} = getDataForCompare(input, value, block)
-//
-// }
 
 function trimComment(value: string): string {
     let trimmed = false;
@@ -261,7 +318,7 @@ function resourceValueHelper(resource: LhqModelResourceType, options: any): stri
 
         if (!isNullOrEmpty(lang)) {
             const res = resource?.values?.[lang]?.value ?? '';
-            return trim ? res.trim() : res; 
+            return trim ? res.trim() : res;
         }
     }
 
@@ -345,13 +402,32 @@ function isNotNullOrEmptyHelper(input: any): boolean {
     return !isNullOrEmpty(input);
 }
 
-function callFunctionHelper(fn: any): any {
-    // HostEnv.debugLog("[callFunctionHelper] fn: " + typeof fn + " , " + JSON.stringify(fn));
-
-    return fn();
+function callFunctionHelper(fn: Function, ...args: any): any {
+    let fnArgs = undefined;
+    if (arguments.length > 0) {
+        //const ctx = arguments[arguments.length - 1] as HbsDataContext;
+        fnArgs = Array.from(args).slice(0, -1);
+    }
+    
+    return fnArgs === undefined ? fn() : fn(...fnArgs);
 }
+
+// function callFunctionHelper(fn: any): any {
+//     return fn();
+// }
 
 function debugLogHelper(...args: any[]): string {
     HostEnv.debugLog(args.join(' '));
     return '';
 } 
+
+function returnVarFromTempHelper(name: string, options: any): any {
+    //const name = options?.hash?.name;
+    const defaultVal = options?.hash?.default;
+    
+    if (isNullOrEmpty(name)) {
+        return '';
+    }
+    
+    return globalVarTemp[name] ?? defaultVal;
+}

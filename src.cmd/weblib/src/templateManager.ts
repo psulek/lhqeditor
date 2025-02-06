@@ -1,12 +1,13 @@
 // noinspection JSUnusedGlobalSymbols
 
 import {
+    LhqModelCategoryOrResourceType,
     LhqModelCategoryType,
     LhqModelType,
     ModelDataNode,
     TemplateRootModel
 } from "./types";
-import {registerHelpers} from "./helpers";
+import {clearContext, registerHelpers} from "./helpers";
 import {TypescriptJson01Template} from "./templates/typescriptJson";
 import {CodeGeneratorTemplate, CodeGeneratorTemplateConstructor} from "./templates/codeGeneratorTemplate";
 import {NetCoreResxCsharp01Template} from "./templates/netCoreResxCsharp";
@@ -19,7 +20,7 @@ const CodeGenUID = 'b40c8a1d-23b7-4f78-991b-c24898596dd2';
 
 export class TemplateManager {
     private static handlebarFiles: Record<string, string>;
-    
+
     private static generators: Record<string, CodeGeneratorTemplateConstructor> = {
         [TypescriptJson01Template.Id]: TypescriptJson01Template,
         [NetCoreResxCsharp01Template.Id]: NetCoreResxCsharp01Template,
@@ -27,7 +28,7 @@ export class TemplateManager {
         [WinFormsResxCsharp01Template.Id]: WinFormsResxCsharp01Template,
         [WpfResxCsharp01Template.Id]: WpfResxCsharp01Template
     };
-    
+
     public static intialize(handlebarFiles: string): void {
         TemplateManager.handlebarFiles = JSON.parse(handlebarFiles) as Record<string, string>;
 
@@ -35,22 +36,22 @@ export class TemplateManager {
         String.prototype.isTrue = function () {
             return this.toLowerCase() === "true";
         };
-        
+
         registerHelpers();
     }
-    
+
     public static runTemplate(lhqModelJson: string, hostData: string): void {
         let lhqModel = JSON.parse(lhqModelJson) as LhqModelType;
         if (lhqModel) {
             lhqModel = TemplateManager.sortByNameModel(lhqModel);
-            
+
             const {template, templateId, settingsNode} = TemplateManager.loadTemplate(lhqModel as LhqModelType);
             let settings = template.loadSettings(settingsNode);
             let host = {};
             if (hostData) {
                 host = JSON.parse(hostData) as Record<string, unknown>;
             }
-            
+
             const rootModel: TemplateRootModel = {
                 model: lhqModel,
                 settings: settings,
@@ -59,8 +60,9 @@ export class TemplateManager {
             };
 
             template.generate(rootModel);
-        }
-        else {
+
+            clearContext();
+        } else {
             throw new Error(`Unable to deserialize LHQ model !`);
         }
     }
@@ -84,7 +86,7 @@ export class TemplateManager {
         if (node && templateId !== undefined && template !== '') {
             const ctor = TemplateManager.generators[templateId];
             template = (ctor && new ctor(TemplateManager.handlebarFiles)) || undefined;
-            
+
             return {template, templateId, settingsNode: node};
         }
 
@@ -92,30 +94,50 @@ export class TemplateManager {
     }
 
     private static sortByNameModel(lhqModel: LhqModelType): LhqModelType {
+        function getFullParentPath(sep: string, element: LhqModelCategoryOrResourceType): string {
+            let pathArray: string[] = [];
+            let currentElement: LhqModelCategoryType | undefined = element.getParent!();
+            pathArray.unshift(element.getName!());
+
+            while (currentElement) {
+                pathArray.unshift(currentElement.getName!());
+                currentElement = currentElement.getParent!();
+                if (currentElement?.isRoot!()) {
+                    break;
+                }
+            }
+            
+            return pathArray.join(sep);
+        }
+
         function recursiveCategories(parentCategory: LhqModelCategoryType) {
             if (parentCategory.categories) {
                 parentCategory.categories = sortObjectByKey(parentCategory.categories);
-                iterateObject(parentCategory.categories, (category, _, __, isLastCategory) => {
+                iterateObject(parentCategory.categories, (category, name, __, isLastCategory) => {
+                    category.getName = () => name;
                     category.isRoot = () => false;
                     category.isLast = () => isLastCategory;
                     category.getParent = () => parentCategory;
                     category.hasCategories = () => hasItems(parentCategory.categories);
                     category.hasResources = () => hasItems(parentCategory.resources);
+                    category.getFullParentPath = (sep: string) => getFullParentPath(sep, category);
 
                     recursiveCategories(category);
                 });
             }
             if (parentCategory.resources) {
                 parentCategory.resources = sortObjectByKey(parentCategory.resources);
-                
-                iterateObject(parentCategory.resources, (resource, _, __, isLastResource) => {
+
+                iterateObject(parentCategory.resources, (resource, name, __, isLastResource) => {
+                    resource.getName = () => name;
                     resource.isLast = () => isLastResource;
                     resource.getParent = () => parentCategory;
                     resource.hasParameters = () => hasItems(resource.parameters);
+                    resource.getFullParentPath = (sep: string) => getFullParentPath(sep, resource);
 
                     if (resource.parameters) {
                         resource.parameters = sortObjectByValue(resource.parameters, x => x.order);
-                        
+
                         iterateObject(resource.parameters, (parameter, _, __, isLastParam) => {
                             parameter.isLast = () => isLastParam;
                             parameter.getParent = () => resource;
@@ -125,11 +147,13 @@ export class TemplateManager {
             }
         }
 
+        lhqModel.getName = () => lhqModel.model.name;
         lhqModel.isRoot = () => true;
         lhqModel.isLast = () => true;
         lhqModel.getParent = () => undefined;
         lhqModel.hasCategories = () => hasItems(lhqModel.categories);
         lhqModel.hasResources = () => hasItems(lhqModel.resources);
+        lhqModel.getFullParentPath = () => '';
         recursiveCategories(lhqModel);
         return lhqModel;
     }

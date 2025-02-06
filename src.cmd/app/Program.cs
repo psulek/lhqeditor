@@ -160,6 +160,7 @@ catch (Exception e)
 finally
 {
     AddToLogFile("Program lhqcmd.exe finished.");
+    //Console.ReadLine();
 }
 
 

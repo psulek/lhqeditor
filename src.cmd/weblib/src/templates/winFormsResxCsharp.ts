@@ -27,8 +27,6 @@ export class WinFormsResxCsharp01Template extends CSharpResXTemplateBase<CSharpW
     }
 
     generate(rootModel: TemplateRootModel) {
-        super.generate(rootModel);
-
         if (this._settings.CSharp.Enabled.isTrue()) {
             rootModel.extra = rootModel.extra ?? {};
             const generateParamsMethods = this._settings.CSharp.GenerateParamsMethods.isTrue();
@@ -38,5 +36,7 @@ export class WinFormsResxCsharp01Template extends CSharpResXTemplateBase<CSharpW
             const bindableContent = this.compileAndRun('WinFormsBindableObject', rootModel);
             HostEnv.addResultFile(bindableFileName, bindableContent);
         }
+
+        super.generate(rootModel);
     }
 }

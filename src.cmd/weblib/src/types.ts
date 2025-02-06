@@ -23,17 +23,22 @@ export type LhqModelType = Record<string, unknown> & {
     }
 } & LhqModelCategoryType;
 
-export type LhqModelCategoriesCollectionType = Record<string, LhqModelCategoryType>; 
+export type LhqModelCategoriesCollectionType = Record<string, LhqModelCategoryType>;
+
+export type LhqModelCategoryOrResourceType = {
+    getName?: () => string;
+    isLast?: () => boolean;
+    getParent?: () => LhqModelCategoryType | undefined;
+    getFullParentPath?: (sep: string) => string;
+}
 
 export type LhqModelCategoryType = {
     categories?: LhqModelCategoriesCollectionType;
     resources?: Record<string, LhqModelResourceType>;
     isRoot?: () => boolean;
-    isLast?: () => boolean;
-    getParent?: () => LhqModelCategoryType | undefined  ;
     hasCategories?: () => boolean;
     hasResources?: () => boolean;
-}
+} & LhqModelCategoryOrResourceType;
 
 export type LhqModelResourceParameterType = {
     description: string;
@@ -49,20 +54,18 @@ export type LhqModelResourceType = {
     values: Record<string, {
         value: string;
     }>;
-    isLast?: () => boolean;
-    getParent?: () => LhqModelCategoryType;
     hasParameters?: () => boolean;
-}
+} & LhqModelCategoryOrResourceType;
 
 export type TemplateRootModel = {
     model: LhqModelType;
     settings: unknown;
-    
+
     /*
      * data from host environment
      */
     host: Record<string, unknown>;
-    
+
     /*
      * extra data defined dynamically by template
      */

@@ -201,3 +201,10 @@ export function objCount<T>(obj: Record<string, T> | Array<T> | undefined): numb
 
     return 0;
 }
+
+
+export function copyObject<T extends Record<string, unknown>, K extends keyof T>(obj: T, keysToSkip: K[]): Omit<T, K> {
+    return Object.fromEntries(
+        Object.entries(obj).filter(([key]) => !keysToSkip.includes(key as K))
+    ) as Omit<T, K>;
+}

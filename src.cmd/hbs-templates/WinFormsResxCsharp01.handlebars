@@ -11,7 +11,7 @@ namespace {{ @root.host.namespace }}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public partial class {{@root.extra.rootClassName}}: {{ x-concat @root.host.namespace ".BindableObject" }}, IFormattable
+	public partial class {{@root.extra.rootClassName}}: {{ x-concat @root.host.namespace ".BindableObject" var="bindableObjectFullName" }}, IFormattable
 	{
 		private CultureInfo _culture;
 		private CultureInfo _fallbackCulture;
@@ -86,7 +86,7 @@ namespace {{ @root.host.namespace }}
 				Thread.CurrentThread.CurrentUICulture = _culture;
 				OnPropertyChanged(nameof(Culture));
 
-				{{x-concat model.name "BindingProxy" }}.Instance.RefreshProperties();
+				{{x-concat model.name "BindingProxy" var="bindingProxyClassName" }}.Instance.RefreshProperties();
 			}
 		}
 
@@ -146,7 +146,7 @@ namespace {{ @root.host.namespace }}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public static partial class {{model.name}}Keys
+	public static partial class {{x-concat model.name "Keys" var="keysClassName" }}
 	{
 	{{#each categories ~}}
 		{{#with (x-merge this _resourceRenderValue="key")}}
@@ -183,6 +183,23 @@ namespace {{ @root.host.namespace }}
 	{{/with}}
     {{/if}}
 	}
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public partial class {{x-var "bindingProxyClassName"}}: {{x-var "bindableObjectFullName"}}
+	{
+		private {{x-var "bindingProxyClassName"}}() 
+		{}
+
+		public static {{x-var "bindingProxyClassName"}} Instance { get; } = new {{x-var "bindingProxyClassName"}}();
+
+	{{> categoriesproxy}}
+
+		
+		{{#if resources}}
+		{{> resourcesproxy _static=true }}
+		{{/if}}
+	}
 }
 {{/with}}
 {{#*inline "category"}}
@@ -209,31 +226,81 @@ public{{x-render " static" when=(x-equals _resourceRenderValue "key") }} partial
 	public const string {{@key}} = "{{x-concat ../_parent @../key @key}}";
 	{{else}}
 	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
-	public static string {{@key}} => {{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}});
+	public static string {{@key}} => {{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}});
 	{{else}}
 	public static string {{@key}}
 	{
 		get
 		{
-			return {{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}});
+			return {{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}});
 		}
 	}
 	{{/if}}
 	{{#if (x-logical (x-hasItems parameters) (x-isTrue @root.extra.generateParamsMethods) op="and") }}
+¤
 	/// <summary>
 	/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
 	/// </summary>
 	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
-	public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+	public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
 	{{else}}
 	public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }})
 	{
-		return string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+		return string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
 	}
 	{{/if}}
 	{{/if}}
 ¤
 	{{/if}}
+{{/each}}
+{{/if}}
+{{/inline}}
+{{#*inline "categoriesproxy"}}
+{{#each categories }}
+{{#if (x-hasItems categories) }}
+	{{> categoriesproxy }}
+{{/if}}
+	{{> resourcesproxy }}
+¤
+{{/each}}
+{{/inline}}
+{{#*inline "resourcesproxy"}}
+{{#if resources}}
+{{#each resources}}
+/// <summary>
+/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
+/// </summary>
+{{#if (x-isTrue ../_static)}}
+public static string {{@key}}
+{
+	get
+	{
+		return {{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{@key}});
+	}
+}
+{{else}}
+public string {{x-fn getFullParentPath ''}}
+{
+	get
+	{
+		return {{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
+	}
+}
+{{/if}}
+{{#if (x-logical (x-hasItems parameters) (x-isTrue @root.extra.generateParamsMethods) op="and") }}
+¤
+/// <summary>
+/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
+/// </summary>
+{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+{{else}}
+public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }})
+{
+	return string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+}
+{{/if}}
+{{/if}}
 {{/each}}
 {{/if}}
 {{/inline}}

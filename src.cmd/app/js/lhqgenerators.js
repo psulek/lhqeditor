@@ -39,6 +39,7 @@ class AppError extends Error {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   clearContext: () => (/* binding */ clearContext),
 /* harmony export */   getKnownHelpers: () => (/* binding */ getKnownHelpers),
 /* harmony export */   registerHelpers: () => (/* binding */ registerHelpers)
 /* harmony export */ });
@@ -48,9 +49,11 @@ __webpack_require__.r(__webpack_exports__);
 
 function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
+        const fn = helpersList[key];
         // @ts-ignore
-        Handlebars.registerHelper(key, helpersList[key]);
+        Handlebars.registerHelper(key, () => debugLogAndExec(fn, ...arguments));
     });
+    clearContext();
 }
 const helpersList = {
     'x-header': headerHelper,
@@ -78,14 +81,46 @@ const helpersList = {
     'x-isNullOrEmpty': isNullOrEmptyHelper,
     'x-isNotNullOrEmpty': isNotNullOrEmptyHelper,
     'x-fn': callFunctionHelper,
-    'x-logical': logicalOperatorHelper,
-    'x-debugLog': debugLogHelper
+    'x-logical': logicalHelper,
+    'x-debugLog': debugLogHelper,
+    'x-var': returnVarFromTempHelper
 };
 function getKnownHelpers() {
     return Object.fromEntries(Object.keys(helpersList).map(key => [key, true]));
 }
-function debugLogAndExec() {
-    //(...arguments);
+let dbgCounter = 0;
+let globalVarTemp = {};
+function clearContext() {
+    dbgCounter = 0;
+    globalVarTemp = {};
+}
+function debugLogAndExec(fn, ...args) {
+    var _a, _b, _c, _d, _e;
+    let debug = false;
+    let header = '';
+    let cnt = 0;
+    if (arguments.length > 0) {
+        const ctx = arguments[arguments.length - 1];
+        debug = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.valueAsBool)((_b = (_a = ctx.hash) === null || _a === void 0 ? void 0 : _a._debug) !== null && _b !== void 0 ? _b : false);
+        if (debug) {
+            cnt = ++dbgCounter;
+            const debugLog = ((_d = (_c = ctx.hash) === null || _c === void 0 ? void 0 : _c._debugLog) !== null && _d !== void 0 ? _d : '').toString();
+            const hash = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.copyObject)((_e = ctx.hash) !== null && _e !== void 0 ? _e : {}, ['_debug', '_debugLog']);
+            const restArgs = Array.from(args).slice(0, -1);
+            header = `[${cnt}#${ctx.name}](${debugLog}) hash: ${JSON.stringify(hash, null, 0)}`;
+            _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(`${header} ${JSON.stringify(restArgs, null, 0)}`);
+        }
+    }
+    //HostEnv.debugLog(`[debugLogAndExec] fn: ${typeof fn} , arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
+    if (debug) {
+        //HostEnv.debugLog(`${header}, arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
+    }
+    // @ts-ignore
+    const res = fn.call(this, ...args);
+    if (debug) {
+        _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(`${header}, result: ${JSON.stringify(res, null, 0)}`);
+    }
+    return res;
 }
 function headerHelper() {
     return `//------------------------------------------------------------------------------
@@ -115,18 +150,23 @@ function indentHelper(count, options) {
 <h1>Jobs</h1>
 {{join jobs delimiter=", " start="1" end="2"}}
 */
-function joinHelper(items, block) {
-    var delimiter = block.hash.delimiter || ",", start = block.hash.start || 0, len = items ? items.length : 0, end = block.hash.end || len, out = "", decorator = block.hash.decorator || `"`;
+function joinHelper(items, options) {
+    // if (dbgCounter === 0) {
+    //     dbgCounter = 1;
+    //     // @ts-ignore
+    //     HostEnv.debugLog(`[joinHelper] items: ${typeof items}, ${items.name} options: ${JSON.stringify(options)}`);
+    // }
+    var delimiter = options.hash.delimiter || ",", start = options.hash.start || 0, len = items ? items.length : 0, end = options.hash.end || len, out = "", decorator = options.hash.decorator || `"`;
     if (end > len)
         end = len;
-    if ('function' === typeof block) {
+    if ('function' === typeof options) {
         for (let i = start; i < end; i++) {
             if (i > start)
                 out += delimiter;
             if ('string' === typeof items[i])
                 out += items[i];
             else
-                out += block(items[i]);
+                out += options(items[i]);
         }
         return out;
     }
@@ -137,21 +177,42 @@ function joinHelper(items, block) {
         return new Handlebars.SafeString(res);
     }
 }
-let dbgCounter = 0;
 // usage: {{ x-concat 'prop1' 'prop2' 'prop3' sep="," }}
 function concatHelper(...args) {
     const options = args.pop();
     const sep = options.hash.sep || ''; // Default to empty string if no separator is provided
-    if (options && dbgCounter === 0) {
-        dbgCounter = 1;
-        _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog("[concatHelper] options: " + JSON.stringify(options));
-    }
+    return saveResultToTempData(options, () => args.filter(x => !(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(x)).join(sep));
+    //return saveResultToTempData(() => args.filter(x => !isNullOrEmpty(x)).join(sep), ...arguments);
     // @ts-ignore
-    //return args.filter(Boolean).join(sep);
-    return args.filter(x => !(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(x)).join(sep);
+    //return args.filter(x => !isNullOrEmpty(x)).join(sep);
 }
-function replaceHelper(value, block) {
-    const what = block.hash.what || '', withStr = block.hash.with || '';
+function saveResultToTempData(options, fn) {
+    var _a;
+    const res = fn();
+    const varName = (_a = options === null || options === void 0 ? void 0 : options.hash) === null || _a === void 0 ? void 0 : _a.var;
+    if (!(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(varName)) {
+        globalVarTemp[varName] = res;
+    }
+    return res;
+}
+// function saveResultToTempData(fn: Function, ...args: any): any {
+//     // @ts-ignore
+//     const res = fn.call(this, ...args);
+//     if (arguments.length > 0) {
+//         const ctx = arguments[arguments.length - 1] as HbsDataContext;
+//         const varName = ctx?.hash?.var;
+//
+//         if (!isNullOrEmpty(varName)) {
+//             ctx.data['temp'] = ctx.data['temp'] ?? {};
+//             // @ts-ignore
+//             ctx.data['temp'][varName] = res;
+//         }
+//     }
+//    
+//     return res;
+// }
+function replaceHelper(value, options) {
+    const what = options.hash.what || '', withStr = options.hash.with || '';
     if (!what || !withStr || (what === withStr)) {
         return value;
     }
@@ -169,26 +230,8 @@ function trimEndHelper(input, endPattern) {
         return input;
     }
 }
-// usage: {{#x-equals 'hello world' 'WorlD' cs="false" }}
-// function ifEquals(input: any, value: any, block: any): boolean {
-//     const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
-//     const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
-//     const val2 = typeof value === "string" ? value : (value?.toString() ?? '');
-//    
-//     const equals = cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
-//     if (equals) {
-//         // @ts-ignore
-//         return block.fn(this);
-//     } else {
-//         // @ts-ignore
-//         return block.inverse(this);
-//     }
-// }
-function equalsHelper(input, value, block) {
-    /*const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
-    const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
-    const val2 = typeof value === "string" ? value : (value?.toString() ?? '');*/
-    const { cs, val1, val2 } = getDataForCompare(input, value, block);
+function equalsHelper(input, value, options) {
+    const { cs, val1, val2 } = getDataForCompare(input, value, options);
     return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
 }
 function isTrueHelper(input) {
@@ -197,28 +240,25 @@ function isTrueHelper(input) {
 function isFalseHelper(input) {
     return input === false;
 }
-function getDataForCompare(input, value, block) {
+function getDataForCompare(input, value, options) {
     var _a, _b;
-    const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
+    const cs = (options.hash.cs || "true").toString().toLowerCase() == "true";
     const val1 = typeof input === "string" ? input : ((_a = input === null || input === void 0 ? void 0 : input.toString()) !== null && _a !== void 0 ? _a : '');
     const val2 = typeof value === "string" ? value : ((_b = value === null || value === void 0 ? void 0 : value.toString()) !== null && _b !== void 0 ? _b : '');
     return { cs: cs, val1, val2 };
 }
-function logicalOperatorHelper(input, value, block) {
-    const op = (block.hash.op || 'and').toLowerCase();
+function logicalHelper(input, value, options) {
+    const op = (options.hash.op || 'and').toLowerCase();
     if (op === 'and') {
-        return input === value;
+        //return input === value;
+        return (input === true) && (value === true);
     }
     else if (op === 'or') {
-        return input || value;
+        //return input || value;
+        return (input === true) || (value === true);
     }
     return false;
 }
-// function compareHelper(input: any, value: any, block: any): boolean {
-//     const cs = (block.hash.cs || "true").toString().toLowerCase() == "true";
-//     const {cs, val1, val2} = getDataForCompare(input, value, block)
-//
-// }
 function trimComment(value) {
     let trimmed = false;
     var idxNewLine = value.indexOf('\r\n');
@@ -334,13 +374,29 @@ function isNullOrEmptyHelper(value) {
 function isNotNullOrEmptyHelper(input) {
     return !(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(input);
 }
-function callFunctionHelper(fn) {
-    // HostEnv.debugLog("[callFunctionHelper] fn: " + typeof fn + " , " + JSON.stringify(fn));
-    return fn();
+function callFunctionHelper(fn, ...args) {
+    let fnArgs = undefined;
+    if (arguments.length > 0) {
+        //const ctx = arguments[arguments.length - 1] as HbsDataContext;
+        fnArgs = Array.from(args).slice(0, -1);
+    }
+    return fnArgs === undefined ? fn() : fn(...fnArgs);
 }
+// function callFunctionHelper(fn: any): any {
+//     return fn();
+// }
 function debugLogHelper(...args) {
     _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(args.join(' '));
     return '';
+}
+function returnVarFromTempHelper(name, options) {
+    var _a, _b;
+    //const name = options?.hash?.name;
+    const defaultVal = (_a = options === null || options === void 0 ? void 0 : options.hash) === null || _a === void 0 ? void 0 : _a.default;
+    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(name)) {
+        return '';
+    }
+    return (_b = globalVarTemp[name]) !== null && _b !== void 0 ? _b : defaultVal;
 }
 
 
@@ -447,6 +503,7 @@ class TemplateManager {
                 extra: {}
             };
             template.generate(rootModel);
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.clearContext)();
         }
         else {
             throw new Error(`Unable to deserialize LHQ model !`);
@@ -472,24 +529,41 @@ class TemplateManager {
         throw new Error(`Template '${templateId}' not found !`);
     }
     static sortByNameModel(lhqModel) {
+        function getFullParentPath(sep, element) {
+            let pathArray = [];
+            let currentElement = element.getParent();
+            pathArray.unshift(element.getName());
+            while (currentElement) {
+                pathArray.unshift(currentElement.getName());
+                currentElement = currentElement.getParent();
+                if (currentElement === null || currentElement === void 0 ? void 0 : currentElement.isRoot()) {
+                    break;
+                }
+            }
+            return pathArray.join(sep);
+        }
         function recursiveCategories(parentCategory) {
             if (parentCategory.categories) {
                 parentCategory.categories = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByKey)(parentCategory.categories);
-                (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(parentCategory.categories, (category, _, __, isLastCategory) => {
+                (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(parentCategory.categories, (category, name, __, isLastCategory) => {
+                    category.getName = () => name;
                     category.isRoot = () => false;
                     category.isLast = () => isLastCategory;
                     category.getParent = () => parentCategory;
                     category.hasCategories = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(parentCategory.categories);
                     category.hasResources = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(parentCategory.resources);
+                    category.getFullParentPath = (sep) => getFullParentPath(sep, category);
                     recursiveCategories(category);
                 });
             }
             if (parentCategory.resources) {
                 parentCategory.resources = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByKey)(parentCategory.resources);
-                (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(parentCategory.resources, (resource, _, __, isLastResource) => {
+                (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(parentCategory.resources, (resource, name, __, isLastResource) => {
+                    resource.getName = () => name;
                     resource.isLast = () => isLastResource;
                     resource.getParent = () => parentCategory;
                     resource.hasParameters = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(resource.parameters);
+                    resource.getFullParentPath = (sep) => getFullParentPath(sep, resource);
                     if (resource.parameters) {
                         resource.parameters = (0,_utils__WEBPACK_IMPORTED_MODULE_6__.sortObjectByValue)(resource.parameters, x => x.order);
                         (0,_utils__WEBPACK_IMPORTED_MODULE_6__.iterateObject)(resource.parameters, (parameter, _, __, isLastParam) => {
@@ -500,11 +574,13 @@ class TemplateManager {
                 });
             }
         }
+        lhqModel.getName = () => lhqModel.model.name;
         lhqModel.isRoot = () => true;
         lhqModel.isLast = () => true;
         lhqModel.getParent = () => undefined;
         lhqModel.hasCategories = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(lhqModel.categories);
         lhqModel.hasResources = () => (0,_utils__WEBPACK_IMPORTED_MODULE_6__.hasItems)(lhqModel.resources);
+        lhqModel.getFullParentPath = () => '';
         recursiveCategories(lhqModel);
         return lhqModel;
     }
@@ -608,28 +684,30 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
                  provide value for parameter '${key}' in cmd data parameters.`);
         }
     }
+    debugLog(msg) {
+        _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(msg);
+    }
     generate(rootModel) {
-        var _a;
+        var _a, _b;
         const modelVersion = rootModel.model.model.version;
         // if (modelVersion < 2) {
         //     throw new AppError(`Current LHQ file version (${modelVersion}) is not supported! (min version 2 is supported)`);
         // }
         const defaultCompatibleTextEncoding = modelVersion < 2;
         const modelName = rootModel.model.model.name;
+        rootModel.extra = (_a = rootModel.extra) !== null && _a !== void 0 ? _a : {};
         if (this._settings.CSharp.Enabled.isTrue()) {
             this.checkHasNamespaceName(rootModel);
-            rootModel.extra = {};
             rootModel.extra['rootClassName'] = this.getRootCsharpClassName(rootModel);
             const csfileContent = this.compileAndRun(this.csharpTemplateName, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(csFileName, csfileContent);
         }
         if (this._settings.ResX.Enabled.isTrue()) {
-            rootModel.extra = {};
             rootModel.extra['useHostWebHtmlEncode'] = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
                 : this._settings.ResX.CompatibleTextEncoding.isTrue();
-            (_a = rootModel.model.languages) === null || _a === void 0 ? void 0 : _a.forEach(lang => {
+            (_b = rootModel.model.languages) === null || _b === void 0 ? void 0 : _b.forEach(lang => {
                 if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(lang)) {
                     rootModel.extra['lang'] = lang;
                     const resxfileContent = this.compileAndRun('SharedResx', rootModel);
@@ -845,7 +923,6 @@ class WinFormsResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPO
     }
     generate(rootModel) {
         var _a, _b;
-        super.generate(rootModel);
         if (this._settings.CSharp.Enabled.isTrue()) {
             rootModel.extra = (_a = rootModel.extra) !== null && _a !== void 0 ? _a : {};
             const generateParamsMethods = this._settings.CSharp.GenerateParamsMethods.isTrue();
@@ -855,6 +932,7 @@ class WinFormsResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPO
             const bindableContent = this.compileAndRun('WinFormsBindableObject', rootModel);
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(bindableFileName, bindableContent);
         }
+        super.generate(rootModel);
     }
 }
 
@@ -896,6 +974,7 @@ class WpfResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPORTED_
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   copyObject: () => (/* binding */ copyObject),
 /* harmony export */   getNestedPropertyValue: () => (/* binding */ getNestedPropertyValue),
 /* harmony export */   hasItems: () => (/* binding */ hasItems),
 /* harmony export */   isNullOrEmpty: () => (/* binding */ isNullOrEmpty),
@@ -1071,6 +1150,9 @@ function objCount(obj) {
         return Object.keys(obj).length;
     }
     return 0;
+}
+function copyObject(obj, keysToSkip) {
+    return Object.fromEntries(Object.entries(obj).filter(([key]) => !keysToSkip.includes(key)));
 }
 
 

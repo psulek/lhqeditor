@@ -485,7 +485,7 @@ namespace <#= namespaceName #>
 			if (category.Categories.Count > 0)
 			{
 				PushIndent();
-				WriteCategoriesAndResourcesClassForBindingProxy(category, null, parentName + category.Name);
+ 				WriteCategoriesAndResourcesClassForBindingProxy(category, null, parentName + category.Name);
 				PopIndent();
 			}
 

@@ -7,6 +7,13 @@
         <Nullable>enable</Nullable>
         <AssemblyName>LHQ.Cmd.Tests</AssemblyName>
         <RootNamespace>LHQ.Cmd.Tests</RootNamespace>
+        <Configurations>Debug;Release;Publish</Configurations>
+        <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Publish' ">
+      <DebugSymbols Condition=" '$(DebugSymbols)' == '' ">true</DebugSymbols>
+      <Optimize Condition=" '$(Optimize)' == '' ">false</Optimize>
     </PropertyGroup>
 
     <ItemGroup>

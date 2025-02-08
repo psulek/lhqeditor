@@ -65,13 +65,14 @@ public class Generator : IDisposable
         }
 
         var handlebarFiles = new Dictionary<string, string>();
-
-        foreach (var file in Directory.GetFiles("hbs", "*.handlebars", SearchOption.TopDirectoryOnly))
+        var hbsFiles = thisAssembly.GetManifestResourceNames().Where(x => x.Contains(".hbs.")).ToArray();
+        foreach (var hbsFile in hbsFiles)
         {
-            var key = Path.GetFileNameWithoutExtension(file);
-            handlebarFiles.Add(key, File.ReadAllText(file));
+            var content = JavaScriptEngineSwitcher.Core.Utilities.Utils.GetResourceAsString(hbsFile, thisAssembly);
+            var key = hbsFile.Replace($"{rootNamespace}.hbs.", "").Replace(".handlebars", "");
+            handlebarFiles.Add(key, content);
         }
-
+        
         _engine.SetVariableValue("__handlebarFiles", JsonSerializer.Serialize(handlebarFiles));
         _engine.Execute("LhqGenerators.TemplateManager.intialize(__handlebarFiles);");
     }

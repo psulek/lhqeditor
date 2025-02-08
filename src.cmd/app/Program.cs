@@ -14,13 +14,15 @@ string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
 //args = ["--help"];
 
-var logFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "lhqcmd.log");
-
+StartLogger();
+AddToLogFile(new string('-', 50));
 AddToLogFile("Program lhqcmd.exe started.");
 
-RunTestData();
+#if DEBUG
+//RunTestData();
+#endif
 
-var missingParams = args.Length < 2;
+var missingParams = args.Length == 0;
 
 try
 {
@@ -36,7 +38,7 @@ try
     else
     {
         var lhqFile = args[0];
-        var csProjFile = args[1];
+        var csProjFile = args.Length > 1 ? args[1] : null;
 
         if (string.IsNullOrEmpty(lhqFile) || !File.Exists(lhqFile))
         {
@@ -47,7 +49,7 @@ try
         {
             throw new Exception($"C# project file '{csProjFile}' was not found!");
         }
-
+        
         string outDir = args.Length > 2 ? args[2] : string.Empty;
         if (!string.IsNullOrEmpty(outDir))
         {
@@ -154,7 +156,7 @@ catch (Exception e)
 
     if (genericLog)
     {
-        Console.WriteLine(Error("Error: \n") + e.Message);
+        Console.WriteLine(Error("Unexpected error occurred. See log file for details."));
     }
 }
 finally
@@ -184,7 +186,7 @@ void WriteHelp()
     var param_lhq = "lhq model file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);
     var param_csproj = "C# project file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);
 
-    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> <{param_csproj}> {Grey("[output dir]")} {Grey("[data]")}";
+    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> [{param_csproj}] {Grey("[output dir]")} {Grey("[data]")}";
 
     bool requestedHelp = args is ["--help"];
 
@@ -219,6 +221,10 @@ void WriteHelp()
 
          {White("NOTES:")}
 
+         {param_csproj}
+           - for most template(s) (C# related this parameter is required
+           - for some template(s) (eg: Typescript) this parameter is not required
+         
          {White("[output dir]")}
            - optional output directory where to generated files from lhq model
            - defaults to directory of {param_lhq} 
@@ -237,6 +243,30 @@ void WriteHelp()
                - xml element {White($"/Project/ItemGroup/Content[@Include='{param_lhq}']/CustomToolNamespace")}
                     
          """);
+}
+
+var logFile = "";
+void StartLogger()
+{
+    var logDir = Path.GetDirectoryName(Environment.ProcessPath);
+    logFile = Path.Combine(logDir, "lhqcmd.log");
+    Console.WriteLine($"Logging to file: {White(logFile)}");
+    if (File.Exists(logFile))
+    {
+        try
+        {
+            // split log file when size is more than 500kb
+            var split = new FileInfo(logFile).Length > 1024 * 500;
+            if (split)
+            {
+                File.Move(logFile, Path.Combine(logDir, $"lhqcmd_{DateTime.Now.Ticks}.log"));
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
 }
 
 void AddToLogFile(params string[] lines)

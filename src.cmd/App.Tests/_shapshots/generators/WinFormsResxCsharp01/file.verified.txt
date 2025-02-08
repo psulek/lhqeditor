@@ -1,0 +1,5 @@
+﻿Resources\BindableObject.gen.cs
+Resources\Strings.de.resx
+Resources\Strings.en.resx
+Resources\Strings.gen.cs
+Resources\Strings.sk.resx

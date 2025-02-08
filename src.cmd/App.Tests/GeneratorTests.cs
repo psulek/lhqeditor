@@ -144,4 +144,8 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 
     [Test]
     public Task TypescriptJson01v3() => Generate();
+
+    // WinForms
+    [Test]
+    public Task WinFormsResxCsharp01() => Generate();
 }

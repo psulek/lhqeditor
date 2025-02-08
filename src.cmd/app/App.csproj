@@ -8,36 +8,33 @@
         <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
         <AssemblyName>lhqcmd</AssemblyName>
         <RootNamespace>LHQ.Cmd</RootNamespace>
+        <Configurations>Debug;Release;Publish</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.27.3" />
-        <PackageReference Include="Pastel" Version="6.0.1" />
+        <PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.27.3"/>
+        <PackageReference Include="Pastel" Version="6.0.1"/>
     </ItemGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)' == 'Publish' ">
+        <Optimize>false</Optimize>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>embedded</DebugType>
+        <StackTraceSupport>true</StackTraceSupport>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Publish00' ">
+        <PublishSingleFile>true</PublishSingleFile> <!-- Produce a single file -->
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract> <!-- Include native libraries for self-extraction -->
+        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> <!-- Include all content for self-extraction -->
+        <PublishAot>true</PublishAot> <!-- Enable AOT compilation -->
+        <PublishTrimmed>true</PublishTrimmed> <!-- Enable trimming for size optimization -->
+    </PropertyGroup>
+
 
     <ItemGroup>
-        <Reference Include="LHQ.Data">
-            <HintPath>libs\LHQ.Data.dll</HintPath>
-        </Reference>
-        <Reference Include="LHQ.Utils">
-            <HintPath>libs\LHQ.Utils.dll</HintPath>
-        </Reference>
+        <EmbeddedResource Include="js\**\*"/>
+        <EmbeddedResource Include="hbs\**\*"/>
     </ItemGroup>
-
-    <ItemGroup>
-        <None Update="Strings.lhq*">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource Include="js\**\*" WithCulture="false" />
-    </ItemGroup>
-
-    <Target Name="CopyFilesBeforeBuild" BeforeTargets="BeforeBuild">
-        <ItemGroup>
-            <HbsFiles Include="$(MSBuildThisFileDirectory)\..\hbs-templates\*.*" />
-        </ItemGroup>
-        <Copy SourceFiles="%(HbsFiles.Identity)" DestinationFolder="$(OutputPath)\hbs" OverwriteReadOnlyFiles="true" />
-    </Target>
 </Project>

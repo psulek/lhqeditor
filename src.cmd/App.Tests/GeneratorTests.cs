@@ -75,7 +75,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 
         foreach (var (file, content) in generatedFiles)
         {
-            result.AppendContentAsFile(FileHelper.ToLinuxLineEndings(content), name: Path.GetFileName(file));
+            result.AppendContentAsFile(Utils.ToLinuxLineEndings(content), name: Path.GetFileName(file));
         }
 
         return await result;
@@ -104,7 +104,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
                         Directory.CreateDirectory(dir);
                     }
 
-                    FileHelper.WriteAllText(verifiedFile, verifiedFileContent);
+                    Utils.WriteAllText(verifiedFile, verifiedFileContent);
 
                     foreach (var file in resourceFiles.OrderBy(x => x))
                     {
@@ -112,7 +112,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
                             $"file#{Path.GetFileName(file)}.verified.txt");
                         if (!File.Exists(verifiedFileName))
                         {
-                            FileHelper.WriteAllText(verifiedFileName, File.ReadAllText(file), linuxLineEndings: true);
+                            Utils.WriteAllText(verifiedFileName, File.ReadAllText(file), linuxLineEndings: true);
                         }
                     }
                 }

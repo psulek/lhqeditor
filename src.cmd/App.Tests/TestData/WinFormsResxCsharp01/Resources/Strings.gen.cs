@@ -321,7 +321,6 @@ namespace ScaleHQ.Windows.WinForms1
 					return StringsContext.Instance.GetStringSafely(StringsKeys.Cars.Diesel.Mercedes);
 				}
 			}
-	
 			/// <summary>
 			/// Gets localized string similar to: Skoda EN
 			/// </summary>
@@ -333,7 +332,6 @@ namespace ScaleHQ.Windows.WinForms1
 				}
 			}
 	
-			
 			/// <summary>
 			/// Gets localized string similar to: toyota EN
 			/// </summary>
@@ -345,7 +343,8 @@ namespace ScaleHQ.Windows.WinForms1
 				}
 			}
 	
-		
+
+	
 		/// <summary>
 		/// Gets localized string similar to: Hi {0}, we're glad you are using {1} at {2} / \ [ ] < > " & car <abc> </end>
 		/// </summary>
@@ -356,6 +355,7 @@ namespace ScaleHQ.Windows.WinForms1
 				return StringsContext.Instance.GetStringSafely(StringsKeys.Messages.Title);
 			}
 		}
+
 
 		
 		/// <summary>
@@ -368,7 +368,7 @@ namespace ScaleHQ.Windows.WinForms1
 				return StringsContext.Instance.GetStringSafely(StringsKeys.Welcome);
 			}
 		}
-
+	
 		/// <summary>
 		/// Gets localized string similar to: Welcome {0} in this {1} !
 		/// </summary>
@@ -376,6 +376,5 @@ namespace ScaleHQ.Windows.WinForms1
 		{
 			return string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Welcome), userName,productName,date);
 		}
-
 	}
 }

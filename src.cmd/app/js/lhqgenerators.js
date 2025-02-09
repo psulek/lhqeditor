@@ -14,8 +14,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   AppError: () => (/* binding */ AppError)
 /* harmony export */ });
 class AppError extends Error {
-    constructor(message, stack) {
+    constructor(title, message, stack) {
         super(message);
+        this.title = title;
         this.message = message;
         this.name = 'AppError';
         // Maintains proper stack trace for where our error was thrown (only available on V8)
@@ -679,9 +680,8 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
     checkHasNamespaceName(rootModel) {
         const key = 'namespace';
         if ((0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(rootModel.host[key])) {
-            throw new _AppError__WEBPACK_IMPORTED_MODULE_3__.AppError(`Missing value for parameter '${key}' ! 
-                 Provide valid path to *.csproj which uses required lhq model or 
-                 provide value for parameter '${key}' in cmd data parameters.`);
+            throw new _AppError__WEBPACK_IMPORTED_MODULE_3__.AppError(`Missing value for parameter '${key}'.`, `> provide valid path to *.csproj which uses required lhq model\n` +
+                `> or provide value for parameter '${key}' in cmd data parameters`);
         }
     }
     debugLog(msg) {

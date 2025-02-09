@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
-using System.Reflection;
 using System.Text;
 using JavaScriptEngineSwitcher.Core;
-using Jint;
 using Jint.Runtime;
 using LHQ.Cmd;
 using Pastel;
@@ -13,10 +11,18 @@ string White(string msg) => msg.Pastel(ConsoleColor.White);
 string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
 //args = ["--help"];
+// args = [
+//     @"C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WinFormsResxCsharp01\\Strings.lhq",
+//     "--namespace=ScaleHQ.Windows.WinForms1"
+// ];
 
-StartLogger();
-AddToLogFile(new string('-', 50));
-AddToLogFile("Program lhqcmd.exe started.");
+Console.OutputEncoding = Encoding.UTF8;
+Console.WriteLine(
+    $"{White("LHQ Model Generator")}  {Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n")}");
+
+Utils.StartLogger();
+Utils.AddToLogFile(new string('-', 50));
+Utils.AddToLogFile("Program lhqcmd.exe started.");
 
 #if DEBUG
 //RunTestData();
@@ -26,11 +32,6 @@ var missingParams = args.Length == 0;
 
 try
 {
-    Console.OutputEncoding = Encoding.UTF8;
-
-    Console.WriteLine($"{White("LHQ Model Generator")}  " +
-                      Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n"));
-
     if (missingParams)
     {
         WriteHelp();
@@ -39,18 +40,27 @@ try
     {
         var lhqFile = args[0];
         var csProjFile = args.Length > 1 ? args[1] : null;
+        if (!string.IsNullOrEmpty(csProjFile) && csProjFile.StartsWith("--"))
+        {
+            csProjFile = null;
+        }
 
         if (string.IsNullOrEmpty(lhqFile) || !File.Exists(lhqFile))
         {
             throw new Exception($"LhQ model file '{lhqFile}' was not found!");
         }
-
+        
         if (!string.IsNullOrEmpty(csProjFile) && !File.Exists(csProjFile))
         {
             throw new Exception($"C# project file '{csProjFile}' was not found!");
         }
-        
-        string outDir = args.Length > 2 ? args[2] : string.Empty;
+
+        var outDir = args.Length > 2 ? args[2] : null;
+        if (!string.IsNullOrEmpty(outDir) && outDir.StartsWith("--"))
+        {
+            outDir = null;
+        }
+
         if (!string.IsNullOrEmpty(outDir))
         {
             if (!Directory.Exists(outDir))
@@ -72,12 +82,11 @@ try
         }
 
         Dictionary<string, object> hostData = new();
-        if (args.Length > 2)
+        if (args.Length > 1)
         {
-            int startIdx = args[2].StartsWith("--") ? 2 : 3;
-            if (startIdx == 2 || args.Length > 3)
+            try
             {
-                for (int i = startIdx; i < args.Length; i++)
+                for (int i = 1; i < args.Length; i++)
                 {
                     var item = args[i];
                     if (item.StartsWith("--"))
@@ -93,24 +102,47 @@ try
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Utils.AddToLogFile($"Error extracting data from cmd line. {Utils.GetFullException(e)}");
+            }
         }
 
-        Console.WriteLine($"LHQ model file: {lhqFile.Pastel(ConsoleColor.DarkCyan)}");
-        Console.WriteLine($"C# project file: {csProjFile.Pastel(ConsoleColor.DarkCyan)}");
-        Console.WriteLine($"Output directory: {outDir.Pastel(ConsoleColor.DarkCyan)}");
-        Console.WriteLine("Generating files from LHQ model started ...");
-
+        Console.WriteLine($"""
+                           LHQ model file: 
+                           {lhqFile.Pastel(ConsoleColor.DarkCyan)}
+                           
+                           C# project file:
+                           {(csProjFile ?? "-").Pastel(ConsoleColor.DarkCyan)}
+                           
+                           Output directory:
+                           {outDir.Pastel(ConsoleColor.DarkCyan)}
+                           
+                           """);
+        
+        Console.WriteLine("Generating files from LHQ model started ...\n".Pastel(ConsoleColor.White));
+        
         using var generator = new Generator();
         var start = Stopwatch.GetTimestamp();
         var generatedFiles = generator.Generate(lhqFile, csProjFile, hostData);
         var elapsedTime = Stopwatch.GetElapsedTime(start);
 
         Console.WriteLine($"Generated {generatedFiles.Count} files in {elapsedTime:g}\n");
+        Console.WriteLine($"Ouput directory: \n{outDir.Pastel(ConsoleColor.DarkCyan)}\n");
 
+        var processedFiles = new List<string>();
         foreach (var file in generatedFiles)
         {
+            var overwritingFile = processedFiles.Contains(file.Key);
+            if (!overwritingFile)
+            {
+                processedFiles.Add(file.Key);
+            }
+
             string fileName = Path.Combine(outDir, file.Key);
-            Console.WriteLine($"Generated file: {fileName.Pastel(ConsoleColor.DarkCyan)}");
+
+            string str = overwritingFile ? "overwritten" : "generated";
+            Console.WriteLine($"[{str}] {file.Key.Pastel(ConsoleColor.DarkCyan)}");
 
             var dir = Path.GetDirectoryName(fileName);
             if (dir != null && !Directory.Exists(dir))
@@ -118,20 +150,16 @@ try
                 Directory.CreateDirectory(dir);
             }
 
-            FileHelper.WriteAllText(fileName, file.Value);
+            Utils.WriteAllText(fileName, file.Value);
         }
 
-        Console.WriteLine($"Successfully saved {generatedFiles.Count} files.");
+        Console.WriteLine($"\nSuccessfully saved {generatedFiles.Count} files.");
     }
 }
 catch (Exception e)
 {
     bool genericLog = true;
-
-    StringBuilder sb = new();
-    FillException(e, sb);
-
-    AddToLogFile(sb.ToString());
+    Utils.AddToLogFile(Utils.GetFullException(e));
 
     try
     {
@@ -140,13 +168,11 @@ catch (Exception e)
         {
             if (jsRuntimeException.Type == "AppError")
             {
+                var title = jsException.Error.Get("title");
                 var message = jsException.Error.Get("message");
-
-                if (!string.IsNullOrEmpty(message.ToString()))
-                {
-                    Console.Write(Error(message.ToString()));
-                    genericLog = false;
-                }
+                
+                Console.Write($"{Error(title.ToString())}\n{message}");
+                genericLog = false;
             }
         }
     }
@@ -161,22 +187,9 @@ catch (Exception e)
 }
 finally
 {
-    AddToLogFile("Program lhqcmd.exe finished.");
-    //Console.ReadLine();
+    Utils.AddToLogFile("Program lhqcmd.exe finished.");
+    Console.ReadLine();
 }
-
-
-//sb.AppendLine($"Root: {e.GetType().Name}: {e.Message}");
-void FillException(Exception e, StringBuilder sb, int level = 0)
-{
-    var prefix = level == 0 ? "Root" : $"Inner_{level}";
-    sb.AppendLine($"[{prefix}] {e.GetType().Name} -> {e.Message} , StackTrace: {e.StackTrace}");
-    if (e.InnerException != null)
-    {
-        FillException(e.InnerException, sb, level + 1);
-    }
-}
-
 
 void WriteHelp()
 {
@@ -224,7 +237,7 @@ void WriteHelp()
          {param_csproj}
            - for most template(s) (C# related this parameter is required
            - for some template(s) (eg: Typescript) this parameter is not required
-         
+
          {White("[output dir]")}
            - optional output directory where to generated files from lhq model
            - defaults to directory of {param_lhq} 
@@ -245,40 +258,13 @@ void WriteHelp()
          """);
 }
 
-var logFile = "";
-void StartLogger()
-{
-    var logDir = Path.GetDirectoryName(Environment.ProcessPath);
-    logFile = Path.Combine(logDir, "lhqcmd.log");
-    Console.WriteLine($"Logging to file: {White(logFile)}");
-    if (File.Exists(logFile))
-    {
-        try
-        {
-            // split log file when size is more than 500kb
-            var split = new FileInfo(logFile).Length > 1024 * 500;
-            if (split)
-            {
-                File.Move(logFile, Path.Combine(logDir, $"lhqcmd_{DateTime.Now.Ticks}.log"));
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-    }
-}
-
-void AddToLogFile(params string[] lines)
-{
-    File.AppendAllLines(logFile, lines.Select(x => $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}: {x}"));
-}
 
 void RunTestData()
 {
     string? customNamespace = null;
 
-    var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WinFormsResxCsharp01\\Strings.lhq";
+    var lhqFullPath =
+        "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WinFormsResxCsharp01\\Strings.lhq";
     var csProjName = "WinFormsResxCsharp01.csproj";
 
 // var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");

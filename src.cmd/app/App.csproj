@@ -24,15 +24,6 @@
         <StackTraceSupport>true</StackTraceSupport>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Publish00' ">
-        <PublishSingleFile>true</PublishSingleFile> <!-- Produce a single file -->
-        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract> <!-- Include native libraries for self-extraction -->
-        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> <!-- Include all content for self-extraction -->
-        <PublishAot>true</PublishAot> <!-- Enable AOT compilation -->
-        <PublishTrimmed>true</PublishTrimmed> <!-- Enable trimming for size optimization -->
-    </PropertyGroup>
-
-
     <ItemGroup>
         <EmbeddedResource Include="js\**\*"/>
         <EmbeddedResource Include="hbs\**\*"/>

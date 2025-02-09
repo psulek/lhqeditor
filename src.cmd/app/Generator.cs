@@ -139,7 +139,7 @@ public class Generator : IDisposable
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Console.WriteLine($"Error getting root namespace. {Utils.GetFullException(e)}");
             rootNamespace = null;
         }
 
@@ -182,7 +182,7 @@ public class Generator : IDisposable
         if (_generatedFiles.Count != _generatedFiles.DistinctBy(x => x.Key).Count())
         {
             var duplicateFiles = _generatedFiles.Except(_generatedFiles.DistinctBy(x => x.Key)).Select(x=>x.Key).ToArray();
-            throw new Exception("Duplicated generated files: " + string.Join(", ", duplicateFiles));
+            Utils.AddToLogFile("Duplicated generated files: " + string.Join(", ", duplicateFiles));
         }
 
         return _generatedFiles;

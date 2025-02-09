@@ -80,6 +80,7 @@ namespace LHQ.App.ViewModels
 
         private bool _lastFreshSave;
         private bool _showOnlyUntranslated;
+        private bool _showOnlyMarkedForExport;
 
         private string _lastSearchText;
         private int _lastSearchElementIndex;
@@ -367,6 +368,12 @@ namespace LHQ.App.ViewModels
             }
         }
 
+        public bool ShowOnlyMarkedForExport
+        {
+            get => _showOnlyMarkedForExport;
+            set => SetProperty(ref _showOnlyMarkedForExport, value);
+        }
+
         public bool ShowOnlyUntranslated
         {
             get => _showOnlyUntranslated;
@@ -621,6 +628,7 @@ namespace LHQ.App.ViewModels
             }
 
             bool onlyUntranslated = ShowOnlyUntranslated;
+            bool showOnlyMarkedForExport = ShowOnlyMarkedForExport;
             bool isEmptyText = searchText.IsNullOrEmpty();
             Regex regex = isEmptyText ? null : new Regex("(" + searchText + ")", RegexOptions.IgnoreCase);
 
@@ -644,15 +652,26 @@ namespace LHQ.App.ViewModels
                 matchedElements = TreeViewService.FindAllElements(x =>
                         {
                             bool isMatched = isEmptyText || regex.IsMatch(x.Name);
-                            if (isMatched && onlyUntranslated)
+                            if (isMatched)
                             {
-                                if (x.ElementType == TreeElementType.Resource)
+                                if (onlyUntranslated)
                                 {
-                                    isMatched = x.IsTranslationValid == false;
+                                    if (x.ElementType == TreeElementType.Resource)
+                                    {
+                                        isMatched = x.IsTranslationValid == false;
+                                    }
+                                    else if (x.ElementType == TreeElementType.Category)
+                                    {
+                                        isMatched = false;
+                                    }
                                 }
-                                else if (x.ElementType == TreeElementType.Category)
+
+                                if (isMatched && showOnlyMarkedForExport)
                                 {
-                                    isMatched = false;
+                                    if (x.ElementType == TreeElementType.Resource)
+                                    {
+                                        isMatched = x.IsMarkedForExport;
+                                    }
                                 }
                             }
 

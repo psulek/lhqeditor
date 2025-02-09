@@ -80,6 +80,17 @@ namespace LHQ.App.ViewModels
             CopyElementAsSpecial2Command = CreateMenuDelegateCommand(CopyElementAsSpecial2Execute, CopyElementAsSpecial2CanExecute,
                 new KeyGesture(Key.C, ModifierKeys.Control | ModifierKeys.Alt, "Ctrl+Alt+C"), false);
 
+            MarkForExportCommand = CreateMenuDelegateCommand(MarkForExportCommandExecute, MarkForExportCommandCanExecute,
+                new KeyGesture(Key.M, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+M"), false);
+
+            UnMarkForExportCommand = CreateMenuDelegateCommand(UnMarkForExportCommandExecute, UnMarkForExportCommandCanExecute,
+                new KeyGesture(Key.U, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+U"), false);
+
+            UnMarkAllForExportCommand = CreateMenuDelegateCommand(UnMarkAllForExportCommandExecute, UnMarkAllForExportCommandCanExecute,
+                new KeyGesture(Key.U, ModifierKeys.Control | ModifierKeys.Shift | ModifierKeys.Alt, "Ctrl+Shift+Alt+U"), false);
+
+            ExportMarkedCommand = CreateDelegateCommand(ExportMarkedCommandExecute, ExportMarkedCommandCanExecute);
+
             PasteElementCommand = CreateMenuDelegateCommand(PasteElementExecute, PasteElementCanExecute,
                 new KeyGesture(Key.V, ModifierKeys.Control, "Ctrl+V"));
 
@@ -145,6 +156,115 @@ namespace LHQ.App.ViewModels
             WhatsNewCommand = CreateDelegateCommand(WhatsNewExecute);
         }
 
+
+        private void UnMarkAllForExportCommandExecute(object obj)
+        {
+            TreeViewService.GetChildsAsFlatList(null).Run(x => x.IsMarkedForExport = false);
+        }
+
+        private bool UnMarkAllForExportCommandCanExecute(object obj)
+        {
+            TreeSelectionInfo selection = TreeViewService.GetSelection();
+            bool canExecute = selection.IsSingleSelection && selection.ElementIsModel;
+            if (canExecute)
+            {
+                // if at least 1 element is marked for export
+                canExecute = TreeViewService.GetChildsAsFlatList(null).Count(x => x.IsMarkedForExport) > 0;
+            }
+
+            return canExecute;
+        }
+        
+        private void MarkForExportCommandExecute(object obj)
+        {
+            MarkElementsForExport(true);
+        }
+        
+        private void UnMarkForExportCommandExecute(object obj)
+        {
+            MarkElementsForExport(false);
+        }
+
+        private void MarkElementsForExport(bool mark)
+        {
+            var selectionInfo = TreeViewService.GetSelection();
+            if (!selectionInfo.IsEmpty)
+            {
+                selectionInfo.GetSelectedElements().ForEach(x =>
+                    {
+                        if (x.ElementIsResource)
+                        {
+                            x.IsMarkedForExport = mark;
+                        }
+                    });
+            }
+        }
+
+        private bool MarkForExportCommandCanExecute(object obj)
+        {
+            return MarkElementsForExportCanExecute(obj, true);
+        }
+
+        private bool UnMarkForExportCommandCanExecute(object obj)
+        {
+            return MarkElementsForExportCanExecute(obj, false);
+        }
+
+        private bool MarkElementsForExportCanExecute(object obj, bool mark)
+        {
+            bool canExecute = ShellIsNotBusy && ShellViewModel.IsEditorMode;
+            if (canExecute)
+            {
+                TreeSelectionInfo selection = TreeViewService.GetSelection();
+                canExecute = !selection.IsEmpty && !selection.ElementIsModel;
+                if (canExecute)
+                {
+                    // all selected elements must be resources...
+                    var selectedElements = selection.GetSelectedElements();
+                    canExecute = selectedElements.Count(x => !x.ElementIsResource) == 0;
+                    if (canExecute)
+                    {
+                        canExecute = selectedElements.Any(x => x.IsMarkedForExport == !mark);
+                    }
+                }
+            }
+
+            // var canExecute = CopyElementCanExecute(obj);
+            // if (canExecute)
+            // {
+            //     TreeSelectionInfo selection = TreeViewService.GetSelection();
+            //     if (selection.IsSingleSelection)
+            //     {
+            //         canExecute = selection.Element.IsMarkedForExport != mark;
+            //     } 
+            // }
+            
+            return canExecute;
+        }
+        
+        private void ExportMarkedCommandExecute(object obj)
+        {
+            var selection = TreeViewService.GetSelection();
+
+            List<string> elementKeys = new List<string>();
+            
+            foreach (ITreeElementViewModel element in TreeViewService.GetChildsAsFlatList(null))
+            {
+                if (element.ElementIsResource && element.IsMarkedForExport)
+                {
+                    elementKeys.Add(element.ElementKey);
+                }
+            }
+
+            AppContext.DialogService.ShowExportResourcesDialog(ShellViewContext, selection.ElementIsModel, elementKeys);
+        }
+
+        private bool ExportMarkedCommandCanExecute(object arg)
+        {
+            return TreeViewService.GetChildsAsFlatList(null).Count(x => x.IsMarkedForExport) > 0;
+        }
+
+
         private bool ShellIsBusy =>
             !ShellViewModel.ProjectBusyOperation.In(ProjectBusyOperationType.None, ProjectBusyOperationType.TreeSearch);
 
@@ -182,6 +302,14 @@ namespace LHQ.App.ViewModels
         public MenuDelegateCommand CopyElementAsSpecial1Command { get; }
 
         public MenuDelegateCommand CopyElementAsSpecial2Command { get; }
+        
+        public MenuDelegateCommand MarkForExportCommand { get; }
+        
+        public MenuDelegateCommand UnMarkForExportCommand { get; }
+        
+        public MenuDelegateCommand UnMarkAllForExportCommand { get; }
+        
+        public DelegateCommand ExportMarkedCommand { get; }
 
         public MenuDelegateCommand PasteElementCommand { get; }
 
@@ -237,28 +365,57 @@ namespace LHQ.App.ViewModels
 
         public MenuItemViewModel[] CreateCopySpecialMenuItems()
         {
-            if (!AppContext.RunInVsPackage)
+            List<MenuItemViewModel> menuItems = new List<MenuItemViewModel>();
+            var copySpecialGroup = new MenuItemViewModel
             {
-                return null;
-            }
-
-            var copyAsXaml = new MenuItemViewModel
+                Header = "Copy As...",
+            };
+            menuItems.Add(copySpecialGroup);
+            
+            copySpecialGroup.MenuItems.Add(new MenuItemViewModel
             {
                 Header = Strings.Menu.CopySpecialMenu.CopyAsXamlMarkup,
                 Command = CopyElementAsSpecial1Command,
                 GestureText = CopyElementAsSpecial1Command.KeyGesture.DisplayString,
                 Tag = CopyElementSpecialTag.XamlMarkup
-            };
+            });
 
-            var copyAsCsharp = new MenuItemViewModel
+            copySpecialGroup.MenuItems.Add(new MenuItemViewModel
             {
                 Header = Strings.Menu.CopySpecialMenu.CopyAsCSharp,
                 Command = CopyElementAsSpecial2Command,
                 GestureText = CopyElementAsSpecial2Command.KeyGesture.DisplayString,
                 Tag = CopyElementSpecialTag.CSharpCode
-            };
+            });
+            
+            menuItems.Add(new MenuItemViewModel
+            {
+                Header = "Mark for Export",
+                Command = MarkForExportCommand,
+                GestureText = MarkForExportCommand.KeyGesture.DisplayString
+            });
 
-            return new[] { copyAsXaml, copyAsCsharp };
+            menuItems.Add(new MenuItemViewModel
+            {
+                Header = "Unmark for Export",
+                Command = UnMarkForExportCommand,
+                GestureText = UnMarkForExportCommand.KeyGesture.DisplayString
+            });
+            
+            menuItems.Add(new MenuItemViewModel
+            {
+                Header = "Unmark all for Export",
+                Command = UnMarkAllForExportCommand,
+                GestureText = UnMarkAllForExportCommand.KeyGesture.DisplayString
+            });
+            
+            menuItems.Add(new MenuItemViewModel
+            {
+                Header = "Export Marked...",
+                Command = ExportMarkedCommand
+            });
+
+            return menuItems.ToArray();
         }
 
         private MenuDelegateCommand CreateMenuDelegateCommand(Action<object> execute, KeyGesture keyGesture,
@@ -354,7 +511,6 @@ namespace LHQ.App.ViewModels
         private void ExportProjectExecute(object obj)
         {
             var selection = TreeViewService.GetSelection();
-            
             AppContext.DialogService.ShowExportResourcesDialog(ShellViewContext, selection.ElementIsModel);
         }
 
@@ -613,8 +769,7 @@ namespace LHQ.App.ViewModels
 
         private void CopyElementAsSpecial1Execute(object obj)
         {
-            var specialTag = AppContext.RunInVsPackage ? CopyElementSpecialTag.XamlMarkup : CopyElementSpecialTag.None;
-            ClipboardManager.SetSelectionToClipboard(false, specialTag);
+            ClipboardManager.SetSelectionToClipboard(false, CopyElementSpecialTag.XamlMarkup);
         }
 
         private bool CopyElementAsSpecial2CanExecute(object obj)
@@ -631,8 +786,7 @@ namespace LHQ.App.ViewModels
 
         private void CopyElementAsSpecial2Execute(object obj)
         {
-            var specialTag = AppContext.RunInVsPackage ? CopyElementSpecialTag.CSharpCode : CopyElementSpecialTag.None;
-            ClipboardManager.SetSelectionToClipboard(false, specialTag);
+            ClipboardManager.SetSelectionToClipboard(false, CopyElementSpecialTag.CSharpCode);
         }
 
         private bool PasteElementCanExecute(object obj)

@@ -16,7 +16,7 @@
                       xmlns:views="clr-namespace:LHQ.App.Views"
                       Title="{Binding Title}"
                       Width="600"
-                      Height="500"
+                      Height="600"
                       d:DataContext="{d:DesignInstance export:ExportDialogViewModel,
                                                        IsDesignTimeCreatable=False}"
                       sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
@@ -35,7 +35,8 @@
                    x:Shared="True"
                    TargetType="{x:Type ListViewItem}">
                 <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Foreground" Value="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}" />
+                <Setter Property="Foreground"
+                        Value="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}" />
             </Style>
 
             <Style x:Key="GridViewColumnHeaderStyle"
@@ -59,12 +60,14 @@
                     <fa:ImageAwesome.Style>
                         <Style TargetType="fa:ImageAwesome">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=Theme, Source={x:Static code:VisualManager.Instance}}"
-                                             Value="Light">
+                                <DataTrigger
+                                    Binding="{Binding Path=Theme, Source={x:Static code:VisualManager.Instance}}"
+                                    Value="Light">
                                     <Setter Property="Foreground" Value="{StaticResource CheckColorBrushLight}" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=Theme, Source={x:Static code:VisualManager.Instance}}"
-                                             Value="Dark">
+                                <DataTrigger
+                                    Binding="{Binding Path=Theme, Source={x:Static code:VisualManager.Instance}}"
+                                    Value="Dark">
                                     <Setter Property="Foreground" Value="{StaticResource CheckColorBrushDark}" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -115,12 +118,31 @@
                    VerticalAlignment="Stretch"
                    Text="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+Export.ExportingLabel}}" />
 
-        <TextBlock Grid.Row="2"
-                   Grid.Column="1"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   FontWeight="SemiBold"
-                   Text="{Binding Path=ExportSourceText, Mode=OneTime}" />
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+            <TextBlock HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       FontWeight="SemiBold"
+                       Height="20"
+                       Text="{Binding Path=ExportSourceText, Mode=OneTime}" />
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,10,0,0" Height="80"
+                          Visibility="{Binding Path=ElementsToExportVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ItemsControl ItemsSource="{Binding ElementsToExport, Mode=OneTime}" Focusable="False">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        ToolTipService.InitialShowDelay="0"
+                                        ToolTipService.ShowDuration="5000">
+                                <fa:ImageAwesome Margin="3,0,10,0"
+                                                 Style="{StaticResource IconTreeElementStyle}" />
+
+                                <TextBlock Text="{Binding Name, Mode=OneTime}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
 
         <TextBlock Grid.Row="4"
                    Grid.Column="1"

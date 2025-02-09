@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2021 Peter ï¿½ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -52,6 +52,7 @@ namespace LHQ.App.ViewModels.Elements
         private bool _isTranslationValid;
         private ObservableCollectionExt<ITreeElementViewModel> _children;
         private bool _isMarkedForCut;
+        private bool _isMarkedForExport;
 
         private bool _isExpandable;
 
@@ -128,6 +129,20 @@ namespace LHQ.App.ViewModels.Elements
                 {
                     _isMarkedForCut = value;
                     RaisePropertyChanged(nameof(IsMarkedForCut));
+                    RaiseObjectPropertiesChanged();
+                }
+            }
+        }
+
+        public bool IsMarkedForExport
+        {
+            get => _isMarkedForExport;
+            set
+            {
+                if (value != _isMarkedForExport)
+                {
+                    _isMarkedForExport = value;
+                    RaisePropertyChanged(nameof(IsMarkedForExport));
                     RaiseObjectPropertiesChanged();
                 }
             }

@@ -34,7 +34,7 @@ namespace LHQ.App.Code
             public const string HomePage = "https://psulek.github.io/lhqeditor/";
             public const string Documentation = HomePage + "/help/";
 
-            public const string ReportBug = "https://github.com/psulek/scalehq-lhq/issues/new?labels=bug&";
+            public const string ReportBug = "https://github.com/psulek/lhqeditor/issues/new?labels=bug&";
 
             public const string VsGalleryApiUrl =
                 "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery?api-version=3.0-preview.1";

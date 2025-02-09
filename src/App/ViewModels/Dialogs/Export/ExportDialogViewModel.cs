@@ -32,7 +32,9 @@ using System.Windows.Input;
 using LHQ.App.Code;
 using LHQ.App.Extensions;
 using LHQ.App.Localization;
+using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
+using LHQ.App.ViewModels.Elements;
 using LHQ.Core.Interfaces;
 using LHQ.Data;
 using LHQ.Data.Comparers;
@@ -74,7 +76,18 @@ namespace LHQ.App.ViewModels.Dialogs.Export
             List<LanguageSelectionViewModel> languages = rootModel.Languages
                 .Select(x => new LanguageSelectionViewModel(this, x))
                 .ToList();
+            
+            if (_resourceKeysToExport?.Count > 0)
+            {
+                ElementsToExport = shellViewContext.TreeViewService
+                    .FindAllElements(x => x.ElementType == TreeElementType.Resource && _resourceKeysToExport.Contains(x.ElementKey))
+                    .Cast<ResourceViewModel>()
+                    .Select(x => new ExportResourceItemViewModel(x.GetParentNames(true, true, false).ToDelimitedString("/"), x.ElementType))
+                    .ToList();
+            }
 
+            ElementsToExportVisible = ElementsToExport?.Count > 0;
+            
             languages.Sort(new LanguagePrimaryComparer());
 
             CheckAndUnCheck = new DelegateCommand<bool>(CheckAndUnCheckExecute);
@@ -97,6 +110,10 @@ namespace LHQ.App.ViewModels.Dialogs.Export
         public bool HasExporters { get; set; }
 
         public string ExportSourceText { get; }
+
+        public List<ExportResourceItemViewModel> ElementsToExport { get; set; }
+
+        public bool ElementsToExportVisible { get; set; }
 
         public string SelectedExporter
         {
@@ -250,5 +267,17 @@ namespace LHQ.App.ViewModels.Dialogs.Export
         {
             WebPageUtils.ShowDoc(WebPageDocSection.ExportResources);
         }
+    }
+
+    public class ExportResourceItemViewModel : ObservableObject
+    {
+        public ExportResourceItemViewModel(string name, TreeElementType elementType)
+        {
+            Name = name;
+            ElementType = elementType;
+        }
+
+        public string Name { get; set; }
+        public TreeElementType ElementType { get; set; }
     }
 }

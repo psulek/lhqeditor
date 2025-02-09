@@ -101,13 +101,16 @@ namespace LHQ.App.Services.Implementation
                     {
                         string modelName = ShellViewModel.RootModel.Name;
                         string fullPath = $"{modelName}Keys+";
-                        var parentRecursiveNames = selectionInfo.ElementAsResource.ParentCategory.GetParentNames(true, true, false);
+                        var parentRecursiveNames = selectionInfo.ElementAsResource.ParentCategory == null
+                            ? new List<string>()
+                            : selectionInfo.ElementAsResource.ParentCategory.GetParentNames(true, true, false);
                         fullPath += string.Join("+", parentRecursiveNames);
                         fullPath += "." + selectionInfo.ElementAsResource.Name;
 
                         Clipboard.Clear();
                         Clipboard.SetText(@"{lhq:Localization Key={x:Static " + fullPath + "}}");
                     }
+
                     break;
                 }
                 case CopyElementSpecialTag.CSharpCode:
@@ -116,12 +119,20 @@ namespace LHQ.App.Services.Implementation
                     {
                         string modelName = ShellViewModel.RootModel.Name;
                         string fullPath = $"{modelName}.";
-                        var parentRecursiveNames = selectionInfo.ElementAsResource.ParentCategory.GetParentNames(true, true, false);
-                        fullPath += string.Join(".", parentRecursiveNames) + "." + selectionInfo.ElementAsResource.Name;
+                        if (selectionInfo.ElementAsResource.ParentCategory == null)
+                        {
+                            fullPath += selectionInfo.ElementAsResource.Name;
+                        }
+                        else
+                        {
+                            var parentRecursiveNames = selectionInfo.ElementAsResource.ParentCategory.GetParentNames(true, true, false);
+                            fullPath += string.Join(".", parentRecursiveNames) + "." + selectionInfo.ElementAsResource.Name;
+                        }
 
                         Clipboard.Clear();
                         Clipboard.SetText(fullPath);
                     }
+
                     break;
                 }
                 default:

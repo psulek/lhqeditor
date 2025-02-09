@@ -39,7 +39,7 @@
                 ItemsSource="{Binding PlacementTarget.Tag.ContextMenuItems, RelativeSource={RelativeSource Self}}"
                 UsesItemContainerTemplate="True">
                 <ContextMenu.Resources>
-                    <DataTemplate DataType="{x:Type vm:MenuItemViewModel}">
+                    <HierarchicalDataTemplate DataType="{x:Type vm:MenuItemViewModel}" ItemsSource="{Binding MenuItems}">
                         <MenuItem
                             Command="{Binding Command}"
                             CommandParameter="{Binding CommandParameter}"
@@ -49,8 +49,10 @@
                             Opacity="{Binding Path=IsEnabled, Converter={StaticResource MenuOpacityConverter}}"
                             ToolTip="{Binding Path=., Converter={StaticResource MenuItemTooltipConverter}}"
                             UsesItemContainerTemplate="true"
+                            Padding="5,2,5,2"
+                            Margin="0"
                             Visibility="{Binding Path=Visible, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    </DataTemplate>
+                    </HierarchicalDataTemplate>
                     <DataTemplate DataType="{x:Type vm:MenuItemSeparatorViewModel}">
                         <Separator />
                     </DataTemplate>
@@ -170,6 +172,34 @@
                         Icon="Filter" />
                 </ToggleButton>
 
+                <ToggleButton
+                    Width="30"
+                    Margin="2,0,0,0"
+                    Padding="0"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    DockPanel.Dock="Right"
+                    IsChecked="{Binding Path=ShowOnlyMarkedForExport, Mode=TwoWay}"
+                    ToolTip="Show Marked for Export">
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior
+                            Command="{Binding Path=TreeSearchCommand}"
+                            Event="Checked"
+                            PassArguments="False" />
+                        <behaviors:EventToCommandBehavior
+                            Command="{Binding Path=TreeSearchCommand}"
+                            Event="Unchecked"
+                            PassArguments="False" />
+                    </i:Interaction.Behaviors>
+                    <fa:ImageAwesome
+                        Width="15"
+                        Height="15"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{Binding Path=ShowOnlyMarkedForExport, Converter={StaticResource SearchFilterIconConverter}, ConverterParameter='icon'}"
+                        Icon="Ambulance" />
+                </ToggleButton>
+
                 <components1:SearchTextBox
                     x:Name="SearchPanel"
                     Margin="2,0,0,0"
@@ -259,18 +289,39 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Border.Style>
-                                        <DockPanel LastChildFill="True">
-                                            <components:NodeExpander VerticalAlignment="Center" />
+                                        <Border
+                                            d:DataContext="{d:DesignInstance model:ITreeElementViewModel,
+                                                                             IsDesignTimeCreatable=False}"
+                                            BorderThickness="2,0,0,0"
+                                            Margin="1,0,0,0"
+                                            DataContext="{Binding Node.Tag, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type components:VirtualTreeListViewItem}}}">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Setter Property="ToolTip" Value="{x:Null}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsMarkedForExport, FallbackValue=false}" Value="True">
+                                                            <Setter Property="BorderBrush" Value="Blue" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Path=IsMarkedForExport, FallbackValue=false}" Value="True">
+                                                            <Setter Property="ToolTip" Value="Is Marked for Export" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <DockPanel LastChildFill="True">
+                                                <components:NodeExpander VerticalAlignment="Center" />
 
-                                            <Border
-                                                Margin="0,0,5,0"
-                                                Style="{StaticResource TreeResourceStateBorderStyle}"
-                                                Visibility="{Binding Path=ElementIsResource, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                <Border
+                                                    Margin="0,0,5,0"
+                                                    Style="{StaticResource TreeResourceStateBorderStyle}"
+                                                    Visibility="{Binding Path=ElementIsResource, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-                                            <fa:ImageAwesome Margin="0,0,5,0" Style="{StaticResource IconTreeElementStyle}" />
+                                                <fa:ImageAwesome Margin="0,0,5,0" Style="{StaticResource IconTreeElementStyle}" />
 
-                                            <TextBlock VerticalAlignment="Top" Text="{Binding Path=Name, Mode=OneWay}" />
-                                        </DockPanel>
+                                                <TextBlock VerticalAlignment="Top" Text="{Binding Path=Name, Mode=OneWay}" />
+                                            </DockPanel>
+                                        </Border>
                                     </Border>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

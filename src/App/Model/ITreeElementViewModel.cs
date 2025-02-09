@@ -51,6 +51,8 @@ namespace LHQ.App.Model
         bool IsVisible { get; set; }
 
         bool IsMarkedForCut { get; set; }
+        
+        bool IsMarkedForExport { get; set; }
 
         TreeElementType ElementType { get; }
 

@@ -160,18 +160,14 @@ namespace {{ @root.host.namespace }}
 	public static class {{x-concat model.name "Keys" var="keysClassName" }}
 	{
 	{{#each categories ~}}
-		{{#with (x-merge this _resourceRenderValue="key")}}
-		{{> category }}
-		{{/with}}
+		{{> category _resourceRenderValue="key" }}
 	{{#if (x-equals @last false) }}     
 		
 	{{/if}}
 	{{/each}}
 	{{#if resources}}
 		
-	{{#with (x-merge this _resourceRenderValue="key")}}
-	{{> resources }}
-	{{/with}}
+	{{> resources _resourceRenderValue="key" }}
     {{/if}}
 	}
 
@@ -198,18 +194,14 @@ namespace {{ @root.host.namespace }}
 		{{/if}}
 
 	{{#each categories ~}}
-		{{#with (x-merge this _resourceRenderValue="value")}}
-		{{> category }}
-		{{/with}}
+		{{> category _resourceRenderValue="value" }}
 	{{#if (x-equals @last false) }}
 		
 	{{/if}}
 	{{/each}}
 	{{#if resources}}
 		
-	{{#with (x-merge this _resourceRenderValue="value")}}
-	{{> resources }}
-	{{/with}}
+	{{> resources _resourceRenderValue="value" }}
     {{/if}}
 	}
 }
@@ -218,9 +210,7 @@ namespace {{ @root.host.namespace }}
 public static{{x-render " partial" when=(x-equals _resourceRenderValue "value") }} class {{@key}}
 {
 {{#each categories }}
-	{{#with (x-merge this _resourceRenderValue=../_resourceRenderValue) }}
-	{{> category }}
-	{{/with}}
+	{{> category _resourceRenderValue=../_resourceRenderValue }}
 {{#if (x-equals @last false) }}
 	
 {{/if}}

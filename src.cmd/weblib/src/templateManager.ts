@@ -7,7 +7,7 @@ import {
     ModelDataNode,
     TemplateRootModel
 } from "./types";
-import {clearHelpersContext, registerHelpers} from "./helpers";
+import {clearHelpersContext, debugHelpersTimeTaken, registerHelpers} from "./helpers";
 import {TypescriptJson01Template} from "./templates/typescriptJson";
 import {CodeGeneratorTemplate, CodeGeneratorTemplateConstructor} from "./templates/codeGeneratorTemplate";
 import {NetCoreResxCsharp01Template} from "./templates/netCoreResxCsharp";
@@ -66,6 +66,8 @@ export class TemplateManager {
             };
 
             template.generate(rootModel);
+
+            debugHelpersTimeTaken();
 
             clearHelpersContext();
         } else {

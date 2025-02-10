@@ -16,7 +16,7 @@ export function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
         const fn = helpersList[key];
         // @ts-ignore
-        Handlebars.registerHelper(key, () => debugLogAndExec(fn, ...arguments));
+        Handlebars.registerHelper(key, () => debugLogAndExec(key, fn, ...arguments));
     });
 
     clearHelpersContext();
@@ -65,17 +65,20 @@ type HbsDataContext = {
 
 let dbgCounter = 0;
 let globalVarTemp: Record<string, unknown> = {};
+let helpersTimeTaken: Record<string, number> = {};
+const trackHelperTimes = false;
 
 export function clearHelpersContext() {
     dbgCounter = 0;
     globalVarTemp = {};
+    //helpersTimeTaken = {};
 }
 
-function debugLogAndExec(fn: Function, ...args: any) {
+function debugLogAndExec(helperName: string, fn: Function, ...args: any) {
     let debug = false;
     let header = '';
     let cnt = 0;
-    
+
     if (arguments.length > 0) {
         const ctx = arguments[arguments.length - 1] as HbsDataContext;
         debug = valueAsBool(ctx.hash?._debug ?? false);
@@ -93,15 +96,50 @@ function debugLogAndExec(fn: Function, ...args: any) {
     if (debug) {
         //HostEnv.debugLog(`${header}, arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
     }
-    
+
+    let start = 0;
+    if (trackHelperTimes) {
+        start = Date.now();
+    }
+
     // @ts-ignore
     const res = fn.call(this, ...args);
-    
+
+    if (trackHelperTimes) {
+        const duration = Date.now() - start;
+        helpersTimeTaken[helperName] = (helpersTimeTaken[helperName] ?? 0) + duration;
+    }
+
     if (debug) {
         HostEnv.debugLog(`${header}, result: ${JSON.stringify(res, null, 0)}`);
     }
-    
+
     return res;
+}
+
+export function debugHelpersTimeTaken(): void {
+    if (!trackHelperTimes) {
+        return;
+    }
+
+    let totalDuration = 0;
+    Object.keys(helpersTimeTaken).forEach(key => {
+        const duration = helpersTimeTaken[key] ?? 0;
+        totalDuration += duration;
+
+        HostEnv.debugLog(`helper '${key}' taken total: ${formatDuration(duration)}`);
+    });
+
+    HostEnv.debugLog(`All helpers taken total: ${formatDuration(totalDuration)}`);
+}
+
+function formatDuration(ms: number): string {
+    const seconds = Math.floor(ms / 1000);
+    const milliseconds = ms % 1000;
+
+    return seconds > 0
+        ? `${seconds} second${seconds > 1 ? 's' : ''} and ${milliseconds} ms`
+        : `${milliseconds} ms`;
 }
 
 function headerHelper() {
@@ -178,12 +216,12 @@ function concatHelper(...args: any[]) {
 
     return saveResultToTempData(options, () => args.filter(x => !isNullOrEmpty(x)).join(sep));
     //return saveResultToTempData(() => args.filter(x => !isNullOrEmpty(x)).join(sep), ...arguments);
-    
+
     // @ts-ignore
     //return args.filter(x => !isNullOrEmpty(x)).join(sep);
 }
 
-function saveResultToTempData(options: any, fn: ()=> any): any {
+function saveResultToTempData(options: any, fn: () => any): any {
     const res = fn();
     const varName = options?.hash?.var;
     if (!isNullOrEmpty(varName)) {
@@ -270,7 +308,7 @@ function trimComment(value: string): string {
     if (isNullOrEmpty(value)) {
         return '';
     }
-    
+
     let trimmed = false;
     var idxNewLine = value.indexOf('\r\n');
 
@@ -307,7 +345,7 @@ function resourceCommentHelper(resource: LhqModelResourceType, options: any): st
             const resourceValue = resource.values[primaryLanguage]?.value;
             let propertyComment = isNullOrEmpty(resourceValue) ? resource.description : resourceValue;
             //try {
-                propertyComment = trimComment(propertyComment);
+            propertyComment = trimComment(propertyComment);
             // }
             // catch(err) {
             //     const s1 = `res_value_${primaryLanguage}: ${resource.values[primaryLanguage]?.value}`;
@@ -419,7 +457,7 @@ function callFunctionHelper(fn: Function, ...args: any): any {
         //const ctx = arguments[arguments.length - 1] as HbsDataContext;
         fnArgs = Array.from(args).slice(0, -1);
     }
-    
+
     return fnArgs === undefined ? fn() : fn(...fnArgs);
 }
 
@@ -430,15 +468,15 @@ function callFunctionHelper(fn: Function, ...args: any): any {
 function debugLogHelper(...args: any[]): string {
     HostEnv.debugLog(args.join(' '));
     return '';
-} 
+}
 
 function returnVarFromTempHelper(name: string, options: any): any {
     //const name = options?.hash?.name;
     const defaultVal = options?.hash?.default;
-    
+
     if (isNullOrEmpty(name)) {
         return '';
     }
-    
+
     return globalVarTemp[name] ?? defaultVal;
 }

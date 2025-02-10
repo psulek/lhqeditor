@@ -214,9 +214,10 @@ void RunTestData()
 
     // var lhqFullPath = @"c:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WpfResxCsharp01\Strings.lhq";
     // var lhqFullPath = @"c:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WinFormsResxCsharp01\Strings.lhq";
+    // var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\NetCoreResxCsharp01\\Strings.lhq";
     // var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v4\\Strings.lhq";
-    
-    var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\NetCoreResxCsharp01\\Strings.lhq";
+
+    var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01\\Strings.lhq";
     
     var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests"), "GenOutput");
     if (!Directory.Exists(outputDir))

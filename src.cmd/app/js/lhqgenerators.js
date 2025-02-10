@@ -41,6 +41,7 @@ class AppError extends Error {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   clearHelpersContext: () => (/* binding */ clearHelpersContext),
+/* harmony export */   debugHelpersTimeTaken: () => (/* binding */ debugHelpersTimeTaken),
 /* harmony export */   getKnownHelpers: () => (/* binding */ getKnownHelpers),
 /* harmony export */   registerHelpers: () => (/* binding */ registerHelpers)
 /* harmony export */ });
@@ -52,7 +53,7 @@ function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
         const fn = helpersList[key];
         // @ts-ignore
-        Handlebars.registerHelper(key, () => debugLogAndExec(fn, ...arguments));
+        Handlebars.registerHelper(key, () => debugLogAndExec(key, fn, ...arguments));
     });
     clearHelpersContext();
 }
@@ -91,12 +92,15 @@ function getKnownHelpers() {
 }
 let dbgCounter = 0;
 let globalVarTemp = {};
+let helpersTimeTaken = {};
+const trackHelperTimes = false;
 function clearHelpersContext() {
     dbgCounter = 0;
     globalVarTemp = {};
+    //helpersTimeTaken = {};
 }
-function debugLogAndExec(fn, ...args) {
-    var _a, _b, _c, _d, _e;
+function debugLogAndExec(helperName, fn, ...args) {
+    var _a, _b, _c, _d, _e, _f;
     let debug = false;
     let header = '';
     let cnt = 0;
@@ -116,12 +120,40 @@ function debugLogAndExec(fn, ...args) {
     if (debug) {
         //HostEnv.debugLog(`${header}, arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
     }
+    let start = 0;
+    if (trackHelperTimes) {
+        start = Date.now();
+    }
     // @ts-ignore
     const res = fn.call(this, ...args);
+    if (trackHelperTimes) {
+        const duration = Date.now() - start;
+        helpersTimeTaken[helperName] = ((_f = helpersTimeTaken[helperName]) !== null && _f !== void 0 ? _f : 0) + duration;
+    }
     if (debug) {
         _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(`${header}, result: ${JSON.stringify(res, null, 0)}`);
     }
     return res;
+}
+function debugHelpersTimeTaken() {
+    if (!trackHelperTimes) {
+        return;
+    }
+    let totalDuration = 0;
+    Object.keys(helpersTimeTaken).forEach(key => {
+        var _a;
+        const duration = (_a = helpersTimeTaken[key]) !== null && _a !== void 0 ? _a : 0;
+        totalDuration += duration;
+        _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(`helper '${key}' taken total: ${formatDuration(duration)}`);
+    });
+    _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(`All helpers taken total: ${formatDuration(totalDuration)}`);
+}
+function formatDuration(ms) {
+    const seconds = Math.floor(ms / 1000);
+    const milliseconds = ms % 1000;
+    return seconds > 0
+        ? `${seconds} second${seconds > 1 ? 's' : ''} and ${milliseconds} ms`
+        : `${milliseconds} ms`;
 }
 function headerHelper() {
     return `//------------------------------------------------------------------------------
@@ -529,6 +561,7 @@ class TemplateManager {
                 extra: {}
             };
             template.generate(rootModel);
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.debugHelpersTimeTaken)();
             (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.clearHelpersContext)();
         }
         else {

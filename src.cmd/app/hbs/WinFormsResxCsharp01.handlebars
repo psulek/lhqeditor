@@ -149,18 +149,14 @@ namespace {{ @root.host.namespace }}
 	public static partial class {{x-concat model.name "Keys" var="keysClassName" }}
 	{
 	{{#each categories ~}}
-		{{#with (x-merge this _resourceRenderValue="key")}}
-		{{> category _parent='' _parentdot=''}}
-		{{/with}}
+		{{> category _resourceRenderValue="key"}}
 	{{#if (x-equals @last false) }}     
 		
 	{{/if}}
 	{{/each}}
 	{{#if resources}}
 		
-	{{#with (x-merge this _resourceRenderValue="key")}}
-	{{> resources }}
-	{{/with}}
+	{{> resources _resourceRenderValue="key" }}
     {{/if}}
 	}
 
@@ -169,18 +165,14 @@ namespace {{ @root.host.namespace }}
 	public partial class {{model.name}}
 	{
 	{{#each categories ~}}
-		{{#with (x-merge this _resourceRenderValue="value")}}
-		{{> category _parent='' _parentdot=''}}
-		{{/with}}
+		{{> category _resourceRenderValue="value"}}
 	{{#if (x-equals @last false) }}
 		
 	{{/if}}
 	{{/each}}
 	{{#if resources}}
 		
-	{{#with (x-merge this _resourceRenderValue="value")}}
-	{{> resources }}
-	{{/with}}
+	{{> resources _resourceRenderValue="value" }}
     {{/if}}
 	}
 
@@ -206,9 +198,7 @@ namespace {{ @root.host.namespace }}
 public{{x-render " static" when=(x-equals _resourceRenderValue "key") }} partial class {{@key}}
 {
 {{#each categories }}
-	{{#with (x-merge this _resourceRenderValue=../_resourceRenderValue) }}
-	{{> category _parent=(x-concat @../_parent.key  @../key sep="") _parentdot=(x-concat @../_parent.key  @../key sep=".") }}
-	{{/with}}
+	{{> category _resourceRenderValue=../_resourceRenderValue }}
 {{#if (x-equals @last false) }}
 	
 {{/if}}

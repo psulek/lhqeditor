@@ -1,7 +1,7 @@
 import {ModelDataNode, OutputSettings, TemplateRootModel} from "../types";
 import {isNullOrEmpty} from "../utils";
 import {HostEnv} from "../hostEnv";
-import {clearHelpersContext, getKnownHelpers} from "../helpers";
+import {clearHelpersContext, debugHelpersTimeTaken, getKnownHelpers} from "../helpers";
 
 export interface CodeGeneratorTemplateConstructor {
     new(handlebarFiles: Record<string, string>): CodeGeneratorTemplate;

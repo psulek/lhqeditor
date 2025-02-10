@@ -1,7 +1,7 @@
 import {ModelDataNode, OutputSettings, TemplateRootModel} from "../types";
 import {isNullOrEmpty} from "../utils";
 import {HostEnv} from "../hostEnv";
-import {getKnownHelpers} from "../helpers";
+import {clearHelpersContext, getKnownHelpers} from "../helpers";
 
 export interface CodeGeneratorTemplateConstructor {
     new(handlebarFiles: Record<string, string>): CodeGeneratorTemplate;
@@ -54,6 +54,8 @@ export abstract class CodeGeneratorTemplate {
         if (isNullOrEmpty(compiled)) {
             throw new Error(`Template '${templateFileName}' was not found !`);
         }
+
+        clearHelpersContext();
 
         let result = compiled(data);
         result = result.replace(/\t¤$/gm, "");

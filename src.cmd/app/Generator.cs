@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
@@ -57,13 +58,16 @@ public class Generator : IDisposable
 
         var hostAddResultFile = new Action<string, string>((file, content) => { _generatedFiles.Add(file, content); });
         var hostPathCombine = new Func<string, string, string>(Path.Combine);
-
         var hostWebHtmlEncode = new Func<string, string>(System.Net.WebUtility.HtmlEncode);
+        var hostStopwatchStart = new Func<long>(Stopwatch.GetTimestamp);
+        var hostStopwatchEnd = new Func<long, string>(start => Stopwatch.GetElapsedTime(start).ToString());
 
         _engine.EmbedHostObject("HostDebugLog", hostDebugLog);
         _engine.EmbedHostObject("HostAddResultFile", hostAddResultFile);
         _engine.EmbedHostObject("HostPathCombine", hostPathCombine);
         _engine.EmbedHostObject("HostWebHtmlEncode", hostWebHtmlEncode);
+        _engine.EmbedHostObject("HostStopwatchStart", hostStopwatchStart);
+        _engine.EmbedHostObject("HostStopwatchEnd", hostStopwatchEnd);
 
         var type = typeof(Generator);
         var thisAssembly = type.Assembly;

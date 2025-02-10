@@ -7,6 +7,8 @@ declare function HostDebugLog(msg: string): void;
 declare function HostAddResultFile(name: string, content: string): void;
 declare function HostPathCombine(path1: string, path2: string): string;
 declare function HostWebHtmlEncode(input: string): string;
+declare function HostStopwatchStart(): number;
+declare function HostStopwatchEnd(start: number): string;
 
 export class HostEnv {
     public static addResultFile(name: string, content: string) {
@@ -40,5 +42,21 @@ export class HostEnv {
         }
         
         return input;
+    }
+    
+    public static stopwatchStart(): number {
+        if (HostStopwatchStart) {
+            return HostStopwatchStart();
+        }
+        
+        return Date.now();
+    }
+    
+    public static stopwatchEnd(start: number): string {
+        if (HostStopwatchEnd) {
+            return HostStopwatchEnd(start);
+        }
+        
+        return (Date.now() - start).toString();
     }
 }

@@ -11,14 +11,14 @@ namespace {{ @root.host.namespace }}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public partial class {{@root.extra.rootClassName}}: {{ x-concat @root.host.namespace ".BindableObject" var="bindableObjectFullName" }}, IFormattable
+	public partial class {{x-concat model.name "Context" var="rootClassName" }}: {{ x-concat @root.host.namespace ".BindableObject" var="bindableObjectFullName" }}, IFormattable
 	{
 		private CultureInfo _culture;
 		private CultureInfo _fallbackCulture;
-		private static readonly Lazy<{{@root.extra.rootClassName}}> _instance = new Lazy<{{@root.extra.rootClassName}}>(() => new {{@root.extra.rootClassName}}());
+		private static readonly Lazy<{{x-var "rootClassName"}}> _instance = new Lazy<{{x-var "rootClassName"}}>(() => new {{x-var "rootClassName"}}());
 		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
 
-		private {{@root.extra.rootClassName}}()
+		private {{x-var "rootClassName"}}()
 		{}
 
 		public static ResourceManager ResourceManager
@@ -56,7 +56,7 @@ namespace {{ @root.host.namespace }}
 			}
 		}
 
-		public static {{@root.extra.rootClassName}} Instance
+		public static {{x-var "rootClassName"}} Instance
 		{
 			get
 			{
@@ -223,16 +223,16 @@ public{{x-render " static" when=(x-equals _resourceRenderValue "key") }} partial
 	/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
 	/// </summary>
 	{{#if (x-equals ../_resourceRenderValue "key") }}
-	public const string {{@key}} = "{{x-concat ../_parent @../key @key}}";
+	public const string {{@key}} = "{{x-fn getFullParentPath ''}}";
 	{{else}}
 	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
-	public static string {{@key}} => {{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}});
+	public static string {{@key}} => {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
 	{{else}}
 	public static string {{@key}}
 	{
 		get
 		{
-			return {{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}});
+			return {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
 		}
 	}
 	{{/if}}
@@ -242,11 +242,11 @@ public{{x-render " static" when=(x-equals _resourceRenderValue "key") }} partial
 	/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
 	/// </summary>
 	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
-	public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+	public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
 	{{else}}
 	public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }})
 	{
-		return string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+		return string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
 	}
 	{{/if}}
 	{{/if}}
@@ -275,7 +275,7 @@ public static string {{@key}}
 {
 	get
 	{
-		return {{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{@key}});
+		return {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{@key}});
 	}
 }
 {{else}}
@@ -283,7 +283,7 @@ public string {{x-fn getFullParentPath ''}}
 {
 	get
 	{
-		return {{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
+		return {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
 	}
 }
 {{/if}}
@@ -293,11 +293,11 @@ public string {{x-fn getFullParentPath ''}}
 /// Gets localized string similar to: {{ x-resourceComment this root=@root }}
 /// </summary>
 {{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
-public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
 {{else}}
 public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }})
 {
-	return string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+	return string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
 }
 {{/if}}
 {{/if}}

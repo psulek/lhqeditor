@@ -7,7 +7,7 @@ import {
     ModelDataNode,
     TemplateRootModel
 } from "./types";
-import {clearContext, registerHelpers} from "./helpers";
+import {clearHelpersContext, registerHelpers} from "./helpers";
 import {TypescriptJson01Template} from "./templates/typescriptJson";
 import {CodeGeneratorTemplate, CodeGeneratorTemplateConstructor} from "./templates/codeGeneratorTemplate";
 import {NetCoreResxCsharp01Template} from "./templates/netCoreResxCsharp";
@@ -15,6 +15,7 @@ import {NetFwResxCsharp01Template} from "./templates/netFwResxCsharp";
 import {WinFormsResxCsharp01Template} from "./templates/winFormsResxCsharp";
 import {WpfResxCsharp01Template} from "./templates/wpfResxCsharp";
 import {hasItems, iterateObject, sortObjectByKey, sortObjectByValue} from "./utils";
+import {HostEnv} from "./hostEnv";
 
 const CodeGenUID = 'b40c8a1d-23b7-4f78-991b-c24898596dd2';
 
@@ -43,7 +44,12 @@ export class TemplateManager {
     public static runTemplate(lhqModelJson: string, hostData: string): void {
         let lhqModel = JSON.parse(lhqModelJson) as LhqModelType;
         if (lhqModel) {
+            //const startTime = HostEnv.stopwatchStart();
+            
             lhqModel = TemplateManager.sortByNameModel(lhqModel);
+            
+            // const elapsedTime = HostEnv.stopwatchEnd(startTime);
+            // HostEnv.debugLog(`[sortByNameModel] takes ${elapsedTime}`);
 
             const {template, templateId, settingsNode} = TemplateManager.loadTemplate(lhqModel as LhqModelType);
             let settings = template.loadSettings(settingsNode);
@@ -61,7 +67,7 @@ export class TemplateManager {
 
             template.generate(rootModel);
 
-            clearContext();
+            clearHelpersContext();
         } else {
             throw new Error(`Unable to deserialize LHQ model !`);
         }
@@ -100,11 +106,11 @@ export class TemplateManager {
             pathArray.unshift(element.getName!());
 
             while (currentElement) {
-                pathArray.unshift(currentElement.getName!());
-                currentElement = currentElement.getParent!();
                 if (currentElement?.isRoot!()) {
                     break;
                 }
+                pathArray.unshift(currentElement.getName!());
+                currentElement = currentElement.getParent!();
             }
             
             return pathArray.join(sep);

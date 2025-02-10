@@ -50,9 +50,12 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
             const csfileContent = this.compileAndRun(this.csharpTemplateName, rootModel);
             const csFileName = this.prepareFilePath(modelName + '.gen.cs', this._settings.CSharp);
             HostEnv.addResultFile(csFileName, csfileContent);
+
         }
 
         if (this._settings.ResX.Enabled.isTrue()) {
+            // const startTime = HostEnv.stopwatchStart();
+            
             rootModel.extra['useHostWebHtmlEncode'] = isNullOrEmpty(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
                 : this._settings.ResX.CompatibleTextEncoding.isTrue();
@@ -65,6 +68,9 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
                     HostEnv.addResultFile(resxfileName, resxfileContent);
                 }
             });
+
+            // const elapsedTime = HostEnv.stopwatchEnd(startTime);
+            // HostEnv.debugLog(`[compileAndRun/resx] takes ${elapsedTime}`);
         }
     }
 

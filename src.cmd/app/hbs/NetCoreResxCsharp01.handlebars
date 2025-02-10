@@ -157,11 +157,11 @@ namespace {{ @root.host.namespace }}
 		}
 	}
 
-	public static class {{model.name}}Keys
+	public static class {{x-concat model.name "Keys" var="keysClassName" }}
 	{
 	{{#each categories ~}}
 		{{#with (x-merge this _resourceRenderValue="key")}}
-		{{> category _parent='' _parentdot=''}}
+		{{> category }}
 		{{/with}}
 	{{#if (x-equals @last false) }}     
 		
@@ -199,7 +199,7 @@ namespace {{ @root.host.namespace }}
 
 	{{#each categories ~}}
 		{{#with (x-merge this _resourceRenderValue="value")}}
-		{{> category _parent='' _parentdot=''}}
+		{{> category }}
 		{{/with}}
 	{{#if (x-equals @last false) }}
 		
@@ -219,7 +219,7 @@ public static{{x-render " partial" when=(x-equals _resourceRenderValue "value") 
 {
 {{#each categories }}
 	{{#with (x-merge this _resourceRenderValue=../_resourceRenderValue) }}
-	{{> category _parent=(x-concat @../_parent.key  @../key sep="") _parentdot=(x-concat @../_parent.key  @../key sep=".") }}
+	{{> category }}
 	{{/with}}
 {{#if (x-equals @last false) }}
 	
@@ -235,27 +235,27 @@ public static{{x-render " partial" when=(x-equals _resourceRenderValue "value") 
 	/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
 	/// </summary>
 	{{#if (x-equals ../_resourceRenderValue "key") }}
-	public const string {{@key}} = "{{x-concat ../_parent @../key @key}}";
+	public const string {{@key}} = "{{x-fn getFullParentPath ''}}";
 	{{else}}
 	{{#if (x-equals (x-objCount parameters) 0)}}
 	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
-	public static string {{@key}} => _localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}];
+	public static string {{@key}} => _localizer[{{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}];
 	{{else}}
 	public static string {{@key}}
 	{
 		get
 		{
-			return _localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}];
+			return _localizer[{{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}];
 		}
 	}
 	{{/if}}
 	{{else}}
 	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
-	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) => _localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}, {{ x-resourceParamNames this }}];
+	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) => _localizer[{{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}, {{ x-resourceParamNames this }}];
 	{{else}}
 	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }})
 	{
-		return _localizer[{{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}, {{ x-resourceParamNames this }}];
+		return _localizer[{{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}, {{ x-resourceParamNames this }}];
 	}
 	{{/if}}
 	{{/if}}

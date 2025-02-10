@@ -120,13 +120,13 @@
   {{#with model}}
 {{> resources }}
   {{#each categories ~}}
-{{> category _parent='' }}
+{{> category }}
   {{/each}}
   {{/with}}
 </root>
 {{#*inline "category"}}
 {{#each categories ~}}
-{{> category _parent=(x-concat @../_parent.key  @../key sep="") }}
+{{> category }}
 {{/each}}
 {{> resources }}
 {{/inline}}
@@ -134,7 +134,7 @@
 {{#if resources}}
 {{#each resources}}
 {{#if (x-resourceHasLang this lang=@root.extra.lang) }}
-  <data name="{{x-concat ../_parent @../key @key}}" xml:space="preserve">
+  <data name="{{x-fn getFullParentPath ''}}" xml:space="preserve">
     {{#if @root.extra.useHostWebHtmlEncode }}
     <value>{{ x-host-webHtmlEncode (x-resourceValue this lang=@root.extra.lang) }}</value>
     {{else}}

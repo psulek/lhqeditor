@@ -40,7 +40,7 @@ class AppError extends Error {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   clearContext: () => (/* binding */ clearContext),
+/* harmony export */   clearHelpersContext: () => (/* binding */ clearHelpersContext),
 /* harmony export */   getKnownHelpers: () => (/* binding */ getKnownHelpers),
 /* harmony export */   registerHelpers: () => (/* binding */ registerHelpers)
 /* harmony export */ });
@@ -54,7 +54,7 @@ function registerHelpers() {
         // @ts-ignore
         Handlebars.registerHelper(key, () => debugLogAndExec(fn, ...arguments));
     });
-    clearContext();
+    clearHelpersContext();
 }
 const helpersList = {
     'x-header': headerHelper,
@@ -91,7 +91,7 @@ function getKnownHelpers() {
 }
 let dbgCounter = 0;
 let globalVarTemp = {};
-function clearContext() {
+function clearHelpersContext() {
     dbgCounter = 0;
     globalVarTemp = {};
 }
@@ -457,6 +457,18 @@ class HostEnv {
         }
         return input;
     }
+    static stopwatchStart() {
+        if (HostStopwatchStart) {
+            return HostStopwatchStart();
+        }
+        return Date.now();
+    }
+    static stopwatchEnd(start) {
+        if (HostStopwatchEnd) {
+            return HostStopwatchEnd(start);
+        }
+        return (Date.now() - start).toString();
+    }
 }
 
 
@@ -500,7 +512,10 @@ class TemplateManager {
     static runTemplate(lhqModelJson, hostData) {
         let lhqModel = JSON.parse(lhqModelJson);
         if (lhqModel) {
+            //const startTime = HostEnv.stopwatchStart();
             lhqModel = TemplateManager.sortByNameModel(lhqModel);
+            // const elapsedTime = HostEnv.stopwatchEnd(startTime);
+            // HostEnv.debugLog(`[sortByNameModel] takes ${elapsedTime}`);
             const { template, templateId, settingsNode } = TemplateManager.loadTemplate(lhqModel);
             let settings = template.loadSettings(settingsNode);
             let host = {};
@@ -514,7 +529,7 @@ class TemplateManager {
                 extra: {}
             };
             template.generate(rootModel);
-            (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.clearContext)();
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.clearHelpersContext)();
         }
         else {
             throw new Error(`Unable to deserialize LHQ model !`);
@@ -545,11 +560,11 @@ class TemplateManager {
             let currentElement = element.getParent();
             pathArray.unshift(element.getName());
             while (currentElement) {
-                pathArray.unshift(currentElement.getName());
-                currentElement = currentElement.getParent();
                 if (currentElement === null || currentElement === void 0 ? void 0 : currentElement.isRoot()) {
                     break;
                 }
+                pathArray.unshift(currentElement.getName());
+                currentElement = currentElement.getParent();
             }
             return pathArray.join(sep);
         }
@@ -656,6 +671,7 @@ class CodeGeneratorTemplate {
         if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(compiled)) {
             throw new Error(`Template '${templateFileName}' was not found !`);
         }
+        (0,_helpers__WEBPACK_IMPORTED_MODULE_2__.clearHelpersContext)();
         let result = compiled(data);
         result = result.replace(/\t¤$/gm, "");
         return result;
@@ -714,6 +730,7 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
             _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(csFileName, csfileContent);
         }
         if (this._settings.ResX.Enabled.isTrue()) {
+            // const startTime = HostEnv.stopwatchStart();
             rootModel.extra['useHostWebHtmlEncode'] = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.isNullOrEmpty)(this._settings.ResX.CompatibleTextEncoding)
                 ? defaultCompatibleTextEncoding
                 : this._settings.ResX.CompatibleTextEncoding.isTrue();
@@ -725,6 +742,8 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
                     _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(resxfileName, resxfileContent);
                 }
             });
+            // const elapsedTime = HostEnv.stopwatchEnd(startTime);
+            // HostEnv.debugLog(`[compileAndRun/resx] takes ${elapsedTime}`);
         }
     }
     loadSettings(node) {

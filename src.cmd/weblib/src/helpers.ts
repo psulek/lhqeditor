@@ -19,7 +19,7 @@ export function registerHelpers() {
         Handlebars.registerHelper(key, () => debugLogAndExec(fn, ...arguments));
     });
 
-    clearContext();
+    clearHelpersContext();
 }
 
 const helpersList: Record<string, Function> = {
@@ -66,7 +66,7 @@ type HbsDataContext = {
 let dbgCounter = 0;
 let globalVarTemp: Record<string, unknown> = {};
 
-export function clearContext() {
+export function clearHelpersContext() {
     dbgCounter = 0;
     globalVarTemp = {};
 }

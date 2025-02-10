@@ -210,30 +210,14 @@ void WriteHelp()
 void RunTestData()
 {
     string? customNamespace = null;
+    var csProjName = "";
 
-    var lhqFullPath =
-        "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v4\\Strings.lhq";
-    var csProjName = "WpfResxCsharp01v4.csproj";
-
-// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");
-// var csProjName = "NetCoreResxCsharp01.csproj";
-
-// var lhqFullPath = "c:\\Temp\\neo_online\\Neo.Localization\\Strings.lhq";
-// var csProjName = "Neo.Localization.csproj";
-// customNamespace = "Neo.Localization";
-
-// var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\Test.Localization"), "Strings.lhq");
-// var csProjName = "Test.Localization.csproj";
-
-// var lhqFullPath = "c:\\Terminal\\Localization.Common\\StringsCommon.lhq";
-// var csProjName = "Localization.Common.csproj";
-
-// var lhqFullPath = "C:\\Users\\peter.sulek\\source\\repos\\ScaleHQ.Windows.WPF1\\ScaleHQ.Windows.WPF1\\Strings.lhq";
-// var csProjName = "ScaleHQ.Windows.WPF1.csproj";
-
-// var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v2\\Strings.lhq";
-// var csProjName = "WpfResxCsharp01v2.csproj";
-
+    // var lhqFullPath = @"c:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WpfResxCsharp01\Strings.lhq";
+    // var lhqFullPath = @"c:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WinFormsResxCsharp01\Strings.lhq";
+    // var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v4\\Strings.lhq";
+    
+    var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\NetCoreResxCsharp01\\Strings.lhq";
+    
     var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests"), "GenOutput");
     if (!Directory.Exists(outputDir))
     {

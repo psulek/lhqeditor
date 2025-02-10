@@ -14,14 +14,14 @@ namespace {{ @root.host.namespace }}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public partial class {{@root.extra.rootClassName}}: INotifyPropertyChanged, IFormattable
+	public partial class {{x-concat model.name "Context" var="rootClassName" }}: INotifyPropertyChanged, IFormattable
 	{
 		private CultureInfo _culture;
 		private CultureInfo _fallbackCulture;
-		private static readonly Lazy<{{@root.extra.rootClassName}}> _instance = new Lazy<{{@root.extra.rootClassName}}>(() => new {{@root.extra.rootClassName}}());
+		private static readonly Lazy<{{x-var "rootClassName"}}> _instance = new Lazy<{{x-var "rootClassName"}}>(() => new {{x-var "rootClassName"}}());
 		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
 
-		private {{@root.extra.rootClassName}}()
+		private {{x-var "rootClassName"}}()
 		{}
 
 		public static ResourceManager ResourceManager
@@ -63,7 +63,7 @@ namespace {{ @root.host.namespace }}
 			}
 		}
 
-		public static {{@root.extra.rootClassName}} Instance
+		public static {{x-var "rootClassName"}} Instance
 		{
 			get
 			{
@@ -158,11 +158,11 @@ namespace {{ @root.host.namespace }}
 
 	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
 	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-	public static partial class {{model.name}}Keys
+	public static partial class {{x-concat model.name "Keys" var="keysClassName" }}
 	{
 	{{#each categories ~}}
 		{{#with (x-merge this _resourceRenderValue="key")}}
-		{{> category _parent='' _parentdot=''}}
+		{{> category }}
 		{{/with}}
 	{{#if (x-equals @last false) }}     
 		
@@ -182,7 +182,7 @@ namespace {{ @root.host.namespace }}
 	{
 	{{#each categories ~}}
 		{{#with (x-merge this _resourceRenderValue="value")}}
-		{{> category _parent='' _parentdot=''}}
+		{{> category }}
 		{{/with}}
 	{{#if (x-equals @last false) }}
 		
@@ -202,7 +202,7 @@ public static partial class {{@key}}
 {
 {{#each categories }}
 	{{#with (x-merge this _resourceRenderValue=../_resourceRenderValue) }}
-	{{> category _parent=(x-concat @../_parent.key  @../key sep="") _parentdot=(x-concat @../_parent.key  @../key sep=".") }}
+	{{> category }}
 	{{/with}}
 {{#if (x-equals @last false) }}
 	
@@ -218,12 +218,29 @@ public static partial class {{@key}}
 	/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
 	/// </summary>
 	{{#if (x-equals ../_resourceRenderValue "key") }}
-	public const string {{@key}} = "{{x-concat ../_parent @../key @key}}";
+	public const string {{@key}} = "{{x-fn getFullParentPath ''}}";
 	{{else}}
 	{{#if (x-equals (x-objCount parameters) 0)}}
-	public static string {{@key}} => {{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}});
+	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+	public static string {{@key}} => {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
 	{{else}}
-	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{@root.model.model.name}}Context.Instance.GetStringSafely({{@root.model.model.name}}Keys.{{x-concat ../_parentdot @../key @key sep="."}}), {{ x-resourceParamNames this }});
+	public static string {{@key}}
+	{
+		get
+		{
+			return {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
+		}
+	}
+	{{/if}}
+	{{else}}
+	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
+	{{else}}
+	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }})
+	{
+		return string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
+	}
+    {{/if}}
 	{{/if}}
 ¤
 	{{/if}}

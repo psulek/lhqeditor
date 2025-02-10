@@ -1,5 +1,6 @@
-﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+#region License
+
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -21,18 +22,33 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
-namespace LHQ.App.Code
+using System;
+
+namespace LHQ.App.Model
 {
-    public enum ProjectBusyOperationType
+    public sealed class ModelFileFromCmdLine
     {
-        None,
-        OpenProject,
-        SaveProject,
-        Export,
-        Import,
-        TreeSearch,
-        GenerateCode
+        public ModelFileFromCmdLine()
+        {
+            Active = false;
+            FileName = null;
+        }
+        
+        public ModelFileFromCmdLine(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(fileName));
+            }
+            Active = true;
+            FileName = fileName;
+        }
+
+        public bool Active { get; private set; }
+        
+        public string FileName { get; private set; }
     }
 }

@@ -87,6 +87,8 @@ namespace LHQ.App.ViewModels
                  new KeyGesture(Key.D, ModifierKeys.Control, "Ctrl+D"), false);
 
             LanguageSettingsCommand = CreateDelegateCommand(LanguageSettingsExecute, LanguageSettingsCanExecute);
+            StandaloneCodeGenerateCommand = CreateDelegateCommand(StandaloneCodeGenerateExecute, StandaloneCodeGenerateCanExecute);
+            
             ProjectSettingsCommand = CreateDelegateCommand(ProjectSettingsExecute, ProjectSettingsCanExecute);
 
             PluginsCommand = CreateDelegateCommand(PluginsCommandExecute, PluginsCommandCanExecute);
@@ -188,6 +190,8 @@ namespace LHQ.App.ViewModels
         public MenuDelegateCommand DuplicateElementCommand { get; }
 
         public ICommand LanguageSettingsCommand { get; }
+        
+        public ICommand StandaloneCodeGenerateCommand { get; }
 
         public MenuDelegateCommand ExportCommand { get; }
 
@@ -820,6 +824,16 @@ namespace LHQ.App.ViewModels
             {
                 RootModelViewModel.UpdateLanguages(allLanguages, replacedLanguages, primaryLanguageName);
             }
+        }
+
+        private bool StandaloneCodeGenerateCanExecute(object arg)
+        {
+            return ShellIsNotBusy && AppContext.StandaloneCodeGeneratorService.Available;
+        }
+
+        private void StandaloneCodeGenerateExecute(object obj)
+        {
+            ShellService.StandaloneCodeGenerate();
         }
 
         private bool PluginsCommandCanExecute(object arg)

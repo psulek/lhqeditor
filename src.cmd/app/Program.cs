@@ -11,120 +11,69 @@ string White(string msg) => msg.Pastel(ConsoleColor.White);
 string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
 //args = ["--help"];
+
 // args = [
-//     @"C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WinFormsResxCsharp01\\Strings.lhq",
-//     "--namespace=ScaleHQ.Windows.WinForms1"
+//     "c:\\Temp\\3\\Strings.lhq",
+//     "-out=C:\\Temp\\3\\1\\",
+//     "--namespace=abc"
 // ];
+
+// args = [
+//     @"C:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WpfResxCsharp01v4\Strings.lhq"
+// ];
+
+//var csProjectFile = Generator.FindOwnerCsProjectFile("c:\\Temp\\3\\Strings.lhq");
 
 Console.OutputEncoding = Encoding.UTF8;
 Console.WriteLine(
     $"{White("LHQ Model Generator")}  {Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n")}");
 
-Utils.StartLogger();
-Utils.AddToLogFile(new string('-', 50));
-Utils.AddToLogFile("Program lhqcmd.exe started.");
+// Utils.StartLogger();
+// Utils.AddToLogFile(new string('-', 50));
+// Utils.AddToLogFile("Program lhqcmd.exe started.");
 
 #if DEBUG
-//RunTestData();
+RunTestData();
 #endif
 
 var missingParams = args.Length == 0;
+bool requestedHelp = args is ["--help"];
 
 try
 {
-    if (missingParams)
+    if (missingParams || requestedHelp)
     {
         WriteHelp();
     }
     else
     {
-        var lhqFile = args[0];
-        var csProjFile = args.Length > 1 ? args[1] : null;
-        if (!string.IsNullOrEmpty(csProjFile) && csProjFile.StartsWith("--"))
-        {
-            csProjFile = null;
-        }
+        Utils.StartLogger();
+        Utils.AddToLogFile(new string('-', 50));
+        Utils.AddToLogFile("Program lhqcmd.exe started.");
 
-        if (string.IsNullOrEmpty(lhqFile) || !File.Exists(lhqFile))
-        {
-            throw new Exception($"LhQ model file '{lhqFile}' was not found!");
-        }
+        CmdArgs.Parse(args);
+        var lhqFile = CmdArgs.LhqFile;
+        var csProjFile = CmdArgs.ProjectFile;
+        var outDir = CmdArgs.OutDir!;
+        var hostData = CmdArgs.Data;
         
-        if (!string.IsNullOrEmpty(csProjFile) && !File.Exists(csProjFile))
-        {
-            throw new Exception($"C# project file '{csProjFile}' was not found!");
-        }
-
-        var outDir = args.Length > 2 ? args[2] : null;
-        if (!string.IsNullOrEmpty(outDir) && outDir.StartsWith("--"))
-        {
-            outDir = null;
-        }
-
-        if (!string.IsNullOrEmpty(outDir))
-        {
-            if (!Directory.Exists(outDir))
-            {
-                throw new DirectoryNotFoundException($"Output directory '{outDir}' was not found!");
-            }
-        }
-
-        if (string.IsNullOrEmpty(outDir))
-        {
-            outDir = !string.IsNullOrEmpty(csProjFile)
-                ? Path.GetDirectoryName(csProjFile)!
-                : Path.GetDirectoryName(lhqFile)!;
-        }
-
-        if (string.IsNullOrEmpty(outDir))
-        {
-            throw new Exception("Unable to determine output directory!");
-        }
-
-        Dictionary<string, object> hostData = new();
-        if (args.Length > 1)
-        {
-            try
-            {
-                for (int i = 1; i < args.Length; i++)
-                {
-                    var item = args[i];
-                    if (item.StartsWith("--"))
-                    {
-                        var values = item.Split("=");
-                        var key = values[0].Length > 2 ? values[0].Substring(2) : string.Empty;
-                        var value = values[1];
-
-                        if (!string.IsNullOrEmpty(key))
-                        {
-                            hostData[key] = value;
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Utils.AddToLogFile($"Error extracting data from cmd line. {Utils.GetFullException(e)}");
-            }
-        }
-
         Console.WriteLine($"""
                            LHQ model file: 
                            {lhqFile.Pastel(ConsoleColor.DarkCyan)}
-                           
+
                            C# project file:
                            {(csProjFile ?? "-").Pastel(ConsoleColor.DarkCyan)}
-                           
+
                            Output directory:
                            {outDir.Pastel(ConsoleColor.DarkCyan)}
-                           
+
                            """);
-        
+
         Console.WriteLine("Generating files from LHQ model started ...\n".Pastel(ConsoleColor.White));
-        
+
         using var generator = new Generator();
         var start = Stopwatch.GetTimestamp();
-        var generatedFiles = generator.Generate(lhqFile, csProjFile, hostData);
+        var generatedFiles = generator.Generate(lhqFile, csProjFile, outDir, hostData);
         var elapsedTime = Stopwatch.GetElapsedTime(start);
 
         Console.WriteLine($"Generated {generatedFiles.Count} files in {elapsedTime:g}\n");
@@ -170,7 +119,7 @@ catch (Exception e)
             {
                 var title = jsException.Error.Get("title");
                 var message = jsException.Error.Get("message");
-                
+
                 Console.Write($"{Error(title.ToString())}\n{message}");
                 genericLog = false;
             }
@@ -188,20 +137,20 @@ catch (Exception e)
 finally
 {
     Utils.AddToLogFile("Program lhqcmd.exe finished.");
-    Console.ReadLine();
+    //Console.ReadLine();
 }
 
 void WriteHelp()
 {
     var lhqcmd = "lhqcmd.exe".Pastel(ConsoleColor.DarkCyan);
     var exam_lhq = White("Strings.lhq");
-    var exam_csproj = White("MyProject.csproj");
+    var exam_csproj = "-project=MyProject.csproj".Pastel(ConsoleColor.DarkYellow);
+    var exam_outDir = White("-out=c:\\MyOutputFolder");
     var param_lhq = "lhq model file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);
-    var param_csproj = "C# project file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);
+    //var param_csproj = "C# project file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);
+    var param_csproj = "-project=MyProject.csproj".Pastel(ConsoleColor.DarkYellow);
 
-    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> [{param_csproj}] {Grey("[output dir]")} {Grey("[data]")}";
-
-    bool requestedHelp = args is ["--help"];
+    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> [{param_csproj}] [{Grey("-out=DIR")}] {Grey("[data]")}";
 
     if (missingParams && !requestedHelp)
     {
@@ -212,7 +161,7 @@ void WriteHelp()
              {usageHelp}
 
              Example:
-             {lhqcmd} {exam_lhq} {exam_csproj}
+             {lhqcmd} {exam_lhq} {exam_csproj} {exam_outDir}
 
              For more information, run {White("lhqcmd.exe --help")}
              """);
@@ -227,19 +176,16 @@ void WriteHelp()
            {lhqcmd} {exam_lhq} {exam_csproj}
            
          Example 2:
-           {lhqcmd}{exam_lhq}{exam_csproj} C:\MyCustomOutputDir\ --namespace=customNamespace
+           {lhqcmd} {exam_lhq} {exam_csproj} -out=C:\MyCustomOutputDir\ --namespace=customNamespace
            
-         Example 3:
-           {lhqcmd}{exam_lhq}{exam_csproj} --namespace=customNamespace
-
          {White("NOTES:")}
 
-         {param_csproj}
-           - for most template(s) (C# related this parameter is required
-           - for some template(s) (eg: Typescript) this parameter is not required
+         {White("-project=<path to csproj file>")}
+           - for C# related templates this parameter should be explicitly provided
+           - if not specified app will search for C# project within same folder as lhq model 
 
-         {White("[output dir]")}
-           - optional output directory where to generated files from lhq model
+         {White("-out=DIR")}
+           - optional output directory where to save generated files from lhq model
            - defaults to directory of {param_lhq} 
 
          {White("[data]")} 
@@ -254,6 +200,8 @@ void WriteHelp()
                - xml element {White("//Project/PropertyGroup/RootNamespace")} 
                 OR
                - xml element {White($"/Project/ItemGroup/Content[@Include='{param_lhq}']/CustomToolNamespace")}
+               
+         * some templates does not require {"namespace".Pastel(ConsoleColor.Yellow)} value (eg: typescript one)
                     
          """);
 }
@@ -264,8 +212,8 @@ void RunTestData()
     string? customNamespace = null;
 
     var lhqFullPath =
-        "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WinFormsResxCsharp01\\Strings.lhq";
-    var csProjName = "WinFormsResxCsharp01.csproj";
+        "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v4\\Strings.lhq";
+    var csProjName = "WpfResxCsharp01v4.csproj";
 
 // var lhqFullPath = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests\\TestData\\NetCoreResxCsharp01\\"), "Strings.lhq");
 // var csProjName = "NetCoreResxCsharp01.csproj";
@@ -302,8 +250,8 @@ void RunTestData()
     args =
     [
         lhqFullPath,
-        string.IsNullOrEmpty(csProjName) ? csProjName : Path.Combine(testDataFolder, csProjName),
-        outputDir
+        "-project=" + (string.IsNullOrEmpty(csProjName) ? csProjName : Path.Combine(testDataFolder, csProjName)),
+        "-out=" + outputDir
     ];
 
     if (!string.IsNullOrEmpty(customNamespace))

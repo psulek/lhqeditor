@@ -64,5 +64,6 @@ namespace LHQ.App.Services.Interfaces
 
         void StartProjectOperationIsBusy(ProjectBusyOperationType type);
         void StopProjectOperationIsBusy();
+        void StandaloneCodeGenerate();
     }
 }

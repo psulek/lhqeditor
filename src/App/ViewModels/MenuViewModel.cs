@@ -140,6 +140,11 @@ namespace LHQ.App.ViewModels
                 // Help -> About
                 AddMenuItem(Strings.Menu.Help.About, commands.AboutCommand, null, null, menuHelp);
             }
+            else
+            {
+                AddMenuItem("Run Code Generator", commands.StandaloneCodeGenerateCommand, 
+                    @"/LHQ.App;component/Images/play.png", null);
+            }
 
             // build tree view context menu
             ContextMenuItems.Add(new MenuItemViewModel

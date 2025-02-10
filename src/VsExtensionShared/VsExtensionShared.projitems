@@ -21,6 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Code\VsRecentFilesService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\VsServicesRegistrator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\VsShellService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\VsStandaloneCodeGeneratorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\VsUpdateService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\CommandBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\CommandsManager.cs" />

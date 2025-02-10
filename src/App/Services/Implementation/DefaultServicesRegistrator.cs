@@ -59,6 +59,7 @@ namespace LHQ.App.Services.Implementation
                     serviceContainer.Register<IUtilityHelper, UtilityHelper>();
                     serviceContainer.Register<IFileSystemService, FileSystemService>();
                     serviceContainer.Register<IUpdateService, UpdateService>();
+                    serviceContainer.Register<IStandaloneCodeGeneratorService, StandaloneCodeGeneratorService>();
                     break;
                 }
                 case ServicesRegistratorType.ShellViewContextService:

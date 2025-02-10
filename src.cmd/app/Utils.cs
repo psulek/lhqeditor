@@ -49,7 +49,10 @@ public static class Utils
 
     public static void AddToLogFile(params string[] lines)
     {
-        File.AppendAllLines(logFile, lines.Select(x => $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}: {x}"));
+        if (!string.IsNullOrEmpty(logFile))
+        {
+            File.AppendAllLines(logFile, lines.Select(x => $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}: {x}"));
+        }
     }
     
     public static string GetFullException(Exception e, int level = 0)

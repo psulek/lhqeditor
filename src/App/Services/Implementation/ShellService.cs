@@ -1,5 +1,5 @@
-#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+ï»¿#region License
+// Copyright (c) 2021 Peter ï¿½ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -36,6 +36,7 @@ using LHQ.App.ViewModels.Dialogs.AppSettings;
 using LHQ.Core.DependencyInjection;
 using LHQ.Core.Model;
 using LHQ.Data;
+using LHQ.Data.Extensions;
 using LHQ.Data.Interfaces.Key;
 using LHQ.Data.ModelStorage;
 using LHQ.Utils.Extensions;
@@ -208,6 +209,11 @@ namespace LHQ.App.Services.Implementation
                     RecentFilesService.ResetLastOpenedFile();
                     fileName = null;
                 }
+            }
+
+            if (AppContext.ModelFileFromCmdLine.Active && File.Exists(AppContext.ModelFileFromCmdLine.FileName))
+            {
+                fileName = AppContext.ModelFileFromCmdLine.FileName;
             }
 
             return fileName;
@@ -555,6 +561,8 @@ namespace LHQ.App.Services.Implementation
             {
                 RecentFilesService.Use(fileName);
                 RecentFilesService.Save(ShellViewContext);
+
+                //StandaloneCodeGenerate(fileName);
             }
             else
             {
@@ -562,6 +570,20 @@ namespace LHQ.App.Services.Implementation
             }
 
             return result.IsSuccess;
+        }
+
+        public void StandaloneCodeGenerate()
+        {
+            var standaloneCodeGenerator = AppContext.StandaloneCodeGeneratorService;
+            if (!standaloneCodeGenerator.Available)
+            {
+                return;
+            }
+            
+            CallProjectBusyOperation(() =>
+                {
+                    standaloneCodeGenerator.GenerateCodeAsync(ShellViewModel.ProjectFileName);
+                }, ProjectBusyOperationType.GenerateCode);
         }
 
         protected virtual void OpenProject(ModelContext modelContext, string fileName)
@@ -576,6 +598,13 @@ namespace LHQ.App.Services.Implementation
 
             RecentFilesService.Use(fileName);
             RecentFilesService.Save(ShellViewContext);
+
+            if (AppContext.StandaloneCodeGeneratorService.Available)
+            {
+                string templateId = modelContext.GetCodeGeneratorTemplateId();
+                ShellViewModel.CodeGeneratorItemTemplate = templateId;
+                //ShellViewModel.CheckCodeGeneratorTemplate();
+            }
         }
 
         public void CloseProject()

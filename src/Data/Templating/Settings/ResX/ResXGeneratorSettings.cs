@@ -60,7 +60,11 @@ namespace LHQ.Data.Templating.Settings.ResX
             base.Serialize(node);
 
             node.AddAttribute(nameof(CultureCodeInFileNameForPrimaryLanguage), DataNodeValueHelper.ToString(CultureCodeInFileNameForPrimaryLanguage));
-            node.AddAttribute(nameof(CompatibleTextEncoding), DataNodeValueHelper.ToString(CompatibleTextEncoding));
+            // write only if CompatibleTextEncoding is false (for backward compatibility)
+            if (!CompatibleTextEncoding)
+            {
+                node.AddAttribute(nameof(CompatibleTextEncoding), DataNodeValueHelper.ToString(CompatibleTextEncoding));
+            }
         }
 
         public override bool Deserialize(DataNode node)

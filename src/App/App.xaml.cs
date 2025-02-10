@@ -46,10 +46,12 @@ namespace LHQ.App
     public partial class App
     {
         private static string _appFileName;
+        private static string[] _cmdArgs;
 
         [STAThread]
-        public static void Main()
+        public static void Main(string[] args)
         {
+            _cmdArgs = args;
             DateTimeHelper.Initialize();
 
             LocalizationExtension.Initialize(new LocalizationContextFactoryDefault(() => StringsContext.Instance));
@@ -118,7 +120,7 @@ namespace LHQ.App
 
         private static Task RunInDebugModeAsync()
         {
-            var bootstrapper = new Bootstraper(_appFileName);
+            var bootstrapper = new Bootstraper(_appFileName, _cmdArgs);
             return bootstrapper.Run();
         }
 
@@ -126,7 +128,7 @@ namespace LHQ.App
         private static async Task RunInReleaseModeAsync()
         {
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
-            var bootstrapper = new Bootstraper(_appFileName);
+            var bootstrapper = new Bootstraper(_appFileName, _cmdArgs);
             await bootstrapper.Run();
         }
 

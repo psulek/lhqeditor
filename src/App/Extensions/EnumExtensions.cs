@@ -167,6 +167,10 @@ namespace LHQ.App.Extensions
                 {
                     return Strings.Enums.ProjectBusyOperationType.TreeSearch;
                 }
+                case ProjectBusyOperationType.GenerateCode:
+                {
+                    return "Generating code...";
+                }
                 default:
                 {
                     throw new ArgumentOutOfRangeException(nameof(busyOperationType), busyOperationType, null);

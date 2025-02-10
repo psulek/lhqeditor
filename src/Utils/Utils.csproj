@@ -91,6 +91,7 @@
     <Compile Include="Utilities\Disposabler.cs" />
     <Compile Include="Utilities\FileUtils.cs" />
     <Compile Include="Utilities\JsonUtils.cs" />
+    <Compile Include="Utilities\ProcessUtils.cs" />
     <Compile Include="Utilities\ThreadSafeSingleShotGuard.cs" />
     <Compile Include="Utilities\Ellipsis.cs" />
     <Compile Include="Utilities\EllipsisFormat.cs" />

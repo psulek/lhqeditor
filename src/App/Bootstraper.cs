@@ -38,17 +38,19 @@ namespace LHQ.App
     public sealed class Bootstraper
     {
         private readonly string _appFileName;
+        private readonly string[] _cmdArgs;
         private AppView _appView;
 
-        public Bootstraper(string appFileName)
+        public Bootstraper(string appFileName, string[] cmdArgs)
         {
             _appFileName = appFileName;
+            _cmdArgs = cmdArgs;
         }
 
-        public static async Task<AppView> CreateAppView(string appFileName)
+        public static async Task<AppView> CreateAppView(string appFileName, string[] cmdArgs)
         {
             var servicesRegistrator = new DefaultServicesRegistrator();
-            AppContext appContext = CreateAppContext(appFileName, servicesRegistrator, false);
+            AppContext appContext = CreateAppContext(appFileName, servicesRegistrator, false, cmdArgs);
             ShellViewContext shellViewContext = CreateShellViewContext(appContext);
 
             var appView = new AppView();
@@ -82,9 +84,10 @@ namespace LHQ.App
             return shellView;
         }
 
-        public static AppContext CreateAppContext(string appFileName, IServicesRegistrator servicesRegistrator, bool runInVsPackage)
+        public static AppContext CreateAppContext(string appFileName, IServicesRegistrator servicesRegistrator, bool runInVsPackage,
+            string[] cmdArgs)
         {
-            return AppContext.Initialize(servicesRegistrator, runInVsPackage, appFileName);
+            return AppContext.Initialize(servicesRegistrator, runInVsPackage, appFileName, cmdArgs);
         }
 
         public static ShellViewContext CreateShellViewContext(IAppContext appContext)
@@ -101,7 +104,7 @@ namespace LHQ.App
 
         public async Task Run()
         {
-            _appView = await CreateAppView(_appFileName);
+            _appView = await CreateAppView(_appFileName, _cmdArgs);
 
 #if DEBUG
             /*var resetAppStorage = 0;

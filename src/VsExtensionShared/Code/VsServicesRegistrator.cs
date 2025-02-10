@@ -46,6 +46,7 @@ namespace LHQ.VsExtension.Code
                     serviceContainer.ReplaceRegistration<IDialogService, VsDialogService>();
                     serviceContainer.ReplaceRegistration<IApplicationService, VsApplicationService>();
                     serviceContainer.ReplaceRegistration<IUpdateService, VsUpdateService>();
+                    serviceContainer.ReplaceRegistration<IStandaloneCodeGeneratorService, VsStandaloneCodeGeneratorService>();
                     break;
                 }
                 case ServicesRegistratorType.ShellViewContextService:

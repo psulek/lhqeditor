@@ -33,6 +33,12 @@ namespace LHQ.Data.Extensions
 {
     public static class ModelContextExtensions
     {
+        public static string GetCodeGeneratorTemplateId(this ModelContext modelContext)
+        {
+            CodeGeneratorMetadata metadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+            return metadata?.TemplateId;
+        }
+
         public static bool HasCodeGeneratorTemplate(this ModelContext modelContext)
         {
             CodeGeneratorMetadata metadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);

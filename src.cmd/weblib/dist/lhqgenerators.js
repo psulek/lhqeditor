@@ -261,6 +261,9 @@ function logicalHelper(input, value, options) {
     return false;
 }
 function trimComment(value) {
+    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(value)) {
+        return '';
+    }
     let trimmed = false;
     var idxNewLine = value.indexOf('\r\n');
     if (idxNewLine == -1) {
@@ -290,7 +293,14 @@ function resourceCommentHelper(resource, options) {
         if (!(0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(primaryLanguage) && resource.values) {
             const resourceValue = (_c = resource.values[primaryLanguage]) === null || _c === void 0 ? void 0 : _c.value;
             let propertyComment = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isNullOrEmpty)(resourceValue) ? resource.description : resourceValue;
+            //try {
             propertyComment = trimComment(propertyComment);
+            // }
+            // catch(err) {
+            //     const s1 = `res_value_${primaryLanguage}: ${resource.values[primaryLanguage]?.value}`;
+            //     const s2 = 'res_name: ' + resource.getName!();
+            //     HostEnv.debugLog('[resourceCommentHelper] failed for: ' + (isNullOrEmpty(propertyComment) ? 'null': JSON.stringify(propertyComment)) + `, ${s1}, ${s2}`);
+            // }
             // @ts-ignore
             return new Handlebars.SafeString(propertyComment);
         }

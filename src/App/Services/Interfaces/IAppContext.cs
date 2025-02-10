@@ -40,6 +40,8 @@ namespace LHQ.App.Services.Interfaces
 
         string AppFolder { get; }
 
+        string[] CmdArgs { get; }
+
         string DataFolder { get; }
 
         string AppFileName { get; }
@@ -49,6 +51,8 @@ namespace LHQ.App.Services.Interfaces
         bool AppStartedFirstTime { get; }
 
         UpdateCheckInfo UpdateInfo { get; }
+
+        ModelFileFromCmdLine ModelFileFromCmdLine { get; }
 
         IServicesRegistrator ServicesRegistrator { get; }
 
@@ -67,6 +71,8 @@ namespace LHQ.App.Services.Interfaces
         IAppConfigStorage AppConfigStorage { get; }
 
         IAppConfigFactory AppConfigFactory { get; }
+        
+        IStandaloneCodeGeneratorService StandaloneCodeGeneratorService { get; }
 
         ITranslationService TranslationService { get; }
 

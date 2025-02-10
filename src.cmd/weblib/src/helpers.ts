@@ -267,6 +267,10 @@ function logicalHelper(input: any, value: any, options: any): boolean {
 }
 
 function trimComment(value: string): string {
+    if (isNullOrEmpty(value)) {
+        return '';
+    }
+    
     let trimmed = false;
     var idxNewLine = value.indexOf('\r\n');
 
@@ -302,7 +306,14 @@ function resourceCommentHelper(resource: LhqModelResourceType, options: any): st
         if (!isNullOrEmpty(primaryLanguage) && resource.values) {
             const resourceValue = resource.values[primaryLanguage]?.value;
             let propertyComment = isNullOrEmpty(resourceValue) ? resource.description : resourceValue;
-            propertyComment = trimComment(propertyComment);
+            //try {
+                propertyComment = trimComment(propertyComment);
+            // }
+            // catch(err) {
+            //     const s1 = `res_value_${primaryLanguage}: ${resource.values[primaryLanguage]?.value}`;
+            //     const s2 = 'res_name: ' + resource.getName!();
+            //     HostEnv.debugLog('[resourceCommentHelper] failed for: ' + (isNullOrEmpty(propertyComment) ? 'null': JSON.stringify(propertyComment)) + `, ${s1}, ${s2}`);
+            // }
             // @ts-ignore
             return new Handlebars.SafeString(propertyComment);
         }

@@ -83,7 +83,7 @@ namespace LHQ.VsExtension
             string appFullPath = Assembly.GetExecutingAssembly().Location;
 
             _servicesRegistrator = new VsServicesRegistrator();
-            AppContext = AppContext.Initialize(_servicesRegistrator, true, appFullPath, ExtensionPath);
+            AppContext = AppContext.Initialize(_servicesRegistrator, true, appFullPath, null, ExtensionPath);
             await AppContext.ApplicationService.Initialize();
 
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;

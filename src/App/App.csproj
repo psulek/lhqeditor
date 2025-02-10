@@ -318,6 +318,7 @@
     <Compile Include="Model\RecentFileInfo.cs" />
     <Compile Include="Model\RestartAppReason.cs" />
     <Compile Include="Model\ShellViewCacheKeys.cs" />
+    <Compile Include="Model\ModelFileFromCmdLine.cs" />
     <Compile Include="Model\SuggestTranslationMode.cs" />
     <Compile Include="Behaviors\UpdateSourceOnDemandBehavior.cs" />
     <Compile Include="Code\AppConfig\AppConfigStorage_v1_0_0_0.cs" />
@@ -378,6 +379,7 @@
     <Compile Include="Services\Implementation\ShellViewCache.cs" />
     <Compile Include="Services\Implementation\ShellViewContext.cs" />
     <Compile Include="Services\Implementation\ShellViewContextServiceBase.cs" />
+    <Compile Include="Services\Implementation\StandaloneCodeGeneratorService.cs" />
     <Compile Include="Services\Implementation\StorageServiceBase.cs" />
     <Compile Include="Services\Implementation\TranslationAsyncOperation.cs" />
     <Compile Include="Services\Implementation\TreeViewService.PropertyValidityProcess.cs">
@@ -420,6 +422,7 @@
     <Compile Include="Services\Interfaces\IServicesRegistrator.cs" />
     <Compile Include="Services\Interfaces\IShellViewContext.cs" />
     <Compile Include="Services\Interfaces\IShellViewContextService.cs" />
+    <Compile Include="Services\Interfaces\IStandaloneCodeGeneratorService.cs" />
     <Compile Include="Services\Interfaces\IStorageService.cs" />
     <Compile Include="Services\Interfaces\ITransactionManager.cs" />
     <Compile Include="Services\Interfaces\ITranslationService.cs" />
@@ -885,6 +888,7 @@
     <Resource Include="Images\element_category.png" />
     <Resource Include="Images\element_model.png" />
     <Resource Include="Images\check.png" />
+    <Resource Include="Images\play.png" />
     <Resource Include="Components\SearchTextBox\Images\clear.png" />
     <Resource Include="Components\SearchTextBox\Images\search.png" />
     <Resource Include="Icon.ico" />

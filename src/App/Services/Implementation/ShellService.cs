@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using LHQ.App.Code;
 using LHQ.App.Extensions;
 using LHQ.App.Localization;
@@ -572,7 +573,7 @@ namespace LHQ.App.Services.Implementation
             return result.IsSuccess;
         }
 
-        public void StandaloneCodeGenerate()
+        public async Task StandaloneCodeGenerate()
         {
             var standaloneCodeGenerator = AppContext.StandaloneCodeGeneratorService;
             if (!standaloneCodeGenerator.Available)
@@ -580,10 +581,14 @@ namespace LHQ.App.Services.Implementation
                 return;
             }
             
-            CallProjectBusyOperation(() =>
+            StartProjectOperationIsBusy(ProjectBusyOperationType.GenerateCode);
+            await Task.Run(async () =>
                 {
-                    standaloneCodeGenerator.GenerateCodeAsync(ShellViewModel.ProjectFileName);
-                }, ProjectBusyOperationType.GenerateCode);
+                    await standaloneCodeGenerator.GenerateCodeAsync(ShellViewModel.ProjectFileName);
+                }).ContinueWith(_ =>
+                {
+                    StopProjectOperationIsBusy();
+                });
         }
 
         protected virtual void OpenProject(ModelContext modelContext, string fileName)

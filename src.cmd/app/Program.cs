@@ -76,7 +76,9 @@ try
         var generatedFiles = generator.Generate(lhqFile, csProjFile, outDir, hostData);
         var elapsedTime = Stopwatch.GetElapsedTime(start);
 
-        Console.WriteLine($"Generated {generatedFiles.Count} files in {elapsedTime:g}\n");
+        var genMsg = $"Generated {generatedFiles.Count} files in {elapsedTime:g}\n";
+        Console.WriteLine(genMsg);
+        Utils.AddToLogFile(genMsg);
         Console.WriteLine($"Ouput directory: \n{outDir.Pastel(ConsoleColor.DarkCyan)}\n");
 
         var processedFiles = new List<string>();

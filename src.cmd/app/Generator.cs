@@ -48,7 +48,8 @@ public class Generator : IDisposable
         _engine = new JintJsEngine(new JintSettings
         {
             AllowReflection = false,
-            EnableDebugging = true,
+            EnableDebugging = false, //true,
+            StrictMode = true
         });
 
         var hostDebugLog = new Action<string, string?>((msg, lvl) =>

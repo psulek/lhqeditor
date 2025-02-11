@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using LHQ.App.Code;
 using LHQ.App.Dialogs;
@@ -833,7 +834,10 @@ namespace LHQ.App.ViewModels
 
         private void StandaloneCodeGenerateExecute(object obj)
         {
-            ShellService.StandaloneCodeGenerate();
+            ShellService.StandaloneCodeGenerate().ContinueWith(_ =>
+                {
+                    RaiseObjectPropertiesChanged();                    
+                });
         }
 
         private bool PluginsCommandCanExecute(object arg)

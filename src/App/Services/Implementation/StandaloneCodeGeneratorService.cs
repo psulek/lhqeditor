@@ -54,16 +54,22 @@ namespace LHQ.App.Services.Implementation
             if (e is ApplicationEventAppInitialized)
             {
                 _generatorFilePath = Path.Combine(AppContext.AppFolder, "lhqcmd.exe");
-                Available = File.Exists(_generatorFilePath);
+                CheckAvailable();
             }
+        }
+
+        private bool CheckAvailable()
+        {
+            Available = File.Exists(_generatorFilePath);
+            return Available;
         }
 
         public async Task GenerateCodeAsync(string modelFileName)
         {
-            // return Task.Run(() =>
-            //     {
-            //         Generate(modelFileName, TimeSpan.FromSeconds(30));
-            //     });
+            if (!CheckAvailable())
+            {
+                return;
+            }
             
             var startInfo = new ProcessStartInfo(_generatorFilePath)
             {
@@ -74,48 +80,11 @@ namespace LHQ.App.Services.Implementation
                 WindowStyle = ProcessWindowStyle.Hidden
             };
 
-            var timeout = TimeSpan.FromSeconds(30);
+            var timeout = TimeSpan.FromSeconds(60);
             using (var cancellationTokenSource = new CancellationTokenSource(timeout))
             {
                 await ProcessUtils.RunAsync(startInfo, cancellationTokenSource.Token);
             }
         }
-
-        //private void Generate(string modelFileName, CancellationToken cancellationToken)
-        // private void Generate(string modelFileName, TimeSpan timeout)
-        // {
-        //     //using (Process process = new Process())
-        //     var startInfo = new ProcessStartInfo(_generatorFilePath)
-        //         {
-        //             Arguments = $"\"{modelFileName}\"",
-        //             Verb = "runas",
-        //             UseShellExecute = false,
-        //             CreateNoWindow = true,
-        //             WindowStyle = ProcessWindowStyle.Hidden
-        //         };
-        //
-        //     using (var cancellationTokenSource = new CancellationTokenSource(timeout))
-        //     {
-        //         await ProcessEx.RunAsync(startInfo, cancellationTokenSource.Token);
-        //     }
-        //
-        //     // cancellationToken.Register(() =>
-        //     //     {
-        //     //         try
-        //     //         {
-        //     //             process.Kill();
-        //     //         }
-        //     //         catch
-        //     //         {
-        //     //             // ignored
-        //     //         }
-        //     //     });
-        //     //
-        //     // process.Start();
-        //     //
-        //     // cancellationToken.WaitHandle.wa
-        //         
-        //     //process.WaitForExit(60 * 1000);
-        // }
     }
 }

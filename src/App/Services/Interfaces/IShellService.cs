@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using System.Threading.Tasks;
 using LHQ.App.Code;
 using LHQ.App.Model;
 using LHQ.Core.Model;
@@ -64,6 +65,6 @@ namespace LHQ.App.Services.Interfaces
 
         void StartProjectOperationIsBusy(ProjectBusyOperationType type);
         void StopProjectOperationIsBusy();
-        void StandaloneCodeGenerate();
+        Task StandaloneCodeGenerate();
     }
 }

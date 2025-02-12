@@ -183,12 +183,12 @@ function joinHelper(items: any[], options: any) {
     //     HostEnv.debugLog(`[joinHelper] items: ${typeof items}, ${items.name} options: ${JSON.stringify(options)}`);
     // }
 
-    var delimiter = options.hash.delimiter || ",",
-        start = options.hash.start || 0,
+    var delimiter = options.hash?.delimiter || ",",
+        start = options.hash?.start || 0,
         len = items ? items.length : 0,
-        end = options.hash.end || len,
+        end = options.hash?.end || len,
         out = "",
-        decorator = options.hash.decorator || `"`;
+        decorator = options.hash?.decorator || `"`;
 
     if (end > len) end = len;
 
@@ -212,7 +212,7 @@ function joinHelper(items: any[], options: any) {
 // usage: {{ x-concat 'prop1' 'prop2' 'prop3' sep="," }}
 function concatHelper(...args: any[]) {
     const options = args.pop();
-    const sep = options.hash.sep || ''; // Default to empty string if no separator is provided
+    const sep = options.hash?.sep || ''; // Default to empty string if no separator is provided
 
     return saveResultToTempData(options, () => args.filter(x => !isNullOrEmpty(x)).join(sep));
     //return saveResultToTempData(() => args.filter(x => !isNullOrEmpty(x)).join(sep), ...arguments);
@@ -249,8 +249,8 @@ function saveResultToTempData(options: any, fn: () => any): any {
 // }
 
 function replaceHelper(value: string, options: any) {
-    const what = options.hash.what || '',
-        withStr = options.hash.with || '';
+    const what = options.hash?.what || '',
+        withStr = options.hash?.with || '';
 
     if (!what || !withStr || (what === withStr)) {
         return value;
@@ -266,7 +266,7 @@ function trimEndHelper(input: string, endPattern: string): string {
         const regex = new RegExp(endPattern + '$');
         return input.replace(regex, '');
     } catch (error) {
-        console.error('Invalid regex pattern:', endPattern);
+        HostEnv.debugLog('Invalid regex pattern:' + endPattern);
         return input;
     }
 }
@@ -285,14 +285,14 @@ function isFalseHelper(input: any): boolean {
 }
 
 function getDataForCompare(input: any, value: any, options: any): { cs: boolean, val1: string, val2: string } {
-    const cs = (options.hash.cs || "true").toString().toLowerCase() == "true";
+    const cs = (options.hash?.cs || "true").toString().toLowerCase() == "true";
     const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
     const val2 = typeof value === "string" ? value : (value?.toString() ?? '');
     return {cs: cs, val1, val2};
 }
 
 function logicalHelper(input: any, value: any, options: any): boolean {
-    const op = (options.hash.op || 'and').toLowerCase();
+    const op = (options.hash?.op || 'and').toLowerCase();
     if (op === 'and') {
         //return input === value;
         return (input === true) && (value === true);
@@ -339,7 +339,7 @@ function trimComment(value: string): string {
 
 function resourceCommentHelper(resource: LhqModelResourceType, options: any): string {
     if (typeof resource === 'object') {
-        const model = (options.hash.root as TemplateRootModel).model;
+        const model = (options.hash?.root as TemplateRootModel).model;
         const primaryLanguage = model?.model?.primaryLanguage ?? '';
         if (!isNullOrEmpty(primaryLanguage) && resource.values) {
             const resourceValue = resource.values[primaryLanguage]?.value;
@@ -362,8 +362,8 @@ function resourceCommentHelper(resource: LhqModelResourceType, options: any): st
 
 function resourceValueHelper(resource: LhqModelResourceType, options: any): string {
     if (typeof resource === 'object') {
-        const lang = options.hash.lang ?? '';
-        const trim = options.hash.trim ?? false;
+        const lang = options.hash?.lang ?? '';
+        const trim = options.hash?.trim ?? false;
 
         if (!isNullOrEmpty(lang)) {
             const res = resource?.values?.[lang]?.value ?? '';
@@ -376,7 +376,7 @@ function resourceValueHelper(resource: LhqModelResourceType, options: any): stri
 
 function resourceHasLangHelper(resource: LhqModelResourceType, options: any): boolean {
     if (typeof resource === 'object') {
-        const lang = options.hash.lang ?? '';
+        const lang = options.hash?.lang ?? '';
         if (!isNullOrEmpty(lang) && resource.values && resource.values[lang]) {
             return true;
         }

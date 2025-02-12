@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.ts',
-  mode: 'production',
+  mode: 'development',
   output: {
     library: {
         name: 'LhqGenerators',
@@ -12,7 +12,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   target: 'web',
-  devtool: false,
+  devtool: 'hidden-source-map',
   resolve: {
     extensions: ['.ts', '.js']
   },

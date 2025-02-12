@@ -3,14 +3,17 @@ using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using JavaScriptEngineSwitcher.Jint;
+// using JsEngine = JavaScriptEngineSwitcher.Jint.JintJsEngine;
+// using JsEngineSettings = JavaScriptEngineSwitcher.Jint.JintSettings;
+using JsEngine = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine;
+using JsEngineSettings = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings;
 
 namespace LHQ.Cmd;
 
 public class Generator : IDisposable
 {
     private bool _disposed;
-    private readonly JintJsEngine _engine;
+    private readonly JsEngine _engine;
     private readonly Dictionary<string, string> _generatedFiles = [];
 
     private static readonly string[] JsFiles =
@@ -45,10 +48,10 @@ public class Generator : IDisposable
 
     public Generator()
     {
-        _engine = new JintJsEngine(new JintSettings
+        _engine = new JsEngine(new JsEngineSettings
         {
             AllowReflection = false,
-            EnableDebugging = true
+            //EnableDebugging = true // Jint
         });
 
         var hostDebugLog = new Action<string, string?>((msg, lvl) =>

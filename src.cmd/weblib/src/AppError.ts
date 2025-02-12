@@ -1,7 +1,7 @@
 export class AppError extends Error {
     public name = 'AppError';
 
-    constructor(public title: string, public message: string, stack?: string) {
+    constructor(public message: string, stack?: string) {
         super(message);
 
         // Maintains proper stack trace for where our error was thrown (only available on V8)

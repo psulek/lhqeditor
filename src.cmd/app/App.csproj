@@ -13,8 +13,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.27.3"/>
         <PackageReference Include="Pastel" Version="6.0.1"/>
+
+<!--        <PackageReference Include="JavaScriptEngineSwitcher.Jint" Version="3.27.3"/>-->
+
+        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore" Version="3.27.3"/>
+        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64" Version="3.27.3"/>
     </ItemGroup>
     
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

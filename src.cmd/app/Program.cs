@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Text;
 using JavaScriptEngineSwitcher.Core;
-using Jint.Runtime;
+//using Jint.Runtime;
 using LHQ.Cmd;
 using Pastel;
 
@@ -110,22 +110,49 @@ try
 catch (Exception e)
 {
     bool genericLog = true;
-    Utils.AddToLogFile(Utils.GetFullException(e));
 
     try
     {
-        if (e is JsRuntimeException jsRuntimeException &&
-            e.InnerException is JavaScriptException jsException)
+        bool handled = false;
+        
+        if (e is JsRuntimeException jsRuntimeException)
         {
-            if (jsRuntimeException.Type == "AppError")
+            if (jsRuntimeException.Type =="AppError")
             {
-                var title = jsException.Error.Get("title");
-                var message = jsException.Error.Get("message");
+                var callStack = jsRuntimeException.CallStack;
+                var description = jsRuntimeException.Description;
+                var documentName = jsRuntimeException.DocumentName;
 
-                Console.Write($"{Error(title.ToString())}\n{message}");
+                var items = description.Split("\n");
+                var title = items.Length == 0 ? description : items[0];
+                var message = items.Length > 1 ? string.Join("\n", items.Skip(1)) : string.Empty;
+                
+                Console.Write($"{Error(title)}\n{message}");
+                
+                Utils.AddToLogFile($"{title}\n{message}\nFILE: {documentName} >> {callStack}");
+                
                 genericLog = false;
+                handled = true;
             }
         }
+
+        if (!handled)
+        {
+            Utils.AddToLogFile(Utils.GetFullException(e));
+        }
+        
+        // if (e is JsRuntimeException jsRuntimeException &&
+        //     e.InnerException is JavaScriptException jsException)
+        // {
+        //     if (jsRuntimeException.Type == "AppError")
+        //     {
+        //         var title = jsException.Error.Get("title");
+        //         var message = jsException.Error.Get("message");
+        //
+        //         Console.Write($"{Error(title.ToString())}\n{message}");
+        //         genericLog = false;
+        //     }
+        // }
     }
     catch
     {
@@ -217,7 +244,9 @@ void RunTestData()
     // var lhqFullPath = @"c:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WpfResxCsharp01\Strings.lhq";
     // var lhqFullPath = @"c:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WinFormsResxCsharp01\Strings.lhq";
     // var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\NetCoreResxCsharp01\\Strings.lhq";
-    var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v4\\Strings.lhq";
+    // var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v4\\Strings.lhq";
+    var lhqFullPath = "c:\\Terminal\\Base\\Localization\\Strings.lhq";
+    // var lhqFullPath = "c:\\Temp\\3\\2\\Strings.lhq";
 
  //   var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01\\Strings.lhq";
     

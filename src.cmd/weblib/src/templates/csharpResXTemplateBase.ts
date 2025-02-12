@@ -23,7 +23,7 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
     private checkHasNamespaceName(rootModel: TemplateRootModel): void {
         const key = 'namespace';
         if (isNullOrEmpty(rootModel.host[key])) {
-            throw new AppError(`Missing value for parameter '${key}'.`,
+            throw new AppError(`Missing value for parameter '${key}'.\n` +
                 `> provide valid path to *.csproj which uses required lhq model\n`+ 
                  `> or provide value for parameter '${key}' in cmd data parameters`);
         }

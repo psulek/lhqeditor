@@ -14,9 +14,10 @@ import {HostEnv} from "./hostEnv";
 
 export function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
-        const fn = helpersList[key];
         // @ts-ignore
-        Handlebars.registerHelper(key, () => debugLogAndExec(key, fn, ...arguments));
+        Handlebars.registerHelper(key, helpersList[key]);
+        //const fn = helpersList[key];
+        //Handlebars.registerHelper(key, () => debugLogAndExec(key, fn, ...arguments));
     });
 
     clearHelpersContext();

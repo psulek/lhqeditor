@@ -580,14 +580,19 @@ namespace LHQ.App.Services.Implementation
             {
                 return;
             }
-            
+
+            bool codeGenResult = false;
             StartProjectOperationIsBusy(ProjectBusyOperationType.GenerateCode);
             await Task.Run(async () =>
                 {
-                    await standaloneCodeGenerator.GenerateCodeAsync(ShellViewModel.ProjectFileName);
+                    codeGenResult = await standaloneCodeGenerator.GenerateCodeAsync(ShellViewModel.ProjectFileName);
                 }).ContinueWith(_ =>
                 {
                     StopProjectOperationIsBusy();
+                    if (!codeGenResult)
+                    {
+                        DialogService.ShowError("Code Generator", "Error generateding template code !", "", TimeSpan.FromMilliseconds(500));
+                    }
                 });
         }
 

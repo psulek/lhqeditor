@@ -25,28 +25,27 @@
 
 #endregion
 
-using System.Threading;
-using System.Threading.Tasks;
-using LHQ.App.Services.Implementation;
-using LHQ.App.Services.Interfaces;
-using LHQ.Core.DependencyInjection;
+using System;
+using System.Runtime.Serialization;
 
-namespace LHQ.VsExtension.Code
+namespace LHQ.Gen.Lib
 {
-    public class VsStandaloneCodeGeneratorService : AppContextServiceBase, IStandaloneCodeGeneratorService
+    public class GeneratorException : Exception
     {
-        public bool Available { get; } = false;
+        public string Title { get; set; }
+        
+        public GeneratorException()
+        { }
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {}
+        protected GeneratorException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
 
-        public void Initialize()
+        public GeneratorException(string message) : base(message)
+        { }
+
+        public GeneratorException(string title, string message, Exception innerException) : base(message, innerException)
         {
-        }
-
-        public Task<bool> GenerateCodeAsync(string modelFileName)
-        {
-            throw new System.NotImplementedException();
+            Title = title;
         }
     }
 }

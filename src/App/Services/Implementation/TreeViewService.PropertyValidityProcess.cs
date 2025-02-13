@@ -118,7 +118,7 @@ namespace LHQ.App.Services.Implementation
                     return false;
                 }
 
-                if (!_recalculatingInProgress.SetSignal())
+                if (!_recalculatingInProgress.TrySetSignal())
                 {
                     return false;
                 }

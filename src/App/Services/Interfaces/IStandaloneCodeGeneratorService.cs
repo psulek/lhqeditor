@@ -34,6 +34,6 @@ namespace LHQ.App.Services.Interfaces
     {
         bool Available { get; }
         
-        Task GenerateCodeAsync(string modelFileName);
+        Task<bool> GenerateCodeAsync(string modelFileName);
     }
 }

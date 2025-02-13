@@ -192,7 +192,7 @@ namespace LHQ.App.Services.Implementation
 
         public void ShowExceptionDialog(Exception exception)
         {
-            if (_exceptionDialogIsVisible.SetSignal())
+            if (_exceptionDialogIsVisible.TrySetSignal())
             {
                 try
                 {

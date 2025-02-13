@@ -1,0 +1,296 @@
+﻿{{{ x-header }}}
+
+{{#with model}}
+namespace {{ @root.host.namespace }}
+{
+	using System;
+	using System.Linq;
+	using System.Resources;
+	using System.Globalization;
+	using System.Threading;
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public partial class {{x-concat model.name "Context" var="rootClassName" }}: {{ x-concat @root.host.namespace ".BindableObject" var="bindableObjectFullName" }}, IFormattable
+	{
+		private CultureInfo _culture;
+		private CultureInfo _fallbackCulture;
+		private static readonly Lazy<{{x-var "rootClassName"}}> _instance = new Lazy<{{x-var "rootClassName"}}>(() => new {{x-var "rootClassName"}}());
+		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
+
+		private {{x-var "rootClassName"}}()
+		{}
+
+		public static ResourceManager ResourceManager
+		{
+			get
+			{
+				return _resourceManager.Value;
+			}
+		}
+
+		public const string PrimaryCulture = "{{model.primaryLanguage}}";
+
+		public string[] AvailableCultures => new[] {
+			{{x-join languages }}
+		};
+
+		public CultureInfo FallbackCulture
+		{
+			get
+			{
+				if (_fallbackCulture == null)
+				{
+					_fallbackCulture = new CultureInfo(PrimaryCulture);
+				}
+				return _fallbackCulture;
+			}
+			set
+			{
+				if ((value == null) || !AvailableCultures.Contains(value.Name))
+				{
+					throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
+				}
+
+				_fallbackCulture = value;
+			}
+		}
+
+		public static {{x-var "rootClassName"}} Instance
+		{
+			get
+			{
+				return _instance.Value;
+			}
+		}
+
+		public CultureInfo Culture
+		{
+			get
+			{
+				return _culture ?? (_culture = CultureInfo.CurrentUICulture);
+			}
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException("Culture must not be null");
+				}
+
+				if (value.Name == Culture.Name)
+				{
+					return;
+				}
+
+				_culture = value;
+				Thread.CurrentThread.CurrentUICulture = _culture;
+				OnPropertyChanged(nameof(Culture));
+
+				{{x-concat model.name "BindingProxy" var="bindingProxyClassName" }}.Instance.RefreshProperties();
+			}
+		}
+
+		private static ResourceManager CreateResourceManager()
+		{
+			return new ResourceManager("{{ x-concat @root.host.namespace (x-trimEnd @root.settings.CSharp.OutputFolder "[\\/]") model.name sep="." }}",
+				typeof({{x-concat @root.host.namespace model.name sep="."}}).Assembly);
+		}
+
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return GetStringSafely(format);
+		}
+
+		public string GetStringSafely(string name)
+		{
+			if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
+			string result = GetStringSafely(name, Culture);
+			if (result == null)
+			{
+				{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
+				if (FallbackCulture != null)
+				{
+					result = GetStringSafely(name, FallbackCulture);
+					if (result == null)
+					{
+						result = string.Format("???{0}.{1}???", name, FallbackCulture == null ? string.Empty : FallbackCulture.Name);
+					}
+				}
+				{{else}}
+				result = string.Format("???{0}.{1}???", name, Culture == null ? string.Empty : Culture.Name);
+				{{/if}}
+			}
+
+			return result;
+		}
+
+		private string GetStringSafely(string name, CultureInfo culture)
+		{
+			string result = null;
+			try
+			{
+				result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
+			}
+			catch (MissingManifestResourceException)
+			{
+				// Resource does not exist
+			}
+
+			return result;
+		}
+	}
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public static partial class {{x-concat model.name "Keys" var="keysClassName" }}
+	{
+	{{#each categories ~}}
+		{{> category _resourceRenderValue="key"}}
+	{{#if (x-equals @last false) }}     
+		
+	{{/if}}
+	{{/each}}
+	{{#if resources}}
+		
+	{{> resources _resourceRenderValue="key" }}
+    {{/if}}
+	}
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public partial class {{model.name}}
+	{
+	{{#each categories ~}}
+		{{> category _resourceRenderValue="value"}}
+	{{#if (x-equals @last false) }}
+		
+	{{/if}}
+	{{/each}}
+	{{#if resources}}
+		
+	{{> resources _resourceRenderValue="value" }}
+    {{/if}}
+	}
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public partial class {{x-var "bindingProxyClassName"}}: {{x-var "bindableObjectFullName"}}
+	{
+		private {{x-var "bindingProxyClassName"}}() 
+		{}
+
+		public static {{x-var "bindingProxyClassName"}} Instance { get; } = new {{x-var "bindingProxyClassName"}}();
+
+	{{> categoriesproxy}}
+
+		
+		{{#if resources}}
+		{{> resourcesproxy _static=true }}
+		{{/if}}
+	}
+}
+{{/with}}
+{{#*inline "category"}}
+public{{x-render " static" when=(x-equals _resourceRenderValue "key") }} partial class {{@key}}
+{
+{{#each categories }}
+	{{> category _resourceRenderValue=../_resourceRenderValue }}
+{{#if (x-equals @last false) }}
+	
+{{/if}}
+{{/each}}
+{{> resources }}
+}
+{{/inline}}
+{{#*inline "resources"}}
+{{#if resources}}
+{{#each resources}}
+	/// <summary>
+	/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
+	/// </summary>
+	{{#if (x-equals ../_resourceRenderValue "key") }}
+	public const string {{@key}} = "{{x-fn getFullParentPath ''}}";
+	{{else}}
+	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+	public static string {{@key}} => {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
+	{{else}}
+	public static string {{@key}}
+	{
+		get
+		{
+			return {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
+		}
+	}
+	{{/if}}
+	{{#if (x-logical (x-hasItems parameters) (x-isTrue @root.extra.generateParamsMethods) op="and") }}
+¤
+	/// <summary>
+	/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
+	/// </summary>
+	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+	public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
+	{{else}}
+	public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }})
+	{
+		return string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
+	}
+	{{/if}}
+	{{/if}}
+¤
+	{{/if}}
+{{/each}}
+{{/if}}
+{{/inline}}
+{{#*inline "categoriesproxy"}}
+{{#each categories }}
+{{#if (x-hasItems categories) }}
+	{{> categoriesproxy }}
+{{/if}}
+	{{> resourcesproxy }}
+¤
+{{/each}}
+{{/inline}}
+{{#*inline "resourcesproxy"}}
+{{#if resources}}
+{{#each resources}}
+/// <summary>
+/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
+/// </summary>
+{{#if (x-isTrue ../_static)}}
+public static string {{@key}}
+{
+	get
+	{
+		return {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{@key}});
+	}
+}
+{{else}}
+public string {{x-fn getFullParentPath ''}}
+{
+	get
+	{
+		return {{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}});
+	}
+}
+{{/if}}
+{{#if (x-logical (x-hasItems parameters) (x-isTrue @root.extra.generateParamsMethods) op="and") }}
+¤
+/// <summary>
+/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
+/// </summary>
+{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }}) => string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
+{{else}}
+public static string {{x-concat @key @root.extra.paramsMethodsSuffix sep=""}}({{ x-resourceParamNames this withTypes="true" }})
+{
+	return string.Format({{x-var "rootClassName"}}.Instance.GetStringSafely({{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}), {{ x-resourceParamNames this }});
+}
+{{/if}}
+{{/if}}
+{{/each}}
+{{/if}}
+{{/inline}}

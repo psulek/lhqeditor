@@ -104,7 +104,7 @@ namespace LHQ.App.Model
         {
             if (block)
             {
-                _propertyChangeBlocker.SetSignal();
+                _propertyChangeBlocker.TrySetSignal();
             }
             else
             {

@@ -33,7 +33,7 @@ Console.WriteLine(
 // Utils.AddToLogFile("Program lhqcmd.exe started.");
 
 #if DEBUG
-RunTestData();
+//RunTestData();
 #endif
 
 var missingParams = args.Length == 0;

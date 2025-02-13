@@ -132,7 +132,7 @@ namespace LHQ.VsExtension.Wizard
 
         protected void InstallNugetPackages(Project project, bool openReadmeTxt)
         {
-            if (_installingPackages.SetSignal())
+            if (_installingPackages.TrySetSignal())
             {
                 Task.Run(async () =>
                     {

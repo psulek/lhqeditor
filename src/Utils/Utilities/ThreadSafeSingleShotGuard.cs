@@ -44,7 +44,7 @@ namespace LHQ.Utils.Utilities
         {
             if (signaled)
             {
-                SetSignal();
+                TrySetSignal();
             }
             else
             {
@@ -63,7 +63,7 @@ namespace LHQ.Utils.Utilities
         /// <returns>
         /// Returns <c>true</c> if set signal was successful.
         /// </returns>
-        public bool SetSignal()
+        public bool TrySetSignal()
         {
             return Interlocked.Exchange(ref _state, SignalSet) == SignalNotset;
         }

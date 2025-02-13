@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>LHQ.Gen.Lib</RootNamespace>
+        <LangVersion>7.3</LangVersion>
+        <ImplicitUsings>false</ImplicitUsings>
+        <SignAssembly>true</SignAssembly>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Pastel" Version="3.0.1"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore" Version="3.27.3"/>
+        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x86" Version="3.27.3"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <AssemblyOriginatorKeyFile>..\..\LHQ.snk</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="js\**\*"/>
+        <EmbeddedResource Include="hbs\**\*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Core\Core.csproj"/>
+    </ItemGroup>
+
+</Project>

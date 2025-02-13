@@ -33,6 +33,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VsExtensionShared", "src\Vs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsExtension2022", "src\VsExtension2022\VsExtension2022.csproj", "{4A6B5AD8-10F4-44D3-95E7-4E3B7CC72BA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gen.Lib", "src\Gen.Lib\Gen.Lib.csproj", "{757A4513-F633-4110-8EA6-78177FEBF7F9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\VsExtensionShared\VsExtensionShared.projitems*{4a6b5ad8-10f4-44d3-95e7-4e3b7cc72ba1}*SharedItemsImports = 4
@@ -160,6 +162,18 @@ Global
 		{4A6B5AD8-10F4-44D3-95E7-4E3B7CC72BA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4A6B5AD8-10F4-44D3-95E7-4E3B7CC72BA1}.Release|x86.ActiveCfg = Release|x86
 		{4A6B5AD8-10F4-44D3-95E7-4E3B7CC72BA1}.Release|x86.Build.0 = Release|x86
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.AppSetup|Any CPU.ActiveCfg = Debug|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.AppSetup|Any CPU.Build.0 = Debug|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.AppSetup|x86.ActiveCfg = Debug|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.AppSetup|x86.Build.0 = Debug|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Debug|x86.Build.0 = Debug|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

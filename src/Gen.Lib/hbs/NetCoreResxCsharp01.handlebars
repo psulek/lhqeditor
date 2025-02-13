@@ -1,0 +1,256 @@
+﻿{{{ x-header }}}
+
+{{#with model}}
+namespace {{ @root.host.namespace }}
+{
+	using System;
+	using System.Resources;
+	using System.Reflection;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Globalization;
+	using Microsoft.Extensions.Localization;
+
+	public class {{@root.extra.rootClassName}} : IStringLocalizer
+	{
+		private readonly CultureInfo _culture;
+		{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
+		private CultureInfo _fallbackCulture;
+	
+		{{else}}
+	
+		{{/if}}
+		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
+
+		public {{@root.extra.rootClassName}}()
+		{}
+
+		public {{@root.extra.rootClassName}}(CultureInfo culture)
+		{
+			_culture = culture;
+		}
+
+		public const string PrimaryCulture = "{{model.primaryLanguage}}";
+
+		{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+		public static ResourceManager ResourceManager => _resourceManager.Value;
+		{{else}}
+		public static ResourceManager ResourceManager
+		{
+			get
+			{
+				return _resourceManager.Value;
+			}
+		}
+		{{/if}}
+
+		private static ResourceManager CreateResourceManager()
+		{
+			return new ResourceManager("{{ x-concat @root.host.namespace (x-trimEnd @root.settings.CSharp.OutputFolder "[\\/]") model.name sep="." }}",
+					typeof({{x-concat @root.host.namespace model.name sep="."}}).GetTypeInfo().Assembly);
+		}
+
+		{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
+		public CultureInfo FallbackCulture
+		{
+			get
+			{
+				if (_fallbackCulture == null)
+				{
+					_fallbackCulture = new CultureInfo(PrimaryCulture);
+				}
+				return _fallbackCulture;
+			}
+			set
+			{
+				if ((value == null) || !{{model.name}}.AvailableCultures.Contains(value.Name))
+				{
+					throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
+				}
+
+				_fallbackCulture = value;
+			}
+		}
+		{{/if}}
+	
+
+		LocalizedString IStringLocalizer.this[string name]
+		{
+			get
+			{
+				if (name == null)
+				{
+					throw new ArgumentNullException(nameof(name));
+				}
+
+				var value = GetStringSafely(name, _culture);
+				return new LocalizedString(name, value ?? name, value == null);
+			}
+		}
+
+		LocalizedString IStringLocalizer.this[string name, params object[] arguments]
+		{
+			get
+			{
+				if (name == null)
+				{
+					throw new ArgumentNullException(nameof(name));
+				}
+
+				var format = GetStringSafely(name, _culture);
+				var value = string.Format(format ?? name, arguments);
+				return new LocalizedString(name, value, format == null);
+			}
+		}
+
+		public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
+		{
+			throw new NotImplementedException();
+		}
+
+		{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+		public IStringLocalizer WithCulture(CultureInfo culture) => new {{@root.extra.rootClassName}}(culture);
+		{{else}}
+		public IStringLocalizer WithCulture(CultureInfo culture)
+		{
+			return new {{@root.extra.rootClassName}}(culture);
+		}
+		{{/if}}
+
+		private string GetStringSafely(string name, CultureInfo culture)
+		{
+			string result = null;
+			try
+			{
+				result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
+			}
+			catch (MissingManifestResourceException)
+			{} // Resource does not exist
+
+			if (result == null)
+			{
+				{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
+				if (FallbackCulture != null)
+				{
+					try
+					{
+						result = ResourceManager.GetString(name, FallbackCulture);
+					}
+					catch (MissingManifestResourceException)
+					{} // Resource does not exist
+
+					if (result == null)
+					{
+						result = string.Format("???{0}.{1}???", name, FallbackCulture == null ? string.Empty : FallbackCulture.Name);
+					}
+				}
+				else
+				{
+					result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
+				}
+				{{else}}
+				result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
+				{{/if}}
+			}
+
+			return result;
+		}
+	}
+
+	public static class {{x-concat model.name "Keys" var="keysClassName" }}
+	{
+	{{#each categories ~}}
+		{{> category _resourceRenderValue="key" }}
+	{{#if (x-equals @last false) }}     
+		
+	{{/if}}
+	{{/each}}
+	{{#if resources}}
+		
+	{{> resources _resourceRenderValue="key" }}
+    {{/if}}
+	}
+
+	public partial class {{model.name}}
+	{
+		private static IStringLocalizer _localizer;
+
+		public {{model.name}}(IStringLocalizer localizer)
+		{
+			_localizer = localizer;
+		}
+
+
+		{{#if (x-equals @root.settings.CSharp.MissingTranslationFallbackToPrimary "true" cs=false) }}
+		public static string[] AvailableCultures => new string[] { {{x-join languages }} };
+		{{else}}
+		public static string[] AvailableCultures
+		{
+			get
+			{
+				return new string[] { {{x-join languages }} };
+			}
+		}
+		{{/if}}
+
+	{{#each categories ~}}
+		{{> category _resourceRenderValue="value" }}
+	{{#if (x-equals @last false) }}
+		
+	{{/if}}
+	{{/each}}
+	{{#if resources}}
+		
+	{{> resources _resourceRenderValue="value" }}
+    {{/if}}
+	}
+}
+{{/with}}
+{{#*inline "category"}}
+public static{{x-render " partial" when=(x-equals _resourceRenderValue "value") }} class {{@key}}
+{
+{{#each categories }}
+	{{> category _resourceRenderValue=../_resourceRenderValue }}
+{{#if (x-equals @last false) }}
+	
+{{/if}}
+{{/each}}
+{{> resources }}
+}
+{{/inline}}
+{{#*inline "resources"}}
+{{#if resources}}
+{{#each resources}}
+	/// <summary>
+	/// Gets localized string similar to: {{ x-resourceComment this root=@root }}
+	/// </summary>
+	{{#if (x-equals ../_resourceRenderValue "key") }}
+	public const string {{@key}} = "{{x-fn getFullParentPath ''}}";
+	{{else}}
+	{{#if (x-equals (x-objCount parameters) 0)}}
+	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+	public static string {{@key}} => _localizer[{{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}];
+	{{else}}
+	public static string {{@key}}
+	{
+		get
+		{
+			return _localizer[{{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}];
+		}
+	}
+	{{/if}}
+	{{else}}
+	{{#if (x-equals @root.settings.CSharp.UseExpressionBodySyntax "true" cs=false) }}
+	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }}) => _localizer[{{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}, {{ x-resourceParamNames this }}];
+	{{else}}
+	public static string {{@key}}({{ x-resourceParamNames this withTypes="true" }})
+	{
+		return _localizer[{{x-var "keysClassName"}}.{{x-fn getFullParentPath '.'}}, {{ x-resourceParamNames this }}];
+	}
+	{{/if}}
+	{{/if}}
+¤
+	{{/if}}
+{{/each}}
+{{/if}}
+{{/inline}}

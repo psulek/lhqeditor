@@ -924,6 +924,10 @@
       <Project>{ee616feb-a683-41ed-95ca-e6a555292239}</Project>
       <Name>Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gen.Lib\Gen.Lib.csproj">
+      <Project>{757a4513-f633-4110-8ea6-78177febf7f9}</Project>
+      <Name>Gen.Lib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{5b60761b-5710-4971-a61d-66559d8a6b39}</Project>
       <Name>Utils</Name>
@@ -1004,6 +1008,9 @@
     </PackageReference>
     <PackageReference Include="FontAwesome.WPF">
       <Version>4.7.0.9</Version>
+    </PackageReference>
+    <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x86">
+      <Version>3.27.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.Platforms">
       <Version>2.2.0</Version>

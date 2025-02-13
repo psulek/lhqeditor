@@ -91,7 +91,7 @@ namespace LHQ.VsExtension
 
         public static bool CanAutoShowOutputPane()
         {
-            bool canAutoShowOutputPane = _autoShowOutputPaneDisabled.SetSignal();
+            bool canAutoShowOutputPane = _autoShowOutputPaneDisabled.TrySetSignal();
             return canAutoShowOutputPane;
         }
 

@@ -1,4 +1,9 @@
-﻿2023.1
+﻿2025.1
+- Added new feature 'Mark for export' on resources in tree
+  - New 'Export marked...' from tree
+- Added new standalone code generator (when LHQ.App.exe is run outside of VS)
+
+2023.1
 - Fixed bug #9, VS2022 bug when tt generators throws null reference exception
 
 2022.3

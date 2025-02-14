@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35507.96 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7DFA1603-4F36-4209-A37A-0248BC715888}"
 	ProjectSection(SolutionItems) = preProject
@@ -35,11 +35,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsExtension2022", "src\VsEx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gen.Lib", "src\Gen.Lib\Gen.Lib.csproj", "{757A4513-F633-4110-8EA6-78177FEBF7F9}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "App.Setup", "src\App.Setup\App.Setup.vdproj", "{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		src\VsExtensionShared\VsExtensionShared.projitems*{4a6b5ad8-10f4-44d3-95e7-4e3b7cc72ba1}*SharedItemsImports = 4
-		src\VsExtensionShared\VsExtensionShared.projitems*{ddbae22a-3121-44fe-8580-ffa34312ab4e}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppSetup|Any CPU = AppSetup|Any CPU
 		AppSetup|x86 = AppSetup|x86
@@ -174,6 +172,12 @@ Global
 		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Release|x86.ActiveCfg = Release|Any CPU
 		{757A4513-F633-4110-8EA6-78177FEBF7F9}.Release|x86.Build.0 = Release|Any CPU
+		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.AppSetup|Any CPU.ActiveCfg = Debug
+		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.AppSetup|x86.ActiveCfg = Debug
+		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.Debug|Any CPU.ActiveCfg = Debug
+		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.Debug|x86.ActiveCfg = Debug
+		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.Release|Any CPU.ActiveCfg = Release
+		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,5 +189,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7CD2AEE5-EF22-4737-956A-EAEFCA9CAD9D}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\VsExtensionShared\VsExtensionShared.projitems*{4a6b5ad8-10f4-44d3-95e7-4e3b7cc72ba1}*SharedItemsImports = 4
+		src\VsExtensionShared\VsExtensionShared.projitems*{ddbae22a-3121-44fe-8580-ffa34312ab4e}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

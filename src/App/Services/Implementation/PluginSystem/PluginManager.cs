@@ -76,17 +76,23 @@ namespace LHQ.App.Services.Implementation.PluginSystem
                 .Where(x => x.GetName().GetPublicKeyTokenAsHex() == PublicKeyToken).ToList();
 
             string appFolder = AppContext.AppFolder;
-            string[] pluginAssemblyFiles = Directory.GetFiles(appFolder, "LHQ.Plugin.*.dll", SearchOption.TopDirectoryOnly);
+            var searchPattern = "LHQ.Plugin.*.dll";
+            Logger.Info($"Searching for plugins in: {appFolder} ({searchPattern}) ...");
+            string[] pluginAssemblyFiles = Directory.GetFiles(appFolder, searchPattern, SearchOption.TopDirectoryOnly);
+            Logger.Info($"Searching for plugins in: {appFolder} found {pluginAssemblyFiles.Length} plugins");
             if (pluginAssemblyFiles.Length > 0)
             {
                 foreach (string pluginAssemblyFile in pluginAssemblyFiles)
                 {
                     try
                     {
+                        Logger.Info($"Loading plugin assembly: {pluginAssemblyFile} ...");
                         Assembly pluginAssembly = Assembly.LoadFile(pluginAssemblyFile);
                         if (!assemblies.Contains(pluginAssembly))
                         {
                             assemblies.Add(pluginAssembly);
+                            
+                            Logger.Info($"Loading plugin assembly: {pluginAssemblyFile} succeed.");
                         }
                         else
                         {
@@ -103,8 +109,13 @@ namespace LHQ.App.Services.Implementation.PluginSystem
             List<Type> pluginModuleTypes = null;
             try
             {
+                Logger.Info($"Searching for 'plugin module registration' in {assemblies.Count} assemblies...");
+                
                 pluginModuleTypes = TypeHelper.LoadTypesFromTypedAttributes<PluginModuleRegistrationAttribute, IPluginModule>(
                     "GetPluginModules", assemblies.ToArray());
+                
+                Logger.Info($"Searching for 'plugin module registration' in {assemblies.Count}, found " 
+                    + (pluginModuleTypes == null ? "-" : $"{pluginModuleTypes.Count} types"));
             }
             catch (Exception e)
             {

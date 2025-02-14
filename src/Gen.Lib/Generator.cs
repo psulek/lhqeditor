@@ -7,9 +7,8 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using JavaScriptEngineSwitcher.Core;
-using LHQ.Core.Interfaces;
-using LHQ.Utils.Extensions;
 using Newtonsoft.Json;
+using NLog;
 // using JsEngine = JavaScriptEngineSwitcher.Jint.JintJsEngine;
 // using JsEngineSettings = JavaScriptEngineSwitcher.Jint.JintSettings;
 using JsEngine = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine;
@@ -98,7 +97,7 @@ namespace LHQ.Gen.Lib
             _engine.Execute("LhqGenerators.TemplateManager.intialize(__handlebarFiles);");
         }
 
-        public static string FindOwnerCsProjectFile(string lhqModelFileName)
+        public string FindOwnerCsProjectFile(string lhqModelFileName)
         {
             if (!File.Exists(lhqModelFileName))
             {
@@ -122,12 +121,12 @@ namespace LHQ.Gen.Lib
             return result;
         }
 
-        public static string GetRootNamespace(string lhqModelFileName, string csProjectFileName)
+        public string GetRootNamespace(string lhqModelFileName, string csProjectFileName)
         {
             return GetRootNamespace(lhqModelFileName, csProjectFileName, out _);
         }
 
-        public static string GetRootNamespace(string lhqModelFileName, string csProjectFileName,
+        public string GetRootNamespace(string lhqModelFileName, string csProjectFileName,
             out bool referencedLhqFile)
         {
             referencedLhqFile = false;
@@ -199,7 +198,9 @@ namespace LHQ.Gen.Lib
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error getting root namespace. {e.GetFullExceptionDetails()}");
+                Console.WriteLine($"Error getting root namespace.");
+                _logger.Error(e, "Error getting root namespace.");
+
                 rootNamespace = null;
             }
 
@@ -241,7 +242,7 @@ namespace LHQ.Gen.Lib
                     csProjectFileName = FindOwnerCsProjectFile(lhqModelFileName);
                     if (!string.IsNullOrEmpty(csProjectFileName))
                     {
-                        _logger.Info($"Found '{csProjectFileName}' associated with '{lhqModelFileName}'.");
+                        _logger.Debug($"Found '{csProjectFileName}' associated with '{lhqModelFileName}'.");
                         //Utils.AddToLogFile($"C# project was not specified but one was auto find by app: {csProjectFileName}");
                         csProjFound = true;
                     }
@@ -262,7 +263,7 @@ namespace LHQ.Gen.Lib
                 $"- c# project file: {(string.IsNullOrEmpty(csProjectFileName) ? "-" : csProjectFileName)} ({(csProjFound ? "auto found" : "cmd")})");
             sb.AppendLine($"- out dir: {outDir}");
 
-            _logger.Info(sb.ToString());
+            _logger.Debug(sb.ToString());
 
             try
             {
@@ -290,7 +291,7 @@ namespace LHQ.Gen.Lib
                         throw new GeneratorException(title, message, e);
                     }
                 }
-                
+
                 throw;
             }
 

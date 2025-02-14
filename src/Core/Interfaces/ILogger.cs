@@ -43,6 +43,8 @@ namespace LHQ.Core.Interfaces
         void Fatal(string message, Exception exception = null);
 
         void Log(LogEventType eventType, string message, Exception exception = null);
+
+        object GetSourceLogger();
     }
 
     public enum LogEventType

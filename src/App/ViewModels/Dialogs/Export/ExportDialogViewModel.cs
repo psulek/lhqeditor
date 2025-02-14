@@ -23,11 +23,13 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using LHQ.App.Code;
 using LHQ.App.Extensions;
@@ -94,6 +96,7 @@ namespace LHQ.App.ViewModels.Dialogs.Export
             Languages = languages.ToObservableCollectionExt();
             SelectFileCommand = new DelegateCommand(SelectFileExecute, SelectFileCanExecute);
             ShowHelpCommand = new DelegateCommand(ShowHelpExecute);
+            CopyElementsToClipboard = new DelegateCommand(CopyElementsToClipboardExecute);
 
             if (fromRootModel)
             {
@@ -105,7 +108,16 @@ namespace LHQ.App.ViewModels.Dialogs.Export
             }
         }
 
+        private void CopyElementsToClipboardExecute(object obj)
+        {
+            string items = ElementsToExport.Select(x => x.Name).ToDelimitedString(Environment.NewLine);
+            Clipboard.Clear();
+            Clipboard.SetText(items);
+        }
+
         public ICommand ShowHelpCommand { get; }
+        
+        public ICommand CopyElementsToClipboard { get; }
 
         public bool HasExporters { get; set; }
 

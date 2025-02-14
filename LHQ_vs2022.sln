@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ProductAssemblyInfo.cs = ProductAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "src\UnitTests\UnitTests.csproj", "{460E4E15-095C-49E3-993B-EFC4A9685235}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "src\App\App.csproj", "{87F223E0-202A-4712-B0EB-710D32B3E16B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "src\Data\Data.csproj", "{EE616FEB-A683-41ED-95CA-E6A555292239}"
@@ -37,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gen.Lib", "src\Gen.Lib\Gen.
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "App.Setup", "src\App.Setup\App.Setup.vdproj", "{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gen.Cmd", "src\Gen.Cmd\Gen.Cmd.csproj", "{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppSetup|Any CPU = AppSetup|Any CPU
@@ -47,17 +47,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.AppSetup|Any CPU.ActiveCfg = Release|Any CPU
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.AppSetup|x86.ActiveCfg = Release|x86
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.AppSetup|x86.Build.0 = Release|x86
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.Debug|x86.Build.0 = Debug|Any CPU
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.Release|Any CPU.Build.0 = Release|Any CPU
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.Release|x86.ActiveCfg = Release|Any CPU
-		{460E4E15-095C-49E3-993B-EFC4A9685235}.Release|x86.Build.0 = Release|Any CPU
 		{87F223E0-202A-4712-B0EB-710D32B3E16B}.AppSetup|Any CPU.ActiveCfg = Release|Any CPU
 		{87F223E0-202A-4712-B0EB-710D32B3E16B}.AppSetup|x86.ActiveCfg = Release|x86
 		{87F223E0-202A-4712-B0EB-710D32B3E16B}.AppSetup|x86.Build.0 = Release|x86
@@ -178,6 +167,18 @@ Global
 		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.Debug|x86.ActiveCfg = Debug
 		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.Release|Any CPU.ActiveCfg = Release
 		{DB708EEC-1E64-97CB-24DF-FABC27E09AAD}.Release|x86.ActiveCfg = Release
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.AppSetup|Any CPU.ActiveCfg = Debug|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.AppSetup|Any CPU.Build.0 = Debug|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.AppSetup|x86.ActiveCfg = Debug|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.AppSetup|x86.Build.0 = Debug|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Debug|x86.Build.0 = Debug|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Release|x86.ActiveCfg = Release|Any CPU
+		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

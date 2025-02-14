@@ -89,7 +89,7 @@ namespace LHQ.App.Services.Implementation
             {
                 if (_generator == null)
                 {
-                    _generator = new Generator(Logger);
+                    _generator = new Generator(Logger.GetSourceLogger() as NLog.ILogger);
                 }
 
                 Logger.Info($"[GenerateCode] {modelFileName}");

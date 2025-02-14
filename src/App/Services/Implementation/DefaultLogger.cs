@@ -132,6 +132,11 @@ namespace LHQ.App.Services.Implementation
             _logger.Log(GetLogLevel(eventType), exception, message);
         }
 
+        public object GetSourceLogger()
+        {
+            return _logger;
+        }
+
         public void Debug(string message, Exception exception = null)
         {
             Log(LogEventType.Debug, message, exception);

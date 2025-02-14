@@ -197,7 +197,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Foreground="{Binding Path=ShowOnlyMarkedForExport, Converter={StaticResource SearchFilterIconConverter}, ConverterParameter='icon'}"
-                        Icon="Ambulance" />
+                        Icon="Bookmark" />
                 </ToggleButton>
 
                 <components1:SearchTextBox

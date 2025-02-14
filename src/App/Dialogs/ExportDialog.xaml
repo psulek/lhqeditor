@@ -122,9 +122,14 @@
             <TextBlock HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        FontWeight="SemiBold"
-                       Height="20"
-                       Text="{Binding Path=ExportSourceText, Mode=OneTime}" />
-
+                       Height="20">
+                <Run Text="{Binding Path=ExportSourceText, Mode=OneTime}" />
+                <Hyperlink Command="{Binding Path=CopyElementsToClipboard}"
+                           Style="{StaticResource HyperlinkStyle}">
+                    <Run Text="Copy to clipboard" />
+                </Hyperlink>
+            </TextBlock>
+            
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,10,0,0" Height="80"
                           Visibility="{Binding Path=ElementsToExportVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ItemsControl ItemsSource="{Binding ElementsToExport, Mode=OneTime}" Focusable="False">

@@ -927,6 +927,18 @@
       <Project>{757a4513-f633-4110-8ea6-78177febf7f9}</Project>
       <Name>Gen.Lib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugins\ExportImportPack\ExportImportPack.csproj">
+      <Project>{1a43af51-9d19-40ea-a87a-5b36e24e2e69}</Project>
+      <Name>ExportImportPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\MicrosoftTranslator\MicrosoftTranslator.csproj">
+      <Project>{d1e7efca-c3d2-4e79-b6d9-021f9e730464}</Project>
+      <Name>MicrosoftTranslator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\YandexTranslator\YandexTranslator.csproj">
+      <Project>{920eb8f4-19f7-4c0a-b6aa-0aaddf3c35a0}</Project>
+      <Name>YandexTranslator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{5b60761b-5710-4971-a61d-66559d8a6b39}</Project>
       <Name>Utils</Name>

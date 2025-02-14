@@ -103,8 +103,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(TargetDir)$(TargetName).dll $(SolutionDir)src\App\bin\$(ConfigurationName)\ /R /F /S /Y
-xcopy $(TargetDir)$(TargetName).pdb $(SolutionDir)src\App\bin\$(ConfigurationName)\ /R /F /S /Y
-xcopy $(TargetDir)EPPlus.dll $(SolutionDir)src\App\bin\$(ConfigurationName)\ /R /F /S /Y</PostBuildEvent>
+    <PostBuildEvent>rem xcopy $(TargetDir)$(TargetName).dll $(SolutionDir)src\App\bin\$(ConfigurationName)\ /R /F /S /Y
+      rem xcopy $(TargetDir)$(TargetName).pdb $(SolutionDir)src\App\bin\$(ConfigurationName)\ /R /F /S /Y
+      rem xcopy $(TargetDir)EPPlus.dll $(SolutionDir)src\App\bin\$(ConfigurationName)\ /R /F /S /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

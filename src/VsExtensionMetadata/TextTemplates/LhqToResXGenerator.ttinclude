@@ -151,7 +151,7 @@ class ResXGenerator: GeneratorBase<ResXGeneratorSettings> {
 					if (Settings.CompatibleTextEncoding) {
 						resValue = System.Web.HttpUtility.HtmlEncode(resourceValue.Value);
 					} else {
-					    resValue = XmlValueEncode(resourceValue.Value, false);
+					    resValue = XmlValueEncode.EncodeText(resourceValue.Value, false);
 					}
 				}
 #>

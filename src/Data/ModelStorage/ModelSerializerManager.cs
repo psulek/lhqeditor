@@ -39,29 +39,47 @@ namespace LHQ.Data.ModelStorage
 {
     public class ModelSerializerManager
     {
+        private IEnumerable<Assembly> _assembliesWithSerializers;
+        private bool _initialized; 
+        
         private List<IModelSerializer> _modelSerializers;
 
         private IModelSerializer _currentModelSerializer;
 
         public void Initialize(IEnumerable<Assembly> assembliesWithSerializers)
         {
-            _modelSerializers = TypeHelper.CreateInstancesFromTypedAttributes<ModelSerializerAttribute, IModelSerializer>(
-                "ModelSerializerManager.Initialize", assembliesWithSerializers.ToArray());
+            _assembliesWithSerializers = assembliesWithSerializers ?? throw new ArgumentNullException(nameof(assembliesWithSerializers));
+        }
 
-            if (_modelSerializers.Count == 0)
-            {
-                throw new InvalidOperationException("Could not find any model serializer registered!");
-            }
+        private List<IModelSerializer> GetModelSerializers()
+        {
+            InternalInit();
+            return _modelSerializers;
+        }
 
-            if (_modelSerializers.Count != _modelSerializers.Select(x => x.ModelVersion).Distinct().Count())
+        private void InternalInit()
+        {
+            if (!_initialized)
             {
-                throw new InvalidOperationException("Each model serializer must target one specific model version!");
-            }
+                _modelSerializers = TypeHelper.CreateInstancesFromTypedAttributes<ModelSerializerAttribute, IModelSerializer>(
+                    "ModelSerializerManager.Initialize", _assembliesWithSerializers.ToArray());
 
-            _currentModelSerializer = _modelSerializers.SingleOrDefault(x => x.ModelVersion == ModelConstants.CurrentModelVersion);
-            if (_currentModelSerializer == null)
-            {
-                throw new InvalidOperationException($"Missing model serializer for current model version '{ModelConstants.CurrentModelVersion}' !");
+                if (_modelSerializers.Count == 0)
+                {
+                    throw new InvalidOperationException("Could not find any model serializer registered!");
+                }
+
+                if (_modelSerializers.Count != _modelSerializers.Select(x => x.ModelVersion).Distinct().Count())
+                {
+                    throw new InvalidOperationException("Each model serializer must target one specific model version!");
+                }
+
+                _currentModelSerializer = _modelSerializers.SingleOrDefault(x => x.ModelVersion == ModelConstants.CurrentModelVersion);
+                if (_currentModelSerializer == null)
+                {
+                    throw new InvalidOperationException($"Missing model serializer for current model version '{ModelConstants.CurrentModelVersion}' !");
+                }
+                _initialized = true;
             }
         }
 
@@ -96,6 +114,8 @@ namespace LHQ.Data.ModelStorage
         {
             ModelLoadResult modelLoadResult;
 
+            InternalInit();
+            
             try
             {
                 JObject jsonRoot = JObject.Parse(source, new JsonLoadSettings
@@ -180,6 +200,8 @@ namespace LHQ.Data.ModelStorage
 
         public string Serialize(ModelContext modelContext, ModelSaveOptions saveOptions)
         {
+            InternalInit();
+            
             JToken jsonModel = _currentModelSerializer.Serialize(modelContext, saveOptions);
             return JsonUtils.TokenToString(jsonModel, GetFormatting(saveOptions));
         }
@@ -187,6 +209,17 @@ namespace LHQ.Data.ModelStorage
         private Formatting GetFormatting(ModelSaveOptions saveOptions)
         {
             return saveOptions.IndentOutput ? Formatting.Indented : Formatting.None;
+        }
+
+        public bool IsCompatible(ModelContext modelContext)
+        {
+            IModelSerializer serializer = GetModelSerializers().SingleOrDefault(x => x.ModelVersion == modelContext.Model.Version);
+            return serializer?.IsCompatibleWithCurrent() == true;
+        }
+
+        public int[] GetSupportedModelVersions()
+        {
+            return GetModelSerializers().Select(x => x.ModelVersion).Distinct().ToArray();
         }
     }
 }

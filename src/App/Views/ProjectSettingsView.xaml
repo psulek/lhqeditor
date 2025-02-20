@@ -12,7 +12,7 @@
     xmlns:vm="clr-namespace:LHQ.App.ViewModels"
     d:DataContext="{d:DesignInstance vm:ProjectSettingsViewModel,
                                      IsDesignTimeCreatable=False}"
-    d:DesignHeight="600"
+    d:DesignHeight="700"
     d:DesignWidth="600"
     mc:Ignorable="d">
     <components:AppUserControl.Resources>
@@ -37,6 +37,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -106,6 +110,26 @@
                 VerticalAlignment="Center"
                 Source="{Binding Path=LayoutImage}" />
         </Grid>
+        
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Padding="10,5,0,5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Visibility="{Binding Path=ModelVersionVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+            Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
+            Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+            Text="Model version:" />
+        
+        <ComboBox
+            Grid.Row="6"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            Visibility="{Binding Path=ModelVersionVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+            ItemsSource="{Binding Path=ModelVersions, Mode=OneTime}"
+            SelectedItem="{Binding Path=SelectedModelVersion, Mode=TwoWay}" />
     </Grid>
 
 </components:AppUserControl>

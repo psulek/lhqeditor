@@ -26,6 +26,10 @@
 #><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
 #><#@ import namespace="Microsoft.CSharp"
 #><#@ import namespace="System.Windows"
+#><#@ import namespace="LHQ.Utils"
+#><#@ import namespace="LHQ.Data"
+#><#@ import namespace="LHQ.Data.Extensions"
+#><#@ import namespace="LHQ.Gen.Lib"
 #><#+
 
 public static class T4Utils
@@ -36,10 +40,91 @@ public static class T4Utils
 
 		throw new ApplicationException(message);
     }
+    
+    public static void ShowError(string message)
+    {
+        //System.Windows.MessageBox.Show(message, "Localization HQ Editor");
+
+		throw new ApplicationException(message);
+    }
 
 	public const byte OutputMessageInfo = 0;
 	public const byte OutputMessageWarn = 1;
 	public const byte OutputMessageError = 2;
+    
+    public static void AddMessagesToOutput(DTE2 dte, System.Collections.Generic.Dictionary<string, byte> messages)
+    {
+        if (dte == null)
+        {
+            return;
+        }
+        
+        try
+        {
+            const string vsWindowKindOutput = "{34E76E81-EE4A-11D0-AE2E-00A0C90FFFC3}";
+            const string LhqOutputMessagesPaneName = "LHQ Editor Code Generator";
+            var window = dte.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
+            var outputWindow = (EnvDTE.OutputWindow)window.Object;
+
+
+            EnvDTE.OutputWindowPane pane = null;
+            bool activate = messages.Count(x => x.Value > 0) > 0;
+            foreach (EnvDTE.OutputWindowPane item in outputWindow.OutputWindowPanes)
+            {
+                if (item.Name == LhqOutputMessagesPaneName)
+                {
+                    pane = item;
+                    break;
+                }
+            }
+
+            if (pane == null)
+            {
+                pane = outputWindow.OutputWindowPanes.Add(LhqOutputMessagesPaneName);
+            }
+
+            if (activate)
+            {
+                window.Activate();
+                pane.Activate();
+            }
+
+            foreach (KeyValuePair<string, byte> pair in messages)
+            {
+                var message = pair.Key;
+                var messageType = pair.Value;
+
+                string prefix;
+                switch (messageType)
+                {
+                    case OutputMessageInfo:
+                    {
+                        prefix = "INFO";
+                        break;
+                    }
+                    case OutputMessageWarn:
+                    {
+                        prefix = "WARN";
+                        break;
+                    }
+                    case OutputMessageError:
+                    {
+                        prefix = "ERR";
+                        break;
+                    }
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(messageType), messageType, null);
+                }
+
+                pane.OutputString($"[{prefix}] {message}\n");
+            }
+        }
+        catch (Exception e)
+        {
+            ShowError(e.Message);
+        }
+    }
+
 
 	public static void AddMessageToOutput(string message, byte messageType)
     {
@@ -59,6 +144,90 @@ public static class T4Utils
 
 		outputMessages.Add(message, messageType);
 		T4Utils.SetCallContextData("OutputMessages", outputMessages);
+    }
+
+    public static bool RunModernGenerator(DTE2 dte, string lhqFileName, string lhqItemTemplateId,
+        FileManager fileManager)
+    {
+        RemoveLastError();
+        bool result = false;
+        
+        // var type = typeof(LHQ.Gen.Lib.Generator);
+        // throw new ApplicationException($"type: {type.AssemblyQualifiedName}");
+        using (var memoryLogger = new LHQ.Gen.Lib.InMemoryLogger())
+        {
+            using (var generator = new LHQ.Gen.Lib.Generator(memoryLogger.Logger))
+            {
+                try
+                {
+                    string outDir = System.IO.Path.GetDirectoryName(lhqFileName);
+                    string csProjectFileName = "";
+                    var messages = new Dictionary<string, byte>();
+                    messages.Add($"Generating code using modern generator for: {lhqFileName} [{lhqItemTemplateId}]", OutputMessageInfo);
+                    
+                    var generateResult = generator.Generate(lhqFileName, csProjectFileName, outDir);
+
+                    var errors = new StringBuilder();
+                    memoryLogger.AllLogs.ForEach(log =>
+                        {
+                            if (log.Item2 == OutputMessageError)
+                            {
+                                errors.AppendLine(log.Item1);
+                            }
+                            messages.Add(log.Item1, log.Item2);
+                        });
+
+                    if (messages.Count > 0)
+                    {
+                        AddMessagesToOutput(dte, messages);
+                    }
+                    
+                    if (errors.Length > 0)
+                    {
+                        ShowError(errors.ToString());
+                    }
+                    else
+                    {
+                        result = generateResult.GeneratedFiles.Count > 0;
+                        if (result)
+                        {
+                            fileManager.generatedFiles.Clear();
+                            var generatedFiles = generateResult.GeneratedFiles;
+
+                            foreach (var file in generatedFiles)
+                            {
+                                var outputTarget = new FileManager.OutputTarget("", Path.GetDirectoryName(file.FileName));
+                                fileManager.StartNewFile(Path.GetFileName(file.FileName), outputTarget);
+                                fileManager.CurrentFileBlock.FullContent = file.GetContent(true);
+                                fileManager.CurrentFileBlock.BOM = file.Bom;
+                                fileManager.EndNewFile();
+
+                                // resultGeneratedFiles.Add(new FileManager.FileBlock
+                                // {
+                                //     Name = Path.GetFileName(file.FileName),
+                                //     Target = new FileManager.OutputTarget()
+                                // });
+
+                                // var fileName = Path.Combine(outDir, file.FileName);
+                                // var dir = Path.GetDirectoryName(fileName);
+                                // if (dir != null && !Directory.Exists(dir))
+                                // {
+                                //     Directory.CreateDirectory(dir);
+                                // }
+                                //
+                                //file.WriteToDisk(outDir);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    ShowError(e.Message);
+                }
+            }
+        }
+
+        return result;
     }
 
     public static void SetCallContextData(string key, object value)
@@ -283,6 +452,8 @@ public class FileManager: IDisposable
         public BlockData Header;
         public BlockData Footer;
         public OutputTarget Target;
+        public bool BOM = false;
+        public string FullContent = null;
 
         internal string TargetFileName { get; set; }
 
@@ -324,7 +495,7 @@ public class FileManager: IDisposable
     #endregion class Block
 
 
-    private readonly List<FileBlock> generatedFiles = new List<FileBlock>();
+    internal readonly List<FileBlock> generatedFiles = new List<FileBlock>();
     protected DynamicTextTransformation _textTransformation;
     private FileBlock currentFileBlock;
     private string templateDirectory;
@@ -338,6 +509,14 @@ public class FileManager: IDisposable
         this._textTransformation = textTransformation;
         this.templateFile = textTransformation.Host.TemplateFile;
         this.templateDirectory = Path.GetDirectoryName(templateFile);
+        ModernGenerator = _textTransformation.LhqModelVersion > 1;
+    }
+    
+    public bool ModernGenerator { get; private set; }
+
+    protected virtual bool RunModernGenerator(FileManager fileManager)
+    {
+        return T4Utils.RunModernGenerator(null as DTE2, _textTransformation.LhqFileName, _textTransformation.LhqItemTemplateId, fileManager);
     }
 
 	public void Dispose()
@@ -350,6 +529,17 @@ public class FileManager: IDisposable
 			{
 				if (isShared) 
 				{
+				    if (ModernGenerator)
+				    {
+                        CleanUp();
+                        //T4Utils.RemoveLastError();
+				        if (RunModernGenerator(this))
+				        {
+				            this.InternalFlush(true, true);
+				        }
+				        return;
+				    }
+                    
 					var lastError = T4Utils.GetLastError();
 					if (lastError != null)
 					{
@@ -511,7 +701,7 @@ public class FileManager: IDisposable
         EndBlockData(CurrentFileBlock.Header);
     }
 
-    private FileBlock CurrentFileBlock
+    internal FileBlock CurrentFileBlock
     {
         get { return currentFileBlock; }
         set
@@ -561,9 +751,9 @@ public class FileManager: IDisposable
         this.InternalFlush(!isShared);
     }
 
-	internal void InternalFlush(bool allowed)
+	internal void InternalFlush(bool allowed, bool force = false)
     {
-		if (allowed)
+		if ((allowed && !ModernGenerator) || force)
         {
 			this.Process();
         }
@@ -603,14 +793,21 @@ public class FileManager: IDisposable
 				throw new System.ApplicationException(string.Format("Directory '{0}' does not exist!", outputDir));
             }
 
-            String fileName = Path.Combine(outputDir, fileBlock.Name);
+            string fileName = Path.Combine(outputDir, fileBlock.Name);
 
-            string headerText = fileBlock.Header == null ? string.Empty : fileBlock.Header.GetData(this.Template);
-            string footerText = fileBlock.Footer == null ? string.Empty : fileBlock.Footer.GetData(this.Template);
+            string content;
+            if (string.IsNullOrEmpty(fileBlock.FullContent))
+            {
+                string headerText = fileBlock.Header == null ? string.Empty : fileBlock.Header.GetData(this.Template);
+                string footerText = fileBlock.Footer == null ? string.Empty : fileBlock.Footer.GetData(this.Template);
+                content = headerText + fileBlock.GetData(this.Template) + footerText;
+            }
+            else
+            {
+                content = fileBlock.FullContent;
+            }
 
-            string content = headerText + fileBlock.GetData(this.Template) + footerText;
-
-			try {            
+            try {            
 				CreateFile(fileName, content, fileBlock);
             } catch (System.IO.IOException e) {
 				throw new System.ApplicationException(string.Format("Could not create/update file '{0}'", fileName));
@@ -631,9 +828,12 @@ public class FileManager: IDisposable
         }
     }
 
+    private static readonly Encoding _noBomEncoding = new UTF8Encoding(false);
+
 	protected void SaveContentToFile(String fileName, String content, FileBlock fileBlock)
 	{
-		File.WriteAllText(fileName, content);
+	    var encoding = fileBlock.BOM ? System.Text.Encoding.UTF8 : _noBomEncoding;
+		File.WriteAllText(fileName, content, encoding);
 		/*var tempFile = System.IO.Path.Combine(this.tempPath, fileBlock.Name);
 		File.WriteAllText(tempFile, content);*/
 	}
@@ -661,6 +861,11 @@ public class FileManager: IDisposable
 
     protected bool IsFileContentDifferent(String fileName, String newContent)
     {
+        if (ModernGenerator)
+        {
+            return true;
+        }
+        
         return !(File.Exists(fileName) && File.ReadAllText(fileName) == newContent);
     }
 
@@ -690,6 +895,11 @@ public class FileManager: IDisposable
             TemplateFileAsOutputTarget = new OutputTarget(templateProjectItem);
 
             checkOutAction = (String fileName) => dte.SourceControl.CheckOutItem(fileName);
+        }
+
+        protected override bool RunModernGenerator(FileManager fileManager)
+        {
+            return T4Utils.RunModernGenerator(dte, _textTransformation.LhqFileName, _textTransformation.LhqItemTemplateId, fileManager);
         }
 
 		public override DTE2 GetDte()
@@ -1279,6 +1489,9 @@ public class DynamicTextTransformation
     private readonly PropertyInfo _errors;
     private readonly PropertyInfo _host;
 
+    // 0: file name, 1: itemtemplateId, 2: modelVersion
+    private System.Tuple<string, string, int> _currentModelInfo;
+
     /// <summary>
     /// Creates an instance of the DynamicTextTransformation class around the passed in
     /// TextTransformation shapped instance passed in, or if the passed in instance
@@ -1318,14 +1531,57 @@ public class DynamicTextTransformation
         }
         _host = type.GetProperty("Host");
         _errors = type.GetProperty("Errors");
+        
+        var propCurrentModelInfo = type.GetProperty("CurrentModelInfo");
+        if (propCurrentModelInfo != null)
+        {
+            _currentModelInfo = propCurrentModelInfo.GetValue(instance) as System.Tuple<string, string, int>;
+        }
+
+        if (_currentModelInfo == null)
+        {
+            _currentModelInfo = System.Tuple.Create("", "", 1);
+        }
+
+        _isModernGenerator = _currentModelInfo.Item3 > 1;
+        if (_isModernGenerator)
+        {
+            _nullStringBuilder = new StringBuilder();
+        }
     }
+
+    public string LhqFileName
+    {
+        get { return _currentModelInfo.Item1; }
+    }
+
+    public string LhqItemTemplateId
+    {
+        get { return _currentModelInfo.Item2; }
+    }
+    
+    public int LhqModelVersion
+    {
+        get { return _currentModelInfo.Item3; }
+    }
+
+    private bool _isModernGenerator;
+    private StringBuilder _nullStringBuilder;
+    
 
     /// <summary>
     /// Gets the value of the wrapped TextTranformation instance's GenerationEnvironment property
     /// </summary>
     public StringBuilder GenerationEnvironment
     {
-        get { return (StringBuilder) _generationEnvironment.GetValue(_instance, null); }
+        get
+        {
+            if (_isModernGenerator)
+            {
+                return _nullStringBuilder;
+            }
+            return (StringBuilder) _generationEnvironment.GetValue(_instance, null);
+        }
     }
 
     /// <summary>
@@ -1341,6 +1597,7 @@ public class DynamicTextTransformation
     /// </summary>
     public void Write(string text)
     {
+        if (_isModernGenerator) return;
         _write.Invoke(_instance, new object[]
                                  {
                                      text
@@ -1352,6 +1609,7 @@ public class DynamicTextTransformation
     /// </summary>
     public void WriteLine(string text)
     {
+        if (_isModernGenerator) return;
         _writeLine.Invoke(_instance, new object[]
                                      {
                                          text

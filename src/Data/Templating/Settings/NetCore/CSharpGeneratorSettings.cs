@@ -47,9 +47,9 @@ namespace LHQ.Data.Templating.Settings.NetCore
             }
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             node.AddAttribute(nameof(MissingTranslationFallbackToPrimary), DataNodeValueHelper.ToString(MissingTranslationFallbackToPrimary));
         }

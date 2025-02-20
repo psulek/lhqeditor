@@ -55,9 +55,9 @@ namespace LHQ.Data.Templating.Settings.Json
             }
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             node.AddAttribute(nameof(CultureCodeInFileNameForPrimaryLanguage), DataNodeValueHelper.ToString(CultureCodeInFileNameForPrimaryLanguage));
             node.AddAttribute(nameof(MetadataFileNameSuffix), MetadataFileNameSuffix);

@@ -32,10 +32,10 @@ namespace LHQ.Data.Templating.Templates
     {
         public abstract string Id { get; }
         public abstract string Name { get; }
-
+        
         public abstract ModelFeatures ModelFeatures { get; }
 
-        public abstract void Serialize(DataNode node);
+        public abstract void Serialize(DataNode node, int modelVersion);
         public abstract bool Deserialize(DataNode node);
 
         public abstract SettingsValidationError Validate();

@@ -1,7 +1,7 @@
 ﻿{
   "model": {
     "uid": "6ce4d54c5dbd415c93019d315e278638",
-    "version": 1,
+    "version": 2,
     "options": {
       "categories": true,
       "resources": "Categories"
@@ -6733,6 +6733,8 @@
                   "name": "CSharp",
                   "attrs": {
                     "OutputFolder": "Resources",
+                    "EncodingWithBOM": "false",
+                    "LineEndings": "CRLF",
                     "UseExpressionBodySyntax": "true",
                     "MissingTranslationFallbackToPrimary": "true"
                   }
@@ -6741,6 +6743,8 @@
                   "name": "ResX",
                   "attrs": {
                     "OutputFolder": "Resources",
+                    "EncodingWithBOM": "false",
+                    "LineEndings": "CRLF",
                     "CultureCodeInFileNameForPrimaryLanguage": "true"
                   }
                 }

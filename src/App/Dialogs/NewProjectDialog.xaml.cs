@@ -23,10 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using LHQ.App.Behaviors;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs;
 using LHQ.Data;
 using LHQ.Data.Templating.Templates;
+using Microsoft.Xaml.Behaviors;
 
 namespace LHQ.App.Dialogs
 {
@@ -46,13 +48,13 @@ namespace LHQ.App.Dialogs
             var openLanguageSettings = false;
             ModelOptions modelOptions = null;
             CodeGeneratorTemplate codeGeneratorTemplate = null;
-
+            
             using (var viewModel = new NewProjectDialogViewModel(shellViewContext))
             {
-                viewModel.SetVsExtraInfo(vsExtraInfo);
+                viewModel.SetExtraInfo(vsExtraInfo);
                 viewModel.ModelName = modelName;
                 
-                bool? dialogResult = DialogShow<NewProjectDialogViewModel, NewProjectDialog>(viewModel);
+                bool? dialogResult = DialogShow<NewProjectDialogViewModel, NewProjectDialog>(viewModel, true);
                 bool submitted = dialogResult == true;
                 if (submitted)
                 {

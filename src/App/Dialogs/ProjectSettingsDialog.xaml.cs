@@ -40,13 +40,14 @@ namespace LHQ.App.Dialogs
             InitializeComponent();
         }
 
-        public static bool DialogShow(IShellViewContext shellViewContext, ModelOptions modelOptions)
+        public static bool DialogShow(IShellViewContext shellViewContext, ModelOptions modelOptions, out int newModelVersion)
         {
             ArgumentValidator.EnsureArgumentNotNull(modelOptions, "modelOptions");
 
             using (var viewModel = new ProjectSettingsDialogViewModel(shellViewContext))
             {
                 bool? dialogResult = DialogShow<ProjectSettingsDialogViewModel, ProjectSettingsDialog>(viewModel);
+                newModelVersion = viewModel.ProjectSettings.SelectedModelVersion;
                 bool result = dialogResult == true;
                 if (result)
                 {

@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationFrameworkDelayProcessServiceRestartMachine" xml:space="preserve">
+    <value>Riavvia macchina</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTconfirm1stOwnerKey" xml:space="preserve">
+    <value>Pulsante AVVIA - conferma la chiave del 1&#176; titolare.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTrebootmachine" xml:space="preserve">
+    <value>Pulsante AVVIA - riavvia la macchina.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmKey" xml:space="preserve">
+    <value>CONFERMA CHIAVE</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmWithButtonAndRemove" xml:space="preserve">
+    <value>Conferma la chiave come chiave titolare con il pulsante CONFERMA CHIAVE e rimuove la chiave dalla macchina.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyDiscardByRemove" xml:space="preserve">
+    <value>Rimuove questa chiave eliminandola dalla macchina.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyInsertKeyToRegister" xml:space="preserve">
+    <value>Inserire la chiave per registrare la chiave del primo titolare.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyKeyInserted" xml:space="preserve">
+    <value>La chiave {0} &#232; stata inserita.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyNoOwnerKeyRegistered" xml:space="preserve">
+    <value>Nessuna chiave titolare registrata.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyOwnerKeyRegistration" xml:space="preserve">
+    <value>Registrazione chiave titolare</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyReboot" xml:space="preserve">
+    <value>RIAVVIA</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyRemoveToContinue" xml:space="preserve">
+    <value>Rimuovere la chiave per continuare.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeySuccessfullyRegistered" xml:space="preserve">
+    <value>La chiave {0} &#232; stata registrata correttamente come chiave titolare.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineAllDoorClosed" xml:space="preserve">
+    <value>Tutte le porte sono chiuse. Chiama assistente.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineClosedDoor" xml:space="preserve">
+    <value>{0} Chiusa</value>
+  </data>
+  <data name="AWPDialogProcessingAftAftLockMessage" xml:space="preserve">
+    <value>Trasferimento senza contanti. Attendere...</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinted" xml:space="preserve">
+    <value>Ricevuta stampata. Conservare la ricevuta.</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinting" xml:space="preserve">
+    <value>Stampa ricevuta. Attendere...</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinted" xml:space="preserve">
+    <value>Voucher stampato. Conservare il voucher.</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinting" xml:space="preserve">
+    <value>Stampa voucher. Attendere...</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorGameWillBeDeactivated" xml:space="preserve">
+    <value>Il gioco verr&#224; disattivato dopo il riavvio!</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorInternalError" xml:space="preserve">
+    <value>Errore interno. Chiamare l&#39;assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorReconcileButton" xml:space="preserve">
+    <value>Risolva gioco</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartButton" xml:space="preserve">
+    <value>Riavvia macchina</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Prema &quot;START&quot; per riavviare.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Prema &quot;ROSSO&quot; per risolvere. Prema &quot;START&quot; per riavviare.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Errore di gioco</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Errore di gioco {0}Selezionare un&#39;opzione.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorSerialNumberIsEmpty" xml:space="preserve">
+    <value>Il numero di serie &#232; vuoto.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnexpectedError" xml:space="preserve">
+    <value>Errore imprevisto. Chiamare l’assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnfinishedGame" xml:space="preserve">
+    <value>Terminare gioco non terminato &quot;{0}&quot;. Chiamare l’assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorWorkflowError" xml:space="preserve">
+    <value>Errore interno</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineCashOutButton" xml:space="preserve">
+    <value>Incasso</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineSasBlockMachine" xml:space="preserve">
+    <value>Macchina disabilitata dall’host SAS</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Chiamare l’assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogGameWin" xml:space="preserve">
+    <value>Vincita di gioco: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpot" xml:space="preserve">
+    <value>Jackpot! {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWin" xml:space="preserve">
+    <value>Jackpot: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWithoutAmount" xml:space="preserve">
+    <value>Jackpot! </value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoBonusAwards" xml:space="preserve">
+    <value>Assegnazione bonus host: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoCongratulations" xml:space="preserve">
+    <value>Congratulazioni!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectBonusAward" xml:space="preserve">
+    <value>Surinkti assegnazione bonus host!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButton" xml:space="preserve">
+    <value>Riscuoti</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButtonInfo" xml:space="preserve">
+    <value>Il pulsante START consente la riscossione della vincita aggiungendola al proprio saldo.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptNotPrinted" xml:space="preserve">
+    <value>Ricevuta non stampata.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinted" xml:space="preserve">
+    <value>Voucher stampato. Conservare il voucher.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinting" xml:space="preserve">
+    <value>Stampa voucher. Attendere...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogBillsPaid" xml:space="preserve">
+    <value>Banconote pagato: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogDispenseCashOut" xml:space="preserve">
+    <value>Incasso</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayCancelledDialogHandpayCancelled" xml:space="preserve">
+    <value>Pagamento contanti annullato</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpay" xml:space="preserve">
+    <value>Pagamento contanti!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpayAmount" xml:space="preserve">
+    <value>Importo pagamento contanti: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogCallAttendant" xml:space="preserve">
+    <value>Chiamare l’assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayAmount" xml:space="preserve">
+    <value>Importo pagamento contanti: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayRequired" xml:space="preserve">
+    <value>Pagamento contanti richiesto!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogMessage" xml:space="preserve">
+    <value>Pagamento contanti a mano</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpayAmount" xml:space="preserve">
+    <value>Importo pagamento contanti: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpaySuccessful" xml:space="preserve">
+    <value>Pagamento contanti concluso correttamente</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogRemoveKey" xml:space="preserve">
+    <value>Rimuovi chiave per uscire</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogBillCashOutFailed" xml:space="preserve">
+    <value>Incasso tramite dispensatore di banconote non riuscito. Chiamare l&#39;assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCashOut" xml:space="preserve">
+    <value>Incasso</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsLeft" xml:space="preserve">
+    <value>Monete rimaste:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsPaid" xml:space="preserve">
+    <value>Monete pagate:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsToBePaid" xml:space="preserve">
+    <value>Monete da pagare:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCashOutFailed" xml:space="preserve">
+    <value>Incasso tramite moneta hopper non riuscito. Chiamare l&#39;assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCoinValue" xml:space="preserve">
+    <value>Valore moneta hopper:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutDialogMessage" xml:space="preserve">
+    <value>Incasso host: Attendere...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutFailedDialogMessage" xml:space="preserve">
+    <value>Incasso a host non riuscito. Chiama assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonCashout" xml:space="preserve">
+    <value>INCASSO</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonContinuePlaying" xml:space="preserve">
+    <value>CONTINUA IL GIOCO</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogFooter" xml:space="preserve">
+    <value>Premere &quot;MENU&quot; per continuare il gioco. Premere &quot;START&quot; per incassare.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogMessage" xml:space="preserve">
+    <value>Vuoi incassare?</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogFooter" xml:space="preserve">
+    <value>Premere &quot;MENU&quot; per continuare il gioco.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogNotPaidAmount" xml:space="preserve">
+    <value>Hopper non pu&#242; pagare l’importo {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogSelectOption" xml:space="preserve">
+    <value>Selezionare un’opzione:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogContinueGamePlay" xml:space="preserve">
+    <value>Continuare a giocare.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogRestrictedCredit" xml:space="preserve">
+    <value>Credito limitato {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketNotPrinted" xml:space="preserve">
+    <value>Voucher non stampato.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinted" xml:space="preserve">
+    <value>Voucher stampato. Conservare il voucher.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinting" xml:space="preserve">
+    <value>Stampa voucher. Attendere...</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenCallAttendant" xml:space="preserve">
+    <value>Chiamare l’assistente.</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenDescription" xml:space="preserve">
+    <value>Descrizione:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenErrorCode" xml:space="preserve">
+    <value>Codice di errore:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenInternalError" xml:space="preserve">
+    <value>Errore interno</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenSolution" xml:space="preserve">
+    <value>Soluzione:</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostLobby" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDenominations" xml:space="preserve">
+    <value>Denominazioni cambiate.</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDisabled" xml:space="preserve">
+    <value>Gioco disabilitato dall’host</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostReload" xml:space="preserve">
+    <value>Ricaricare</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureCallAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Chiamare l’assistente!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogFooterOnlyMenu" xml:space="preserve">
+    <value>Premi &quot;Menu&quot; per tornare alla lobby</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogLobbyButton" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogPayoutButton" xml:space="preserve">
+    <value>Incasso</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogFooter" xml:space="preserve">
+    <value>Premi &quot;START&quot; per restituire la puntata</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReconnectReturn" xml:space="preserve">
+    <value>Riconnetti il ​​server del Jackpot o premi un pulsante per restituire la PUNTATA.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReturnBetButton" xml:space="preserve">
+    <value>Restituire la puntata</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogBetReturned" xml:space="preserve">
+    <value>La scommessa &#232; stata restituita al saldo del credito del giocatore!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogRemoveKey" xml:space="preserve">
+    <value>Rimuovere la chiave per continuare.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureGameDisabled" xml:space="preserve">
+    <value>Gioco disabilitato!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Mancata corrispondenza nelle configurazioni del Jackpot.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotServerNotAvailable" xml:space="preserve">
+    <value>Il Jackpot non &#232; disponibile.</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseLicenseExpired" xml:space="preserve">
+    <value>Licenza scaduta</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseNoLicense" xml:space="preserve">
+    <value>Nessuna licenza</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCashOutButton" xml:space="preserve">
+    <value>Incasso</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDown" xml:space="preserve">
+    <value>Connessione persa con l&#39;host.</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDownSasDongleMissing" xml:space="preserve">
+    <value>Connessione persa con l&#39;host! (dongle SAS manca)</value>
+  </data>
+  <data name="AWPDialogProcessingValidationIdConfigurationNotConfigured" xml:space="preserve">
+    <value>ID validazione non configurato</value>
+  </data>
+  <data name="AWPDialogProcessingError" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionDisabled" xml:space="preserve">
+    <value>LA PARTITA NON CONTRIBUISCE AL JACKPOT, QUINDI IL JACKPOT NON PU&#210; ESSERE VINTO. </value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionEnabled" xml:space="preserve">
+    <value>LA PARTITA CONTRIBUISCE AL JACKPOT, QUINDI IL JACKPOT PU&#210; ESSERE VINTO. </value>
+  </data>
+  <data name="AWPViewsInitialViewAllSettingsWereSet" xml:space="preserve">
+    <value>Tutte le impostazioni sono state eseguite, premere “Riavvia la macchina”</value>
+  </data>
+  <data name="AWPViewsInitialViewAllTheseParameters" xml:space="preserve">
+    <value>Tutti questi parametri non verranno impostati correttamente per il corretto funzionamento della macchina. Utilizzare la chiave del titolare per entrare nel Menu di servizio</value>
+  </data>
+  <data name="AWPViewsInitialViewDetailInfo" xml:space="preserve">
+    <value>Informazioni dettagliate</value>
+  </data>
+  <data name="AWPViewsInitialViewInitialErrors" xml:space="preserve">
+    <value>Impostazioni iniziali - elenco di parametri non impostati</value>
+  </data>
+  <data name="AWPViewsInitialViewRebootMachine" xml:space="preserve">
+    <value>Riavvia la macchina</value>
+  </data>
+  <data name="AWPViewsInitialViewRootMenuItem" xml:space="preserve">
+    <value>Voce del menu di riavvio</value>
+  </data>
+  <data name="AWPViewsInitialViewSubMenuItem" xml:space="preserve">
+    <value>Voce del sottomenu</value>
+  </data>
+  <data name="AWPViewsInitialViewUseHwButtons" xml:space="preserve">
+    <value>Pulsanti PAGAMENTO - pagina precedente, MENU - pagina successiva&quot;, AVVIA - riavvia la macchina</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeAftBonus" xml:space="preserve">
+    <value>Bonus AFT</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeLegacyBonus" xml:space="preserve">
+    <value>Bonus precedente</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBackDoor" xml:space="preserve">
+    <value>Porta nera</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBellyDoor" xml:space="preserve">
+    <value>Sportello</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillStackerDoor" xml:space="preserve">
+    <value>Impilatore 2 porta</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillValidatorDoor" xml:space="preserve">
+    <value>Impilatore 1 porta</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor1" xml:space="preserve">
+    <value>Cassa 1 porta</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor2" xml:space="preserve">
+    <value>Cassa 2 porta</value>
+  </data>
+  <data name="HardwareDPXS435SwitchLogicBox" xml:space="preserve">
+    <value>Porta logica</value>
+  </data>
+  <data name="HardwareDPXS435SwitchNone" xml:space="preserve">
+    <value>Valore vuoto</value>
+  </data>
+  <data name="HardwareDPXS435SwitchServiceDoor" xml:space="preserve">
+    <value>Porta di servizio</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterChassisIsOpen" xml:space="preserve">
+    <value>Telaio stampante aperto</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterHeadIsUp" xml:space="preserve">
+    <value>Testa stampante in funzione</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotReady" xml:space="preserve">
+    <value>Stampante non pronta</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotResponding" xml:space="preserve">
+    <value>La stampante non risponde</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterOutOfTicket" xml:space="preserve">
+    <value>La stampante non ha pi&#249; biglietti</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterPaperJam" xml:space="preserve">
+    <value>Inceppamento carta</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestDownArrow" xml:space="preserve">
+    <value>↓</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestUpArrow" xml:space="preserve">
+    <value>↑</value>
+  </data>
+</root>

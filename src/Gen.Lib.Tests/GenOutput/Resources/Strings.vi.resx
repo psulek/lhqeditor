@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationFrameworkDelayProcessServiceRestartMachine" xml:space="preserve">
+    <value>Khởi động lại m&#225;y</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTconfirm1stOwnerKey" xml:space="preserve">
+    <value>N&#250;t START (BẮT ĐẦU) - x&#225;c nhận ch&#236;a kh&#243;a Chủ sở hữu thứ nhất.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTrebootmachine" xml:space="preserve">
+    <value>N&#250;t START (BẮT ĐẦU) - khởi động lại m&#225;y.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmKey" xml:space="preserve">
+    <value>X&#193;C NHẬN CH&#204;A KH&#211;A</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmWithButtonAndRemove" xml:space="preserve">
+    <value>X&#225;c nhận ch&#236;a kh&#243;a n&#224;y l&#224; Ch&#236;a kh&#243;a chủ sở hữu bằng n&#250;t CONFIRM KEY (X&#193;C NHẬN CH&#204;A KH&#211;A) v&#224; r&#250;t ch&#236;a kh&#243;a khỏi m&#225;y. </value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyDiscardByRemove" xml:space="preserve">
+    <value>Hủy bỏ ch&#236;a kh&#243;a n&#224;y bằng c&#225;ch r&#250;t ch&#236;a kh&#243;a khỏi m&#225;y.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyInsertKeyToRegister" xml:space="preserve">
+    <value>Cắm ch&#236;a kh&#243;a để đăng k&#253; Ch&#236;a kh&#243;a chủ sở hữu đầu ti&#234;n.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyKeyInserted" xml:space="preserve">
+    <value>Đ&#227; cắm {0} ch&#236;a kh&#243;a.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyNoOwnerKeyRegistered" xml:space="preserve">
+    <value>Kh&#244;ng c&#243; Ch&#236;a kh&#243;a chủ sở hữu n&#224;o được đăng k&#253;.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyOwnerKeyRegistration" xml:space="preserve">
+    <value>Đăng k&#253; Ch&#236;a kh&#243;a chủ sở hữu</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyReboot" xml:space="preserve">
+    <value>KHỞI ĐỘNG LẠI</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyRemoveToContinue" xml:space="preserve">
+    <value>R&#250;t ch&#236;a kh&#243;a để tiếp tục.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeySuccessfullyRegistered" xml:space="preserve">
+    <value>Ch&#236;a kh&#243;a {0} đ&#227; được đăng k&#253; th&#224;nh c&#244;ng l&#224; ch&#236;a kh&#243;a Chủ sở hữu.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineAllDoorClosed" xml:space="preserve">
+    <value>Đ&#227; đ&#243;ng tất cả c&#225;c cửa. Gọi Nh&#226;n vi&#234;n phục vụ.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineClosedDoor" xml:space="preserve">
+    <value>{0} đ&#227; đ&#243;ng</value>
+  </data>
+  <data name="AWPDialogProcessingAftAftLockMessage" xml:space="preserve">
+    <value>Chuyển khoản kh&#244;ng d&#249;ng tiền mặt. Vui l&#242;ng chờ...</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinted" xml:space="preserve">
+    <value>Đ&#227; in bi&#234;n nhận. Vui l&#242;ng nhận bi&#234;n nhận.</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinting" xml:space="preserve">
+    <value>Đang in bi&#234;n nhận. Vui l&#242;ng chờ...</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinted" xml:space="preserve">
+    <value>Đ&#227; in phiếu ưu đ&#227;i. Vui l&#242;ng nhận phiếu ưu đ&#227;i.</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinting" xml:space="preserve">
+    <value>Đang in phiếu ưu đ&#227;i. Vui l&#242;ng chờ...</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorGameWillBeDeactivated" xml:space="preserve">
+    <value>Tr&#242; chơi sẽ bị hủy k&#237;ch hoạt sau khi khởi động lại!</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorInternalError" xml:space="preserve">
+    <value>Lỗi nội bộ. Vui l&#242;ng gọi nh&#226;n vi&#234;n.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorReconcileButton" xml:space="preserve">
+    <value>D&#224;n xếp tr&#242; chơi</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartButton" xml:space="preserve">
+    <value>Khởi động lại m&#225;y</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Nhấn &quot;START&quot; để khởi động lại.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Nhấn &quot;ĐỎ&quot; để d&#224;n xếp. Nhấn &quot;START&quot; để khởi động lại.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Lỗi tr&#242; chơi</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Lỗi tr&#242; chơi {0}Vui l&#242;ng chọn một t&#249;y chọn:</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorSerialNumberIsEmpty" xml:space="preserve">
+    <value>Số s&#234;-ri trống.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnexpectedError" xml:space="preserve">
+    <value>Lỗi kh&#244;ng mong muốn. Vui l&#242;ng gọi Nh&#226;n vi&#234;n phục vụ.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnfinishedGame" xml:space="preserve">
+    <value>Ho&#224;n th&#224;nh tr&#242; chơi chưa ho&#224;n th&#224;nh &quot;{0}&quot;. Vui l&#242;ng gọi Nh&#226;n vi&#234;n phục vụ.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorWorkflowError" xml:space="preserve">
+    <value>Lỗi nội bộ</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineCashOutButton" xml:space="preserve">
+    <value>Nhận bằng tiền mặt</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineSasBlockMachine" xml:space="preserve">
+    <value>M&#225;y bị v&#244; hiệu h&#243;a bởi m&#225;y chủ SAS</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Vui l&#242;ng gọi Nh&#226;n vi&#234;n phục vụ.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogGameWin" xml:space="preserve">
+    <value>Tiền thắng từ tr&#242; chơi: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpot" xml:space="preserve">
+    <value>Jackpot! {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWin" xml:space="preserve">
+    <value>Jackpot: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWithoutAmount" xml:space="preserve">
+    <value>Jackpot! </value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoBonusAwards" xml:space="preserve">
+    <value>Giải thưởng của m&#225;y chủ: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoCongratulations" xml:space="preserve">
+    <value>Xin ch&#250;c mừng!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectBonusAward" xml:space="preserve">
+    <value>Nhận giải thưởng của m&#225;y chủ!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButton" xml:space="preserve">
+    <value>Nhận</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButtonInfo" xml:space="preserve">
+    <value>N&#250;t START sẽ ghi c&#243; số tiền thắng cược v&#224;o số dư.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptNotPrinted" xml:space="preserve">
+    <value>Bi&#234;n nhận kh&#244;ng được in.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinted" xml:space="preserve">
+    <value>Đ&#227; in phiếu ưu đ&#227;i. Vui l&#242;ng nhận phiếu ưu đ&#227;i.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinting" xml:space="preserve">
+    <value>Đang in phiếu ưu đ&#227;i. Vui l&#242;ng chờ...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogBillsPaid" xml:space="preserve">
+    <value>H&#243;a đơn đ&#227; thanh to&#225;n: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogDispenseCashOut" xml:space="preserve">
+    <value>R&#250;t tiền</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayCancelledDialogHandpayCancelled" xml:space="preserve">
+    <value>Đ&#227; hủy thanh to&#225;n thủ c&#244;ng</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpay" xml:space="preserve">
+    <value>Thanh to&#225;n thủ c&#244;ng!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpayAmount" xml:space="preserve">
+    <value>Số tiền thanh to&#225;n thủ c&#244;ng: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogCallAttendant" xml:space="preserve">
+    <value>Vui l&#242;ng gọi Nh&#226;n vi&#234;n phục vụ.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayAmount" xml:space="preserve">
+    <value>Số tiền thanh to&#225;n thủ c&#244;ng: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayRequired" xml:space="preserve">
+    <value>Y&#234;u cầu thanh to&#225;n!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogMessage" xml:space="preserve">
+    <value>R&#250;t bằng tiền mặt kh&#244;ng th&#224;nh c&#244;ng!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpayAmount" xml:space="preserve">
+    <value>Số tiền thanh to&#225;n thủ c&#244;ng: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpaySuccessful" xml:space="preserve">
+    <value>Thanh to&#225;n thủ c&#244;ng th&#224;nh c&#244;ng</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogRemoveKey" xml:space="preserve">
+    <value>R&#250;t ch&#236;a kh&#243;a để Tho&#225;t</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogBillCashOutFailed" xml:space="preserve">
+    <value>R&#250;t tiền từ Bill Dispenser kh&#244;ng th&#224;nh c&#244;ng.
+Vui l&#242;ng gọi nh&#226;n vi&#234;n.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCashOut" xml:space="preserve">
+    <value>Nhận bằng tiền mặt</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsLeft" xml:space="preserve">
+    <value>Số xu c&#242;n lại:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsPaid" xml:space="preserve">
+    <value>Số xu đ&#227; thanh to&#225;n:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsToBePaid" xml:space="preserve">
+    <value>Số xu phải thanh to&#225;n:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCashOutFailed" xml:space="preserve">
+    <value>R&#250;t tiền từ Hopper kh&#244;ng th&#224;nh c&#244;ng. 
+Vui l&#242;ng gọi nh&#226;n vi&#234;n.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCoinValue" xml:space="preserve">
+    <value>Gi&#225; trị xu của phễu chứa xu:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutDialogMessage" xml:space="preserve">
+    <value>R&#250;t tiền v&#224;o m&#225;y chủ. Vui l&#242;ng chờ...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutFailedDialogMessage" xml:space="preserve">
+    <value>R&#250;t tiền v&#224;o m&#225;y chủ thất bại. Gọi Nh&#226;n vi&#234;n phục vụ.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonCashout" xml:space="preserve">
+    <value>Nhận bằng tiền mặt</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonContinuePlaying" xml:space="preserve">
+    <value>TIẾP TỤC CHƠI</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogFooter" xml:space="preserve">
+    <value>Nhấn &quot;MENU&quot; để Tiếp tục chơi. Nhấn &quot;START&quot; để R&#250;t tiền.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogMessage" xml:space="preserve">
+    <value>Bạn c&#243; muốn R&#250;t tiền kh&#244;ng?</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogFooter" xml:space="preserve">
+    <value>Nhấn &quot;MENU&quot; để tiếp tục chơi.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogNotPaidAmount" xml:space="preserve">
+    <value>Phễu chứa xu kh&#244;ng thể trả tiền {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogSelectOption" xml:space="preserve">
+    <value>Vui l&#242;ng chọn một t&#249;y chọn:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogContinueGamePlay" xml:space="preserve">
+    <value>Vui l&#242;ng tiếp tục chơi tr&#242; chơi.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogRestrictedCredit" xml:space="preserve">
+    <value>T&#237;n dụng bị giới hạn {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketNotPrinted" xml:space="preserve">
+    <value>Phiếu ưu đ&#227;i kh&#244;ng được in.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinted" xml:space="preserve">
+    <value>Đ&#227; in phiếu ưu đ&#227;i. Vui l&#242;ng nhận phiếu ưu đ&#227;i.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinting" xml:space="preserve">
+    <value>Đang in phiếu ưu đ&#227;i. Vui l&#242;ng chờ...</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenCallAttendant" xml:space="preserve">
+    <value>Gọi nh&#226;n vi&#234;n</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenDescription" xml:space="preserve">
+    <value>M&#244; tả:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenErrorCode" xml:space="preserve">
+    <value>M&#227; lỗi:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenInternalError" xml:space="preserve">
+    <value>Lỗi nội bộ</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenSolution" xml:space="preserve">
+    <value>Giải ph&#225;p:</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostLobby" xml:space="preserve">
+    <value>Sảnh đợi</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDenominations" xml:space="preserve">
+    <value>Mệnh gi&#225; đ&#227; được thay đổi.</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDisabled" xml:space="preserve">
+    <value>Tr&#242; chơi bị v&#244; hiệu h&#243;a bởi m&#225;y chủ</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostReload" xml:space="preserve">
+    <value>Tải lại</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureCallAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Vui l&#242;ng gọi Nh&#226;n vi&#234;n phục vụ!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogFooterOnlyMenu" xml:space="preserve">
+    <value>Nhấn &quot;Menu&quot; để quay lại sảnh đợi</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogLobbyButton" xml:space="preserve">
+    <value>Sảnh đợi</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogPayoutButton" xml:space="preserve">
+    <value>Nhận bằng tiền mặt</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogFooter" xml:space="preserve">
+    <value>Nhấn &quot;START&quot; quay lại đặt cược</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReconnectReturn" xml:space="preserve">
+    <value>Kết nối lại m&#225;y chủ Jackpot hoặc nhấn một n&#250;t để trả lại tiền đặt cược.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReturnBetButton" xml:space="preserve">
+    <value>Trả lại tiền cược</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogBetReturned" xml:space="preserve">
+    <value>Tiền đặt cược đ&#227; được ho&#224;n trả v&#224;o số dư t&#237;n dụng của người chơi!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogRemoveKey" xml:space="preserve">
+    <value>R&#250;t ch&#236;a kh&#243;a để tiếp tục.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureGameDisabled" xml:space="preserve">
+    <value>Tr&#242; chơi bị v&#244; hiệu h&#243;a!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Cấu h&#236;nh Jackpot kh&#244;ng khớp.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotServerNotAvailable" xml:space="preserve">
+    <value>Jackpot kh&#244;ng c&#243; sẵn.</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseLicenseExpired" xml:space="preserve">
+    <value>Giấy ph&#233;p đ&#227; hết hạn</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseNoLicense" xml:space="preserve">
+    <value>Kh&#244;ng c&#243; giấy ph&#233;p</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCashOutButton" xml:space="preserve">
+    <value>R&#250;t tiền</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDown" xml:space="preserve">
+    <value>Mất kết nối với m&#225;y chủ.</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDownSasDongleMissing" xml:space="preserve">
+    <value>Mất kết nối với m&#225;y chủ! (SAS dongle bị thiếu)</value>
+  </data>
+  <data name="AWPDialogProcessingValidationIdConfigurationNotConfigured" xml:space="preserve">
+    <value>Id x&#225;c thực kh&#244;ng được định cấu h&#236;nh</value>
+  </data>
+  <data name="AWPDialogProcessingError" xml:space="preserve">
+    <value>lỗi</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionDisabled" xml:space="preserve">
+    <value>TR&#210; CHƠI KH&#212;NG G&#211;P PHẦN V&#192;O JACKPOT V&#204; VẬY KH&#212;NG THỂ CHIẾN THẮNG. </value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionEnabled" xml:space="preserve">
+    <value>TR&#210; CHƠI G&#211;P PHẦN V&#192;O JACKPOT V&#204; VẬY THỂ CHIẾN THẮNG. </value>
+  </data>
+  <data name="AWPViewsInitialViewAllSettingsWereSet" xml:space="preserve">
+    <value>Tất cả c&#225;c c&#224;i đặt đ&#227; được đặt, b&#226;y giờ vui l&#242;ng nhấn &#39;Khởi động lại m&#225;y&#39;</value>
+  </data>
+  <data name="AWPViewsInitialViewAllTheseParameters" xml:space="preserve">
+    <value>Tất cả c&#225;c th&#244;ng số n&#224;y phải được đặt ch&#237;nh x&#225;c để m&#225;y hoạt động đ&#250;ng. Sử dụng ch&#236;a kh&#243;a Chủ sở hữu để nhập Menu dịch vụ.</value>
+  </data>
+  <data name="AWPViewsInitialViewDetailInfo" xml:space="preserve">
+    <value>Th&#244;ng tin chi tiết</value>
+  </data>
+  <data name="AWPViewsInitialViewInitialErrors" xml:space="preserve">
+    <value>C&#224;i đặt ban đầu - Danh s&#225;ch tham số chưa đặt</value>
+  </data>
+  <data name="AWPViewsInitialViewRebootMachine" xml:space="preserve">
+    <value>Khởi động lại m&#225;y</value>
+  </data>
+  <data name="AWPViewsInitialViewRootMenuItem" xml:space="preserve">
+    <value>Mục menu gốc</value>
+  </data>
+  <data name="AWPViewsInitialViewSubMenuItem" xml:space="preserve">
+    <value>Mục menu phụ</value>
+  </data>
+  <data name="AWPViewsInitialViewUseHwButtons" xml:space="preserve">
+    <value>N&#250;t PAYOUT (THANH TO&#193;N)- trang trước, MENU - trang tiếp theo&quot;, START (KHỞI ĐỘNG) - khởi động lại m&#225;y</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeAftBonus" xml:space="preserve">
+    <value>Tiền thưởng AFT</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeLegacyBonus" xml:space="preserve">
+    <value>Tiền thưởng kế thừa</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBackDoor" xml:space="preserve">
+    <value>Cửa sau</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBellyDoor" xml:space="preserve">
+    <value>Cửa trước</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillStackerDoor" xml:space="preserve">
+    <value>Cửa hộc giữ tiền 2</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillValidatorDoor" xml:space="preserve">
+    <value>Cửa hộc giữ tiền 1</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor1" xml:space="preserve">
+    <value>Cửa hộp tiền 1</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor2" xml:space="preserve">
+    <value>Cửa hộp tiền 2</value>
+  </data>
+  <data name="HardwareDPXS435SwitchLogicBox" xml:space="preserve">
+    <value>Cửa l&#244;gic</value>
+  </data>
+  <data name="HardwareDPXS435SwitchNone" xml:space="preserve">
+    <value>Gi&#225; trị trống</value>
+  </data>
+  <data name="HardwareDPXS435SwitchServiceDoor" xml:space="preserve">
+    <value>Cửa dịch vụ</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterChassisIsOpen" xml:space="preserve">
+    <value>Khung m&#225;y in đang mở</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterHeadIsUp" xml:space="preserve">
+    <value>Đầu m&#225;y in dựng l&#234;n</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotReady" xml:space="preserve">
+    <value>M&#225;y in chưa sẵn s&#224;ng</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotResponding" xml:space="preserve">
+    <value>M&#225;y in kh&#244;ng phản hồi</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterOutOfTicket" xml:space="preserve">
+    <value>M&#225;y in đ&#227; hết v&#233;</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterPaperJam" xml:space="preserve">
+    <value>Kẹt giấy</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestDownArrow" xml:space="preserve">
+    <value>↓</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestUpArrow" xml:space="preserve">
+    <value>↑</value>
+  </data>
+</root>

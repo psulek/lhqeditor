@@ -59,6 +59,11 @@ namespace LHQ.App.Services.Implementation
             return loadResult.Status == ModelLoadStatus.Success ? clonedModelContext : null;
         }
 
+        public bool IsCompatible(ModelContext modelContext)
+        {
+            return _serializerManager.IsCompatible(modelContext);
+        }
+
         public ModelLoadResult Load(ModelContext modelContext, string content)
         {
             var loadOptions = new ModelLoadOptions(false);
@@ -77,6 +82,11 @@ namespace LHQ.App.Services.Implementation
         public string Save(ModelContext modelContext, ModelSaveOptions modelSaveOptions)
         {
             return _serializerManager.Serialize(modelContext, modelSaveOptions);
+        }
+
+        public int[] GetSupportedModelVersions()
+        {
+            return _serializerManager.GetSupportedModelVersions();
         }
 
         public void Initialize()

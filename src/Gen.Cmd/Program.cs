@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,11 +22,11 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System.Diagnostics;
 using System.Drawing;
-using System.Reflection;
 using System.Text;
 using JavaScriptEngineSwitcher.Core;
 using LHQ.Gen.Cmd;
@@ -38,7 +39,7 @@ string Grey(string msg) => msg.Pastel(ConsoleColor.Gray);
 string White(string msg) => msg.Pastel(ConsoleColor.White);
 string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
-ILogger logger = new DefaultLogger().Logger;
+var logger = new DefaultLogger().Logger;
 
 string exePath = Process.GetCurrentProcess().MainModule.FileName;
 string exeName = Path.GetFileName(exePath);
@@ -48,7 +49,8 @@ Console.WriteLine(
     $"{White("LHQ Model Generator")}  {Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n")}");
 
 #if DEBUG
-//RunTestData();
+var testDataMode = false;
+RunTestData();
 #endif
 
 var missingParams = args.Length == 0;
@@ -70,7 +72,7 @@ try
         var csProjFile = CmdArgs.ProjectFile;
         var outDir = CmdArgs.OutDir!;
         var hostData = CmdArgs.Data;
-        
+
         Console.WriteLine($"""
                            LHQ model file: 
                            {lhqFile.Pastel(ConsoleColor.DarkCyan)}
@@ -85,30 +87,59 @@ try
 
         Console.WriteLine("Generating files from LHQ model started ...\n".Pastel(ConsoleColor.White));
 
+        // var inmemLogger = new InMemoryLogger();
+        // using var generator = new Generator(inmemLogger.Logger);
+
         using var generator = new Generator(logger);
         var start = Stopwatch.GetTimestamp();
-        var generatedFiles = generator.Generate(lhqFile, csProjFile, outDir, hostData);
+        var generateResult = generator.Generate(lhqFile, csProjFile, outDir, hostData);
+        var generatedFiles = generateResult.GeneratedFiles;
+        var modelGroupSettings = generateResult.ModelGroupSettings;
         var elapsedTime = Stopwatch.GetElapsedTime(start);
+        
+
+        // inmemLogger.Logger.Log(LogLevel.Error, "This is test error!");
+        // var ss = inmemLogger.ToString();
+        // var errs = inmemLogger.GetErrors();
 
         var genMsg = $"Generated {generatedFiles.Count} files in {elapsedTime:g}\n";
         Console.WriteLine(genMsg);
         logger.Info(genMsg);
         Console.WriteLine($"Ouput directory: \n{outDir.Pastel(ConsoleColor.DarkCyan)}\n");
 
+        if (modelGroupSettings.Count > 0)
+        {
+            Console.WriteLine("Settings:");
+            foreach (var groupSetting in modelGroupSettings)
+            {
+                if (groupSetting.Settings != null)
+                {
+                    Console.WriteLine($"  [{groupSetting.Group.Pastel(ConsoleColor.DarkYellow)}]");
+                    foreach (var settings in groupSetting.Settings)
+                    {
+                        Console.WriteLine($"\t{settings.Key}: {settings.Value.ToString().Pastel(ConsoleColor.White)}");
+                    }
+                }
+            }
+            
+            Console.WriteLine();
+        }
+
         var processedFiles = new List<string>();
-        var noBomEncoding = new UTF8Encoding(false);
         foreach (var file in generatedFiles)
         {
-            var overwritingFile = processedFiles.Contains(file.Key);
+            var fileName = file.FileName;
+            var overwritingFile = processedFiles.Contains(fileName);
             if (!overwritingFile)
             {
-                processedFiles.Add(file.Key);
+                processedFiles.Add(fileName);
             }
 
-            string fileName = Path.Combine(outDir, file.Key);
+            fileName = Path.Combine(outDir, fileName);
 
             string str = overwritingFile ? "overwritten" : "generated";
-            Console.WriteLine($"[{str}] {file.Key.Pastel(ConsoleColor.DarkCyan)}");
+            //string strBom = (file.Bom ? "with" : "without") + " BOM";
+            Console.WriteLine($"[{str}] {fileName.Pastel(ConsoleColor.DarkCyan)}"); // ({file.LineEndings}) {strBom}");
 
             var dir = Path.GetDirectoryName(fileName);
             if (dir != null && !Directory.Exists(dir))
@@ -116,8 +147,7 @@ try
                 Directory.CreateDirectory(dir);
             }
 
-            //await FileUtils.WriteAllTextAsync(fileName, file.Value);
-            File.WriteAllText(fileName, file.Value, noBomEncoding);
+            await file.WriteToDiskAsync(outDir);
         }
 
         Console.WriteLine($"\nSuccessfully saved {generatedFiles.Count} files.");
@@ -130,10 +160,10 @@ catch (Exception e)
     try
     {
         bool handled = false;
-        
+
         if (e is JsRuntimeException jsRuntimeException)
         {
-            if (jsRuntimeException.Type =="AppError")
+            if (jsRuntimeException.Type == "AppError")
             {
                 var callStack = jsRuntimeException.CallStack;
                 var description = jsRuntimeException.Description;
@@ -142,11 +172,11 @@ catch (Exception e)
                 var items = description.Split("\n");
                 var title = items.Length == 0 ? description : items[0];
                 var message = items.Length > 1 ? string.Join("\n", items.Skip(1)) : string.Empty;
-                
+
                 Console.Write($"{Error(title)}\n{message}");
-                
+
                 logger.Info($"{title}\n{message}\nFILE: {documentName} >> {callStack}");
-                
+
                 genericLog = false;
                 handled = true;
             }
@@ -158,8 +188,7 @@ catch (Exception e)
         }
     }
     catch
-    {
-    }
+    { }
 
     if (genericLog)
     {
@@ -169,6 +198,12 @@ catch (Exception e)
 finally
 {
     logger.Info($"Program {exeName} finished.");
+#if DEBUG
+    if (testDataMode)
+    {
+        Console.ReadLine();
+    }
+#endif
 }
 
 void WriteHelp()
@@ -237,22 +272,23 @@ void WriteHelp()
          """);
 }
 
-
 void RunTestData()
 {
     string? customNamespace = null;
     var csProjName = "";
+    testDataMode = true;
 
     // var lhqFullPath = @"c:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WpfResxCsharp01\Strings.lhq";
     // var lhqFullPath = @"c:\dev\github\psulek\lhqeditor\src.cmd\App.Tests\TestData\WinFormsResxCsharp01\Strings.lhq";
-    // var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\NetCoreResxCsharp01\\Strings.lhq";
-    // var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\WpfResxCsharp01v4\\Strings.lhq";
-    var lhqFullPath = "c:\\Terminal\\Base\\Localization\\Strings.lhq";
+    // var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src\\Gen.Lib.Tests\\TestData\\NetCoreResxCsharp01\\Strings.lhq";
+    // var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src\\Gen.Lib.Tests\\TestData\\WpfResxCsharp01v4\\Strings.lhq";
+    // var lhqFullPath = "c:\\Terminal\\Base\\Localization\\Strings.lhq";
     // var lhqFullPath = "c:\\Temp\\3\\2\\Strings.lhq";
 
- //   var lhqFullPath = "c:\\dev\\github\\psulek\\lhqeditor\\src.cmd\\App.Tests\\TestData\\TypescriptJson01\\Strings.lhq";
-    
+    var lhqFullPath = "C:\\dev\\github\\psulek\\lhqeditor\\src\\Gen.Lib.Tests\\TestData\\TypescriptJson01\\Strings.lhq";
+
     var outputDir = Path.Combine(Path.GetFullPath("..\\..\\..\\App.Tests"), "GenOutput");
+    //var outputDir = Path.GetDirectoryName(lhqFullPath);
     if (!Directory.Exists(outputDir))
     {
         Directory.CreateDirectory(outputDir);
@@ -277,4 +313,3 @@ void RunTestData()
         args = Enumerable.Append(args, "--namespace=" + customNamespace).ToArray();
     }
 }
-

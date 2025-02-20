@@ -60,18 +60,13 @@ namespace LHQ.Utils.Utilities
             }
         }
 
-        public static string ToLinuxLineEndings(string str)
-        {
-            return str.Replace("\r\n", "\n").Replace('\r', '\n');
-        }
+        // public static string ToLinuxLineEndings(string str)
+        // {
+        //     return str.Replace("\r\n", "\n").Replace('\r', '\n');
+        // }
 
-        public static async Task WriteAllTextAsync(string fileName, string text, bool useBOM = false, bool linuxLineEndings = false)
+        public static async Task WriteAllTextAsync(string fileName, string text, bool useBOM = false)
         {
-            if (linuxLineEndings)
-            {
-                text = ToLinuxLineEndings(text);
-            }
-
             var encoding = useBOM ? Encoding.UTF8 : NoBomEncoding;
             byte[] encodedText = encoding.GetBytes(text);
 

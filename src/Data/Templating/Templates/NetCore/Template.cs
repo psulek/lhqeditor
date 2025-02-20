@@ -32,6 +32,9 @@ namespace LHQ.Data.Templating.Templates.NetCore
 {
     public class NetCoreResxCsharp01Template: CSharpResXTemplateBase<CSharpGeneratorSettings>
     {
+        // public NetCoreResxCsharp01Template(int modelVersion) : base(modelVersion)
+        // { }
+
         [Browsable(false)]
         [JsonIgnore]
         public override string Id { get; } = "NetCoreResxCsharp01";

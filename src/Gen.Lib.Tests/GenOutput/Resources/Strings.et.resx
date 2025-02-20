@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationFrameworkDelayProcessServiceRestartMachine" xml:space="preserve">
+    <value>Taask&#228;ivitage masin</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTconfirm1stOwnerKey" xml:space="preserve">
+    <value>START nupp - kinnitab 1. omaniku v&#245;tme.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTrebootmachine" xml:space="preserve">
+    <value>START nupp - taask&#228;ivitab masina.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmKey" xml:space="preserve">
+    <value>V&#213;TME KINNITAMINE</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmWithButtonAndRemove" xml:space="preserve">
+    <value>Kinnitage see v&#245;ti Omaniku v&#245;tmeks nupust V&#213;TME KINNITAMINE ja eemaldage v&#245;ti masinast.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyDiscardByRemove" xml:space="preserve">
+    <value>K&#245;rvaldage v&#245;ti seda masinast eemaldades.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyInsertKeyToRegister" xml:space="preserve">
+    <value>Esimese Omaniku v&#245;tme registreerimiseks sisestage v&#245;ti.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyKeyInserted" xml:space="preserve">
+    <value>V&#245;ti {0} sisestatud.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyNoOwnerKeyRegistered" xml:space="preserve">
+    <value>Omaniku v&#245;tit ei ole registreeritud.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyOwnerKeyRegistration" xml:space="preserve">
+    <value>Omaniku v&#245;tme registreerimine</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyReboot" xml:space="preserve">
+    <value>TAASK&#196;IVITA</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyRemoveToContinue" xml:space="preserve">
+    <value>J&#228;tkamiseks eemaldage v&#245;ti.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeySuccessfullyRegistered" xml:space="preserve">
+    <value>V&#245;ti {0} registreeriti edukalt Omaniku v&#245;tmeks.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineAllDoorClosed" xml:space="preserve">
+    <value>K&#245;ik uksed suletud. Kutsuge saalit&#246;&#246;taja.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineClosedDoor" xml:space="preserve">
+    <value>Suletud {0}</value>
+  </data>
+  <data name="AWPDialogProcessingAftAftLockMessage" xml:space="preserve">
+    <value>Sularahavaba &#252;lekanne. Palun oodake...</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinted" xml:space="preserve">
+    <value>Kviitung tr&#252;kitud. V&#245;tke enda kviitung.</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinting" xml:space="preserve">
+    <value>Kviitungi tr&#252;kkimine. Palun oodake...</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinted" xml:space="preserve">
+    <value>Vautšer tr&#252;kitud. V&#245;tke enda vautšer.</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinting" xml:space="preserve">
+    <value>Vautšeri tr&#252;kkimine. Palun oodake...</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorGameWillBeDeactivated" xml:space="preserve">
+    <value>M&#228;ng deaktiveeritakse p&#228;rast taask&#228;ivitamist!</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorInternalError" xml:space="preserve">
+    <value>Sisemine viga. P&#246;&#246;rduge palun saalit&#246;&#246;taja poole.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorReconcileButton" xml:space="preserve">
+    <value>Lahenda m&#228;ng</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartButton" xml:space="preserve">
+    <value>Taask&#228;ivitage masin</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Taask&#228;ivitamiseks vajutage nuppu „START“.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Lahendamiseks vajutage „PUNANE“ Taask&#228;ivitamiseks vajutage nuppu „START“.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>M&#228;ngu ajal tekkis viga</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>M&#228;ngu ajal tekkis viga {0}Palun tehke valik:</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorSerialNumberIsEmpty" xml:space="preserve">
+    <value>Seerianumber on t&#252;hi.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnexpectedError" xml:space="preserve">
+    <value>Ootamatu viga. Kutsuge saalit&#246;&#246;taja.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnfinishedGame" xml:space="preserve">
+    <value>L&#245;petage pooleliolev m&#228;ng &quot;{0}&quot;. Kutsuge saalit&#246;&#246;taja.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorWorkflowError" xml:space="preserve">
+    <value>Sisemine viga</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineCashOutButton" xml:space="preserve">
+    <value>V&#228;ljamakse</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineSasBlockMachine" xml:space="preserve">
+    <value>SAS host l&#252;litas masina v&#228;lja</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Kutsuge saalit&#246;&#246;taja.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogGameWin" xml:space="preserve">
+    <value>V&#245;idud m&#228;ngust: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpot" xml:space="preserve">
+    <value>Jackpot! {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWin" xml:space="preserve">
+    <value>Jackpot: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWithoutAmount" xml:space="preserve">
+    <value>Jackpot! </value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoBonusAwards" xml:space="preserve">
+    <value>Hosti boonuse auhinnad: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoCongratulations" xml:space="preserve">
+    <value>Palju &#245;nne!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectBonusAward" xml:space="preserve">
+    <value>Cobrar hosti boonuse auhinnad!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButton" xml:space="preserve">
+    <value>Cobrar</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButtonInfo" xml:space="preserve">
+    <value>Nupp START lisab v&#245;idud sinu kontoseisule.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptNotPrinted" xml:space="preserve">
+    <value>Kviitungit ei tr&#252;kitud.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinted" xml:space="preserve">
+    <value>Vaušer tr&#252;kitud. V&#245;tke enda vautšer.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinting" xml:space="preserve">
+    <value>Vautšeri tr&#252;kkimine. Palun oodake...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogBillsPaid" xml:space="preserve">
+    <value>Makstud arved: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogDispenseCashOut" xml:space="preserve">
+    <value>V&#228;ljamakse</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayCancelledDialogHandpayCancelled" xml:space="preserve">
+    <value>Handpay t&#252;histatud</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpay" xml:space="preserve">
+    <value>Handpay!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpayAmount" xml:space="preserve">
+    <value>Handpay summa: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogCallAttendant" xml:space="preserve">
+    <value>Kutsuge saalit&#246;&#246;taja.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayAmount" xml:space="preserve">
+    <value>Handpay summa: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayRequired" xml:space="preserve">
+    <value>Handpay n&#245;utud!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogMessage" xml:space="preserve">
+    <value>Handpay v&#228;ljamakse eba&#245;nnestus!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpayAmount" xml:space="preserve">
+    <value>Handpay summa: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpaySuccessful" xml:space="preserve">
+    <value>Handpay edukas</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogRemoveKey" xml:space="preserve">
+    <value>V&#228;ljumiseks eemaldage v&#245;ti</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogBillCashOutFailed" xml:space="preserve">
+    <value>Bill Dispenser&#39;i v&#228;ljamakse eba&#245;nnestus.
+P&#246;&#246;rduge palun saalit&#246;&#246;taja poole.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCashOut" xml:space="preserve">
+    <value>V&#228;ljamakse</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsLeft" xml:space="preserve">
+    <value>M&#252;nte j&#228;&#228;nud:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsPaid" xml:space="preserve">
+    <value>M&#252;nte makstud:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsToBePaid" xml:space="preserve">
+    <value>M&#252;nte maksta:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCashOutFailed" xml:space="preserve">
+    <value>Kolu v&#228;ljamakse eba&#245;nnestus! 
+P&#246;&#246;rduge palun saalit&#246;&#246;taja poole.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCoinValue" xml:space="preserve">
+    <value>Kolu m&#252;ndi v&#228;&#228;rtus:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutDialogMessage" xml:space="preserve">
+    <value>Hosti v&#228;ljamakse. Palun oodake...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutFailedDialogMessage" xml:space="preserve">
+    <value>Hostile v&#228;ljamakse eba&#245;nnestus. Kutsuge saalit&#246;&#246;taja.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonCashout" xml:space="preserve">
+    <value>V&#228;ljamakse</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonContinuePlaying" xml:space="preserve">
+    <value>J&#196;TKAKE M&#196;NGU</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogFooter" xml:space="preserve">
+    <value>M&#228;nguga j&#228;tkamiseks vajutage &quot;MENU&quot;. V&#228;ljamakse jaoks vajutage &quot;START&quot;.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogMessage" xml:space="preserve">
+    <value>Kas soovite teha v&#228;ljamakse?</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogFooter" xml:space="preserve">
+    <value>M&#228;nguga j&#228;tkamiseks vajutage &quot;MENU&quot;.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogNotPaidAmount" xml:space="preserve">
+    <value>Kolu ei saa summat maksta {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogSelectOption" xml:space="preserve">
+    <value>Tehke valik:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogContinueGamePlay" xml:space="preserve">
+    <value>J&#228;tkake m&#228;ngu.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogRestrictedCredit" xml:space="preserve">
+    <value>Piiratud krediit {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketNotPrinted" xml:space="preserve">
+    <value>Vautšerit ei tr&#252;kitud.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinted" xml:space="preserve">
+    <value>Vaušer tr&#252;kitud. V&#245;tke enda vautšer.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinting" xml:space="preserve">
+    <value>Vautšeri tr&#252;kkimine. Palun oodake...</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenCallAttendant" xml:space="preserve">
+    <value>Kutsuge saalit&#246;&#246;taja</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenDescription" xml:space="preserve">
+    <value>Kirjeldus:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenErrorCode" xml:space="preserve">
+    <value>Vea kood:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenInternalError" xml:space="preserve">
+    <value>Sisemine viga</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenSolution" xml:space="preserve">
+    <value>Lahendus:</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostLobby" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDenominations" xml:space="preserve">
+    <value>Nimiv&#228;&#228;rtused on muudetud.</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDisabled" xml:space="preserve">
+    <value>Host keelas m&#228;ngu</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostReload" xml:space="preserve">
+    <value>Uuesti laadima</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureCallAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Kutsuge saalit&#246;&#246;taja!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogFooterOnlyMenu" xml:space="preserve">
+    <value>Fuajeesse naasmiseks vajutage &quot;Menu&quot;</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogLobbyButton" xml:space="preserve">
+    <value>Fuajeesse</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogPayoutButton" xml:space="preserve">
+    <value>V&#228;ljamakse</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogFooter" xml:space="preserve">
+    <value>Panuse tagastamiseks vajutage &quot;START&quot;</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReconnectReturn" xml:space="preserve">
+    <value>&#220;hendage uuesti jackpoti server v&#245;i vajutage PANUSE tagastamiseks nuppu.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReturnBetButton" xml:space="preserve">
+    <value>Tagasta panus</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogBetReturned" xml:space="preserve">
+    <value>Panus tagastati m&#228;ngija krediidisaldole!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogRemoveKey" xml:space="preserve">
+    <value>J&#228;tkamiseks eemaldage v&#245;ti.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureGameDisabled" xml:space="preserve">
+    <value>M&#228;ng keelatud!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Jackpoti konfiguratsioon ei &#252;hti.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotServerNotAvailable" xml:space="preserve">
+    <value>Jackpot pole saadaval.</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseLicenseExpired" xml:space="preserve">
+    <value>Litsents aegunud</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseNoLicense" xml:space="preserve">
+    <value>Litsents puudub</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCashOutButton" xml:space="preserve">
+    <value>V&#228;ljamakse</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDown" xml:space="preserve">
+    <value>&#220;hendus hostiga katkes.</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDownSasDongleMissing" xml:space="preserve">
+    <value>&#220;hendus hostiga katkes! (puudub SAS-dongle)</value>
+  </data>
+  <data name="AWPDialogProcessingValidationIdConfigurationNotConfigured" xml:space="preserve">
+    <value>Valideerimise ID pole konfigureeritud</value>
+  </data>
+  <data name="AWPDialogProcessingError" xml:space="preserve">
+    <value>Viga</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionDisabled" xml:space="preserve">
+    <value>KUNA M&#196;NG EI PANUSTA JACKPOT‘I, SIIS POLE V&#213;IMALIK JACKPOT‘I V&#213;ITA. </value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionEnabled" xml:space="preserve">
+    <value>M&#196;NG PANUSTAB JACKPOT‘I, SIIS V&#213;IMALIK JACKPOT‘I V&#213;ITA.</value>
+  </data>
+  <data name="AWPViewsInitialViewAllSettingsWereSet" xml:space="preserve">
+    <value>K&#245;ik seadistused m&#228;&#228;ratud, vajutage &quot;Taask&#228;ivita masin&quot;.</value>
+  </data>
+  <data name="AWPViewsInitialViewAllTheseParameters" xml:space="preserve">
+    <value>K&#245;ik need parameetrid tuleb masina &#245;igeks t&#246;&#246;ks &#245;igesti seadistada. Kasutage hooldusmen&#252;&#252; avamiseks Omaniku v&#245;tit.</value>
+  </data>
+  <data name="AWPViewsInitialViewDetailInfo" xml:space="preserve">
+    <value>&#220;ksikasjalik teave</value>
+  </data>
+  <data name="AWPViewsInitialViewInitialErrors" xml:space="preserve">
+    <value>Algseaded - loend seadistamata parameetritest</value>
+  </data>
+  <data name="AWPViewsInitialViewRebootMachine" xml:space="preserve">
+    <value>Taask&#228;ivitage masin</value>
+  </data>
+  <data name="AWPViewsInitialViewRootMenuItem" xml:space="preserve">
+    <value>Juurmen&#252;&#252; &#252;ksus</value>
+  </data>
+  <data name="AWPViewsInitialViewSubMenuItem" xml:space="preserve">
+    <value>Alam-men&#252;&#252; &#252;ksus</value>
+  </data>
+  <data name="AWPViewsInitialViewUseHwButtons" xml:space="preserve">
+    <value>Nupud V&#196;LJAMAKSE - eelmine leht, MEN&#220;&#220; - j&#228;rgmine leht&quot;, START - masina taask&#228;ivitamine</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeAftBonus" xml:space="preserve">
+    <value>AFT boonus</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeLegacyBonus" xml:space="preserve">
+    <value>Legacy boonus</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBackDoor" xml:space="preserve">
+    <value>Tagauks</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBellyDoor" xml:space="preserve">
+    <value>Esiuks</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillStackerDoor" xml:space="preserve">
+    <value>Virnastaja 2 uks</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillValidatorDoor" xml:space="preserve">
+    <value>Virnastaja 1 uks</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor1" xml:space="preserve">
+    <value>Rahakasti 1 uks</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor2" xml:space="preserve">
+    <value>Rahakasti 2 uks</value>
+  </data>
+  <data name="HardwareDPXS435SwitchLogicBox" xml:space="preserve">
+    <value>S&#252;steemiuks</value>
+  </data>
+  <data name="HardwareDPXS435SwitchNone" xml:space="preserve">
+    <value>T&#252;hi v&#228;&#228;rtus</value>
+  </data>
+  <data name="HardwareDPXS435SwitchServiceDoor" xml:space="preserve">
+    <value>Hooldusuks</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterChassisIsOpen" xml:space="preserve">
+    <value>Printeri korpus avatud</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterHeadIsUp" xml:space="preserve">
+    <value>Prindipea on &#252;leval</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotReady" xml:space="preserve">
+    <value>Printer ei ole valmis</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotResponding" xml:space="preserve">
+    <value>Printer ei vasta</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterOutOfTicket" xml:space="preserve">
+    <value>Printeril on kviitungid otsas</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterPaperJam" xml:space="preserve">
+    <value>Paberi on kinni j&#228;&#228;nud</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestDownArrow" xml:space="preserve">
+    <value>↓</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestUpArrow" xml:space="preserve">
+    <value>↑</value>
+  </data>
+</root>

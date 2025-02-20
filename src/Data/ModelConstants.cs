@@ -32,7 +32,10 @@ namespace LHQ.Data
         /// <summary>
         /// Current version of model metadata
         /// </summary>
-        public const int CurrentModelVersion = 1;
+        public const int CurrentModelVersion = 2;
+        
+        public const int LatestSupportedModelVersion = 2;
+        // public const int CurrentModelVersion = 2;
 
         public static readonly Guid ModelUID = new Guid("6CE4D54C-5DBD-415C-9301-9D315E278638");
     }

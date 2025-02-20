@@ -27,11 +27,14 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using LHQ.App.Behaviors;
 using LHQ.App.Code;
 using LHQ.App.Extensions;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs;
 using LHQ.Utils.Utilities;
+using Microsoft.Xaml.Behaviors;
+
 // ReSharper disable VirtualMemberNeverOverridden.Global
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -93,7 +96,8 @@ namespace LHQ.App.Dialogs
         protected virtual void InternalOnLoaded()
         { }
 
-        public static bool? DialogShow<TDialogViewModel, TDialogWindow>(TDialogViewModel dialogViewModel)
+        public static bool? DialogShow<TDialogViewModel, TDialogWindow>(TDialogViewModel dialogViewModel, 
+            bool manualBehaviors = false)
             where TDialogViewModel : DialogViewModelBase
             where TDialogWindow : DialogWindow, new()
         {
@@ -106,6 +110,17 @@ namespace LHQ.App.Dialogs
                 Owner = ownerWindow,
                 DataContext = dialogViewModel
             };
+
+            if (manualBehaviors)
+            {
+                var behaviors = Interaction.GetBehaviors(dialog);
+                behaviors.Add(new EventToCommandBehavior
+                {
+                    Event = "Loaded",
+                    PassArguments = true,
+                    Command = dialogViewModel.LoadedWindowCommand
+                });
+            }
 
             dialog.Closed += (sender, args) => { dialog.DataContext = null; };
 

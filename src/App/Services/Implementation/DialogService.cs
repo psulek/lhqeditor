@@ -196,6 +196,8 @@ namespace LHQ.App.Services.Implementation
             {
                 try
                 {
+                    Logger.Error("Global exception", exception);
+                    
 #if DEBUG0
                     ExceptionDebugDialog.DialogShow(AppContext, exception);
 #else

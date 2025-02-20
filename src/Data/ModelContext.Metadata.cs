@@ -25,10 +25,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
-using LHQ.Data.Interfaces.Key;
 using LHQ.Data.Interfaces.Metadata;
 using LHQ.Data.Metadata;
 using LHQ.Data.Support;
@@ -64,6 +62,7 @@ namespace LHQ.Data
         internal void DeserializeMetadata()
         {
             ModelMetadataList metadata = Model.Metadata;
+            //int modelVersion = Model.Version;
             if (metadata != null)
             {
                 var alreadyProcessed = new List<Guid>();

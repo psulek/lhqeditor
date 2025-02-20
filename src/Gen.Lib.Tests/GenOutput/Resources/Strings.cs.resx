@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationFrameworkDelayProcessServiceRestartMachine" xml:space="preserve">
+    <value>Restartuj stroj</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTconfirm1stOwnerKey" xml:space="preserve">
+    <value>Tlač&#237;tko START - potvrzen&#237; 1. Kl&#237;če majitele</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTrebootmachine" xml:space="preserve">
+    <value> 
+Tlač&#237;tko START - restart zař&#237;zen&#237;</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmKey" xml:space="preserve">
+    <value>POTVRDIT KL&#205;Č</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmWithButtonAndRemove" xml:space="preserve">
+    <value>Potvrďte tento kl&#237;č jako Kl&#237;č Majitele stisknut&#237;m tlač&#237;tka POTVRDIT a odstraňte kl&#237;č ze zař&#237;zen&#237;.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyDiscardByRemove" xml:space="preserve">
+    <value>Odstraňte tento kl&#237;č vytažen&#237;m ze zař&#237;zen&#237;.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyInsertKeyToRegister" xml:space="preserve">
+    <value>Vsuňte kl&#237;č pro registraci Kl&#237;če Majitele.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyKeyInserted" xml:space="preserve">
+    <value>Kl&#237;č {0} byl vložen.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyNoOwnerKeyRegistered" xml:space="preserve">
+    <value>Nen&#237; registrov&#225;n ž&#225;dn&#253; Kl&#237;č Majitele.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyOwnerKeyRegistration" xml:space="preserve">
+    <value>Registrace Kl&#237;če Majitele.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyReboot" xml:space="preserve">
+    <value>RESTART</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyRemoveToContinue" xml:space="preserve">
+    <value>Pre pokračovanie vyberte kľ&#250;č</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeySuccessfullyRegistered" xml:space="preserve">
+    <value>Kl&#237;č {0} byl &#250;spěšně zaregistrov&#225;n jako kl&#237;č Majitele.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineAllDoorClosed" xml:space="preserve">
+    <value>Všechny dveře jsou zavřen&#233;. Zavolejte obsluhu.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineClosedDoor" xml:space="preserve">
+    <value>Zavřen&#233; {0}</value>
+  </data>
+  <data name="AWPDialogProcessingAftAftLockMessage" xml:space="preserve">
+    <value>Prob&#237;h&#225; bezhotovostn&#237; převod. Pros&#237;m čekejte...</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinted" xml:space="preserve">
+    <value>Stvrzenka byla vytištěna. Pros&#237;m vezměte si stvrzenku.</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinting" xml:space="preserve">
+    <value>Prob&#237;h&#225; tisk stvrzenky. Pros&#237;m čekejte...</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinted" xml:space="preserve">
+    <value>Tiket byl vytištěn. Pros&#237;m vezměte si tiket.</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinting" xml:space="preserve">
+    <value>Prob&#237;h&#225; tisk tiketu... Pros&#237;m čekejte...</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorGameWillBeDeactivated" xml:space="preserve">
+    <value>Hra bude po restartu deaktivov&#225;na!</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorInternalError" xml:space="preserve">
+    <value>Intern&#237; chyba. Pros&#237;m zavolejte obsluhu.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorReconcileButton" xml:space="preserve">
+    <value>Vypoř&#225;dej hru</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartButton" xml:space="preserve">
+    <value>Restartuj stroj</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Stiskněte tlač&#237;tko &quot;START&quot; pro restart. </value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Stiskněte tlač&#237;tko &quot;ČERVEN&#193;&quot; pro vypoř&#225;d&#225;n&#237;. Stiskněte &quot;START&quot; pro restart. </value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Chyba hry</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Chyba hry {0}Pros&#237;m, zvolte jednu z možnost&#237;:</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorSerialNumberIsEmpty" xml:space="preserve">
+    <value>S&#233;riov&#233; č&#237;slo je pr&#225;zdn&#233;.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnexpectedError" xml:space="preserve">
+    <value>Nečekan&#225; Chyba. Pros&#237;m zavolejte obsluhu.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnfinishedGame" xml:space="preserve">
+    <value>Dokončete neukončenou hru &quot;{0}&quot;. Pros&#237;m zavolejte Obsluhu.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorWorkflowError" xml:space="preserve">
+    <value>Intern&#237; chyba</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineCashOutButton" xml:space="preserve">
+    <value>Vyplatit</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineSasBlockMachine" xml:space="preserve">
+    <value>Př&#237;stroj byl vypnut SAS hostitelem.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Pros&#237;m zavolejte obsluhu.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogGameWin" xml:space="preserve">
+    <value>V&#253;hra z hry: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpot" xml:space="preserve">
+    <value>Jackpot!  {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWin" xml:space="preserve">
+    <value>Jackpot: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWithoutAmount" xml:space="preserve">
+    <value>Jackpot! </value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoBonusAwards" xml:space="preserve">
+    <value>Bonus syst&#233;mu: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoCongratulations" xml:space="preserve">
+    <value>Gratulujeme!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectBonusAward" xml:space="preserve">
+    <value>Připsat bonus syst&#233;mu!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButton" xml:space="preserve">
+    <value>Připsat</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButtonInfo" xml:space="preserve">
+    <value>Tlač&#237;tko START přip&#237;še v&#253;hru do kreditu.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptNotPrinted" xml:space="preserve">
+    <value>Stvrzenka nebyla vytištěna.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinted" xml:space="preserve">
+    <value>Stvrzenka byla vytištěna. Pros&#237;m, vezměte si vaši stvrzenku.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinting" xml:space="preserve">
+    <value>Prob&#237;h&#225; tisk stvrzenky. Pros&#237;m čekejte...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogBillsPaid" xml:space="preserve">
+    <value>Vyplacen&#233; bankovky: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogDispenseCashOut" xml:space="preserve">
+    <value>Vyplatit</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayCancelledDialogHandpayCancelled" xml:space="preserve">
+    <value>V&#253;plata hotovosti zrušena.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpay" xml:space="preserve">
+    <value>V&#253;plata hotovosti!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpayAmount" xml:space="preserve">
+    <value>V&#253;še v&#253;platy: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogCallAttendant" xml:space="preserve">
+    <value>Pros&#237;m zavolejte obsluhu.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayAmount" xml:space="preserve">
+    <value>V&#253;še v&#253;platy: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayRequired" xml:space="preserve">
+    <value>Nutn&#225; v&#253;plata v hotovosti !</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogMessage" xml:space="preserve">
+    <value>V&#253;plata obsluhou selhala!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpayAmount" xml:space="preserve">
+    <value>V&#253;še v&#253;platy: {0}}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpaySuccessful" xml:space="preserve">
+    <value>V&#253;plata hotovosti byla &#250;spěšn&#225;</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogRemoveKey" xml:space="preserve">
+    <value>Pro ukončen&#237; odstraňte kl&#237;č</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogBillCashOutFailed" xml:space="preserve">
+    <value>V&#253;plata d&#225;vkovačem bankovek selhala. Zavolejte pros&#237;m obsluhu.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCashOut" xml:space="preserve">
+    <value>Vyplatit</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsLeft" xml:space="preserve">
+    <value>Zb&#253;v&#225; minc&#237;:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsPaid" xml:space="preserve">
+    <value>Vyplacen&#233; mince:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsToBePaid" xml:space="preserve">
+    <value>Mince na vyplacen&#237;:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCashOutFailed" xml:space="preserve">
+    <value>Vypl&#225;cen&#237; minc&#237; ze z&#225;sobn&#237;ku selhalo. 
+Pros&#237;m zavolejte obsluhu. </value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCoinValue" xml:space="preserve">
+    <value>Hodnota minc&#237; v z&#225;sobn&#237;ku</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutDialogMessage" xml:space="preserve">
+    <value>Prob&#237;h&#225; vypl&#225;cen&#237; syst&#233;mov&#233;ho &#250;čtu. Pros&#237;m čekejte…</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutFailedDialogMessage" xml:space="preserve">
+    <value>Vypl&#225;cen&#237; syst&#233;mov&#233;ho &#250;čtu selhalo. Zavolejte pros&#237;m obsluhu.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonCashout" xml:space="preserve">
+    <value>Vyplatit</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonContinuePlaying" xml:space="preserve">
+    <value>Pokračovat ve hře</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogFooter" xml:space="preserve">
+    <value>Stiskněte &quot;MENU&quot; pro pokračov&#225;n&#237; ve hře. Stlačte &quot;START&quot; pro vyplacen&#237;.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogMessage" xml:space="preserve">
+    <value>Přejete si vyplatit v&#253;hru?</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogFooter" xml:space="preserve">
+    <value>Stiskněte &quot;MENU&quot; pro pokračov&#225;n&#237; ve hře.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogNotPaidAmount" xml:space="preserve">
+    <value>Z&#225;sobn&#237;k nemůže vyplatit č&#225;stku {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogSelectOption" xml:space="preserve">
+    <value>Pros&#237;m, zvolte si možnost:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogContinueGamePlay" xml:space="preserve">
+    <value>Pros&#237;m pokračujte ve hře.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogRestrictedCredit" xml:space="preserve">
+    <value>Omezen&#253; kredit {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketNotPrinted" xml:space="preserve">
+    <value>Tiket nebyl vytištěn.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinted" xml:space="preserve">
+    <value>Tiket byl vytištěn. Pros&#237;m vezměte si v&#225;š tiket.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinting" xml:space="preserve">
+    <value>Prob&#237;h&#225; tisk tiketu. Pros&#237;m čekejte…</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenCallAttendant" xml:space="preserve">
+    <value>Zavolejte obsluhu.</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenDescription" xml:space="preserve">
+    <value>Popis:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenErrorCode" xml:space="preserve">
+    <value>Chybov&#253; k&#243;d:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenInternalError" xml:space="preserve">
+    <value>Intern&#237; chyba:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenSolution" xml:space="preserve">
+    <value>Řešen&#237;:</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostLobby" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDenominations" xml:space="preserve">
+    <value>Denominace byly změneny.</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDisabled" xml:space="preserve">
+    <value>Hra byla ukončena hostiteľom.</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostReload" xml:space="preserve">
+    <value>Znovu nač&#237;st</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureCallAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Pros&#237;m zavolejte obsluhu!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogFooterOnlyMenu" xml:space="preserve">
+    <value>Stiskněte &quot;Menu&quot; pro n&#225;vrat do lobby</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogLobbyButton" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogPayoutButton" xml:space="preserve">
+    <value>Vyplatit</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogFooter" xml:space="preserve">
+    <value>Stiskněte &quot;ŠTART&quot; pro vr&#225;cen&#237; s&#225;zky</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReconnectReturn" xml:space="preserve">
+    <value>
+Znovu připojte Jackpot server nebo stiskněte tlač&#237;tko pro vr&#225;cen&#237; S&#193;ZKY.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReturnBetButton" xml:space="preserve">
+    <value>Vr&#225;tit s&#225;zku</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogBetReturned" xml:space="preserve">
+    <value>S&#225;zka byla vr&#225;cena do zůstatku kreditu hr&#225;če!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogRemoveKey" xml:space="preserve">
+    <value>Pro pokračov&#225;n&#237; vyjměte kl&#237;č.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureGameDisabled" xml:space="preserve">
+    <value>Hra zak&#225;z&#225;na!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Nesoulad v konfiguraci Jackpotu.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotServerNotAvailable" xml:space="preserve">
+    <value>Jackpot nen&#237; k dispozici.</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseLicenseExpired" xml:space="preserve">
+    <value>Licence vypršela.</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseNoLicense" xml:space="preserve">
+    <value>Bez licence</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCashOutButton" xml:space="preserve">
+    <value>V&#253;plata</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDown" xml:space="preserve">
+    <value>Selhalo spojen&#237; s hostitelem.</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDownSasDongleMissing" xml:space="preserve">
+    <value>Selhalo spojen&#237; s hostitelem. (Chyb&#237; SAS dongle)</value>
+  </data>
+  <data name="AWPDialogProcessingValidationIdConfigurationNotConfigured" xml:space="preserve">
+    <value>ID validace nen&#237; nakonfigurov&#225;no</value>
+  </data>
+  <data name="AWPDialogProcessingError" xml:space="preserve">
+    <value>Chyba</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionDisabled" xml:space="preserve">
+    <value>HRA SE NEZAPOČ&#205;T&#193;V&#193; DO JACKPOTU,  JACKPOT TEDY NELZE VYHR&#193;T. </value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionEnabled" xml:space="preserve">
+    <value>HRA SE ZAPOČ&#205;T&#193;V&#193; DO JACKPOTU, JACKPOT TEDY LZE VYHR&#193;T.</value>
+  </data>
+  <data name="AWPViewsInitialViewAllSettingsWereSet" xml:space="preserve">
+    <value>Všechna nastaven&#237; jsou připraveny, nyn&#237; pros&#237;m stiskněte &quot;Restartovat zař&#237;zen&#237;&quot;.</value>
+  </data>
+  <data name="AWPViewsInitialViewAllTheseParameters" xml:space="preserve">
+    <value>Pro spr&#225;vn&#233; fungov&#225;n&#237; zař&#237;zen&#237; mus&#237; b&#253;t všechny tyto parametry spr&#225;vně nastaven&#233;. Použijte Kl&#237;č Majitele pro vstup do Servisn&#237;ho Menu.</value>
+  </data>
+  <data name="AWPViewsInitialViewDetailInfo" xml:space="preserve">
+    <value>Detailn&#237; informace</value>
+  </data>
+  <data name="AWPViewsInitialViewInitialErrors" xml:space="preserve">
+    <value>&#218;vodn&#237; Nastaven&#237; - Zoznam nenastaven&#253;ch parametrov</value>
+  </data>
+  <data name="AWPViewsInitialViewRebootMachine" xml:space="preserve">
+    <value>Restartovat zař&#237;zen&#237;</value>
+  </data>
+  <data name="AWPViewsInitialViewRootMenuItem" xml:space="preserve">
+    <value>Položka z&#225;kladn&#237;ho menu</value>
+  </data>
+  <data name="AWPViewsInitialViewSubMenuItem" xml:space="preserve">
+    <value>Položka podsekce menu</value>
+  </data>
+  <data name="AWPViewsInitialViewUseHwButtons" xml:space="preserve">
+    <value>Tlač&#237;tka VYPLATIŤ - předchoz&#237; str&#225;nka, MENU - n&#225;sleduj&#237;c&#237; str&#225;nka, START - restart př&#237;stroje</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeAftBonus" xml:space="preserve">
+    <value>AFT Bonus</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeLegacyBonus" xml:space="preserve">
+    <value>Přenosn&#253; Bonus</value>
+  </data>
+  <data name="CountriescsCZ" xml:space="preserve">
+    <value>Česk&#225; republika</value>
+  </data>
+  <data name="CountriesenAU" xml:space="preserve">
+    <value>Austr&#225;lie</value>
+  </data>
+  <data name="CountriesenCA" xml:space="preserve">
+    <value>Kanada</value>
+  </data>
+  <data name="CountriesenGB" xml:space="preserve">
+    <value>Velk&#225; Brit&#225;nie</value>
+  </data>
+  <data name="CountriesenUS" xml:space="preserve">
+    <value>Spojen&#233; st&#225;ty</value>
+  </data>
+  <data name="CountrieshuHU" xml:space="preserve">
+    <value>Maďarsko</value>
+  </data>
+  <data name="CountriesskSK" xml:space="preserve">
+    <value>Slovensko</value>
+  </data>
+  <data name="CountriesukUA" xml:space="preserve">
+    <value>Ukrajinština (Ukrajina)</value>
+  </data>
+  <data name="GameRoundReportAmount" xml:space="preserve">
+    <value>Č&#225;stka</value>
+  </data>
+  <data name="GameRoundReportBackToList" xml:space="preserve">
+    <value>Zpět na seznam</value>
+  </data>
+  <data name="GameRoundReportBaseGame" xml:space="preserve">
+    <value>Z&#225;kladn&#237; hra</value>
+  </data>
+  <data name="GameRoundReportBet" xml:space="preserve">
+    <value>S&#225;zka</value>
+  </data>
+  <data name="GameRoundReportBetPaid" xml:space="preserve">
+    <value>Zaplacen&#225; s&#225;zka</value>
+  </data>
+  <data name="GameRoundReportBonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="GameRoundReportCanceledCaps" xml:space="preserve">
+    <value>ZRUŠEN&#201;</value>
+  </data>
+  <data name="GameRoundReportCanceledWin" xml:space="preserve">
+    <value>Zrušen&#225; v&#253;hra</value>
+  </data>
+  <data name="GameRoundReportCollectedWin" xml:space="preserve">
+    <value>Připsan&#225; v&#253;hra</value>
+  </data>
+  <data name="GameRoundReportCount" xml:space="preserve">
+    <value>Počet</value>
+  </data>
+  <data name="GameRoundReportDetail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="GameRoundReportExpiredTimestamp" xml:space="preserve">
+    <value>Timestamp vypršel.</value>
+  </data>
+  <data name="GameRoundReportFinalMultiplier" xml:space="preserve">
+    <value>Konečn&#253; n&#225;sobitel</value>
+  </data>
+  <data name="GameRoundReportFinished" xml:space="preserve">
+    <value>Ukončena</value>
+  </data>
+  <data name="GameRoundReportFreeSpin" xml:space="preserve">
+    <value>Voln&#225; Ot&#225;čka</value>
+  </data>
+  <data name="GameRoundReportFreeSpins" xml:space="preserve">
+    <value>Voln&#233; ot&#225;čky</value>
+  </data>
+  <data name="GameRoundReportGamble" xml:space="preserve">
+    <value>Risk</value>
+  </data>
+  <data name="GameRoundReportGame" xml:space="preserve">
+    <value>Hra</value>
+  </data>
+  <data name="GameRoundReportGameRound" xml:space="preserve">
+    <value>Odehran&#225; hra</value>
+  </data>
+  <data name="GameRoundReportGameRoundDetailNotAvailable" xml:space="preserve">
+    <value>Detail hry neni k dispozici.</value>
+  </data>
+  <data name="GameRoundReportHalve" xml:space="preserve">
+    <value>Půlen&#237;</value>
+  </data>
+  <data name="GameRoundReportHeadTitle" xml:space="preserve">
+    <value>Synot Detail Hry</value>
+  </data>
+  <data name="GameRoundReportIncorrectCustomerCode" xml:space="preserve">
+    <value>Nespr&#225;vn&#253; k&#243;d z&#225;kazn&#237;ka.</value>
+  </data>
+  <data name="GameRoundReportIncorrectParameterTimestamp" xml:space="preserve">
+    <value>Parametr timestamp chyb&#237;, nebo m&#225; nespr&#225;vn&#253; form&#225;t.</value>
+  </data>
+  <data name="GameRoundReportInvalidSignature" xml:space="preserve">
+    <value>Podpis je neplatn&#253;.</value>
+  </data>
+  <data name="GameRoundReportLimitCaps" xml:space="preserve">
+    <value>LIMIT</value>
+  </data>
+  <data name="GameRoundReportLineBet" xml:space="preserve">
+    <value>S&#225;zka na l&#237;niu</value>
+  </data>
+  <data name="GameRoundReportMissingParameterSignature" xml:space="preserve">
+    <value>Chyb&#237; parametr signature.</value>
+  </data>
+  <data name="GameRoundReportMissingParameterTimestamp" xml:space="preserve">
+    <value>Chyb&#237; parametr timestamp.</value>
+  </data>
+  <data name="GameRoundReportMissingReportData" xml:space="preserve">
+    <value>Chyb&#253; data o detaile hry.</value>
+  </data>
+  <data name="GameRoundReportMsgGameAutoCleanuped" xml:space="preserve">
+    <value>Tato hra byla automaticky vynulov&#225;na.</value>
+  </data>
+  <data name="GameRoundReportMsgGameAutoClosed" xml:space="preserve">
+    <value>Tato hra byla automaticky zatvoren&#225;.</value>
+  </data>
+  <data name="GameRoundReportMsgGameAutoCollected" xml:space="preserve">
+    <value>Tato hra byla automaticky připsan&#225;.</value>
+  </data>
+  <data name="GameRoundReportMsgGameCanceled" xml:space="preserve">
+    <value>Tato hra byla stornov&#225;na.</value>
+  </data>
+  <data name="GameRoundReportMsgGameExpirationCollected" xml:space="preserve">
+    <value>Toto hern&#237; kolo bylo automaticky ukončeno z důvodu vypršen&#237; časov&#233;ho limitu. Všechny v&#253;hry byly přips&#225;ny do kreditu.</value>
+  </data>
+  <data name="GameRoundReportMsgGameForceCanceled" xml:space="preserve">
+    <value>Tato hra byla vynutene stornov&#225;na.</value>
+  </data>
+  <data name="GameRoundReportMsgGameForceCleanuped" xml:space="preserve">
+    <value>Tato hra byla vynutene vynulov&#225;na.</value>
+  </data>
+  <data name="GameRoundReportMsgGameForceClosed" xml:space="preserve">
+    <value>Tato hra byla vynutene zatvoren&#225;.</value>
+  </data>
+  <data name="GameRoundReportMsgGameForceCollected" xml:space="preserve">
+    <value>Tato hra byla vynutene připsan&#225;.</value>
+  </data>
+  <data name="GameRoundReportMsgGameLimit" xml:space="preserve">
+    <value>Limit hry</value>
+  </data>
+  <data name="GameRoundReportMsgGamePlatformCanceled" xml:space="preserve">
+    <value>Tato hra byla stornov&#225;na platformou.</value>
+  </data>
+  <data name="GameRoundReportMsgGamePlatformCollected" xml:space="preserve">
+    <value>Tato hra byla připsan&#225; platformou.</value>
+  </data>
+  <data name="GameRoundReportMsgGamePlatformRolledbackresource" xml:space="preserve">
+    <value>Tato hra byla vr&#225;cen&#225; platformou.</value>
+  </data>
+  <data name="GameRoundReportMsgLimitOccurred" xml:space="preserve">
+    <value>Byl dosažen limit:</value>
+  </data>
+  <data name="GameRoundReportMsgNoWins" xml:space="preserve">
+    <value>Ž&#225;dn&#225; v&#253;hra</value>
+  </data>
+  <data name="GameRoundReportMultiplier" xml:space="preserve">
+    <value>N&#225;sobitel</value>
+  </data>
+  <data name="GameRoundReportPayline" xml:space="preserve">
+    <value>Linie</value>
+  </data>
+  <data name="GameRoundReportPaylineCount" xml:space="preserve">
+    <value>Počet lini&#237;</value>
+  </data>
+  <data name="GameRoundReportPayout" xml:space="preserve">
+    <value>V&#253;hra</value>
+  </data>
+  <data name="GameRoundReportPaytable" xml:space="preserve">
+    <value>V&#253;hern&#237; tabulka</value>
+  </data>
+  <data name="GameRoundReportPick" xml:space="preserve">
+    <value>V&#253;běr</value>
+  </data>
+  <data name="GameRoundReportPickGame" xml:space="preserve">
+    <value>Konfigur&#225;tor</value>
+  </data>
+  <data name="GameRoundReportReels" xml:space="preserve">
+    <value>V&#225;lce</value>
+  </data>
+  <data name="GameRoundReportRespin" xml:space="preserve">
+    <value>Respin</value>
+  </data>
+  <data name="GameRoundReportResult" xml:space="preserve">
+    <value>V&#253;sledek</value>
+  </data>
+  <data name="GameRoundReportReturnedBet" xml:space="preserve">
+    <value>Vr&#225;cena s&#225;zka</value>
+  </data>
+  <data name="GameRoundReportReturnedCaps" xml:space="preserve">
+    <value>VR&#193;CEN&#201;</value>
+  </data>
+  <data name="GameRoundReportRevealedReels" xml:space="preserve">
+    <value>Odhalen&#233; V&#225;lce</value>
+  </data>
+  <data name="GameRoundReportRound" xml:space="preserve">
+    <value>Hra</value>
+  </data>
+  <data name="GameRoundReportSelection" xml:space="preserve">
+    <value>V&#253;běr</value>
+  </data>
+  <data name="GameRoundReportSpecialExpandingSymbol" xml:space="preserve">
+    <value>Speci&#225;ln&#237; expanduj&#237;ci symbol</value>
+  </data>
+  <data name="GameRoundReportSpin" xml:space="preserve">
+    <value>Ot&#225;čka</value>
+  </data>
+  <data name="GameRoundReportStarted" xml:space="preserve">
+    <value>Zah&#225;jeno</value>
+  </data>
+  <data name="GameRoundReportSummary" xml:space="preserve">
+    <value>Souhrn</value>
+  </data>
+  <data name="GameRoundReportSymbol" xml:space="preserve">
+    <value>Symbol</value>
+  </data>
+  <data name="GameRoundReportSymbols" xml:space="preserve">
+    <value>Symboly</value>
+  </data>
+  <data name="GameRoundReportTipCategoryCollone" xml:space="preserve">
+    <value>Sloupec</value>
+  </data>
+  <data name="GameRoundReportTipCategoryCorner" xml:space="preserve">
+    <value>Čtveřice</value>
+  </data>
+  <data name="GameRoundReportTipCategoryDozen" xml:space="preserve">
+    <value>Tucet</value>
+  </data>
+  <data name="GameRoundReportTipCategoryEvenChance" xml:space="preserve">
+    <value>Rovn&#225; S&#225;zka</value>
+  </data>
+  <data name="GameRoundReportTipCategorySixLine" xml:space="preserve">
+    <value>Šestice</value>
+  </data>
+  <data name="GameRoundReportTipCategorySplit" xml:space="preserve">
+    <value>Dvojice</value>
+  </data>
+  <data name="GameRoundReportTipCategoryStraightUp" xml:space="preserve">
+    <value>Č&#237;slo</value>
+  </data>
+  <data name="GameRoundReportTipCategoryStreet" xml:space="preserve">
+    <value>Trojice</value>
+  </data>
+  <data name="GameRoundReportTipOptionBlack" xml:space="preserve">
+    <value>Čern&#225;</value>
+  </data>
+  <data name="GameRoundReportTipOptionEven" xml:space="preserve">
+    <value>Sud&#225;</value>
+  </data>
+  <data name="GameRoundReportTipOptionHigh" xml:space="preserve">
+    <value>Vysok&#225; (19-36)</value>
+  </data>
+  <data name="GameRoundReportTipOptionLow" xml:space="preserve">
+    <value>N&#237;zk&#225; (1-18)</value>
+  </data>
+  <data name="GameRoundReportTipOptionOdd" xml:space="preserve">
+    <value>Lich&#225;</value>
+  </data>
+  <data name="GameRoundReportTipOptionRed" xml:space="preserve">
+    <value>Červen&#225;</value>
+  </data>
+  <data name="GameRoundReportWin" xml:space="preserve">
+    <value>V&#253;hra</value>
+  </data>
+  <data name="GameRoundReportWinningNumber" xml:space="preserve">
+    <value>V&#253;hern&#237; Č&#237;slo</value>
+  </data>
+  <data name="GameRoundReportWins" xml:space="preserve">
+    <value>V&#253;hry</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBackDoor" xml:space="preserve">
+    <value>Zadn&#237; dveře</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBellyDoor" xml:space="preserve">
+    <value>Předn&#237; dveře</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillStackerDoor" xml:space="preserve">
+    <value>Dveře z&#225;sobn&#237;ku 2</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillValidatorDoor" xml:space="preserve">
+    <value>Dveře z&#225;sobn&#237;ku 1</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor1" xml:space="preserve">
+    <value>Dveře mincovn&#237;ku 1</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor2" xml:space="preserve">
+    <value>Dveře mincovn&#237;ku 2</value>
+  </data>
+  <data name="HardwareDPXS435SwitchLogicBox" xml:space="preserve">
+    <value>Dveře poč&#237;tače</value>
+  </data>
+  <data name="HardwareDPXS435SwitchNone" xml:space="preserve">
+    <value>Pr&#225;zdn&#225; hodnota</value>
+  </data>
+  <data name="HardwareDPXS435SwitchServiceDoor" xml:space="preserve">
+    <value>Hlavn&#237; dveře</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterChassisIsOpen" xml:space="preserve">
+    <value>Podvozek tisk&#225;rny je otevřen&#253;</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterHeadIsUp" xml:space="preserve">
+    <value>Hlava tisk&#225;rny je vysunuta</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotReady" xml:space="preserve">
+    <value>Tisk&#225;rna nen&#237; připravena</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotResponding" xml:space="preserve">
+    <value>Tisk&#225;rna nereaguje</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterOutOfTicket" xml:space="preserve">
+    <value>V tisk&#225;rně chyb&#237; tikety.</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterPaperJam" xml:space="preserve">
+    <value>Zaseknut&#253; pap&#237;r</value>
+  </data>
+  <data name="Languagescs" xml:space="preserve">
+    <value>Čeština</value>
+  </data>
+  <data name="Languagesen" xml:space="preserve">
+    <value>Angličtina</value>
+  </data>
+  <data name="Languageshu" xml:space="preserve">
+    <value>Maďarština</value>
+  </data>
+  <data name="Languagesro" xml:space="preserve">
+    <value>Rumunština</value>
+  </data>
+  <data name="Languagessk" xml:space="preserve">
+    <value>Slovenština</value>
+  </data>
+  <data name="Languagesuk" xml:space="preserve">
+    <value>Ukrajinština</value>
+  </data>
+  <data name="ServiceMenuBaseRolesAttendant" xml:space="preserve">
+    <value>CZ??Attendant</value>
+  </data>
+  <data name="ServiceMenuBaseRolesCashCollector" xml:space="preserve">
+    <value>CZ??Cash Collector</value>
+  </data>
+  <data name="ServiceMenuBaseRolesOwner" xml:space="preserve">
+    <value>CZ??Owner</value>
+  </data>
+  <data name="ServiceMenuBaseRolesService" xml:space="preserve">
+    <value>CZ??Service</value>
+  </data>
+  <data name="ServiceMenuViewsDiagnosticsNetworkSetupEthernetConfigurationIPAssignment" xml:space="preserve">
+    <value>Z&#237;sk&#225;n&#237; IP</value>
+  </data>
+  <data name="ServiceMenuViewsDiagnosticsNetworkSetupEthernetConfigurationStatic" xml:space="preserve">
+    <value>Statick&#225;</value>
+  </data>
+  <data name="ServiceMenuViewsDiagnosticsNetworkSetupChange" xml:space="preserve">
+    <value>ZMĚNIT</value>
+  </data>
+  <data name="ServiceMenuViewsGameSetupGambleSetupCardGambleEnabled" xml:space="preserve">
+    <value>Karetn&#237; risk</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupDateAndTimeViewButtonSaveChanges" xml:space="preserve">
+    <value>ULOŽIT ZMĚNY</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupDateAndTimeViewDate" xml:space="preserve">
+    <value>Datum:</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupDateAndTimeViewTime" xml:space="preserve">
+    <value>Čas:</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupDateAndTimeViewTitle" xml:space="preserve">
+    <value>Aktu&#225;ln&#237; čas a datum: {0} ({1})</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupDateAndTimeViewTitleUtc" xml:space="preserve">
+    <value>Aktu&#225;ln&#237; UTC čas a datum: {0} ({1})</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupLanguagesSetupViewButtonChange" xml:space="preserve">
+    <value>ZMĚNIT</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupLanguagesSetupViewButtonSaveChanges" xml:space="preserve">
+    <value>ULOŽIT ZMĚNY</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupLanguagesSetupViewDisabled" xml:space="preserve">
+    <value>Zak&#225;zan&#233;</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupLanguagesSetupViewEnabled" xml:space="preserve">
+    <value>Povolen&#233;</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupLanguagesSetupViewFlagName" xml:space="preserve">
+    <value>Vlajka</value>
+  </data>
+  <data name="ServiceMenuViewsGeneralSetupLanguagesSetupViewLanguageName" xml:space="preserve">
+    <value>Jazyk</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotImportJackpot" xml:space="preserve">
+    <value>Import jackpotu</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotImportJackpotFailed" xml:space="preserve">
+    <value>Import jackpotu se nezdařil</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotImportJackpotFileNotFound" xml:space="preserve">
+    <value>Nepodařilo se importovat jackpot, soubor {0} nenalezen</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotImportJackpotFileQuestion" xml:space="preserve">
+    <value>Chcete importovat jackpot ze souboru:</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotImportJackpotImportFailed" xml:space="preserve">
+    <value>Import se nezdařil:</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotImportJackpotSuccessfullyImported" xml:space="preserve">
+    <value>&#218;spěšně importov&#225;no:</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotImportJackpotWrongServerUrl" xml:space="preserve">
+    <value>Nepodařilo se importovat jackpoty, adresa URL serveru je neplatn&#225;.</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotInsertedUSBNoJackpotFiles" xml:space="preserve">
+    <value>Vložen&#233; USB neobsahuje ž&#225;dn&#233; vstupn&#237; soubory jackpotu.</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupFireBirdJackpotSuccessImportFormat" xml:space="preserve">
+    <value>Soubor: {0} byl &#250;spěšně importov&#225;n.</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotNetworkSetAsPrimaryJackpotServer" xml:space="preserve">
+    <value>Nastavit jako prim&#225;rn&#237;</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotNetworkSetJackpotServerAsPrimaryFailed" xml:space="preserve">
+    <value>Nastaven&#237; jackpotov&#233;ho serveru jako prim&#225;rn&#237;ho se nezdařilo</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotNetworkSetJackpotServerAsPrimaryWasSuccessfull" xml:space="preserve">
+    <value>Nastaven&#237; jackpotov&#233;ho serveru jako prim&#225;rn&#237;ho bylo &#250;spěšn&#233;</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestDownArrow" xml:space="preserve">
+    <value>↓</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestUpArrow" xml:space="preserve">
+    <value>↑</value>
+  </data>
+  <data name="ServiceMenuViewsMenuServiceBillDispenserRefill" xml:space="preserve">
+    <value>CZ??Bill Dispenser Refill</value>
+  </data>
+  <data name="ServiceMenuViewsServiceCabinetInfoRegion" xml:space="preserve">
+    <value>REGION:</value>
+  </data>
+  <data name="ServiceMenuViewsServiceCabinetOperationsViewFactoryResetMachine" xml:space="preserve">
+    <value>Factory Reset</value>
+  </data>
+  <data name="ServiceMenuViewsServiceFactoryResetViewJackpotServerDataClear" xml:space="preserve">
+    <value>Smazat jackpotov&#233; d&#225;ta</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewButtonBack" xml:space="preserve">
+    <value>ZPĚT</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewButtonDelete" xml:space="preserve">
+    <value>Smazat</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewButtonReassign" xml:space="preserve">
+    <value>Znovu přiřadit</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewExportKeys" xml:space="preserve">
+    <value>Export kl&#237;čů</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewFileToExport" xml:space="preserve">
+    <value>Export do souboru:</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewFileToImport" xml:space="preserve">
+    <value>Soubor pro import:</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewImport" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewImportKeys" xml:space="preserve">
+    <value>Import kl&#237;čů</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewMountUsb" xml:space="preserve">
+    <value>Připojit USB</value>
+  </data>
+  <data name="ServiceMenuViewsServiceKeyAssignmentViewNoUSBDisc" xml:space="preserve">
+    <value>USB zař&#237;zen&#237; nen&#237; připraveno.</value>
+  </data>
+</root>

@@ -5,13 +5,14 @@
                       xmlns:code="clr-namespace:LHQ.App.Code"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
-                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
                       xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
                       xmlns:views="clr-namespace:LHQ.App.Views"
                       xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
+                      xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
                       Title="{Binding Title}"
                       Width="600"
                       d:DataContext="{d:DesignInstance vm:NewProjectDialogViewModel,
@@ -31,6 +32,8 @@
                 <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <converters:EventArgsConverter x:Key="EventArgsConverter"/>
+            
             <Style x:Key="TextBlockHintStyle"
                    TargetType="TextBlock">
                 <Setter Property="FontStyle" Value="Italic" />
@@ -45,12 +48,12 @@
                     Gesture="F1" />
     </dialogs:DialogWindow.InputBindings>
 
-    <i:Interaction.Behaviors>
-        <behaviors:EventToCommandBehavior Command="{Binding Path=LoadedWindowCommand}"
-                                          Event="Loaded"
-                                          PassArguments="True" />
-    </i:Interaction.Behaviors>
-
+    <!-- <i:Interaction.Behaviors> -->
+    <!--     <behaviors:EventToCommandBehavior Command="{Binding Path=LoadedWindowCommand}" -->
+    <!--                                       Event="Loaded" -->
+    <!--                                       PassArguments="True" /> -->
+    <!-- </i:Interaction.Behaviors> -->
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />
@@ -125,10 +128,7 @@
                                    Grid.ColumnSpan="2"
                                    DataContext="{Binding Path=ProjectSettings}" />
 
-        <Grid Grid.Row="14"
-              Grid.Column="0"
-              Grid.ColumnSpan="2"
-              Visibility="{Binding Path=RunInVsPackage, Converter={StaticResource BoolToVisibilityConverter}}">
+        <Grid Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
@@ -154,28 +154,28 @@
                        Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
                        Text="{localization:Localization Key={x:Static resources:StringsKeys+ViewModels+NewProject.CodeGeneratorTemplateTitle}}" />
 
-            <Label Grid.Row="2"
+            <ComboBox
+                Grid.Row="2"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                DisplayMemberPath="Key"
+                ItemsSource="{Binding Path=GeneratorTemplates, Mode=OneTime}"
+                SelectedIndex="{Binding Path=GeneratorTemplateIndex, Mode=TwoWay}" />
+
+            <Label Grid.Row="4"
                    Grid.Column="1"
                    Padding="0"
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Center"
-                   Content="{Binding Path=ExtraInfo.TemplateName}"
+                   Content="{Binding Path=GeneratorTemplateName}"
                    FontWeight="SemiBold" />
-
-            <TextBlock Grid.Row="4"
-                       Grid.Column="1"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Center"
-                       behaviors:ApplyBaseStyleBehaviour.Style="{StaticResource TextBlockHintStyle}"
-                       FontSize="9pt"
-                       FontStyle="Italic"
-                       Text="{Binding Path=ExtraInfo.TemplateId}" />
 
             <TextBlock Grid.Row="6"
                        Grid.Column="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        FontWeight="Normal"
+                       Visibility="{Binding Path=HasSelectedCodeGenerator, Converter={StaticResource BoolToVisibilityConverter}}"
                        TextWrapping="NoWrap">
                 <Hyperlink Command="{Binding Path=ChangeCodeGeneratorSettingsCommand}"
                            Style="{StaticResource HyperlinkStyle}">

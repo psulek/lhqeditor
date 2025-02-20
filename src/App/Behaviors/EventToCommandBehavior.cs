@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,13 +22,14 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 
 namespace LHQ.App.Behaviors
 {
@@ -41,17 +43,21 @@ namespace LHQ.App.Behaviors
     public class EventToCommandBehavior : Behavior<FrameworkElement>
     {
         public static readonly DependencyProperty EventProperty =
-            DependencyProperty.Register("Event", typeof(string), typeof(EventToCommandBehavior), new PropertyMetadata(null, OnEventChanged));
+            DependencyProperty.Register(nameof(Event), typeof(string), typeof(EventToCommandBehavior), new PropertyMetadata(null, OnEventChanged));
 
         public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(EventToCommandBehavior), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Command), typeof(ICommand), typeof(EventToCommandBehavior), new PropertyMetadata(null));
 
         public static readonly DependencyProperty PassArgumentsProperty =
-            DependencyProperty.Register("PassArguments", typeof(bool), typeof(EventToCommandBehavior), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(PassArguments), typeof(bool), typeof(EventToCommandBehavior), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty PropagateEventFromChildsProperty =
+            DependencyProperty.Register(nameof(PropagateEventFromChilds), typeof(bool), typeof(EventToCommandBehavior), new PropertyMetadata(false));
 
         private Delegate _handler;
         private EventInfo _oldEvent;
 
+        // TODO: update comments to xml
         // Event
         public string Event
         {
@@ -71,6 +77,12 @@ namespace LHQ.App.Behaviors
         {
             get => (bool)GetValue(PassArgumentsProperty);
             set => SetValue(PassArgumentsProperty, value);
+        }
+
+        public bool PropagateEventFromChilds
+        {
+            get => (bool)GetValue(PropagateEventFromChildsProperty);
+            set => SetValue(PropagateEventFromChildsProperty, value);
         }
 
         private static void OnEventChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -106,12 +118,9 @@ namespace LHQ.App.Behaviors
                 if (ei != null)
                 {
                     MethodInfo mi = GetType().GetMethod("ExecuteCommand", BindingFlags.Instance | BindingFlags.NonPublic);
-                    if (mi != null)
-                    {
-                        _handler = Delegate.CreateDelegate(ei.EventHandlerType, this, mi);
-                        ei.AddEventHandler(AssociatedObject, _handler);
-                        _oldEvent = ei; // store to detach in case the Event property changes
-                    }
+                    _handler = Delegate.CreateDelegate(ei.EventHandlerType, this, mi);
+                    ei.AddEventHandler(AssociatedObject, _handler);
+                    _oldEvent = ei; // store to detach in case the Event property changes
                 }
                 else
                 {
@@ -123,12 +132,15 @@ namespace LHQ.App.Behaviors
         /// <summary>
         ///     Executes the Command
         /// </summary>
-        // ReSharper disable once UnusedParameter.Local
         // ReSharper disable once UnusedMember.Local
+        // ReSharper disable once UnusedParameter.Local
         private void ExecuteCommand(object sender, EventArgs e)
         {
             object parameter = PassArguments ? e : null;
-            if (Command != null)
+            var routedEventArgs = e as RoutedEventArgs;
+            var validSender = PropagateEventFromChilds || routedEventArgs == null || routedEventArgs.OriginalSource == sender;
+
+            if (Command != null && validSender)
             {
                 if (Command.CanExecute(parameter))
                 {

@@ -1,4 +1,9 @@
-﻿2025.1
+﻿2025.2
+- Added new code generator template settings:
+  - Line endings (LF or CRLF)
+  - Encoding file with BOM
+
+2025.1
 - Added new feature 'Mark for export' on resources in tree
   - New 'Export marked...' from tree
 - Added new standalone code generator (when LHQ.App.exe is run outside of VS)

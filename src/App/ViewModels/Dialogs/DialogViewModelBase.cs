@@ -38,13 +38,15 @@ namespace LHQ.App.ViewModels.Dialogs
         private string _title;
         private Window _dialogWindow;
         private bool? _dialogResult;
+        private bool _initializeCompleted;
 
         protected DialogViewModelBase(IAppContext appContext)
             : base(appContext, true)
         {
             _title = string.Empty;
             _dialogResult = null;
-            Initialize();
+            
+            InitializeCommands();
         }
 
         public string Title
@@ -69,15 +71,32 @@ namespace LHQ.App.ViewModels.Dialogs
 
         protected bool? DialogResult => HasDialogWindow ? _dialogWindow.DialogResult : _dialogResult;
 
-        private void Initialize()
+        private void InitializeCommands()
         {
-            KeyDownCommand = new DelegateCommand<KeyEventArgs>(OnKeyDown);
-            LoadedWindowCommand = new DelegateCommand<RoutedEventArgs>(OnLoadedWindow);
-            ClosingWindowCommand = new DelegateCommand<CancelEventArgs>(OnClosingWindow);
+            try
+            {
+                KeyDownCommand = new DelegateCommand<KeyEventArgs>(OnKeyDown);
+                LoadedWindowCommand = new DelegateCommand<RoutedEventArgs>(OnLoadedWindow);
+                ClosingWindowCommand = new DelegateCommand<CancelEventArgs>(OnClosingWindow);
 
-            CloseDialogCommand = new DelegateCommand(CloseDialogExecute, CloseDialogCanExecute);
-            SubmitDialogCommand = new DelegateCommand(SubmitDialogExecute, SubmitDialogCanExecute);
-            CancelDialogCommand = new DelegateCommand(CancelDialogExecute);
+                CloseDialogCommand = new DelegateCommand(CloseDialogExecute, CloseDialogCanExecute);
+                SubmitDialogCommand = new DelegateCommand(SubmitDialogExecute, SubmitDialogCanExecute);
+                CancelDialogCommand = new DelegateCommand(CancelDialogExecute);
+            }
+            finally
+            {
+                _initializeCompleted = true;
+            }
+        }
+
+        protected internal override bool IsBlockedPropertyChange()
+        {
+            if (!_initializeCompleted)
+            {
+                return true;
+            }
+            
+            return base.IsBlockedPropertyChange();
         }
 
         protected virtual void OnLoadedWindow(RoutedEventArgs e)

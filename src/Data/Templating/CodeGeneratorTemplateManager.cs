@@ -25,12 +25,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LHQ.Data.Templating.Templates;
 using LHQ.Data.Templating.Templates.NetCore;
 using LHQ.Data.Templating.Templates.NetFw;
 using LHQ.Data.Templating.Templates.Typescript;
 using LHQ.Data.Templating.Templates.WinForms;
 using LHQ.Data.Templating.Templates.Wpf;
+using LHQ.Utils;
 
 namespace LHQ.Data.Templating
 {
@@ -40,7 +42,7 @@ namespace LHQ.Data.Templating
 
         public static CodeGeneratorTemplateManager Instance => _instance.Value;
 
-        private readonly Dictionary<string, Type> _templates = new Dictionary<string, Type>();
+        private readonly Dictionary<string, KeyValue<Type, string>> _templates = new Dictionary<string, KeyValue<Type, string>>();
 
         public CodeGeneratorTemplateManager()
         {
@@ -50,9 +52,16 @@ namespace LHQ.Data.Templating
             Register<NetCoreResxCsharp01Template>();
             Register<TypescriptJson01Template>();
         }
+        
+        /// <summary>
+        /// Returns dictionary of all templates where key - template id, value - template name. 
+        /// </summary>
+        public Dictionary<string, string> GetAllTemplates()
+        {
+            return _templates.ToDictionary(x => x.Key, x => x.Value.Value);
+        }
 
-        private void Register<T>()
-            where T : CodeGeneratorTemplate, new()
+        private void Register<T>() where T : CodeGeneratorTemplate, new()
         {
             T template = new T();
             if (_templates.ContainsKey(template.Id))
@@ -60,14 +69,15 @@ namespace LHQ.Data.Templating
                 throw new InvalidOperationException($"Template '{template.Name}' already registered in Templates Manager.");
             }
 
-            _templates.Add(template.Id, template.GetType());
+            Type type = template.GetType();
+            _templates.Add(template.Id, KeyValue.Create(type, template.Name));
         }
 
         public CodeGeneratorTemplate CreateTemplate(string templateId)
         {
             if (_templates.TryGetValue(templateId, out var type))
             {
-                return Activator.CreateInstance(type) as CodeGeneratorTemplate;
+                return Activator.CreateInstance(type.Key) as CodeGeneratorTemplate;
             }
 
             return null;

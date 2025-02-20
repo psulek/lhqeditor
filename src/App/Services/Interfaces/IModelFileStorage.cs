@@ -32,10 +32,14 @@ namespace LHQ.App.Services.Interfaces
     {
         ModelContext Clone(ModelContext source, bool preserveKeys = false);
 
+        bool IsCompatible(ModelContext modelContext);
+        
         ModelLoadResult Load(ModelContext modelContext, string content);
 
         ModelLoadResult Upgrade(ModelContext modelContext, string content, int fromModelVersion);
 
         string Save(ModelContext modelContext, ModelSaveOptions modelSaveOptions);
+
+        int[] GetSupportedModelVersions();
     }
 }

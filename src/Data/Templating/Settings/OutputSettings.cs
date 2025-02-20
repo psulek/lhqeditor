@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,18 +30,27 @@ using System.ComponentModel;
 using LHQ.Data.Support;
 using LHQ.Utils;
 using LHQ.Utils.Extensions;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace LHQ.Data.Templating.Settings
 {
-    public abstract class OutputSettings: IGeneratorSettings
+    public abstract class OutputSettings : IGeneratorSettings
     {
         [DefaultValue("Resources")]
         public string OutputFolder { get; set; }
 
         [ReadOnly(true)]
         public string OutputProjectName { get; set; }
+
+        [DisplayName("Encoding with BOM")]
+        [Description("Whenever the encoding contains BOM (Byte Order Mark), where default is false (No BOM).")]
+        public bool EncodingWithBOM { get; set; } = false;
+
+        [DisplayName("Line endings (LF or CRLF)")]
+        [Description("Line endings used when generated files are saved on disk, where default is LF.")]
+        public OutputSettingsLineEndings LineEndings { get; set; } = OutputSettingsLineEndings.LF;
 
         protected OutputSettings()
         {
@@ -62,7 +73,7 @@ namespace LHQ.Data.Templating.Settings
             return ValidateNameFor(propertyValue, propertyName, NameValidatorFlags.None, out validatorResult);
         }
 
-        protected SettingsValidationError ValidateNameFor(string propertyValue, string propertyName, 
+        protected SettingsValidationError ValidateNameFor(string propertyValue, string propertyName,
             NameValidatorFlags nameValidatorFlags, out NameValidatorResult validatorResult)
         {
             validatorResult = NameValidator.Validate(propertyValue, nameValidatorFlags);
@@ -90,7 +101,7 @@ namespace LHQ.Data.Templating.Settings
                 }
             }
         }
-        
+
         public virtual SettingsValidationError Validate()
         {
             var validationError = ValidateNameFor(OutputFolder, "Output Folder", out var validatorResult);
@@ -114,7 +125,7 @@ namespace LHQ.Data.Templating.Settings
             }
         }
 
-        public virtual void Serialize(DataNode node)
+        public virtual void Serialize(DataNode node, int modelVersion)
         {
             if (!OutputProjectName.IsNullOrEmpty())
             {
@@ -125,6 +136,12 @@ namespace LHQ.Data.Templating.Settings
             {
                 node.AddAttribute(nameof(OutputFolder), OutputFolder);
             }
+
+            if (modelVersion > 1)
+            {
+                node.AddAttribute(nameof(EncodingWithBOM), DataNodeValueHelper.ToString(EncodingWithBOM));
+                node.AddAttribute(nameof(LineEndings), DataNodeValueHelper.ToString(LineEndings));
+            }
         }
 
         public virtual bool Deserialize(DataNode node)
@@ -132,7 +149,30 @@ namespace LHQ.Data.Templating.Settings
             OutputProjectName = node.Attributes.Contains(nameof(OutputProjectName)) ? node.Attributes[nameof(OutputProjectName)].Value : null;
             OutputFolder = node.Attributes.Contains(nameof(OutputFolder)) ? node.Attributes[nameof(OutputFolder)].Value : null;
 
+            EncodingWithBOM = false;
+            if (node.Attributes.Contains(nameof(EncodingWithBOM)))
+            {
+                var attrEncodingWithBOM = node.Attributes[nameof(EncodingWithBOM)];
+                EncodingWithBOM = attrEncodingWithBOM.Value.IsNullOrEmpty() || DataNodeValueHelper.FromString(attrEncodingWithBOM.Value, false);
+            }
+
+            LineEndings = OutputSettingsLineEndings.LF;
+            if (node.Attributes.Contains(nameof(LineEndings)))
+            {
+                var attrLineEndings = node.Attributes[nameof(LineEndings)];
+                if (!attrLineEndings.Value.IsNullOrEmpty())
+                {
+                    LineEndings = DataNodeValueHelper.EnumFromString(attrLineEndings.Value, OutputSettingsLineEndings.LF);
+                }
+            }
+
             return true;
         }
+    }
+    
+    public enum OutputSettingsLineEndings
+    {
+        LF,
+        CRLF
     }
 }

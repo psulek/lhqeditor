@@ -95,30 +95,19 @@ namespace LHQ.App.Services.Implementation
                 Logger.Info($"[GenerateCode] {modelFileName}");
 
                 var outDir = Path.GetDirectoryName(modelFileName);
-                var generatedFiles = _generator.Generate(modelFileName, null, outDir);
+                var generateResult = _generator.Generate(modelFileName, null, outDir);
+                var generatedFiles = generateResult.GeneratedFiles;
 
-                var processedFiles = new List<string>();
                 foreach (var file in generatedFiles)
                 {
-                    var overwritingFile = processedFiles.Contains(file.Key);
-                    if (!overwritingFile)
-                    {
-                        processedFiles.Add(file.Key);
-                    }
-
-                    string fileName = Path.Combine(outDir, file.Key);
-
-                    // string str = overwritingFile ? "overwritten" : "generated";
-                    // Console.WriteLine($"[{str}] {file.Key.Pastel(ConsoleColor.DarkCyan)}");
-
+                    var fileName = Path.Combine(outDir, file.FileName);
                     var dir = Path.GetDirectoryName(fileName);
                     if (dir != null && !Directory.Exists(dir))
                     {
                         Directory.CreateDirectory(dir);
                     }
 
-                    await FileUtils.WriteAllTextAsync(fileName, file.Value);
-                    //Utils.WriteAllText(fileName, file.Value);
+                    await file.WriteToDiskAsync(outDir);
                 }
 
                 result = true;

@@ -55,9 +55,9 @@ namespace LHQ.Data.Templating.Settings.ResX
             }
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             node.AddAttribute(nameof(CultureCodeInFileNameForPrimaryLanguage), DataNodeValueHelper.ToString(CultureCodeInFileNameForPrimaryLanguage));
             // write only if CompatibleTextEncoding is false (for backward compatibility)
@@ -82,6 +82,7 @@ namespace LHQ.Data.Templating.Settings.ResX
                     }
                 }
 
+                CompatibleTextEncoding = true;
                 if (node.Attributes.Contains(nameof(CompatibleTextEncoding)))
                 {
                     var attrCompatibleTextEncoding = node.Attributes[nameof(CompatibleTextEncoding)];

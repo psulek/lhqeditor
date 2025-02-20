@@ -24,12 +24,15 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using LHQ.App.Code;
 using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Data;
+using LHQ.Data.Templating;
+using LHQ.Utils;
 using LHQ.Utils.Extensions;
 
 namespace LHQ.App.ViewModels
@@ -40,6 +43,10 @@ namespace LHQ.App.ViewModels
         private bool _categories;
         private bool _resources;
         private string _layoutImage;
+        private int _selectedModelVersion;
+        private bool _modelVersionVisible;
+        // private bool _generatorTemplatesVisible;
+        // private int _generatorTemplateIndex;
 
         public ProjectSettingsViewModel(IShellViewContext shellViewContext)
             : base(shellViewContext, false)
@@ -48,6 +55,18 @@ namespace LHQ.App.ViewModels
             Categories = modelOptions.Categories;
             Resources = !modelOptions.Categories;
             ResourcesUnderRoot = modelOptions.Resources == ModelOptionsResources.All;
+
+            var modelFileStorage = AppContext.ServiceContainer.Get<IModelFileStorage>();
+            var modelVersions = modelFileStorage.GetSupportedModelVersions();
+            ModelVersions = new ObservableCollectionExt<int>(modelVersions);
+
+            SelectedModelVersion = shellViewContext.ShellViewModel.ModelContext.Model.Version;
+            ModelVersionVisible = true;
+            // GeneratorTemplatesVisible = false;
+            
+            // var allTemplates = CodeGeneratorTemplateManager.Instance.GetAllTemplates();
+            // GeneratorTemplates = new ObservableCollectionExt<KeyValue<string, string>>(allTemplates.Select(x => KeyValue.Create(x.Key, x.Value)));
+            // GeneratorTemplateIndex = -1;
         }
 
         private ITreeViewService TreeViewService => ShellViewContext.TreeViewService;
@@ -56,6 +75,34 @@ namespace LHQ.App.ViewModels
         {
             get => _layoutImage;
             set => SetProperty(ref _layoutImage, value);
+        }
+
+        public int SelectedModelVersion
+        {
+            get => _selectedModelVersion;
+            set => SetProperty(ref _selectedModelVersion, value);
+        }
+
+        public ObservableCollectionExt<int> ModelVersions { get; }
+
+        // public ObservableCollectionExt<KeyValue<string, string>> GeneratorTemplates { get; }
+        //
+        // public int GeneratorTemplateIndex
+        // {
+        //     get => _generatorTemplateIndex;
+        //     set => SetProperty(ref _generatorTemplateIndex, value);
+        // }
+        //
+        // public bool GeneratorTemplatesVisible
+        // {
+        //     get => _generatorTemplatesVisible;
+        //     set => SetProperty(ref _generatorTemplatesVisible, value);
+        // }
+
+        public bool ModelVersionVisible
+        {
+            get => _modelVersionVisible;
+            set => SetProperty(ref _modelVersionVisible, value);
         }
 
         public bool Resources

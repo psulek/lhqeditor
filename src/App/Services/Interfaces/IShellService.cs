@@ -30,6 +30,7 @@ using LHQ.App.Model;
 using LHQ.Core.Model;
 using LHQ.Data;
 using LHQ.Data.Interfaces.Key;
+using LHQ.Data.Templating.Templates;
 
 namespace LHQ.App.Services.Interfaces
 {
@@ -61,7 +62,9 @@ namespace LHQ.App.Services.Interfaces
         /// <returns></returns>
         bool SaveProject(string fileName = null, bool hostEnvironmentSave = false);
         
-        void NewProject(string modelName, string primaryLanguage, ModelOptions modelOptions);
+        void NewProject(string modelName, string primaryLanguage, ModelOptions modelOptions, 
+            CodeGeneratorTemplate codeGeneratorTemplate);
+        
 
         void StartProjectOperationIsBusy(ProjectBusyOperationType type);
         void StopProjectOperationIsBusy();

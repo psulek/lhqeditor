@@ -74,7 +74,7 @@ namespace LHQ.Data.ModelStorage.Serializers
         private Model _model;
         private ModelSaveOptions _saveOptions;
 
-        public int ModelVersion => 1;
+        public virtual int ModelVersion => 1;
 
         private void SetModelContext(ModelContext modelContext)
         {
@@ -91,9 +91,14 @@ namespace LHQ.Data.ModelStorage.Serializers
             return WriteRootModel();
         }
 
-        public bool Upgrade(ModelContext previousModelContext)
+        public virtual bool Upgrade(ModelContext previousModelContext)
         {
             return true;
+        }
+
+        public virtual bool IsCompatibleWithCurrent()
+        {
+            return ModelConstants.CurrentModelVersion <= 2;
         }
 
         [Conditional("DEBUG")]
@@ -158,7 +163,14 @@ namespace LHQ.Data.ModelStorage.Serializers
 
                         if (result.Status == ModelLoadStatus.ModelUpgraderRequired)
                         {
-                            result.ModelVersion = modelVersion;
+                            if (IsCompatibleWithCurrent())
+                            {
+                                result.Status = ModelLoadStatus.Success;
+                            }
+                            else
+                            {
+                                result.ModelVersion = modelVersion;
+                            }
                         }
                     }
                     else

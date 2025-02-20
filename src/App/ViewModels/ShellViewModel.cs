@@ -203,12 +203,16 @@ namespace LHQ.App.ViewModels
                 var metadata = ModelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
                 metadata.TemplateId = template.Id;
                 metadata.Template = template;
-                if (!ShellService.SaveProject(hostEnvironmentSave: true))
+
+                if (!string.IsNullOrEmpty(ProjectFileName))
                 {
-                    DialogService.ShowError(Strings.Operations.Project.ProjectSaveErrorTitle,
-                        Strings.Operations.Project.ProjectSaveFailed, 
-                        Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName),
-                        displayType: AppMessageDisplayType.HostDialog);
+                    if (!ShellService.SaveProject(hostEnvironmentSave: true))
+                    {
+                        DialogService.ShowError(Strings.Operations.Project.ProjectSaveErrorTitle,
+                            Strings.Operations.Project.ProjectSaveFailed,
+                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName),
+                            displayType: AppMessageDisplayType.HostDialog);
+                    }
                 }
             }
         }
@@ -937,6 +941,7 @@ namespace LHQ.App.ViewModels
                     RootModel.UpdateVersion(true);
 
                     Data.Model model = RootModel.SaveToModelElement();
+                    model.Version = ModelContext.Model.Version;
 
                     ModelContext.AssignModelFrom(model);
                     saveResult = ShellService.SaveModelContextToFile(fileName, ModelContext);

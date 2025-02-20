@@ -27,9 +27,11 @@ using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using LHQ.Utils.Extensions;
 using LHQ.Data;
+using LHQ.Gen.Lib;
 using Microsoft.VisualStudio.TextTemplating;
 // ReSharper disable UnusedType.Global
 
@@ -103,6 +105,9 @@ namespace LHQ.VsExtension
                 private LHQ.Data.ModelContext _modelContext;
                 private LHQ.Data.Templating.Templates.CodeGeneratorTemplate _codeGeneratorTemplate;
 
+                // 0: file name, 1: itemtemplateId, 2: modelVersion
+                public System.Tuple<string,string,int> CurrentModelInfo {{get; private set;}}
+
                 public LHQ.Data.ModelContext ModelContext
                 {{
                     get
@@ -121,6 +126,8 @@ namespace LHQ.VsExtension
                             {{
                                 throw new ApplicationException(""Could not find code generator template!"");
                             }}
+
+                            this.CurrentModelInfo = System.Tuple.Create(@""" + fileName + @""", """ + itemTemplate + @""", this._modelContext.Model.Version);
                         }}
 
                         return this._modelContext;
@@ -142,6 +149,8 @@ namespace LHQ.VsExtension
 
         public void FinishProcessingRun()
         {
+            //System.IO.File.WriteAllText(@"c:\tmp\test-file-123.txt", $"Hello {DateTime.UtcNow}");
+            //System.Diagnostics.Trace.WriteLine("Current class 2: " + GetType().AssemblyQualifiedName);
         }
 
         public string GetClassCodeForProcessingRun()
@@ -165,7 +174,10 @@ namespace LHQ.VsExtension
             {
                 typeof(ModelContext).Assembly.Location,
                 typeof(TaskAsyncExtensions).Assembly.Location,
-                GetType().Assembly.Location
+                typeof(Generator).Assembly.Location,
+                GetType().Assembly.Location,
+                typeof(NLog.ILogger).Assembly.Location
+                //typeof(IDisposable).Assembly.Location
             };
             return references.ToArray();
         }
@@ -177,7 +189,8 @@ namespace LHQ.VsExtension
                 "System.IO",
                 "LHQ.Utils",
                 "LHQ.Data",
-                "LHQ.Data.Extensions"
+                "LHQ.Data.Extensions",
+                "LHQ.Gen.Lib"
             };
         }
 

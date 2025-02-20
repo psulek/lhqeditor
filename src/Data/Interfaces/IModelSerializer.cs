@@ -40,5 +40,6 @@ namespace LHQ.Data.Interfaces
 
         // ReSharper disable once UnusedParameter.Global
         bool Upgrade(ModelContext previousModelContext);
+        bool IsCompatibleWithCurrent();
     }
 }

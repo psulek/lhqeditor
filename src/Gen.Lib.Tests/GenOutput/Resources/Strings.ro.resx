@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationFrameworkDelayProcessServiceRestartMachine" xml:space="preserve">
+    <value>Restartează aparatul</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTconfirm1stOwnerKey" xml:space="preserve">
+    <value>Butonul START- confirmă  Cheie de Utilizator</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyButtonsSTARTrebootmachine" xml:space="preserve">
+    <value>Butonul START- reporneşte aparatul</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmKey" xml:space="preserve">
+    <value>CONFIRMĂ CHEIA</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyConfirmWithButtonAndRemove" xml:space="preserve">
+    <value>Confirmă că această cheie este cheia de utilizator apăs&#226;nd butonul CONFIRMĂ CHEIA şi scoate cheia din aparat.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyDiscardByRemove" xml:space="preserve">
+    <value>&#206;nlătură cheia după scoaterea ei din aparat.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyInsertKeyToRegister" xml:space="preserve">
+    <value>Inserează cheia pentru a te &#238;nregistra ca primul Utilizator de Cheie.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyKeyInserted" xml:space="preserve">
+    <value>Cheia {0} a fost inserată.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyNoOwnerKeyRegistered" xml:space="preserve">
+    <value>Nu este &#238;nregistrat niciun Utilizator de Cheie.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyOwnerKeyRegistration" xml:space="preserve">
+    <value>&#206;nregistrare cod Utilizator</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyReboot" xml:space="preserve">
+    <value>REPORNEŞTE</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeyRemoveToContinue" xml:space="preserve">
+    <value>Scoate cheia pentru a continua.</value>
+  </data>
+  <data name="ApplicationFrameworkFirstOwnerKeySuccessfullyRegistered" xml:space="preserve">
+    <value>Cheia {0} a fost &#238;nregistrată cu succes ca Utilizator de Cheie</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineAllDoorClosed" xml:space="preserve">
+    <value>Toate uşile sunt &#238;nchise. Chemaţi operatorul.</value>
+  </data>
+  <data name="ApplicationFrameworkStateMachineClosedDoor" xml:space="preserve">
+    <value>&#206;nchis {0}</value>
+  </data>
+  <data name="AWPDialogProcessingAftAftLockMessage" xml:space="preserve">
+    <value>Transfer fără numerar. Vă rugăm aşteptaţi...</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinted" xml:space="preserve">
+    <value>Bon imprimat. Vă rugăm luaţi bonul.</value>
+  </data>
+  <data name="AWPDialogProcessingAftReceiptPrinting" xml:space="preserve">
+    <value>Se imprimă bonul. Vă rugăm aşteptaţi...</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinted" xml:space="preserve">
+    <value>Voucher imprimat. Vă rugăm luaţi voucher-ul.</value>
+  </data>
+  <data name="AWPDialogProcessingAftTicketPrinting" xml:space="preserve">
+    <value>Se imprimă voucher-ul. Vă rugăm aşteptaţi...</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorGameWillBeDeactivated" xml:space="preserve">
+    <value>Jocul va fi dezactivat după restart!</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorInternalError" xml:space="preserve">
+    <value>Eroare internă. Vă rugăm să apelați la un operator.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorReconcileButton" xml:space="preserve">
+    <value>Jocul de reconciliere.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartButton" xml:space="preserve">
+    <value>Restartează aparatul</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Apasă &quot;START&quot; pentru restartare.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartFooterInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Apasă &quot;RED&quot; pentru reconciliere.Reconcile game</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithoutReconcileOption" xml:space="preserve">
+    <value>Eroare joc</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorRestartInfoMsgWithReconcileOption" xml:space="preserve">
+    <value>Eroare joc {0}Vă rugăm selectați o opțiune:</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorSerialNumberIsEmpty" xml:space="preserve">
+    <value>Numărul de serie nu este completat.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnexpectedError" xml:space="preserve">
+    <value>Eroare neaşteptată. Vă rugăm chemaţi operatorul.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorUnfinishedGame" xml:space="preserve">
+    <value>&#206;ncheiaţi jocul neterminat &quot;{0}&quot;. Vă rugăm chemaţi operatorul.</value>
+  </data>
+  <data name="AWPDialogProcessingApplicationErrorWorkflowError" xml:space="preserve">
+    <value>Eroare internă</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineCashOutButton" xml:space="preserve">
+    <value>Retragere</value>
+  </data>
+  <data name="AWPDialogProcessingBlockMachineSasBlockMachine" xml:space="preserve">
+    <value>Aparat scos din uz de gazda SAS</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Vă rugăm chemaţi operatorul.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogGameWin" xml:space="preserve">
+    <value>C&#226;știgurile de joc: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpot" xml:space="preserve">
+    <value>Jackpot ! {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWin" xml:space="preserve">
+    <value>Jackpot: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardAttendantDialogJackpotWithoutAmount" xml:space="preserve">
+    <value>Jackpot! </value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoBonusAwards" xml:space="preserve">
+    <value>Premiile bonus pentru gazde: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardBonusAwardDialogInfoCongratulations" xml:space="preserve">
+    <value>Felicitări!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectBonusAward" xml:space="preserve">
+    <value>Colectează premiile bonus pentru gazde!</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButton" xml:space="preserve">
+    <value>Colectează</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardCollectJackpotDialogInfoCollectButtonInfo" xml:space="preserve">
+    <value>START butonul creditează c&#226;știgul către bilanțul dumneavoastră.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptNotPrinted" xml:space="preserve">
+    <value>Bonul nu a fost imprimat.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinted" xml:space="preserve">
+    <value>Voucher imprimat. Vă rugăm luaţi voucher-ul.</value>
+  </data>
+  <data name="AWPDialogProcessingBonusAwardReceiptPrinting" xml:space="preserve">
+    <value>Se imprimă voucher-ul. Vă rugăm aşteptaţi...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogBillsPaid" xml:space="preserve">
+    <value>Bancnote plătite: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutDispenserCashOutDialogDispenseCashOut" xml:space="preserve">
+    <value>Retragere</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayCancelledDialogHandpayCancelled" xml:space="preserve">
+    <value>Plată manuală anulată</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpay" xml:space="preserve">
+    <value>Plată manuală!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayConfirmationDialogHandpayAmount" xml:space="preserve">
+    <value>Sumă plată manuală: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogCallAttendant" xml:space="preserve">
+    <value> Vă rugăm chemaţi operatorul.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayAmount" xml:space="preserve">
+    <value>Sumă plată manuală: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayDialogHandpayRequired" xml:space="preserve">
+    <value>Plată manuală necesară</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayFailedDialogMessage" xml:space="preserve">
+    <value>Plata manuală pentru retragere nu a reușit!</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpayAmount" xml:space="preserve">
+    <value>Sumă plată manuală: {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogHandpaySuccessful" xml:space="preserve">
+    <value>Plată manuală &#238;ncheiată cu succes</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHandpayResultDialogRemoveKey" xml:space="preserve">
+    <value>Scoate cheia pentru a ieşi din meniu</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogBillCashOutFailed" xml:space="preserve">
+    <value>Retragerea de la distribuitorul de bancnote a eșuat.
+Vă rugăm chemaţi operatorul.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCashOut" xml:space="preserve">
+    <value>Retragere</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsLeft" xml:space="preserve">
+    <value>Monede rămase:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsPaid" xml:space="preserve">
+    <value>Monede plătite:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogCoinsToBePaid" xml:space="preserve">
+    <value>Monede de plată:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCashOutFailed" xml:space="preserve">
+    <value>Retragere sumă din compartimentul de monede a eşuat. 
+Vă rugăm chemaţi operatorul.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHopperDialogHopperCoinValue" xml:space="preserve">
+    <value>Valoarea monedelor din compartimentul de moede:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutDialogMessage" xml:space="preserve">
+    <value>Retragere sumă de către gazdă. Vă rugăm aşteptaţi...</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutHostCashOutFailedDialogMessage" xml:space="preserve">
+    <value>Retragere sumă de către sistemul extern a eşuat. Vă rugăm chemaţi operatorul.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonCashout" xml:space="preserve">
+    <value>Retragere</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogButtonContinuePlaying" xml:space="preserve">
+    <value>CONTINUĂ SĂ JOCI</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogFooter" xml:space="preserve">
+    <value>Apasă butonul &quot;MENU&quot; pentru a continua să joci. Apasă butonul &quot;START&quot; pentru retragere sumă c&#226;ştigată.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutInfoDialogMessage" xml:space="preserve">
+    <value>Doriţi să retrageţi suma c&#226;ştigată?</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogFooter" xml:space="preserve">
+    <value>Apasă butonul &quot;MENU&quot; pentru a continua să joci.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogNotPaidAmount" xml:space="preserve">
+    <value>Dispozitivul de platănu poate oferi suma de {0}</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutResidualCreditDialogSelectOption" xml:space="preserve">
+    <value>Vă rugăm selectaţi o opţiune:</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogButtonOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogContinueGamePlay" xml:space="preserve">
+    <value>Vă rugăm continuaţi jocul.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutRestrictedCreditDialogRestrictedCredit" xml:space="preserve">
+    <value>Credit {0} restricţionat.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketNotPrinted" xml:space="preserve">
+    <value>Voucher-ul nu a fost imprimat.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinted" xml:space="preserve">
+    <value>Voucher imprimat. Vă rugăm luaţi voucher-ul.</value>
+  </data>
+  <data name="AWPDialogProcessingCashOutTicketTicketPrinting" xml:space="preserve">
+    <value>Se imprimă voucher-ul. Vă rugăm aşteptaţi...</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenCallAttendant" xml:space="preserve">
+    <value>Cheamă operatorul</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenDescription" xml:space="preserve">
+    <value>Descriere:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenErrorCode" xml:space="preserve">
+    <value>Cod eroare:</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenInternalError" xml:space="preserve">
+    <value>Eroare internă</value>
+  </data>
+  <data name="AWPDialogProcessingErrorScreenSolution" xml:space="preserve">
+    <value>Soluție:</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostLobby" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDenominations" xml:space="preserve">
+    <value>Denominările au fost schimbate.</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostMessageDisabled" xml:space="preserve">
+    <value>Joc dezactivat de către sistemul extern</value>
+  </data>
+  <data name="AWPDialogProcessingGameDisabledFromHostReload" xml:space="preserve">
+    <value>Re&#238;ncarcă</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureCallAttendantDialogCallAttendant" xml:space="preserve">
+    <value>Vă rugăm chemaţi operatorul!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogFooterOnlyMenu" xml:space="preserve">
+    <value>Apasă butonul &quot;Menu&quot; a reveni la lobby</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogLobbyButton" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureDisabledDialogPayoutButton" xml:space="preserve">
+    <value>Retragere</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogFooter" xml:space="preserve">
+    <value>Apasă butonul &quot;START&quot; a returna pariul</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReconnectReturn" xml:space="preserve">
+    <value>Reconectați serverul Jackpot sau apăsați un buton pentru a returna PARIUL.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileDialogReturnBetButton" xml:space="preserve">
+    <value>Returna pariul</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogBetReturned" xml:space="preserve">
+    <value>Pariul a fost returnat la soldul creditului jucătorului!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureReconcileEndDialogRemoveKey" xml:space="preserve">
+    <value>Scoate cheia pentru a continua.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureGameDisabled" xml:space="preserve">
+    <value>Joc dezactivat!</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotFeatureUnavailable" xml:space="preserve">
+    <value>Nepotrivire &#238;n configurațiile Jackpot-ului.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotFeatureJackpotServerNotAvailable" xml:space="preserve">
+    <value>Jackpot-ul nu este disponibil.</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseLicenseExpired" xml:space="preserve">
+    <value>Licenţă Expirată</value>
+  </data>
+  <data name="AWPDialogProcessingLicenseNoLicense" xml:space="preserve">
+    <value>Fără Licenţă</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCashOutButton" xml:space="preserve">
+    <value>Retragere</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDown" xml:space="preserve">
+    <value>A pierdut conexiunea cu sistemul extern.</value>
+  </data>
+  <data name="AWPDialogProcessingSasLinkDownCmsDownSasDongleMissing" xml:space="preserve">
+    <value>A pierdut conexiunea cu sistemul extern!(Cheia hardware SAS lipsește)</value>
+  </data>
+  <data name="AWPDialogProcessingValidationIdConfigurationNotConfigured" xml:space="preserve">
+    <value>ID-ul de validare nu a fost configurat</value>
+  </data>
+  <data name="AWPDialogProcessingError" xml:space="preserve">
+    <value>Eroare</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionDisabled" xml:space="preserve">
+    <value>JOCUL NU CONTRIBUIE LA JACKPOT, PRIN URMARE JACKPOTUL NU POATE FI C&#194;ȘTIGAT.</value>
+  </data>
+  <data name="AWPDialogProcessingJackpotContributionEnabled" xml:space="preserve">
+    <value>JOCUL CONTRIBUIE LA JACKPOT, PRIN URMARE JACKPOTUL POATE FI C&#194;ŞTIGAT.</value>
+  </data>
+  <data name="AWPViewsInitialViewAllSettingsWereSet" xml:space="preserve">
+    <value>Toate setările au fost stabilite, vă rugăm apăsaţi butonul &#39;Reporneşte aparatul&#39;</value>
+  </data>
+  <data name="AWPViewsInitialViewAllTheseParameters" xml:space="preserve">
+    <value>Toţi aceşti parametrii vor fi stabiliţi corect pentru o bună funcţionare a aparatului de joc. Folosiţi cheia de utilizator pentru a intra &#238;n Meniul de Service.</value>
+  </data>
+  <data name="AWPViewsInitialViewDetailInfo" xml:space="preserve">
+    <value>Informaţii detailate.</value>
+  </data>
+  <data name="AWPViewsInitialViewInitialErrors" xml:space="preserve">
+    <value>Setări iniţiale- Lista parametriilor nestabiliţi</value>
+  </data>
+  <data name="AWPViewsInitialViewRebootMachine" xml:space="preserve">
+    <value>Reporneşte aparatul de joc</value>
+  </data>
+  <data name="AWPViewsInitialViewRootMenuItem" xml:space="preserve">
+    <value>Obiect din meniul sursă</value>
+  </data>
+  <data name="AWPViewsInitialViewSubMenuItem" xml:space="preserve">
+    <value>Obiect din Sub-Meniu</value>
+  </data>
+  <data name="AWPViewsInitialViewUseHwButtons" xml:space="preserve">
+    <value>Butoanele PAYOUT- pagina anterioară, MENIU- pagina următoare-, START- reporneşte aparatul</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeAftBonus" xml:space="preserve">
+    <value>Bonus AFT</value>
+  </data>
+  <data name="BaseTerminalModelEntitiesJackpotWinTypeLegacyBonus" xml:space="preserve">
+    <value>Bonus de loialitate</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBackDoor" xml:space="preserve">
+    <value>Uşa acces spate</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBellyDoor" xml:space="preserve">
+    <value>Uşa acces faţă</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillStackerDoor" xml:space="preserve">
+    <value>Uşă compartiment bancnote  2</value>
+  </data>
+  <data name="HardwareDPXS435SwitchBillValidatorDoor" xml:space="preserve">
+    <value>Uşă compartiment bancnote 1</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor1" xml:space="preserve">
+    <value>Caseta pentru numerar uşa 1</value>
+  </data>
+  <data name="HardwareDPXS435SwitchDropDoor2" xml:space="preserve">
+    <value>Caseta pentru numerar uşa 2</value>
+  </data>
+  <data name="HardwareDPXS435SwitchLogicBox" xml:space="preserve">
+    <value>Uşă acces computer</value>
+  </data>
+  <data name="HardwareDPXS435SwitchNone" xml:space="preserve">
+    <value>Vloare ne&#238;nregistrată</value>
+  </data>
+  <data name="HardwareDPXS435SwitchServiceDoor" xml:space="preserve">
+    <value>Uşă acces aparat de joc</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterChassisIsOpen" xml:space="preserve">
+    <value>Carcasa imprimantei este deschisă</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterHeadIsUp" xml:space="preserve">
+    <value>Dispozitivul de printare este ridicat</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotReady" xml:space="preserve">
+    <value>Imprimanta nu este pregătită</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterNotResponding" xml:space="preserve">
+    <value>Impimanta nu răspunde la comenzi</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterOutOfTicket" xml:space="preserve">
+    <value>Imprimanta nu mai are bilete</value>
+  </data>
+  <data name="HardwarePrinterStatusPrinterPaperJam" xml:space="preserve">
+    <value>Blocaj de h&#226;rtie</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestDownArrow" xml:space="preserve">
+    <value>↓</value>
+  </data>
+  <data name="ServiceMenuViewsJackpotSetupSynotJackpotServerTestUpArrow" xml:space="preserve">
+    <value>↑</value>
+  </data>
+</root>

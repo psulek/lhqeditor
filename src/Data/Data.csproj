@@ -87,6 +87,7 @@
     <Compile Include="ModelFeatures.cs" />
     <Compile Include="ModelStorage\ModelLoadOptions.cs" />
     <Compile Include="ModelStorage\ModelSerializerManager.cs" />
+    <Compile Include="ModelStorage\Serializers\ModelSerializer_v2.cs" />
     <Compile Include="ModelWellKnowTypes.cs" />
     <Compile Include="Comparers\LanguageEqualityComparer.cs" />
     <Compile Include="Comparers\LanguagePrimaryComparer.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Templating\Settings\GeneratorSettingsBase.cs" />
     <Compile Include="Templating\Settings\Wpf\CSharpGeneratorSettings.cs" />
     <Compile Include="Templating\Templates\CodeGeneratorTemplate.cs" />
+    <Compile Include="Templating\Templates\ModelVersionDependAttribute.cs" />
     <Compile Include="Templating\Templates\NetCore\Template.cs" />
     <Compile Include="Templating\Templates\NetFw\Template.cs" />
     <Compile Include="Templating\Templates\CSharpResXTemplateBase.cs" />

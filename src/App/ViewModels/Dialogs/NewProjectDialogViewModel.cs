@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System.Linq;
 using System.Windows.Input;
 using LHQ.App.Code;
 using LHQ.App.Dialogs;
@@ -30,8 +31,10 @@ using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Elements;
+using LHQ.Data;
 using LHQ.Data.Templating;
 using LHQ.Data.Templating.Templates;
+using LHQ.Utils;
 using LHQ.Utils.Extensions;
 
 namespace LHQ.App.ViewModels.Dialogs
@@ -39,6 +42,8 @@ namespace LHQ.App.ViewModels.Dialogs
     public class NewProjectDialogViewModel : DialogViewModelBase
     {
         private readonly IShellViewContext _shellViewContext;
+        private bool _generatorTemplatesVisible;
+        private int _generatorTemplateIndex;
 
         /// <summary>
         /// Extra info provided from Visual Studio extension.
@@ -64,6 +69,8 @@ namespace LHQ.App.ViewModels.Dialogs
         private string _error;
         private bool _hasError;
         private bool _openLanguageSettings;
+        private string _generatorTemplateName;
+        private bool _hasSelectedCodeGenerator;
 
         public NewProjectDialogViewModel(IShellViewContext shellViewContext) : base(shellViewContext.AppContext)
         {
@@ -74,9 +81,19 @@ namespace LHQ.App.ViewModels.Dialogs
             LanguageSelector.Select(defaultProjectCulture);
 
             ProjectSettings = new ProjectSettingsViewModel(shellViewContext);
+            ProjectSettings.ModelVersionVisible = false;
             ShowHelpCommand = new DelegateCommand(ShowHelpExecute);
             ChangeCodeGeneratorSettingsCommand = new DelegateCommand(ChangeCodeGeneratorSettingsExecute);
 
+            // var allTemplates = CodeGeneratorTemplateManager.Instance.GetAllTemplates();
+            // GeneratorTemplates = new ObservableCollectionExt<KeyValue<string, string>>(allTemplates.Select(x => KeyValue.Create(x.Key, x.Value)));
+            // GeneratorTemplateIndex = -1;
+            //
+            // if (extraInfo != null)
+            // {
+            //     GeneratorTemplateIndex = GeneratorTemplates.FindItemIndex(x => x.Key == extraInfo.TemplateId);
+            // }
+            //
             if (AppContext.RunInVsPackage)
             {
                 OpenLanguageSettings = false;
@@ -85,7 +102,7 @@ namespace LHQ.App.ViewModels.Dialogs
 
         public bool RunInVsPackage => AppContext.RunInVsPackage;
        
-        public string TemplateId { get; set; }
+        //public string TemplateId { get; set; }
 
         public ProjectSettingsViewModel ProjectSettings { get; set; }
 
@@ -93,7 +110,7 @@ namespace LHQ.App.ViewModels.Dialogs
         
         public ICommand ChangeCodeGeneratorSettingsCommand { get; }
 
-        public VsExtraInfo ExtraInfo { get; set; }
+        //public VsExtraInfo ExtraInfo { get; set; }
 
         public string ModelName
         {
@@ -101,13 +118,39 @@ namespace LHQ.App.ViewModels.Dialogs
             set => SetProperty(ref _modelName, value);
         }
 
-        public void SetVsExtraInfo(VsExtraInfo extraInfo)
+        public ObservableCollectionExt<KeyValue<string, string>> GeneratorTemplates { get; private set; }
+
+        public string GeneratorTemplateName
         {
-            if (extraInfo != null)
+            get => _generatorTemplateName;
+            set => SetProperty(ref _generatorTemplateName, value);
+        }
+
+        public bool HasSelectedCodeGenerator
+        {
+            get => _hasSelectedCodeGenerator;
+            set => SetProperty(ref _hasSelectedCodeGenerator, value);
+        }
+
+        public int GeneratorTemplateIndex
+        {
+            get => _generatorTemplateIndex;
+            set
             {
-                ExtraInfo = extraInfo;
-                TemplateId = extraInfo.TemplateId;
-                Template = CodeGeneratorTemplateManager.Instance.CreateTemplate(TemplateId);
+                SetProperty(ref _generatorTemplateIndex, value);
+                
+                var template = value > -1 && value < GeneratorTemplates.Count ? GeneratorTemplates[value] : null;
+                HasSelectedCodeGenerator = template != null;
+                if (template != null)
+                {
+                    Template = CodeGeneratorTemplateManager.Instance.CreateTemplate(template.Key);
+                    GeneratorTemplateName = template.Value;
+                }
+                else
+                {
+                    Template = null;
+                    GeneratorTemplateName = string.Empty;
+                }
             }
         }
 
@@ -147,12 +190,13 @@ namespace LHQ.App.ViewModels.Dialogs
 
         private void ChangeCodeGeneratorSettingsExecute(object obj)
         {
-            if (!RunInVsPackage)
-            {
-                return;
-            }
+            // if (!RunInVsPackage)
+            // {
+            //     return;
+            // }
 
-            (bool submitted, CodeGeneratorTemplate template) = CodeGeneratorDialog.DialogShow(_shellViewContext, TemplateId, Template);
+            string templateId = Template?.Id ?? string.Empty;
+            (bool submitted, CodeGeneratorTemplate template) = CodeGeneratorDialog.DialogShow(_shellViewContext, templateId, Template);
             if (submitted)
             {
                 Template = template;
@@ -204,6 +248,18 @@ namespace LHQ.App.ViewModels.Dialogs
         {
             base.OnDispose();
             LanguageSelector.Dispose();
+        }
+
+        public void SetExtraInfo(VsExtraInfo extraInfo)
+        {
+            var allTemplates = CodeGeneratorTemplateManager.Instance.GetAllTemplates();
+            GeneratorTemplates = new ObservableCollectionExt<KeyValue<string, string>>(allTemplates.Select(x => KeyValue.Create(x.Key, x.Value)));
+            GeneratorTemplateIndex = -1;
+
+            if (extraInfo != null)
+            {
+                GeneratorTemplateIndex = GeneratorTemplates.FindItemIndex(x => x.Key == extraInfo.TemplateId);
+            }
         }
     }
 }

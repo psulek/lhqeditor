@@ -54,11 +54,11 @@ namespace LHQ.App.Services.Implementation
                     serviceContainer.Register<ITranslationService, TranslationService>();
                     serviceContainer.Register<IPluginManager, PluginManager>();
                     serviceContainer.Register<IPluginServiceContainer, PluginServiceContainer>();
-                    serviceContainer.Register<IModelFileStorage, ModelFileStorage>();
                     serviceContainer.Register<ILogger, DefaultLogger>();
                     serviceContainer.Register<IUtilityHelper, UtilityHelper>();
                     serviceContainer.Register<IFileSystemService, FileSystemService>();
                     serviceContainer.Register<IUpdateService, UpdateService>();
+                    serviceContainer.Register<IModelFileStorage, ModelFileStorage>();
                     serviceContainer.Register<IStandaloneCodeGeneratorService, StandaloneCodeGeneratorService>();
                     break;
                 }

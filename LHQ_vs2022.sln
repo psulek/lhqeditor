@@ -37,6 +37,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "App.Setup", "src\App.Setup\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gen.Cmd", "src\Gen.Cmd\Gen.Cmd.csproj", "{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gen.Lib.Tests", "src\Gen.Lib.Tests\Gen.Lib.Tests.csproj", "{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppSetup|Any CPU = AppSetup|Any CPU
@@ -179,6 +181,18 @@ Global
 		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Release|x86.ActiveCfg = Release|Any CPU
 		{83153CFD-2E5C-447F-AA0A-B9DA780AD9B6}.Release|x86.Build.0 = Release|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.AppSetup|Any CPU.ActiveCfg = Debug|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.AppSetup|Any CPU.Build.0 = Debug|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.AppSetup|x86.ActiveCfg = Debug|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.AppSetup|x86.Build.0 = Debug|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.Debug|x86.Build.0 = Debug|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.Release|x86.ActiveCfg = Release|Any CPU
+		{8604EA37-CF1D-4656-A15D-DBB888A9DAA1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

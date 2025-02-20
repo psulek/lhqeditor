@@ -44,12 +44,14 @@ namespace LHQ.Data.Templating.Settings
         {
             OutputFolder = other.OutputFolder;
             OutputProjectName = other.OutputProjectName;
+            EncodingWithBOM = other.EncodingWithBOM;
+            LineEndings = other.LineEndings;
             Enabled = other.Enabled;
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             // write only if Enabled is false
             if (!Enabled)

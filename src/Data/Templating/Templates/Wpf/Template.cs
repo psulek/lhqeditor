@@ -33,6 +33,9 @@ namespace LHQ.Data.Templating.Templates.Wpf
 {
     public class WpfResxCsharp01Template : CSharpResXTemplateBase<CSharpGeneratorSettings>
     {
+        // public WpfResxCsharp01Template(int modelVersion) : base(modelVersion)
+        // { }
+
         [Browsable(false)]
         [JsonIgnore]
         public override string Id { get; } = "WpfResxCsharp01";

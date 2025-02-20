@@ -1022,9 +1022,15 @@ namespace LHQ.App.ViewModels
         private void ProjectSettingsExecute(object obj)
         {
             ModelOptions clonedOptions = ShellViewModel.ModelOptions.Clone();
-            if (ProjectSettingsDialog.DialogShow(ShellViewContext, clonedOptions))
+            if (ProjectSettingsDialog.DialogShow(ShellViewContext, clonedOptions, out var newModelVersion))
             {
                 ShellViewModel.RootModel.ModelOptions = clonedOptions;
+                if (ShellViewModel.ModelContext.Model.Version != newModelVersion)
+                {
+                    ShellViewModel.RootModel.ModelVersion = newModelVersion.ToString();
+                    ShellViewModel.ModelContext.Model.Version = newModelVersion;
+                }
+
                 ShellService.SaveProject();
             }
         }
@@ -1249,7 +1255,15 @@ namespace LHQ.App.ViewModels
                 if (dialogResult.Submitted)
                 {
                     ShellService.NewProject(dialogResult.ModelName, dialogResult.PrimaryLanguage,
-                        dialogResult.ModelOptions);
+                        dialogResult.ModelOptions, dialogResult.Template);
+                    
+                    // var codeGeneratorMetadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+                    // codeGeneratorMetadata.Template = _dialogResult.Template;
+                    // codeGeneratorMetadata.TemplateId = templateId;
+                    //
+                    // var modelFileStorage = new ModelFileStorage();
+                    // modelFileStorage.Initialize();
+                    // string fileContent = modelFileStorage.Save(modelContext, ModelSaveOptions.Indent);
 
                     if (dialogResult.OpenLanguageSettings)
                     {

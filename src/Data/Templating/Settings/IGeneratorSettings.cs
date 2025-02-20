@@ -36,7 +36,7 @@ namespace LHQ.Data.Templating.Settings
 
         SettingsValidationError Validate();
 
-        void Serialize(DataNode node);
+        void Serialize(DataNode node, int modelVersion);
 
         bool Deserialize(DataNode node);
     }

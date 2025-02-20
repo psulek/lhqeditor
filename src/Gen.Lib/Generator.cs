@@ -21,7 +21,8 @@ namespace LHQ.Gen.Lib
         private readonly ILogger _logger;
         private bool _disposed;
         private readonly JsEngine _engine;
-        private readonly Dictionary<string, string> _generatedFiles = new Dictionary<string, string>();
+        private readonly List<GeneratedFile> _generatedFiles = new List<GeneratedFile>();
+        private readonly Dictionary<string, LhqModelGroupSettings> _modelGroupSettings = new Dictionary<string, LhqModelGroupSettings>();
 
         private static readonly string[] JsFiles =
         {
@@ -30,6 +31,7 @@ namespace LHQ.Gen.Lib
         };
 
         private const string XpathRootNamespace = "//ns:Project/ns:PropertyGroup/ns:RootNamespace";
+        private const string XpathAssemblyName = "//ns:Project/ns:PropertyGroup/ns:AssemblyName";
 
         private static readonly string[] ItemGroupTypes = { "Content", "None" };
         private static readonly string[] ItemGroupTypesAttrs = { "Include", "Update" };
@@ -53,7 +55,8 @@ namespace LHQ.Gen.Lib
 
             var hostDebugLog = new Action<string, string>((msg, lvl) => { Console.WriteLine($"[{(lvl ?? "DEBUG")}] {msg}"); });
 
-            var hostAddResultFile = new Action<string, string>((file, content) => { _generatedFiles.Add(file, content); });
+            Action<string, string, bool, string> hostAddResultFile = HostAddResultFile;
+            Action<string, string> hostAddModelGroupSettings = HostAddModelGroupSettings;
             var hostPathCombine = new Func<string, string, string>(Path.Combine);
             var hostWebHtmlEncode = new Func<string, string>(System.Net.WebUtility.HtmlEncode);
             var hostStopwatchStart = new Func<long>(() => DateTime.UtcNow.Ticks);
@@ -68,6 +71,7 @@ namespace LHQ.Gen.Lib
 
             _engine.EmbedHostObject("HostDebugLog", hostDebugLog);
             _engine.EmbedHostObject("HostAddResultFile", hostAddResultFile);
+            _engine.EmbedHostObject("HostAddModelGroupSettings", hostAddModelGroupSettings);
             _engine.EmbedHostObject("HostPathCombine", hostPathCombine);
             _engine.EmbedHostObject("HostWebHtmlEncode", hostWebHtmlEncode);
             _engine.EmbedHostObject("HostStopwatchStart", hostStopwatchStart);
@@ -97,6 +101,26 @@ namespace LHQ.Gen.Lib
             _engine.Execute("LhqGenerators.TemplateManager.intialize(__handlebarFiles);");
         }
 
+        private void HostAddResultFile(string file, string content, bool bom, string le)
+        {
+            var lineEndings = (LineEndings)Enum.Parse(typeof(LineEndings), le, true);
+            _generatedFiles.Add(new GeneratedFile(file, content, bom, lineEndings));
+        }
+
+        private void HostAddModelGroupSettings(string group, string settings)
+        {
+            var jsonSettings = JsonConvert.DeserializeObject<Dictionary<string, object>>(settings);
+
+            LhqModelGroupSettings groupSettings;
+            if (!_modelGroupSettings.TryGetValue(group, out groupSettings))
+            {
+                groupSettings = new LhqModelGroupSettings(group);
+                _modelGroupSettings.Add(group, groupSettings);
+            }
+            
+            groupSettings.Settings = jsonSettings;
+        }
+
         public string FindOwnerCsProjectFile(string lhqModelFileName)
         {
             if (!File.Exists(lhqModelFileName))
@@ -110,8 +134,9 @@ namespace LHQ.Gen.Lib
             var resultNamespace = string.Empty;
             foreach (var csProj in csProjectFiles)
             {
-                var rootNamespace = GetRootNamespace(lhqModelFileName, csProj, out var referencedLhqFile);
-                if (referencedLhqFile && (result == string.Empty || string.IsNullOrEmpty(resultNamespace)))
+                var rootNamespace = GetRootNamespace(lhqModelFileName, csProj);
+                //if (referencedLhqFile && (result == string.Empty || string.IsNullOrEmpty(resultNamespace)))
+                if (result == string.Empty || string.IsNullOrEmpty(resultNamespace))
                 {
                     result = csProj;
                     resultNamespace = rootNamespace;
@@ -121,15 +146,15 @@ namespace LHQ.Gen.Lib
             return result;
         }
 
-        public string GetRootNamespace(string lhqModelFileName, string csProjectFileName)
+        private string GetRootNamespace(string lhqModelFileName, string csProjectFileName)
         {
-            return GetRootNamespace(lhqModelFileName, csProjectFileName, out _);
+            return GetRootNamespace(lhqModelFileName, csProjectFileName, _logger);
         }
 
-        public string GetRootNamespace(string lhqModelFileName, string csProjectFileName,
-            out bool referencedLhqFile)
+        public static string GetRootNamespace(string lhqModelFileName, string csProjectFileName,
+            ILogger logger)
         {
-            referencedLhqFile = false;
+            var referencedLhqFile = false;
 
             if (string.IsNullOrEmpty(csProjectFileName) || !File.Exists(csProjectFileName))
             {
@@ -175,39 +200,39 @@ namespace LHQ.Gen.Lib
                 // if csproj has imported lhq file (lhqModelFileName) explicitly eg: /ItemGroup/None[@Update="Strings.lhq"] (and other variants)
                 // we can look at CustomToolNamespace element under '{lhqModelFileName}.tt' element (if it exists)
                 referencedLhqFile = FindFileElement(lhqModelFileName) != null;
-                //if (referencedLhqFile)
+                var t4FileElement = FindFileElement(lhqFileT4);
+                if (t4FileElement != null)
                 {
-                    var t4FileElement = FindFileElement(lhqFileT4);
-                    //CustomToolNamespace
-                    if (t4FileElement != null)
+                    var dependentUpon = t4FileElement.Descendants(ns + "DependentUpon").FirstOrDefault()?.Value;
+                    if (!string.IsNullOrEmpty(dependentUpon) && dependentUpon == lhqModelFileName)
                     {
-                        var dependentUpon = t4FileElement.Descendants(ns + "DependentUpon").FirstOrDefault()?.Value;
-                        if (!string.IsNullOrEmpty(dependentUpon) && dependentUpon == lhqModelFileName)
-                        {
-                            referencedLhqFile = true;
-                        }
-
-                        var customToolNamespace =
-                            t4FileElement.Descendants(ns + "CustomToolNamespace").FirstOrDefault()?.Value;
-                        if (!string.IsNullOrEmpty(customToolNamespace))
-                        {
-                            rootNamespace = customToolNamespace;
-                        }
+                        referencedLhqFile = true;
                     }
+
+                    var customToolNamespace =
+                        t4FileElement.Descendants(ns + "CustomToolNamespace").FirstOrDefault()?.Value;
+                    if (!string.IsNullOrEmpty(customToolNamespace))
+                    {
+                        rootNamespace = customToolNamespace;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(rootNamespace))
+                {
+                    var assemblyNameElem = doc.XPathSelectElement(XpathAssemblyName, manager);
+                    rootNamespace = assemblyNameElem?.Value;
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error getting root namespace.");
-                _logger.Error(e, "Error getting root namespace.");
-
+                logger?.Error(e, "Error getting root namespace.");
                 rootNamespace = null;
             }
 
             return rootNamespace ?? string.Empty;
         }
 
-        public Dictionary<string, string> Generate(string lhqModelFileName, string csProjectFileName,
+        public GenerateResult Generate(string lhqModelFileName, string csProjectFileName,
             string outDir, Dictionary<string, object> hostData = null)
         {
             if (string.IsNullOrEmpty(lhqModelFileName))
@@ -242,7 +267,7 @@ namespace LHQ.Gen.Lib
                     csProjectFileName = FindOwnerCsProjectFile(lhqModelFileName);
                     if (!string.IsNullOrEmpty(csProjectFileName))
                     {
-                        _logger.Debug($"Found '{csProjectFileName}' associated with '{lhqModelFileName}'.");
+                        _logger.Info($"Found '{csProjectFileName}' associated with '{lhqModelFileName}'.");
                         //Utils.AddToLogFile($"C# project was not specified but one was auto find by app: {csProjectFileName}");
                         csProjFound = true;
                     }
@@ -263,7 +288,7 @@ namespace LHQ.Gen.Lib
                 $"- c# project file: {(string.IsNullOrEmpty(csProjectFileName) ? "-" : csProjectFileName)} ({(csProjFound ? "auto found" : "cmd")})");
             sb.AppendLine($"- out dir: {outDir}");
 
-            _logger.Debug(sb.ToString());
+            _logger.Info(sb.ToString());
 
             try
             {
@@ -295,16 +320,18 @@ namespace LHQ.Gen.Lib
                 throw;
             }
 
-            _logger.Info($"Generating files from {lhqModelFileName} ended.");
+            _logger.Info($"Generating {_generatedFiles.Count} files from {lhqModelFileName} ended.");
 
-            var distinctFileKeys = _generatedFiles.Select(x => x.Key).Distinct().ToList();
+            var distinctFileKeys = _generatedFiles.Select(x => x.FileName).Distinct().ToList();
             if (_generatedFiles.Count != distinctFileKeys.Count)
             {
-                var duplicateFiles = _generatedFiles.Where(x => !distinctFileKeys.Contains(x.Key)).ToArray();
+                var duplicateFiles = _generatedFiles.Where(x => !distinctFileKeys.Contains(x.FileName))
+                    .Select(x => x.FileName).ToArray();
+                
                 _logger.Info("Duplicated generated files: " + string.Join(", ", duplicateFiles));
             }
 
-            return _generatedFiles;
+            return new GenerateResult(_generatedFiles, _modelGroupSettings.Values.ToList());
         }
 
         public void Dispose()
@@ -315,5 +342,11 @@ namespace LHQ.Gen.Lib
                 _disposed = true;
             }
         }
+    }
+
+    public enum LineEndings
+    {
+        LF,
+        CRLF
     }
 }

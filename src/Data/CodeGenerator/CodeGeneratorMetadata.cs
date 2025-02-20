@@ -47,7 +47,7 @@ namespace LHQ.Data.CodeGenerator
         [JsonProperty("templateId")]
         public string TemplateId { get; set; }
 
-        public DataNode Serialize()
+        public DataNode Serialize(int modelVersion)
         {
             DataNode result = null;
             if (!string.IsNullOrEmpty(TemplateId) && Template != null)
@@ -56,7 +56,7 @@ namespace LHQ.Data.CodeGenerator
                 result.AddAttribute(AttributeTemplateId, TemplateId);
 
                 var templateNode = new DataNode(ElementSettings);
-                Template.Serialize(templateNode);
+                Template.Serialize(templateNode, modelVersion);
                 result.AddChildren(templateNode);
             }
 

@@ -77,6 +77,8 @@ namespace LHQ.VsExtension
 
             var uri = new Uri(typeof(VsPackageService).Assembly.CodeBase, UriKind.Absolute);
             ExtensionPath = Path.GetDirectoryName(uri.LocalPath);
+            
+            AddMessageToOutput($"Extension path: {ExtensionPath}", OutputMessageType.Info, false);
 
             AppDomain.CurrentDomain.AssemblyResolve += DomainOnAssemblyResolve;
 

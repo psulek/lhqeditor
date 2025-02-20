@@ -90,9 +90,9 @@ namespace LHQ.Data.Templating.Settings.WinForms
             return error;
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             node.AddAttribute(nameof(GenerateParamsMethods), DataNodeValueHelper.ToString(GenerateParamsMethods));
             node.AddAttribute(nameof(MissingTranslationFallbackToPrimary), DataNodeValueHelper.ToString(MissingTranslationFallbackToPrimary));

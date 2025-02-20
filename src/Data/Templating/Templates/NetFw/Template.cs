@@ -32,6 +32,9 @@ namespace LHQ.Data.Templating.Templates.NetFw
 {
     public class NetFwResxCsharp01Template: CSharpResXTemplateBase<CSharpGeneratorSettings>
     {
+        // public NetFwResxCsharp01Template(int modelVersion) : base(modelVersion)
+        // { }
+
         [Browsable(false)]
         [JsonIgnore]
         public override string Id { get; } = "NetFwResxCsharp01";

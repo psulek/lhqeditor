@@ -33,6 +33,9 @@ namespace LHQ.Data.Templating.Templates.WinForms
 {
     public class WinFormsResxCsharp01Template : CSharpResXTemplateBase<CSharpGeneratorSettings>
     {
+        // public WinFormsResxCsharp01Template(int modelVersion) : base(modelVersion)
+        // { }
+
         [Browsable(false)]
         [JsonIgnore]
         public override string Id { get; } = "WinFormsResxCsharp01";

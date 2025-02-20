@@ -1,0 +1,61 @@
+﻿<Project Sdk="MSTest.Sdk/3.5.1">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>LHQ.Cmd.Tests</AssemblyName>
+        <RootNamespace>LHQ.Cmd.Tests</RootNamespace>
+        <Configurations>Debug;Release;Publish</Configurations>
+        <Platforms>AnyCPU</Platforms>
+
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    </PropertyGroup>
+
+<!--    <PropertyGroup Condition=" '$(Configuration)' == 'Publish' ">-->
+<!--      <DebugSymbols Condition=" '$(DebugSymbols)' == '' ">true</DebugSymbols>-->
+<!--      <Optimize Condition=" '$(Optimize)' == '' ">false</Optimize>-->
+<!--    </PropertyGroup>-->
+
+    <ItemGroup>
+        <EmbeddedResource Remove="TestData\**\*.resx"/>
+        <Compile Remove="TestData\**\*.cs" />
+
+        <None Include="TestData\**\*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+
+        <Compile Remove="GenOutput\**\*.cs" />
+        <EmbeddedResource Remove="GenOutput\**\*" />
+        <None Include="GenOutput\**\*.*" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64" Version="3.27.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0"/>
+        <PackageReference Include="FluentAssertions" Version="6.12.1"/>
+        <PackageReference Include="NUnit" Version="4.3.2" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.6.0"/>
+        <PackageReference Include="NUnit.Analyzers" Version="4.6.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Shouldly" Version="4.3.0" />
+        <PackageReference Include="Verify" Version="28.9.0" />
+        <PackageReference Include="Verify.NUnit" Version="28.9.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\app\App.csproj" />
+    </ItemGroup>
+    
+<!--    <Target Name="CopyFilesBeforeBuild" BeforeTargets="BeforeBuild">-->
+<!--        <ItemGroup>-->
+<!--            <HbsFiles Include="$(MSBuildThisFileDirectory)\..\hbs-templates\*.*" />-->
+<!--        </ItemGroup>-->
+<!--        <Copy SourceFiles="%(HbsFiles.Identity)" DestinationFolder="$(OutputPath)\hbs" OverwriteReadOnlyFiles="true" />-->
+<!--    </Target>-->
+
+</Project>

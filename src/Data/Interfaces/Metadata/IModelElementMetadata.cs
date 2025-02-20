@@ -38,7 +38,7 @@ namespace LHQ.Data.Interfaces.Metadata
         /// </summary>
         Guid DescriptorUID { get; }
 
-        DataNode Serialize();
+        DataNode Serialize(int modelVersion);
 
         bool Deserialize(DataNode sourceNode);
     }

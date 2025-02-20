@@ -37,9 +37,11 @@ using LHQ.App.ViewModels.Dialogs.AppSettings;
 using LHQ.Core.DependencyInjection;
 using LHQ.Core.Model;
 using LHQ.Data;
+using LHQ.Data.CodeGenerator;
 using LHQ.Data.Extensions;
 using LHQ.Data.Interfaces.Key;
 using LHQ.Data.ModelStorage;
+using LHQ.Data.Templating.Templates;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
 
@@ -246,8 +248,10 @@ namespace LHQ.App.Services.Implementation
             {
                 loadResult = LoadModelContextFromFile(fileName, true);
             }
-            catch
+            catch (Exception e)
             {
+                Logger.Error(Strings.Services.Application.OpenProjectFailed(fileName), e);
+                
                 loadResult = null;
                 DialogService.ShowError(
                     Strings.Services.Application.OpenProjectCaption,
@@ -303,6 +307,11 @@ namespace LHQ.App.Services.Implementation
                     {
                         if (loadResult.LoadStatus == ProjectLoadStatus.ModelUpgradeRequired)
                         {
+                            // if (loadResult.ModelContext != null)
+                            // {
+                            //     bool isCompatible = ModelFileStorage.IsCompatible(loadResult.ModelContext);
+                            // }
+                            
                             DialogResult confirmResult = DialogService.ShowConfirm(captionFileCompatIssue,
                                 Strings.Services.Application.FileCompatibilityIssueCreatedInPreviousVersion(fileName),
                                 Strings.Services.Application.FileCompatibilityIssueUpgradeToCurrentVersionConfirm);
@@ -449,7 +458,8 @@ namespace LHQ.App.Services.Implementation
                         else
                         {
                             string tmpModelContent = ModelFileStorage.Save(modelContext, new ModelSaveOptions(false));
-                            if (!tmpModelContent.IsNullOrEmpty() && tmpModelContent != loadResult.RawJson)
+                            //if (!tmpModelContent.IsNullOrEmpty() && tmpModelContent != loadResult.RawJson)
+                            if (!tmpModelContent.IsNullOrEmpty() && string.Compare(tmpModelContent, loadResult.RawJson, StringComparison.Ordinal) != 0)
                             {
                                 try
                                 {
@@ -621,12 +631,13 @@ namespace LHQ.App.Services.Implementation
         {
             RecentFilesService.Save(ShellViewContext);
             NewProject(Strings.ViewModels.NewProject.DefaultModelName,
-                CultureCache.English.Name, new ModelOptions());
+                CultureCache.English.Name, new ModelOptions(), null);
         }
 
         public event EventHandler<ShellContextEventArgs> OnShellViewEvent;
 
-        public void NewProject(string modelName, string primaryLanguage, ModelOptions modelOptions)
+        public void NewProject(string modelName, string primaryLanguage, ModelOptions modelOptions, 
+            CodeGeneratorTemplate codeGeneratorTemplate)
         {
             ModelContext modelContext = CreateModelContext(modelName);
             modelContext.AddLanguage(primaryLanguage, true);
@@ -637,6 +648,18 @@ namespace LHQ.App.Services.Implementation
             ShellViewModel.ProjectFileName = string.Empty;
             ShellViewModel.ShellAreaType = ShellAreaType.EditorArea;
             RecentFilesService.ResetLastOpenedFile();
+
+            if (codeGeneratorTemplate == null)
+            {
+                ShellViewModel.CodeGeneratorItemTemplate = string.Empty;
+            }
+            else
+            {
+                var metadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+                metadata.TemplateId = codeGeneratorTemplate.Id;
+                metadata.Template = codeGeneratorTemplate;
+                ShellViewModel.CodeGeneratorItemTemplate = codeGeneratorTemplate.Id;
+            }
         }
 
         public bool CheckProjectIsDirty()

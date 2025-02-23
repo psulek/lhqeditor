@@ -48,6 +48,7 @@ namespace LHQ.App
                     EnableTranslation = false,
                     OpenLastProjectOnStartup = targetIsVs == false,
                     CheckUpdatesOnAppStart = targetIsVs == false,
+                    RunTemplateAfterSave = targetIsVs,
                     LockTranslationsWithResource = null,
                 };
 

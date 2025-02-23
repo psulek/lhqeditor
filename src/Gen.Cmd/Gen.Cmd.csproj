@@ -7,7 +7,6 @@
         <Nullable>enable</Nullable>
         <RootNamespace>LHQ.Gen.Cmd</RootNamespace>
         <AssemblyName>LHQ.Gen.Cmd</AssemblyName>
-        <SignAssembly>true</SignAssembly>
     </PropertyGroup>
 
     <ItemGroup>
@@ -40,9 +39,4 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
-
-    <PropertyGroup>
-        <AssemblyOriginatorKeyFile>..\..\LHQ.snk</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
-
 </Project>

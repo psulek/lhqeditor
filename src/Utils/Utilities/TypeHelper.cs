@@ -40,8 +40,10 @@ namespace LHQ.Utils.Utilities
         /// </summary>
         public static string GetSimpleAssemblyQualifiedName(this Type pluginModuleType)
         {
-            var assemblyName = pluginModuleType.Assembly.GetName();
-            return $"{pluginModuleType.FullName}, {assemblyName.Name}, PublicKeyToken={assemblyName.GetPublicKeyTokenAsHex()}";
+            return pluginModuleType.AssemblyQualifiedName;
+
+            // var assemblyName = pluginModuleType.Assembly.GetName();
+            // return $"{pluginModuleType.FullName}, {assemblyName.Name}, PublicKeyToken={assemblyName.GetPublicKeyTokenAsHex()}";
         }
         
         public static List<TInstanceInterface> CreateInstancesFromTypedAttributes<TAttribute, TInstanceInterface>(string operationName,

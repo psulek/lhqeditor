@@ -41,6 +41,8 @@ namespace LHQ.App.Code
 
             private const string NugetApiServer = "https://api.nuget.org/v3-flatcontainer/";
 
+            public const string ModelV2Info = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes#obsolete-t4-template-files-lhqtt";
+
             public static string GetReportBug(string title, string body)
             {
                 return ReportBug + "title=" + title + "&body=" + body;

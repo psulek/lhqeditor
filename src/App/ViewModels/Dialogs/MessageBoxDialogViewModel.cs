@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2021 Peter ï¿½ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -40,11 +40,13 @@ namespace LHQ.App.ViewModels.Dialogs
         private readonly DialogButtons _buttons;
         private bool _isChecked;
         private readonly string _caption;
+        private readonly Action _extraButtonAction;
 
         public MessageBoxDialogViewModel(IAppContext appContext,
             string message, string caption, string detail, DialogIcon icon,
             DialogButtons buttons, bool? checkValue, string checkHeader, string checkHint,
-            string cancelButtonHeader = null, string yesButtonHeader = null, string noButtonHeader = null)
+            string cancelButtonHeader = null, string yesButtonHeader = null, string noButtonHeader = null,
+            string extraButtonHeader = null, Action extraButtonAction = null)
             : base(appContext)
         {
             _caption = caption;
@@ -53,6 +55,14 @@ namespace LHQ.App.ViewModels.Dialogs
             Icon = icon;
             _buttons = buttons;
 
+            _extraButtonAction = extraButtonAction;
+            ExtraButtonVisibility = string.IsNullOrEmpty(extraButtonHeader) ? Visibility.Collapsed : Visibility.Visible;
+            ExtraButtonVisibilityHeader = extraButtonHeader;
+            if (!string.IsNullOrEmpty(extraButtonHeader))
+            {
+                ExtraButtonVisibilityCommand = new DelegateCommand(ExtraButtonExecute);
+            }
+            
             IsChecked = checkValue.HasValue && checkValue.Value;
             CheckPanelVisibility = checkValue.HasValue ? Visibility.Visible : Visibility.Collapsed;
             CheckHeader = checkValue.HasValue ? checkHeader : string.Empty;
@@ -104,6 +114,11 @@ namespace LHQ.App.ViewModels.Dialogs
             Result = Model.DialogResult.None;
         }
 
+        private void ExtraButtonExecute(object obj)
+        {
+            _extraButtonAction?.Invoke();
+        }
+
         public DialogResult Result { get; private set; }
 
         public string Message { get; }
@@ -112,6 +127,12 @@ namespace LHQ.App.ViewModels.Dialogs
 
         public DialogIcon Icon { get; }
 
+        public string ExtraButtonVisibilityHeader { get; }
+        
+        public ICommand ExtraButtonVisibilityCommand { get; }
+        
+        public Visibility ExtraButtonVisibility { get; }
+        
         public Visibility NoButtonVisibility { get; }
 
         public string YesOkButtonHeader { get; }

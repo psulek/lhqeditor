@@ -30,6 +30,7 @@ using EnvDTE;
 using LHQ.App.ViewModels;
 using LHQ.Utils.Extensions;
 using Microsoft.VisualStudio.Shell;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -46,15 +47,17 @@ namespace LHQ.VsExtension.Code
 
         public static DTE GetDTE()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             return Package.GetGlobalService(typeof(DTE)) as DTE;
         }
 
         public static string GetVsProductVersion()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             if (Package.GetGlobalService(typeof(DTE)) is DTE dte)
             {
                 var dteVersion = Version.Parse(dte.Version);
-                return _vsVersions.ContainsKey(dteVersion.Major) ? _vsVersions[dteVersion.Major] : dteVersion.Major.ToString();
+                return _vsVersions.TryGetValue(dteVersion.Major, out string version) ? version : dteVersion.Major.ToString();
             }
 
             return string.Empty;
@@ -62,28 +65,41 @@ namespace LHQ.VsExtension.Code
 
         public static List<ShellViewModel> GetOpenedShellViews(this DTE dte, out List<ProjectItem> projectItems)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             return GetOpenedShellViews(dte.Windows, out projectItems);
         }
 
-        public static List<EditorPane> GetOpenedEditorPanes(this Windows windows, out List<ProjectItem> projectItems)
+        public static List<EditorPane> GetOpenedEditorPanes(this EnvDTE.Windows windows, out List<ProjectItem> projectItems)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             List<Window> shellWindows = GetOpenedShellWindows(windows, out projectItems);
+#pragma warning disable VSTHRD010
             return shellWindows.Select(x => x.Object as EditorPane).ToList();
+#pragma warning restore VSTHRD010
         }
 
-        public static List<ShellViewModel> GetOpenedShellViews(this Windows windows, out List<ProjectItem> projectItems)
+        public static List<ShellViewModel> GetOpenedShellViews(this EnvDTE.Windows windows, out List<ProjectItem> projectItems)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             List<Window> shellWindows = GetOpenedShellWindows(windows, out projectItems);
-            return shellWindows.Select(x => (x.Object as EditorPane).ShellViewModel).ToList();
+#pragma warning disable VSTHRD010
+            return shellWindows.Where(x => x.Object is EditorPane).Select(x => ((EditorPane)x.Object).ShellViewModel).ToList();
+#pragma warning restore VSTHRD010
         }
 
-        public static Window GetWindowForShellView(this Windows windows, ShellViewModel shellViewModel)
+        public static Window GetWindowForShellView(this EnvDTE.Windows windows, ShellViewModel shellViewModel)
         {
-            return GetOpenedShellWindows(windows, out _).SingleOrDefault(x => (x.Object as EditorPane).ShellViewModel == shellViewModel);
+            ThreadHelper.ThrowIfNotOnUIThread();
+#pragma warning disable VSTHRD010
+            return GetOpenedShellWindows(windows, out _)
+                .Where(x => x.Object is EditorPane)
+                .SingleOrDefault(x => ((EditorPane)x.Object).ShellViewModel == shellViewModel);
+#pragma warning restore VSTHRD010
         }
 
-        public static List<Window> GetOpenedShellWindows(this Windows windows, out List<ProjectItem> projectItems)
+        public static List<Window> GetOpenedShellWindows(this EnvDTE.Windows windows, out List<ProjectItem> projectItems)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             List<Window> result = new List<Window>();
             projectItems = new List<ProjectItem>();
 
@@ -115,6 +131,7 @@ namespace LHQ.VsExtension.Code
         
         public static EditorPane GetActiveEditorPane(this DTE dte)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             Window window = dte.ActiveWindow;
             if (window != null && !window.ObjectKind.IsNullOrEmpty() && 
                 Guid.TryParse(window.ObjectKind, out var editorKidUid) &&

@@ -31,6 +31,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using EnvDTE;
 using LHQ.App;
@@ -39,7 +40,9 @@ using LHQ.App.Services.Implementation.Undo;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.Services.Interfaces.Undo;
 using LHQ.App.ViewModels;
+using LHQ.Data.Extensions;
 using LHQ.Utils.Extensions;
+using LHQ.VsExtension.Code;
 using LHQ.VsExtension.Undo;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
@@ -222,7 +225,7 @@ namespace LHQ.VsExtension
 
                     if (eventAfterSave.Result.IsSuccess)
                     {
-                        RunT4Templates(ShellViewModel.ProjectFileName);
+                        GenerateTemplateCode(ShellViewModel.ProjectFileName);
                     }
 
                     break;
@@ -230,7 +233,7 @@ namespace LHQ.VsExtension
             }
         }
 
-        private void RunT4Templates(string projectFileName)
+        private void GenerateTemplateCode(string projectFileName)
         {
             try
             {
@@ -239,6 +242,15 @@ namespace LHQ.VsExtension
                 {
                     return;
                 }
+
+                if (ShellViewModel.ModelContext.IsModernGenerator())
+                {
+                    //RunStandaloneGenerator(projectFileName, ShellViewModel.AppContext);
+                    return;
+                }
+                
+                //ShellViewModel.AppContext.StandaloneCodeGeneratorService.GenerateCodeAsync(ShellViewModel.ProjectFileName)
+
 
                 string parentFolder = Path.GetDirectoryName(projectFileName);
 
@@ -277,6 +289,33 @@ namespace LHQ.VsExtension
                 // ignored
             }
         }
+
+//         private void RunStandaloneGenerator(string projectFileName, IAppContext appContext)
+//         {
+// #pragma warning disable VSTHRD110
+//             Task.Factory.StartNew(async () =>
+//                 {
+//                     try
+//                     {
+//                         var stopwatch = Stopwatch.StartNew();
+//                         VsPackageService.ClearOutputMessages();
+//                         VsPackageService.AddMessageToOutput($"Generating code from: {projectFileName}", OutputMessageType.Info);
+//
+//                         var generateResult = await appContext.StandaloneCodeGeneratorService.GenerateCodeAsync(projectFileName);
+//                         string resultStr = generateResult.Success ? 
+//                             $"was successful, {generateResult.GeneratedFileCount} file(s) was generated in {stopwatch.Elapsed:g}." 
+//                             : "failed.";
+//
+//                         VsPackageService.AddMessageToOutput($"Generating code {resultStr}", OutputMessageType.Info);
+//                     }
+//                     catch (Exception e)
+//                     {
+//                         //VsPackageService.AddMessageToOutput("Error Generatring");
+//                         appContext.DialogService.ShowError("Code Generator", "Error generating code", e.Message, TimeSpan.FromSeconds(1));
+//                     }
+//                 });
+// #pragma warning restore VSTHRD110
+//         }
 
         private void UndoManagerOnChanged(object sender, UndoActionArgs e)
         {

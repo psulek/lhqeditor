@@ -127,16 +127,27 @@ namespace LHQ.App.Services.Implementation
             }
         }
 
-        public void ShowWarning(string caption, string message, string detail, TimeSpan? delayTimeout = null)
+        public void ShowWarning(string caption, string message, string detail, TimeSpan? delayTimeout = null,
+            bool? checkValue = null, string checkHeader = null, string checkHint = null,
+            Action<bool> onSubmit = null, string extraButtonHeader = null, Action extraButtonAction = null)
         {
             if (delayTimeout != null)
             {
-                UIService.DelayedAction(() => ShowWarning(caption, message, detail), delayTimeout);
+                UIService.DelayedAction(() =>
+                    {
+                        ShowWarning(caption, message, detail, null, checkValue, checkHeader, checkHint, onSubmit, extraButtonHeader, extraButtonAction);
+                    }, delayTimeout);
                 return;
             }
 
-            MessageBoxDialog.DialogShow(AppContext, message, caption,
-                DialogIcon.Warning, DialogButtons.Ok, detail, null, null, null);
+            var result = MessageBoxDialog.DialogShow(AppContext, message, caption,
+                DialogIcon.Warning, DialogButtons.Ok, detail, checkValue, checkHeader, checkHint,
+                extraButtonHeader: extraButtonHeader, extraButtonAction: extraButtonAction);
+
+            if (checkValue != null && onSubmit != null)
+            {
+                onSubmit(result.Checked);
+            }
         }
 
         public virtual AppSettingsDialogResult ShowAppSettings(AppSettingsDialogPage activePage = AppSettingsDialogPage.General)

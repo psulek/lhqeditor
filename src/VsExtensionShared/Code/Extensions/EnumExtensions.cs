@@ -24,6 +24,7 @@
 #endregion
 
 using LHQ.App.Model;
+using NLog;
 
 namespace LHQ.VsExtension.Code.Extensions
 {
@@ -32,6 +33,22 @@ namespace LHQ.VsExtension.Code.Extensions
         public static AppVisualTheme ToAppVisualTheme(this VisualStudioTheme visualStudioTheme)
         {
             return visualStudioTheme == VisualStudioTheme.Dark ? AppVisualTheme.Dark : AppVisualTheme.Light;
+        }
+
+        public static OutputMessageType ToOutputMessageType(this LogLevel logLevel)
+        {
+            // 0 - info, 1 - warn , 2 - error
+            OutputMessageType result = OutputMessageType.Info;
+            if (logLevel == LogLevel.Warn)
+            {
+                result = OutputMessageType.Warn;
+            }
+            else if (logLevel == LogLevel.Error || logLevel == LogLevel.Fatal)
+            {
+                result = OutputMessageType.Error;
+            }
+
+            return result;
         }
     }
 }

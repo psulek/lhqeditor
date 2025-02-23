@@ -78,11 +78,28 @@
                     <Run Text="{Binding CodeGeneratorItemTemplate}" />
                 </Hyperlink>
             </TextBlock>
+            
+            <!-- Visibility="{Binding Path=RunInVsPackage, Converter={StaticResource BoolToVisibilityConverter}}" -->
+            <ProgressBar Grid.Column="11" Height="20" Width="150"
+                         Margin="10,0,5,0"
+                         Orientation="Horizontal"
+                         IsIndeterminate="True">
+                <ProgressBar.Style>
+                    <Style TargetType="{x:Type ProgressBar}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ProjectBusyOperation, Mode=OneWay}" Value="GenerateCode">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ProgressBar.Style>
+            </ProgressBar>
 
+            <!-- Visibility="{Binding Path=RunInVsPackage, Converter={StaticResource BoolToVisibilityConverterReverse}}" -->
             <StackPanel Grid.Column="11"
                 Margin="10,0,5,0"
-                Orientation="Horizontal"
-                Visibility="{Binding Path=RunInVsPackage, Converter={StaticResource BoolToVisibilityConverterReverse}}">
+                Orientation="Horizontal">
                 <TextBlock
                     FontSize="10pt"
                     Foreground="{Binding Path=BorderBrush, Source={x:Static code:VisualManager.Instance}}"
@@ -92,6 +109,20 @@
                     FontSize="10pt"
                     Foreground="{Binding Path=BorderBrush, Source={x:Static code:VisualManager.Instance}}"
                     Text="{Binding AppVersion}" />
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=RunInVsPackage, RelativeSource={RelativeSource TemplatedParent}}" Value="False" />
+                                    <Condition Binding="{Binding Path=ProjectBusyOperation, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ShellViewBusyOperationConverterBool}}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
             </StackPanel>
         </Grid>
     </Border>

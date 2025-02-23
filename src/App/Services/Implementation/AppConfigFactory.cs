@@ -60,6 +60,7 @@ namespace LHQ.App.Services.Implementation
                 CheckUpdatesOnAppStart = true,
                 EnableTranslation = false,
                 LockTranslationsWithResource = null,
+                RunTemplateAfterSave = false
             };
             newConfig.UpdateVersion(AppContext.AppCurrentVersion);
             return newConfig;
@@ -112,7 +113,7 @@ namespace LHQ.App.Services.Implementation
             return _storage.Load();
         }
 
-        private bool UpgradeIfRequired()
+        protected virtual bool UpgradeIfRequired()
         {
             var requireSave = false;
 

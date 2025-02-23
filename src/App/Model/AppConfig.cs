@@ -36,6 +36,7 @@ namespace LHQ.App.Model
         {
             DetectTheme = null;
             Data = new Dictionary<string, string>();
+            RunTemplateAfterSave = false;
         }
 
         public string Version { get; set; }
@@ -62,9 +63,16 @@ namespace LHQ.App.Model
 
         public AppHintType AppHints { get; set; }
 
+        public bool RunTemplateAfterSave { get; set; }
+
         public void RemoveAppHint(AppHintType appHintType)
         {
             AppHints = AppHints.ClearFlags(appHintType);
+        }
+
+        public void UpdateAppHint(AppHintType appHintType, bool setFlag)
+        {
+            AppHints = AppHints.SetFlags(appHintType, setFlag);
         }
 
         public void SetAllAppHints()

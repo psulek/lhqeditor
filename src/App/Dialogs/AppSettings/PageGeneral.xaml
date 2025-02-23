@@ -48,6 +48,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label
@@ -119,6 +121,15 @@
             Content="{localization:Localization Key={x:Static resources:StringsKeys+Dialogs+AppSettings.ShowHints}}"
             IsChecked="{Binding Path=ShowHints}"
             IsThreeState="{Binding Path=ShowHintsIsThreeState}" />
+
+        <CheckBox
+            Grid.Row="15"
+            Grid.Column="1"
+            VerticalContentAlignment="Center"
+            Content="Run Code Generator After Save"
+            IsChecked="{Binding RunTemplateAfterSave}"
+            TabIndex="0"
+            Visibility="{Binding Path=RunInVsPackage, Converter={StaticResource BoolToVisibilityConverterReverse}}" />
 
         <!--
         <Label Grid.Row="13"

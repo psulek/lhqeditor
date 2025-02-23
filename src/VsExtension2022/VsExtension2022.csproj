@@ -1,15 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>7.3</LangVersion>
     <UseCodebase>true</UseCodebase>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\LHQ.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{4A6B5AD8-10F4-44D3-95E7-4E3B7CC72BA1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LHQ.VsExtension</RootNamespace>
+    <AssemblyName>LHQ.VsExtension</AssemblyName>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <VSixType>v3</VSixType>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,20 +37,7 @@
     <ZipPackageCompressionLevel>Normal</ZipPackageCompressionLevel>
     <TargetVsixContainerName>ScaleHQ.LHQEditor.VSExtension.VS2022.vsix</TargetVsixContainerName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{4A6B5AD8-10F4-44D3-95E7-4E3B7CC72BA1}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LHQ.VsExtension</RootNamespace>
-    <AssemblyName>LHQ.VsExtension</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <VSixType>v3</VSixType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +47,6 @@
     <DefineConstants>TRACE;DEBUG;VS_IDE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
     <DeployExtension>True</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -61,7 +57,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <LangVersion>7.1</LangVersion>
     <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <ItemGroup>
@@ -82,20 +77,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="System.Xaml" />
   </ItemGroup>
-
-<!--  <ItemGroup>-->
-<!--    &lt;!&ndash; Remove x86\ChakraCore.dll from VSIX &ndash;&gt;-->
-<!--    <None Remove="$(OutputPath)x86\ChakraCore.dll" />-->
-
-<!--    &lt;!&ndash; Ensure ChakraCore.dll from NuGet package output is included &ndash;&gt;-->
-<!--    <Content Include="$(OutputPath)x64\ChakraCore.dll">-->
-<!--      <IncludeInVSIX>true</IncludeInVSIX>-->
-<!--      <Pack>true</Pack>-->
-<!--      <PackagePath>ChakraCore.dll</PackagePath> &lt;!&ndash; Places it in the root of VSIX &ndash;&gt;-->
-<!--    </Content>-->
-<!--  </ItemGroup>-->
-
-
   <ItemGroup>
     <Compile Include="source.extension.cs">
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
@@ -358,9 +339,13 @@
     <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64">
       <Version>3.27.3</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.0-previews-4-31709-430" ExcludeAssets="runtime" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools">
-      <Version>17.0.5232</Version>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.13.40008" ExcludeAssets="runtime" PrivateAssets="all" NoWarn="NU1604">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.TextTemplating.Interfaces">
+      <Version>17.10.40152</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.13.2126" NoWarn="NU1604">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -404,9 +389,6 @@
   <PropertyGroup>
     <RegisterOutputPackage>true</RegisterOutputPackage>
     <RegisterWithCodebase>true</RegisterWithCodebase>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Label="TemplateBuilder">
     <TemplateBuilderTargets Condition=" '$(TemplateBuilderTargets)'=='' ">$([System.IO.Path]::GetFullPath( $(NugetPackageRoot)TemplateBuilder\1.1.6.1\tools\ligershark.templates.targets ))</TemplateBuilderTargets>
@@ -455,7 +437,6 @@
     <!-- 	<VSIXSourceItem Include="$(OutDir)\System.ValueTuple.dll" /> -->
     <!-- </ItemGroup> -->
      <ItemGroup> 
-     	<VSIXSourceItem Remove="$(OutputPath)x86\ChakraCore.dll" />
      	<VSIXSourceItem Include="$(OutputPath)x64\ChakraCore.dll" />
      </ItemGroup> 
   </Target>

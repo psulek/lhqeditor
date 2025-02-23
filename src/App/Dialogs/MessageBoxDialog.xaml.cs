@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs;
@@ -42,11 +43,13 @@ namespace LHQ.App.Dialogs
         public static Result DialogShow(IAppContext appContext, string message, string caption,
             DialogIcon icon, DialogButtons buttons, string detail, bool? checkValue, 
             string checkHeader, string checkHint, string cancelButtonHeader = null, 
-            string yesButtonHeader = null, string noButtonHeader = null)
+            string yesButtonHeader = null, string noButtonHeader = null,
+            string extraButtonHeader = null, Action extraButtonAction = null)
         {
             using (var viewModel = new MessageBoxDialogViewModel(appContext, message,
                 caption, detail, icon, buttons, checkValue, checkHeader, checkHint, 
-                cancelButtonHeader, yesButtonHeader, noButtonHeader))
+                cancelButtonHeader, yesButtonHeader, noButtonHeader,
+                extraButtonHeader, extraButtonAction))
             {
                 DialogShow<MessageBoxDialogViewModel, MessageBoxDialog>(viewModel);
                 return new Result(viewModel.Result, viewModel.IsChecked);

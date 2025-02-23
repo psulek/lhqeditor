@@ -35,11 +35,14 @@ namespace LHQ.VsExtension.Code
         {
             AppConfig appConfig = base.Load();
 
-            // those props must not be used in VS extension!
             if (appConfig != null)
             {
+                // those props must not be used in VS extension!
                 appConfig.CheckUpdatesOnAppStart = false;
                 appConfig.OpenLastProjectOnStartup = false;
+                
+                // this must be true in VS ext
+                appConfig.RunTemplateAfterSave = true;
             }
 
             return appConfig;

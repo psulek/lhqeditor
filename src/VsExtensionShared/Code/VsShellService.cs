@@ -65,7 +65,17 @@ namespace LHQ.VsExtension.Code
                 }
             }
 
-            return base.SaveProject(fileName, hostEnvironmentSave);
+            bool result = base.SaveProject(fileName, hostEnvironmentSave);
+            // if (result)
+            // {
+            //     _ = StandaloneCodeGenerate();
+            // }
+            return result;
+        }
+
+        protected override void LogCodeGeneratorAction(string message, bool isError = false)
+        {
+            //VsPackageService.AddMessageToOutput(message, isError ? OutputMessageType.Error : OutputMessageType.Info);
         }
 
         private void ProcessT4Template(string fileName)

@@ -54,7 +54,9 @@ namespace LHQ.App.Services.Interfaces
 
         void ShowOperationResult(string caption, OperationResult operationResult, TimeSpan? delayTimeout = null);
 
-        void ShowWarning(string caption, string message, string detail, TimeSpan? delayTimeout = null);
+        void ShowWarning(string caption, string message, string detail, TimeSpan? delayTimeout = null,
+            bool? checkValue = null, string checkHeader = null, string checkHint = null, Action<bool> onSubmit = null,
+            string extraButtonHeader = null, Action extraButtonAction = null);
 
         AppSettingsDialogResult ShowAppSettings(AppSettingsDialogPage activePage = AppSettingsDialogPage.General);
 

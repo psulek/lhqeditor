@@ -35,6 +35,7 @@ namespace LHQ.App.Model
         ResourceParameters = 2,
         ResourceValue = 4,
         NewVersion = 8,
-        All = CodeGenerator | ResourceParameters | ResourceValue | NewVersion
+        UnsupportedT4Template = 16,
+        All = CodeGenerator | ResourceParameters | ResourceValue | NewVersion | UnsupportedT4Template
     }
 }

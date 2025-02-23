@@ -37,6 +37,7 @@ namespace LHQ.Gen.Lib
 {
     public sealed class InMemoryLogger : IDisposable
     {
+        internal readonly Logger _parentLoggger;
         private readonly Logger _logger;
         private readonly InMemoryTarget _memoryTarget;
         private readonly LogFactory _factory;
@@ -46,17 +47,22 @@ namespace LHQ.Gen.Lib
 
         internal sealed class InMemoryTarget : TargetWithLayout
         {
-            public InMemoryTarget()
+            private readonly InMemoryLogger _owner;
+            private readonly Action<Tuple<LogLevel, string>> _onLogMessage;
+
+            public InMemoryTarget(InMemoryLogger owner, Action<Tuple<LogLevel, string>> onLogMessage = null)
             {
+                _owner = owner ?? throw new ArgumentNullException(nameof(owner));
+                _onLogMessage = onLogMessage;
                 Logs = new List<Tuple<LogLevel, string>>();
                 OptimizeBufferReuse = true;
             }
 
-            public InMemoryTarget(string name)
-                : this()
-            {
-                Name = name;
-            }
+            // public InMemoryTarget(InMemoryLogger owner, string name)
+            //     : this(owner)
+            // {
+            //     Name = name;
+            // }
 
             public List<Tuple<LogLevel, string>> Logs { get; }
 
@@ -75,17 +81,22 @@ namespace LHQ.Gen.Lib
                 {
                     Logs.RemoveAt(0);
                 }
+                
+                _owner._parentLoggger?.Log(logEvent);
 
                 string message = RenderLogEvent(Layout, logEvent);
-                Logs.Add(Tuple.Create(logEvent.Level, message));
+                var logIem = Tuple.Create(logEvent.Level, message);
+                Logs.Add(logIem);
+                _onLogMessage?.Invoke(logIem);
             }
         }
 
         #endregion
 
-        public InMemoryLogger()
+        public InMemoryLogger(Logger parentLoggger = null, Action<Tuple<LogLevel, string>> onLogMessage = null)
         {
-            _memoryTarget = new InMemoryTarget
+            _parentLoggger = parentLoggger;
+            _memoryTarget = new InMemoryTarget(this, onLogMessage)
             {
                 //Layout = "${longdate}: [${level}] ${message}"
                 Layout = "${message}"
@@ -93,9 +104,14 @@ namespace LHQ.Gen.Lib
 
             var config = new LoggingConfiguration();
             config.AddRuleForAllLevels(_memoryTarget);
+            /*foreach (LoggingRule loggingRule in config.LoggingRules)
+            {
+                loggingRule.EnableLoggingForLevels(LogLevel.Debug, LogLevel.Fatal);
+            }*/
 
             _factory = new LogFactory(config);
             _logger = _factory.GetCurrentClassLogger();
+            // _logger = _factory.GetLogger(Guid.NewGuid().ToString());
         }
 
         public Logger Logger => _logger;

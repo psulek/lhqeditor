@@ -53,7 +53,7 @@ namespace LHQ.App.Components.Converters
             {
                 var busyOperationType = (ProjectBusyOperationType)value;
 
-                bool isBusy = !busyOperationType.In(ProjectBusyOperationType.None, ProjectBusyOperationType.TreeSearch);
+                bool isBusy = !busyOperationType.In(ProjectBusyOperationType.None, ProjectBusyOperationType.TreeSearch, ProjectBusyOperationType.GenerateCode);
 
                 switch (Kind)
                 {

@@ -18,7 +18,7 @@ namespace LHQ.Gen.Lib
 {
     public class Generator : IDisposable
     {
-        private readonly ILogger _logger;
+        private ILogger _logger;
         private bool _disposed;
         private readonly JsEngine _engine;
         private readonly List<GeneratedFile> _generatedFiles = new List<GeneratedFile>();
@@ -99,6 +99,11 @@ namespace LHQ.Gen.Lib
             var json = JsonConvert.SerializeObject(handlebarFiles);
             _engine.SetVariableValue("__handlebarFiles", json);
             _engine.Execute("LhqGenerators.TemplateManager.intialize(__handlebarFiles);");
+        }
+
+        public void UpdateLogger(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         private void HostAddResultFile(string file, string content, bool bom, string le)

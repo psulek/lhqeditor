@@ -25,28 +25,78 @@
 
 #endregion
 
-using System.Threading;
+using System;
+using System.IO;
 using System.Threading.Tasks;
+using LHQ.App.Code;
+using LHQ.App.Model;
 using LHQ.App.Services.Implementation;
-using LHQ.App.Services.Interfaces;
-using LHQ.Core.DependencyInjection;
+using LHQ.Data;
+using LHQ.Gen.Lib;
+using LHQ.Utils.Extensions;
+using LHQ.VsExtension.Code.Extensions;
+using NLog;
 
 namespace LHQ.VsExtension.Code
 {
-    public class VsStandaloneCodeGeneratorService : AppContextServiceBase, IStandaloneCodeGeneratorService
+    public class VsStandaloneCodeGeneratorService : StandaloneCodeGeneratorService
     {
-        public bool Available { get; } = false;
+        private NLog.Logger _logger;
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {}
-
-        public void Initialize()
+        public override async Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext)
         {
+            using (var inMemoryLogger = new InMemoryLogger(Logger.GetSourceLogger() as NLog.Logger, OnLogMessage))
+            {
+                _logger = inMemoryLogger.Logger;
+                var result = await base.GenerateCodeAsync(modelFileName, modelContext);
+
+                if (result.Success)
+                {
+                    int modelVersion = modelContext.Model.Version;
+                    var isModernGenerator = modelVersion > 1;
+                    if (isModernGenerator)
+                    {
+                        var dir = Path.GetDirectoryName(modelFileName);
+                        var t4File = Path.Combine(dir, Path.GetFileNameWithoutExtension(modelFileName) + ".lhq.tt");
+                        if (File.Exists(t4File))
+                        {
+                            bool flagUnsupportedT4Template = AppContext.AppConfigFactory.Current.AppHints.IsFlagSet(AppHintType.UnsupportedT4Template);
+
+                            if (flagUnsupportedT4Template)
+                            {
+                                //var ttFile = Path.GetFileName(t4File);
+                                
+                                DialogService.ShowWarning("Code Generator", $"LHQ model version {modelVersion} does not need T4 template file.",
+                                    "Code generator is automatically run after save action.\n" +
+                                    $"Please manually delete file: \n {t4File}.",
+                                    TimeSpan.FromSeconds(1), checkValue: false, checkHeader: "Do not show again", onSubmit: OnSubmit,
+                                    extraButtonHeader: "Read more", extraButtonAction: () =>
+                                        {
+                                            WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2Info);
+                                        });
+                            }
+
+                            void OnSubmit(bool doNotShowAgain)
+                            {
+                                AppContext.AppConfigFactory.Current.UpdateAppHint(AppHintType.UnsupportedT4Template, !doNotShowAgain);
+                                AppContext.ApplicationService.SaveAppConfig();
+                            }
+                        }
+                    }
+                }
+
+                return result;
+            }
+
+            void OnLogMessage(Tuple<LogLevel, string> logItem)
+            {
+                VsPackageService.AddMessageToOutput(logItem.Item2, logItem.Item1.ToOutputMessageType());
+            }
         }
 
-        public Task<bool> GenerateCodeAsync(string modelFileName)
+        protected override ILogger GetLoggerForGenerator()
         {
-            throw new System.NotImplementedException();
+            return _logger;
         }
     }
 }

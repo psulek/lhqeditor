@@ -50,6 +50,7 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
         private bool? _lockTranslationsWithResource;
         private int _selectedThemeIndex;
         private bool _showHintsIsThreeState;
+        private bool _runTemplateAfterSave;
 
         public PageGeneral(IAppContext appContext, IAppSettingsDialogViewModel ownerViewModel, AppSettingsDialogPage page)
             : base(appContext, ownerViewModel, page)
@@ -128,6 +129,12 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
             set => SetProperty(ref _checkUpdatesOnAppStart, value);
         }
 
+        public bool RunTemplateAfterSave
+        {
+            get => _runTemplateAfterSave;
+            set => SetProperty(ref _runTemplateAfterSave, value);
+        }
+
         public LanguageSelectorViewModel ProjectLanguageSelector
         {
             get => _projectLanguageSelector;
@@ -170,6 +177,7 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
             SelectedLocalization = _uiService.GetUiLanguage(appConfig.UILanguage);
             OpenLastProjectOnStartup = appConfig.OpenLastProjectOnStartup;
             CheckUpdatesOnAppStart = appConfig.CheckUpdatesOnAppStart;
+            RunTemplateAfterSave = appConfig.RunTemplateAfterSave;
             LockTranslationsWithResource = appConfig.LockTranslationsWithResource;
             ProjectLanguageSelector.Select(appConfig.GetDefaultProjectCulture() ?? CultureInfoItem.English);
 
@@ -246,6 +254,7 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
             AppConfig.UILanguage = SelectedLocalization.Culture.Name;
             AppConfig.CheckUpdatesOnAppStart = CheckUpdatesOnAppStart;
             AppConfig.LockTranslationsWithResource = LockTranslationsWithResource;
+            AppConfig.RunTemplateAfterSave = RunTemplateAfterSave;
 
             var appVisualTheme = AppVisualTheme.Light;
             var detectTheme = false;

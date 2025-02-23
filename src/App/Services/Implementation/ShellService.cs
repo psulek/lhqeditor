@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using LHQ.App.Code;
@@ -35,6 +36,7 @@ using LHQ.App.Services.Implementation.Messaging;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs.AppSettings;
 using LHQ.Core.DependencyInjection;
+using LHQ.Core.Interfaces;
 using LHQ.Core.Model;
 using LHQ.Data;
 using LHQ.Data.CodeGenerator;
@@ -573,7 +575,10 @@ namespace LHQ.App.Services.Implementation
                 RecentFilesService.Use(fileName);
                 RecentFilesService.Save(ShellViewContext);
 
-                //StandaloneCodeGenerate(fileName);
+                if (AppConfig.RunTemplateAfterSave || AppContext.RunInVsPackage)
+                {
+                    _ = StandaloneCodeGenerate();
+                }
             }
             else
             {
@@ -591,19 +596,45 @@ namespace LHQ.App.Services.Implementation
                 return;
             }
 
-            bool codeGenResult = false;
+            var startTime = DateTime.UtcNow;
+            TimeSpan? elapsedTime = null;
+            LogCodeGeneratorAction($"Generating code from: {ShellViewModel.ProjectFileName} ...");
+
+            var codeGenResult = new StandaloneCodeGenerateResult();
             StartProjectOperationIsBusy(ProjectBusyOperationType.GenerateCode);
             await Task.Run(async () =>
-                {
-                    codeGenResult = await standaloneCodeGenerator.GenerateCodeAsync(ShellViewModel.ProjectFileName);
-                }).ContinueWith(_ =>
-                {
-                    StopProjectOperationIsBusy();
-                    if (!codeGenResult)
                     {
-                        DialogService.ShowError("Code Generator", "Error generateding template code !", "", TimeSpan.FromMilliseconds(500));
-                    }
-                });
+                        codeGenResult = await standaloneCodeGenerator.GenerateCodeAsync(ShellViewModel.ProjectFileName, ShellViewModel.ModelContext);
+                        elapsedTime = DateTime.UtcNow - startTime;
+                    })
+                .ContinueWith(_ =>
+                    {
+                        if (elapsedTime == null)
+                        {
+                            elapsedTime = DateTime.UtcNow - startTime;
+                        }
+                        
+                        string resultStr = codeGenResult.Success ? 
+                            $"was successful, {codeGenResult.GeneratedFileCount} file(s) was generated in {elapsedTime:g}." 
+                            : "failed.";
+                        
+                        LogCodeGeneratorAction($"Generating code {resultStr}", !codeGenResult.Success);
+
+                        UIService.DispatchActionOnUI(() =>
+                            {
+                                StopProjectOperationIsBusy();
+                                if (!codeGenResult.Success)
+                                {
+                                    DialogService.ShowError("Code Generator", "Error generateding template code !", "",
+                                        TimeSpan.FromMilliseconds(500));
+                                }
+                            }, TimeSpan.FromMilliseconds(200));
+                    });
+        }
+
+        protected virtual void LogCodeGeneratorAction(string message, bool isError = false)
+        {
+            //Logger.Log(isError ? LogEventType.Error : LogEventType.Info, message);
         }
 
         protected virtual void OpenProject(ModelContext modelContext, string fileName)

@@ -43,8 +43,9 @@ namespace LHQ.App.Services.Implementation.PluginSystem
     // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class PluginManager : AppContextServiceBase, IPluginManager
     {
-        private const string PublicKeyToken = "d8cff9c478cc93d2";
+        //private const string PublicKeyToken = "d8cff9c478cc93d2";
         private const string ReserverdPluginKeyPrefix = "LHQ.";
+        private const string ReserverdPluginFilePrefix = "LHQ.Plugin.";
         private static readonly Type _typeIPluginModule = typeof(IPluginModule);
 
         private PluginManagerConfigStorage _pluginManagerConfigStorage;
@@ -73,7 +74,8 @@ namespace LHQ.App.Services.Implementation.PluginSystem
             _pluginManagerConfigStorage.ConfigureDependencies(AppContext.ServiceContainer);
 
             List<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => x.GetName().GetPublicKeyTokenAsHex() == PublicKeyToken).ToList();
+                .Where(x => x.GetName().Name.StartsWith(ReserverdPluginFilePrefix, true)).ToList();
+                //.Where(x => x.GetName().GetPublicKeyTokenAsHex() == PublicKeyToken).ToList();
 
             string appFolder = AppContext.AppFolder;
             var searchPattern = "LHQ.Plugin.*.dll";
@@ -158,14 +160,14 @@ namespace LHQ.App.Services.Implementation.PluginSystem
                             // check if its assembly public key token points to app vendor's (if its our plugin or not)
                             if (pluginModule.Key.ToUpper().StartsWith(ReserverdPluginKeyPrefix))
                             {
-                                string pluginModulePublicKeyToken = pluginModuleType.Assembly.GetName().GetPublicKeyTokenAsHex();
-                                if (pluginModulePublicKeyToken != PublicKeyToken)
-                                {
-                                    Logger.Error(
-                                        $"Type '{pluginModuleType.AssemblyQualifiedName}' has invalid prefix '{ReserverdPluginKeyPrefix}' for its Key name.");
-
-                                    continue;
-                                }
+                                // string pluginModulePublicKeyToken = pluginModuleType.Assembly.GetName().GetPublicKeyTokenAsHex();
+                                // if (pluginModulePublicKeyToken != PublicKeyToken)
+                                // {
+                                //     Logger.Error(
+                                //         $"Type '{pluginModuleType.AssemblyQualifiedName}' has invalid prefix '{ReserverdPluginKeyPrefix}' for its Key name.");
+                                //
+                                //     continue;
+                                // }
                             }
 
                             if (registration == null)

@@ -39,6 +39,8 @@ namespace LHQ.Data.Extensions
             return metadata?.TemplateId;
         }
 
+        public static bool IsModernGenerator(this ModelContext modelContext) => modelContext.Model.Version > 1;
+
         public static bool HasCodeGeneratorTemplate(this ModelContext modelContext)
         {
             CodeGeneratorMetadata metadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);

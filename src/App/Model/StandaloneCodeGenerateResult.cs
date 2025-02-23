@@ -1,5 +1,5 @@
-﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+#region License
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -23,17 +23,18 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Windows;
+namespace LHQ.App.Model
+{
+    public sealed class StandaloneCodeGenerateResult
+    {
+        public StandaloneCodeGenerateResult()
+        {
+            Success = false;
+            GeneratedFileCount = 0;
+        }
 
-[assembly: AssemblyTitle("LHQ Application")]
-[assembly: AssemblyProduct("App")]
+        public bool Success { get; set; }
 
-[assembly: ComVisible(false)]
-
-[assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
-
-[assembly: InternalsVisibleTo("LHQ.VsExtension")]
-[assembly: InternalsVisibleTo("LHQ.VsExtension2022")]
+        public int GeneratedFileCount { get; set; }
+    }
+}

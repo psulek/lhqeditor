@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+
+		<!-- AccelerateBuildsInVisualStudio will be set to 'true' later when vs2022/msbuild has fixed bug:
+		https://developercommunity.visualstudio.com/t/appsettingsjson-not-being-picked-up-in/10584312?sort=active -->
+		<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+
+	</PropertyGroup>
+</Project>

@@ -26,16 +26,15 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Core.DependencyInjection;
+using LHQ.Data;
 using LHQ.Gen.Lib;
 using LHQ.Utils.Utilities;
+using Exception = System.Exception;
 
 namespace LHQ.App.Services.Implementation
 {
@@ -72,24 +71,30 @@ namespace LHQ.App.Services.Implementation
             return Available;
         }
 
-        public async Task<bool> GenerateCodeAsync(string modelFileName)
+        public virtual async Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext)
         {
+            var result = new StandaloneCodeGenerateResult();
+            
             if (!CheckAvailable())
             {
-                return false;
+                return result;
             }
 
             if (!_generating.TrySetSignal())
             {
-                return false;
+                // report success because we are already generating and dont want to show error generating...
+                return new StandaloneCodeGenerateResult { Success = true };
             }
 
-            bool result = false;
             try
             {
                 if (_generator == null)
                 {
-                    _generator = new Generator(Logger.GetSourceLogger() as NLog.ILogger);
+                    _generator = new Generator(GetLoggerForGenerator());
+                }
+                else
+                {
+                    _generator.UpdateLogger(GetLoggerForGenerator());
                 }
 
                 Logger.Info($"[GenerateCode] {modelFileName}");
@@ -110,18 +115,18 @@ namespace LHQ.App.Services.Implementation
                     await file.WriteToDiskAsync(outDir);
                 }
 
-                result = true;
+                result.Success = true;
+                result.GeneratedFileCount = generatedFiles.Count;
             }
             catch (GeneratorException ge)
             {
                 DialogService.ShowError("Code Generator", ge.Title, ge.Message, TimeSpan.FromSeconds(1));
-                result = true;
+                result.Success = true;
             }
             catch (Exception e)
             {
                 var message = $"Error generating code from LHQ file '{modelFileName}'";
                 Logger.Error(message, e);
-                //DialogService.ShowError("Generated Code", message, "");
             }
             finally
             {
@@ -130,6 +135,16 @@ namespace LHQ.App.Services.Implementation
 
             return result;
         }
+
+        protected virtual NLog.ILogger GetLoggerForGenerator()
+        {
+            return Logger.GetSourceLogger() as NLog.ILogger;
+        }
+
+        // protected virtual Generator CreateGenerator()
+        // {
+        //     return new Generator();
+        // }
 
         public void Dispose()
         {

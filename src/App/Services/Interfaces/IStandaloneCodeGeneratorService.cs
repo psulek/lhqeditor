@@ -27,6 +27,8 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using LHQ.App.Model;
+using LHQ.Data;
 
 namespace LHQ.App.Services.Interfaces
 {
@@ -34,6 +36,6 @@ namespace LHQ.App.Services.Interfaces
     {
         bool Available { get; }
         
-        Task<bool> GenerateCodeAsync(string modelFileName);
+        Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext);
     }
 }

@@ -9,6 +9,9 @@
     <Import_RootNamespace>LHQ.VsExtension</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseCodeGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseCodeGeneratorWithSite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CodeGeneratorReg.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\DteExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\Extensions\EnumExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\NuGetExtension.cs" />
@@ -34,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)EditorFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EditorPane.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LhqCodeGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LHQDirectiveProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\VsOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T4TemplateExecutor.cs" />

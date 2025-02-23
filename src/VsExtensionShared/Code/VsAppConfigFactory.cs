@@ -46,7 +46,8 @@ namespace LHQ.VsExtension.Code
                 DefaultProjectLanguage = CultureCache.English.Name,
                 CheckUpdatesOnAppStart = false,
                 EnableTranslation = false,
-                TranslatorProviderKey = string.Empty
+                TranslatorProviderKey = string.Empty,
+                RunTemplateAfterSave = true
             };
             newConfig.UpdateVersion(_appVersion);
             return newConfig;
@@ -60,6 +61,17 @@ namespace LHQ.VsExtension.Code
                 var appVisualTheme = VisualStudioThemeManager.Instance.Theme.ToAppVisualTheme();
                 appConfig.Theme = appVisualTheme;
             }
+        }
+
+        protected override bool UpgradeIfRequired()
+        {
+            var result = base.UpgradeIfRequired();
+            if (!result && !Current.RunTemplateAfterSave)
+            {
+                Current.RunTemplateAfterSave = true;
+                result = true;
+            }
+            return result;
         }
     }
 }

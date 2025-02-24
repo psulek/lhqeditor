@@ -24,15 +24,12 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using LHQ.App.Code;
 using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Data;
-using LHQ.Data.Templating;
-using LHQ.Utils;
 using LHQ.Utils.Extensions;
 
 namespace LHQ.App.ViewModels
@@ -183,7 +180,7 @@ namespace LHQ.App.ViewModels
                     bool hasAnyResource = TreeViewService.RootModel.Children.Any(x => x.ElementType == TreeElementType.Resource);
                     if (hasAnyResource)
                     {
-                        DialogService.ShowError(dialogCaption, Strings.Operations.ProjectSettings.ValidationError1, null);
+                        DialogService.ShowError(new DialogShowInfo(dialogCaption, Strings.Operations.ProjectSettings.ValidationError1));
                         valid = false;
                     }
                 }
@@ -193,7 +190,7 @@ namespace LHQ.App.ViewModels
                 bool hasAnyCategory = TreeViewService.FindAllElements(x => x.ElementType == TreeElementType.Category).Any();
                 if (hasAnyCategory)
                 {
-                    DialogService.ShowError(dialogCaption, Strings.Operations.ProjectSettings.ValidationError2, null);
+                    DialogService.ShowError(new DialogShowInfo(dialogCaption, Strings.Operations.ProjectSettings.ValidationError2));
                     valid = false;
                 }
             }

@@ -200,20 +200,16 @@ namespace LHQ.App.ViewModels.Dialogs.Export
         {
             if (Languages.Count(x => x.IsSelected) <= 1)
             {
-                DialogService.ShowError(
-                    Strings.Dialogs.Export.PageTitle,
-                    Strings.Dialogs.Export.Validations.MinimumLanguagesMessage, 
-                    null);
+                DialogService.ShowError(new DialogShowInfo(Strings.Dialogs.Export.PageTitle,
+                    Strings.Dialogs.Export.Validations.MinimumLanguagesMessage));
 
                 return false;
             }
 
             if (SelectedFile.IsNullOrEmpty())
             {
-                DialogService.ShowError(
-                    Strings.Dialogs.Export.PageTitle,
-                    Strings.Dialogs.Export.Validations.MissingFileNameMessage,
-                    null);
+                DialogService.ShowError(new DialogShowInfo(Strings.Dialogs.Export.PageTitle,
+                    Strings.Dialogs.Export.Validations.MissingFileNameMessage));
 
                 return false;
             }

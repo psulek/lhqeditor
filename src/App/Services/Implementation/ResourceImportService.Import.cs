@@ -31,6 +31,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using LHQ.App.Code;
 using LHQ.App.Localization;
+using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.UndoUnits;
 using LHQ.App.ViewModels;
@@ -90,7 +91,10 @@ namespace LHQ.App.Services.Implementation
 
                 if (userCancelled)
                 {
-                    dialogService.ShowError(Strings.Services.Import.ImportResourcesCaption, Strings.Services.Import.ImportWasCancelledByUser, null);
+                    var dialogShowInfo = new DialogShowInfo(Strings.Services.Import.ImportResourcesCaption, 
+                        Strings.Services.Import.ImportWasCancelledByUser);
+                    
+                    dialogService.ShowError(dialogShowInfo);
                 }
                 else
                 {
@@ -107,7 +111,8 @@ namespace LHQ.App.Services.Implementation
                             _importResult.ImportedUpdateCategories,
                             _importResult.ImportedNewLanguages);
 
-                        dialogService.ShowInfo(Strings.Services.Import.ImportResourcesCaption, message, detail);
+                        var dialogShowInfo = new DialogShowInfo(Strings.Services.Import.ImportResourcesCaption, message, detail);
+                        dialogService.ShowInfo(dialogShowInfo);
                     }
                     else
                     {
@@ -115,7 +120,7 @@ namespace LHQ.App.Services.Implementation
                             ? Strings.Services.Import.ImportingResourcesFailed
                             : _importResult.Message;
 
-                        dialogService.ShowError(Strings.Services.Import.ImportResourcesCaption, message, null);
+                        dialogService.ShowError(new DialogShowInfo(Strings.Services.Import.ImportResourcesCaption, message));
                     }
                 }
 

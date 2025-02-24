@@ -159,10 +159,11 @@ namespace LHQ.App.Services.Implementation
         {
             if (!ShellViewModel.AppConfig.EnableTranslation)
             {
-                if (DialogService.ShowConfirm(
-                    Strings.Services.Application.TranslationServiceCaption,
+                var dialogShowInfo = new DialogShowInfo(Strings.Services.Application.TranslationServiceCaption,
                     Strings.Services.Application.TranslationServiceIsNotEnabled,
-                    Strings.Services.Application.TranslationServiceEnableConfirm) == DialogResult.Yes)
+                    Strings.Services.Application.TranslationServiceEnableConfirm);
+                
+                if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes)
                 {
                     ApplicationService.ShowAppSettings(AppSettingsDialogPage.Translator);
                 }
@@ -179,10 +180,11 @@ namespace LHQ.App.Services.Implementation
 
             if (!TranslationService.ActiveProvider.IsConfigured)
             {
-                if (DialogService.ShowConfirm(
-                    Strings.Services.Application.TranslationServiceCaption,
+                var dialogShowInfo = new DialogShowInfo(Strings.Services.Application.TranslationServiceCaption,
                     Strings.Services.Application.TranslationServiceIsNotConfigured,
-                    Strings.Services.Application.TranslationServiceConfigureConfirm) == DialogResult.Yes)
+                    Strings.Services.Application.TranslationServiceConfigureConfirm);
+                
+                if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes)
                 {
                     ApplicationService.ShowAppSettings(AppSettingsDialogPage.Translator);
                 }
@@ -268,10 +270,8 @@ namespace LHQ.App.Services.Implementation
                     Logger.Error(Strings.Services.Application.OpenProjectFailed(fileName), e);
 
                     loadResult = null;
-                    DialogService.ShowError(
-                        Strings.Services.Application.OpenProjectCaption,
-                        Strings.Services.Application.OpenProjectFailed(fileName),
-                        null);
+                    DialogService.ShowError(new DialogShowInfo(Strings.Services.Application.OpenProjectCaption,
+                        Strings.Services.Application.OpenProjectFailed(fileName)));
                 }
             }
 
@@ -297,9 +297,9 @@ namespace LHQ.App.Services.Implementation
 
                         if (loadResult.LoadStatus == ProjectLoadStatus.ModelVersionHigherThanApp)
                         {
-                            DialogService.ShowWarning(captionFileCompatIssue,
+                            DialogService.ShowWarning(new DialogShowInfo(captionFileCompatIssue,
                                 Strings.Services.Application.OpenProjectFailed(fileName),
-                                Strings.Services.Application.FileCompatibilityIssueCreatedWithHigherVersion);
+                                Strings.Services.Application.FileCompatibilityIssueCreatedWithHigherVersion));
                         }
                         else
                         {
@@ -308,7 +308,8 @@ namespace LHQ.App.Services.Implementation
                                 : Strings.Operations.Project.OpenProjectCaption;
                             string message = Strings.Services.Application.OpenProjectFailed(fileName);
                             string detail = loadResult.LoadStatus.ToDisplayName(fileName);
-                            DialogService.ShowError(caption, message, detail);
+                            
+                            DialogService.ShowError(new DialogShowInfo(caption, message, detail));
                         }
                     }
                 }
@@ -327,10 +328,11 @@ namespace LHQ.App.Services.Implementation
 
                             if (!doUpgrade)
                             {
-                                DialogResult confirmResult = DialogService.ShowConfirm(captionFileCompatIssue,
+                                var dialogShowInfo = new DialogShowInfo(captionFileCompatIssue,
                                     Strings.Services.Application.FileCompatibilityIssueCreatedInPreviousVersion(fileName),
                                     Strings.Services.Application.FileCompatibilityIssueUpgradeToCurrentVersionConfirm);
-                            
+                                
+                                var confirmResult = DialogService.ShowConfirm(dialogShowInfo).DialogResult;
                                 doUpgrade = confirmResult == DialogResult.Yes;
                             }
 
@@ -480,9 +482,8 @@ namespace LHQ.App.Services.Implementation
                                 Logger.Error($"Open '{fileName}' failed (upgradingModel: true)", e);
 
                                 var file = backupFileName.IsNullOrEmpty() ? string.Empty : Path.GetFullPath(backupFileName);
-                                DialogService.ShowError(Strings.Services.Application.OpenProjectCaption,
-                                    Strings.Services.Application.BackupOfOriginalFileFailed("\n", file),
-                                    null);
+                                DialogService.ShowError(new DialogShowInfo(Strings.Services.Application.OpenProjectCaption,
+                                    Strings.Services.Application.BackupOfOriginalFileFailed("\n", file)));
                             }
 
                             backupCreated = true;
@@ -503,9 +504,8 @@ namespace LHQ.App.Services.Implementation
                                     Logger.Error($"Open '{fileName}' failed", e);
 
                                     var file = backupFileName.IsNullOrEmpty() ? string.Empty : Path.GetFullPath(backupFileName);
-                                    DialogService.ShowError(Strings.Services.Application.OpenProjectCaption,
-                                        Strings.Services.Application.BackupOfOriginalFileFailed("\n", file),
-                                        null);
+                                    DialogService.ShowError(new DialogShowInfo(Strings.Services.Application.OpenProjectCaption,
+                                        Strings.Services.Application.BackupOfOriginalFileFailed("\n", file)));
                                 }
 
                                 backupCreated = true;
@@ -591,9 +591,8 @@ namespace LHQ.App.Services.Implementation
             string dialogCaption = Strings.Operations.Project.ProjectSaveErrorTitle;
             if (fileInfo.Exists && fileInfo.IsReadOnly)
             {
-                //string message = $"Failed to save project changes, file '{fileName}' is read-only.";
                 string message = Strings.Services.Application.SaveFailedFileIsReadonly(fileName);
-                DialogService.ShowError(dialogCaption, message, null);
+                DialogService.ShowError(new DialogShowInfo(dialogCaption, message));
                 return false;
             }
 
@@ -612,7 +611,7 @@ namespace LHQ.App.Services.Implementation
             }
             else
             {
-                DialogService.ShowError(dialogCaption, result.Message, result.Detail);
+                DialogService.ShowError(new DialogShowInfo(dialogCaption, result.Message, result.Detail));
             }
 
             return result.IsSuccess;
@@ -648,8 +647,7 @@ namespace LHQ.App.Services.Implementation
                                 StopProjectOperationIsBusy();
                                 if (!codeGenResult.Success)
                                 {
-                                    DialogService.ShowError("Code Generator", "Error generateding template code !", "",
-                                        TimeSpan.FromMilliseconds(500));
+                                    DialogService.ShowError(new DialogShowInfo("Code Generator", "Error generateding template code !"));
                                 }
                             }, TimeSpan.FromMilliseconds(200));
                     });
@@ -659,9 +657,6 @@ namespace LHQ.App.Services.Implementation
         {
             int modelVersion = ShellViewModel.ModelContext.Model.Version;
             OpenProject(ShellViewModel.ProjectFileName, false, modelVersion);
-            //LoadModelContextFromFile(ShellViewModel.ProjectFileName, true, );
-            
-            //AppContext.ModelFileStorage.Upgrade(ShellViewModel.ModelContext, modelContent, upgradeFromModelVersion.Value)
         }
         
         protected virtual void OpenProject(ModelContext modelContext, string fileName)
@@ -730,7 +725,7 @@ namespace LHQ.App.Services.Implementation
                 string message = Strings.Services.Application.DetectedUnsavedChangesMessage;
                 string detail = Strings.Services.Application.DetectedUnsavedChangesDetail;
 
-                DialogResult confirmResult = DialogService.ShowConfirm(caption, message, detail, DialogButtons.YesNoCancel);
+                var confirmResult = DialogService.ShowConfirm(new DialogShowInfo(caption, message, detail), DialogButtons.YesNoCancel).DialogResult;
                 result = confirmResult != DialogResult.Cancel;
 
                 if (confirmResult == DialogResult.Yes)
@@ -765,7 +760,7 @@ namespace LHQ.App.Services.Implementation
                 }
             }
 
-            if (DialogService.ShowConfirm(confirmCaption, confirmMessage, confirmDetail) == DialogResult.Yes)
+            if (DialogService.ShowConfirm(new DialogShowInfo(confirmCaption, confirmMessage, confirmDetail)).DialogResult == DialogResult.Yes)
             {
                 if (CheckProjectIsDirty())
                 {

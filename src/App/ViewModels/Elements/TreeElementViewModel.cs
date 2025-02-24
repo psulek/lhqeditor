@@ -361,14 +361,15 @@ namespace LHQ.App.ViewModels.Elements
                     if (duplicates.Count == childsToMove.Count)
                     {
                         moveAllowed = false;
-                        DialogService.ShowError(dialogCaption, Strings.Operations.Move.MoveElementsStoppedErrorMessage, null);
+                        DialogService.ShowError(new DialogShowInfo(dialogCaption, Strings.Operations.Move.MoveElementsStoppedErrorMessage));
                     }
                     else
                     {
                         var message = Strings.Operations.Move.MoveElementsSomeDuplicatesMessage;
                         string detail = Strings.Operations.Move.MoveElementsSomeDuplicatesDetail;
 
-                        moveAllowed = DialogService.ShowConfirm(dialogCaption, message, detail) == DialogResult.Yes;
+                        var dialogShowInfo = new DialogShowInfo(dialogCaption, message, detail);  
+                        moveAllowed = DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes;
                         if (moveAllowed)
                         {
                             childsToMove = childsToMove.Except(duplicates).ToList();

@@ -29,6 +29,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using LHQ.App.Localization;
+using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Data.CodeGenerator;
 using LHQ.Data.Templating;
@@ -109,7 +110,7 @@ namespace LHQ.App.ViewModels.Dialogs
         {
             string caption = Strings.Dialogs.CodeGenerator.ResetConfirmCaption;
             string message = Strings.Dialogs.CodeGenerator.ResetConfirmMessage;
-            if (DialogService.ShowConfirm(caption, message, null) == Model.DialogResult.Yes)
+            if (DialogService.ShowConfirm(new DialogShowInfo(caption, message)).DialogResult == Model.DialogResult.Yes)
             {
                 Settings = CodeGeneratorTemplateManager.Instance.CreateTemplate(TemplateId);
             }
@@ -126,16 +127,16 @@ namespace LHQ.App.ViewModels.Dialogs
                 {
                     if (error.IsConfirmation)
                     {
-                        valid = DialogService.ShowConfirm(Title, error.Message, error.Detail) == Model.DialogResult.Yes;
+                        valid = DialogService.ShowConfirm(new DialogShowInfo(Title, error.Message, error.Detail)).DialogResult == Model.DialogResult.Yes;
                     }
                     else
                     {
-                        DialogService.ShowWarning(Title, error.Message, error.Detail);
+                        DialogService.ShowWarning(new DialogShowInfo(Title, error.Message, error.Detail));
                     }
                 }
                 else
                 {
-                    DialogService.ShowError(Title, error.Message, error.Detail);
+                    DialogService.ShowError(new DialogShowInfo(Title, error.Message, error.Detail));
                 }
             }
 

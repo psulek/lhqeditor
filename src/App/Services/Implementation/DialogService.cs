@@ -56,24 +56,10 @@ namespace LHQ.App.Services.Implementation
         public override void ConfigureDependencies(IServiceContainer serviceContainer)
         { }
 
-        public DialogResult ShowConfirm(string caption, string message, string detail,
-            DialogButtons buttons = DialogButtons.YesNo, DialogIcon dialogIcon = DialogIcon.Question,
-            string cancelButtonHeader = null, string yesButtonHeader = null, string noButtonHeader = null)
+        public DialogResultInfo ShowConfirm(DialogShowInfo dialogShowInfo,
+            DialogButtons buttons = DialogButtons.YesNo, DialogIcon dialogIcon = DialogIcon.Question)
         {
-            return MessageBoxDialog.DialogShow(AppContext, message, caption,
-                dialogIcon, buttons, detail, null, null, null, cancelButtonHeader,
-                yesButtonHeader, noButtonHeader).DialogResult;
-        }
-
-        public DialogResult ShowConfirmRemember(string caption, string message, string detail, DialogButtons buttons,
-            ref bool rememberChecked, string rememberText, string rememberHint = null, DialogIcon dialogIcon = DialogIcon.Question,
-            string cancelButtonHeader = null)
-        {
-            MessageBoxDialog.Result dialogResult = MessageBoxDialog.DialogShow(AppContext, message, caption,
-                dialogIcon, buttons, detail, rememberChecked, rememberText, rememberHint, cancelButtonHeader);
-
-            rememberChecked = dialogResult.Checked;
-            return dialogResult.DialogResult;
+            return MessageBoxDialog.DialogShow(AppContext, dialogIcon, buttons, dialogShowInfo);
         }
 
         public bool ShowPrompt(string caption, string message, ref string input)
@@ -87,68 +73,37 @@ namespace LHQ.App.Services.Implementation
             return result.Submitted;
         }
 
-        public virtual void ShowError(string caption, string message, string detail, TimeSpan? delayTimeout = null,
-            AppMessageDisplayType displayType = AppMessageDisplayType.ModalDialog)
+        public virtual DialogResultInfo ShowError(DialogShowInfo dialogShowInfo, AppMessageDisplayType displayType = AppMessageDisplayType.ModalDialog)
         {
-            if (delayTimeout != null)
-            {
-                UIService.DelayedAction(() => ShowError(caption, message, detail), delayTimeout);
-                return;
-            }
-
-            MessageBoxDialog.DialogShow(AppContext, message, caption,
-                DialogIcon.Error, DialogButtons.Ok, detail, null, null, null);
+            return MessageBoxDialog.DialogShow(AppContext, DialogIcon.Error, DialogButtons.Ok, dialogShowInfo);
         }
 
-        public void ShowInfo(string caption, string message, string detail, TimeSpan? delayTimeout = null)
+        public DialogResultInfo ShowInfo(DialogShowInfo dialogShowInfo)
         {
-            if (delayTimeout != null)
-            {
-                UIService.DelayedAction(() => ShowInfo(caption, message, detail), delayTimeout);
-                return;
-            }
-
-            MessageBoxDialog.DialogShow(AppContext, message, caption,
-                DialogIcon.Info, DialogButtons.Ok, detail, null, null, null);
+            return MessageBoxDialog.DialogShow(AppContext, DialogIcon.Info, DialogButtons.Ok, dialogShowInfo);
         }
 
-        public void ShowOperationResult(string caption, OperationResult operationResult, TimeSpan? delayTimeout = null)
+        public void ShowOperationResult(string caption, OperationResult operationResult)
         {
+            var dialogShowInfo = new DialogShowInfo(caption, operationResult.Message, operationResult.Detail);
             if (operationResult.IsWarning)
             {
-                ShowWarning(caption, operationResult.Message, operationResult.Detail, delayTimeout);
+                // ShowWarning(caption, operationResult.Message, operationResult.Detail, delayTimeout);
+                ShowWarning(dialogShowInfo);
             }
             else if (operationResult.IsSuccess)
             {
-                ShowInfo(caption, operationResult.Message, operationResult.Detail, delayTimeout);
+                ShowInfo(dialogShowInfo);
             }
             else
             {
-                ShowError(caption, operationResult.Message, operationResult.Detail, delayTimeout);
+                ShowError(dialogShowInfo);
             }
         }
 
-        public void ShowWarning(string caption, string message, string detail, TimeSpan? delayTimeout = null,
-            bool? checkValue = null, string checkHeader = null, string checkHint = null,
-            Action<bool> onSubmit = null, string extraButtonHeader = null, Action extraButtonAction = null)
+        public DialogResultInfo ShowWarning(DialogShowInfo dialogShowInfo)
         {
-            if (delayTimeout != null)
-            {
-                UIService.DelayedAction(() =>
-                    {
-                        ShowWarning(caption, message, detail, null, checkValue, checkHeader, checkHint, onSubmit, extraButtonHeader, extraButtonAction);
-                    }, delayTimeout);
-                return;
-            }
-
-            var result = MessageBoxDialog.DialogShow(AppContext, message, caption,
-                DialogIcon.Warning, DialogButtons.Ok, detail, checkValue, checkHeader, checkHint,
-                extraButtonHeader: extraButtonHeader, extraButtonAction: extraButtonAction);
-
-            if (checkValue != null && onSubmit != null)
-            {
-                onSubmit(result.Checked);
-            }
+            return MessageBoxDialog.DialogShow(AppContext, DialogIcon.Warning, DialogButtons.Ok, dialogShowInfo);
         }
 
         public virtual AppSettingsDialogResult ShowAppSettings(AppSettingsDialogPage activePage = AppSettingsDialogPage.General)
@@ -173,9 +128,8 @@ namespace LHQ.App.Services.Implementation
             RootModelViewModel rootModel = shellViewContext.ShellViewModel.RootModel;
             if (rootModel.Children.Count == 0)
             {
-                ShowError(Strings.Services.Export.ExportResourcesCaption,
-                    Strings.Services.Export.NoResourcesToExport,
-                    null);
+                ShowError(new DialogShowInfo(Strings.Services.Export.ExportResourcesCaption,
+                    Strings.Services.Export.NoResourcesToExport));
             }
             else
             {
@@ -216,7 +170,8 @@ namespace LHQ.App.Services.Implementation
                     string caption = $"{Strings.App.Title} - {Strings.Common.Error}";
                     string message = Strings.Dialogs.UnhandledError.Message;
                     string detail = Strings.Dialogs.UnhandledError.Detail;
-                    if (ShowConfirm(caption, message, detail, DialogButtons.YesNo, DialogIcon.Error) == DialogResult.Yes)
+                    var dialogResultInfo = ShowConfirm(new DialogShowInfo(caption, message, detail), DialogButtons.YesNo, DialogIcon.Error);
+                    if (dialogResultInfo.DialogResult == DialogResult.Yes)
                     {
                         ReportErrorToWeb(exception);
                     }
@@ -239,7 +194,16 @@ namespace LHQ.App.Services.Implementation
                 $"Old version of LHQ VS IDE extension will not work with {latestVersionStr} model unless upgraded at " +
                 $"least to version {AppConstants.ModernGeneratorMinVersion}.";
 
-            return DialogService.ShowConfirm(caption, message, detail) == DialogResult.Yes;
+            var dialogShowInfo = new DialogShowInfo(caption, message, detail)
+            {
+                ExtraButtonHeader = "Read more",
+                ExtraButtonAction = () =>
+                    {
+                        WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2_Info);
+                    }
+            };
+            
+            return DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes;
         }
 
         private void ReportErrorToWeb(Exception exception)

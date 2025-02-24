@@ -120,7 +120,11 @@ namespace LHQ.App.Services.Implementation
             }
             catch (GeneratorException ge)
             {
-                DialogService.ShowError("Code Generator", ge.Title, ge.Message, TimeSpan.FromSeconds(1));
+                UIService.DispatchActionOnUI(() =>
+                    {
+                        DialogService.ShowError(new DialogShowInfo("Code Generator", ge.Title, ge.Message));                        
+                    }, TimeSpan.FromMilliseconds(200));
+                
                 result.Success = true;
             }
             catch (Exception e)

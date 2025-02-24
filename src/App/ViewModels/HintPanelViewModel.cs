@@ -76,6 +76,8 @@ namespace LHQ.App.ViewModels
             }
         }
 
+        public bool RemoveFlagOnClose { get; set; } = true;
+
         public bool CloseButtonVisible
         {
             get => _closeButtonVisible;
@@ -119,7 +121,12 @@ namespace LHQ.App.ViewModels
             {
                 case AppHintType.ModernGeneratorAvailable:
                 {
-                    Visible = Visible && ShellViewModel.ModelContext.Model.Version == 1;
+                    //Visible = Visible && ShellViewModel.ModelContext.Model.Version == 1;
+                    //Visible = ShellViewModel.ModelContext.Model.Version == 1;
+                    if (Visible && ShellViewModel.ModelContext.Model.Version > 1)
+                    {
+                        Visible = false;
+                    }
                     
                     items.Add(BulletListItem.Item("LHQ now supports new modern generator, that can generate code outside VS IDE"));
                     items.Add(BulletListItem.Item("To use new modern generator, upgrade current file to version 2"));
@@ -191,8 +198,11 @@ namespace LHQ.App.ViewModels
         private void CloseCommandExecute(object obj)
         {
             Visible = false;
-            AppContext.AppConfigFactory.Current.RemoveAppHint(_appHintType);
-            AppContext.ApplicationService.SaveAppConfig();
+            if (RemoveFlagOnClose)
+            {
+                AppContext.AppConfigFactory.Current.RemoveAppHint(_appHintType);
+                AppContext.ApplicationService.SaveAppConfig();
+            }
         }
 
         private void ReadUpdateChangedExecute(object obj)

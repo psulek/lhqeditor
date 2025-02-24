@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using LHQ.App.Code;
 using LHQ.App.Dialogs;
@@ -638,7 +637,7 @@ namespace LHQ.App.ViewModels
 
                 bool exit = true;
 
-                if (DialogService.ShowConfirm(caption, message, detail) == DialogResult.Yes)
+                if (DialogService.ShowConfirm(new DialogShowInfo(caption, message, detail)).DialogResult == DialogResult.Yes)
                 {
                     ShellViewModel.RootModel.ModelOptions.Resources = ModelOptionsResources.All;
                     exit = ShellService.SaveProject() == false;
@@ -1164,11 +1163,11 @@ namespace LHQ.App.ViewModels
             {
                 if (!File.Exists(recentFileInfo.FileName))
                 {
-                    if (DialogService.ShowConfirm(
-                            Strings.Operations.Project.RecentProjectDoestNotExistCaption,
-                            Strings.Operations.Project.RecentProjectDoestNotExistMessage(recentFileInfo.FileName),
-                            Strings.Operations.Project.RecentProjectDoestNotExistDetail)
-                        == DialogResult.Yes)
+                    var dialogShowInfo = new DialogShowInfo(Strings.Operations.Project.RecentProjectDoestNotExistCaption,
+                        Strings.Operations.Project.RecentProjectDoestNotExistMessage(recentFileInfo.FileName),
+                        Strings.Operations.Project.RecentProjectDoestNotExistDetail);
+                    
+                    if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes)
                     {
                         RecentFilesService.Remove(recentFileInfo.FileName);
                         RecentFilesService.Save(ShellViewContext);

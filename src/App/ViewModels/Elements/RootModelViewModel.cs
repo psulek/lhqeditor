@@ -84,9 +84,11 @@ namespace LHQ.App.ViewModels.Elements
             if (DialogService.ShowPrompt(caption,
                 Strings.ViewModels.RootModel.EditModelNameMessage, ref newName) && newName != Name)
             {
-                if (DialogService.ShowConfirm(caption,
+                var dialogShowInfo = new DialogShowInfo(caption,
                     Strings.ViewModels.RootModel.EditModelNameWarningMessage, 
-                    Strings.ViewModels.RootModel.EditModelNameWarningDetail) == DialogResult.Yes)
+                    Strings.ViewModels.RootModel.EditModelNameWarningDetail);
+                
+                if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes)
                 {
                     Name = newName;
                 }
@@ -235,7 +237,7 @@ namespace LHQ.App.ViewModels.Elements
                 Strings.ViewModels.RootModel.ChangePrimaryLanguageConfirmMessage(language.FormattedName);
             string caption = Strings.ViewModels.RootModel.ChangePrimaryLanguageConfirmCaption;
 
-            return DialogService.ShowConfirm(caption, message, null) == DialogResult.Yes;
+            return DialogService.ShowConfirm(new DialogShowInfo(caption, message)).DialogResult == DialogResult.Yes;
         }
 
         internal void RebuildModel(Data.Model model)

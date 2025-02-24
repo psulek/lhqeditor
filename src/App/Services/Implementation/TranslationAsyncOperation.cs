@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2021 Peter Å ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -210,18 +210,18 @@ namespace LHQ.App.Services.Implementation
 
             if (userCancelled)
             {
-                dialogService.ShowError(Strings.Services.Translation.TranslateResourcesCaption,
-                    Strings.Services.Translation.TranslationWasCancelledByUser, null);
+                dialogService.ShowError(new DialogShowInfo(Strings.Services.Translation.TranslateResourcesCaption,
+                    Strings.Services.Translation.TranslationWasCancelledByUser));
             }
             else
             {
                 if (Result.IsSuccess)
                 {
-                    dialogService.ShowInfo(Strings.Services.Translation.TranslateResourcesCaption, Result.Message, Result.Detail);
+                    dialogService.ShowInfo(new DialogShowInfo(Strings.Services.Translation.TranslateResourcesCaption, Result.Message, Result.Detail));
                 }
                 else
                 {
-                    dialogService.ShowError(Strings.Services.Translation.TranslateResourcesCaption, Result.Message, Result.Detail);
+                    dialogService.ShowError(new DialogShowInfo(Strings.Services.Translation.TranslateResourcesCaption, Result.Message, Result.Detail));
                 }
             }
 

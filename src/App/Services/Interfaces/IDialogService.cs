@@ -36,27 +36,21 @@ namespace LHQ.App.Services.Interfaces
 {
     public interface IDialogService : IAppContextService
     {
-        DialogResult ShowConfirm(string caption, string message, string detail,
-            DialogButtons buttons = DialogButtons.YesNo, DialogIcon dialogIcon = DialogIcon.Question,
-            string cancelButtonHeader = null, string yesButtonHeader = null, string noButtonHeader = null);
+        DialogResultInfo ShowConfirm(DialogShowInfo dialogShowInfo,
+            DialogButtons buttons = DialogButtons.YesNo, DialogIcon dialogIcon = DialogIcon.Question);
 
-        DialogResult ShowConfirmRemember(string caption, string message, string detail,
-            DialogButtons buttons, ref bool rememberChecked, string rememberText,
-            string rememberHint = null, DialogIcon dialogIcon = DialogIcon.Question,
-            string cancelButtonHeader = null);
+        // DialogResultInfo ShowConfirmRemember(DialogShowInfo dialogShowInfo,
+        //     DialogButtons buttons, DialogIcon dialogIcon = DialogIcon.Question);
 
         bool ShowPrompt(string caption, string message, ref string input);
 
-        void ShowError(string caption, string message, string detail, TimeSpan? delayTimeout = null, 
-            AppMessageDisplayType displayType = AppMessageDisplayType.ModalDialog);
+        DialogResultInfo ShowError(DialogShowInfo dialogShowInfo, AppMessageDisplayType displayType = AppMessageDisplayType.ModalDialog);
 
-        void ShowInfo(string caption, string message, string detail, TimeSpan? delayTimeout = null);
+        DialogResultInfo ShowInfo(DialogShowInfo dialogShowInfo);
 
-        void ShowOperationResult(string caption, OperationResult operationResult, TimeSpan? delayTimeout = null);
+        void ShowOperationResult(string caption, OperationResult operationResult);
 
-        void ShowWarning(string caption, string message, string detail, TimeSpan? delayTimeout = null,
-            bool? checkValue = null, string checkHeader = null, string checkHint = null, Action<bool> onSubmit = null,
-            string extraButtonHeader = null, Action extraButtonAction = null);
+        DialogResultInfo ShowWarning(DialogShowInfo dialogShowInfo);
 
         AppSettingsDialogResult ShowAppSettings(AppSettingsDialogPage activePage = AppSettingsDialogPage.General);
 

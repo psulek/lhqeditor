@@ -229,9 +229,8 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
         {
             if (!HasSelectedDefaultLanguage)
             {
-                DialogService.ShowError(
-                    Strings.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationCaption,
-                    Strings.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationMessage, null);
+                DialogService.ShowError(new DialogShowInfo(Strings.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationCaption,
+                    Strings.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationMessage));
 
                 return false;
             }

@@ -184,7 +184,7 @@ namespace LHQ.App.ViewModels.Dialogs
             var caption = Strings.ViewModels.ResourceParameters.RemoveParameterCaption;
             string message = Strings.ViewModels.ResourceParameters.RemoveParameterMessage(name, position);
 
-            if (DialogService.ShowConfirm(caption, message, null) == Model.DialogResult.Yes)
+            if (DialogService.ShowConfirm(new DialogShowInfo(caption, message)).DialogResult == Model.DialogResult.Yes)
             {
                 Parameters.Remove(SelectedParameter);
 

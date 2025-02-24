@@ -164,7 +164,11 @@ namespace LHQ.App.ViewModels
 
             HintPanelViewModel = new HintPanelViewModel(shellViewContext, AppHintType.CodeGenerator);
             NewVersionPanelViewModel = new HintPanelViewModel(shellViewContext, AppHintType.NewVersion);
-            ModernGeneratorAvailablePanel = new HintPanelViewModel(shellViewContext, AppHintType.ModernGeneratorAvailable);
+            ModernGeneratorAvailablePanel = new HintPanelViewModel(shellViewContext, AppHintType.ModernGeneratorAvailable)
+            {
+                RemoveFlagOnClose = false,
+                Visible = ModelContext.Model.Version == 1
+            };
         }
 
         public CodeGeneratorTemplate GetCodeGeneratorTemplate()
@@ -185,10 +189,11 @@ namespace LHQ.App.ViewModels
                     metadata.Template = template;
                     if (!ShellService.SaveProject(hostEnvironmentSave: true))
                     {
-                        DialogService.ShowError(Strings.Operations.Project.ProjectSaveErrorTitle,
-                            Strings.Operations.Project.ProjectSaveFailed, 
-                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName),
-                            displayType: AppMessageDisplayType.HostDialog);
+                        var dialogShowInfo = new DialogShowInfo(Strings.Operations.Project.ProjectSaveErrorTitle,
+                            Strings.Operations.Project.ProjectSaveFailed,
+                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName));
+                        
+                        DialogService.ShowError(dialogShowInfo, displayType: AppMessageDisplayType.HostDialog);
                     }
 
                     ModelContext.HasCodeGeneratorTemplate();
@@ -210,10 +215,11 @@ namespace LHQ.App.ViewModels
                 {
                     if (!ShellService.SaveProject(hostEnvironmentSave: true))
                     {
-                        DialogService.ShowError(Strings.Operations.Project.ProjectSaveErrorTitle,
+                        var dialogShowInfo = new DialogShowInfo(Strings.Operations.Project.ProjectSaveErrorTitle,
                             Strings.Operations.Project.ProjectSaveFailed,
-                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName),
-                            displayType: AppMessageDisplayType.HostDialog);
+                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName));
+                        
+                        DialogService.ShowError(dialogShowInfo, displayType: AppMessageDisplayType.HostDialog);
                     }
                 }
             }
@@ -1142,10 +1148,11 @@ namespace LHQ.App.ViewModels
         {
             if (ProjectIsDirty)
             {
-                DialogResult confirmResult = DialogService.ShowConfirm(
-                    Strings.Operations.ExitApp.ConfirmCaption, 
+                var dialogShowInfo = new DialogShowInfo(Strings.Operations.ExitApp.ConfirmCaption, 
                     Strings.Operations.ExitApp.ConfirmMessage, 
-                    Strings.Operations.ExitApp.ConfirmDetail, DialogButtons.YesNoCancel);
+                    Strings.Operations.ExitApp.ConfirmDetail);
+                
+                var confirmResult = DialogService.ShowConfirm(dialogShowInfo, DialogButtons.YesNoCancel).DialogResult;
 
                 args.Cancel = confirmResult == DialogResult.Cancel;
                 if (confirmResult == DialogResult.Yes)

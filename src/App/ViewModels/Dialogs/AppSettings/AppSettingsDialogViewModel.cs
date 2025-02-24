@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2021 Peter Å ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -137,7 +137,7 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
             string message = Strings.ViewModels.AppSettings.ResetSettingsToDefaultsMessage;
             string detail = Strings.ViewModels.AppSettings.ResetSettingsToDefaultsDetail;
 
-            if (DialogService.ShowConfirm(caption,message,detail) == Model.DialogResult.Yes)
+            if (DialogService.ShowConfirm(new DialogShowInfo(caption,message,detail)).DialogResult == Model.DialogResult.Yes)
             {
                 _appConfig = AppContext.AppConfigFactory.CreateDefault();
                 BindControls();

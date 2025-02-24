@@ -65,21 +65,31 @@ namespace LHQ.VsExtension.Code
                             if (flagUnsupportedT4Template)
                             {
                                 //var ttFile = Path.GetFileName(t4File);
-                                
-                                DialogService.ShowWarning("Code Generator", $"LHQ model version {modelVersion} does not need T4 template file.",
+
+                                var dialogShowInfo = new DialogShowInfo("Code Generator",
+                                    $"LHQ model version {modelVersion} does not need T4 template file.",
                                     "Code generator is automatically run after save action.\n" +
-                                    $"Please manually delete file: \n {t4File}.",
-                                    TimeSpan.FromSeconds(1), checkValue: false, checkHeader: "Do not show again", onSubmit: OnSubmit,
-                                    extraButtonHeader: "Read more", extraButtonAction: () =>
+                                    $"Please manually delete file: \n {t4File}.")
+                                {
+                                    CheckValue = false,
+                                    CheckHeader = "Do not show again",
+                                    ExtraButtonHeader = "Read more",
+                                    ExtraButtonAction = () =>
                                         {
                                             WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2_T4Obsolete);
-                                        });
-                            }
-
-                            void OnSubmit(bool doNotShowAgain)
-                            {
-                                AppContext.AppConfigFactory.Current.UpdateAppHint(AppHintType.UnsupportedT4Template, !doNotShowAgain);
-                                AppContext.ApplicationService.SaveAppConfig();
+                                        }
+                                };
+                                
+                                UIService.DispatchActionOnUI(() =>
+                                    {
+                                        var dialogResultInfo = DialogService.ShowWarning(dialogShowInfo);
+                                        
+                                        if (dialogResultInfo.DialogResult == DialogResult.OK)
+                                        {
+                                            AppContext.AppConfigFactory.Current.UpdateAppHint(AppHintType.UnsupportedT4Template, !dialogResultInfo.IsChecked);
+                                            AppContext.ApplicationService.SaveAppConfig();
+                                        }
+                                    }, TimeSpan.FromSeconds(1));
                             }
                         }
                     }

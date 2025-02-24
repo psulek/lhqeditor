@@ -231,7 +231,7 @@ namespace LHQ.App.ViewModels.Elements
             if (!appStateStorage.StateFinalLocksResourceNotified)
             {
                 string message = Strings.ViewModels.ResourceModel.FinalStateConfirmMessageNotify;
-                DialogService.ShowInfo(caption, message, null);
+                DialogService.ShowInfo(new DialogShowInfo(caption, message));
 
                 AppContext.AppStateStorageService.Update(storage => appStateStorage.StateFinalLocksResourceNotified = true);
             }
@@ -246,17 +246,26 @@ namespace LHQ.App.ViewModels.Elements
                 bool? lockTranslationsWithResource = ShellViewModel.AppConfig.LockTranslationsWithResource;
                 if (lockTranslationsWithResource == null)
                 {
-                    var rememberChoice = false;
-                    DialogResult dialogResult = DialogService.ShowConfirmRemember(caption, message, null,
-                        DialogButtons.YesNoCancel, ref rememberChoice, rememberText, rememberHint);
+                    //var rememberChoice = false;
+                    var dialogShowInfo = new DialogShowInfo(caption, message)
+                    {
+                        CheckHeader = rememberText,
+                        CheckValue = false,
+                        CheckHint = rememberHint
+                    };
+                   
+                    var dialogResultInfo = DialogService.ShowConfirm(dialogShowInfo, DialogButtons.YesNoCancel);
+                    
+                    // DialogResultInfo dialogResult = DialogService.ShowConfirmRemember(caption, message, null,
+                    //     DialogButtons.YesNoCancel, ref rememberChoice, rememberText, rememberHint);
 
-                    if (dialogResult == DialogResult.Cancel)
+                    if (dialogResultInfo.DialogResult == DialogResult.Cancel)
                     {
                         return;
                     }
 
-                    lockValues = dialogResult == DialogResult.Yes;
-                    ShellViewModel.AppConfig.LockTranslationsWithResource = rememberChoice
+                    lockValues = dialogResultInfo.DialogResult == DialogResult.Yes;
+                    ShellViewModel.AppConfig.LockTranslationsWithResource = dialogResultInfo.IsChecked
                         ? lockValues
                         : (bool?)null;
 

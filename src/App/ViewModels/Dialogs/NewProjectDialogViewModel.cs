@@ -31,7 +31,6 @@ using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Elements;
-using LHQ.Data;
 using LHQ.Data.Templating;
 using LHQ.Data.Templating.Templates;
 using LHQ.Utils;
@@ -222,9 +221,8 @@ namespace LHQ.App.ViewModels.Dialogs
         {
             if (LanguageSelector.SelectedLanguage == null)
             {
-                DialogService.ShowError(GetTitle(), 
-                    Strings.ViewModels.NewProject.PrimaryLanguageValidationMessage,
-                    null);
+                DialogService.ShowError(new DialogShowInfo(GetTitle(), 
+                    Strings.ViewModels.NewProject.PrimaryLanguageValidationMessage));
 
                 return false;
             }

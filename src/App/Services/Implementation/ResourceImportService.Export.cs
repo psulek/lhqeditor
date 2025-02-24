@@ -29,6 +29,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using LHQ.App.Code;
 using LHQ.App.Localization;
+using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Core.Interfaces;
 using LHQ.Core.Model.Exporter;
@@ -74,7 +75,7 @@ namespace LHQ.App.Services.Implementation
 
                 if (userCancelled)
                 {
-                    dialogService.ShowError(Strings.Services.Import.ImportResourcesCaption, Strings.Services.Import.ImportWasCancelledByUser, null);
+                    dialogService.ShowError(new DialogShowInfo(Strings.Services.Import.ImportResourcesCaption, Strings.Services.Import.ImportWasCancelledByUser));
                 }
                 else
                 {
@@ -84,7 +85,7 @@ namespace LHQ.App.Services.Implementation
                             ? Strings.Services.Export.ExportingResourcesWasSuccessfull
                             : _exportResult.Message;
 
-                        dialogService.ShowInfo(Strings.Services.Export.ExportResourcesCaption, message, null);
+                        dialogService.ShowInfo(new DialogShowInfo(Strings.Services.Export.ExportResourcesCaption, message));
                     }
                     else
                     {
@@ -92,7 +93,7 @@ namespace LHQ.App.Services.Implementation
                             ? Strings.Services.Export.ExportingResourcesFailed
                             : _exportResult.Message;
 
-                        dialogService.ShowError(Strings.Services.Export.ExportResourcesCaption, message, null);
+                        dialogService.ShowError(new DialogShowInfo(Strings.Services.Export.ExportResourcesCaption, message));
                     }
                 }
 

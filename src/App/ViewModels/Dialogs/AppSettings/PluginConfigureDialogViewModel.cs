@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2021 Peter Å ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -26,6 +26,7 @@
 using System.Windows.Input;
 using LHQ.App.Code;
 using LHQ.App.Localization;
+using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Core.Interfaces.PluginSystem;
 using LHQ.Utils.Extensions;
@@ -73,10 +74,10 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
 
         private void ResetToDefaultsExecute(object obj)
         {
-            if (DialogService.ShowConfirm(
-                Strings.ViewModels.AppSettings.PagePlugins.ResetPluginToDefaultsCaption, 
-                Strings.ViewModels.AppSettings.PagePlugins.ResetPluginToDefaultsMessage(Plugin?.DisplayName ?? string.Empty), null) 
-                == Model.DialogResult.Yes)
+            var dialogShowInfo = new DialogShowInfo(Strings.ViewModels.AppSettings.PagePlugins.ResetPluginToDefaultsCaption, 
+                Strings.ViewModels.AppSettings.PagePlugins.ResetPluginToDefaultsMessage(Plugin?.DisplayName ?? string.Empty));
+            
+            if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == Model.DialogResult.Yes)
             {
                 if (Plugin != null)
                 {

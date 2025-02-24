@@ -69,5 +69,7 @@ namespace LHQ.App.Services.Interfaces
         void StartProjectOperationIsBusy(ProjectBusyOperationType type);
         void StopProjectOperationIsBusy();
         Task StandaloneCodeGenerate();
+        
+        void UpgradeModelToLatest();
     }
 }

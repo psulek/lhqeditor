@@ -72,7 +72,7 @@ namespace LHQ.VsExtension.Code
                                     TimeSpan.FromSeconds(1), checkValue: false, checkHeader: "Do not show again", onSubmit: OnSubmit,
                                     extraButtonHeader: "Read more", extraButtonAction: () =>
                                         {
-                                            WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2Info);
+                                            WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2_T4Obsolete);
                                         });
                             }
 

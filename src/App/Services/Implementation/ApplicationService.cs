@@ -117,7 +117,7 @@ namespace LHQ.App.Services.Implementation
                 { "OS", Environment.OSVersion.ToString() }
             };
         }
-
+        
         public virtual void Exit(bool restartApp)
         {
             if (restartApp)

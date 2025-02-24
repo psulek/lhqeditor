@@ -71,5 +71,7 @@ namespace LHQ.App.Services.Interfaces
         void ShowPluginHelp(IPluginModule pluginModule);
 
         void ShowExceptionDialog(Exception exception);
+        
+        bool ShowUpgradeModelDialog();
     }
 }

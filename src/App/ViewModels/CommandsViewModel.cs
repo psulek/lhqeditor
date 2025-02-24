@@ -1022,16 +1022,17 @@ namespace LHQ.App.ViewModels
         private void ProjectSettingsExecute(object obj)
         {
             ModelOptions clonedOptions = ShellViewModel.ModelOptions.Clone();
-            if (ProjectSettingsDialog.DialogShow(ShellViewContext, clonedOptions, out var newModelVersion))
+            if (ProjectSettingsDialog.DialogShow(ShellViewContext, clonedOptions, out var isUpgradeRequested))
             {
                 ShellViewModel.RootModel.ModelOptions = clonedOptions;
-                if (ShellViewModel.ModelContext.Model.Version != newModelVersion)
-                {
-                    ShellViewModel.RootModel.ModelVersion = newModelVersion.ToString();
-                    ShellViewModel.ModelContext.Model.Version = newModelVersion;
-                }
-
                 ShellService.SaveProject();
+            }
+
+            if (isUpgradeRequested &&
+                DialogService.ShowUpgradeModelDialog() &&
+                ShellViewModel.ModelContext.Model.Version < ModelConstants.CurrentModelVersion)
+            {
+                ShellViewContext.ShellService.UpgradeModelToLatest();
             }
         }
 

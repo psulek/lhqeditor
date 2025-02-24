@@ -72,12 +72,7 @@ namespace LHQ.VsExtension.Code
             // }
             return result;
         }
-
-        protected override void LogCodeGeneratorAction(string message, bool isError = false)
-        {
-            //VsPackageService.AddMessageToOutput(message, isError ? OutputMessageType.Error : OutputMessageType.Info);
-        }
-
+        
         private void ProcessT4Template(string fileName)
         {
             string parentFolder = Path.GetDirectoryName(fileName);

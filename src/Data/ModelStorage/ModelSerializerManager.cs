@@ -219,7 +219,7 @@ namespace LHQ.Data.ModelStorage
 
         public int[] GetSupportedModelVersions()
         {
-            return GetModelSerializers().Select(x => x.ModelVersion).Distinct().ToArray();
+            return GetModelSerializers().Select(x => x.ModelVersion).Distinct().OrderBy(x => x).ToArray();
         }
     }
 }

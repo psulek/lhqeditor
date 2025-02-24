@@ -123,13 +123,19 @@
             Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
             Text="Model version:" />
         
-        <ComboBox
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+            <TextBlock HorizontalAlignment="Stretch" Text="{Binding Path=ModelVersion, Mode=OneTime}"/>
+            <!-- <CheckBox Margin="10,0,0,0" Content="{Binding Path=UpgradeLabel}" IsChecked="{Binding Path=IsUpgradeRequested}" -->
+            <!--           Visibility="{Binding Path=UpgradeLabelVisible, Converter={StaticResource BoolToVisibilityConverter}}"/> -->
+        </StackPanel>
+        
+        <!--<ComboBox
             Grid.Row="6"
             Grid.Column="1"
             HorizontalAlignment="Stretch"
             Visibility="{Binding Path=ModelVersionVisible, Converter={StaticResource BoolToVisibilityConverter}}"
             ItemsSource="{Binding Path=ModelVersions, Mode=OneTime}"
-            SelectedItem="{Binding Path=SelectedModelVersion, Mode=TwoWay}" />
+            SelectedItem="{Binding Path=SelectedModelVersion, Mode=TwoWay}" />-->
     </Grid>
 
 </components:AppUserControl>

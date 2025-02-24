@@ -36,6 +36,11 @@ namespace LHQ.App.Model
         ResourceValue = 4,
         NewVersion = 8,
         UnsupportedT4Template = 16,
-        All = CodeGenerator | ResourceParameters | ResourceValue | NewVersion | UnsupportedT4Template
+        
+        /// <summary>
+        /// Flag to notify about new modern generator (only when model version is 1) 
+        /// </summary>
+        ModernGeneratorAvailable = 32,
+        All = CodeGenerator | ResourceParameters | ResourceValue | NewVersion | UnsupportedT4Template | ModernGeneratorAvailable
     }
 }

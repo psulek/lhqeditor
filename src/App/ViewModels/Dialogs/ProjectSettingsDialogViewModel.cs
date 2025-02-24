@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2021 Peter Å ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -36,12 +36,18 @@ namespace LHQ.App.ViewModels.Dialogs
         public ProjectSettingsDialogViewModel(IShellViewContext shellViewContext) : base(shellViewContext.AppContext)
         {
             ProjectSettings = new ProjectSettingsViewModel(shellViewContext);
-            ShowHelpCommand = new DelegateCommand(ShowHelpExecute);
+            UpgradeModelCommand = new DelegateCommand(UpgradeModelCommandExecute);
+            UpdrageModelRequested = false;
         }
 
         public ProjectSettingsViewModel ProjectSettings { get; set; }
 
         public ICommand ShowHelpCommand { get; }
+        
+        public ICommand UpgradeModelCommand { get; }
+
+        public bool UpdrageModelVisible { get; set; }
+        public bool UpdrageModelRequested { get; set; }
 
         protected override string GetTitle()
         {
@@ -61,6 +67,12 @@ namespace LHQ.App.ViewModels.Dialogs
         private void ShowHelpExecute(object obj)
         {
             WebPageUtils.ShowDoc(WebPageDocSection.ProjectSettings);
+        }
+        
+        private void UpgradeModelCommandExecute(object obj)
+        {
+            UpdrageModelRequested = true;
+            CloseDialogCommand.Execute(null);
         }
     }
 }

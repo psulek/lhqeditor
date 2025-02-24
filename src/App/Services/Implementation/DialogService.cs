@@ -40,6 +40,7 @@ using LHQ.App.ViewModels.Elements;
 using LHQ.Core.DependencyInjection;
 using LHQ.Core.Interfaces.PluginSystem;
 using LHQ.Core.Model;
+using LHQ.Data;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
 
@@ -226,6 +227,19 @@ namespace LHQ.App.Services.Implementation
                     _exceptionDialogIsVisible.ResetSignal();
                 }
             }
+        }
+
+        public bool ShowUpgradeModelDialog()
+        {
+            var caption = "Upgrade model to new version";
+            var latestVersion = ModelConstants.CurrentModelVersion;
+            var latestVersionStr = $"v{latestVersion}";
+            var message = $"Do you want to upgrade current model to new version ({latestVersionStr}) ?";
+            string detail = "Upgrading to new model version does not affect existing model data.\n\n" +
+                $"Old version of LHQ VS IDE extension will not work with {latestVersionStr} model unless upgraded at " +
+                $"least to version {AppConstants.ModernGeneratorMinVersion}.";
+
+            return DialogService.ShowConfirm(caption, message, detail) == DialogResult.Yes;
         }
 
         private void ReportErrorToWeb(Exception exception)

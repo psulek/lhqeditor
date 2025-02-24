@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using LHQ.App.Code;
@@ -36,7 +35,6 @@ using LHQ.App.Services.Implementation.Messaging;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs.AppSettings;
 using LHQ.Core.DependencyInjection;
-using LHQ.Core.Interfaces;
 using LHQ.Core.Model;
 using LHQ.Data;
 using LHQ.Data.CodeGenerator;
@@ -234,31 +232,47 @@ namespace LHQ.App.Services.Implementation
             UIService.DelayedAction(() => { OpenProject(fileName, true); }, TimeSpan.FromMilliseconds(100));
         }
 
-        private void OpenProject(string fileName, bool isLastOpened)
+        private void OpenProject(string fileName, bool isLastOpened, int? forceUpgradeFromModel = null)
         {
-            CallProjectBusyOperation(() => { InternalOpenProject(fileName, isLastOpened); }, ProjectBusyOperationType.OpenProject);
+            CallProjectBusyOperation(() =>
+                {
+                    InternalOpenProject(fileName, isLastOpened, forceUpgradeFromModel);
+                }, ProjectBusyOperationType.OpenProject);
         }
 
-        private void InternalOpenProject(string fileName, bool isLastOpened)
+        private void InternalOpenProject(string fileName, bool isLastOpened, int? forceUpgradeFromModel = null)
         {
             CloseProject();
 
             ShellViewModel.TreeIsStartupFocused = false;
 
             ProjectLoadResult loadResult;
-            try
+
+            if (forceUpgradeFromModel > 0)
             {
-                loadResult = LoadModelContextFromFile(fileName, true);
+                loadResult = new ProjectLoadResult(fileName)
+                {
+                    LoadStatus = ProjectLoadStatus.ModelUpgradeRequired,
+                    ModelVersion = forceUpgradeFromModel.Value,
+                    MarkIsDirty = false
+                };
             }
-            catch (Exception e)
+            else
             {
-                Logger.Error(Strings.Services.Application.OpenProjectFailed(fileName), e);
-                
-                loadResult = null;
-                DialogService.ShowError(
-                    Strings.Services.Application.OpenProjectCaption,
-                    Strings.Services.Application.OpenProjectFailed(fileName),
-                    null);
+                try
+                {
+                    loadResult = LoadModelContextFromFile(fileName, true);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(Strings.Services.Application.OpenProjectFailed(fileName), e);
+
+                    loadResult = null;
+                    DialogService.ShowError(
+                        Strings.Services.Application.OpenProjectCaption,
+                        Strings.Services.Application.OpenProjectFailed(fileName),
+                        null);
+                }
             }
 
             try
@@ -309,21 +323,37 @@ namespace LHQ.App.Services.Implementation
                     {
                         if (loadResult.LoadStatus == ProjectLoadStatus.ModelUpgradeRequired)
                         {
-                            // if (loadResult.ModelContext != null)
-                            // {
-                            //     bool isCompatible = ModelFileStorage.IsCompatible(loadResult.ModelContext);
-                            // }
-                            
-                            DialogResult confirmResult = DialogService.ShowConfirm(captionFileCompatIssue,
-                                Strings.Services.Application.FileCompatibilityIssueCreatedInPreviousVersion(fileName),
-                                Strings.Services.Application.FileCompatibilityIssueUpgradeToCurrentVersionConfirm);
+                            bool doUpgrade = forceUpgradeFromModel > 0;
 
-                            if (confirmResult == DialogResult.Yes)
+                            if (!doUpgrade)
+                            {
+                                DialogResult confirmResult = DialogService.ShowConfirm(captionFileCompatIssue,
+                                    Strings.Services.Application.FileCompatibilityIssueCreatedInPreviousVersion(fileName),
+                                    Strings.Services.Application.FileCompatibilityIssueUpgradeToCurrentVersionConfirm);
+                            
+                                doUpgrade = confirmResult == DialogResult.Yes;
+                            }
+
+                            if (doUpgrade)
                             {
                                 loadResult = LoadModelContextFromFile(fileName, true, loadResult.ModelVersion);
 
                                 if (loadResult?.LoadStatus == ProjectLoadStatus.Success && loadResult.ModelContext != null)
                                 {
+                                    if (forceUpgradeFromModel > 0)
+                                    {
+                                        loadResult.MarkIsDirty = true;
+                                        try
+                                        {
+                                            SaveModelContextToFile(fileName, loadResult.ModelContext);
+                                            loadResult.MarkIsDirty = false;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Logger.Error($"Saving upgraded project '{fileName}' failed", e);
+                                        }
+                                    }
+
                                     OpenProject(loadResult.ModelContext, fileName);
                                 }
                                 else
@@ -598,7 +628,6 @@ namespace LHQ.App.Services.Implementation
 
             var startTime = DateTime.UtcNow;
             TimeSpan? elapsedTime = null;
-            LogCodeGeneratorAction($"Generating code from: {ShellViewModel.ProjectFileName} ...");
 
             var codeGenResult = new StandaloneCodeGenerateResult();
             StartProjectOperationIsBusy(ProjectBusyOperationType.GenerateCode);
@@ -614,12 +643,6 @@ namespace LHQ.App.Services.Implementation
                             elapsedTime = DateTime.UtcNow - startTime;
                         }
                         
-                        string resultStr = codeGenResult.Success ? 
-                            $"was successful, {codeGenResult.GeneratedFileCount} file(s) was generated in {elapsedTime:g}." 
-                            : "failed.";
-                        
-                        LogCodeGeneratorAction($"Generating code {resultStr}", !codeGenResult.Success);
-
                         UIService.DispatchActionOnUI(() =>
                             {
                                 StopProjectOperationIsBusy();
@@ -632,11 +655,15 @@ namespace LHQ.App.Services.Implementation
                     });
         }
 
-        protected virtual void LogCodeGeneratorAction(string message, bool isError = false)
+        public void UpgradeModelToLatest()
         {
-            //Logger.Log(isError ? LogEventType.Error : LogEventType.Info, message);
+            int modelVersion = ShellViewModel.ModelContext.Model.Version;
+            OpenProject(ShellViewModel.ProjectFileName, false, modelVersion);
+            //LoadModelContextFromFile(ShellViewModel.ProjectFileName, true, );
+            
+            //AppContext.ModelFileStorage.Upgrade(ShellViewModel.ModelContext, modelContent, upgradeFromModelVersion.Value)
         }
-
+        
         protected virtual void OpenProject(ModelContext modelContext, string fileName)
         {
             // before open to save 'expanded states'

@@ -40,15 +40,21 @@ namespace LHQ.App.Dialogs
             InitializeComponent();
         }
 
-        public static bool DialogShow(IShellViewContext shellViewContext, ModelOptions modelOptions, out int newModelVersion)
+        //public static bool DialogShow(IShellViewContext shellViewContext, ModelOptions modelOptions, out int newModelVersion)
+        public static bool DialogShow(IShellViewContext shellViewContext, ModelOptions modelOptions, out bool isUpgradeRequested)
         {
             ArgumentValidator.EnsureArgumentNotNull(modelOptions, "modelOptions");
 
             using (var viewModel = new ProjectSettingsDialogViewModel(shellViewContext))
             {
+                var selectedModelVersion = shellViewContext.ShellViewModel.ModelContext.Model.Version;
+                viewModel.UpdrageModelVisible = selectedModelVersion < ModelConstants.CurrentModelVersion;
                 bool? dialogResult = DialogShow<ProjectSettingsDialogViewModel, ProjectSettingsDialog>(viewModel);
-                newModelVersion = viewModel.ProjectSettings.SelectedModelVersion;
-                bool result = dialogResult == true;
+
+                isUpgradeRequested = viewModel.UpdrageModelRequested;
+                
+                //isUpgradeRequested = viewModel.ProjectSettings.IsUpgradeRequested;
+                bool result = dialogResult == true && !isUpgradeRequested;
                 if (result)
                 {
                     viewModel.Save(modelOptions);

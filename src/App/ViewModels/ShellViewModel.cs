@@ -99,6 +99,7 @@ namespace LHQ.App.ViewModels
         private HintPanelViewModel _hintPanelViewModel;
         private string _codeGeneratorItemTemplate;
         private HintPanelViewModel _newVersionPanelViewModel;
+        private HintPanelViewModel _modernGeneratorAvailablePanel;
 
         public ShellViewModel(ShellViewContext shellViewContext, ModelContext modelContext, bool showMainMenu)
             : base(shellViewContext.AppContext, true)
@@ -163,6 +164,7 @@ namespace LHQ.App.ViewModels
 
             HintPanelViewModel = new HintPanelViewModel(shellViewContext, AppHintType.CodeGenerator);
             NewVersionPanelViewModel = new HintPanelViewModel(shellViewContext, AppHintType.NewVersion);
+            ModernGeneratorAvailablePanel = new HintPanelViewModel(shellViewContext, AppHintType.ModernGeneratorAvailable);
         }
 
         public CodeGeneratorTemplate GetCodeGeneratorTemplate()
@@ -417,6 +419,12 @@ namespace LHQ.App.ViewModels
         {
             get => _newVersionPanelViewModel;
             set => SetProperty(ref _newVersionPanelViewModel, value);
+        }
+
+        public HintPanelViewModel ModernGeneratorAvailablePanel
+        {
+            get => _modernGeneratorAvailablePanel;
+            set => SetProperty(ref _modernGeneratorAvailablePanel, value);
         }
 
         public HintPanelViewModel HintPanelViewModel

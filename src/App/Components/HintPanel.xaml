@@ -49,8 +49,7 @@
                 VerticalAlignment="Center" />
 
             <local:BulletList Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"
-                FontSize="12"
-                ItemsSource="{Binding Path=ItemsSource}" />
+                FontSize="12" ItemsSource="{Binding Path=ItemsSource}" />
 
             <Button Grid.Row="0" Grid.Column="5"
                 Background="Transparent"
@@ -65,8 +64,6 @@
                     Foreground="{Binding Path=ContentForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
                     Icon="Close" />
             </Button>
-
         </Grid>
-
     </Border>
 </UserControl>

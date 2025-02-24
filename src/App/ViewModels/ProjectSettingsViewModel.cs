@@ -45,6 +45,10 @@ namespace LHQ.App.ViewModels
         private string _layoutImage;
         private int _selectedModelVersion;
         private bool _modelVersionVisible;
+
+        private bool _isUpgradeRequested;
+
+        private bool _upgradeLabelVisible;
         // private bool _generatorTemplatesVisible;
         // private int _generatorTemplateIndex;
 
@@ -56,12 +60,22 @@ namespace LHQ.App.ViewModels
             Resources = !modelOptions.Categories;
             ResourcesUnderRoot = modelOptions.Resources == ModelOptionsResources.All;
 
-            var modelFileStorage = AppContext.ServiceContainer.Get<IModelFileStorage>();
-            var modelVersions = modelFileStorage.GetSupportedModelVersions();
-            ModelVersions = new ObservableCollectionExt<int>(modelVersions);
-
-            SelectedModelVersion = shellViewContext.ShellViewModel.ModelContext.Model.Version;
+            var selectedModelVersion = shellViewContext.ShellViewModel.ModelContext.Model.Version;
+            ModelVersion = $"v{selectedModelVersion}";
+            if (selectedModelVersion == ModelConstants.CurrentModelVersion)
+            {
+                ModelVersion += " (Latest)";
+            }
             ModelVersionVisible = true;
+
+            //var modelFileStorage = AppContext.ServiceContainer.Get<IModelFileStorage>();
+            //var modelVersions = modelFileStorage.GetSupportedModelVersions();
+            //ModelVersions = new ObservableCollectionExt<int>(modelVersions);
+            //int latestVersion = modelVersions.Last();
+
+            // UpgradeLabel = $"Upgrade to latest (v{latestVersion})";
+            // UpgradeLabelVisible = selectedModelVersion < latestVersion;
+
             // GeneratorTemplatesVisible = false;
             
             // var allTemplates = CodeGeneratorTemplateManager.Instance.GetAllTemplates();
@@ -77,32 +91,27 @@ namespace LHQ.App.ViewModels
             set => SetProperty(ref _layoutImage, value);
         }
 
-        public int SelectedModelVersion
-        {
-            get => _selectedModelVersion;
-            set => SetProperty(ref _selectedModelVersion, value);
-        }
+        public string ModelVersion { get; }
 
-        public ObservableCollectionExt<int> ModelVersions { get; }
-
-        // public ObservableCollectionExt<KeyValue<string, string>> GeneratorTemplates { get; }
-        //
-        // public int GeneratorTemplateIndex
+        // public int SelectedModelVersion
         // {
-        //     get => _generatorTemplateIndex;
-        //     set => SetProperty(ref _generatorTemplateIndex, value);
-        // }
-        //
-        // public bool GeneratorTemplatesVisible
-        // {
-        //     get => _generatorTemplatesVisible;
-        //     set => SetProperty(ref _generatorTemplatesVisible, value);
+        //     get => _selectedModelVersion;
+        //     set => SetProperty(ref _selectedModelVersion, value);
         // }
 
+        //public ObservableCollectionExt<int> ModelVersions { get; }
+        
         public bool ModelVersionVisible
         {
             get => _modelVersionVisible;
-            set => SetProperty(ref _modelVersionVisible, value);
+            set
+            {
+                SetProperty(ref _modelVersionVisible, value);
+                // if (!value && UpgradeLabelVisible)
+                // {
+                //     UpgradeLabelVisible = false;
+                // }
+            }
         }
 
         public bool Resources
@@ -147,6 +156,20 @@ namespace LHQ.App.ViewModels
             get => _resourcesUnderRoot;
             set => SetProperty(ref _resourcesUnderRoot, value);
         }
+
+        // public string UpgradeLabel { get; }
+        //
+        // public bool UpgradeLabelVisible
+        // {
+        //     get => _upgradeLabelVisible;
+        //     set => SetProperty(ref _upgradeLabelVisible, value);
+        // }
+        //
+        // public bool IsUpgradeRequested
+        // {
+        //     get => _isUpgradeRequested;
+        //     set => SetProperty(ref _isUpgradeRequested, value);
+        // }
 
         public bool Validate()
         {

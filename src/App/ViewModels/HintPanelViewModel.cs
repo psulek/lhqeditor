@@ -35,6 +35,7 @@ using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs;
+using LHQ.Data;
 using LHQ.Utils.Extensions;
 
 namespace LHQ.App.ViewModels
@@ -55,12 +56,15 @@ namespace LHQ.App.ViewModels
             AppContext.OnAppEvent += HandleAppEvent;
             ShellViewModel.PropertyChanged += ShellViewOnPropertyChanged;
             CloseButtonVisible = true;
+            UpgradeModelCommand = new DelegateCommand(UpgradeModelCommandExecute);
             DataBind();
         }
 
         public ICommand CloseCommand { get; }
 
         public ICommand ReadUpdateChangedCommand { get; }
+        
+        public ICommand UpgradeModelCommand { get; }
 
         public List<BulletListItem> ItemsSource
         {
@@ -84,6 +88,22 @@ namespace LHQ.App.ViewModels
             set => SetProperty(ref _visible, value);
         }
 
+        private void UpgradeModelCommandExecute(object obj)
+        {
+            if (ShellViewModel.ModelContext.Model.Version == 1 && DialogService.ShowUpgradeModelDialog())
+            {
+                if (ShellViewModel.ModelContext.Model.Version < ModelConstants.CurrentModelVersion)
+                {
+                    CloseCommand.Execute(null);
+                        
+                    UIService.DelayedAction(() =>
+                        {
+                            ShellViewContext.ShellService.UpgradeModelToLatest();        
+                        }, TimeSpan.FromMilliseconds(200));
+                }    
+            }
+        }
+
         private void DataBind()
         {
             Visible = AppContext.AppConfigFactory.Current.AppHints.IsFlagSet(_appHintType);
@@ -97,13 +117,24 @@ namespace LHQ.App.ViewModels
             var items = new List<BulletListItem>();
             switch (_appHintType)
             {
+                case AppHintType.ModernGeneratorAvailable:
+                {
+                    Visible = Visible && ShellViewModel.ModelContext.Model.Version == 1;
+                    
+                    items.Add(BulletListItem.Item("LHQ now supports new modern generator, that can generate code outside VS IDE"));
+                    items.Add(BulletListItem.Item("To use new modern generator, upgrade current file to version 2"));
+                    items.Add(BulletListItem.Hyperlink("Upgrade model", UpgradeModelCommand));
+                    items.Add(BulletListItem.Hyperlink("Read more about modern generator", AppConstants.WebSiteUrls.ModelV2_Info));
+                    
+                    break;
+                }
                 case AppHintType.CodeGenerator:
                 {
-                    if (!AppContext.RunInVsPackage)
-                    {
-                        items.Add(BulletListItem.Item(Strings.ViewModels.HintPanel.CodeGenerator.HintTextOnlyInVS, FontWeights.DemiBold));
-                        items.Add(BulletListItem.Separator());
-                    }
+                    // if (!AppContext.RunInVsPackage)
+                    // {
+                    //     items.Add(BulletListItem.Item(Strings.ViewModels.HintPanel.CodeGenerator.HintTextOnlyInVS, FontWeights.DemiBold));
+                    //     items.Add(BulletListItem.Separator());
+                    // }
 
                     foreach (string line in Strings.ViewModels.HintPanel.CodeGenerator.HintText.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
                     {

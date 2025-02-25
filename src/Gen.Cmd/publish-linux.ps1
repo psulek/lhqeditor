@@ -1,0 +1,2 @@
+if (Test-Path '../../_published/linux') { Remove-Item -Recurse -Force '../../_published/linux' }
+dotnet publish -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=false -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:IncludeAllContentForSelfExtract=true -o ../../_published/linux

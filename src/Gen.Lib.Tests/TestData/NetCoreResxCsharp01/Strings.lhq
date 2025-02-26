@@ -1,7 +1,7 @@
 ﻿{
   "model": {
     "uid": "6ce4d54c5dbd415c93019d315e278638",
-    "version": 2,
+    "version": 1,
     "options": {
       "categories": true,
       "resources": "All"
@@ -100,7 +100,7 @@
           "value": "Welcome {0} in this {1} !"
         },
         "sk": {
-          "value": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5.\r\navc"
+          "value": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
         }
       }
     }
@@ -126,8 +126,6 @@
                   "name": "CSharp",
                   "attrs": {
                     "OutputFolder": "Resources",
-                    "EncodingWithBOM": "false",
-                    "LineEndings": "LF",
                     "UseExpressionBodySyntax": "true",
                     "MissingTranslationFallbackToPrimary": "true"
                   }
@@ -136,8 +134,6 @@
                   "name": "ResX",
                   "attrs": {
                     "OutputFolder": "Resources",
-                    "EncodingWithBOM": "false",
-                    "LineEndings": "LF",
                     "CultureCodeInFileNameForPrimaryLanguage": "true"
                   }
                 }

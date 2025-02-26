@@ -41,9 +41,6 @@ string Grey(string msg) => msg.Pastel(ConsoleColor.Gray);
 string White(string msg) => msg.Pastel(ConsoleColor.White);
 string Error(string msg) => msg.Pastel(ConsoleColor.Red);
 
-Console.WriteLine($"args({args.Length}): {string.Join(Environment.NewLine, args)}");
-Console.WriteLine("--------------");
-
 var logger = DefaultLogger.Instance.Logger;
 
 bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
@@ -55,8 +52,8 @@ Console.OutputEncoding = Encoding.UTF8;
 Console.WriteLine(
     $"{White("LHQ Model Generator")}  {Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n")}");
 
-var testDataMode = false;
 #if DEBUG
+var testDataMode = false;
 //RunTestData();
 #endif
 
@@ -74,112 +71,9 @@ try
         logger.Debug(new string('-', 50));
         logger.Info($"Program {exeName} started.");
 
-        // CmdArgs.Parse(logger, args);
-
-        // await ConsoleApp.RunAsync(args, ([Argument] string modelFile, string project, string @out = "", params string[] data) =>
-        //     {
-        //         
-        //     });
-        
         var app = ConsoleApp.Create();
         app.Add<Commands>();
-        // args =
-        // [
-        //     "c:\\tmp\\Neo.Localization\\Strings.lhq", 
-        //     "--out",
-        //     ".",
-        //     "-p",
-        //     "c:\\tmp\\Neo.Localization\\Neo.Localization.csproj",
-        //     "--data",
-        //     "k1=v1",
-        //     "namespace=ABC.XYZ"
-        // ];
-        
         await app.RunAsync(args);
-        
-//         var lhqFile = CmdArgs.LhqFile;
-//         var csProjFile = CmdArgs.ProjectFile;
-//         var outDir = CmdArgs.OutDir!;
-//         var hostData = CmdArgs.Data;
-//
-//         Console.WriteLine($"""
-//                            LHQ model file: 
-//                            {lhqFile.Pastel(ConsoleColor.DarkCyan)}
-//
-//                            C# project file:
-//                            {(csProjFile ?? "-").Pastel(ConsoleColor.DarkCyan)}
-//
-//                            Output directory:
-//                            {outDir.Pastel(ConsoleColor.DarkCyan)}
-//
-//                            """);
-//
-//         Console.WriteLine("Generating files from LHQ model started ...\n".Pastel(ConsoleColor.White));
-//
-//         // var inmemLogger = new InMemoryLogger();
-//         // using var generator = new Generator(inmemLogger.Logger);
-//
-//         using var generator = new Generator(logger);
-//         var start = Stopwatch.GetTimestamp();
-//         var generateResult = generator.Generate(lhqFile, csProjFile, outDir, hostData);
-//         var generatedFiles = generateResult.GeneratedFiles;
-//         var modelGroupSettings = generateResult.ModelGroupSettings;
-//         var elapsedTime = Stopwatch.GetElapsedTime(start);
-//         
-//
-//         // inmemLogger.Logger.Log(LogLevel.Error, "This is test error!");
-//         // var ss = inmemLogger.ToString();
-//         // var errs = inmemLogger.GetErrors();
-//
-//         var genMsg = $"Generated {generatedFiles.Count} files in {elapsedTime:g}\n";
-//         Console.WriteLine(genMsg);
-//         logger.Info(genMsg);
-//         Console.WriteLine($"Ouput directory: \n{outDir.Pastel(ConsoleColor.DarkCyan)}\n");
-//
-//         if (modelGroupSettings.Count > 0)
-//         {
-//             Console.WriteLine("Settings:");
-//             foreach (var groupSetting in modelGroupSettings)
-//             {
-//                 if (groupSetting.Settings != null)
-//                 {
-//                     Console.WriteLine($"  [{groupSetting.Group.Pastel(ConsoleColor.DarkYellow)}]");
-//                     foreach (var settings in groupSetting.Settings)
-//                     {
-//                         Console.WriteLine($"\t{settings.Key}: {settings.Value.ToString().Pastel(ConsoleColor.White)}");
-//                     }
-//                 }
-//             }
-//             
-//             Console.WriteLine();
-//         }
-//
-//         var processedFiles = new List<string>();
-//         foreach (var file in generatedFiles)
-//         {
-//             var fileName = file.FileName;
-//             var overwritingFile = processedFiles.Contains(fileName);
-//             if (!overwritingFile)
-//             {
-//                 processedFiles.Add(fileName);
-//             }
-//
-//             fileName = Path.Combine(outDir, fileName);
-//
-//             string str = overwritingFile ? "overwritten" : "generated";
-//             //string strBom = (file.Bom ? "with" : "without") + " BOM";
-//             Console.WriteLine($"[{str}] {fileName.Pastel(ConsoleColor.DarkCyan)}"); // ({file.LineEndings}) {strBom}");
-//
-//             var dir = Path.GetDirectoryName(fileName);
-//             if (dir != null && !Directory.Exists(dir))
-//             {
-//                 Directory.CreateDirectory(dir);
-//             }
-//
-//             await file.WriteToDiskAsync(outDir);
-//         }
-//
-//         Console.WriteLine($"\nSuccessfully saved {generatedFiles.Count} files.");
     }
 }
 catch (Exception e)
@@ -302,6 +196,7 @@ void WriteHelp()
          """);
 }
 
+#if DEBUG
 void RunTestData()
 {
     string? customNamespace = null;
@@ -343,3 +238,4 @@ void RunTestData()
         args = Enumerable.Append(args, "--data namespace=" + customNamespace).ToArray();
     }
 }
+#endif

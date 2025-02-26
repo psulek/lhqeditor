@@ -120,8 +120,7 @@
   <data name="Welcome" xml:space="preserve">
     <value>Zmieniono datę i godzinę.
 Z {0} w strefie czasowej {1} z czasem letnim 2,
-na 3 w strefie czasowej 4 z czasem letnim 5.
-avc</value>
+na 3 w strefie czasowej 4 z czasem letnim 5.</value>
   </data>
   <data name="CarsDieselOldOld_Kia" xml:space="preserve">
     <value>Old_ kia SK</value>

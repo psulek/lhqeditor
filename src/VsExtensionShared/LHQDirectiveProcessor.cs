@@ -148,10 +148,7 @@ namespace LHQ.VsExtension
         }
 
         public void FinishProcessingRun()
-        {
-            //System.IO.File.WriteAllText(@"c:\tmp\test-file-123.txt", $"Hello {DateTime.UtcNow}");
-            //System.Diagnostics.Trace.WriteLine("Current class 2: " + GetType().AssemblyQualifiedName);
-        }
+        {}
 
         public string GetClassCodeForProcessingRun()
         {

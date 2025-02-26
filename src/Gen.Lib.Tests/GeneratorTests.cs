@@ -19,12 +19,12 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
     {
         Console.WriteLine($"[OneTimeSetUp] {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}");
         
-        if (!Directory.Exists(ShapshotFullDir))
+        if (!Directory.Exists(_shapshotFullDir))
         {
-            Directory.CreateDirectory(ShapshotFullDir);
+            Directory.CreateDirectory(_shapshotFullDir);
         }
         
-        var subdirs = Directory.GetDirectories(ShapshotFullDir, "*.*", SearchOption.TopDirectoryOnly);
+        var subdirs = Directory.GetDirectories(_shapshotFullDir, "*.*", SearchOption.TopDirectoryOnly);
         if (subdirs.Length == 0)
         {
             var testMethods = GetType().GetMethods()
@@ -71,14 +71,14 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
         var verifySettings = new VerifySettings(GetVerifySettings("generators"));
 
         var result = Verify(allFilesInfo, verifySettings)
-            .UseDirectory(Path.Combine(ShapshotDir, methodName))
+            .UseDirectory(Path.Combine(_shapshotDir, methodName))
             .UseFileName("file")
             .AutoVerify();
 
         foreach (var file in generatedFiles)
         {
             string content = file.GetContent(false);
-            result.AppendContentAsFile(ToLinuxLineEndings(content), name: Path.GetFileName(file.FileName));
+            await result.AppendContentAsFile(ToLinuxLineEndings(content), name: Path.GetFileName(file.FileName));
         }
 
         return await result;
@@ -105,7 +105,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 
     private void CreateVerifiedFiles(string methodName)
     {
-        var verifiedFile = Path.Combine(ShapshotFullDir, methodName, "file.verified.txt");
+        var verifiedFile = Path.Combine(_shapshotFullDir, methodName, "file.verified.txt");
         if (!File.Exists(verifiedFile))
         {
             var resourcesDir = Path.Combine("TestData", methodName, "Resources");
@@ -128,7 +128,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
 
                     foreach (var file in resourceFiles.OrderBy(x => x))
                     {
-                        var verifiedFileName = Path.Combine(ShapshotFullDir, methodName,
+                        var verifiedFileName = Path.Combine(_shapshotFullDir, methodName,
                             $"file#{Path.GetFileName(file)}.verified.txt");
                         if (!File.Exists(verifiedFileName))
                         {

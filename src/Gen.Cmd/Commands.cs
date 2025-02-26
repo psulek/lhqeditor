@@ -35,17 +35,6 @@ namespace LHQ.Gen.Cmd;
 
 public class Commands
 {
-    private static void TryGetLinuxHomeDir(ref string dir)
-    {
-        bool isLinuxLike = !RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-        
-        if (isLinuxLike && dir.StartsWith("~/"))
-        {
-            string homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            dir = Path.Combine(homeDirectory, dir.Substring(2));
-        }
-    }
-    
     /// <summary>
     /// LHQ Model Generator
     /// </summary>
@@ -111,7 +100,6 @@ public class Commands
         }
         else if (outDir == ".")
         {
-            //Console.WriteLine($">> outDir is .  -> changing to Environment.CurrentDirectory: {Environment.CurrentDirectory}");
             outDir = Environment.CurrentDirectory;
         }
         else
@@ -195,5 +183,16 @@ public class Commands
         }
 
         Console.WriteLine($"\nSuccessfully saved {generatedFiles.Count} files.");
+    }
+
+    private static void TryGetLinuxHomeDir(ref string dir)
+    {
+        bool isLinuxLike = !RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+        
+        if (isLinuxLike && dir.StartsWith("~/"))
+        {
+            string homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            dir = Path.Combine(homeDirectory, dir.Substring(2));
+        }
     }
 }

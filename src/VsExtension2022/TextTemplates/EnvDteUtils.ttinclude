@@ -748,10 +748,10 @@ public class FileManager: IDisposable
         this.InternalFlush(!isShared);
     }
 
-	internal void InternalFlush(bool allowed, bool force = false)
+	internal void InternalFlush(bool allowed)
     {
 		//if ((allowed && !ModernGenerator) || force)
-		if (allowed || force)
+		if (allowed)
         {
 			this.Process();
         }

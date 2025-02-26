@@ -64,12 +64,9 @@ namespace LHQ.VsExtension.Code
 
                             if (flagUnsupportedT4Template)
                             {
-                                //var ttFile = Path.GetFileName(t4File);
-
                                 var dialogShowInfo = new DialogShowInfo("Code Generator",
-                                    $"LHQ model version {modelVersion} does not need T4 template file.",
-                                    "Code generator is automatically run after save action.\n" +
-                                    $"Please manually delete file: \n {t4File}.")
+                                    $"LHQ model version {modelVersion} does not use any T4 template file.",
+                                    $"\nYou can safely delete file: \n {t4File}.")
                                 {
                                     CheckValue = false,
                                     CheckHeader = "Do not show again",

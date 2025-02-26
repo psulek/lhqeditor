@@ -1,1 +1,0 @@
-dotnet build --configuration Debug -p:DebugType=full --output app\bin\Release\_published\pdb --force

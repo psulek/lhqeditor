@@ -98,20 +98,14 @@ namespace LHQ.Gen.Lib
             _parentLoggger = parentLoggger;
             _memoryTarget = new InMemoryTarget(this, onLogMessage)
             {
-                //Layout = "${longdate}: [${level}] ${message}"
                 Layout = "${message}"
             };
 
             var config = new LoggingConfiguration();
             config.AddRuleForAllLevels(_memoryTarget);
-            /*foreach (LoggingRule loggingRule in config.LoggingRules)
-            {
-                loggingRule.EnableLoggingForLevels(LogLevel.Debug, LogLevel.Fatal);
-            }*/
 
             _factory = new LogFactory(config);
             _logger = _factory.GetCurrentClassLogger();
-            // _logger = _factory.GetLogger(Guid.NewGuid().ToString());
         }
 
         public Logger Logger => _logger;

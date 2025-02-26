@@ -128,7 +128,7 @@ namespace LHQ.App.ViewModels
                         Visible = false;
                     }
                     
-                    items.Add(BulletListItem.Item("LHQ now supports new modern generator, that can generate code outside VS IDE"));
+                    items.Add(BulletListItem.Item($"LHQ (from version {AppConstants.ModernGeneratorMinVersion}) introduces new modern generator, that can generate code outside VS IDE..."));
                     items.Add(BulletListItem.Item("To use new modern generator, upgrade current file to version 2"));
                     items.Add(BulletListItem.Hyperlink("Upgrade model", UpgradeModelCommand));
                     items.Add(BulletListItem.Hyperlink("Read more about modern generator", AppConstants.WebSiteUrls.ModelV2_Info));

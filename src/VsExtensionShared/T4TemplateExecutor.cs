@@ -37,81 +37,82 @@ using Microsoft.VisualStudio.TextTemplating.VSHost;
 
 namespace LHQ.VsExtension
 {
-    public static class T4Utils
-    {
-        public static void SetCallContextData(string key, object value)
-        {
-            System.Runtime.Remoting.Messaging.CallContext.LogicalSetData(key, value);
-        }
+    // public static class T4Utils
+    // {
+    //     public static void SetCallContextData(string key, object value)
+    //     {
+    //         System.Runtime.Remoting.Messaging.CallContext.LogicalSetData(key, value);
+    //     }
+    //
+    //     private static T GetCallContextData<T>(string key, T defaultValue)
+    //     {
+    //         T result = defaultValue;
+    //         object o = System.Runtime.Remoting.Messaging.CallContext.LogicalGetData(key);
+    //         if (o != null)
+    //         {
+    //             result = (T)o;
+    //         }
+    //
+    //         return result;
+    //     }
+    //
+    //     private static void RemoveCallContextData(string key)
+    //     {
+    //         System.Runtime.Remoting.Messaging.CallContext.FreeNamedDataSlot(key);
+    //     }
+    //
+    //     public static bool HasCallContextData(string key)
+    //     {
+    //         return System.Runtime.Remoting.Messaging.CallContext.LogicalGetData(key) != null;
+    //     }
+    //
+    //     public static void SetLastError(Exception e)
+    //     {
+    //         SetCallContextData("LastError", e);
+    //     }
+    //
+    //     public static Dictionary<string, byte> GetOutputMessages()
+    //     {
+    //         return GetCallContextData<Dictionary<string, byte>>("OutputMessages", null);
+    //     }
+    //
+    //     public static Exception GetLastError()
+    //     {
+    //         return GetCallContextData<Exception>("LastError", null);
+    //     }
+    //
+    //     public static void RemoveLastError()
+    //     {
+    //         RemoveCallContextData("LastError");
+    //     }
+    //
+    //     public static bool HasLastError()
+    //     {
+    //         return HasCallContextData("LastError");
+    //     }
+    //
+    //     public static bool IsCalledFromEditor()
+    //     {
+    //         return GetCallContextData("CalledFromEditor", false);
+    //     }
+    //
+    //     public static void SetCalledFromEditor()
+    //     {
+    //         SetCallContextData("CalledFromEditor", true);
+    //     }
+    //
+    //     public static void RemoveCalledFromEditor()
+    //     {
+    //         RemoveCallContextData("CalledFromEditor");
+    //     }
+    //
+    //     public static void RemoveOutputMessages()
+    //     {
+    //         RemoveCallContextData("OutputMessages");
+    //     }
+    // }
 
-        private static T GetCallContextData<T>(string key, T defaultValue)
-        {
-            T result = defaultValue;
-            object o = System.Runtime.Remoting.Messaging.CallContext.LogicalGetData(key);
-            if (o != null)
-            {
-                result = (T)o;
-            }
-
-            return result;
-        }
-
-        private static void RemoveCallContextData(string key)
-        {
-            System.Runtime.Remoting.Messaging.CallContext.FreeNamedDataSlot(key);
-        }
-
-        public static bool HasCallContextData(string key)
-        {
-            return System.Runtime.Remoting.Messaging.CallContext.LogicalGetData(key) != null;
-        }
-
-        public static void SetLastError(Exception e)
-        {
-            SetCallContextData("LastError", e);
-        }
-
-        public static Dictionary<string, byte> GetOutputMessages()
-        {
-            return GetCallContextData<Dictionary<string, byte>>("OutputMessages", null);
-        }
-
-        public static Exception GetLastError()
-        {
-            return GetCallContextData<Exception>("LastError", null);
-        }
-
-        public static void RemoveLastError()
-        {
-            RemoveCallContextData("LastError");
-        }
-
-        public static bool HasLastError()
-        {
-            return HasCallContextData("LastError");
-        }
-
-        public static bool IsCalledFromEditor()
-        {
-            return GetCallContextData("CalledFromEditor", false);
-        }
-
-        public static void SetCalledFromEditor()
-        {
-            SetCallContextData("CalledFromEditor", true);
-        }
-
-        public static void RemoveCalledFromEditor()
-        {
-            RemoveCallContextData("CalledFromEditor");
-        }
-
-        public static void RemoveOutputMessages()
-        {
-            RemoveCallContextData("OutputMessages");
-        }
-    }
-
+    /*
     public class T4TemplateExecutor
     {
         public static void RunTemplate(ITextTemplating t4, string templateFile, string templateContent = null)
@@ -223,4 +224,5 @@ namespace LHQ.VsExtension
 
         }
     }
+*/
 }

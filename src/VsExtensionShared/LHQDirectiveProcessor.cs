@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -33,6 +35,7 @@ using LHQ.Utils.Extensions;
 using LHQ.Data;
 using LHQ.Gen.Lib;
 using Microsoft.VisualStudio.TextTemplating;
+
 // ReSharper disable UnusedType.Global
 
 namespace LHQ.VsExtension
@@ -115,19 +118,21 @@ namespace LHQ.VsExtension
                         if (this._modelContext == null) 
                         {{
                             this._modelContext = new LHQ.Data.ModelContext(LHQ.Data.ModelContextOptions.Default);" +
-                            "var loadResult = LHQ.Data.ModelStorage.ModelSerializerManager.DeserializeFrom(@\"" + fileName + "\", this._modelContext);"
-                            + @"if (loadResult.Status != LHQ.Data.ModelStorage.ModelLoadStatus.Success)
+                    "var loadResult = LHQ.Data.ModelStorage.ModelSerializerManager.DeserializeFrom(@\"" + fileName + "\", this._modelContext);"
+                    + @"if (loadResult.Status != LHQ.Data.ModelStorage.ModelLoadStatus.Success)
                             {{
                                 throw new ApplicationException(""Error loading strings file, "" + loadResult.Status.ToString());
                             }}
                             
-                            this._codeGeneratorTemplate = LHQ.Data.Extensions.ModelContextExtensions.GetCodeGeneratorTemplate(this._modelContext, """ + itemTemplate + @""");
+                            this._codeGeneratorTemplate = LHQ.Data.Extensions.ModelContextExtensions.GetCodeGeneratorTemplate(this._modelContext, """ +
+                    itemTemplate + @""");
                             if (this._codeGeneratorTemplate == null)
                             {{
                                 throw new ApplicationException(""Could not find code generator template!"");
                             }}
 
-                            this.CurrentModelInfo = System.Tuple.Create(@""" + fileName + @""", """ + itemTemplate + @""", this._modelContext.Model.Version);
+                            this.CurrentModelInfo = System.Tuple.Create(@""" + fileName + @""", """ + itemTemplate +
+                    @""", this._modelContext.Model.Version);
                         }}
 
                         return this._modelContext;
@@ -148,7 +153,7 @@ namespace LHQ.VsExtension
         }
 
         public void FinishProcessingRun()
-        {}
+        { }
 
         public string GetClassCodeForProcessingRun()
         {
@@ -167,17 +172,51 @@ namespace LHQ.VsExtension
 
         public string[] GetReferencesForProcessingRun()
         {
-            List<string> references = new List<string>
+            var references = new List<string>();
+
+            void AddAssemblyReference<T>(Type type = null)
             {
-                typeof(ModelContext).Assembly.Location,
-                typeof(TaskAsyncExtensions).Assembly.Location,
-                typeof(Generator).Assembly.Location,
-                GetType().Assembly.Location,
-                typeof(NLog.ILogger).Assembly.Location
-                //typeof(IDisposable).Assembly.Location
-            };
+                string location = typeof(T).Assembly.Location;
+                if (type != null)
+                {
+                    location = type.Assembly.Location;
+                }
+                if (!references.Contains(location))
+                {
+                    references.Add(location);
+                }
+            }
+
+            AddAssemblyReference<int>(typeof(TaskAsyncExtensions));
+            AddAssemblyReference<int>(GetType());
+            AddAssemblyReference<ModelContext>();
+            AddAssemblyReference<Generator>();
+            AddAssemblyReference<NLog.ILogger>();
+            AddAssemblyReference<Code.OutputMessageType>();
+            
+            // List<string> references = new List<string>
+            // {
+            //     typeof(ModelContext).Assembly.Location,
+            //     typeof(TaskAsyncExtensions).Assembly.Location,
+            //     typeof(Generator).Assembly.Location,
+            //     GetType().Assembly.Location,
+            //     typeof(NLog.ILogger).Assembly.Location,
+            //     typeof(Code.OutputMessageType).Assembly.Location
+            // };
+            
             return references.ToArray();
         }
+
+        // private LHQDirectiveProcessor AddAssemblyReference<T>(List<string> references)
+        // {
+        //     string location = typeof(T).Assembly.Location;
+        //     if (!references.Contains(location))
+        //     {
+        //         references.Add(location);
+        //     }
+        //     
+        //     return this;
+        // }
 
         public string[] GetImportsForProcessingRun()
         {
@@ -197,7 +236,6 @@ namespace LHQ.VsExtension
         }
 
         public void SetProcessingRunIsHostSpecific(bool hostSpecific)
-        {
-        }
+        { }
     }
 }

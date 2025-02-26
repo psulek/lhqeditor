@@ -40,46 +40,17 @@ namespace LHQ.App.Services.Implementation
 {
     public class StandaloneCodeGeneratorService : AppContextServiceBase, IDisposable, IStandaloneCodeGeneratorService
     {
-        //private string _generatorFilePath;
         private readonly ThreadSafeSingleShotGuard _generating = ThreadSafeSingleShotGuard.Create(false);
         private Generator _generator;
         private bool _disposed;
 
-        public bool Available { get; private set; } = true;
-
         public override void ConfigureDependencies(IServiceContainer serviceContainer)
         { }
-
-        public void Initialize()
-        {
-            // AppContext.OnAppEvent += AppContextOnOnAppEvent;
-        }
-
-        // private void AppContextOnOnAppEvent(object sender, ApplicationEventArgs e)
-        // {
-        //     if (e is ApplicationEventAppInitialized)
-        //     {
-        //         _generatorFilePath = Path.Combine(AppContext.AppFolder, "lhqcmd.exe");
-        //         CheckAvailable();
-        //     }
-        // }
-
-        private bool CheckAvailable()
-        {
-            //Available = File.Exists(_generatorFilePath);
-            Available = true;
-            return Available;
-        }
 
         public virtual async Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext)
         {
             var result = new StandaloneCodeGenerateResult();
             
-            if (!CheckAvailable())
-            {
-                return result;
-            }
-
             if (!_generating.TrySetSignal())
             {
                 // report success because we are already generating and dont want to show error generating...
@@ -144,12 +115,7 @@ namespace LHQ.App.Services.Implementation
         {
             return Logger.GetSourceLogger() as NLog.ILogger;
         }
-
-        // protected virtual Generator CreateGenerator()
-        // {
-        //     return new Generator();
-        // }
-
+        
         public void Dispose()
         {
             if (!_disposed)
@@ -159,22 +125,4 @@ namespace LHQ.App.Services.Implementation
             }
         }
     }
-
-    //
-    // var startInfo = new ProcessStartInfo(_generatorFilePath)
-    // {
-    //     Arguments = $"\"{modelFileName}\"",
-    //     Verb = "runas",
-    //     UseShellExecute = false,
-    //     CreateNoWindow = true,
-    //     WindowStyle = ProcessWindowStyle.Hidden,
-    //     WorkingDirectory = Path.GetDirectoryName(_generatorFilePath) ?? string.Empty
-    // };
-    //
-    // var timeout = TimeSpan.FromSeconds(60);
-    // using (var cancellationTokenSource = new CancellationTokenSource(timeout))
-    // {
-    //     var results = await ProcessUtils.RunAsync(startInfo, cancellationTokenSource.Token);
-    //     Logger.Info($"[GenerateCode] ExitCode: {results.ExitCode}");
-    // }
 }

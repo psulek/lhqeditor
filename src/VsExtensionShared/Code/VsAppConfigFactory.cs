@@ -27,7 +27,7 @@ using System;
 using LHQ.App.Model;
 using LHQ.App.Services.Implementation;
 using LHQ.Utils.Utilities;
-using LHQ.VsExtension.Code.Extensions;
+using LHQ.VsExtension.Code;
 
 namespace LHQ.VsExtension.Code
 {

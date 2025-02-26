@@ -34,7 +34,7 @@ using LHQ.App.Services.Implementation;
 using LHQ.Data;
 using LHQ.Gen.Lib;
 using LHQ.Utils.Extensions;
-using LHQ.VsExtension.Code.Extensions;
+using LHQ.VsExtension.Code;
 using NLog;
 
 namespace LHQ.VsExtension.Code

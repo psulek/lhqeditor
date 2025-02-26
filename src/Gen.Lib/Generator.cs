@@ -226,6 +226,11 @@ namespace LHQ.Gen.Lib
                 {
                     var assemblyNameElem = doc.XPathSelectElement(XpathAssemblyName, manager);
                     rootNamespace = assemblyNameElem?.Value;
+
+                    if (string.IsNullOrEmpty(rootNamespace) && !string.IsNullOrEmpty(csProjectFileName))
+                    {
+                        rootNamespace = Path.GetFileNameWithoutExtension(csProjectFileName).Replace(" ", "_");
+                    }
                 }
             }
             catch (Exception e)

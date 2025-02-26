@@ -616,14 +616,38 @@ namespace LHQ.App.Services.Implementation
 
             return result.IsSuccess;
         }
-
+        
         public async Task StandaloneCodeGenerate()
         {
-            var standaloneCodeGenerator = AppContext.StandaloneCodeGeneratorService;
-            if (!standaloneCodeGenerator.Available)
+            if (!ShellViewModel.HasCodeGeneratorItemTemplate)
             {
+                void OpenProjectSettingsDialog()
+                {
+                    UIService.DispatchActionOnUI(() =>
+                        {
+                            if (ShellViewModel.Commands.ProjectSettingsCommand.CanExecute(null))
+                            {
+                                ShellViewModel.Commands.ProjectSettingsCommand.Execute(null);
+                            }
+                        }, TimeSpan.FromMilliseconds(200));
+                }
+                
+                UIService.DispatchActionOnUI(() =>
+                    {
+                        var dialogResultInfo = DialogService.ShowConfirm(new DialogShowInfo("Run Code Generator", 
+                            "Project does not have associated code generator template !",
+                            "\nDo you want to setup code generator template now ?"), dialogIcon: DialogIcon.Error);
+
+                        if (dialogResultInfo.DialogResult == DialogResult.Yes)
+                        {
+                            OpenProjectSettingsDialog();
+                        }
+                        
+                    }, TimeSpan.FromMilliseconds(200));
                 return;
             }
+            
+            var standaloneCodeGenerator = AppContext.StandaloneCodeGeneratorService;
 
             var startTime = DateTime.UtcNow;
             TimeSpan? elapsedTime = null;
@@ -672,12 +696,14 @@ namespace LHQ.App.Services.Implementation
             RecentFilesService.Use(fileName);
             RecentFilesService.Save(ShellViewContext);
 
-            if (AppContext.StandaloneCodeGeneratorService.Available)
-            {
-                string templateId = modelContext.GetCodeGeneratorTemplateId();
-                ShellViewModel.CodeGeneratorItemTemplate = templateId;
-                //ShellViewModel.CheckCodeGeneratorTemplate();
-            }
+            ShellViewModel.CheckCodeGeneratorTemplate();
+
+            // if (AppContext.StandaloneCodeGeneratorService.Available)
+            // {
+            //     string templateId = modelContext.GetCodeGeneratorTemplateId();
+            //     ShellViewModel.CodeGeneratorItemTemplate = templateId;
+            //     //ShellViewModel.CheckCodeGeneratorTemplate();
+            // }
         }
 
         public void CloseProject()

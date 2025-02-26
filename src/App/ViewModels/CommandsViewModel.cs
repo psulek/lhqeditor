@@ -982,11 +982,18 @@ namespace LHQ.App.ViewModels
 
         private bool StandaloneCodeGenerateCanExecute(object arg)
         {
-            return ShellIsNotBusy && AppContext.StandaloneCodeGeneratorService.Available;
+            return ShellIsNotBusy;
         }
 
         private void StandaloneCodeGenerateExecute(object obj)
         {
+            if (ShellViewModel.ProjectIsDirty || string.IsNullOrEmpty(ShellViewModel.ProjectFileName))
+            {
+                DialogService.ShowError(new DialogShowInfo("Run Code Generator",
+                    "Please save changes before generating code!"));
+                return;
+            }
+            
             ShellService.StandaloneCodeGenerate().ContinueWith(_ =>
                 {
                     RaiseObjectPropertiesChanged();                    

@@ -25,17 +25,14 @@
 
 #endregion
 
-using System.Threading;
 using System.Threading.Tasks;
 using LHQ.App.Model;
 using LHQ.Data;
 
 namespace LHQ.App.Services.Interfaces
 {
-    public interface IStandaloneCodeGeneratorService: IAppContextService, IHasInitialize
+    public interface IStandaloneCodeGeneratorService: IAppContextService
     {
-        bool Available { get; }
-        
         Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext);
     }
 }

@@ -26,7 +26,7 @@
 using LHQ.App.Model;
 using NLog;
 
-namespace LHQ.VsExtension.Code.Extensions
+namespace LHQ.VsExtension.Code
 {
     public static class EnumExtensions
     {

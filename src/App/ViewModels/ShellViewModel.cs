@@ -197,6 +197,8 @@ namespace LHQ.App.ViewModels
                     }
 
                     ModelContext.HasCodeGeneratorTemplate();
+
+                    CodeGeneratorItemTemplate = template.Id;
                 }
             }
         }

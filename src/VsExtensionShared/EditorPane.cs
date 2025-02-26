@@ -223,16 +223,17 @@ namespace LHQ.VsExtension
                         isDirty = false;
                     }
 
-                    if (eventAfterSave.Result.IsSuccess)
+                    /*if (eventAfterSave.Result.IsSuccess)
                     {
                         GenerateTemplateCode(ShellViewModel.ProjectFileName);
-                    }
+                    }*/
 
                     break;
                 }
             }
         }
 
+        /*
         private void GenerateTemplateCode(string projectFileName)
         {
             try
@@ -289,6 +290,7 @@ namespace LHQ.VsExtension
                 // ignored
             }
         }
+        */
 
 //         private void RunStandaloneGenerator(string projectFileName, IAppContext appContext)
 //         {

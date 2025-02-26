@@ -41,9 +41,9 @@ namespace LHQ.VsExtension.Code
         protected override void OpenProject(ModelContext modelContext, string fileName)
         {
             base.OpenProject(modelContext, fileName);
-            ProcessT4Template(fileName);
+            //ProcessT4Template(fileName);
 
-            ShellViewModel.CheckCodeGeneratorTemplate();
+            //ShellViewModel.CheckCodeGeneratorTemplate();
         }
 
         public override bool SaveProject(string fileName = null, bool hostEnvironmentSave = false)
@@ -73,48 +73,48 @@ namespace LHQ.VsExtension.Code
             return result;
         }
         
-        private void ProcessT4Template(string fileName)
-        {
-            string parentFolder = Path.GetDirectoryName(fileName);
-
-            _t4File = null;
-            if (!string.IsNullOrEmpty(parentFolder))
-            {
-                try
-                {
-                    _t4File = Path.Combine(parentFolder, Path.GetFileName(fileName) + ".tt");
-                    if (File.Exists(_t4File))
-                    {
-                        string t4Content = File.ReadAllText(_t4File);
-                        if (!t4Content.IsNullOrEmpty())
-                        {
-                            int idx = t4Content.IndexOf("LHQDirective", StringComparison.Ordinal);
-                            if (idx > -1)
-                            {
-                                string tag = "ItemTemplate=\"";
-                                idx = t4Content.IndexOf(tag, idx, StringComparison.Ordinal);
-                                if (idx > -1)
-                                {
-                                    idx += tag.Length;
-                                    if (idx < t4Content.Length)
-                                    {
-                                        var idx2 = t4Content.IndexOf("\"", idx, StringComparison.Ordinal);
-                                        if (idx2 > -1)
-                                        {
-                                            ShellViewModel.CodeGeneratorItemTemplate = t4Content.Substring(idx, idx2 - idx);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.Error($"Error loading associated T4 file '{_t4File}'!", e);
-                }
-            }
-        }
+        // private void ProcessT4Template(string fileName)
+        // {
+        //     string parentFolder = Path.GetDirectoryName(fileName);
+        //
+        //     _t4File = null;
+        //     if (!string.IsNullOrEmpty(parentFolder))
+        //     {
+        //         try
+        //         {
+        //             _t4File = Path.Combine(parentFolder, Path.GetFileName(fileName) + ".tt");
+        //             if (File.Exists(_t4File))
+        //             {
+        //                 string t4Content = File.ReadAllText(_t4File);
+        //                 if (!t4Content.IsNullOrEmpty())
+        //                 {
+        //                     int idx = t4Content.IndexOf("LHQDirective", StringComparison.Ordinal);
+        //                     if (idx > -1)
+        //                     {
+        //                         string tag = "ItemTemplate=\"";
+        //                         idx = t4Content.IndexOf(tag, idx, StringComparison.Ordinal);
+        //                         if (idx > -1)
+        //                         {
+        //                             idx += tag.Length;
+        //                             if (idx < t4Content.Length)
+        //                             {
+        //                                 var idx2 = t4Content.IndexOf("\"", idx, StringComparison.Ordinal);
+        //                                 if (idx2 > -1)
+        //                                 {
+        //                                     ShellViewModel.CodeGeneratorItemTemplate = t4Content.Substring(idx, idx2 - idx);
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             Logger.Error($"Error loading associated T4 file '{_t4File}'!", e);
+        //         }
+        //     }
+        // }
 
         protected override void HandleShellViewLoadedEvent(ShellViewLoadedEventArgs eventArgs)
         {

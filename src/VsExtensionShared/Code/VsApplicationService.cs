@@ -32,7 +32,7 @@ using EnvDTE;
 using LHQ.App.Code;
 using LHQ.App.Model;
 using LHQ.App.Services.Implementation;
-using LHQ.VsExtension.Code.Extensions;
+using LHQ.VsExtension.Code;
 
 namespace LHQ.VsExtension.Code
 {

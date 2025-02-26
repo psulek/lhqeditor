@@ -38,6 +38,8 @@ using LHQ.App.ViewModels.Dialogs;
 using LHQ.App.ViewModels.Dialogs.AppSettings;
 using LHQ.App.ViewModels.Elements;
 using LHQ.Data;
+using LHQ.Data.CodeGenerator;
+using LHQ.Data.Templating.Templates;
 using LHQ.Utils.Extensions;
 using Microsoft.Win32;
 
@@ -477,7 +479,7 @@ namespace LHQ.App.ViewModels
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                ShellService.SaveProject(saveFileDialog.FileName);
+                ShellService.SaveProject(saveFileDialog.FileName, SaveProjectFlags.SkipCodeGeneration);
             }
         }
 
@@ -640,7 +642,7 @@ namespace LHQ.App.ViewModels
                 if (DialogService.ShowConfirm(new DialogShowInfo(caption, message, detail)).DialogResult == DialogResult.Yes)
                 {
                     ShellViewModel.RootModel.ModelOptions.Resources = ModelOptionsResources.All;
-                    exit = ShellService.SaveProject() == false;
+                    exit = ShellService.SaveProject(flags: SaveProjectFlags.SkipCodeGeneration) == false;
                 }
 
                 if (exit)
@@ -987,17 +989,23 @@ namespace LHQ.App.ViewModels
 
         private void StandaloneCodeGenerateExecute(object obj)
         {
-            if (ShellViewModel.ProjectIsDirty || string.IsNullOrEmpty(ShellViewModel.ProjectFileName))
+            bool projectIsDirty = ShellViewModel.ProjectIsDirty;
+            if (projectIsDirty || string.IsNullOrEmpty(ShellViewModel.ProjectFileName))
             {
-                DialogService.ShowError(new DialogShowInfo("Run Code Generator",
-                    "Please save changes before generating code!"));
+                var message = projectIsDirty 
+                    ? "Please save changes before generating code!"
+                    : "Please save project before generating code!";
+                
+                DialogService.ShowError(new DialogShowInfo("Run Code Generator", message));
                 return;
             }
+
+            ShellService.StandaloneCodeGenerate();
             
-            ShellService.StandaloneCodeGenerate().ContinueWith(_ =>
-                {
-                    RaiseObjectPropertiesChanged();                    
-                });
+            // ShellService.StandaloneCodeGenerate().ContinueWith(_ =>
+            //     {
+            //         RaiseObjectPropertiesChanged();                    
+            //     });
         }
 
         private bool PluginsCommandCanExecute(object arg)
@@ -1027,18 +1035,36 @@ namespace LHQ.App.ViewModels
 
         private void ProjectSettingsExecute(object obj)
         {
-            ModelOptions clonedOptions = ShellViewModel.ModelOptions.Clone();
-            if (ProjectSettingsDialog.DialogShow(ShellViewContext, clonedOptions, out var isUpgradeRequested))
-            {
-                ShellViewModel.RootModel.ModelOptions = clonedOptions;
-                ShellService.SaveProject();
-            }
-
-            if (isUpgradeRequested &&
+            var dialogResult = ProjectSettingsDialog.DialogShow(ShellViewContext);
+            var modelContext = ShellViewModel.ModelContext;
+            
+            if (dialogResult.IsUpgradeRequested &&
                 DialogService.ShowUpgradeModelDialog() &&
-                ShellViewModel.ModelContext.Model.Version < ModelConstants.CurrentModelVersion)
+                modelContext.Model.Version < ModelConstants.CurrentModelVersion)
             {
                 ShellViewContext.ShellService.UpgradeModelToLatest();
+                return;
+            }
+            
+            if (dialogResult.Submitted)
+            {
+                ShellViewModel.RootModel.ModelOptions = dialogResult.ModelOptions;
+
+                var codeGeneratorTemplate = dialogResult.CodeGeneratorTemplate;
+                if (codeGeneratorTemplate == null)
+                {
+                    ShellViewModel.CodeGeneratorItemTemplate = string.Empty;
+                }
+                else
+                {
+                    var metadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+                    metadata.TemplateId = codeGeneratorTemplate.Id;
+                    metadata.Template = codeGeneratorTemplate;
+                    ShellViewModel.CodeGeneratorItemTemplate = codeGeneratorTemplate.Id;
+                }
+
+                var saveFlags = ShellViewModel.HasCodeGeneratorItemTemplate ? SaveProjectFlags.None : SaveProjectFlags.SkipCodeGeneration;
+                ShellService.SaveProject(flags: saveFlags);
             }
         }
 
@@ -1264,14 +1290,6 @@ namespace LHQ.App.ViewModels
                     ShellService.NewProject(dialogResult.ModelName, dialogResult.PrimaryLanguage,
                         dialogResult.ModelOptions, dialogResult.Template);
                     
-                    // var codeGeneratorMetadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
-                    // codeGeneratorMetadata.Template = _dialogResult.Template;
-                    // codeGeneratorMetadata.TemplateId = templateId;
-                    //
-                    // var modelFileStorage = new ModelFileStorage();
-                    // modelFileStorage.Initialize();
-                    // string fileContent = modelFileStorage.Save(modelContext, ModelSaveOptions.Indent);
-
                     if (dialogResult.OpenLanguageSettings)
                     {
                         if (LanguageSettingsCommand.CanExecute(null))

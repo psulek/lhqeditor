@@ -23,12 +23,10 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using LHQ.App.Behaviors;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs;
 using LHQ.Data;
 using LHQ.Data.Templating.Templates;
-using Microsoft.Xaml.Behaviors;
 
 namespace LHQ.App.Dialogs
 {
@@ -61,7 +59,7 @@ namespace LHQ.App.Dialogs
                     modelName = viewModel.ModelName;
                     primaryLanguage = viewModel.LanguageSelector.SelectedLanguage.CultureName;
                     openLanguageSettings = viewModel.OpenLanguageSettings;
-                    codeGeneratorTemplate = viewModel.Template;
+                    codeGeneratorTemplate = viewModel.ProjectSettings.Template;
                     modelOptions = new ModelOptions();
                     viewModel.ProjectSettings.Save(modelOptions);
                 }

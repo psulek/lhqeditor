@@ -28,14 +28,29 @@ using LHQ.App.Code;
 using LHQ.App.Localization;
 using LHQ.App.Services.Interfaces;
 using LHQ.Data;
+using LHQ.Data.CodeGenerator;
+using LHQ.Data.Templating;
 
 namespace LHQ.App.ViewModels.Dialogs
 {
     public class ProjectSettingsDialogViewModel : DialogViewModelBase
     {
-        public ProjectSettingsDialogViewModel(IShellViewContext shellViewContext) : base(shellViewContext.AppContext)
+        public ProjectSettingsDialogViewModel(IShellViewContext shellViewContext)
+            : base(shellViewContext.AppContext)
         {
+            var shellViewModel = shellViewContext.ShellViewModel;
+            //var modelOptions = shellViewModel.ModelOptions.Clone();
+            bool canChangeGeneratorTemplate = !shellViewModel.HasCodeGeneratorItemTemplate;
+            string templateId = shellViewModel.CodeGeneratorItemTemplate;
+            
+            var metadata = shellViewModel.ModelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+            var template = metadata.Template ??
+                (string.IsNullOrEmpty(templateId) ? null : CodeGeneratorTemplateManager.Instance.CreateTemplate(templateId));
+            
             ProjectSettings = new ProjectSettingsViewModel(shellViewContext);
+            ProjectSettings.CanChangeGeneratorTemplate = canChangeGeneratorTemplate;
+            ProjectSettings.SetTemplate(template);
+            //ProjectSettings.SelectTemplateById(templateId);
             UpgradeModelCommand = new DelegateCommand(UpgradeModelCommandExecute);
             UpdrageModelRequested = false;
         }

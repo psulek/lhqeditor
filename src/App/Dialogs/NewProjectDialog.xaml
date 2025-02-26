@@ -5,14 +5,12 @@
                       xmlns:code="clr-namespace:LHQ.App.Code"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
-                      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
                       xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
                       xmlns:views="clr-namespace:LHQ.App.Views"
                       xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
-                      xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
                       Title="{Binding Title}"
                       Width="600"
                       d:DataContext="{d:DesignInstance vm:NewProjectDialogViewModel,
@@ -32,8 +30,6 @@
                 <ResourceDictionary Source="/LHQ.App;component/Resources/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <converters:EventArgsConverter x:Key="EventArgsConverter"/>
-            
             <Style x:Key="TextBlockHintStyle"
                    TargetType="TextBlock">
                 <Setter Property="FontStyle" Value="Italic" />
@@ -128,7 +124,7 @@
                                    Grid.ColumnSpan="2"
                                    DataContext="{Binding Path=ProjectSettings}" />
 
-        <Grid Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="2">
+        <!--<Grid Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
@@ -185,6 +181,7 @@
 
         </Grid>
 
+        -->
         <DockPanel Grid.Row="16"
                    Grid.Column="1"
                    VerticalAlignment="Center"

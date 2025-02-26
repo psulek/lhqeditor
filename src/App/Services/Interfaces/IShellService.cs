@@ -50,17 +50,14 @@ namespace LHQ.App.Services.Interfaces
         void CloseProject();
 
         event EventHandler<ShellContextEventArgs> OnShellViewEvent;
-        
+
         /// <summary>
         /// Save project changes (if any) in current ShellView instance.
         /// </summary>
         /// <param name="fileName">File name of file to save. Optional, if empty than actual file name associated with ShellView is used.</param>
-        /// <param name="hostEnvironmentSave">Flag to true to enforce save via host environment (VS) and not directly to file.
-        /// Default is false to save directly to file. But in some situations there will be <c>true</c> to use for eg. VS to trigger save on envdte document object
-        /// which will in turn call associated Source Control (if any) to checkout file if is readonly (TFS server for example, not GIT).
-        /// </param>
+        /// <param name="flags">Save flags</param>
         /// <returns></returns>
-        bool SaveProject(string fileName = null, bool hostEnvironmentSave = false);
+        bool SaveProject(string fileName = null, SaveProjectFlags flags = SaveProjectFlags.None);
         
         void NewProject(string modelName, string primaryLanguage, ModelOptions modelOptions, 
             CodeGeneratorTemplate codeGeneratorTemplate);
@@ -68,7 +65,8 @@ namespace LHQ.App.Services.Interfaces
 
         void StartProjectOperationIsBusy(ProjectBusyOperationType type);
         void StopProjectOperationIsBusy();
-        Task StandaloneCodeGenerate();
+        // Task StandaloneCodeGenerate();
+        void StandaloneCodeGenerate();
         
         void UpgradeModelToLatest();
     }

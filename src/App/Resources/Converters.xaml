@@ -12,6 +12,7 @@
         x:Key="BoolToVisibilityConverterReverse"
         Collapse="True"
         Reverse="True" />
+    <converters:ReverseBoolConverter x:Key="ReverseBoolConverter"/>
     <converters:MultiplyValueConverter x:Key="MultiplyValue" />
     <converters:NullToVisibilityConverter x:Key="NullToVisibility" />
     <converters:InvertBoolConverter x:Key="InvertBoolConverter" />

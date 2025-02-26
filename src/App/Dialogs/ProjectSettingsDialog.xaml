@@ -14,8 +14,8 @@
     xmlns:views="clr-namespace:LHQ.App.Views"
     xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
     Title="Project settings"
-    Width="515"
-    Height="400"
+    Width="535"
+    Height="550"
     d:DataContext="{d:DesignInstance vm:ProjectSettingsDialogViewModel,
                                      IsDesignTimeCreatable=False}"
     sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"

@@ -179,15 +179,16 @@ namespace LHQ.App.ViewModels
 
         public void CheckCodeGeneratorTemplate()
         {
+            CodeGeneratorTemplate template = null;
             if (!ModelContext.HasCodeGeneratorTemplate())
             {
-                CodeGeneratorTemplate template = GetCodeGeneratorTemplate();
+                template = GetCodeGeneratorTemplate();
                 if (template != null)
                 {
                     var metadata = ModelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
                     metadata.TemplateId = template.Id;
                     metadata.Template = template;
-                    if (!ShellService.SaveProject(hostEnvironmentSave: true))
+                    if (!ShellService.SaveProject(flags: SaveProjectFlags.HostEnvironmentSave))
                     {
                         var dialogShowInfo = new DialogShowInfo(Strings.Operations.Project.ProjectSaveErrorTitle,
                             Strings.Operations.Project.ProjectSaveFailed,
@@ -197,10 +198,14 @@ namespace LHQ.App.ViewModels
                     }
 
                     ModelContext.HasCodeGeneratorTemplate();
-
-                    CodeGeneratorItemTemplate = template.Id;
                 }
             }
+            else
+            {
+                template = GetCodeGeneratorTemplate();
+            }
+            
+            CodeGeneratorItemTemplate = template?.Id;
         }
 
         private void CodeGeneratorItemTemplateNavigateExecute(object obj)
@@ -215,7 +220,7 @@ namespace LHQ.App.ViewModels
 
                 if (!string.IsNullOrEmpty(ProjectFileName))
                 {
-                    if (!ShellService.SaveProject(hostEnvironmentSave: true))
+                    if (!ShellService.SaveProject(flags: SaveProjectFlags.HostEnvironmentSave))
                     {
                         var dialogShowInfo = new DialogShowInfo(Strings.Operations.Project.ProjectSaveErrorTitle,
                             Strings.Operations.Project.ProjectSaveFailed,

@@ -573,7 +573,7 @@ namespace LHQ.App.Services.Implementation
             return result;
         }
 
-        public virtual bool SaveProject(string fileName = null, bool hostEnvironmentSave = false)
+        public virtual bool SaveProject(string fileName = null, SaveProjectFlags flags = SaveProjectFlags.None)
         {
             if (fileName.IsNullOrEmpty())
             {
@@ -604,9 +604,10 @@ namespace LHQ.App.Services.Implementation
                 RecentFilesService.Use(fileName);
                 RecentFilesService.Save(ShellViewContext);
 
-                if (AppConfig.RunTemplateAfterSave || AppContext.RunInVsPackage)
+                bool generateCode = AppConfig.RunTemplateAfterSave || AppContext.RunInVsPackage;
+                if (generateCode && !flags.IsFlagSet(SaveProjectFlags.SkipCodeGeneration))
                 {
-                    _ = StandaloneCodeGenerate();
+                    StandaloneCodeGenerate();
                 }
             }
             else
@@ -617,33 +618,22 @@ namespace LHQ.App.Services.Implementation
             return result.IsSuccess;
         }
         
-        public async Task StandaloneCodeGenerate()
+        public void StandaloneCodeGenerate()
         {
             if (!ShellViewModel.HasCodeGeneratorItemTemplate)
             {
-                void OpenProjectSettingsDialog()
+                var dialogResultInfo = DialogService.ShowConfirm(new DialogShowInfo("Run Code Generator", 
+                    "Project does not have associated code generator template !",
+                    "Do you want to setup code generator template now ?"), dialogIcon: DialogIcon.Error);
+
+                if (dialogResultInfo.DialogResult == DialogResult.Yes)
                 {
-                    UIService.DispatchActionOnUI(() =>
-                        {
-                            if (ShellViewModel.Commands.ProjectSettingsCommand.CanExecute(null))
-                            {
-                                ShellViewModel.Commands.ProjectSettingsCommand.Execute(null);
-                            }
-                        }, TimeSpan.FromMilliseconds(200));
+                    if (ShellViewModel.Commands.ProjectSettingsCommand.CanExecute(null))
+                    {
+                        ShellViewModel.Commands.ProjectSettingsCommand.Execute(null);
+                    }
                 }
                 
-                UIService.DispatchActionOnUI(() =>
-                    {
-                        var dialogResultInfo = DialogService.ShowConfirm(new DialogShowInfo("Run Code Generator", 
-                            "Project does not have associated code generator template !",
-                            "\nDo you want to setup code generator template now ?"), dialogIcon: DialogIcon.Error);
-
-                        if (dialogResultInfo.DialogResult == DialogResult.Yes)
-                        {
-                            OpenProjectSettingsDialog();
-                        }
-                        
-                    }, TimeSpan.FromMilliseconds(200));
                 return;
             }
             
@@ -654,7 +644,7 @@ namespace LHQ.App.Services.Implementation
 
             var codeGenResult = new StandaloneCodeGenerateResult();
             StartProjectOperationIsBusy(ProjectBusyOperationType.GenerateCode);
-            await Task.Run(async () =>
+            _ = Task.Run(async () =>
                     {
                         codeGenResult = await standaloneCodeGenerator.GenerateCodeAsync(ShellViewModel.ProjectFileName, ShellViewModel.ModelContext);
                         elapsedTime = DateTime.UtcNow - startTime;
@@ -671,7 +661,7 @@ namespace LHQ.App.Services.Implementation
                                 StopProjectOperationIsBusy();
                                 if (!codeGenResult.Success)
                                 {
-                                    DialogService.ShowError(new DialogShowInfo("Code Generator", "Error generateding template code !"));
+                                    DialogService.ShowError(new DialogShowInfo("Code Generator", "Error generating template code !"));
                                 }
                             }, TimeSpan.FromMilliseconds(200));
                     });

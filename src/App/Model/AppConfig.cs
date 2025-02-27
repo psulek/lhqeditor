@@ -36,7 +36,7 @@ namespace LHQ.App.Model
         {
             DetectTheme = null;
             Data = new Dictionary<string, string>();
-            RunTemplateAfterSave = false;
+            RunTemplateAfterSave = true;
         }
 
         public string Version { get; set; }

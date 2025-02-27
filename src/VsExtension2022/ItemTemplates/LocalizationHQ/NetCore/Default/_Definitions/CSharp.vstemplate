@@ -20,7 +20,6 @@ Recommended target projects:
   </TemplateData>
   <TemplateContent>
     <ProjectItem TargetFileName="$fileinputname$.lhq" ReplaceParameters="true">Strings.lhq</ProjectItem>
-    <ProjectItem TargetFileName="$fileinputname$.lhq\$fileinputname$.lhq.tt" ReplaceParameters="true">Strings.lhq.tt</ProjectItem>
     <CustomParameters>
       <CustomParameter Name="$lhq_itemtemplate$" Value="NetCoreResxCsharp01"/>
     </CustomParameters>
@@ -32,7 +31,7 @@ Recommended target projects:
   <WizardData>
     {
       "Packages": [
-        {"Id": "ScaleHQ.AspNetCore.LHQ", "Version": "1.0.0"}
+        {"Id": "ScaleHQ.AspNetCore.LHQ", "Version": "1.2.2"}
       ]
     }
   </WizardData>

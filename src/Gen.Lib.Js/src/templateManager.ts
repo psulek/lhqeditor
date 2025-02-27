@@ -14,8 +14,9 @@ import {NetCoreResxCsharp01Template} from "./templates/netCoreResxCsharp";
 import {NetFwResxCsharp01Template} from "./templates/netFwResxCsharp";
 import {WinFormsResxCsharp01Template} from "./templates/winFormsResxCsharp";
 import {WpfResxCsharp01Template} from "./templates/wpfResxCsharp";
-import {hasItems, iterateObject, sortObjectByKey, sortObjectByValue} from "./utils";
+import {hasItems, isNullOrEmpty, iterateObject, sortObjectByKey, sortObjectByValue} from "./utils";
 import {HostEnv} from "./hostEnv";
+import {AppError} from "./AppError";
 
 const CodeGenUID = 'b40c8a1d-23b7-4f78-991b-c24898596dd2';
 
@@ -44,14 +45,13 @@ export class TemplateManager {
     public static runTemplate(lhqModelJson: string, hostData: string): void {
         let lhqModel = JSON.parse(lhqModelJson) as LhqModelType;
         if (lhqModel) {
-            //const startTime = HostEnv.stopwatchStart();
-            
             lhqModel = TemplateManager.sortByNameModel(lhqModel);
             
-            // const elapsedTime = HostEnv.stopwatchEnd(startTime);
-            // HostEnv.debugLog(`[sortByNameModel] takes ${elapsedTime}`);
-
             const {template, templateId, settingsNode} = TemplateManager.loadTemplate(lhqModel as LhqModelType);
+            if (isNullOrEmpty(template)) {
+                throw new AppError(`Failed to load template '${templateId}' !`);
+            }
+            
             let settings = template.loadSettings(settingsNode);
             let host = {};
             if (hostData) {

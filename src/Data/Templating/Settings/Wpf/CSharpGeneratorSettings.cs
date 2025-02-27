@@ -43,9 +43,9 @@ namespace LHQ.Data.Templating.Settings.Wpf
         {
             base.AssignFrom(other);
 
-            if (other is CSharpGeneratorSettings other2)
+            if (other is CSharpGeneratorSettings otherSettings)
             {
-                MissingTranslationFallbackToPrimary = other2.MissingTranslationFallbackToPrimary;
+                MissingTranslationFallbackToPrimary = otherSettings.MissingTranslationFallbackToPrimary;
             }
         }
 

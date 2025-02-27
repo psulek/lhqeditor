@@ -536,7 +536,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _templates_winFormsResxCsharp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./templates/winFormsResxCsharp */ "./src/templates/winFormsResxCsharp.ts");
 /* harmony import */ var _templates_wpfResxCsharp__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./templates/wpfResxCsharp */ "./src/templates/wpfResxCsharp.ts");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils */ "./src/utils.ts");
+/* harmony import */ var _AppError__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AppError */ "./src/AppError.ts");
 // noinspection JSUnusedGlobalSymbols
+
 
 
 
@@ -557,11 +559,11 @@ class TemplateManager {
     static runTemplate(lhqModelJson, hostData) {
         let lhqModel = JSON.parse(lhqModelJson);
         if (lhqModel) {
-            //const startTime = HostEnv.stopwatchStart();
             lhqModel = TemplateManager.sortByNameModel(lhqModel);
-            // const elapsedTime = HostEnv.stopwatchEnd(startTime);
-            // HostEnv.debugLog(`[sortByNameModel] takes ${elapsedTime}`);
             const { template, templateId, settingsNode } = TemplateManager.loadTemplate(lhqModel);
+            if ((0,_utils__WEBPACK_IMPORTED_MODULE_6__.isNullOrEmpty)(template)) {
+                throw new _AppError__WEBPACK_IMPORTED_MODULE_7__.AppError(`Failed to load template '${templateId}' !`);
+            }
             let settings = template.loadSettings(settingsNode);
             let host = {};
             if (hostData) {
@@ -887,8 +889,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class NetFwResxCsharp01Template extends _csharpResXTemplateBase__WEBPACK_IMPORTED_MODULE_0__.CSharpResXTemplateBase {
     static get Id() {
-        //return 'NetFwResxCsharp01';
-        return 'WpfResxCsharp01'; // NetFwResxCsharp01 is same as WpfResxCsharp01!
+        return 'NetFwResxCsharp01';
     }
     get csharpTemplateName() {
         return NetFwResxCsharp01Template.Id;

@@ -95,24 +95,8 @@
     <!-- itemtemplates begin -->
     <None Include="ItemTemplates\LocalizationHQ\NetCore\Default\Strings.lhq" />
     <None Include="ItemTemplates\LocalizationHQ\NetCore\Web\Strings.lhq" />
-    <None Include="ItemTemplates\LocalizationHQ\NetFW\Generic\Strings.lhq.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
-      <Parameters>
-				&lt;%3fxml version="1.0" encoding="utf-16"%3f&gt;
-				&lt;ArrayOfParameterStorage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;
-			</Parameters>
-    </None>
-    <None Include="ItemTemplates\LocalizationHQ\NetCore\Web\Strings.lhq.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
-    </None>
     <Content Include="ItemTemplates\LocalizationHQ\NetCore\Default\icon.png" />
     <Content Include="ItemTemplates\LocalizationHQ\NetCore\Default\preview.png" />
-    <None Include="ItemTemplates\LocalizationHQ\NetCore\Default\Strings.lhq.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
-    </None>
     <Content Include="ItemTemplates\LocalizationHQ\NetCore\Default\_Definitions\CSharp.vstemplate" />
     <Content Include="ItemTemplates\LocalizationHQ\NetCore\Default\_preprocess.xml" />
     <Content Include="ItemTemplates\LocalizationHQ\NetCore\Web\preview.png" />
@@ -126,10 +110,6 @@
     <None Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\Strings.lhq">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\Strings.lhq.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
-    </None>
     <Content Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\_Definitions\CSharp.vstemplate">
       <SubType>Designer</SubType>
     </Content>
@@ -138,19 +118,11 @@
     </Content>
     <Content Include="ItemTemplates\LocalizationHQ\NetFW\Generic\_preprocess.xml" />
     <None Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\Strings.lhq" />
-    <None Include="ItemTemplates\LocalizationHQ\NetFW\WPF\Strings.lhq.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
-    </None>
     <Content Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\icon.png" />
     <Content Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\preview.png" />
     <Content Include="ItemTemplates\LocalizationHQ\NetFW\Typescript\_preprocess.xml" />
     <Content Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\icon.png" />
     <Content Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\preview.png" />
-    <None Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\Strings.lhq.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Strings.lhq.cs</LastGenOutput>
-    </None>
     <Content Include="ItemTemplates\LocalizationHQ\NetFW\WinForms\_Definitions\CSharp.vstemplate">
       <SubType>Designer</SubType>
     </Content>

@@ -3,8 +3,7 @@ import {CSharpResXTemplateBase} from "./csharpResXTemplateBase";
 
 export class NetFwResxCsharp01Template extends CSharpResXTemplateBase<CSharpGeneratorSettings> {
     public static get Id(): string {
-        //return 'NetFwResxCsharp01';
-        return 'WpfResxCsharp01'; // NetFwResxCsharp01 is same as WpfResxCsharp01!
+        return 'NetFwResxCsharp01';
     }
 
     public get csharpTemplateName(): string {

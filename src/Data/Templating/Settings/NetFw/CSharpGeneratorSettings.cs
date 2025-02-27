@@ -70,7 +70,7 @@ namespace LHQ.Data.Templating.Settings.NetFw
                 }
             }
 
-            return result; 
+            return result;
         }
     }
 }

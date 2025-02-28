@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -41,6 +43,9 @@ using JsEngineSettings = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings;
 
 namespace LHQ.Gen.Lib
 {
+    /// <summary>
+    /// Code generator that generates files from *.lhq model files.
+    /// </summary>
     public class Generator : IDisposable
     {
         private ILogger _logger;
@@ -49,7 +54,7 @@ namespace LHQ.Gen.Lib
         private readonly List<GeneratedFile> _generatedFiles = new List<GeneratedFile>();
         private readonly Dictionary<string, LhqModelGroupSettings> _modelGroupSettings = new Dictionary<string, LhqModelGroupSettings>();
 
-        private static readonly string[] JsFiles =
+        private static readonly string[] _jsFiles =
         {
             "handlebars.min.js",
             "lhqgenerators.js"
@@ -69,6 +74,13 @@ namespace LHQ.Gen.Lib
             public const string Namespace = "namespace";
         }
 
+        /// <summary>
+        /// Initializes new instance of <see cref="Generator"/>
+        /// </summary>
+        /// <param name="logger">Logger that implements <see cref="NLog.ILogger"/> which will be used to log messages.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="logger"/> is null.
+        /// </exception>
         public Generator(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -90,8 +102,6 @@ namespace LHQ.Gen.Lib
                     var startTime = new DateTime(start, DateTimeKind.Utc);
                     var duration = DateTime.UtcNow - startTime;
                     return duration.ToString();
-
-                    //return (DateTime.Now.Ticks - start.ToString());
                 });
 
             _engine.EmbedHostObject("HostDebugLog", hostDebugLog);
@@ -106,7 +116,7 @@ namespace LHQ.Gen.Lib
             var thisAssembly = type.Assembly;
             var rootNamespace = type.Namespace;
 
-            foreach (var jsFile in JsFiles)
+            foreach (var jsFile in _jsFiles)
             {
                 string resourceName = $"{rootNamespace}.js.{jsFile}";
                 _engine.ExecuteResource(resourceName, thisAssembly);
@@ -126,6 +136,13 @@ namespace LHQ.Gen.Lib
             _engine.Execute("LhqGenerators.TemplateManager.intialize(__handlebarFiles);");
         }
 
+        /// <summary>
+        /// Updates current logger to new one.
+        /// </summary>
+        /// <param name="logger">new <see cref="NLog.ILogger"/> to replace current one.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="logger"/> is null.
+        /// </exception>
         public void UpdateLogger(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -147,11 +164,11 @@ namespace LHQ.Gen.Lib
                 groupSettings = new LhqModelGroupSettings(group);
                 _modelGroupSettings.Add(group, groupSettings);
             }
-            
+
             groupSettings.Settings = jsonSettings;
         }
 
-        public string FindOwnerCsProjectFile(string lhqModelFileName)
+        private string FindOwnerCsProjectFile(string lhqModelFileName)
         {
             if (!File.Exists(lhqModelFileName))
             {
@@ -165,7 +182,6 @@ namespace LHQ.Gen.Lib
             foreach (var csProj in csProjectFiles)
             {
                 var rootNamespace = GetRootNamespace(lhqModelFileName, csProj);
-                //if (referencedLhqFile && (result == string.Empty || string.IsNullOrEmpty(resultNamespace)))
                 if (result == string.Empty || string.IsNullOrEmpty(resultNamespace))
                 {
                     result = csProj;
@@ -181,7 +197,7 @@ namespace LHQ.Gen.Lib
             return GetRootNamespace(lhqModelFileName, csProjectFileName, _logger);
         }
 
-        public static string GetRootNamespace(string lhqModelFileName, string csProjectFileName,
+        internal static string GetRootNamespace(string lhqModelFileName, string csProjectFileName,
             ILogger logger)
         {
             var referencedLhqFile = false;
@@ -267,6 +283,20 @@ namespace LHQ.Gen.Lib
             return rootNamespace ?? string.Empty;
         }
 
+        /// <summary>
+        /// Generates code from given LHQ model file (*.lhq) and C# project file (*.csproj0 using handlebars templates.
+        /// </summary>
+        /// <param name="lhqModelFileName">Full path to LHQ model file (*.lhq).</param>
+        /// <param name="csProjectFileName">
+        /// Full path to C# project file (*.csproj). This value is optional and if is not specified, process will try to find it
+        /// in the same directory as lhq model file.
+        /// </param>
+        /// <param name="outDir">Output directory for generated files.</param>
+        /// <param name="hostData">Optional dictionary with host data that can be accessed in templates.</param>
+        /// <returns>Result of generation process with list of generated files and used model group settings as an <see cref="GenerateResult"/>.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="lhqModelFileName"/>.</exception>
+        /// <exception cref="FileNotFoundException">Thrown when <paramref name="lhqModelFileName"/>.</exception>
+        /// <exception cref="GeneratorException">Thrown when generation process fails on executing handlerbars templates.</exception>
         public GenerateResult Generate(string lhqModelFileName, string csProjectFileName,
             string outDir, Dictionary<string, object> hostData = null)
         {
@@ -303,7 +333,6 @@ namespace LHQ.Gen.Lib
                     if (!string.IsNullOrEmpty(csProjectFileName))
                     {
                         _logger.Info($"Found '{csProjectFileName}' associated with '{lhqModelFileName}'.");
-                        //Utils.AddToLogFile($"C# project was not specified but one was auto find by app: {csProjectFileName}");
                         csProjFound = true;
                     }
                 }
@@ -362,7 +391,7 @@ namespace LHQ.Gen.Lib
             {
                 var duplicateFiles = _generatedFiles.Where(x => !distinctFileKeys.Contains(x.FileName))
                     .Select(x => x.FileName).ToArray();
-                
+
                 _logger.Info("Duplicated generated files: " + string.Join(", ", duplicateFiles));
             }
 
@@ -379,9 +408,19 @@ namespace LHQ.Gen.Lib
         }
     }
 
+    /// <summary>
+    /// Represents line endings type.
+    /// </summary>
     public enum LineEndings
     {
+        /// <summary>
+        /// Unix like line endings (LF).
+        /// </summary>
         LF,
+        
+        /// <summary>
+        /// Windows like line endings (CRLF).
+        /// </summary>
         CRLF
     }
 }

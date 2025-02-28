@@ -13,7 +13,10 @@
         <PackageReference Include="Pastel" Version="3.0.1"/>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
         <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore" Version="3.27.3"/>
-<!--        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64" Version="3.27.3"/>-->
+    </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="LHQ.Cmd.Tests" />
     </ItemGroup>
 
     <ItemGroup>

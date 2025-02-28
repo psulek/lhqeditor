@@ -64,7 +64,8 @@ namespace LHQ.VsExtension.Code
                             {
                                 var dialogShowInfo = new DialogShowInfo("Code Generator",
                                     $"LHQ model version {modelVersion} does not use any T4 template file.",
-                                    $"\nYou can safely delete file: \n {t4File}.")
+                                    $"You can safely delete file: \n {t4File}.\n\n"+
+                                    $"Other team members must also upgrade LHQ Extension to min. version '{AppConstants.ModernGeneratorNoT4MinVersion}' !")
                                 {
                                     CheckValue = false,
                                     CheckHeader = "Do not show again",

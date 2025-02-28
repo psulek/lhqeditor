@@ -27,15 +27,30 @@ using System.Collections.Generic;
 
 namespace LHQ.Gen.Lib
 {
+    /// <summary>
+    /// Represents result of code generator process of <see cref="Generator.Generate"/>. 
+    /// </summary>
     public sealed class GenerateResult
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenerateResult"/> class.
+        /// </summary>
+        /// <param name="generatedFiles">List of <see cref="GeneratedFile"/> files.</param>
+        /// <param name="modelGroupSettings">List of settings used in code generator process.</param>
         public GenerateResult(List<GeneratedFile> generatedFiles, List<LhqModelGroupSettings> modelGroupSettings)
         {
             GeneratedFiles = generatedFiles;
             ModelGroupSettings = modelGroupSettings;
         }
 
-        public List<GeneratedFile> GeneratedFiles { get; }
-        public List<LhqModelGroupSettings> ModelGroupSettings { get; }
+        /// <summary>
+        /// Gets list of <see cref="GeneratedFile"/> files.
+        /// </summary>
+        public IReadOnlyList<GeneratedFile> GeneratedFiles { get; }
+        
+        /// <summary>
+        /// Gets list of settings used in code generator process.
+        /// </summary>
+        public IReadOnlyList<LhqModelGroupSettings> ModelGroupSettings { get; }
     }
 }

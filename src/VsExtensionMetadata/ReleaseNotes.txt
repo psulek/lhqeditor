@@ -2,6 +2,7 @@
 - Added new code generator template settings:
   - Line endings (LF or CRLF)
   - Encoding file with BOM
+- Added new NET8 console app project template 
 
 2025.1
 - Added new feature 'Mark for export' on resources in tree

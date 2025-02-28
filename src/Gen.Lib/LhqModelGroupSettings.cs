@@ -27,16 +27,29 @@ using System.Collections.Generic;
 
 namespace LHQ.Gen.Lib
 {
+    /// <summary>
+    /// Model group settings used in code generator process of <see cref="Generator.Generate"/>.
+    /// </summary>
     public sealed class LhqModelGroupSettings
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LhqModelGroupSettings"/> class.
+        /// </summary>
+        /// <param name="group">Settings grup name</param>
         public LhqModelGroupSettings(string group)
         {
             Group = group;
             Settings = new Dictionary<string, object>();
         }
 
+        /// <summary>
+        /// Get settings group name.
+        /// </summary>
         public string Group { get; }
 
+        /// <summary>
+        /// Get settings dictionary.
+        /// </summary>
         public Dictionary<string, object> Settings { get; set; }
     }
 }

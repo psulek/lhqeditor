@@ -28,19 +28,36 @@ using System.Runtime.Serialization;
 
 namespace LHQ.Gen.Lib
 {
+    /// <summary>
+    /// Thrown when generation process of <see cref="Generator.Generate"/> fails on executing handlerbars templates.
+    /// </summary>
     public class GeneratorException : Exception
     {
+        /// <summary>
+        /// Title of the exception.
+        /// </summary>
         public string Title { get; set; }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeneratorException"/> class.
+        /// </summary>
         public GeneratorException()
         { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeneratorException"/> class.
+        /// </summary>
+        /// <param name="info">Serialization information.</param>
+        /// <param name="context">Streaming context.</param>
         protected GeneratorException(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
 
-        public GeneratorException(string message) : base(message)
-        { }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeneratorException"/> class.
+        /// </summary>
+        /// <param name="title">Title of the exception.</param>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         public GeneratorException(string title, string message, Exception innerException) : base(message, innerException)
         {
             Title = title;

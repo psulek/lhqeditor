@@ -1289,18 +1289,18 @@ namespace LHQ.VsExtension
         /// <param name="_isFileReadOnly">Indicates whether the file loaded is Read Only or not</param>
         private void SetReadOnly(bool _isFileReadOnly)
         {
-            //this.editorControl.RichTextBoxControl.ReadOnly = _isFileReadOnly;
-
-            //update editor caption with "[Read Only]" or "" as necessary
+            ThreadHelper.ThrowIfNotOnUIThread();
             var frame = (IVsWindowFrame)GetService(typeof(SVsWindowFrame));
-            var editorCaption = "";
-            if (_isFileReadOnly)
+            if (frame != null)
             {
-                //editorCaption = GetResourceString("@100");
-                editorCaption = "[Read Only]";
+                var editorCaption = "";
+                if (_isFileReadOnly)
+                {
+                    editorCaption = "[Read Only]";
+                }
+
+                ErrorHandler.ThrowOnFailure(frame.SetProperty((int)__VSFPROPID.VSFPROPID_EditorCaption, editorCaption));
             }
-            ErrorHandler.ThrowOnFailure(frame.SetProperty((int)__VSFPROPID.VSFPROPID_EditorCaption, editorCaption));
-            //_backupObsolete = true;
         }
 
         /// <summary>

@@ -11,7 +11,7 @@
                       xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
                       Title="{Binding Title}"
                       Width="550"
-                      Height="280"
+                      Height="330"
                       d:DataContext="{d:DesignInstance vm:MessageBoxDialogViewModel,
                                                        IsDesignTimeCreatable=false}"
                       sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"

@@ -61,7 +61,7 @@ namespace LHQ.VsExtension.Code
                     {
                         AppContext.UnsetAppStartedFirstTime();
 
-                        string caption = App.Localization.Strings.VsExtension.FirstTimeOpenSettings.Caption;
+                        /*string caption = App.Localization.Strings.VsExtension.FirstTimeOpenSettings.Caption;
                         string message = App.Localization.Strings.VsExtension.FirstTimeOpenSettings.Message;
                         string detail = App.Localization.Strings.VsExtension.FirstTimeOpenSettings.Detail;
 
@@ -71,7 +71,7 @@ namespace LHQ.VsExtension.Code
                         {
                             VsPackageService.CloseOpenedEditors();
                             VsPackageService.ShowOptionsPage(activePage, AppContext.AppStartedFirstTime);
-                        }
+                        }*/
                     });
             }
             else

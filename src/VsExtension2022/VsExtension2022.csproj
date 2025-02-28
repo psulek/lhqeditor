@@ -92,6 +92,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="..\VsExtensionMetadata\ProjectTemplates\Localization HQ\ConsoleAppNET8.zip">
+      <Link>ProjectTemplates\Localization HQ\ConsoleAppNET8.zip</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <!-- itemtemplates begin -->
     <None Include="ItemTemplates\LocalizationHQ\NetCore\Default\Strings.lhq" />
     <None Include="ItemTemplates\LocalizationHQ\NetCore\Web\Strings.lhq" />

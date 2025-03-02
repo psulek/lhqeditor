@@ -26,6 +26,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Core.DependencyInjection;
@@ -91,7 +92,7 @@ namespace LHQ.App.Services.Implementation
             {
                 UIService.DispatchActionOnUI(() =>
                     {
-                        DialogService.ShowError(new DialogShowInfo("Code Generator", ge.Title, ge.Message));                        
+                        DialogService.ShowError(new DialogShowInfo(Strings.Dialogs.CodeGenerator.CodeGeneratorTitle, ge.Title, ge.Message));                        
                     }, TimeSpan.FromMilliseconds(200));
                 
                 result.Success = true;

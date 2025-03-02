@@ -222,6 +222,9 @@
   <data name="CommonColumnName" xml:space="preserve">
     <value>N&#225;zov</value>
   </data>
+  <data name="CommonDontShowAgain" xml:space="preserve">
+    <value>Nabud&#250;ce nezobrazovať</value>
+  </data>
   <data name="CommonDontShowThisPageAgain" xml:space="preserve">
     <value>Nabud&#250;ce nezobrazovať t&#250;to str&#225;nku</value>
   </data>
@@ -842,5 +845,8 @@ Chcete pokračovať?</value>
   </data>
   <data name="ViewsTreeViewShowOnlyUntranslated" xml:space="preserve">
     <value>Zobraziť iba nepreložen&#233;</value>
+  </data>
+  <data name="VsExtensionNugetFailedToInstallNugetPackage" xml:space="preserve">
+    <value>Please manually install NuGet package &#39;{0}&#39;{2} in Nuget Package Manager.</value>
   </data>
 </root>

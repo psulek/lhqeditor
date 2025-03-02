@@ -528,6 +528,17 @@
             }
           }
         },
+        "DontShowAgain": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Do not show again"
+            },
+            "sk": {
+              "value": "Nabudúce nezobrazovať"
+            }
+          }
+        },
         "DontShowThisPageAgain": {
           "state": "New",
           "values": {
@@ -611,6 +622,14 @@
           "values": {
             "en": {
               "value": "Active product license ({0}) has disabled '{1}' feature."
+            }
+          }
+        },
+        "ReadMore": {
+          "state": "New",
+          "values": {
+            "en": {
+              "value": "Read more"
             }
           }
         },
@@ -988,6 +1007,38 @@
                 }
               }
             },
+            "CodeGeneratorTitle": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Code Generator"
+                }
+              }
+            },
+            "ErrorGeneratingTemplateCode": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Error generating template code !"
+                }
+              }
+            },
+            "NoGenerateTemplateAssociated": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Project does not have associated code generator template !"
+                }
+              }
+            },
+            "NoGenerateTemplateAssociatedDetail": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Do you want to setup code generator template now ?"
+                }
+              }
+            },
             "ResetConfirmCaption": {
               "state": "Edited",
               "values": {
@@ -1001,6 +1052,33 @@
               "values": {
                 "en": {
                   "value": "Do you want to reset settings to its default values?"
+                }
+              }
+            },
+            "RunCodeGenerator": {
+              "state": "New",
+              "values": {
+                "en": {
+                  "value": "Run code generator"
+                }
+              }
+            },
+            "T4NotUsedAnymore": {
+              "state": "Edited",
+              "parameters": {
+                "modelVersion": {
+                  "order": 0
+                },
+                "t4File": {
+                  "order": 1
+                },
+                "noT4MinVersion": {
+                  "order": 2
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "LHQ model version {0} does not use any T4 template file.\r\nYou can safely delete file: \\n {1}.\r\n\r\nOther team members must also upgrade LHQ Extension to min. version '{2}' !"
                 }
               }
             },
@@ -1574,6 +1652,47 @@
               "values": {
                 "en": {
                   "value": "Unexpected error occured!"
+                }
+              }
+            }
+          }
+        },
+        "UpgradeModel": {
+          "resources": {
+            "UpgradeModelCaption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Upgrade model to new version"
+                }
+              }
+            },
+            "UpgradeModelDetail": {
+              "state": "Edited",
+              "parameters": {
+                "latestVersion": {
+                  "order": 0
+                },
+                "minVersion": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Upgrading to new model version does not affect existing model data.\r\n\r\nOld version of LHQ VS IDE extension will not work with {0} model unless upgraded at least to version {1}."
+                }
+              }
+            },
+            "UpgradeModelMessage": {
+              "state": "Edited",
+              "parameters": {
+                "version": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Do you want to upgrade current model to new version ({0}) ?"
                 }
               }
             }
@@ -6704,6 +6823,29 @@
               "values": {
                 "en": {
                   "value": "This is the first time you use Localization HQ Editor extension."
+                }
+              }
+            }
+          }
+        },
+        "Nuget": {
+          "resources": {
+            "FailedToInstallNugetPackage": {
+              "state": "Edited",
+              "parameters": {
+                "packageId": {
+                  "order": 0
+                },
+                "versionStr": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Failed to install nuget package '{0}'{2}."
+                },
+                "sk": {
+                  "value": "Please manually install NuGet package '{0}'{2} in Nuget Package Manager."
                 }
               }
             }

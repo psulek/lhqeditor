@@ -1,4 +1,10 @@
-import {CSharpGeneratorSettings, ModelDataNode, ResXGeneratorSettings, TemplateRootModel} from "../types";
+import {
+    CSharpGeneratorSettings,
+    GeneratorSettings,
+    ModelDataNode,
+    ResXGeneratorSettings,
+    TemplateRootModel
+} from "../types";
 import {CodeGeneratorTemplate} from "./codeGeneratorTemplate";
 import {HostEnv} from "../hostEnv";
 import {isNullOrEmpty, valueOrDefault} from "../utils";
@@ -34,13 +40,25 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         HostEnv.debugLog(msg);
     }
 
+    protected setDefaults(outputSettings: GeneratorSettings, settingsName: string): void {
+        super.setDefaults(outputSettings, settingsName);
+        
+        if (settingsName === 'CSharp') {
+        }
+        else if (settingsName === 'ResX') {
+            const resx = outputSettings as ResXGeneratorSettings;
+            // @ts-ignore
+            resx.CompatibleTextEncoding = valueOrDefault(resx.CompatibleTextEncoding,
+                this._defaultCompatibleTextEncoding.toString());
+        }
+    }
+
     public generate(rootModel: TemplateRootModel) {
         //const modelVersion = rootModel.model.model.version;
         // if (modelVersion < 2) {
         //     throw new AppError(`Current LHQ file version (${modelVersion}) is not supported! (min version 2 is supported)`);
         // }
 
-        //const defaultCompatibleTextEncoding = true; //modelVersion < 2;
         const modelName = rootModel.model.model.name;
 
         rootModel.extra = rootModel.extra ?? {};
@@ -55,8 +73,6 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         }
 
         if (this._settings.ResX.Enabled.isTrue()) {
-            //this._settings.ResX.CompatibleTextEncoding = valueOrDefault(this._settings.ResX.CompatibleTextEncoding, defaultCompatibleTextEncoding.toString());
-            
             rootModel.extra['useHostWebHtmlEncode'] = this._settings.ResX.CompatibleTextEncoding.isTrue();
             
             this.addModelGroupSettings('ResX', this._settings.ResX, ['Enabled']);
@@ -101,12 +117,12 @@ export abstract class CSharpResXTemplateBase<TCSharpSettings extends CSharpGener
         // result.CSharp.Enabled = result.CSharp.Enabled ?? true.toString();
         // result.ResX.Enabled = result.ResX.Enabled ?? true.toString();
 
-        this.setDefaults(result.CSharp);
-        this.setDefaults(result.ResX);
+        this.setDefaults(result.CSharp, 'CSharp');
+        this.setDefaults(result.ResX, 'ResX');
 
         // @ts-ignore
-        result.ResX.CompatibleTextEncoding = valueOrDefault(result.ResX.CompatibleTextEncoding,
-            this._defaultCompatibleTextEncoding.toString());
+        // result.ResX.CompatibleTextEncoding = valueOrDefault(result.ResX.CompatibleTextEncoding,
+        //     this._defaultCompatibleTextEncoding.toString());
 
         this._settings = result;
         return result;

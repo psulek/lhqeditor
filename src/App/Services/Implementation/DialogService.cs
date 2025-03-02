@@ -186,17 +186,15 @@ namespace LHQ.App.Services.Implementation
 
         public bool ShowUpgradeModelDialog()
         {
-            var caption = "Upgrade model to new version";
+            var caption = Strings.Dialogs.UpgradeModel.UpgradeModelCaption;
             var latestVersion = ModelConstants.CurrentModelVersion;
             var latestVersionStr = $"v{latestVersion}";
-            var message = $"Do you want to upgrade current model to new version ({latestVersionStr}) ?";
-            string detail = "Upgrading to new model version does not affect existing model data.\n\n" +
-                $"Old version of LHQ VS IDE extension will not work with {latestVersionStr} model unless upgraded at " +
-                $"least to version {AppConstants.ModernGeneratorMinVersion}.";
+            var message = Strings.Dialogs.UpgradeModel.UpgradeModelMessage(latestVersionStr);
+            string detail = Strings.Dialogs.UpgradeModel.UpgradeModelDetail(latestVersionStr, AppConstants.ModernGeneratorMinVersion);
 
             var dialogShowInfo = new DialogShowInfo(caption, message, detail)
             {
-                ExtraButtonHeader = "Read more",
+                ExtraButtonHeader = Strings.Common.ReadMore,
                 ExtraButtonAction = () =>
                     {
                         WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2_Info);

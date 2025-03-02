@@ -95,7 +95,6 @@ namespace LHQ.VsExtension
     //This is required for Find In files scenario to work properly. This provides a connection point 
     //to the event interface
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
-    //[ComSourceInterfaces(typeof(IVsTextViewEvents))]
     [ComVisible(true)]
     public sealed class EditorPane : WindowPane,
         IVsPersistDocData, //to Enable persistence functionality for document data
@@ -232,93 +231,7 @@ namespace LHQ.VsExtension
                 }
             }
         }
-
-        /*
-        private void GenerateTemplateCode(string projectFileName)
-        {
-            try
-            {
-                ProjectItem projectItem = _dte.Solution.FindProjectItem(projectFileName);
-                if (projectItem == null)
-                {
-                    return;
-                }
-
-                if (ShellViewModel.ModelContext.IsModernGenerator())
-                {
-                    //RunStandaloneGenerator(projectFileName, ShellViewModel.AppContext);
-                    return;
-                }
-                
-                //ShellViewModel.AppContext.StandaloneCodeGeneratorService.GenerateCodeAsync(ShellViewModel.ProjectFileName)
-
-
-                string parentFolder = Path.GetDirectoryName(projectFileName);
-
-                bool t4FileExist = false;
-                dynamic t4File = null;
-
-                try
-                {
-                    t4File = projectItem.Properties?.Item("CustomToolNamespace")?.Value?.ToString();
-                }
-                catch
-                {
-                    // ignored
-                }
-
-                if (!string.IsNullOrEmpty(t4File))
-                {
-                    t4File = Path.Combine(parentFolder, t4File);
-                    t4FileExist = File.Exists(t4File);
-                }
-
-                if (!t4FileExist && !parentFolder.IsNullOrEmpty())
-                {
-                    t4File = Path.Combine(parentFolder, Path.GetFileName(projectFileName) + ".tt");
-                    t4FileExist = File.Exists(t4File);
-                }
-
-                if (t4FileExist)
-                {
-                    var t4 = GetService(typeof(STextTemplating)) as ITextTemplating;
-                    T4TemplateExecutor.RunTemplate(t4, t4File);
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-        }
-        */
-
-//         private void RunStandaloneGenerator(string projectFileName, IAppContext appContext)
-//         {
-// #pragma warning disable VSTHRD110
-//             Task.Factory.StartNew(async () =>
-//                 {
-//                     try
-//                     {
-//                         var stopwatch = Stopwatch.StartNew();
-//                         VsPackageService.ClearOutputMessages();
-//                         VsPackageService.AddMessageToOutput($"Generating code from: {projectFileName}", OutputMessageType.Info);
-//
-//                         var generateResult = await appContext.StandaloneCodeGeneratorService.GenerateCodeAsync(projectFileName);
-//                         string resultStr = generateResult.Success ? 
-//                             $"was successful, {generateResult.GeneratedFileCount} file(s) was generated in {stopwatch.Elapsed:g}." 
-//                             : "failed.";
-//
-//                         VsPackageService.AddMessageToOutput($"Generating code {resultStr}", OutputMessageType.Info);
-//                     }
-//                     catch (Exception e)
-//                     {
-//                         //VsPackageService.AddMessageToOutput("Error Generatring");
-//                         appContext.DialogService.ShowError("Code Generator", "Error generating code", e.Message, TimeSpan.FromSeconds(1));
-//                     }
-//                 });
-// #pragma warning restore VSTHRD110
-//         }
-
+        
         private void UndoManagerOnChanged(object sender, UndoActionArgs e)
         {
             if (_isLoading)

@@ -27,6 +27,7 @@ using System;
 using System.IO;
 using System.Linq;
 using EnvDTE;
+using LHQ.App.Localization;
 using LHQ.Utils.Extensions;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
@@ -129,9 +130,11 @@ namespace LHQ.VsExtension.Code
 
                 if (containPackageId && containVersion)
                 {
-                    string versionStr = string.IsNullOrEmpty(version) ? string.Empty : $" version {version}";
-                    string error = $"Failed to install nuget package '{packageId}'{versionStr}.\n" +
-                        $"Please manually install NuGet package '{packageId}'{versionStr} in Nuget Package Manager.";
+                    string versionStr = string.IsNullOrEmpty(version) ? string.Empty : $" v{version}";
+                    // string error = $"Failed to install nuget package '{packageId}'{versionStr}.\n" +
+                    //     $"Please manually install NuGet package '{packageId}'{versionStr} in Nuget Package Manager.";
+                    string error = Strings.VsExtension.Nuget.FailedToInstallNugetPackage(packageId, versionStr);
+                    
                     
                     VsPackageService.AddMessageToOutput(error, OutputMessageType.Error);
                 }

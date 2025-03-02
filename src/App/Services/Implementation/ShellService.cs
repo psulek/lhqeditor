@@ -342,6 +342,7 @@ namespace LHQ.App.Services.Implementation
 
                                 if (loadResult?.LoadStatus == ProjectLoadStatus.Success && loadResult.ModelContext != null)
                                 {
+                                    bool upgradeSuccess = false;
                                     if (forceUpgradeFromModel > 0)
                                     {
                                         loadResult.MarkIsDirty = true;
@@ -349,6 +350,7 @@ namespace LHQ.App.Services.Implementation
                                         {
                                             SaveModelContextToFile(fileName, loadResult.ModelContext);
                                             loadResult.MarkIsDirty = false;
+                                            upgradeSuccess = true;
                                         }
                                         catch (Exception e)
                                         {
@@ -357,6 +359,11 @@ namespace LHQ.App.Services.Implementation
                                     }
 
                                     OpenProject(loadResult.ModelContext, fileName);
+
+                                    if (upgradeSuccess && ShellViewModel.HasCodeGeneratorItemTemplate)
+                                    {
+                                        StandaloneCodeGenerate();
+                                    }
                                 }
                                 else
                                 {
@@ -622,9 +629,9 @@ namespace LHQ.App.Services.Implementation
         {
             if (!ShellViewModel.HasCodeGeneratorItemTemplate)
             {
-                var dialogResultInfo = DialogService.ShowConfirm(new DialogShowInfo("Run Code Generator", 
-                    "Project does not have associated code generator template !",
-                    "Do you want to setup code generator template now ?"), dialogIcon: DialogIcon.Error);
+                var dialogResultInfo = DialogService.ShowConfirm(new DialogShowInfo(Strings.Dialogs.CodeGenerator.RunCodeGenerator, 
+                    Strings.Dialogs.CodeGenerator.NoGenerateTemplateAssociated,
+                    Strings.Dialogs.CodeGenerator.NoGenerateTemplateAssociatedDetail), dialogIcon: DialogIcon.Error);
 
                 if (dialogResultInfo.DialogResult == DialogResult.Yes)
                 {
@@ -661,7 +668,10 @@ namespace LHQ.App.Services.Implementation
                                 StopProjectOperationIsBusy();
                                 if (!codeGenResult.Success)
                                 {
-                                    DialogService.ShowError(new DialogShowInfo("Code Generator", "Error generating template code !"));
+                                    var info = new DialogShowInfo(Strings.Dialogs.CodeGenerator.CodeGeneratorTitle,
+                                        Strings.Dialogs.CodeGenerator.ErrorGeneratingTemplateCode);
+                                    
+                                    DialogService.ShowError(info);
                                 }
                             }, TimeSpan.FromMilliseconds(200));
                     });
@@ -672,8 +682,8 @@ namespace LHQ.App.Services.Implementation
             int modelVersion = ShellViewModel.ModelContext.Model.Version;
             OpenProject(ShellViewModel.ProjectFileName, false, modelVersion);
         }
-        
-        protected virtual void OpenProject(ModelContext modelContext, string fileName)
+
+        private void OpenProject(ModelContext modelContext, string fileName)
         {
             // before open to save 'expanded states'
             RecentFilesService.Save(ShellViewContext);
@@ -687,13 +697,6 @@ namespace LHQ.App.Services.Implementation
             RecentFilesService.Save(ShellViewContext);
 
             ShellViewModel.CheckCodeGeneratorTemplate();
-
-            // if (AppContext.StandaloneCodeGeneratorService.Available)
-            // {
-            //     string templateId = modelContext.GetCodeGeneratorTemplateId();
-            //     ShellViewModel.CodeGeneratorItemTemplate = templateId;
-            //     //ShellViewModel.CheckCodeGeneratorTemplate();
-            // }
         }
 
         public void CloseProject()

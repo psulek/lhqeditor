@@ -97,37 +97,6 @@ namespace LHQ.App.Services.Implementation
             return appLogsFolder;
         }
 
-        // private LogLevel GetLogLevel(LogEventType eventType)
-        // {
-        //     switch (eventType)
-        //     {
-        //         case LogEventType.Info:
-        //         {
-        //             return LogLevel.Info;
-        //         }
-        //         case LogEventType.Warn:
-        //         {
-        //             return LogLevel.Warn;
-        //         }
-        //         case LogEventType.Debug:
-        //         {
-        //             return LogLevel.Debug;
-        //         }
-        //         case LogEventType.Error:
-        //         {
-        //             return LogLevel.Error;
-        //         }
-        //         case LogEventType.Fatal:
-        //         {
-        //             return LogLevel.Fatal;
-        //         }
-        //         default:
-        //         {
-        //             throw new ArgumentOutOfRangeException(nameof(eventType), eventType, null);
-        //         }
-        //     }
-        // }
-
         public void Log(LogEventType eventType, string message, Exception exception = null)
         {
             _logger.Log(eventType.ToLogLevel(), exception, message);

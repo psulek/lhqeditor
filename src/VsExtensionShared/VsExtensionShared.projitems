@@ -40,7 +40,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)LhqCodeGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LHQDirectiveProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\VsOptions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)T4TemplateExecutor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Undo\OleUndoUnit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Undo\UndoUnitState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VSCommandTable.cs" />

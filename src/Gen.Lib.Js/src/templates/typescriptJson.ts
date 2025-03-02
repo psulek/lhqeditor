@@ -1,4 +1,10 @@
-import {JsonGeneratorSettings, ModelDataNode, TemplateRootModel, TypescriptGeneratorSettings} from '../types';
+import {
+    GeneratorSettings,
+    JsonGeneratorSettings,
+    ModelDataNode,
+    TemplateRootModel,
+    TypescriptGeneratorSettings
+} from '../types';
 import {CodeGeneratorTemplate} from "./codeGeneratorTemplate";
 import {HostEnv} from "../hostEnv";
 import {isNullOrEmpty, sortBy, valueOrDefault} from "../utils";
@@ -50,6 +56,15 @@ export class TypescriptJson01Template extends CodeGeneratorTemplate {
         }
     }
 
+    protected setDefaults(outputSettings: GeneratorSettings, settingsName: string): void {
+        super.setDefaults(outputSettings, settingsName);
+        
+        if (settingsName === 'Json') {
+            const json = outputSettings as JsonGeneratorSettings;
+            json.MetadataFileNameSuffix = valueOrDefault(json.MetadataFileNameSuffix, 'metadata');
+        }
+    }
+
     public loadSettings(node: ModelDataNode): Settings {
         const result: Settings = {Typescript: undefined!, Json: undefined!};
 
@@ -73,12 +88,9 @@ export class TypescriptJson01Template extends CodeGeneratorTemplate {
             throw new Error('Json settings not found !');
         }
 
-        //result.Typescript.Enabled = result.Typescript.Enabled ?? true.toString();
-        this.setDefaults(result.Typescript);
-               
-        //result.Json.Enabled = result.Json.Enabled ?? true.toString();
-        this.setDefaults(result.Json);
-        result.Json.MetadataFileNameSuffix = valueOrDefault(result.Json.MetadataFileNameSuffix, 'metadata');
+        this.setDefaults(result.Typescript, 'Typescript');
+        this.setDefaults(result.Json, 'Json');
+        //result.Json.MetadataFileNameSuffix = valueOrDefault(result.Json.MetadataFileNameSuffix, 'metadata');
 
         this._settings = result;
         return result;

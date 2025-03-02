@@ -261,6 +261,9 @@
   <data name="CommonColumnName" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="CommonDontShowAgain" xml:space="preserve">
+    <value>Do not show again</value>
+  </data>
   <data name="CommonDontShowThisPageAgain" xml:space="preserve">
     <value>Do not show this page again</value>
   </data>
@@ -284,6 +287,9 @@
   </data>
   <data name="CommonProductFeatureIsDisabledForActiveLicense" xml:space="preserve">
     <value>Active product license ({0}) has disabled &#39;{1}&#39; feature.</value>
+  </data>
+  <data name="CommonReadMore" xml:space="preserve">
+    <value>Read more</value>
   </data>
   <data name="CommonResetToDefaults" xml:space="preserve">
     <value>Reset to defaults</value>
@@ -387,11 +393,32 @@
   <data name="DialogsCodeGeneratorButtonResetToDefault" xml:space="preserve">
     <value>Reset To Default</value>
   </data>
+  <data name="DialogsCodeGeneratorCodeGeneratorTitle" xml:space="preserve">
+    <value>Code Generator</value>
+  </data>
+  <data name="DialogsCodeGeneratorErrorGeneratingTemplateCode" xml:space="preserve">
+    <value>Error generating template code !</value>
+  </data>
+  <data name="DialogsCodeGeneratorNoGenerateTemplateAssociated" xml:space="preserve">
+    <value>Project does not have associated code generator template !</value>
+  </data>
+  <data name="DialogsCodeGeneratorNoGenerateTemplateAssociatedDetail" xml:space="preserve">
+    <value>Do you want to setup code generator template now ?</value>
+  </data>
   <data name="DialogsCodeGeneratorResetConfirmCaption" xml:space="preserve">
     <value>Reset Settings To Default Values</value>
   </data>
   <data name="DialogsCodeGeneratorResetConfirmMessage" xml:space="preserve">
     <value>Do you want to reset settings to its default values?</value>
+  </data>
+  <data name="DialogsCodeGeneratorRunCodeGenerator" xml:space="preserve">
+    <value>Run code generator</value>
+  </data>
+  <data name="DialogsCodeGeneratorT4NotUsedAnymore" xml:space="preserve">
+    <value>LHQ model version {0} does not use any T4 template file.
+You can safely delete file: \n {1}.
+
+Other team members must also upgrade LHQ Extension to min. version &#39;{2}&#39; !</value>
   </data>
   <data name="DialogsCodeGeneratorTemplateId" xml:space="preserve">
     <value>Template id: {0}</value>
@@ -565,6 +592,17 @@ NOTE: You need to have active github account to report error.</value>
   </data>
   <data name="DialogsUnhandledErrorMessage" xml:space="preserve">
     <value>Unexpected error occured!</value>
+  </data>
+  <data name="DialogsUpgradeModelUpgradeModelCaption" xml:space="preserve">
+    <value>Upgrade model to new version</value>
+  </data>
+  <data name="DialogsUpgradeModelUpgradeModelDetail" xml:space="preserve">
+    <value>Upgrading to new model version does not affect existing model data.
+
+Old version of LHQ VS IDE extension will not work with {0} model unless upgraded at least to version {1}.</value>
+  </data>
+  <data name="DialogsUpgradeModelUpgradeModelMessage" xml:space="preserve">
+    <value>Do you want to upgrade current model to new version ({0}) ?</value>
   </data>
   <data name="DialogsVsOptionsApplyChangesCaption" xml:space="preserve">
     <value>Apply Settings Change</value>
@@ -2001,5 +2039,8 @@ Any previously generated files must be removed manually!</value>
   </data>
   <data name="VsExtensionFirstTimeOpenSettingsMessage" xml:space="preserve">
     <value>This is the first time you use Localization HQ Editor extension.</value>
+  </data>
+  <data name="VsExtensionNugetFailedToInstallNugetPackage" xml:space="preserve">
+    <value>Failed to install nuget package &#39;{0}&#39;{2}.</value>
   </data>
 </root>

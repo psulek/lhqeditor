@@ -186,7 +186,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EEF62E1A697C4776941E84CB2D8DF8B0"
             {
-            "SourcePath" = "8:..\\App\\bin\\Debug\\NLog.config"
+            "SourcePath" = "8:..\\App\\bin\\Debug\\net48\\win-x64\\NLog.config"
             "TargetName" = "8:NLog.config"
             "Tag" = "8:"
             "Folder" = "8:_44A0001B29E14D2F9F81758224E96307"
@@ -206,7 +206,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FC62AF3DF4584CA3B0A0A7B9D4FAED55"
             {
-            "SourcePath" = "8:..\\App\\bin\\Debug\\ChakraCore.dll"
+            "SourcePath" = "8:..\\App\\bin\\Debug\\net48\\win-x64\\ChakraCore.dll"
             "TargetName" = "8:ChakraCore.dll"
             "Tag" = "8:"
             "Folder" = "8:_44A0001B29E14D2F9F81758224E96307"

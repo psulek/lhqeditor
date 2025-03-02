@@ -27,6 +27,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using LHQ.App.Code;
+using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Implementation;
 using LHQ.Data;
@@ -59,17 +60,17 @@ namespace LHQ.VsExtension.Code
                         if (File.Exists(t4File))
                         {
                             bool flagUnsupportedT4Template = AppContext.AppConfigFactory.Current.AppHints.IsFlagSet(AppHintType.UnsupportedT4Template);
-
+                            
                             if (flagUnsupportedT4Template)
                             {
-                                var dialogShowInfo = new DialogShowInfo("Code Generator",
-                                    $"LHQ model version {modelVersion} does not use any T4 template file.",
-                                    $"You can safely delete file: \n {t4File}.\n\n"+
-                                    $"Other team members must also upgrade LHQ Extension to min. version '{AppConstants.ModernGeneratorNoT4MinVersion}' !")
+                                var message = Strings.Dialogs.CodeGenerator.T4NotUsedAnymore(modelVersion, t4File,
+                                    AppConstants.ModernGeneratorNoT4MinVersion);
+                                
+                                var dialogShowInfo = new DialogShowInfo(Strings.Dialogs.CodeGenerator.CodeGeneratorTitle, message)
                                 {
                                     CheckValue = false,
-                                    CheckHeader = "Do not show again",
-                                    ExtraButtonHeader = "Read more",
+                                    CheckHeader = Strings.Common.DontShowAgain,
+                                    ExtraButtonHeader = Strings.Common.ReadMore,
                                     ExtraButtonAction = () =>
                                         {
                                             WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2_T4Obsolete);

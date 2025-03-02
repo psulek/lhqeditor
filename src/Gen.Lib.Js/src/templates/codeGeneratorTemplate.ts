@@ -39,7 +39,7 @@ export abstract class CodeGeneratorTemplate {
             outputSettings.LineEndings ?? 'lf');
     }
     
-    protected setDefaults(outputSettings: GeneratorSettings): void {
+    protected setDefaults(outputSettings: GeneratorSettings, settingsName: string): void {
         outputSettings.EncodingWithBOM = valueOrDefault(outputSettings.EncodingWithBOM, false);
         outputSettings.LineEndings = valueOrDefault(outputSettings.LineEndings, 'lf');
         outputSettings.Enabled = outputSettings.Enabled ?? true.toString();

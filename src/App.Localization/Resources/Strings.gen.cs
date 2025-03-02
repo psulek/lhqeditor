@@ -372,6 +372,10 @@ namespace LHQ.App.Localization
 			/// </summary>
 			public const string ColumnName = "CommonColumnName";
 			/// <summary>
+			/// Gets localized string similar to: Do not show again
+			/// </summary>
+			public const string DontShowAgain = "CommonDontShowAgain";
+			/// <summary>
 			/// Gets localized string similar to: Do not show this page again
 			/// </summary>
 			public const string DontShowThisPageAgain = "CommonDontShowThisPageAgain";
@@ -403,6 +407,10 @@ namespace LHQ.App.Localization
 			/// Gets localized string similar to: Active product license ({0}) has disabled '{1}' feature.
 			/// </summary>
 			public const string ProductFeatureIsDisabledForActiveLicense = "CommonProductFeatureIsDisabledForActiveLicense";
+			/// <summary>
+			/// Gets localized string similar to: Read more
+			/// </summary>
+			public const string ReadMore = "CommonReadMore";
 			/// <summary>
 			/// Gets localized string similar to: Reset to defaults
 			/// </summary>
@@ -576,6 +584,22 @@ namespace LHQ.App.Localization
 				/// </summary>
 				public const string ButtonResetToDefault = "DialogsCodeGeneratorButtonResetToDefault";
 				/// <summary>
+				/// Gets localized string similar to: Code Generator
+				/// </summary>
+				public const string CodeGeneratorTitle = "DialogsCodeGeneratorCodeGeneratorTitle";
+				/// <summary>
+				/// Gets localized string similar to: Error generating template code !
+				/// </summary>
+				public const string ErrorGeneratingTemplateCode = "DialogsCodeGeneratorErrorGeneratingTemplateCode";
+				/// <summary>
+				/// Gets localized string similar to: Project does not have associated code generator template !
+				/// </summary>
+				public const string NoGenerateTemplateAssociated = "DialogsCodeGeneratorNoGenerateTemplateAssociated";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to setup code generator template now ?
+				/// </summary>
+				public const string NoGenerateTemplateAssociatedDetail = "DialogsCodeGeneratorNoGenerateTemplateAssociatedDetail";
+				/// <summary>
 				/// Gets localized string similar to: Reset Settings To Default Values
 				/// </summary>
 				public const string ResetConfirmCaption = "DialogsCodeGeneratorResetConfirmCaption";
@@ -583,6 +607,14 @@ namespace LHQ.App.Localization
 				/// Gets localized string similar to: Do you want to reset settings to its default values?
 				/// </summary>
 				public const string ResetConfirmMessage = "DialogsCodeGeneratorResetConfirmMessage";
+				/// <summary>
+				/// Gets localized string similar to: Run code generator
+				/// </summary>
+				public const string RunCodeGenerator = "DialogsCodeGeneratorRunCodeGenerator";
+				/// <summary>
+				/// Gets localized string similar to: LHQ model version {0} does not use any T4 template file....
+				/// </summary>
+				public const string T4NotUsedAnymore = "DialogsCodeGeneratorT4NotUsedAnymore";
 				/// <summary>
 				/// Gets localized string similar to: Template id: {0}
 				/// </summary>
@@ -854,6 +886,22 @@ namespace LHQ.App.Localization
 				/// Gets localized string similar to: Unexpected error occured!
 				/// </summary>
 				public const string Message = "DialogsUnhandledErrorMessage";
+			}
+			
+			public static partial class UpgradeModel
+			{
+				/// <summary>
+				/// Gets localized string similar to: Upgrade model to new version
+				/// </summary>
+				public const string UpgradeModelCaption = "DialogsUpgradeModelUpgradeModelCaption";
+				/// <summary>
+				/// Gets localized string similar to: Upgrading to new model version does not affect existing model data....
+				/// </summary>
+				public const string UpgradeModelDetail = "DialogsUpgradeModelUpgradeModelDetail";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to upgrade current model to new version ({0}) ?
+				/// </summary>
+				public const string UpgradeModelMessage = "DialogsUpgradeModelUpgradeModelMessage";
 			}
 			
 			public static partial class VsOptions
@@ -3031,6 +3079,14 @@ namespace LHQ.App.Localization
 				/// </summary>
 				public const string Message = "VsExtensionFirstTimeOpenSettingsMessage";
 			}
+			
+			public static partial class Nuget
+			{
+				/// <summary>
+				/// Gets localized string similar to: Failed to install nuget package '{0}'{2}.
+				/// </summary>
+				public const string FailedToInstallNugetPackage = "VsExtensionNugetFailedToInstallNugetPackage";
+			}
 		}
 	}
 
@@ -3296,6 +3352,11 @@ namespace LHQ.App.Localization
 			public static string ColumnName => StringsContext.Instance.GetStringSafely(StringsKeys.Common.ColumnName);
 	
 			/// <summary>
+			/// Gets localized string similar to: Do not show again
+			/// </summary>
+			public static string DontShowAgain => StringsContext.Instance.GetStringSafely(StringsKeys.Common.DontShowAgain);
+	
+			/// <summary>
 			/// Gets localized string similar to: Do not show this page again
 			/// </summary>
 			public static string DontShowThisPageAgain => StringsContext.Instance.GetStringSafely(StringsKeys.Common.DontShowThisPageAgain);
@@ -3334,6 +3395,11 @@ namespace LHQ.App.Localization
 			/// Gets localized string similar to: Active product license ({0}) has disabled '{1}' feature.
 			/// </summary>
 			public static string ProductFeatureIsDisabledForActiveLicense(object licenseName,object featureName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Common.ProductFeatureIsDisabledForActiveLicense), licenseName,featureName);
+	
+			/// <summary>
+			/// Gets localized string similar to: Read more
+			/// </summary>
+			public static string ReadMore => StringsContext.Instance.GetStringSafely(StringsKeys.Common.ReadMore);
 	
 			/// <summary>
 			/// Gets localized string similar to: Reset to defaults
@@ -3542,6 +3608,26 @@ namespace LHQ.App.Localization
 				public static string ButtonResetToDefault => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ButtonResetToDefault);
 		
 				/// <summary>
+				/// Gets localized string similar to: Code Generator
+				/// </summary>
+				public static string CodeGeneratorTitle => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.CodeGeneratorTitle);
+		
+				/// <summary>
+				/// Gets localized string similar to: Error generating template code !
+				/// </summary>
+				public static string ErrorGeneratingTemplateCode => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ErrorGeneratingTemplateCode);
+		
+				/// <summary>
+				/// Gets localized string similar to: Project does not have associated code generator template !
+				/// </summary>
+				public static string NoGenerateTemplateAssociated => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.NoGenerateTemplateAssociated);
+		
+				/// <summary>
+				/// Gets localized string similar to: Do you want to setup code generator template now ?
+				/// </summary>
+				public static string NoGenerateTemplateAssociatedDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.NoGenerateTemplateAssociatedDetail);
+		
+				/// <summary>
 				/// Gets localized string similar to: Reset Settings To Default Values
 				/// </summary>
 				public static string ResetConfirmCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ResetConfirmCaption);
@@ -3550,6 +3636,16 @@ namespace LHQ.App.Localization
 				/// Gets localized string similar to: Do you want to reset settings to its default values?
 				/// </summary>
 				public static string ResetConfirmMessage => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.ResetConfirmMessage);
+		
+				/// <summary>
+				/// Gets localized string similar to: Run code generator
+				/// </summary>
+				public static string RunCodeGenerator => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.RunCodeGenerator);
+		
+				/// <summary>
+				/// Gets localized string similar to: LHQ model version {0} does not use any T4 template file....
+				/// </summary>
+				public static string T4NotUsedAnymore(object modelVersion,object t4File,object noT4MinVersion) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.CodeGenerator.T4NotUsedAnymore), modelVersion,t4File,noT4MinVersion);
 		
 				/// <summary>
 				/// Gets localized string similar to: Template id: {0}
@@ -3878,6 +3974,25 @@ namespace LHQ.App.Localization
 				/// Gets localized string similar to: Unexpected error occured!
 				/// </summary>
 				public static string Message => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UnhandledError.Message);
+		
+			}
+			
+			public static partial class UpgradeModel
+			{
+				/// <summary>
+				/// Gets localized string similar to: Upgrade model to new version
+				/// </summary>
+				public static string UpgradeModelCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UpgradeModel.UpgradeModelCaption);
+		
+				/// <summary>
+				/// Gets localized string similar to: Upgrading to new model version does not affect existing model data....
+				/// </summary>
+				public static string UpgradeModelDetail(object latestVersion,object minVersion) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UpgradeModel.UpgradeModelDetail), latestVersion,minVersion);
+		
+				/// <summary>
+				/// Gets localized string similar to: Do you want to upgrade current model to new version ({0}) ?
+				/// </summary>
+				public static string UpgradeModelMessage(object version) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UpgradeModel.UpgradeModelMessage), version);
 		
 			}
 			
@@ -6522,6 +6637,15 @@ namespace LHQ.App.Localization
 				/// Gets localized string similar to: This is the first time you use Localization HQ Editor extension.
 				/// </summary>
 				public static string Message => StringsContext.Instance.GetStringSafely(StringsKeys.VsExtension.FirstTimeOpenSettings.Message);
+		
+			}
+			
+			public static partial class Nuget
+			{
+				/// <summary>
+				/// Gets localized string similar to: Failed to install nuget package '{0}'{2}.
+				/// </summary>
+				public static string FailedToInstallNugetPackage(object packageId,object versionStr) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.VsExtension.Nuget.FailedToInstallNugetPackage), packageId,versionStr);
 		
 			}
 		}

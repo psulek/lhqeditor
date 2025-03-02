@@ -124,6 +124,9 @@ namespace LHQ.App.Services.Implementation
             {
                 requireSave = true;
                 Current.UpdateVersion(appCurrentVersion);
+                
+                // when upgrading, reset all app hints
+                Current.SetAllAppHints();
 
                 //TODO: Add some upgrade rules later, when required!
                 // loadedConfig.NewProperty = "defaultValue";

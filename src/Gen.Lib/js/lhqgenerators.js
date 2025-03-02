@@ -705,7 +705,7 @@ class CodeGeneratorTemplate {
         var _a, _b;
         _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.addResultFile(name, content, (_a = outputSettings.EncodingWithBOM) !== null && _a !== void 0 ? _a : false, (_b = outputSettings.LineEndings) !== null && _b !== void 0 ? _b : 'lf');
     }
-    setDefaults(outputSettings) {
+    setDefaults(outputSettings, settingsName) {
         var _a;
         outputSettings.EncodingWithBOM = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.valueOrDefault)(outputSettings.EncodingWithBOM, false);
         outputSettings.LineEndings = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.valueOrDefault)(outputSettings.LineEndings, 'lf');
@@ -780,13 +780,22 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
     debugLog(msg) {
         _hostEnv__WEBPACK_IMPORTED_MODULE_1__.HostEnv.debugLog(msg);
     }
+    setDefaults(outputSettings, settingsName) {
+        super.setDefaults(outputSettings, settingsName);
+        if (settingsName === 'CSharp') {
+        }
+        else if (settingsName === 'ResX') {
+            const resx = outputSettings;
+            // @ts-ignore
+            resx.CompatibleTextEncoding = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.valueOrDefault)(resx.CompatibleTextEncoding, this._defaultCompatibleTextEncoding.toString());
+        }
+    }
     generate(rootModel) {
         //const modelVersion = rootModel.model.model.version;
         // if (modelVersion < 2) {
         //     throw new AppError(`Current LHQ file version (${modelVersion}) is not supported! (min version 2 is supported)`);
         // }
         var _a, _b;
-        //const defaultCompatibleTextEncoding = true; //modelVersion < 2;
         const modelName = rootModel.model.model.name;
         rootModel.extra = (_a = rootModel.extra) !== null && _a !== void 0 ? _a : {};
         if (this._settings.CSharp.Enabled.isTrue()) {
@@ -798,7 +807,6 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
             this.addModelGroupSettings('CSharp', this._settings.CSharp, ['Enabled']);
         }
         if (this._settings.ResX.Enabled.isTrue()) {
-            //this._settings.ResX.CompatibleTextEncoding = valueOrDefault(this._settings.ResX.CompatibleTextEncoding, defaultCompatibleTextEncoding.toString());
             rootModel.extra['useHostWebHtmlEncode'] = this._settings.ResX.CompatibleTextEncoding.isTrue();
             this.addModelGroupSettings('ResX', this._settings.ResX, ['Enabled']);
             (_b = rootModel.model.languages) === null || _b === void 0 ? void 0 : _b.forEach(lang => {
@@ -836,10 +844,11 @@ class CSharpResXTemplateBase extends _codeGeneratorTemplate__WEBPACK_IMPORTED_MO
         }
         // result.CSharp.Enabled = result.CSharp.Enabled ?? true.toString();
         // result.ResX.Enabled = result.ResX.Enabled ?? true.toString();
-        this.setDefaults(result.CSharp);
-        this.setDefaults(result.ResX);
+        this.setDefaults(result.CSharp, 'CSharp');
+        this.setDefaults(result.ResX, 'ResX');
         // @ts-ignore
-        result.ResX.CompatibleTextEncoding = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.valueOrDefault)(result.ResX.CompatibleTextEncoding, this._defaultCompatibleTextEncoding.toString());
+        // result.ResX.CompatibleTextEncoding = valueOrDefault(result.ResX.CompatibleTextEncoding,
+        //     this._defaultCompatibleTextEncoding.toString());
         this._settings = result;
         return result;
     }
@@ -954,6 +963,13 @@ class TypescriptJson01Template extends _codeGeneratorTemplate__WEBPACK_IMPORTED_
             });
         }
     }
+    setDefaults(outputSettings, settingsName) {
+        super.setDefaults(outputSettings, settingsName);
+        if (settingsName === 'Json') {
+            const json = outputSettings;
+            json.MetadataFileNameSuffix = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.valueOrDefault)(json.MetadataFileNameSuffix, 'metadata');
+        }
+    }
     loadSettings(node) {
         var _a;
         const result = { Typescript: undefined, Json: undefined };
@@ -974,11 +990,9 @@ class TypescriptJson01Template extends _codeGeneratorTemplate__WEBPACK_IMPORTED_
         if (result.Json === undefined) {
             throw new Error('Json settings not found !');
         }
-        //result.Typescript.Enabled = result.Typescript.Enabled ?? true.toString();
-        this.setDefaults(result.Typescript);
-        //result.Json.Enabled = result.Json.Enabled ?? true.toString();
-        this.setDefaults(result.Json);
-        result.Json.MetadataFileNameSuffix = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.valueOrDefault)(result.Json.MetadataFileNameSuffix, 'metadata');
+        this.setDefaults(result.Typescript, 'Typescript');
+        this.setDefaults(result.Json, 'Json');
+        //result.Json.MetadataFileNameSuffix = valueOrDefault(result.Json.MetadataFileNameSuffix, 'metadata');
         this._settings = result;
         return result;
     }

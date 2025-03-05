@@ -1,0 +1,194 @@
+{
+  "$ref": "#/definitions/LhqModel",
+  "definitions": {
+    "LhqModel": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "object",
+          "properties": {
+            "uid": {
+              "type": "string",
+              "const": "6ce4d54c5dbd415c93019d315e278638"
+            },
+            "version": {
+              "type": "number",
+              "enum": [
+                1,
+                2
+              ]
+            },
+            "options": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "type": "boolean"
+                },
+                "resources": {
+                  "type": "string",
+                  "enum": [
+                    "All",
+                    "Categories"
+                  ]
+                }
+              },
+              "required": [
+                "categories",
+                "resources"
+              ],
+              "additionalProperties": false
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "primaryLanguage": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "uid",
+            "version",
+            "options",
+            "name",
+            "primaryLanguage"
+          ],
+          "additionalProperties": false
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metadatas": {
+          "type": "object",
+          "properties": {
+            "childs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "attrs": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "childs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/LhqModel/properties/metadatas/properties/childs/items"
+                    }
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "resources": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "enum": [
+                  "New",
+                  "Edited",
+                  "NeedsReview",
+                  "Final"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "order": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "order"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "values": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "locked": {
+                      "type": "boolean"
+                    },
+                    "auto": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "state",
+              "values"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "categories": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "resources": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/definitions/LhqModel/properties/resources/additionalProperties"
+                }
+              },
+              "categories": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/definitions/LhqModel/properties/categories/additionalProperties"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "model",
+        "languages",
+        "metadatas"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

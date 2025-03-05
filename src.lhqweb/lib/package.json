@@ -1,0 +1,33 @@
+{
+  "name": "lhq-generators",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-cli": "ts-node --project tsconfig-build.json src/build/cli.ts --gen-schema",
+    "test": "ts-node --project tsconfig.build.json src/build/test.ts",
+    "build": "rimraf dist && webpack",
+    "dts": "tsup src/model/schemas.ts --tsconfig tsconfig.dts.json --dts-only -d ./dist/types"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^22.10.10",
+    "cpx": "1.5.0",
+    "minimist": "1.2.8",
+    "rimraf": "^6.0.1",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "zod-to-json-schema": "^3.24.3",
+    "zod-validation-error": "3.4.0"
+  }
+}

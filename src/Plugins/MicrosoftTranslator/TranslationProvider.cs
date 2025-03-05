@@ -48,6 +48,7 @@ namespace LHQ.Plugin.MicrosoftTranslator
     public class TranslationProvider : ITranslationProvider, IDisposable
     {
         private const string OcpApimSubscriptionKeyHeader = "Ocp-Apim-Subscription-Key";
+        private const string OcpApimSubscriptionRegionHeader = "Ocp-Apim-Subscription-Region";
         private const string AzureHostUrl = "https://api.cognitive.microsofttranslator.com";
 
         private const string RouteTranslate = "/translate?api-version=3.0&from=";
@@ -229,6 +230,11 @@ namespace LHQ.Plugin.MicrosoftTranslator
                         if (useSubscriptionKey)
                         {
                             requestMessage.Headers.Add(OcpApimSubscriptionKeyHeader, PluginConfig.MicrosoftTranslatorSubscriptionKey);
+                        }
+
+                        if (!PluginConfig.MicrosoftTranslatorSubscriptionKeyRegion.IsNullOrEmpty())
+                        {
+                            requestMessage.Headers.Add(OcpApimSubscriptionRegionHeader, PluginConfig.MicrosoftTranslatorSubscriptionKeyRegion);
                         }
 
                         if (request != null)

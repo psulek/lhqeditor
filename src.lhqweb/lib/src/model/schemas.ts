@@ -1,34 +1,34 @@
 import { z } from "zod";
 
-export const lhqModelOptionsResourcesSchema = z.union([
+const LhqModelOptionsResourcesSchema = z.union([
     z.literal("All"), z.literal("Categories")
 ]);
 
-export const lhqModelResourceParameterSchema = z.object({
+const LhqModelResourceParameterSchema = z.object({
     description: z.string().optional(),
     order: z.number()
 });
 
-export const lhqModelResourceTranslationStateSchema = z.union([
+export const LhqModelResourceTranslationStateSchema = z.union([
     z.literal("New"), z.literal("Edited"), z.literal("NeedsReview"), z.literal("Final")
 ]);
 
-export const lhqModelResourceValueScheme = z.object({
+const LhqModelResourceValueScheme = z.object({
     value: z.string().optional(),
     locked: z.boolean().optional(),
     auto: z.boolean().optional()
 });
 
-export const lhqModelResourceSchemaBase = z.object({
-    state: lhqModelResourceTranslationStateSchema,
+const LhqModelResourceSchemaBase = z.object({
+    state: LhqModelResourceTranslationStateSchema,
     description: z.string().optional(),
-    parameters: z.record(lhqModelResourceParameterSchema).optional(),
-    values: z.record(lhqModelResourceValueScheme)
+    parameters: z.record(LhqModelResourceParameterSchema).optional(),
+    values: z.record(LhqModelResourceValueScheme)
 });
 
-type Resource = z.infer<typeof lhqModelResourceSchemaBase> & {};
+type Resource = z.infer<typeof LhqModelResourceSchemaBase> & {};
 
-export const lhqModelResourceSchema: z.ZodType<Resource> = lhqModelResourceSchemaBase;
+const LhqModelResourceSchema: z.ZodType<Resource> = LhqModelResourceSchemaBase;
 
 
 const baseDataNodeSchema = z.object({
@@ -40,82 +40,84 @@ type BaseDataNode = z.infer<typeof baseDataNodeSchema> & {
     childs?: BaseDataNode[];
 }
 
-export const lqhModelDataNodeSchema: z.ZodType<BaseDataNode> = baseDataNodeSchema.extend({
-    childs: z.lazy(() => z.array(lqhModelDataNodeSchema)).optional()
+export const LhqModelDataNodeSchema: z.ZodType<BaseDataNode> = baseDataNodeSchema.extend({
+    childs: z.lazy(() => z.array(LhqModelDataNodeSchema)).optional()
 });
 
 const baseCategorySchema = z.object({
     description: z.string().optional(),
-    //resources: z.record(lhqModelResourceSchema).optional()
-    resources: z.lazy(() => lhqModelResourcesCollectionSchema).optional()
+    resources: z.lazy(() => LhqModelResourcesCollectionSchema).optional()
 });
 
 type Category = z.infer<typeof baseCategorySchema> & {
     categories?: Record<string, Category>;
 };
 
-export const lhqModelCategorySchema: z.ZodType<Category> = baseCategorySchema.extend({
-    //categories: z.lazy(() => z.record(lhqModelCategorySchema)).optional()
-    categories: z.lazy(() => lhqModelCategoriesCollectionSchema).optional()
+const LhqModelCategorySchema: z.ZodType<Category> = baseCategorySchema.extend({
+    categories: z.lazy(() => LhqModelCategoriesCollectionSchema).optional()
 });
 
-export const lhqModelUidSchema = z.literal('6ce4d54c5dbd415c93019d315e278638');
+export const LhqModelUidSchema = z.literal('6ce4d54c5dbd415c93019d315e278638');
 
-export const lhqModelVersionSchema = z.union([z.literal(1), z.literal(2)]);
+export const LhqModelVersionSchema = z.union([z.literal(1), z.literal(2)]);
 
-export const lhqModelCategoriesCollectionSchema = z.record(lhqModelCategorySchema);
+export const LhqCodeGenVersionSchema = z.literal(1);
 
-export const lhqModelResourcesCollectionSchema = z.record(lhqModelResourceSchema);
+const LhqModelCategoriesCollectionSchema = z.record(LhqModelCategorySchema);
 
-export const lhqModelOptionsSchema = z.object({
+const LhqModelResourcesCollectionSchema = z.record(LhqModelResourceSchema);
+
+export const LhqModelOptionsSchema = z.object({
     categories: z.boolean(),
-    resources: lhqModelOptionsResourcesSchema
+    resources: LhqModelOptionsResourcesSchema
 });
 
-export const lqhModelMetadataSchema = z.object({
-    childs: z.array(lqhModelDataNodeSchema).optional(),
+export const LhqModelMetadataSchema = z.object({
+    childs: z.array(LhqModelDataNodeSchema).optional(),
 });
 
-export const lhqModelSchema = z.object({
+export const LhqModelSchema = z.object({
     model: z.object({
-        uid: lhqModelUidSchema,
-        version: lhqModelVersionSchema,
-        options: lhqModelOptionsSchema,
+        uid: LhqModelUidSchema,
+        version: LhqModelVersionSchema,
+        options: LhqModelOptionsSchema,
         name: z.string(),
         description: z.string().optional(),
         primaryLanguage: z.string()
     }),
     languages: z.array(z.string()),
-    metadatas: lqhModelMetadataSchema.optional(),
-    resources: z.lazy(() => lhqModelResourcesCollectionSchema).optional(),
-    categories: z.lazy(() => lhqModelCategoriesCollectionSchema).optional()
+    metadatas: LhqModelMetadataSchema.optional(),
+    resources: z.lazy(() => LhqModelResourcesCollectionSchema).optional(),
+    categories: z.lazy(() => LhqModelCategoriesCollectionSchema).optional()
 });
 
 
-export type LhqModelUid = z.infer<typeof lhqModelUidSchema>;
+export type LhqModelUid = z.infer<typeof LhqModelUidSchema>;
 
-export type LhqModelVersion = z.infer<typeof lhqModelVersionSchema>;
+export type LhqModelVersion = z.infer<typeof LhqModelVersionSchema>;
 
-export type LhqModelOptions = z.infer<typeof lhqModelOptionsSchema>;
+export type LhqCodeGenVersion = z.infer<typeof LhqCodeGenVersionSchema>;
 
-export type LhqModelOptionsResources = z.infer<typeof lhqModelOptionsResourcesSchema>;
+export type LhqModelOptions = z.infer<typeof LhqModelOptionsSchema>;
 
-export type LhqModelResourceParameter = z.infer<typeof lhqModelResourceParameterSchema>;
+export type LhqModelOptionsResources = z.infer<typeof LhqModelOptionsResourcesSchema>;
 
-export type LhqModelResourceTranslationState = z.infer<typeof lhqModelResourceTranslationStateSchema>;
+export type LhqModelResourceParameter = z.infer<typeof LhqModelResourceParameterSchema>;
 
-export type LhqModelResourceValue = z.infer<typeof lhqModelResourceValueScheme>;
+export type LhqModelResourceTranslationState = z.infer<typeof LhqModelResourceTranslationStateSchema>;
 
-export type LhqModelResource = z.infer<typeof lhqModelResourceSchema>;
+export type LhqModelResourceValue = z.infer<typeof LhqModelResourceValueScheme>;
 
-export type LhqModelCategory = z.infer<typeof lhqModelCategorySchema>;
+export type LhqModelResource = z.infer<typeof LhqModelResourceSchema>;
 
-export type LhqModelCategoriesCollection = z.infer<typeof lhqModelCategoriesCollectionSchema>;
+export type LhqModelCategory = z.infer<typeof LhqModelCategorySchema>;
 
-export type LhqModelResourcesCollection = z.infer<typeof lhqModelResourcesCollectionSchema>;
+export type LhqModelCategoriesCollection = z.infer<typeof LhqModelCategoriesCollectionSchema>;
 
-export type LhqModelDataNode = z.infer<typeof lqhModelDataNodeSchema>;
+export type LhqModelResourcesCollection = z.infer<typeof LhqModelResourcesCollectionSchema>;
 
-export type LqhModelMetadata = z.infer<typeof lqhModelMetadataSchema>;
+export type LhqModelDataNode = z.infer<typeof LhqModelDataNodeSchema>;
 
-export type LhqModel = z.infer<typeof lhqModelSchema>;
+export type LhqModelMetadata = z.infer<typeof LhqModelMetadataSchema>;
+
+export type LhqModel = z.infer<typeof LhqModelSchema>;

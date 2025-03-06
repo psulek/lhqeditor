@@ -1,4 +1,7 @@
-import { LhqModelDataNode, LhqModelOptions, LhqModelResourceTranslationState, LhqModelUid, LhqModelVersion, LqhModelMetadata } from './schemas';
+import { LhqModelDataNode, LhqModelOptions, 
+    LhqModelResourceTranslationState, LhqModelUid, LhqModelVersion, LhqModelMetadata, 
+    LhqCodeGenVersion} 
+    from './schemas';
 
 export type TreeElementType = 'model' | 'category' | 'resource';
 
@@ -22,7 +25,8 @@ export interface ICodeGeneratorElement {
     readonly templateId: string;
 
     // TODO: Must add 'version' for code generator templates in v3 of LHQ model file format!!
-    // readonly version: string; 
+    // for now this value will be artificially set to 1 (not stored in lhq model file)
+    readonly version: LhqCodeGenVersion; 
     readonly settings: LhqModelDataNode;
 }
 
@@ -33,7 +37,7 @@ export interface IRootModelElement extends ICategoryLikeTreeElement {
     readonly options: Readonly<LhqModelOptions>;
     readonly primaryLanguage: string;
     readonly languages: Readonly<string[]>;
-    readonly metadatas: Readonly<LqhModelMetadata> | undefined;
+    readonly metadatas: Readonly<LhqModelMetadata> | undefined;
     readonly codeGenerator: ICodeGeneratorElement | undefined;
 }
 

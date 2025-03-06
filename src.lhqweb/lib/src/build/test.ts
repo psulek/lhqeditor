@@ -1,4 +1,4 @@
-import { LhqModel } from '../model/schemas';
+import { LhqModel } from '../model/api/schemas';
 import { validateLhqModel } from './utils';
 
 const model = getModel();

@@ -1,9 +1,9 @@
 import { isNullOrEmpty, iterateObject, sortObjectByKey, sortObjectByValue } from '../utils';
 import { ResourceParameterElement } from './resourceParameterElement';
 import { ResourceValueElement } from './resourceValueElement';
-import { LhqModelResource, LhqModelResourceTranslationState } from './schemas';
+import { LhqModelResource, LhqModelResourceTranslationState } from './api/schemas';
 import { TreeElement } from './treeElement';
-import { ICategoryLikeTreeElement, IResourceElement, IResourceParameterElement, IResourceValueElement } from './types';
+import { ICategoryLikeTreeElement, IResourceElement, IResourceParameterElement, IResourceValueElement } from './api/types';
 
 export class ResourceElement extends TreeElement implements IResourceElement {
     private _state: LhqModelResourceTranslationState;

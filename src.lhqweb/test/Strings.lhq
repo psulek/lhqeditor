@@ -1,7 +1,8 @@
 ﻿{
   "model": {
     "uid": "6ce4d54c5dbd415c93019d315e278638",
-    "version": 1,
+    "version": 2,
+    "description": "root desc",
     "options": {
       "categories": true,
       "resources": "All"
@@ -15,6 +16,7 @@
   ],
   "categories": {
     "Cars": {
+      "description": "cars desc",
       "categories": {
         "Diesel": {
           "categories": {
@@ -79,13 +81,14 @@
     "Messages": {
       "resources": {
         "Title": {
-          "state": "New",
+          "state": "Edited",
           "values": {
             "en": {
               "value": "Hi {0}, we're glad you are using {1} at {2} / \\ [ ] < > \" & car <abc> </end>"
             },
             "sk": {
-              "value": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
+              "value": "Ahoj {0}, sme radi, že používate {1} na {2} / \\ [ ] < > \" & car <abc> </end>",
+              "auto": true
             }
           }
         }
@@ -97,10 +100,12 @@
       "state": "Edited",
       "values": {
         "en": {
-          "value": "Welcome {0} in this {1} !"
+          "value": "Welcome {0} in this {1} !",
+          "locked": true
         },
         "sk": {
-          "value": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
+          "value": "Vitajte {0} v tejto {1} !",
+          "auto": true
         }
       }
     }
@@ -126,6 +131,8 @@
                   "name": "CSharp",
                   "attrs": {
                     "OutputFolder": "Resources",
+                    "EncodingWithBOM": "false",
+                    "LineEndings": "LF",
                     "UseExpressionBodySyntax": "true",
                     "MissingTranslationFallbackToPrimary": "true"
                   }
@@ -134,6 +141,8 @@
                   "name": "ResX",
                   "attrs": {
                     "OutputFolder": "Resources",
+                    "EncodingWithBOM": "false",
+                    "LineEndings": "LF",
                     "CultureCodeInFileNameForPrimaryLanguage": "true"
                   }
                 }

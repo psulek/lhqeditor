@@ -1,9 +1,9 @@
 import { TreeElement } from './treeElement';
-import { ICategoryElement, ICategoryLikeTreeElement, IResourceElement, TreeElementType } from './types';
+import { ICategoryElement, ICategoryLikeTreeElement, IResourceElement, TreeElementType } from './api/types';
 import { isNullOrEmpty, iterateObject, sortObjectByKey, sortObjectByValue } from '../utils';
 import { CategoryElement } from './categoryElement';
 import { ResourceElement } from './resourceElement';
-import { LhqModelCategoriesCollection, LhqModelResourcesCollection } from './schemas';
+import { LhqModelCategoriesCollection, LhqModelResourcesCollection } from './api/schemas';
 
 export abstract class CategoryLikeTreeElement extends TreeElement implements ICategoryLikeTreeElement {
     private _categories: ICategoryElement[];

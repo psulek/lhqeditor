@@ -6,7 +6,7 @@ import { isNullOrEmpty } from '../utils';
 import { printNode, zodToTs, createTypeAlias } from 'zod-to-ts'
 //import { ZodToTypescript } from "@duplojs/zod-to-typescript";
 
-import * as schemas from '../model/schemas';
+import * as schemas from '../model/api/schemas';
 import { ZodTypeAny } from 'zod';
 
 

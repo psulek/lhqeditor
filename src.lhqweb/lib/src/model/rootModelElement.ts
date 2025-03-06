@@ -1,6 +1,6 @@
 import { CategoryLikeTreeElement } from './categoryLikeTreeElement';
-import { LhqModel, LhqModelUid, LhqModelVersion } from './schemas';
-import { ICodeGeneratorElement, IRootModelElement } from './types';
+import { LhqModel, LhqModelUid, LhqModelVersion } from './api/schemas';
+import { ICodeGeneratorElement, IRootModelElement } from './api/types';
 
 export class RootModelElement extends CategoryLikeTreeElement implements IRootModelElement {
     private _uid: LhqModelUid;

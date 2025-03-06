@@ -1,8 +1,12 @@
 import * as fs from 'node:fs';
+import {LhqModel, LhqModelSchema} from 'lhq-generators';
 import { fromZodError } from 'zod-validation-error';
-import { zodToJsonSchema } from "zod-to-json-schema";
 
-import { LhqModel, LhqModelSchema } from '../model/api/schemas';
+const file = process.argv[2];
+
+const res = validateLhqModel(file);
+console.log(res);
+
 
 export function validateLhqModel(fileOrModel: string | LhqModel): { success: boolean, error: string | undefined } {
     let data: unknown;
@@ -25,13 +29,4 @@ export function validateLhqModel(fileOrModel: string | LhqModel): { success: boo
     const success = parseResult.success;
     const error = parseResult.success ? undefined : fromZodError(parseResult.error).toString();
     return { success, error };
-}
-
-export function generateSchema(schemaFilePath: string) {
-    const jsonSchema = zodToJsonSchema(LhqModelSchema, {
-        name: "LhqModel",
-        $refStrategy: 'root'
-    });
-
-    fs.writeFileSync(schemaFilePath, JSON.stringify(jsonSchema, null, 2), { encoding: 'utf-8' });
 }

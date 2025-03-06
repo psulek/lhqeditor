@@ -5,18 +5,21 @@
   "main": "index.js",
   "scripts": {
     "gen-schema": "ts-node --project tsconfig.build.json src/build/cli.ts --gen-schema",
-    "gen-dts": "ts-node --project tsconfig.build.json src/build/cli.ts --gen-dts",
+    "__gen-dts": "ts-node --project tsconfig.build.json src/build/cli.ts --gen-dts",
     "test": "ts-node --project tsconfig.build.json src/build/test.ts",
     "build": "rimraf dist && webpack",
-    "dts": "tsup src/model/schemas.ts --tsconfig tsconfig.dts.json --dts-only -d ./dist/types"
+    "dts": "tsup src/model/api/index.ts --tsconfig tsconfig.dts.json --dts-only -d ./dist",
+    "pkg": "rimraf dist && npm run dts && cpx package.json dist && cd dist && npm pack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "zod": "^3.24.2"
+  "peerDependencies": {
+    "typescript": "^4.9.4 || ^5.0.2",
+    "zod": "^3"
   },
   "devDependencies": {
+    "zod": "^3.24.2",
     "@types/minimist": "^1.2.5",
     "@types/node": "^22.10.10",
     "cpx": "1.5.0",

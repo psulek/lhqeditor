@@ -1,6 +1,6 @@
 import { isNullOrEmpty } from '../utils';
 import { TreeElementPaths } from './treeElementPaths';
-import { ICategoryLikeTreeElement, ITreeElement, ITreeElementPaths, TreeElementType } from './types';
+import { ICategoryLikeTreeElement, ITreeElement, ITreeElementPaths, TreeElementType } from './api/types';
 
 export abstract class TreeElement implements ITreeElement {
     private _parent: ICategoryLikeTreeElement | undefined;

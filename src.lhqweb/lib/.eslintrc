@@ -1,0 +1,77 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "plugins": [
+        "eslint-plugin-tsdoc"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:eslint-comments/recommended",
+        "plugin:import/typescript",
+        "prettier"
+    ],
+    "ignorePatterns": [
+        ".eslintrc",
+        "src/eventEmitterCached.ts",
+        "node_modules",
+        "eslint.config.mjs",
+        "dist",
+        "*.mts",
+        "tests",
+        "gendoc.js"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "tsdoc/syntax": "warn",
+        "quotes": [2, "single", {
+            "avoidEscape": true,
+            "allowTemplateLiterals": true
+        }],
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "error",
+
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+
+        "require-await": "off",
+        "@typescript-eslint/require-await": "error",
+
+        "@typescript-eslint/no-inferrable-types": [
+            "error",
+            {
+                "ignoreParameters": true
+            }
+        ],
+
+        "@typescript-eslint/no-misused-promises": [
+            "error",
+            {
+                "checksVoidReturn": false
+            }
+        ],
+        "@typescript-eslint/restrict-template-expressions": [
+            "error",
+            {
+                "allowBoolean": true
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        }
+    }
+}

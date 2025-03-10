@@ -1,9 +1,20 @@
 import { CategoryLikeTreeElement } from './categoryLikeTreeElement';
-import { LhqModelCategory } from './api/schemas';
-import { ICategoryElement, ICategoryLikeTreeElement } from './api/types';
+import { LhqModelCategory, LhqModelResource } from './api/schemas';
+import { ICategoryElement, ICategoryLikeTreeElement, IResourceElement, IRootModelElement } from './api/types';
+import { ResourceElement } from './resourceElement';
 
 export class CategoryElement extends CategoryLikeTreeElement implements ICategoryElement {
-    constructor(name: string, source: LhqModelCategory, parent: ICategoryLikeTreeElement | undefined) {
-        super('category', name, source?.description, parent);
+    constructor(root: IRootModelElement, name: string, source: LhqModelCategory,
+        parent: ICategoryLikeTreeElement | undefined) {
+        super(root, 'category', name, source?.description, parent);
+    }
+
+    protected createCategory(root: IRootModelElement, name: string, source: LhqModelCategory,
+        parent: ICategoryLikeTreeElement | undefined): CategoryLikeTreeElement {
+        return new CategoryElement(root, name, source, parent);
+    }
+
+    protected createResource(root: IRootModelElement, name: string, source: LhqModelResource, parent: ICategoryLikeTreeElement): IResourceElement {
+        return new ResourceElement(root, name, source, parent);
     }
 }

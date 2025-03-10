@@ -6,7 +6,7 @@ export class TreeElementPaths implements ITreeElementPaths {
     constructor(element: ITreeElement) {
         if (element.parent) {
             const parentPaths = element.parent.paths;
-            
+
             if (parentPaths instanceof TreeElementPaths) {
                 this.paths = [...parentPaths.paths];
             }
@@ -15,8 +15,12 @@ export class TreeElementPaths implements ITreeElementPaths {
         this.paths.push(element.name);
     }
 
-    public getParentPath(separator: string): string {
+    public getParentPath = (separator: string, includeRoot?: boolean): string => {
         separator ??= '';
-        return this.paths.join(separator);
+        includeRoot ??= false;
+        // return this.paths.join(separator);
+        return (includeRoot || this.paths.length === 1)
+            ? this.paths.join(separator)
+            : this.paths.slice(1).join(separator);
     }
 }

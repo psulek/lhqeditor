@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gen-schema": "ts-node --project tsconfig.build.json src/build/cli.ts --gen-schema",
-    "__gen-dts": "ts-node --project tsconfig.build.json src/build/cli.ts --gen-dts",
-    "test": "ts-node --project tsconfig.build.json src/build/test.ts",
+    "gen-schema": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-schema",
+    "gen-lhq": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/Strings.lhq",
+    "__gen-dts": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-dts",
+    "test": "ts-node --project tsconfig.build.json ./src/build/test.ts",
     "build": "rimraf dist && webpack",
     "dts": "tsup src/model/api/index.ts --tsconfig tsconfig.dts.json --dts-only -d ./dist",
     "pkg": "rimraf dist && npm run dts && cpx package.json dist && cd dist && npm pack"
@@ -14,12 +15,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "handlebars": "^4.7.8",
+    "jmespath": "^0.16.0"
+  },
   "peerDependencies": {
     "typescript": "^4.9.4 || ^5.0.2",
     "zod": "^3"
   },
   "devDependencies": {
-    "zod": "^3.24.2",
+    "@duplojs/zod-to-typescript": "0.3.0",
+    "@total-typescript/ts-reset": "^0.6.1",
+    "@types/get-value": "3.0.5",
+    "@types/jmespath": "0.15.2",
     "@types/minimist": "^1.2.5",
     "@types/node": "^22.10.10",
     "cpx": "1.5.0",
@@ -31,9 +39,9 @@
     "typescript": "^5.8.2",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1",
+    "zod": "^3.24.2",
     "zod-to-json-schema": "^3.24.3",
     "zod-to-ts": "^1.2.0",
-    "@duplojs/zod-to-typescript": "0.3.0",
     "zod-validation-error": "3.4.0"
   }
 }

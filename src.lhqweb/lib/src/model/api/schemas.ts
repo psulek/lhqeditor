@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const LhqModelLineEndingsSchema = z.union([z.literal('lf'), z.literal('crlf')]);
+
 export const LhqModelOptionsResourcesSchema = z.union([
     z.literal("All"), z.literal("Categories")
 ]);
@@ -76,6 +78,13 @@ export const LhqModelMetadataSchema = z.object({
     childs: z.array(LhqModelDataNodeSchema).optional(),
 });
 
+export const LhqModelCodeGeneratorBasicSettingsSchema = z.object({
+    OutputFolder: z.string(),
+    OutputProjectName: z.string().optional(),
+    EncodingWithBOM: z.union([z.literal('true'), z.literal('false')]).optional(),
+    LineEndings: LhqModelLineEndingsSchema.optional()
+});
+
 export const LhqModelSchema = z.object({
     model: z.object({
         uid: LhqModelUidSchema,
@@ -118,5 +127,9 @@ export type LhqModelResourcesCollection = z.infer<typeof LhqModelResourcesCollec
 export type LhqModelDataNode = z.infer<typeof LhqModelDataNodeSchema>;
 
 export type LhqModelMetadata = z.infer<typeof LhqModelMetadataSchema>;
+
+export type LhqModelCodeGeneratorBasicSettings = z.infer<typeof LhqModelCodeGeneratorBasicSettingsSchema>;
+
+export type LhqModelLineEndings = z.infer<typeof LhqModelLineEndingsSchema>;
 
 export type LhqModel = z.infer<typeof LhqModelSchema>;

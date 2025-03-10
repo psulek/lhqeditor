@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "type": "npm",
+            "script": "gen-lhq",
+            "problemMatcher": [],
+            "label": "npm: gen-lhq",
+            "detail": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/Strings.lhq"
+        }
+    ]
+}

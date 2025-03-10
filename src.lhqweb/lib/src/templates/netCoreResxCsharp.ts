@@ -1,16 +1,16 @@
-import {CSharpGeneratorSettings, TemplateRootModel} from "../types";
-import {CSharpResXTemplateBase} from "./csharpResXTemplateBase";
+// import {CSharpGeneratorSettings, TemplateRootModel} from "../types";
+// import {CSharpResXTemplateBase} from "./csharpResXTemplateBase";
 
-export class NetCoreResxCsharp01Template extends CSharpResXTemplateBase<CSharpGeneratorSettings> {
-    public static get Id(): string {
-        return 'NetCoreResxCsharp01';
-    }
+// export class NetCoreResxCsharp01Template extends CSharpResXTemplateBase<CSharpGeneratorSettings> {
+//     public static get Id(): string {
+//         return 'NetCoreResxCsharp01';
+//     }
     
-    public get csharpTemplateName(): string {
-        return NetCoreResxCsharp01Template.Id;
-    }
+//     public get csharpTemplateName(): string {
+//         return NetCoreResxCsharp01Template.Id;
+//     }
 
-    public getRootCsharpClassName(rootModel: TemplateRootModel): string {
-        return rootModel.model.model.name + 'Localizer';
-    }
-}
+//     public getRootCsharpClassName(rootModel: TemplateRootModel): string {
+//         return rootModel.model.model.name + 'Localizer';
+//     }
+// }

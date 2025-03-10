@@ -1,5 +1,52 @@
-export function getNestedPropertyValue<T, U>(obj: T, path: string): U {
-    return path.split('.').reduce((acc, part) => {
+import { fromZodError } from 'zod-validation-error';
+import { zodToJsonSchema } from "zod-to-json-schema";
+
+// import { search as jmespath, JSONValue, registerFunction, TYPE_STRING } from '@metrichor/jmespath';
+import { search as jmespath } from 'jmespath';
+import { LhqModel, LhqModelSchema } from './model/api/schemas';
+
+// export function testJMesPath() {
+//     registerFunction('trimEnd',
+//         (resolvedArgs) => {
+//             const [input, endPattern] = resolvedArgs;
+//             return trimEnd(input, endPattern);
+//         },
+//         [{ types: [TYPE_STRING] }, { types: [TYPE_STRING] }]);
+
+//     const obj = {
+//         "languages": [
+//             "en",
+//             "sk",
+//             "de\\"
+//         ]
+//     };
+
+//     const a1 = jmespath(obj, `languages[2]`);
+//     const a2 = jmespath(obj, `trimEnd(languages[2],'[\\\\/]')`);
+//     console.log(a1);
+// }
+
+
+export function safeJsonParse<T>(value: string): T {
+    return JSON.parse(value.charCodeAt(0) === 0xFEFF ? value.slice(1) : value) as T;
+}
+
+export function jsonQuery<T>(obj: any, query: string, defaultValue?: T | undefined): T | undefined {
+    return (jmespath(obj, query) as T | undefined) ?? defaultValue;
+}
+// export function jsonQuery<T, U>(obj: T, query: string): U | undefined {
+//     return jmespath(obj, query) as U | undefined;
+// }
+
+export function normalizePath(path: string): string {
+    return path
+        .replace(/\\/g, '/') // Replace backslashes with forward slashes
+        .replace(/\/\//g, '/') // Remove duplicate forward slashes
+        .replace(/[\\/]$/g, '') // Remove trailing forward or back slash
+}
+
+export function getNestedPropertyValue<T, U>(obj: T, path: string, defaultValue?: U | undefined): U | undefined {
+    const res = path.split('.').reduce((acc, part) => {
         if (acc === undefined) return undefined;
 
         // Check if the part includes an array index like "c[1]"
@@ -14,6 +61,8 @@ export function getNestedPropertyValue<T, U>(obj: T, path: string): U {
         // @ts-ignore
         return acc![part];
     }, obj) as unknown as U;
+
+    return res ?? defaultValue;
 }
 
 /**
@@ -37,7 +86,7 @@ export function sortObjectByKey<T>(obj: Record<string, T>, sortOrder: 'asc' | 'd
 }
 
 export function sortObjectByValue<T>(obj: Record<string, T>, predicate: (item: T) => number | string,
-                                     sortOrder: 'asc' | 'desc' = 'asc'): Record<string, T> {
+    sortOrder: 'asc' | 'desc' = 'asc'): Record<string, T> {
 
     return Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => {
         const aValue = predicate(a);
@@ -114,11 +163,13 @@ export type TextEncodeOptions =
     { mode: 'xml', quotes: boolean } |
     { mode: 'json' };
 
+export type TextEncodeModes = Extract<TextEncodeOptions, { mode: any }>['mode'];
+
 export function textEncode(str: string, encoder: TextEncodeOptions): string {
     if (isNullOrEmpty(str)) {
         return str;
     }
-    
+
     const encodedChars = [];
     for (let i = 0; i < str.length; i++) {
         const ch = str.charAt(i);
@@ -142,7 +193,7 @@ export function textEncode(str: string, encoder: TextEncodeOptions): string {
     return encodedChars.join('');
 }
 
-export function valueOrDefault<T>(value: T | null | undefined | '', defaultValue: T): T {
+export function valueOrDefault<T>(value: T | null | undefined | '' | unknown, defaultValue: T): T {
     let result = isNullOrEmpty(value)
         ? defaultValue
         : value;
@@ -151,7 +202,40 @@ export function valueOrDefault<T>(value: T | null | undefined | '', defaultValue
         result = (valueAsBool(value) as unknown) as T;
     }
 
-    return result;
+    return result as T;
+}
+
+export function trimComment(value: string): string {
+    if (isNullOrEmpty(value)) {
+        return '';
+    }
+
+    let trimmed = false;
+    var idxNewLine = value.indexOf('\r\n');
+
+    if (idxNewLine == -1) {
+        idxNewLine = value.indexOf('\n');
+    }
+
+    if (idxNewLine == -1) {
+        idxNewLine = value.indexOf('\r');
+    }
+
+    if (idxNewLine > -1) {
+        value = value.substring(0, idxNewLine);
+        trimmed = true;
+    }
+
+    if (value.length > 80) {
+        value = value.substring(0, 80);
+        trimmed = true;
+    }
+
+    if (trimmed) {
+        value += "...";
+    }
+
+    return value.replace('\t', ' ');
 }
 
 export function valueAsBool(value: unknown): boolean {
@@ -198,4 +282,40 @@ export function copyObject<T extends Record<string, unknown>, K extends keyof T>
     return Object.fromEntries(
         Object.entries(obj).filter(([key]) => !keysToSkip.includes(key as K))
     ) as Omit<T, K>;
+}
+
+export function removeNewLines(input: string): string {
+    if (isNullOrEmpty(input)) return input;
+    return input.replace(/\r\n|\r|\n/g, '');
+}
+
+export function validateLhqModel(data: LhqModel): { success: boolean, error: string | undefined, model?: LhqModel } {
+    if (data === undefined || data === null || typeof data !== 'object') {
+        return { success: false, error: 'File or model must be specified.' };
+    }
+
+    const parseResult = LhqModelSchema.safeParse(data);
+    const success = parseResult.success;
+    const error = parseResult.success ? undefined : fromZodError(parseResult.error).toString();
+    return { success, error, model: success ? parseResult.data : undefined };
+}
+
+export function generateSchema(schemaFilePath: string) {
+    const jsonSchema = zodToJsonSchema(LhqModelSchema, {
+        name: "LhqModel",
+        $refStrategy: 'root'
+    });
+
+    return JSON.stringify(jsonSchema, null, 2);
+}
+
+export function removeProperties(obj: any, ...propertiesToRemove: any) {
+    //@ts-ignore
+    propertiesToRemove.forEach(propObj => {
+        for (let key in propObj) {
+            if (obj.hasOwnProperty(key)) {
+                delete obj[key];
+            }
+        }
+    });
 }

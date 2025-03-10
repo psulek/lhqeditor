@@ -178,8 +178,7 @@
       },
       "required": [
         "model",
-        "languages",
-        "metadatas"
+        "languages"
       ],
       "additionalProperties": false
     }

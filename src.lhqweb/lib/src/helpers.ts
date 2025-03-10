@@ -1,16 +1,27 @@
+import Handlebars from "handlebars";
+
 import {
     copyObject,
-    getNestedPropertyValue,
     hasItems,
     isNullOrEmpty,
+    jsonQuery,
+    normalizePath,
     objCount,
+    removeNewLines,
+    removeProperties,
     sortBy,
     sortObjectByKey,
     textEncode,
+    TextEncodeModes,
     valueAsBool,
+    valueOrDefault,
 } from "./utils";
-import {LhqModelResourceType, TemplateRootModel} from "./types";
-import {HostEnv} from "./hostEnv";
+
+import { AppError } from './AppError';
+import { TreeElement } from './model/treeElement';
+import { OutputFileData, TemplateRootModel } from './model/templateRootModel';
+import { LhqModelCodeGeneratorBasicSettings } from './model/api/schemas';
+import { DefaultCodeGenSettings } from './model/modelConst';
 
 export function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
@@ -24,20 +35,19 @@ export function registerHelpers() {
 }
 
 const helpersList: Record<string, Function> = {
+    // generic helpers
     'x-header': headerHelper,
-    'x-value': objValueHelper,
+    'x-normalizePath': normalizePathHelper,
+    'x-value': valueHelper,
     'x-indent': indentHelper,
     'x-join': joinHelper,
+    'x-split': splitHelper,
     'x-concat': concatHelper,
     'x-replace': replaceHelper,
     'x-trimEnd': trimEndHelper,
     'x-equals': equalsHelper,
     'x-isTrue': isTrueHelper,
     'x-isFalse': isFalseHelper,
-    'x-resourceComment': resourceCommentHelper,
-    'x-resourceValue': resourceValueHelper,
-    'x-resourceHasLang': resourceHasLangHelper,
-    'x-resourceParamNames': resourceParamNamesHelper,
     'x-merge': mergeHelper,
     'x-sortBy': sortByHelper,
     'x-sortObject': sortObjectByKeyHelper,
@@ -51,27 +61,45 @@ const helpersList: Record<string, Function> = {
     'x-fn': callFunctionHelper,
     'x-logical': logicalHelper,
     'x-debugLog': debugLogHelper,
-    'x-var': returnVarFromTempHelper
+    'x-toJson': toJsonHelper,
+    'x-typeOf': typeOfHelper,
+
+    // model specific helpers
+    'm-data': modelDataHelper,
+    'm-outputFile': modelOutputFileHelper,
+
+    //'m-settings': modelSettingsHelper,
+    //'x-resourceComment': resourceCommentHelper,
+    // 'x-resourceValue': resourceValueHelper,
+    // 'x-resourceHasLang': resourceHasLangHelper,
+    //'x-resourceParamNames': resourceParamNamesHelper,
 };
 
-export function getKnownHelpers() {
-    return Object.fromEntries(Object.keys(helpersList).map(key => [key, true]));
+let _knownHelpers: KnownHelpers | undefined = undefined;
+
+export function getKnownHelpers(): KnownHelpers {
+    if (_knownHelpers === undefined) {
+        _knownHelpers = Object.fromEntries(Object.keys(helpersList).map(key => [key, true]));
+    }
+
+    return _knownHelpers;
 }
 
-type HbsDataContext = {
-    name: string;
-    hash: Record<string, unknown>;
-    data: Record<string, unknown>;
+type HbsDataContext<T = Record<string, unknown>> = {
+    name?: string;
+    hash?: T;
+    data?: Record<string, unknown>;
+    fn?: (ctx: any) => any;
 };
 
 let dbgCounter = 0;
-let globalVarTemp: Record<string, unknown> = {};
+//let globalVarTemp: Record<string, unknown> = {};
 let helpersTimeTaken: Record<string, number> = {};
 const trackHelperTimes = false;
 
 export function clearHelpersContext() {
     dbgCounter = 0;
-    globalVarTemp = {};
+    //globalVarTemp = {};
     //helpersTimeTaken = {};
 }
 
@@ -89,13 +117,13 @@ function debugLogAndExec(helperName: string, fn: Function, ...args: any) {
             const hash = copyObject(ctx.hash ?? {}, ['_debug', '_debugLog']);
             const restArgs = Array.from(args).slice(0, -1);
             header = `[${cnt}#${ctx.name}](${debugLog}) hash: ${JSON.stringify(hash, null, 0)}`;
-            HostEnv.debugLog(`${header} ${JSON.stringify(restArgs, null, 0)}`);
+            HostEnvironment.debugLog(`${header} ${JSON.stringify(restArgs, null, 0)}`);
         }
     }
 
-    //HostEnv.debugLog(`[debugLogAndExec] fn: ${typeof fn} , arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
+    //HostEnvironment.debugLog(`[debugLogAndExec] fn: ${typeof fn} , arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
     if (debug) {
-        //HostEnv.debugLog(`${header}, arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
+        //HostEnvironment.debugLog(`${header}, arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
     }
 
     let start = 0;
@@ -112,7 +140,7 @@ function debugLogAndExec(helperName: string, fn: Function, ...args: any) {
     }
 
     if (debug) {
-        HostEnv.debugLog(`${header}, result: ${JSON.stringify(res, null, 0)}`);
+        HostEnvironment.debugLog(`${header}, result: ${JSON.stringify(res, null, 0)}`);
     }
 
     return res;
@@ -128,10 +156,10 @@ export function debugHelpersTimeTaken(): void {
         const duration = helpersTimeTaken[key] ?? 0;
         totalDuration += duration;
 
-        HostEnv.debugLog(`helper '${key}' taken total: ${formatDuration(duration)}`);
+        HostEnvironment.debugLog(`helper '${key}' taken total: ${formatDuration(duration)}`);
     });
 
-    HostEnv.debugLog(`All helpers taken total: ${formatDuration(totalDuration)}`);
+    HostEnvironment.debugLog(`All helpers taken total: ${formatDuration(totalDuration)}`);
 }
 
 function formatDuration(ms: number): string {
@@ -154,9 +182,47 @@ function headerHelper() {
 //------------------------------------------------------------------------------`
 }
 
-function objValueHelper(context: any, path: string) {
-    const value = getNestedPropertyValue(context, path);
-    return value !== undefined ? value : '';
+function normalizePathHelper(context: any, options: HbsDataContext) {
+    if (typeof context !== 'string') {
+        return context;
+    }
+
+    let result = normalizePath(context);
+
+    const replacePathSep = (options.hash?.replacePathSep || '') as string;
+    if (!isNullOrEmpty(replacePathSep)) {
+        result = result.split('/').join(replacePathSep);
+    }
+
+    return result;
+}
+
+function queryObjValue(context: any, options: HbsDataContext): any {
+    let value = context;
+    let query = options?.hash?.query;
+    let defaultVal = options?.hash?.default ?? undefined;
+    if (typeof options?.fn === 'function') {
+        query = options.fn(context);
+        if (!isNullOrEmpty(query) && typeof query === 'string') {
+            query = removeNewLines(query);
+        }
+    }
+
+    if (!isNullOrEmpty(query) && typeof query === 'string' && typeof context === 'object') {
+        value = jsonQuery(context, query, defaultVal);
+    }
+
+    return value;
+}
+
+/**
+ * @valueHelper
+ * Works same as @modelDataHelper without storing result into @root.data, just returns into template to immediate use
+ */
+function valueHelper(context: any, options: HbsDataContext) {
+    const defaultValue = options?.hash?.default;
+    const value = queryObjValue(context, options);
+    return value ?? defaultValue;
 }
 
 function indentHelper(count: number, options: any) {
@@ -171,25 +237,36 @@ function indentHelper(count: number, options: any) {
     return paddedContent;
 }
 
+function splitHelper(context: any, options: HbsDataContext) {
+    if (typeof context !== 'string') return context;
+
+    const sep = (options.hash?.sep || '') as string;
+    if (isNullOrEmpty(sep)) {
+        return context;
+    }
+
+    return context.split(sep);
+}
+
 /*
 {{#join people delimiter=" and " start="0" end="2"}}{{name}} ({{gender}}, {{age}}){{/join}}
 <h1>Jobs</h1>
 {{join jobs delimiter=", " start="1" end="2"}}
 */
-function joinHelper(items: any[], options: any) {
+function joinHelper(items: any[], options: HbsDataContext) {
 
     // if (dbgCounter === 0) {
     //     dbgCounter = 1;
     //     // @ts-ignore
-    //     HostEnv.debugLog(`[joinHelper] items: ${typeof items}, ${items.name} options: ${JSON.stringify(options)}`);
+    //     HostEnvironment.debugLog(`[joinHelper] items: ${typeof items}, ${items.name} options: ${JSON.stringify(options)}`);
     // }
 
-    var delimiter = options.hash?.delimiter || ",",
-        start = options.hash?.start || 0,
-        len = items ? items.length : 0,
-        end = options.hash?.end || len,
-        out = "",
-        decorator = options.hash?.decorator || `"`;
+    const delimiter = options.hash?.delimiter || ",";
+    const start = (options.hash?.start || 0) as number;
+    const len = (items ? items.length : 0) as number;
+    let end = (options.hash?.end || len) as number;
+    let out = "";
+    const decorator = options.hash?.decorator || `"`;
 
     if (end > len) end = len;
 
@@ -211,53 +288,50 @@ function joinHelper(items: any[], options: any) {
 }
 
 // usage: {{ x-concat 'prop1' 'prop2' 'prop3' sep="," }}
-function concatHelper(...args: any[]) {
-    const options = args.pop();
-    const sep = options.hash?.sep || ''; // Default to empty string if no separator is provided
+function concatHelper(...args: any[]): string {
+    const options = args.pop() as HbsDataContext;
+    const sep = valueOrDefault(options.hash?.sep, '');
 
-    return saveResultToTempData(options, () => args.filter(x => !isNullOrEmpty(x)).join(sep));
-    //return saveResultToTempData(() => args.filter(x => !isNullOrEmpty(x)).join(sep), ...arguments);
-
-    // @ts-ignore
-    //return args.filter(x => !isNullOrEmpty(x)).join(sep);
+    return args.filter(x => !isNullOrEmpty(x)).join(sep);
 }
 
-function saveResultToTempData(options: any, fn: () => any): any {
-    const res = fn();
-    const varName = options?.hash?.var;
-    if (!isNullOrEmpty(varName)) {
-        globalVarTemp[varName] = res;
+function setCustomData(context: any, options: HbsDataContext, valueOrFn: () => any | any): void {
+    const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
+    const key = valueOrDefault(options?.hash?.key, '');
+    //const target = valueOrDefault<ITreeElement | undefined>(options?.hash?.target, undefined);
+
+    //@ts-ignore
+    //const context = this;
+
+    if (!isNullOrEmpty(key)) {
+        if (context instanceof TreeElement) {
+            context.addToTempData(key, value);
+        } else if (context instanceof TemplateRootModel) {
+            //const root = getRoot(options);
+            context.addToTempData(key, value);
+        } else {
+            HostEnvironment.debugLog(`[setCustomData] unknown context: ${typeof context} for key '${key}' !`);
+        }
     }
-
-    return res;
 }
 
-// function saveResultToTempData(fn: Function, ...args: any): any {
-//     // @ts-ignore
-//     const res = fn.call(this, ...args);
-//     if (arguments.length > 0) {
-//         const ctx = arguments[arguments.length - 1] as HbsDataContext;
-//         const varName = ctx?.hash?.var;
-//
-//         if (!isNullOrEmpty(varName)) {
-//             ctx.data['temp'] = ctx.data['temp'] ?? {};
-//             // @ts-ignore
-//             ctx.data['temp'][varName] = res;
-//         }
-//     }
-//    
-//     return res;
-// }
+/**
+ * @replaceHelper
+ * @example 
+ * // This will replace "World" with "Universe" and result string will be "Hello Universe"
+ * {{x-replace "Hello World" what="World" with="Universe"}}
+ */
+function replaceHelper(value: string, options: HbsDataContext): string {
+    const what = valueOrDefault(options.hash?.what, '');
+    const withStr = valueOrDefault(options.hash?.with, '');
+    const regexopts = valueOrDefault(options.hash?.opts, 'g');
+    const hasOpts = !isNullOrEmpty(options.hash?.opts);
 
-function replaceHelper(value: string, options: any) {
-    const what = options.hash?.what || '',
-        withStr = options.hash?.with || '';
-
-    if (!what || !withStr || (what === withStr)) {
+    if (isNullOrEmpty(what) || isNullOrEmpty(withStr) || (what === withStr && !hasOpts)) {
         return value;
     }
 
-    const regex = new RegExp(what, 'g');
+    const regex = new RegExp(what, regexopts);
     return value.replace(regex, withStr);
 }
 
@@ -267,13 +341,13 @@ function trimEndHelper(input: string, endPattern: string): string {
         const regex = new RegExp(endPattern + '$');
         return input.replace(regex, '');
     } catch (error) {
-        HostEnv.debugLog('Invalid regex pattern:' + endPattern);
+        HostEnvironment.debugLog('Invalid regex pattern:' + endPattern);
         return input;
     }
 }
 
 function equalsHelper(input: any, value: any, options: any): boolean {
-    const {cs, val1, val2} = getDataForCompare(input, value, options)
+    const { cs, val1, val2 } = getDataForCompare(input, value, options)
     return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
 }
 
@@ -289,7 +363,7 @@ function getDataForCompare(input: any, value: any, options: any): { cs: boolean,
     const cs = (options.hash?.cs || "true").toString().toLowerCase() == "true";
     const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
     const val2 = typeof value === "string" ? value : (value?.toString() ?? '');
-    return {cs: cs, val1, val2};
+    return { cs: cs, val1, val2 };
 }
 
 function logicalHelper(input: any, value: any, options: any): boolean {
@@ -305,101 +379,77 @@ function logicalHelper(input: any, value: any, options: any): boolean {
     return false;
 }
 
-function trimComment(value: string): string {
-    if (isNullOrEmpty(value)) {
-        return '';
-    }
 
-    let trimmed = false;
-    var idxNewLine = value.indexOf('\r\n');
+// function resourceCommentHelper(resource: LhqModelResourceType, options: any): string {
+//     if (typeof resource === 'object') {
+//         const model = (options.hash?.root as TemplateRootModel).model;
+//         const primaryLanguage = model?.model?.primaryLanguage ?? '';
+//         if (!isNullOrEmpty(primaryLanguage) && resource.values) {
+//             const resourceValue = resource.values[primaryLanguage]?.value;
+//             let propertyComment = isNullOrEmpty(resourceValue) ? resource.description : resourceValue;
+//             propertyComment = trimComment(propertyComment);
+//             // @ts-ignore
+//             return new Handlebars.SafeString(propertyComment);
+//         }
+//     }
 
-    if (idxNewLine == -1) {
-        idxNewLine = value.indexOf('\n');
-    }
+//     return '';
+// }
 
-    if (idxNewLine == -1) {
-        idxNewLine = value.indexOf('\r');
-    }
+// function resourceValueHelper(resource: LhqModelResourceType, options: any): string {
+//     if (typeof resource === 'object') {
+//         const lang = options.hash?.lang ?? '';
+//         const trim = options.hash?.trim ?? false;
 
-    if (idxNewLine > -1) {
-        value = value.substring(0, idxNewLine);
-        trimmed = true;
-    }
+//         if (!isNullOrEmpty(lang)) {
+//             const res = resource?.values?.[lang]?.value ?? '';
+//             return trim ? res.trim() : res;
+//         }
+//     }
 
-    if (value.length > 80) {
-        value = value.substring(0, 80);
-        trimmed = true;
-    }
+//     return '';
+// }
 
-    if (trimmed) {
-        value += "...";
-    }
+// function resourceHasLangHelper(resource: LhqModelResourceType, options: any): boolean {
+//     if (typeof resource === 'object') {
+//         const lang = options.hash?.lang ?? '';
+//         if (!isNullOrEmpty(lang) && resource.values && resource.values[lang]) {
+//             return true;
+//         }
+//     }
 
-    return value.replace('\t', ' ');
-}
+//     return false;
+// }
 
-function resourceCommentHelper(resource: LhqModelResourceType, options: any): string {
-    if (typeof resource === 'object') {
-        const model = (options.hash?.root as TemplateRootModel).model;
-        const primaryLanguage = model?.model?.primaryLanguage ?? '';
-        if (!isNullOrEmpty(primaryLanguage) && resource.values) {
-            const resourceValue = resource.values[primaryLanguage]?.value;
-            let propertyComment = isNullOrEmpty(resourceValue) ? resource.description : resourceValue;
-            //try {
-            propertyComment = trimComment(propertyComment);
-            // }
-            // catch(err) {
-            //     const s1 = `res_value_${primaryLanguage}: ${resource.values[primaryLanguage]?.value}`;
-            //     const s2 = 'res_name: ' + resource.getName!();
-            //     HostEnv.debugLog('[resourceCommentHelper] failed for: ' + (isNullOrEmpty(propertyComment) ? 'null': JSON.stringify(propertyComment)) + `, ${s1}, ${s2}`);
-            // }
-            // @ts-ignore
-            return new Handlebars.SafeString(propertyComment);
+// function resourceParamNamesHelper(resource: LhqModelResourceType, options: any): string {
+//     if (typeof resource === 'object' && resource.parameters) {
+//         const withTypes = options?.hash?.withTypes ?? false;
+
+//         return Object.keys(resource.parameters).map(key => {
+//             return withTypes ? `object ${key}` : key;
+//         }).join(',');
+//     }
+
+//     return '';
+// }
+
+function mergeHelper(...args: any[]): any {
+    const options = args.pop() as HbsDataContext;
+    // @ts-ignore
+    const context = args.length === 0 ? this : args.shift();
+
+    Object.assign(context, ...args, options.hash ?? {});
+
+    let result = undefined;
+    if (typeof options?.fn === 'function') {
+        try {
+            result = options.fn(context);
+        } finally {
+            removeProperties(context, ...args, options.hash ?? {});
         }
     }
 
-    return '';
-}
-
-function resourceValueHelper(resource: LhqModelResourceType, options: any): string {
-    if (typeof resource === 'object') {
-        const lang = options.hash?.lang ?? '';
-        const trim = options.hash?.trim ?? false;
-
-        if (!isNullOrEmpty(lang)) {
-            const res = resource?.values?.[lang]?.value ?? '';
-            return trim ? res.trim() : res;
-        }
-    }
-
-    return '';
-}
-
-function resourceHasLangHelper(resource: LhqModelResourceType, options: any): boolean {
-    if (typeof resource === 'object') {
-        const lang = options.hash?.lang ?? '';
-        if (!isNullOrEmpty(lang) && resource.values && resource.values[lang]) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-function resourceParamNamesHelper(resource: LhqModelResourceType, options: any): string {
-    if (typeof resource === 'object' && resource.parameters) {
-        const withTypes = options?.hash?.withTypes ?? false;
-
-        return Object.keys(resource.parameters).map(key => {
-            return withTypes ? `object ${key}` : key;
-        }).join(',');
-    }
-
-    return '';
-}
-
-function mergeHelper(context: any, options: any) {
-    return Object.assign({}, context, options.hash ?? {});
+    return result;
 }
 
 function sortByHelper<T>(source: T[], propName?: string, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
@@ -419,10 +469,10 @@ function hasItemsHelper<T>(obj: Record<string, T> | Array<T> | undefined): boole
     return hasItems<T>(obj);
 }
 
-function textEncodeHelper(str: string, options: any): string {
-    const mode = options?.hash?.mode ?? 'html';
-    const quotes = options?.hash?.quotes ?? false;
-    const s = textEncode(str, {mode: mode, quotes});
+export function textEncodeHelper(str: string, options: HbsDataContext): string {
+    const mode = valueOrDefault<TextEncodeModes>(options?.hash?.mode, 'html');
+    const quotes = valueOrDefault(options?.hash?.quotes, false);
+    const s = textEncode(str, { mode: mode, quotes });
     // @ts-ignore
     return new Handlebars.SafeString(s);
 }
@@ -432,7 +482,7 @@ function hostWebHtmlEncodeHelper(str: string): string {
         return str;
     }
 
-    const encoded = HostEnv.webHtmlEncode(str);
+    const encoded = HostEnvironment.webHtmlEncode(str);
 
     // @ts-ignore
     return new Handlebars.SafeString(encoded);
@@ -455,29 +505,94 @@ function isNotNullOrEmptyHelper(input: any): boolean {
 function callFunctionHelper(fn: Function, ...args: any): any {
     let fnArgs = undefined;
     if (arguments.length > 0) {
-        //const ctx = arguments[arguments.length - 1] as HbsDataContext;
         fnArgs = Array.from(args).slice(0, -1);
     }
 
     return fnArgs === undefined ? fn() : fn(...fnArgs);
 }
 
-// function callFunctionHelper(fn: any): any {
-//     return fn();
-// }
-
 function debugLogHelper(...args: any[]): string {
-    HostEnv.debugLog(args.join(' '));
+    HostEnvironment.debugLog(args.join(' '));
     return '';
 }
 
-function returnVarFromTempHelper(name: string, options: any): any {
-    //const name = options?.hash?.name;
-    const defaultVal = options?.hash?.default;
-
-    if (isNullOrEmpty(name)) {
-        return '';
+function getRoot(options: HbsDataContext): TemplateRootModel {
+    if (isNullOrEmpty(options) || isNullOrEmpty(options?.data)) {
+        throw new AppError('Template has unknown definition for root data !');
     }
 
-    return globalVarTemp[name] ?? defaultVal;
+    return options.data['root'] as TemplateRootModel;
+}
+
+// function modelSettingsHelper(name: string, options: HbsDataContext) {
+//     const root = getRoot(options);
+//     //childs[?name=='ResX'].attrs | [0]
+//     const settings = root.codeGenerator?.settings;
+//     jsonQuery(settings, `childs[?name=='${name}`+"'].attrs | [0]");
+// }
+
+function toJsonHelper(context: any) {
+    return JSON.stringify(context);
+}
+
+function typeOfHelper(context: any) {
+    if (typeof context === 'object') {
+        return context.constructor ? context.constructor.name : 'object';
+    } else {
+        return context === undefined ? 'undefined' : `${context}[${typeof context}]`;
+    }
+}
+
+/**
+ * @dataHelper
+ * @example
+ * // Example 1: this will concat model.name and "Localizer" string into @root.data dictionary under key "rootClassName"
+ * {{m-data (x-concat model.name "Localizer") key="rootClassName" }}
+ * 
+ * // Example 2: this will query (using jmespath expression) to get custom data and will be stored into @root.data dictionary under key "settings"
+ * {{m-data model.codeGenerator.settings key="settings" query="childs[?name=='CSharp'].attrs | [0]" }}
+ * 
+ * // Example 3: if query is long it can be placed in block helper , like this:
+ * {{#m-data model.codeGenerator.settings key="settings" }}
+ * childs[?name=='CSharp'].attrs | [0].{
+ *    bodySyntax: (UseExpressionBodySyntax||'false') == 'true',
+ *    fallbackToPrimary: (MissingTranslationFallbackToPrimary||'false') == 'true',
+ *    outputFolder: (OutputFolder||'Resources')
+ * }
+{{/m-data}}
+ */
+function modelDataHelper(context: any, options: HbsDataContext) {
+    const value = queryObjValue(context, options);
+    //@ts-ignore
+    setCustomData(this, options, value);
+}
+
+function modelOutputFileHelper(options: HbsDataContext<OutputFileData & { settingsQuery: string }>) {
+    //@ts-ignore
+    const context = this;
+
+    if (!(context instanceof TemplateRootModel)) {
+        throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
+    }
+
+    if (isNullOrEmpty(options.hash)) {
+        throw new AppError(`Helper '${options.name}' missing hash properties !`);
+    }
+
+    const settings = options?.hash?.settings ?? context.model.codeGenerator?.settings;
+    const settingsQuery = options?.hash?.settingsQuery ?? '';
+    const outputFile: OutputFileData = {
+        fileName: options?.hash?.fileName ?? '',
+        settings: settings
+    };
+
+    if (!isNullOrEmpty(settingsQuery) && typeof settingsQuery === 'string' && typeof settings === 'object') {
+        outputFile.settings = jsonQuery(settings, settingsQuery) ?? DefaultCodeGenSettings;
+
+        if (isNullOrEmpty(outputFile.settings)) {
+            throw new AppError(`Helper '${options.name}' could not find settings from query: ${settingsQuery} !`);
+        }
+    }
+
+    context.setRootOutputFile(outputFile);
 }

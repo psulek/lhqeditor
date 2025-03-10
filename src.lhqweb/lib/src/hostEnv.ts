@@ -1,74 +1,49 @@
-// declare let HostEnv: {
-//     DebugLog: (msg: string) => void;
-//     AddResultFile: (name: string, content: string) => void;
-// }
+import * as path from 'path';
+import { textEncode } from './utils';
 
-import {type LineEndings} from "./types";
+export interface IHostEnvironment {
+    debugLog(msg: string): void;
+    // addResultFile(name: string, content: string, bom: boolean, lineEndings: LineEndings): void;
+    // addModelGroupSettings(group: string, settings: unknown): void;
+    pathCombine(path1: string, path2: string): string;
+    webHtmlEncode(input: string): string;
+    stopwatchStart(): number;
+    stopwatchEnd(start: number): string;
+}
 
-declare function HostDebugLog(msg: string): void;
-declare function HostAddResultFile(name: string, content: string, bom: boolean, lineEndings: LineEndings): void;
-declare function HostAddModelGroupSettings(group:string, settings: string): void;
-declare function HostPathCombine(path1: string, path2: string): string;
-declare function HostWebHtmlEncode(input: string): string;
-declare function HostStopwatchStart(): number;
-declare function HostStopwatchEnd(start: number): string;
+declare global {
+    var HostEnvironment: IHostEnvironment;
+}
 
-export class HostEnv {
-    public static addResultFile(name: string, content: string, bom: boolean, lineEndings: LineEndings) {
-        if (HostAddResultFile) {
-            HostAddResultFile(name, content, bom, lineEndings);
-            //HostEnv.debugLog(`Added file '${name}' with content: ${content}`);
-        } else {
-            console.log(`Added file '${name}' with content: '${content}'`);
-        }
+export class HostEnvironmentDefault implements IHostEnvironment {
+    //private _generatedFiles: GeneratedFile[] = [];
+
+    public debugLog(msg: string): void {
+        console.log(msg);
     }
-    
-    public static addModelGroupSettings(group: string, settings: unknown) {
-        const json = JSON.stringify(settings);
-        if (HostAddModelGroupSettings) {
-            HostAddModelGroupSettings(group, json);
-        } else {
-            console.log(`Added model group '${group}' with settings: ` + json);
-        }
+
+    // public addResultFile(name: string, content: string, bom: boolean, lineEndings: LineEndings) {
+    //     this._generatedFiles.push(new GeneratedFile(name, content, bom, lineEndings));
+    // }
+
+    // public addModelGroupSettings(group: string, settings: unknown) {
+    //     const json = JSON.stringify(settings);
+    //     console.log(`Added model group '${group}' with settings: ` + json);
+    // }
+
+    public pathCombine(path1: string, path2: string): string {
+        return path.join(path1, path2);
     }
-    
-    public static debugLog(msg: string) {
-        if (HostDebugLog) {
-            HostDebugLog(msg);
-        } else {
-            console.log(msg);
-        }
+
+    public webHtmlEncode(input: string): string {
+        return textEncode(input, { mode: 'html' });
     }
-    
-    public static pathCombine(path1: string, path2: string): string {
-        if (HostPathCombine) {
-            return HostPathCombine(path1, path2);
-        }
-        
-        return path1 + '/' + path2;
+
+    public stopwatchStart(): number {
+        return performance.now();
     }
-    
-    public static webHtmlEncode(input: string): string {
-        if (HostWebHtmlEncode) {
-            return HostWebHtmlEncode(input);
-        }
-        
-        return input;
-    }
-    
-    public static stopwatchStart(): number {
-        if (HostStopwatchStart) {
-            return HostStopwatchStart();
-        }
-        
-        return Date.now();
-    }
-    
-    public static stopwatchEnd(start: number): string {
-        if (HostStopwatchEnd) {
-            return HostStopwatchEnd(start);
-        }
-        
-        return (Date.now() - start).toString();
+
+    public stopwatchEnd(start: number): string {
+        return `${(performance.now() - start).toFixed(2)}ms`;
     }
 }

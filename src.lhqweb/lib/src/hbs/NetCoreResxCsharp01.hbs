@@ -1,0 +1,304 @@
+﻿{{! query template settings for 'CSharp' and set output in format {bodySyntax: boolean, fallbackToPrimary: boolean} under @root.data object }}
+{{~#m-data model.codeGenerator.settings key="settings" ~}}
+childs[?name=='CSharp'].attrs | [0].{
+    bodySyntax: (UseExpressionBodySyntax||'false') == 'true',
+    fallbackToPrimary: (MissingTranslationFallbackToPrimary||'false') == 'true',
+    outputFolder: (OutputFolder||'Resources')
+}
+{{~/m-data~}}
+
+{{! sets root output file name to 'model name' with suffix '.gen.cs' with output settings from 'model.codeGenerator.settings' -  child 'CSharp'}}
+{{~m-outputFile fileName=(x-concat model.name ".gen.cs") settingsQuery="childs[?name=='CSharp'].attrs | [0]" ~}}
+
+{{~m-data (x-concat model.name "Localizer") key="rootClassName" ~}}
+{{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
+
+{{! this replace value in 'outputFolder' from eg: 'Resources\\subdir\' to 'Resources/subdir' and also replace path sep (/) with . so result will be 'Resources.subdir' }}
+{{~m-data (x-normalizePath @root.data.settings.outputFolder replacePathSep=".") key="outputFolder" ~}}
+
+{{! this will construct full type name of resource type with namespace, eg: 'Namespace1.Resources.subdir.Strings' (if namespace is 'Namespace1' and root model name is 'Strings') }}
+{{~m-data (x-concat @root.host.namespace @root.data.outputFolder model.name sep=".") key="resourceTypeName" ~}}
+
+{{~m-data (x-concat @root.host.namespace model.name sep=".") key="resourceType" ~}}
+
+
+{{{ x-header }}}
+
+{{#with model}}
+namespace {{ @root.host.namespace }}
+{
+	using System;
+	using System.Resources;
+	using System.Reflection;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Globalization;
+	using Microsoft.Extensions.Localization;
+
+	public class {{@root.data.rootClassName}} : IStringLocalizer
+	{
+		private readonly CultureInfo _culture;
+		{{#if @root.data.settings.fallbackToPrimary }}
+		private CultureInfo _fallbackCulture;
+	
+		{{else}}
+	
+		{{/if}}
+		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
+
+		public {{@root.data.rootClassName}}()
+		{}
+
+		public {{@root.data.rootClassName}}(CultureInfo culture)
+		{
+			_culture = culture;
+		}
+
+		public const string PrimaryCulture = "{{primaryLanguage}}";
+
+		{{#if @root.data.settings.bodySyntax }}
+		public static ResourceManager ResourceManager => _resourceManager.Value;
+		{{else}}
+		public static ResourceManager ResourceManager
+		{
+			get
+			{
+				return _resourceManager.Value;
+			}
+		}
+		{{/if}}
+
+		private static ResourceManager CreateResourceManager()
+		{
+			return new ResourceManager("{{@root.data.resourceTypeName}}",
+					typeof({{@root.data.resourceType}}).GetTypeInfo().Assembly);
+		}
+
+		{{#if @root.data.settings.fallbackToPrimary }}
+		public CultureInfo FallbackCulture
+		{
+			get
+			{
+				if (_fallbackCulture == null)
+				{
+					_fallbackCulture = new CultureInfo(PrimaryCulture);
+				}
+				return _fallbackCulture;
+			}
+			set
+			{
+				if ((value == null) || !{{name}}.AvailableCultures.Contains(value.Name))
+				{
+					throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
+				}
+
+				_fallbackCulture = value;
+			}
+		}
+		{{/if}}
+	
+
+		LocalizedString IStringLocalizer.this[string name]
+		{
+			get
+			{
+				if (name == null)
+				{
+					throw new ArgumentNullException(nameof(name));
+				}
+
+				var value = GetStringSafely(name, _culture);
+				return new LocalizedString(name, value ?? name, value == null);
+			}
+		}
+
+		LocalizedString IStringLocalizer.this[string name, params object[] arguments]
+		{
+			get
+			{
+				if (name == null)
+				{
+					throw new ArgumentNullException(nameof(name));
+				}
+
+				var format = GetStringSafely(name, _culture);
+				var value = string.Format(format ?? name, arguments);
+				return new LocalizedString(name, value, format == null);
+			}
+		}
+
+		public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
+		{
+			throw new NotImplementedException();
+		}
+
+		{{#if @root.data.settings.bodySyntax }}
+		public IStringLocalizer WithCulture(CultureInfo culture) => new {{@root.data.rootClassName}}(culture);
+		{{else}}
+		public IStringLocalizer WithCulture(CultureInfo culture)
+		{
+			return new {{@root.data.rootClassName}}(culture);
+		}
+		{{/if}}
+
+		private string GetStringSafely(string name, CultureInfo culture)
+		{
+			string result = null;
+			try
+			{
+				result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
+			}
+			catch (MissingManifestResourceException)
+			{} // Resource does not exist
+
+			if (result == null)
+			{
+				{{#if @root.data.settings.fallbackToPrimary }}
+				if (FallbackCulture != null)
+				{
+					try
+					{
+						result = ResourceManager.GetString(name, FallbackCulture);
+					}
+					catch (MissingManifestResourceException)
+					{} // Resource does not exist
+
+					if (result == null)
+					{
+						result = string.Format("???{0}.{1}???", name, FallbackCulture == null ? string.Empty : FallbackCulture.Name);
+					}
+				}
+				else
+				{
+					result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
+				}
+				{{else}}
+				result = string.Format("???{0}.{1}???", name, culture == null ? string.Empty : culture.Name);
+				{{/if}}
+			}
+
+			return result;
+		}
+	}
+
+	public static class {{@root.data.keysClassName }}
+	{
+	{{#each categories ~}}
+		{{!> category _resourceRenderValue="key" }}
+		{{~#x-merge _resourceRenderValue="key" ~}}
+		{{> category }}
+		{{~/x-merge~}}
+	{{#if (x-equals @last false) }}     
+		
+	{{/if}}
+	{{/each}}
+	{{#if resources}}
+		
+	{{!> resources _resourceRenderValue="key" }}
+	{{~#x-merge _resourceRenderValue="key" ~}}
+	{{> resources }}
+	{{~/x-merge~}}
+    {{/if}}
+	}
+
+	public partial class {{name}}
+	{
+		private static IStringLocalizer _localizer;
+
+		public {{name}}(IStringLocalizer localizer)
+		{
+			_localizer = localizer;
+		}
+
+
+		{{#if @root.data.settings.fallbackToPrimary }}
+		public static string[] AvailableCultures => new string[] { {{x-join languages }} };
+		{{else}}
+		public static string[] AvailableCultures
+		{
+			get
+			{
+				return new string[] { {{x-join languages }} };
+			}
+		}
+		{{/if}}
+
+	{{#each categories ~}}
+		{{!> category _resourceRenderValue="value" }}
+		{{~#x-merge _resourceRenderValue="value" ~}}
+		{{> category }}
+		{{~/x-merge~}}
+	{{#if (x-equals @last false) }}
+		
+	{{/if}}
+	{{/each}}
+	{{#if resources}}
+		
+	{{!> resources _resourceRenderValue="value" }}
+	{{~#x-merge _resourceRenderValue="value" ~}}
+	{{> resources }}
+	{{~/x-merge~}}
+    {{/if}}
+	}
+}
+{{/with}}
+{{#*inline "category"}}
+public static{{x-render " partial" when=(x-equals _resourceRenderValue "value") }} class {{name}}
+{
+{{#each categories }}
+	{{!> category _resourceRenderValue=../_resourceRenderValue }}
+	{{~#x-merge _resourceRenderValue=../_resourceRenderValue ~}}
+	{{> category }}
+	{{~/x-merge~}}
+{{#if (x-equals @last false) }}
+	
+{{/if}}
+{{/each}}
+{{> resources }}
+}
+{{/inline}}
+{{#*inline "resources"}}
+{{#if resources}}
+{{#each resources}}
+	{{! prepare temp data for current resource element (m-data to put data in ITreeElement object and not @root) }}
+	{{~m-data (x-fn paths.getParentPath '') key="parentPath" ~}}
+	{{! constructs full resource path to resource separated by dot , eg: Strings.Dialogs.MyResource1 (Model name: 'Strings', sub category: 'Dialogs' and resource name: 'MyResource1') }}
+	{{m-data (x-concat @root.data.keysClassName (x-fn paths.getParentPath '.') sep=".") key="resourceFullPath" ~}}
+	/// <summary>
+	/// Gets localized string similar to: {{{ this.comment }}}
+	/// </summary>
+	{{#if (x-equals ../_resourceRenderValue "key") }}
+	public const string {{name}} = "{{data.parentPath}}";
+	{{else}}
+	{{!#if (x-equals (x-objCount parameters) 0)}}
+	{{#if hasParameters}}
+	{{! constructs list of parameters in format 'object param1, object param2' into element data with key 'resourceParamNamesWithTypes' }}
+	{{~m-data this query="join(', ', map(&join(' ', ['object', @]), keys(parameters)))" key="resourceParamNamesWithTypes" ~}}
+    {{! constructs list of parameters in format 'param1, param2' into element data with key 'resourceParamNames' }}
+	{{~m-data this query="join(', ', keys(parameters))" key="resourceParamNames" ~}}
+	{{#if @root.data.settings.bodySyntax }}
+	public static string {{name}}({{data.resourceParamNamesWithTypes}}) => _localizer[{{data.resourceFullPath}}, {{data.resourceParamNames}}];
+	{{else}}
+	public static string {{name}}({{data.resourceParamNamesWithTypes}})
+	{
+		return _localizer[{{data.resourceFullPath}}, {{data.resourceParamNames}}];
+	}
+	{{/if}}
+	{{else}}
+	{{#if @root.data.settings.bodySyntax }}
+	public static string {{name}} => _localizer[{{data.resourceFullPath}}];
+	{{else}}
+	public static string {{name}}
+	{
+		get
+		{
+			return _localizer[{{data.resourceFullPath}}];
+		}
+	}
+	{{/if}}
+	{{/if}}
+¤
+	{{/if}}
+{{/each}}
+{{/if}}
+{{/inline}}

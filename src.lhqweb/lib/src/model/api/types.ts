@@ -1,22 +1,33 @@
-import { LhqCodeGenVersion, LhqModelDataNode, LhqModelUid, LhqModelVersion, LhqModelOptions,
-     LhqModelMetadata, LhqModelResourceTranslationState } from './schemas';
+import {
+    LhqModelDataNode, LhqModelOptions,
+    LhqModelResourceTranslationState, LhqModelUid, LhqModelVersion, LhqModelMetadata,
+    LhqCodeGenVersion
+}
+    from './schemas';
 
 export type TreeElementType = 'model' | 'category' | 'resource';
 
 export interface ITreeElement {
     readonly parent: Readonly<ICategoryLikeTreeElement | undefined>;
+    readonly root: Readonly<IRootModelElement>;
     readonly name: string;
     readonly elementType: TreeElementType;
     readonly description: string | undefined;
     readonly paths: Readonly<ITreeElementPaths>;
-    readonly isFirst: boolean;
-    readonly isLast: boolean;
     readonly isRoot: boolean;
+
+    /**
+     * temp data defined dynamically by template run, resets on each template run.
+     */
+    readonly data: Readonly<Record<string, unknown>>;
 }
 
 export interface ICategoryLikeTreeElement extends ITreeElement {
     readonly categories: Readonly<ICategoryElement[]>;
     readonly resources: Readonly<IResourceElement[]>;
+
+    readonly hasCategories: boolean;
+    readonly hasResources: boolean;
 }
 
 export interface ICodeGeneratorElement {
@@ -35,6 +46,7 @@ export interface IRootModelElement extends ICategoryLikeTreeElement {
     readonly options: Readonly<LhqModelOptions>;
     readonly primaryLanguage: string;
     readonly languages: Readonly<string[]>;
+    readonly hasLanguages: boolean;
     readonly metadatas: Readonly<LhqModelMetadata> | undefined;
     readonly codeGenerator: ICodeGeneratorElement | undefined;
 }
@@ -45,6 +57,11 @@ export interface IResourceElement extends ITreeElement {
     readonly state: LhqModelResourceTranslationState;
     readonly parameters: Readonly<IResourceParameterElement[]>;
     readonly values: Readonly<IResourceValueElement[]>;
+    readonly comment: string;
+    readonly hasParameters: boolean;
+    readonly hasValues: boolean;
+
+    getValue(language: string): string;
 }
 
 export interface IResourceParameterElement {
@@ -63,5 +80,10 @@ export interface IResourceValueElement {
 }
 
 export interface ITreeElementPaths {
-    getParentPath(separator: string): string;
+    getParentPath(separator: string, includeRoot?: boolean): string;
+}
+
+export type ModelVersionsType = {
+    model: LhqModelVersion;
+    codeGenerator: LhqCodeGenVersion;
 }

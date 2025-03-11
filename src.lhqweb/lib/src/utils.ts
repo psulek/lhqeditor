@@ -26,6 +26,16 @@ import { LhqModel, LhqModelSchema } from './model/api/schemas';
 //     console.log(a1);
 // }
 
+declare global {
+    interface String {
+        isTrue(): boolean;
+    }
+}
+
+// @ts-ignore
+String.prototype.isTrue = function () {
+    return this.toLowerCase() === "true";
+};
 
 export function safeJsonParse<T>(value: string): T {
     return JSON.parse(value.charCodeAt(0) === 0xFEFF ? value.slice(1) : value) as T;

@@ -1,7 +1,9 @@
 import {
-    LhqModelDataNode, LhqModelOptions,
+    LhqModelOptions,
     LhqModelResourceTranslationState, LhqModelUid, LhqModelVersion, LhqModelMetadata,
-    LhqCodeGenVersion
+    LhqCodeGenVersion,
+    LhqModelLineEndings,
+    LhqModelDataNode
 }
     from './schemas';
 
@@ -28,6 +30,14 @@ export interface ICategoryLikeTreeElement extends ITreeElement {
 
     readonly hasCategories: boolean;
     readonly hasResources: boolean;
+}
+
+export interface CodeGeneratorBasicSettings {
+    OutputFolder: string;
+    OutputProjectName?: string;
+    EncodingWithBOM: boolean;
+    LineEndings: LhqModelLineEndings;
+    Enabled: boolean;
 }
 
 export interface ICodeGeneratorElement {

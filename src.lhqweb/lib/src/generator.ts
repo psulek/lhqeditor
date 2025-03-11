@@ -1,75 +1,24 @@
-import Handlebars from "handlebars";
-
-//import { LineEndings, OutputSettings } from './types';
-import { isNullOrEmpty, jsonQuery, validateLhqModel } from './utils';
-import { GeneratedFile } from './generatedFile';
-import { LhqModel, LhqModelCodeGeneratorBasicSettings } from './model/api';
+import { isNullOrEmpty, validateLhqModel } from './utils';
 import { AppError } from './AppError';
 import { RootModelElement } from './model/rootModelElement';
 import { HostEnvironmentDefault, IHostEnvironment } from './hostEnv';
-import { getKnownHelpers, registerHelpers } from './helpers';
-import { GenerateResult } from './generateResult';
+import { registerHelpers } from './helpers';
 import { TemplateRootModel } from './model/templateRootModel';
-import { DefaultLineEndings } from './model/modelConst';
+import { HbsTemplateManager } from './hbsManager';
+import { DefaultCodeGenSettings } from './model/modelConst';
+import { GeneratedFile, GeneratorSource, GenerateResult } from './types';
+import { CodeGeneratorBasicSettings } from './model/api/types';
 
 export const DataKeys = Object.freeze({
     Namespace: 'namespace'
 });
 
-export type GeneratorSource = {
-    model: LhqModel;
-    fileName: string;
-    // csProjectFileName: string;
-    // outDir: string;
-};
-
-export class HbsTemplateManager {
-    private static _sources: {
-        [templateId: string]: string;
-    }
-
-    private static _compiled: {
-        [templateId: string]: HandlebarsTemplateDelegate;
-    }
-
-    public static registerTemplate(templateId: string, handlebarContent: string): void {
-        HbsTemplateManager._sources ??= {};
-        HbsTemplateManager._sources[templateId] = handlebarContent;
-    }
-
-    public static runTemplate(templateId: string, data: unknown): string {
-        let compiled: HandlebarsTemplateDelegate;
-
-        HbsTemplateManager._compiled ??= {};
-        if (!HbsTemplateManager._compiled.hasOwnProperty(templateId)) {
-            if (!HbsTemplateManager._sources.hasOwnProperty(templateId)) {
-                throw new AppError(`Template with id '${templateId}' not found !`);
-            }
-
-            const source = HbsTemplateManager._sources[templateId];
-            compiled = Handlebars.compile(source, { knownHelpers: getKnownHelpers() });
-
-            HbsTemplateManager._compiled[templateId] = compiled;
-        } else {
-            compiled = HbsTemplateManager._compiled[templateId];
-        }
-
-        const result = compiled(data, {
-            allowProtoPropertiesByDefault: true,
-            allowProtoMethodsByDefault: true,
-            allowCallsToHelperMissing: true
-        });
-        if (result.indexOf('¤') > -1) {
-            // NOTE: special tag to remove one tab (decrease indent)
-            return result.replace(/\t¤$/gm, '');
-        }
-
-        return result;
-    }
-}
-
 export class Generator {
     private static _initialized = false;
+    private static regexLF = new RegExp("\\r\\n|\\r", "g");
+    private static regexCRLF = new RegExp("(\\r(?!\\n))|((?<!\\r)\\n)", "g");
+
+    private _generatedFiles: GeneratedFile[] = [];
 
     public static initialize(hostEnv?: IHostEnvironment): void {
         if (!Generator._initialized) {
@@ -81,8 +30,30 @@ export class Generator {
         }
     }
 
+    /**
+     * Gets the generated content string that should be written to the fileName file.
+     * 
+     * @param generatedFile Information about the generated file.
+     * @param applyLineEndings Flag indicating whether to apply line endings to the content or not.
+     * @returns The generated content string, without any modifications if applyLineEndings is false, or with line endings applied if applyLineEndings is true.
+     */
+    public getFileContent(generatedFile: GeneratedFile, applyLineEndings: boolean): string {
+        if (!applyLineEndings || generatedFile.content.length === 0) {
+            return generatedFile.content;
+        }
 
-    public static generate(inputModel: GeneratorSource, hostData?: Record<string, unknown>): GenerateResult {
+        return generatedFile.lineEndings === 'LF'
+            ? generatedFile.content.replace(Generator.regexLF, "\n")
+            : generatedFile.content.replace(Generator.regexCRLF, "\r\n");
+    }
+
+    /**
+     * Runs code templates for the given input LHQ model.
+     * @param inputModel input LHQ model
+     * @param hostData external host data
+     * @returns generated result.
+     */
+    public generate(inputModel: GeneratorSource, hostData?: Record<string, unknown>): GenerateResult {
         if (!Generator._initialized) {
             throw new AppError('Generator not initialized !');
         }
@@ -115,18 +86,14 @@ export class Generator {
         const rootModel = new RootModelElement(model);
 
         const templateId = rootModel.codeGenerator?.templateId ?? '';
-        if (isNullOrEmpty(templateId)) {
+        if (isNullOrEmpty(rootModel.codeGenerator) || isNullOrEmpty(templateId)) {
             throw new AppError(`LHQ model '${fileName}' missing code generator template information !`);
         }
-        
-        const codeGenSettings = rootModel.codeGenerator?.settings;
-        if (isNullOrEmpty(codeGenSettings)) {
-            throw new AppError(`LHQ model '${fileName}' missing code generator settings information !`);
-        }
+
+        // const codeGenSettings = Object.assign({}, DefaultCodeGenSettings, rootModel.codeGenerator.settings || {});
+        // rootModel.updateCodeGeneratorSettings(codeGenSettings);
 
         const templateModel = new TemplateRootModel(rootModel, {}, hostData);
-
-        const generatedFiles: GeneratedFile[] = [];
 
         // run handlebars template generator
         const templateResult = HbsTemplateManager.runTemplate(templateId, templateModel);
@@ -136,41 +103,27 @@ export class Generator {
             throw new AppError(`LHQ model '${fileName}' missing root output file information (missing 'm-outputFile' helper) !`);
         }
 
-        const genFileName = Generator.prepareFilePath('root output file', rootOutputFile.fileName, rootOutputFile.settings);
-        generatedFiles.push(new GeneratedFile(genFileName, templateResult, false, DefaultLineEndings));
-        return new GenerateResult(generatedFiles, []);
+        this.addResultFile('root output file', templateResult, rootOutputFile.fileName, rootOutputFile.settings);
+
+
+        return { generatedFiles: this._generatedFiles, modelGroupSettings: [] };
     }
 
-    private static prepareFilePath(fileDescription: string, fileName: string, settings: LhqModelCodeGeneratorBasicSettings): string {
+    private addResultFile(fileDescription: string, templateResult: string, fileName: string,
+        settings: CodeGeneratorBasicSettings): void {
+
         if (isNullOrEmpty(fileName)) {
             throw new AppError(`Missing file name for '${fileDescription}' !`);
         }
 
-        return isNullOrEmpty(settings.OutputFolder) ? fileName: HostEnvironment.pathCombine(settings.OutputFolder, fileName);
+        //settings = Object.assign({}, DefaultCodeGenSettings, settings)
+
+        if (settings.Enabled) {
+            const genFileName = isNullOrEmpty(settings.OutputFolder) ? fileName : HostEnvironment.pathCombine(settings.OutputFolder, fileName);
+            const bom = settings.EncodingWithBOM;
+            const lineEndings = settings.LineEndings ?? DefaultCodeGenSettings.LineEndings;
+            const result: GeneratedFile = { fileName: genFileName, content: templateResult, bom, lineEndings };
+            this._generatedFiles.push(result);
+        }
     }
-
-    // private addResultFile(name: string, content: string, bom: boolean, lineEndings: LineEndings) {
-    //     this._generatedFiles.push(new GeneratedFile(name, content, bom, lineEndings));
-    // }
-
-    // private addModelGroupSettings(group: string, settings: unknown) {
-    //     const json = JSON.stringify(settings);
-    //     console.log(`Added model group '${group}' with settings: ` + json);
-    // }
-
-    // private pathCombine(path1: string, path2: string): string {
-    //     return path.join(path1, path2);
-    // }
-
-    // private webHtmlEncode(input: string): string {
-    //     return textEncode(input, { mode: 'html' });
-    // }
-
-    // private stopwatchStart(): number {
-    //     return performance.now();
-    // }
-
-    // private stopwatchEnd(start: number): string {
-    //     return `${(performance.now() - start).toFixed(2)}ms`;
-    // }
 }

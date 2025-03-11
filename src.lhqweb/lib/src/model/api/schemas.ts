@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const LhqModelLineEndingsSchema = z.union([z.literal('lf'), z.literal('crlf')]);
+export const LhqModelLineEndingsSchema = z.union([z.literal('LF'), z.literal('CRLF')]);
 
 export const LhqModelOptionsResourcesSchema = z.union([
     z.literal("All"), z.literal("Categories")
@@ -32,6 +32,7 @@ type Resource = z.infer<typeof LhqModelResourceSchemaBase> & {};
 
 export const LhqModelResourceSchema: z.ZodType<Resource> = LhqModelResourceSchemaBase;
 
+//export const LhqDataNodeAttrsSchema = z.record(z.string());
 
 export const baseDataNodeSchema = z.object({
     name: z.string(),
@@ -78,12 +79,15 @@ export const LhqModelMetadataSchema = z.object({
     childs: z.array(LhqModelDataNodeSchema).optional(),
 });
 
-export const LhqModelCodeGeneratorBasicSettingsSchema = z.object({
-    OutputFolder: z.string(),
-    OutputProjectName: z.string().optional(),
-    EncodingWithBOM: z.union([z.literal('true'), z.literal('false')]).optional(),
-    LineEndings: LhqModelLineEndingsSchema.optional()
-});
+// const BooleanSchema = z.union([z.literal('true'), z.literal('false')]);
+
+// export const LhqModelCodeGeneratorBasicSettingsSchema = z.object({
+//     OutputFolder: z.string(),
+//     OutputProjectName: z.string().optional(),
+//     EncodingWithBOM: BooleanSchema.optional(),
+//     LineEndings: LhqModelLineEndingsSchema.optional().default('lf'),
+//     Enabled: BooleanSchema.optional().default('true')
+// });
 
 export const LhqModelSchema = z.object({
     model: z.object({
@@ -128,7 +132,9 @@ export type LhqModelDataNode = z.infer<typeof LhqModelDataNodeSchema>;
 
 export type LhqModelMetadata = z.infer<typeof LhqModelMetadataSchema>;
 
-export type LhqModelCodeGeneratorBasicSettings = z.infer<typeof LhqModelCodeGeneratorBasicSettingsSchema>;
+//export type LhqDataNodeAttrs = z.infer<typeof LhqDataNodeAttrsSchema>;
+
+//export type LhqModelCodeGeneratorBasicSettings = z.infer<typeof LhqModelCodeGeneratorBasicSettingsSchema>;
 
 export type LhqModelLineEndings = z.infer<typeof LhqModelLineEndingsSchema>;
 

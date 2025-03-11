@@ -1,5 +1,5 @@
 import { CategoryLikeTreeElement } from './categoryLikeTreeElement';
-import { LhqCodeGenVersion, LhqModel, LhqModelCategory, LhqModelResource, LhqModelUid, LhqModelVersion } from './api/schemas';
+import { LhqCodeGenVersion, LhqModel, LhqModelCategory, LhqModelDataNode, LhqModelResource, LhqModelUid, LhqModelVersion } from './api/schemas';
 import { ICategoryLikeTreeElement, ICodeGeneratorElement, IResourceElement, IRootModelElement } from './api/types';
 import { isNullOrEmpty } from '../utils';
 import { ModelVersions } from './modelConst';
@@ -41,7 +41,15 @@ export class RootModelElement extends CategoryLikeTreeElement implements IRootMo
         return new ResourceElement(root, name, source, parent);
     }
 
-    getCodeGenerator(model: LhqModel): ICodeGeneratorElement | undefined {
+    // public updateCodeGeneratorSettings(settings: LhqModelDataNode): void {
+    //     this._codeGenerator = {
+    //         templateId: this._codeGenerator?.templateId ?? '',
+    //         version: this._codeGenerator?.version ?? 1,
+    //         settings: settings
+    //     };
+    // }
+
+    private getCodeGenerator(model: LhqModel): ICodeGeneratorElement | undefined {
         let templateId = '';
         let codeGenVersion: LhqCodeGenVersion = 1;
         let node = model.metadatas?.childs?.find(x => x.name === 'metadata' && x.attrs?.['descriptorUID'] === CodeGenUID);
@@ -61,6 +69,8 @@ export class RootModelElement extends CategoryLikeTreeElement implements IRootMo
         }
 
         if (!isNullOrEmpty(templateId) && !isNullOrEmpty(node)) {
+            
+
             return { templateId, settings: node, version: codeGenVersion };
         }
     }

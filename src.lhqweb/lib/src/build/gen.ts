@@ -1,10 +1,11 @@
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
-import { Generator, HbsTemplateManager } from '../generator';
+import { Generator } from '../generator';
+import { HbsTemplateManager } from '../hbsManager';
 import path from 'node:path';
 import { safeJsonParse } from '../utils';
 import { LhqModel } from '../model/api';
-import { GeneratedFile } from '../generatedFile';
+import { GeneratedFile } from '../types';
 
 export async function generateFromLhq(lhqFileName: string): Promise<void> {
     HbsTemplateManager.registerTemplate('NetCoreResxCsharp01', await readHbsFile('NetCoreResxCsharp01.hbs'))
@@ -13,19 +14,20 @@ export async function generateFromLhq(lhqFileName: string): Promise<void> {
     const model = safeJsonParse<LhqModel>(lhqFile);
 
     Generator.initialize();
-    const result = Generator.generate({ fileName: lhqFileName, model }, {'namespace': 'Root'});
+    const generator = new Generator();
+    const result = generator.generate({ fileName: lhqFileName, model }, { 'namespace': 'Root' });
     console.log(`Generated ${result.generatedFiles.length} files.\n------------\n`);
 
     //result.generatedFiles.forEach(x => console.log(`[${x.FileName}]\n${x.getContent(true)}`));
     const output = path.resolve(__dirname, '../../temp');
-    result.generatedFiles.forEach(function (x) {
-            saveGenFile(x, output);
-            console.log(`Saved file ${x.fileName}.`);
-        });
+    result.generatedFiles.forEach((file) => {
+        saveGenFile(generator, file, output);
+        console.log(`Saved file ${file.fileName}.`);
+    });
 }
 
-async function saveGenFile(generatedFile: GeneratedFile, outputPath?: string): Promise<void> {
-    const content = generatedFile.getContent(true);
+async function saveGenFile(generator: Generator, generatedFile: GeneratedFile, outputPath?: string): Promise<void> {
+    const content = generator.getFileContent(generatedFile, true);
     const bom = generatedFile.bom ? '\uFEFF' : '';
     const encodedText = Buffer.from(bom + content, 'utf8');
 

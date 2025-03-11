@@ -20,7 +20,6 @@ import {
 import { AppError } from './AppError';
 import { TreeElement } from './model/treeElement';
 import { OutputFileData, TemplateRootModel } from './model/templateRootModel';
-import { LhqModelCodeGeneratorBasicSettings } from './model/api/schemas';
 import { DefaultCodeGenSettings } from './model/modelConst';
 
 export function registerHelpers() {
@@ -42,6 +41,7 @@ const helpersList: Record<string, Function> = {
     'x-indent': indentHelper,
     'x-join': joinHelper,
     'x-split': splitHelper,
+    'x-raw': rawHelper,
     'x-concat': concatHelper,
     'x-replace': replaceHelper,
     'x-trimEnd': trimEndHelper,
@@ -66,7 +66,7 @@ const helpersList: Record<string, Function> = {
 
     // model specific helpers
     'm-data': modelDataHelper,
-    'm-outputFile': modelOutputFileHelper,
+    'm-output': modelOutputHelper,
 
     //'m-settings': modelSettingsHelper,
     //'x-resourceComment': resourceCommentHelper,
@@ -200,7 +200,6 @@ function normalizePathHelper(context: any, options: HbsDataContext) {
 function queryObjValue(context: any, options: HbsDataContext): any {
     let value = context;
     let query = options?.hash?.query;
-    let defaultVal = options?.hash?.default ?? undefined;
     if (typeof options?.fn === 'function') {
         query = options.fn(context);
         if (!isNullOrEmpty(query) && typeof query === 'string') {
@@ -209,7 +208,7 @@ function queryObjValue(context: any, options: HbsDataContext): any {
     }
 
     if (!isNullOrEmpty(query) && typeof query === 'string' && typeof context === 'object') {
-        value = jsonQuery(context, query, defaultVal);
+        value = jsonQuery(context, query);
     }
 
     return value;
@@ -221,8 +220,7 @@ function queryObjValue(context: any, options: HbsDataContext): any {
  */
 function valueHelper(context: any, options: HbsDataContext) {
     const defaultValue = options?.hash?.default;
-    const value = queryObjValue(context, options);
-    return value ?? defaultValue;
+    return queryObjValue(context, options) ?? defaultValue;
 }
 
 function indentHelper(count: number, options: any) {
@@ -246,6 +244,13 @@ function splitHelper(context: any, options: HbsDataContext) {
     }
 
     return context.split(sep);
+}
+
+function rawHelper(options: HbsDataContext) {
+    // @ts-ignore
+    const res = options.fn!(this);
+
+    return new Handlebars.SafeString(res);
 }
 
 /*
@@ -562,12 +567,13 @@ function typeOfHelper(context: any) {
 {{/m-data}}
  */
 function modelDataHelper(context: any, options: HbsDataContext) {
-    const value = queryObjValue(context, options);
+    const defaultValue = options?.hash?.default;
+    const value = queryObjValue(context, options) ?? defaultValue;
     //@ts-ignore
     setCustomData(this, options, value);
 }
 
-function modelOutputFileHelper(options: HbsDataContext<OutputFileData & { settingsQuery: string }>) {
+function modelOutputHelper(options: HbsDataContext<{ fileName: string, mergeWithDefaults: boolean }>) {
     //@ts-ignore
     const context = this;
 
@@ -579,20 +585,26 @@ function modelOutputFileHelper(options: HbsDataContext<OutputFileData & { settin
         throw new AppError(`Helper '${options.name}' missing hash properties !`);
     }
 
-    const settings = options?.hash?.settings ?? context.model.codeGenerator?.settings;
-    const settingsQuery = options?.hash?.settingsQuery ?? '';
+    const fileName = options?.hash?.fileName ?? '';
+    if (isNullOrEmpty(fileName)) {
+        throw new AppError(`Helper '${options.name}' missing file name !`);
+    }
+
+    const settingsNode = context.model.codeGenerator?.settings;
+
+    const settingsObj = queryObjValue(settingsNode, options);
+    if (isNullOrEmpty(settingsObj)) {
+        throw new AppError(`Helper '${options.name}' could not find code gen settings from query !`);
+    }
+
+    const mergeWithDefaults = options?.hash?.mergeWithDefaults ?? true;
+
+    const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
+
     const outputFile: OutputFileData = {
-        fileName: options?.hash?.fileName ?? '',
+        fileName: fileName,
         settings: settings
     };
-
-    if (!isNullOrEmpty(settingsQuery) && typeof settingsQuery === 'string' && typeof settings === 'object') {
-        outputFile.settings = jsonQuery(settings, settingsQuery) ?? DefaultCodeGenSettings;
-
-        if (isNullOrEmpty(outputFile.settings)) {
-            throw new AppError(`Helper '${options.name}' could not find settings from query: ${settingsQuery} !`);
-        }
-    }
 
     context.setRootOutputFile(outputFile);
 }

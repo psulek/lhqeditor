@@ -1,11 +1,10 @@
 import { AppError } from '../AppError';
 import { isNullOrEmpty } from '../utils';
-import { LhqModelCodeGeneratorBasicSettings } from './api/schemas';
-import { IRootModelElement } from './api/types';
+import { CodeGeneratorBasicSettings, IRootModelElement } from './api/types';
 
 export type OutputFileData = {
     fileName: string;
-    settings: LhqModelCodeGeneratorBasicSettings;
+    settings: CodeGeneratorBasicSettings;
 };
 
 // model which is bind to handlebars template compile and run
@@ -57,6 +56,15 @@ export class TemplateRootModel {
      */
     public get data(): Readonly<Record<string, unknown>> {
         return this._data;
+    }
+
+    public get settings(): Readonly<CodeGeneratorBasicSettings> {
+        const settings = this._rootOutputFile?.settings;
+        if (isNullOrEmpty(settings)) {
+            throw new AppError('Missing root output file settings !');
+        }
+
+        return settings;
     }
 
     /*

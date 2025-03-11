@@ -72,6 +72,7 @@ export interface IResourceElement extends ITreeElement {
     readonly hasValues: boolean;
 
     getValue(language: string): string;
+    hasValue(language: string): boolean;
 }
 
 export interface IResourceParameterElement {

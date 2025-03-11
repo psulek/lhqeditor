@@ -36,17 +36,6 @@ export class ResourceElement extends TreeElement implements IResourceElement {
         this._comment = this.getComment();
     }
 
-    // protected getIsFirst(): boolean {
-    //     return this.parent?.resources.indexOf(this) === 0;
-    // }
-    
-    // protected getIsLast(): boolean {
-    //     if (this.parent?.resources?.length === 0) {
-    //         return false;
-    //     }
-    //     return this.parent?.resources[this.parent.resources.length - 1] === this;
-    // }
-
     public get hasParameters(): boolean {
         return this._hasParameters;
     }
@@ -59,7 +48,7 @@ export class ResourceElement extends TreeElement implements IResourceElement {
         return this._comment;
     }
 
-    private getComment(): string {
+    private getComment = (): string => {
         const root = this.root;
         const primaryLanguage = root.primaryLanguage ?? '';
         if (!isNullOrEmpty(primaryLanguage) && this.values) {
@@ -79,6 +68,15 @@ export class ResourceElement extends TreeElement implements IResourceElement {
         }
 
         return '';
+    }
+
+    public hasValue = (language: string): boolean => {
+        if (!isNullOrEmpty(language) && this.values) {
+            const value = this.values.find(x => x.languageName === language);
+            return !isNullOrEmpty(value);
+        }
+
+        return false;
     }
 
     public get state(): LhqModelResourceTranslationState {

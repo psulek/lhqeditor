@@ -41,14 +41,6 @@ export class RootModelElement extends CategoryLikeTreeElement implements IRootMo
         return new ResourceElement(root, name, source, parent);
     }
 
-    // public updateCodeGeneratorSettings(settings: LhqModelDataNode): void {
-    //     this._codeGenerator = {
-    //         templateId: this._codeGenerator?.templateId ?? '',
-    //         version: this._codeGenerator?.version ?? 1,
-    //         settings: settings
-    //     };
-    // }
-
     private getCodeGenerator(model: LhqModel): ICodeGeneratorElement | undefined {
         let templateId = '';
         let codeGenVersion: LhqCodeGenVersion = 1;

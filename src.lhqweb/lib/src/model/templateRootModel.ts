@@ -1,18 +1,29 @@
 import { AppError } from '../AppError';
 import { isNullOrEmpty } from '../utils';
-import { CodeGeneratorBasicSettings, IRootModelElement } from './api/types';
+import { CodeGeneratorBasicSettings, ICategoryLikeTreeElement, IRootModelElement, ITreeElement } from './api/types';
+import { TreeElement } from './treeElement';
 
 export type OutputFileData = {
     fileName: string;
     settings: CodeGeneratorBasicSettings;
 };
 
+export type OutputChildData = {
+    templateId: string;
+    host: Record<string, unknown> | undefined;
+}
+
+export type TemplateRunType = 'root' | 'child';
+
 // model which is bind to handlebars template compile and run
 export class TemplateRootModel {
     private _model: IRootModelElement;
     private _data: Record<string, unknown>;
+    private _rootHost: Record<string, unknown> | undefined;
     private _host: Record<string, unknown>;
-    private _rootOutputFile: OutputFileData | undefined;
+    private _output: OutputFileData | undefined;
+    private _templateRunType: TemplateRunType = 'root';
+    private _childOutputs: OutputChildData[] = [];
 
     constructor(model: IRootModelElement, data: Record<string, unknown>, host: Record<string, unknown>) {
         if (isNullOrEmpty(model)) {
@@ -24,16 +35,64 @@ export class TemplateRootModel {
         this._host = host ?? {};
     }
 
-    public setRootOutputFile(outputFile: OutputFileData): void {
-        if (!isNullOrEmpty(this._rootOutputFile)) {
-            throw new AppError('Root output file already set !');
+    public setOutput(outputFile: OutputFileData): void {
+        if (!isNullOrEmpty(this._output)) {
+            throw new AppError('Output was already set !');
         }
 
-        this._rootOutputFile = outputFile;
+        this._output = outputFile;
     }
 
-    public get rootOutputFile(): OutputFileData | undefined {
-        return this._rootOutputFile;
+    public addChildOutput(templateId: string, host: Record<string, unknown> | undefined) {
+        if (this._templateRunType === 'child') {
+            throw new AppError('Child template could not have other child outputs !');
+        }
+
+        this._childOutputs.push({ templateId, host });
+    }
+
+    public get childOutputs(): OutputChildData[] {
+        return this._childOutputs;
+    }
+
+    public get templateRunType(): TemplateRunType {
+        return this._templateRunType;
+    }
+
+    public setAsChildTemplate(childData: OutputChildData): void {
+        if (this._templateRunType === 'root') {
+            this._rootHost = Object.freeze(Object.assign({}, this._host ?? {}));
+            this._templateRunType = 'child';
+        }
+
+        this.clearTempData();
+        //this._childOutputs = [];
+        this._host = Object.assign({}, childData.host ?? {}, this._rootHost);
+        this._output = undefined;
+
+        const recursiveClear = (element: ICategoryLikeTreeElement) => {
+            if (element instanceof TreeElement) {
+                element.clearTempData();
+            }
+
+            if (element.hasCategories) {
+                element.categories.forEach(recursiveClear);
+            }
+
+            if (element.hasResources) {
+                element.resources.forEach(e => {
+                    if (e instanceof TreeElement) {
+                        e.clearTempData();
+                    }
+                });
+            }
+        };
+
+        recursiveClear(this.model);
+    }
+
+    public get output(): OutputFileData | undefined {
+        return this._output;
     }
 
     public addToTempData = (key: string, value: unknown): void => {
@@ -59,7 +118,7 @@ export class TemplateRootModel {
     }
 
     public get settings(): Readonly<CodeGeneratorBasicSettings> {
-        const settings = this._rootOutputFile?.settings;
+        const settings = this._output?.settings;
         if (isNullOrEmpty(settings)) {
             throw new AppError('Missing root output file settings !');
         }

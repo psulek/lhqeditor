@@ -1,16 +1,30 @@
-﻿{{! sets root output file name to 'model name' with suffix '.gen.cs' with output settings from 'model.codeGenerator.settings' -  child 'CSharp'}}
+﻿{{! sets root output:
+    * file name to 'model name' with suffix '.gen.cs' 
+    * with output settings from 'model.codeGenerator.settings' -  child 'CSharp' (data must match ts type 'CodeGeneratorBasicSettings')
+    * content of 'm-output' helper is multiline jmespath query expression to retrieve settings from 'model.codeGenerator.settings',
+      * result of this query is stored in @root.settings (eg: @root.settings.OutputFolder)
+      * more about jmespath query expressions - https://jmespath.org/
+}}
 {{~#m-output fileName=(x-concat model.name ".gen.cs") ~}}
-{{! this is jmespath query expression (https://jmespath.org/) }}
 childs[?name=='CSharp'].attrs | [0].merge(@, {
-    Enabled: (Enabled||'true')=='true',
-    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
-    UseExpressionBodySyntax: (UseExpressionBodySyntax||'false')=='true',
-    MissingTranslationFallbackToPrimary: (MissingTranslationFallbackToPrimary||'false')=='true',
     OutputFolder: (OutputFolder||'Resources'),
-    LineEndings: (LineEndings||'LF')
+    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
+    LineEndings: (LineEndings||'LF'),
+    Enabled: (Enabled||'true')=='true',
+    UseExpressionBodySyntax: (UseExpressionBodySyntax||'false')=='true',
+    MissingTranslationFallbackToPrimary: (MissingTranslationFallbackToPrimary||'false')=='true'
 })
 {{~/m-output~}}
+{{! for each language generate resx file
+    * sets templateId to 'NetResx'
+    * host host.lang to iterated language code (using jmespath query)
+    * child outputs will be generated after this main template is generated
+}}
+{{~#each model.languages ~}}
+    {{~m-output-child templateId="NetResx" host=(x-value this query="{lang: @}") }}
+{{~/each~}}
 
+{{! setup some root data that will be accesible in template via '@root.data.[key]', eg: @root.data.rootClassName }}
 {{~m-data (x-concat model.name "Localizer") key="rootClassName" ~}}
 {{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
 

@@ -1,3 +1,14 @@
+{{! '@root.host.lang' contain language code (eg: 'en', 'sk') }}
+{{~#m-output fileName=(x-concat model.name "." @root.host.lang ".resx") ~}}
+childs[?name=='ResX'].attrs | [0].merge(@, {
+    OutputFolder: (OutputFolder||'Resources'),
+    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
+    LineEndings: (LineEndings||'LF'),
+    Enabled: (Enabled||'true')=='true',
+    CultureCodeInFileNameForPrimaryLanguage: (CultureCodeInFileNameForPrimaryLanguage||'true')=='true',
+    CompatibleTextEncoding: (CompatibleTextEncoding||'true')=='true'
+})
+{{~/m-output~}}
 <?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
@@ -133,12 +144,13 @@
 {{#*inline "resources"}}
 {{#if resources}}
 {{#each resources}}
-{{#if (x-resourceHasLang this lang=@root.extra.lang) }}
-  <data name="{{x-fn getFullParentPath ''}}" xml:space="preserve">
-    {{#if @root.extra.useHostWebHtmlEncode }}
-    <value>{{ x-host-webHtmlEncode (x-resourceValue this lang=@root.extra.lang) }}</value>
+{{#if (x-fn hasValue @root.host.lang) }}
+  <data name="{{x-fn paths.getParentPath ''}}" xml:space="preserve">
+    {{m-data (x-fn getValue @root.host.lang) key="resourceValue" ~}}
+    {{#if @root.settings.CompatibleTextEncoding ~}}
+    <value>{{ x-host-webHtmlEncode data.resourceValue }}</value>
     {{else}}
-    <value>{{ x-textEncode (x-resourceValue this lang=@root.extra.lang) mode="xml" quotes=false}}</value>
+    <value>{{ x-textEncode data.resourceValue mode="xml" quotes=false}}</value>
     {{/if}}
     {{#if description}}
     <comment>{{ description ~}}</comment>

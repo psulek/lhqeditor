@@ -90,20 +90,32 @@ export class Generator {
             throw new AppError(`LHQ model '${fileName}' missing code generator template information !`);
         }
 
-        // const codeGenSettings = Object.assign({}, DefaultCodeGenSettings, rootModel.codeGenerator.settings || {});
-        // rootModel.updateCodeGeneratorSettings(codeGenSettings);
-
         const templateModel = new TemplateRootModel(rootModel, {}, hostData);
 
         // run handlebars template generator
         const templateResult = HbsTemplateManager.runTemplate(templateId, templateModel);
 
-        const rootOutputFile = templateModel.rootOutputFile;
-        if (isNullOrEmpty(rootOutputFile)) {
-            throw new AppError(`LHQ model '${fileName}' missing root output file information (missing 'm-outputFile' helper) !`);
+        const mainOutput = templateModel.output;
+        if (isNullOrEmpty(mainOutput)) {
+            throw new AppError(`Template '${templateId}' missing main output file information (missing 'm-output' helper) !`);
         }
 
-        this.addResultFile('root output file', templateResult, rootOutputFile.fileName, rootOutputFile.settings);
+        this.addResultFile('main output file', templateResult, mainOutput.fileName, mainOutput.settings);
+
+        // process child outputs (if any)
+        templateModel.childOutputs.forEach(child => {
+            templateModel.setAsChildTemplate(child);
+
+            // run handlebars template generator
+            const templateResult = HbsTemplateManager.runTemplate(child.templateId, templateModel);
+
+            const output = templateModel.output;
+            if (isNullOrEmpty(output)) {
+                throw new AppError(`Template '${child.templateId}' missing main output file information (missing 'm-output' helper) !`);
+            }
+
+            this.addResultFile('child output file', templateResult, output.fileName, output.settings);
+        });
 
 
         return { generatedFiles: this._generatedFiles, modelGroupSettings: [] };
@@ -115,8 +127,6 @@ export class Generator {
         if (isNullOrEmpty(fileName)) {
             throw new AppError(`Missing file name for '${fileDescription}' !`);
         }
-
-        //settings = Object.assign({}, DefaultCodeGenSettings, settings)
 
         if (settings.Enabled) {
             const genFileName = isNullOrEmpty(settings.OutputFolder) ? fileName : HostEnvironment.pathCombine(settings.OutputFolder, fileName);

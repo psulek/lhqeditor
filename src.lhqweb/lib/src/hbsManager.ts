@@ -17,6 +17,10 @@ export class HbsTemplateManager {
         HbsTemplateManager._sources[templateId] = handlebarContent;
     }
 
+    public static hasTemplate(templateId: string): boolean {
+        return HbsTemplateManager._sources.hasOwnProperty(templateId);
+    }
+
     public static runTemplate(templateId: string, data: unknown): string {
         let compiled: HandlebarsTemplateDelegate;
 

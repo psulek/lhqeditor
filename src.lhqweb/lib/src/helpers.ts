@@ -19,8 +19,9 @@ import {
 
 import { AppError } from './AppError';
 import { TreeElement } from './model/treeElement';
-import { OutputFileData, TemplateRootModel } from './model/templateRootModel';
+import { OutputFileData, OutputInlineData, TemplateRootModel } from './model/templateRootModel';
 import { DefaultCodeGenSettings } from './model/modelConst';
+import { CodeGeneratorBasicSettings } from './model/api/types';
 
 export function registerHelpers() {
     Object.keys(helpersList).forEach(key => {
@@ -37,6 +38,8 @@ const helpersList: Record<string, Function> = {
     // generic helpers
     'x-header': headerHelper,
     'x-normalizePath': normalizePathHelper,
+    'char-tab': charHelper,
+    'char-quote': charHelper,
     'x-value': valueHelper,
     'x-indent': indentHelper,
     'x-join': joinHelper,
@@ -69,6 +72,7 @@ const helpersList: Record<string, Function> = {
     'm-data': modelDataHelper,
     'm-output': modelOutputHelper,
     'm-output-child': modelOutputChildHelper,
+    'm-output-inline': modelOutputInlineHelper,
 
     //'m-settings': modelSettingsHelper,
     //'x-resourceComment': resourceCommentHelper,
@@ -183,6 +187,20 @@ const fileHeader =
 // </auto-generated>
 //------------------------------------------------------------------------------`;
 
+function getContextAndOptions<T = any>(thisRef: any, ...args: any[]): { context: any, options: HbsDataContext<T> } {
+    if (args.length === 1) {
+        return {
+            context: thisRef,
+            options: args[0] as HbsDataContext<T>
+        };
+    }
+
+    return {
+        context: args[0] ?? thisRef,
+        options: args[1] as HbsDataContext<T>
+    };
+}
+
 function headerHelper(options: HbsDataContext) {
     return getRoot(options).host?.fileHeader ?? fileHeader;
 }
@@ -202,9 +220,11 @@ function normalizePathHelper(context: any, options: HbsDataContext) {
     return result;
 }
 
-function queryObjValue(context: any, options: HbsDataContext<{query?: string}>): any {
-    let value = context;
+function queryObjValue(context: any, options: HbsDataContext<{ query?: string }>, defaultUndefined?: boolean): any {
+    defaultUndefined ??= false;
+    let value = defaultUndefined ? undefined : context;
     let query = options?.hash?.query;
+    //let b = true;
     if (typeof options?.fn === 'function') {
         query = options.fn(context);
         if (!isNullOrEmpty(query) && typeof query === 'string') {
@@ -212,12 +232,41 @@ function queryObjValue(context: any, options: HbsDataContext<{query?: string}>):
         }
     }
 
-    //if (!isNullOrEmpty(query) && typeof query === 'string' && typeof context === 'object') {
     if (!isNullOrEmpty(query) && typeof query === 'string' && !isNullOrEmpty(context)) {
         value = jsonQuery(context, query);
+        //b = false;
     }
 
     return value;
+}
+// function queryObjValue(context: any, options: HbsDataContext<{ query?: string }>): any {
+//     let value = context;
+//     let query = options?.hash?.query;
+//     if (typeof options?.fn === 'function') {
+//         query = options.fn(context);
+//         if (!isNullOrEmpty(query) && typeof query === 'string') {
+//             query = removeNewLines(query);
+//         }
+//     }
+
+//     if (!isNullOrEmpty(query) && typeof query === 'string' && !isNullOrEmpty(context)) {
+//         value = jsonQuery(context, query);
+//     }
+
+//     return value;
+// }
+
+function charHelper(options: HbsDataContext) {
+    const name = options.name?.split('-')[1];
+    switch (name) {
+        case 'tab':
+            return '\t';
+        case 'quote':
+            return '"';
+        default: {
+            throw new AppError(`Unknown '${options?.name}' char helper !`);
+        }
+    }
 }
 
 /**
@@ -259,51 +308,73 @@ function rawHelper(options: HbsDataContext) {
     return new Handlebars.SafeString(res);
 }
 
-/*
-{{#join people delimiter=" and " start="0" end="2"}}{{name}} ({{gender}}, {{age}}){{/join}}
-<h1>Jobs</h1>
-{{join jobs delimiter=", " start="1" end="2"}}
-*/
-function joinHelper(items: any[], options: HbsDataContext) {
+type joinHelperArgs = {
+    sep?: string;
+    start?: number;
+    length?: number;
+    end?: number;
+    decorator?: string;
+};
 
-    // if (dbgCounter === 0) {
-    //     dbgCounter = 1;
-    //     // @ts-ignore
-    //     HostEnvironment.debugLog(`[joinHelper] items: ${typeof items}, ${items.name} options: ${JSON.stringify(options)}`);
-    // }
+function joinHelper(items: any[], options: HbsDataContext<joinHelperArgs>) {
+    const separator = valueOrDefault(options.hash?.sep, ",");
+    const start = valueOrDefault(options.hash?.start, 0);
+    const len = items ? items.length : 0;
+    let end = valueOrDefault(options.hash?.end, len);
+    const decorator = options.hash?.decorator || '';
 
-    const delimiter = options.hash?.delimiter || ",";
-    const start = (options.hash?.start || 0) as number;
-    const len = (items ? items.length : 0) as number;
-    let end = (options.hash?.end || len) as number;
+    // const delimiter = options.hash?.delimiter || ",";
+    // const start = (options.hash?.start || 0) as number;
+    // const len = (items ? items.length : 0) as number;
+    // let end = (options.hash?.end || len) as number;
+    // const decorator = options.hash?.decorator || `"`;
     let out = "";
-    const decorator = options.hash?.decorator || `"`;
 
     if (end > len) end = len;
 
     if ('function' === typeof options) {
         for (let i = start; i < end; i++) {
-            if (i > start) out += delimiter;
+            if (i > start) out += separator;
             if ('string' === typeof items[i])
                 out += items[i];
             else
                 out += options(items[i]);
         }
-        return out;
+
     } else {
         // @ts-ignore
-        var res = [].concat(items).map(x => `${decorator}${x}${decorator}`).slice(start, end).join(delimiter);
+        out = [].concat(items).map(x => `${decorator}${x}${decorator}`).slice(start, end).join(separator);
         // @ts-ignore
-        return new Handlebars.SafeString(res);
+        //return new Handlebars.SafeString(res);
     }
+
+    return out;
+}
+
+type concatHelperArgs = {
+    sep?: string;
+    empty?: boolean;
+};
+const concatHelperArgsDefault: concatHelperArgs = {
+    sep: '',
+    empty: false
 }
 
 // usage: {{ x-concat 'prop1' 'prop2' 'prop3' sep="," }}
 function concatHelper(...args: any[]): string {
-    const options = args.pop() as HbsDataContext;
-    const sep = valueOrDefault(options.hash?.sep, '');
+    const options = args.pop() as HbsDataContext<concatHelperArgs>;
+    // const sep = valueOrDefault(options.hash?.sep, '');
+    // const includeEmpty = valueOrDefault(options.hash?.includeEmpty, false);
+    const hash: concatHelperArgs = Object.assign({}, concatHelperArgsDefault, options.hash ?? {});
 
-    return args.filter(x => !isNullOrEmpty(x)).join(sep);
+    const array = hash.empty ? args : args.filter(x => !isNullOrEmpty(x));
+
+    removeProperties(options.hash, hash);
+    options.hash = { sep: hash.sep };
+
+    return joinHelper(array, options);
+
+    //return args.filter(x => !isNullOrEmpty(x)).join(sep);
 }
 
 function setCustomData(context: any, options: HbsDataContext, valueOrFn: () => any | any, forceToRoot: boolean): void {
@@ -505,7 +576,7 @@ function hostWebHtmlEncodeHelper(str: string): string {
 function renderHelper(input: any, options: any): string {
     const when = options?.hash?.when ?? true;
     // @ts-ignore
-    return when ? input : '';
+    return (!isNullOrEmpty(when) && (when === true || when === "true")) ? input : '';
 }
 
 function isNullOrEmptyHelper<T>(value: T | null | undefined | ''): value is undefined | null | '' {
@@ -538,15 +609,14 @@ function getRoot(options: HbsDataContext): TemplateRootModel {
     return options.data['root'] as TemplateRootModel;
 }
 
-// function modelSettingsHelper(name: string, options: HbsDataContext) {
-//     const root = getRoot(options);
-//     //childs[?name=='ResX'].attrs | [0]
-//     const settings = root.codeGenerator?.settings;
-//     jsonQuery(settings, `childs[?name=='${name}`+"'].attrs | [0]");
-// }
+function stringifyHelper(context: any, options: HbsDataContext<{ space?: number | string | undefined }>) {
+    let space = options.hash?.space ?? undefined;
 
-function stringifyHelper(context: any) {
-    return new Handlebars.SafeString(JSON.stringify(context));
+    if (typeof space === 'string') {
+        space = space.replace(/\\\\t/gm, '\t');
+    }
+
+    return new Handlebars.SafeString(JSON.stringify(context, null, space));
 }
 
 function toJsonHelper(context: any) {
@@ -592,7 +662,13 @@ function modelDataHelper(context: any, options: HbsDataContext) {
     setCustomData(this, options, value, forceToRoot);
 }
 
-function modelOutputHelper(options: HbsDataContext<{ fileName: string, mergeWithDefaults: boolean }>) {
+type modelOutputArgs = {
+    fileName: string;
+    mergeWithDefaults: boolean;
+    settings?: CodeGeneratorBasicSettings
+};
+
+function modelOutputHelper(options: HbsDataContext<modelOutputArgs>) {
     //@ts-ignore
     const context = this;
 
@@ -604,39 +680,48 @@ function modelOutputHelper(options: HbsDataContext<{ fileName: string, mergeWith
         throw new AppError(`Helper '${options.name}' missing hash properties !`);
     }
 
-    let fileName = options?.hash?.fileName ?? '';
+    const fileName = options?.hash?.fileName ?? '';
 
-    // for child run, fileName can be (and most possible be) already set so take it!
-    // if (context.templateRunType === 'child') {
-    //     fileName = context.output?.fileName ?? '';
+    // // if fileName is not set in hash and also root context does not have set fileName then throw error
+    // if (isNullOrEmpty(fileName)) {
+    //     throw new AppError(`Helper '${options.name}' missing file name !`);
     // }
 
-    // if fileName is not set in hash and also root context does not have set fileName then throw error
-    if (isNullOrEmpty(fileName)) {
-        throw new AppError(`Helper '${options.name}' missing file name !`);
-    }
-
-
     const settingsNode = context.model.codeGenerator?.settings;
+    const settingsObj = options.hash?.settings ?? queryObjValue(settingsNode, options as any, true);
 
-    const settingsObj = queryObjValue(settingsNode, options as any);
-    if (isNullOrEmpty(settingsObj)) {
-        throw new AppError(`Helper '${options.name}' could not find code gen settings from query !`);
+    let outputFile: OutputFileData = context.output!;
+    let updateSettings = true;
+
+    if (outputFile) {
+        if (fileName !== undefined) {
+            outputFile.fileName = fileName;
+
+            if (settingsObj === undefined) {
+                updateSettings = false;
+            }
+        }
+    } else {
+        outputFile = {
+            fileName: fileName,
+            settings: settingsObj
+        };
     }
 
-    const mergeWithDefaults = options?.hash?.mergeWithDefaults ?? true;
+    if (updateSettings) {
+        if (isNullOrEmpty(settingsObj)) {
+            throw new AppError(`Helper '${options.name}' could not find code gen settings from query !`);
+        }
 
-    const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
-
-    const outputFile: OutputFileData = {
-        fileName: fileName,
-        settings: settings
-    };
+        const mergeWithDefaults = options?.hash?.mergeWithDefaults ?? true;
+        const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
+        outputFile.settings = settings;
+    }
 
     context.setOutput(outputFile);
 }
 
-function modelOutputChildHelper(options: HbsDataContext<{templateId: string, host?: Record<string, unknown>}>) {
+function modelOutputChildHelper(options: HbsDataContext<{ templateId: string, host?: Record<string, unknown> }>) {
     const context = getRoot(options);
 
     if (!(context instanceof TemplateRootModel)) {
@@ -653,4 +738,55 @@ function modelOutputChildHelper(options: HbsDataContext<{templateId: string, hos
     }
 
     context.addChildOutput(templateId, options.hash?.host);
+}
+
+
+type modelOutputInlineArgs = modelOutputArgs;
+
+//function modelOutputInlineHelper(data: any, opts: HbsDataContext<modelOutputInlineArgs>) {
+function modelOutputInlineHelper() {
+    // @ts-ignore
+    const { context, options } = getContextAndOptions<modelOutputInlineArgs>(this, ...arguments);
+
+    if (!(context instanceof TemplateRootModel)) {
+        throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
+    }
+
+    if (arguments.length > 1) {
+        throw new AppError(`Helper '${options.name}' can be only use as block helper (value must be child of '${options.name}' begin/end tags) !`);
+    }
+
+    const fileName = options.hash?.fileName ?? '';
+    if (isNullOrEmpty(fileName)) {
+        throw new AppError(`Helper '${options.name}' missing property 'fileName' !`);
+    }
+
+    if (typeof options?.fn !== 'function') {
+        throw new AppError(`Helper '${options.name}' can be only use as block helper (value must be child of '${options.name}' begin/end tags) !`);
+    }
+
+    const settingsNode = context.model.codeGenerator?.settings;
+    let settingsObj = options.hash?.settings ?? queryObjValue(settingsNode, options as any);
+
+    if (isNullOrEmpty(settingsObj)) {
+        // get settings from root template if not found on 'ouput-inline' helper...
+        settingsObj = getRoot(options).settings;
+
+        if (isNullOrEmpty(settingsObj)) {
+            throw new AppError(`Helper '${options.name}' could not find code gen settings from query (nor root settings) !`);
+        }
+    }
+
+    const mergeWithDefaults = options?.hash?.mergeWithDefaults ?? true;
+    const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
+
+    const fileContent = options.fn(context) ?? '';
+
+    const inlineOutput: OutputInlineData = {
+        fileName: fileName,
+        settings: settings,
+        content: fileContent
+    };
+
+    context.addInlineOutputs(inlineOutput);
 }

@@ -4,9 +4,11 @@ import { CodeGeneratorBasicSettings, ICategoryLikeTreeElement, IRootModelElement
 import { TreeElement } from './treeElement';
 
 export type OutputFileData = {
-    fileName: string;
-    settings: CodeGeneratorBasicSettings;
+    fileName: string | undefined;
+    settings: CodeGeneratorBasicSettings | undefined;
 };
+
+export type OutputInlineData = OutputFileData & { content: string };
 
 export type OutputChildData = {
     templateId: string;
@@ -24,6 +26,7 @@ export class TemplateRootModel {
     private _output: OutputFileData | undefined;
     private _templateRunType: TemplateRunType = 'root';
     private _childOutputs: OutputChildData[] = [];
+    private _inlineOutputs: OutputInlineData[] = [];
 
     constructor(model: IRootModelElement, data: Record<string, unknown>, host: Record<string, unknown>) {
         if (isNullOrEmpty(model)) {
@@ -36,9 +39,13 @@ export class TemplateRootModel {
     }
 
     public setOutput(outputFile: OutputFileData): void {
-        if (!isNullOrEmpty(this._output)) {
-            throw new AppError('Output was already set !');
-        }
+        // if (!isNullOrEmpty(this._output)) {
+        //     throw new AppError('Output was already set !');
+        // }
+
+        // if (this._templateRunType !== 'root') {
+        //     throw new AppError('Child template cannot set main output !');
+        // }
 
         this._output = outputFile;
     }
@@ -51,8 +58,16 @@ export class TemplateRootModel {
         this._childOutputs.push({ templateId, host });
     }
 
+    public addInlineOutputs(inlineOutput: OutputInlineData) {
+        this._inlineOutputs.push(inlineOutput);
+    }
+
     public get childOutputs(): OutputChildData[] {
         return this._childOutputs;
+    }
+
+    public get inlineOutputs(): OutputInlineData[] {
+        return this._inlineOutputs;
     }
 
     public get templateRunType(): TemplateRunType {
@@ -67,6 +82,7 @@ export class TemplateRootModel {
 
         this.clearTempData();
         //this._childOutputs = [];
+        this._inlineOutputs = [];
         this._host = Object.assign({}, childData.host ?? {}, this._rootHost);
         this._output = undefined;
 

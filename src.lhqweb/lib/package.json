@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "gen-schema": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-schema",
-    "gen-lhq": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/Strings.lhq",
+    "gen-lhq": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/TypescriptJson01.lhq",
     "__gen-dts": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-dts",
     "test": "ts-node --project tsconfig.build.json ./src/build/test.ts",
     "build": "rimraf dist && webpack",
@@ -26,11 +26,13 @@
   "devDependencies": {
     "@duplojs/zod-to-typescript": "0.3.0",
     "@total-typescript/ts-reset": "^0.6.1",
+    "@types/fs-extra": "^11.0.4",
     "@types/get-value": "3.0.5",
     "@types/jmespath": "0.15.2",
     "@types/minimist": "^1.2.5",
     "@types/node": "^22.10.10",
     "cpx": "1.5.0",
+    "fs-extra": "11.3.0",
     "minimist": "1.2.8",
     "rimraf": "^6.0.1",
     "ts-loader": "^9.5.2",

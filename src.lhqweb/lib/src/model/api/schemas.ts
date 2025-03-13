@@ -25,7 +25,7 @@ export const LhqModelResourceSchemaBase = z.object({
     state: LhqModelResourceTranslationStateSchema,
     description: z.string().optional(),
     parameters: z.record(LhqModelResourceParameterSchema).optional(),
-    values: z.record(LhqModelResourceValueSchema)
+    values: z.record(LhqModelResourceValueSchema).optional()
 });
 
 type Resource = z.infer<typeof LhqModelResourceSchemaBase> & {};

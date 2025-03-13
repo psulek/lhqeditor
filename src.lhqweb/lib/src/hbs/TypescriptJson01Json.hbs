@@ -1,0 +1,49 @@
+{{! '@root.host.lang' contain language code (eg: 'en', 'sk') }}
+{{~m-data (x-equals model.primaryLanguage @root.host.lang cs=true) key="isPrimaryLang" ~}}
+{{~#m-output ~}}
+childs[?name=='Json'].attrs | [0].merge(@, {
+    OutputFolder: (OutputFolder||'Resources'),
+    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
+    LineEndings: (LineEndings||'LF'),
+    Enabled: (Enabled||'true')=='true',
+    CultureCodeInFileNameForPrimaryLanguage: (CultureCodeInFileNameForPrimaryLanguage||'true')=='true',
+    MetadataFileNameSuffix: (MetadataFileNameSuffix||'metadata'),
+    WriteEmptyValues: (WriteEmptyValues||'true')=='true',
+    UseLangInName: (CultureCodeInFileNameForPrimaryLanguage||'true')=='true' || '{{@root.data.isPrimaryLang}}'=='false'
+})
+{{~/m-output~}}
+{{~m-output fileName=(x-concat model.name (x-render @root.host.lang when=@root.settings.UseLangInName) "json" sep="." empty=false) ~}}
+
+{{~#if @root.data.isPrimaryLang~}}
+{{~#m-output-inline fileName=(x-concat model.name "-" @root.settings.MetadataFileNameSuffix ".json") ~}}
+{{x-stringify (x-value this query="{default: model.primaryLanguage, languages: model.languages}") space=(char-tab)}}
+{{~/m-output-inline~}}
+{{~/if~}}
+
+{{#with model}}
+{
+{{#each categories ~}}
+	{{> category }}
+{{/each}}
+{{#if resources}}
+{{> resources }}
+{{/if}}
+}
+{{/with}}
+{{#*inline "category"}}
+"{{name}}": {
+{{#each categories }}
+	{{> category ~}}
+{{/each}}
+{{> resources }}
+}{{#if ( x-logical (x-equals @last false) parent.hasResources op="or" ) }},{{/if}}
+{{/inline}}
+{{#*inline "resources"}}
+{{#if resources}}
+{{#each resources}}
+{{#if (x-logical (x-fn hasValue @root.host.lang) @root.settings.WriteEmptyValues op="or") }}
+	"{{name}}": "{{{ x-textEncode (x-fn getValue @root.host.lang true) mode="json" }}}"{{#if (x-equals @last false)}},{{/if}}
+{{/if}}
+{{/each}}
+{{/if}}
+{{/inline}}

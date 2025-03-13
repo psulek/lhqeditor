@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
+import * as fse from 'fs-extra'
 import { Generator } from '../generator';
 import { HbsTemplateManager } from '../hbsManager';
 import path from 'node:path';
@@ -19,6 +20,8 @@ const fileHeader = `//----------------------------------------------------------
 export async function generateFromLhq(lhqFileName: string): Promise<void> {
     HbsTemplateManager.registerTemplate('NetCoreResxCsharp01', await readHbsFile('NetCoreResxCsharp01.hbs'))
     HbsTemplateManager.registerTemplate('NetResx', await readHbsFile('NetResx.hbs'))
+    HbsTemplateManager.registerTemplate('TypescriptJson01', await readHbsFile('TypescriptJson01.hbs'))
+    HbsTemplateManager.registerTemplate('TypescriptJson01Json', await readHbsFile('TypescriptJson01Json.hbs'))
 
     const lhqFile = await fsp.readFile(lhqFileName, { encoding: 'utf-8' });
     const model = safeJsonParse<LhqModel>(lhqFile);
@@ -33,7 +36,8 @@ export async function generateFromLhq(lhqFileName: string): Promise<void> {
     console.log(`Generated ${result.generatedFiles.length} files.\n------------\n`);
 
     //result.generatedFiles.forEach(x => console.log(`[${x.FileName}]\n${x.getContent(true)}`));
-    const output = path.resolve(__dirname, '../../temp');
+    const name = path.parse(lhqFileName).name;
+    const output = path.resolve(__dirname, '../../temp/' + name);
     result.generatedFiles.forEach((file) => {
         saveGenFile(generator, file, output);
         console.log(`Saved file ${file.fileName}.`);
@@ -47,9 +51,12 @@ async function saveGenFile(generator: Generator, generatedFile: GeneratedFile, o
 
     const fileName = !outputPath ? generatedFile.fileName : path.join(outputPath, generatedFile.fileName);
     const dir = path.dirname(fileName);
-    if (!fs.existsSync(dir)) {
+
+    await fse.ensureDir(dir);
+
+    /* if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
-    }
+    } */
 
     await fsp.writeFile(fileName, encodedText, { encoding: 'utf8' });
 

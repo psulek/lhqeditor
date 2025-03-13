@@ -21,7 +21,7 @@ childs[?name=='CSharp'].attrs | [0].merge(@, {
     * child outputs will be generated after this main template is generated
 }}
 {{~#each model.languages ~}}
-    {{~m-output-child templateId="NetResx" host=(x-value this query="{lang: @}") }}
+    {{m-output-child templateId="NetResx" host=(x-value this query="{lang: @}")}}
 {{~/each~}}
 
 {{! setup some root data that will be accesible in template via '@root.data.[key]', eg: @root.data.rootClassName }}
@@ -224,13 +224,13 @@ namespace {{ @root.host.namespace }}
 
 
 		{{#if @root.settings.MissingTranslationFallbackToPrimary }}
-		public static string[] AvailableCultures => new string[] { {{x-join languages }} };
+		public static string[] AvailableCultures => new string[] { {{{x-join languages decorator=(char-quote) }}} };
 		{{else}}
 		public static string[] AvailableCultures
 		{
 			get
 			{
-				return new string[] { {{x-join languages }} };
+				return new string[] { {{{x-join languages decorator=(char-quote) }}} };
 			}
 		}
 		{{/if}}

@@ -1,0 +1,58 @@
+{{~#m-output fileName=(x-concat model.name ".d.ts") ~}}
+childs[?name=='Typescript'].attrs | [0].merge(@, {
+    OutputFolder: (OutputFolder||'Resources'),
+    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
+    LineEndings: (LineEndings||'LF'),
+    Enabled: (Enabled||'true')=='true',
+    AmbientNamespaceName: (AmbientNamespaceName||''),
+    HasAmbientNamespaceName: (AmbientNamespaceName||'')!='',
+    InterfacePrefix: (InterfacePrefix||'')
+})
+{{~/m-output~}}
+{{~#each model.languages ~}}
+    {{m-output-child templateId="TypescriptJson01Json" host=(x-value this query="{lang: @}") }}
+{{~/each~}}
+
+{{#with model}}
+{{#if @root.settings.HasAmbientNamespaceName }}
+declare namespace {{ @root.settings.AmbientNamespaceName }} {
+	{{> template }}
+	
+{{else}}
+{{> template }}
+
+{{/if}}
+{{#if @root.settings.HasAmbientNamespaceName }}
+}
+{{/if}}
+{{/with}}
+{{#*inline "template"}}
+export interface {{ x-concat @root.settings.InterfacePrefix name }} {
+{{#each categories ~}}
+	{{> category }}
+{{/each}}
+{{#if resources}}
+{{> resources }}
+{{/if}}
+}
+
+export interface {{ x-concat @root.settings.InterfacePrefix name "Metadata" }} {
+    default: string;
+    languages: Array<string>;
+}
+{{/inline}}
+{{#*inline "category"}}
+{{name}}: {
+{{#each categories }}
+	{{> category ~}}
+{{/each}}
+{{> resources }}
+}{{#if ( x-logical (x-equals @last false) parent.hasResources op="or" ) }},{{/if}}
+{{/inline}}
+{{#*inline "resources"}}
+{{#if resources}}
+{{#each resources}}
+	{{name}}: string;
+{{/each}}
+{{/if}}
+{{/inline}}

@@ -61,13 +61,14 @@ export class ResourceElement extends TreeElement implements IResourceElement {
         return '';
     }
     
-    public getValue = (language: string): string => {
+    public getValue = (language: string, trim?: boolean): string => {
+        let result = '';
         if (!isNullOrEmpty(language) && this.values) {
             const value = this.values.find(x => x.languageName === language);
-            return value?.value ?? '';
+            result = value?.value ?? '';
         }
 
-        return '';
+        return trim === true ? result.trim() : result;
     }
 
     public hasValue = (language: string): boolean => {

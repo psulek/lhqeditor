@@ -3,7 +3,7 @@ import { AppError } from './AppError';
 import { RootModelElement } from './model/rootModelElement';
 import { HostEnvironmentDefault, IHostEnvironment } from './hostEnv';
 import { registerHelpers } from './helpers';
-import { TemplateRootModel } from './model/templateRootModel';
+import { OutputFileData, OutputInlineData, TemplateRootModel } from './model/templateRootModel';
 import { HbsTemplateManager } from './hbsManager';
 import { DefaultCodeGenSettings } from './model/modelConst';
 import { GeneratedFile, GeneratorSource, GenerateResult } from './types';
@@ -96,11 +96,18 @@ export class Generator {
         const templateResult = HbsTemplateManager.runTemplate(templateId, templateModel);
 
         const mainOutput = templateModel.output;
-        if (isNullOrEmpty(mainOutput)) {
-            throw new AppError(`Template '${templateId}' missing main output file information (missing 'm-output' helper) !`);
+        this.addResultFile(templateId, templateResult, mainOutput);
+
+        const saveInlineOutputs = (templId: string, inlineOutputs: OutputInlineData[]): void => {
+            if (inlineOutputs) {
+                inlineOutputs.forEach(inline => {
+                    this.addResultFile(templId, inline.content, inline);
+                });
+            }
         }
 
-        this.addResultFile('main output file', templateResult, mainOutput.fileName, mainOutput.settings);
+        // save inline outputs (of main template) if any
+        saveInlineOutputs(templateId, templateModel.inlineOutputs);
 
         // process child outputs (if any)
         templateModel.childOutputs.forEach(child => {
@@ -114,19 +121,33 @@ export class Generator {
                 throw new AppError(`Template '${child.templateId}' missing main output file information (missing 'm-output' helper) !`);
             }
 
-            this.addResultFile('child output file', templateResult, output.fileName, output.settings);
+            this.addResultFile(child.templateId, templateResult, output);
+
+            // save inline outputs (of child template) if any
+            saveInlineOutputs(child.templateId, templateModel.inlineOutputs);
         });
 
 
         return { generatedFiles: this._generatedFiles, modelGroupSettings: [] };
     }
 
-    private addResultFile(fileDescription: string, templateResult: string, fileName: string,
-        settings: CodeGeneratorBasicSettings): void {
-
-        if (isNullOrEmpty(fileName)) {
-            throw new AppError(`Missing file name for '${fileDescription}' !`);
+    private addResultFile(templateId: string, templateResult: string, output: OutputFileData | undefined) {
+        if (isNullOrEmpty(output)) {
+            throw new AppError(`Template '${templateId}' missing main output file information (missing 'm-output' helper) !`);
         }
+
+        if (isNullOrEmpty(output.fileName)) {
+            throw new AppError(`Template '${templateId}' missing main output file name (missing property 'fileName' in 'm-output' helper) !`);
+        }
+
+        if (isNullOrEmpty(output.settings)) {
+            throw new AppError(`Template '${templateId}' missing main output settings (in 'm-output' helper) !`);
+        }
+
+        this.addResultFileInternal(templateResult, output.fileName, output.settings);
+    }
+
+    private addResultFileInternal(templateResult: string, fileName: string, settings: CodeGeneratorBasicSettings): void {
 
         if (settings.Enabled) {
             const genFileName = isNullOrEmpty(settings.OutputFolder) ? fileName : HostEnvironment.pathCombine(settings.OutputFolder, fileName);

@@ -71,7 +71,7 @@ export interface IResourceElement extends ITreeElement {
     readonly hasParameters: boolean;
     readonly hasValues: boolean;
 
-    getValue(language: string): string;
+    getValue(language: string, trim?: boolean): string;
     hasValue(language: string): boolean;
 }
 

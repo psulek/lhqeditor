@@ -87,6 +87,10 @@ export function isNullOrEmpty<T>(value: T | null | undefined | ''): value is und
     return value === null || value === undefined || value === '';
 }
 
+export function isNullOrUndefined<T>(value: T | null | undefined): value is undefined | null {
+    return value === null || value === undefined;
+}
+
 export function sortObjectByKey<T>(obj: Record<string, T>, sortOrder: 'asc' | 'desc' = 'asc'): Record<string, T> {
     return Object.fromEntries(
         Object.entries(obj).sort(([a], [b]) =>
@@ -204,9 +208,8 @@ export function textEncode(str: string, encoder: TextEncodeOptions): string {
 }
 
 export function valueOrDefault<T>(value: T | null | undefined | '' | unknown, defaultValue: T): T {
-    let result = isNullOrEmpty(value)
-        ? defaultValue
-        : value;
+    //let result = isNullOrEmpty(value) ? defaultValue : value;
+    let result = isNullOrUndefined(value) ? defaultValue : value;
 
     if (typeof defaultValue === 'boolean') {
         result = (valueAsBool(value) as unknown) as T;
@@ -319,7 +322,7 @@ export function generateSchema(schemaFilePath: string) {
     return JSON.stringify(jsonSchema, null, 2);
 }
 
-export function removeProperties(obj: any, ...propertiesToRemove: any) {
+export function removeProperties(obj: any, ...propertiesToRemove: any): any {
     //@ts-ignore
     propertiesToRemove.forEach(propObj => {
         for (let key in propObj) {
@@ -328,4 +331,6 @@ export function removeProperties(obj: any, ...propertiesToRemove: any) {
             }
         }
     });
+
+    return obj;
 }

@@ -98,6 +98,14 @@
   "resources": {
     "Welcome": {
       "state": "New",
+      "parameters": {
+        "p1": {
+          "order": 0
+        },
+        "p2": {
+          "order": 1
+        }
+      },
       "values": {
         "en": {
           "value": "Welcome {0} in this {1} !"

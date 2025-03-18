@@ -90,14 +90,6 @@ export class Generator {
             throw new AppError(`LHQ model '${fileName}' missing code generator template information !`);
         }
 
-        const templateModel = new TemplateRootModel(rootModel, {}, hostData);
-
-        // run handlebars template generator
-        const templateResult = HbsTemplateManager.runTemplate(templateId, templateModel);
-
-        const mainOutput = templateModel.output;
-        this.addResultFile(templateId, templateResult, mainOutput);
-
         const saveInlineOutputs = (templId: string, inlineOutputs: OutputInlineData[]): void => {
             if (inlineOutputs) {
                 inlineOutputs.forEach(inline => {
@@ -106,25 +98,43 @@ export class Generator {
             }
         }
 
-        // save inline outputs (of main template) if any
-        saveInlineOutputs(templateId, templateModel.inlineOutputs);
+        const templateModel = new TemplateRootModel(rootModel, {}, hostData);
+
+        // run handlebars template generator
+        templateModel.setCurrentTemplateId(templateId);
+        try {
+            const templateResult = HbsTemplateManager.runTemplate(templateId, templateModel);
+
+            const mainOutput = templateModel.output;
+            this.addResultFile(templateId, templateResult, mainOutput);
+
+            // save inline outputs (of main template) if any
+            saveInlineOutputs(templateId, templateModel.inlineOutputs);
+        } finally {
+            templateModel.setCurrentTemplateId(undefined);
+        }
 
         // process child outputs (if any)
         templateModel.childOutputs.forEach(child => {
             templateModel.setAsChildTemplate(child);
 
             // run handlebars template generator
-            const templateResult = HbsTemplateManager.runTemplate(child.templateId, templateModel);
+            templateModel.setCurrentTemplateId(child.templateId);
+            try {
+                const templateResult = HbsTemplateManager.runTemplate(child.templateId, templateModel);
 
-            const output = templateModel.output;
-            if (isNullOrEmpty(output)) {
-                throw new AppError(`Template '${child.templateId}' missing main output file information (missing 'm-output' helper) !`);
+                const output = templateModel.output;
+                if (isNullOrEmpty(output)) {
+                    throw new AppError(`Template '${child.templateId}' missing main output file information (missing 'm-output' helper) !`);
+                }
+
+                this.addResultFile(child.templateId, templateResult, output);
+
+                // save inline outputs (of child template) if any
+                saveInlineOutputs(child.templateId, templateModel.inlineOutputs);
+            } finally {
+                templateModel.setCurrentTemplateId(undefined);
             }
-
-            this.addResultFile(child.templateId, templateResult, output);
-
-            // save inline outputs (of child template) if any
-            saveInlineOutputs(child.templateId, templateModel.inlineOutputs);
         });
 
 

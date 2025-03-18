@@ -44,9 +44,6 @@ export function safeJsonParse<T>(value: string): T {
 export function jsonQuery<T>(obj: any, query: string, defaultValue?: T | undefined): T | undefined {
     return (jmespath(obj, query) as T | undefined) ?? defaultValue;
 }
-// export function jsonQuery<T, U>(obj: T, query: string): U | undefined {
-//     return jmespath(obj, query) as U | undefined;
-// }
 
 export function normalizePath(path: string): string {
     return path
@@ -333,4 +330,13 @@ export function removeProperties(obj: any, ...propertiesToRemove: any): any {
     });
 
     return obj;
+}
+
+export function formatDuration(ms: number): string {
+    const seconds = Math.floor(ms / 1000);
+    const milliseconds = ms % 1000;
+
+    return seconds > 0
+        ? `${seconds} second${seconds > 1 ? 's' : ''} and ${milliseconds} ms`
+        : `${milliseconds} ms`;
 }

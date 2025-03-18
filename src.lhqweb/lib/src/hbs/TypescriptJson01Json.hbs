@@ -1,6 +1,7 @@
 {{! '@root.host.lang' contain language code (eg: 'en', 'sk') }}
 {{~m-data (x-equals model.primaryLanguage @root.host.lang cs=true) key="isPrimaryLang" ~}}
-{{~#m-output ~}}
+{{! set output settings only (without fileName) }}
+{{~#output ~}}
 childs[?name=='Json'].attrs | [0].merge(@, {
     OutputFolder: (OutputFolder||'Resources'),
     EncodingWithBOM: (EncodingWithBOM||'false')=='true',
@@ -11,13 +12,17 @@ childs[?name=='Json'].attrs | [0].merge(@, {
     WriteEmptyValues: (WriteEmptyValues||'true')=='true',
     UseLangInName: (CultureCodeInFileNameForPrimaryLanguage||'true')=='true' || '{{@root.data.isPrimaryLang}}'=='false'
 })
-{{~/m-output~}}
-{{~m-output fileName=(x-concat model.name (x-render @root.host.lang when=@root.settings.UseLangInName) "json" sep="." empty=false) ~}}
+{{~/output~}}
+{{! sets output fileName using value 'UseLangInName' from settings set earlier }}
+{{~output fileName=(x-concat model.name (x-render @root.host.lang when=@root.settings.UseLangInName) "json" sep="." empty=false) ~}}
 
+{{! if current template lang is primary language then generate metadata file as well 
+    * this metadata file is not generated as template file
+    * instead child content is evaluated into string and saved to file ('fileName' attr of 'output-inline' helper) }}
 {{~#if @root.data.isPrimaryLang~}}
-{{~#m-output-inline fileName=(x-concat model.name "-" @root.settings.MetadataFileNameSuffix ".json") ~}}
-{{x-stringify (x-value this query="{default: model.primaryLanguage, languages: model.languages}") space=(char-tab)}}
-{{~/m-output-inline~}}
+{{#output-inline fileName=(x-concat model.name "-" @root.settings.MetadataFileNameSuffix ".json") }}
+{{x-stringify (x-value query="{default: model.primaryLanguage, languages: model.languages}") space=(char-tab)}}
+{{/output-inline}}
 {{~/if~}}
 
 {{#with model}}

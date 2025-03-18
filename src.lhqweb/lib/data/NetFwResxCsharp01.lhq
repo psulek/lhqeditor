@@ -1,8 +1,7 @@
 ﻿{
   "model": {
     "uid": "6ce4d54c5dbd415c93019d315e278638",
-    "version": 2,
-    "description": "root desc",
+    "version": 1,
     "options": {
       "categories": true,
       "resources": "All"
@@ -16,14 +15,13 @@
   ],
   "categories": {
     "Cars": {
-      "description": "cars desc",
       "categories": {
         "Diesel": {
           "categories": {
             "Old": {
               "resources": {
                 "Old_Kia": {
-                  "state": "New",
+                  "state": "Edited",
                   "values": {
                     "en": {
                       "value": "Old_ kia EN"
@@ -49,7 +47,7 @@
               }
             },
             "Skoda": {
-              "state": "New",
+              "state": "Edited",
               "values": {
                 "en": {
                   "value": "Skoda EN"
@@ -64,7 +62,7 @@
         "Electric": {
           "resources": {
             "ToyotaEV": {
-              "state": "New",
+              "state": "Edited",
               "values": {
                 "en": {
                   "value": "toyota EN"
@@ -79,16 +77,29 @@
       }
     },
     "Messages": {
+      "categories": {
+        "Empty": {}
+      },
       "resources": {
         "Title": {
           "state": "Edited",
+          "parameters": {
+            "userName": {
+              "order": 0
+            },
+            "productName": {
+              "order": 1
+            },
+            "date": {
+              "order": 2
+            }
+          },
           "values": {
             "en": {
               "value": "Hi {0}, we're glad you are using {1} at {2} / \\ [ ] < > \" & car <abc> </end>"
             },
             "sk": {
-              "value": "Ahoj {0}, sme radi, že používate {1} na {2} / \\ [ ] < > \" & car <abc> </end>",
-              "auto": true
+              "value": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
             }
           }
         }
@@ -98,24 +109,23 @@
   "resources": {
     "Welcome": {
       "state": "Edited",
+      "description": "Welcome description",
       "parameters": {
-        "user": {
-          "description": "user name",
+        "name": {
+          "description": "Name placeholder",
           "order": 0
         },
-        "app": {
-          "description": "app name",
+        "city": {
+          "description": "City placehoder",
           "order": 1
         }
       },
       "values": {
         "en": {
-          "value": "Welcome {0} in this {1} !",
-          "locked": true
+          "value": "Welcome {0} in this {1} !"
         },
         "sk": {
-          "value": "Vitajte {0} v tejto {1} !",
-          "auto": true
+          "value": "Zmieniono datę i godzinę.\nZ {0} w strefie czasowej {1} z czasem letnim 2,\nna 3 w strefie czasowej 4 z czasem letnim 5."
         }
       }
     }
@@ -131,7 +141,7 @@
         {
           "name": "content",
           "attrs": {
-            "templateId": "NetCoreResxCsharp01"
+            "templateId": "NetFwResxCsharp01"
           },
           "childs": [
             {
@@ -141,8 +151,6 @@
                   "name": "CSharp",
                   "attrs": {
                     "OutputFolder": "Resources",
-                    "EncodingWithBOM": "false",
-                    "LineEndings": "LF",
                     "UseExpressionBodySyntax": "true",
                     "MissingTranslationFallbackToPrimary": "true"
                   }
@@ -151,8 +159,6 @@
                   "name": "ResX",
                   "attrs": {
                     "OutputFolder": "Resources",
-                    "EncodingWithBOM": "false",
-                    "LineEndings": "LF",
                     "CultureCodeInFileNameForPrimaryLanguage": "true"
                   }
                 }

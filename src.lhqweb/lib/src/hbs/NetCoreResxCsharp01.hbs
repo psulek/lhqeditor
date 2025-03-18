@@ -1,11 +1,14 @@
-﻿{{! sets root output:
-    * file name to 'model name' with suffix '.gen.cs' 
-    * with output settings from 'model.codeGenerator.settings' -  child 'CSharp' (data must match ts type 'CodeGeneratorBasicSettings')
-    * content of 'm-output' helper is multiline jmespath query expression to retrieve settings from 'model.codeGenerator.settings',
+﻿{{! helper 'output'
+    * allowed attributes: fileName(string), mergeWithDefaults(bool) / settings (CodeGeneratorBasicSettings))
+    * child content is allowed and its evaluated value represents jmespath query expression to retrieve value for 'settings' attr
+    * required: attr 'fileName' or child content (or both) must be specified
+    * attr 'fileName' can be ommited if not know, but must be later set in template
+    * attr 'mergeWithDefaults' (true/false) to merge evaluated settings with default settings (true by default)
+    * content of 'output' helper is multiline jmespath query expression to retrieve settings from 'model.codeGenerator.settings',
       * result of this query is stored in @root.settings (eg: @root.settings.OutputFolder)
       * more about jmespath query expressions - https://jmespath.org/
 }}
-{{~#m-output fileName=(x-concat model.name ".gen.cs") ~}}
+{{~#output fileName=(x-concat model.name ".gen.cs") ~}}
 childs[?name=='CSharp'].attrs | [0].merge(@, {
     OutputFolder: (OutputFolder||'Resources'),
     EncodingWithBOM: (EncodingWithBOM||'false')=='true',
@@ -14,26 +17,26 @@ childs[?name=='CSharp'].attrs | [0].merge(@, {
     UseExpressionBodySyntax: (UseExpressionBodySyntax||'false')=='true',
     MissingTranslationFallbackToPrimary: (MissingTranslationFallbackToPrimary||'false')=='true'
 })
-{{~/m-output~}}
+{{~/output~}}
 {{! for each language generate resx file
     * sets templateId to 'NetResx'
-    * host host.lang to iterated language code (using jmespath query)
-    * child outputs will be generated after this main template is generated
-}}
+    * sets host.lang to iterated language code (using jmespath query, where @ represents currently iterated language code)
+    * child outputs will be generated after this main template is generated }}
 {{~#each model.languages ~}}
-    {{m-output-child templateId="NetResx" host=(x-value this query="{lang: @}")}}
+    {{output-child templateId="NetResx" host=(x-value query="{lang: @}")}}
 {{~/each~}}
 
 {{! setup some root data that will be accesible in template via '@root.data.[key]', eg: @root.data.rootClassName }}
 {{~m-data (x-concat model.name "Localizer") key="rootClassName" ~}}
 {{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
 
-{{! this replace value in 'outputFolder' from eg: 'Resources\\subdir\' to 'Resources/subdir' and also replace path sep (/) with . so result will be 'Resources.subdir' }}
+{{! normalize path value in 'outputFolder' from eg: 'Resources\\subdir\' to 'Resources/subdir' and also replace path sep (/) with . so result will be 'Resources.subdir' }}
 {{~m-data (x-normalizePath @root.settings.OutputFolder replacePathSep=".") key="outputFolderDots" ~}}
 
-{{! this will construct full type name of resource type with namespace, eg: 'Namespace1.Resources.subdir.Strings' (if namespace is 'Namespace1' and root model name is 'Strings') }}
+{{! constructs full type name of resource type with namespace, eg: 'Namespace1.Resources.subdir.Strings' (if namespace is 'Namespace1' and root model name is 'Strings') }}
 {{~m-data (x-concat @root.host.namespace @root.data.outputFolderDots model.name sep=".") key="resourceTypeName" ~}}
 
+{{! constructs full type name of resource type to be used by ResourceManager }}
 {{~m-data (x-concat @root.host.namespace model.name sep=".") key="resourceType" ~}}
 
 {{{ x-header }}}
@@ -281,9 +284,9 @@ public static{{x-render " partial" when=(x-equals _resourceRenderValue "value") 
 	{{else}}
 	{{#if hasParameters}}
 	{{! constructs list of parameters in format 'object param1, object param2' into element data with key 'resourceParamNamesWithTypes' }}
-	{{~m-data this query="join(', ', map(&join(' ', ['object', @]), keys(parameters)))" key="resourceParamNamesWithTypes" ~}}
+	{{~m-data query="join(',', map(&join('', ['object ', @.name]), parameters))" key="resourceParamNamesWithTypes" ~}}
     {{! constructs list of parameters in format 'param1, param2' into element data with key 'resourceParamNames' }}
-	{{~m-data this query="join(', ', keys(parameters))" key="resourceParamNames" ~}}
+	{{~m-data query="join(',', map(&@.name, parameters))" key="resourceParamNames" ~}}
 	{{#if @root.settings.UseExpressionBodySyntax }}
 	public static string {{name}}({{data.resourceParamNamesWithTypes}}) => _localizer[{{data.resourceFullPath}}, {{data.resourceParamNames}}];
 	{{else}}

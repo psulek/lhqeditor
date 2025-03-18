@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "gen-schema": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-schema",
-    "gen-lhq": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/TypescriptJson01.lhq",
+    "validate-schema": "ts-node --project tsconfig.build.json ./src/build/cli.ts --validate-schema data/WinFormsResxCsharp01.lhq",
+    "gen-lhq": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/WinFormsResxCsharp01.lhq",
+    "gen-lhq2": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/NetCoreResxCsharp01.lhq",
     "__gen-dts": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-dts",
     "test": "ts-node --project tsconfig.build.json ./src/build/test.ts",
     "build": "rimraf dist && webpack",

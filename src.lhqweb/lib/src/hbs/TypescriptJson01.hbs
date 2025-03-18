@@ -1,4 +1,4 @@
-{{~#m-output fileName=(x-concat model.name ".d.ts") ~}}
+{{~#output fileName=(x-concat model.name ".d.ts") ~}}
 childs[?name=='Typescript'].attrs | [0].merge(@, {
     OutputFolder: (OutputFolder||'Resources'),
     EncodingWithBOM: (EncodingWithBOM||'false')=='true',
@@ -8,9 +8,9 @@ childs[?name=='Typescript'].attrs | [0].merge(@, {
     HasAmbientNamespaceName: (AmbientNamespaceName||'')!='',
     InterfacePrefix: (InterfacePrefix||'')
 })
-{{~/m-output~}}
+{{~/output~}}
 {{~#each model.languages ~}}
-    {{m-output-child templateId="TypescriptJson01Json" host=(x-value this query="{lang: @}") }}
+    {{output-child templateId="TypescriptJson01Json" host=(x-value query="{lang: @}") }}
 {{~/each~}}
 
 {{#with model}}

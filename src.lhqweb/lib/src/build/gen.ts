@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import * as fse from 'fs-extra'
 import { Generator } from '../generator';
@@ -22,6 +21,9 @@ export async function generateFromLhq(lhqFileName: string): Promise<void> {
     HbsTemplateManager.registerTemplate('NetResx', await readHbsFile('NetResx.hbs'))
     HbsTemplateManager.registerTemplate('TypescriptJson01', await readHbsFile('TypescriptJson01.hbs'))
     HbsTemplateManager.registerTemplate('TypescriptJson01Json', await readHbsFile('TypescriptJson01Json.hbs'))
+    HbsTemplateManager.registerTemplate('NetFwResxCsharp01', await readHbsFile('NetFwResxCsharp01.hbs'))
+    HbsTemplateManager.registerTemplate('WpfResxCsharp01', await readHbsFile('WpfResxCsharp01.hbs'))
+    HbsTemplateManager.registerTemplate('WinFormsResxCsharp01', await readHbsFile('WinFormsResxCsharp01.hbs'))
 
     const lhqFile = await fsp.readFile(lhqFileName, { encoding: 'utf-8' });
     const model = safeJsonParse<LhqModel>(lhqFile);

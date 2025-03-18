@@ -1,12 +1,13 @@
 import fs from 'node:fs';
 import minimist from 'minimist';
 import path from 'node:path';
-import { generateSchema, isNullOrEmpty, safeJsonParse, validateLhqModel } from '../utils';
+import { generateSchema, isNullOrEmpty, jsonQuery, safeJsonParse, validateLhqModel } from '../utils';
 import { printNode, zodToTs, createTypeAlias } from 'zod-to-ts'
 
 import * as schemas from '../model/api/schemas';
 import { ZodTypeAny } from 'zod';
 import { generateFromLhq } from './gen';
+import { Duration } from '../duration';
 
 
 type CliArguments = {
@@ -18,23 +19,17 @@ type CliArguments = {
 
 const cliCmd = minimist(process.argv.slice(2)) as unknown as CliArguments;
 
-// const f1 = fs.readFileSync('C:\\dev\\github\\psulek\\lhqeditor\\src.lhqweb\\lib\\data\\Strings.lhq', { encoding: 'utf-8' });
-// const f1Content = f1.charCodeAt(0) === 0xFEFF ? f1.slice(1) : f1; // Remove BOM if it exists
-// const f1Obj = JSON.parse(f1Content);
-// //const v1 = getValue(f1Json, 'languages.1', {default: 'wtf'});
-// const v1 = getNestedPropertyValue<schemas.LhqModel, string>(f1Obj, 'languages[1]');
-// console.log('>> ', v1);
-
-
 //testJMesPath();
 
 if (cliCmd['gen-schema'] === true) {
     const cwd = process.cwd();
     const schemaFilePath = path.join(cwd, 'lhq-schema.json');
+    const duration = Duration.start();
     const schemaContent = generateSchema(schemaFilePath);
-    fs.writeFileSync(schemaFilePath, JSON.stringify(schemaContent, null, 2), { encoding: 'utf-8' });
+    duration.end();
+    fs.writeFileSync(schemaFilePath, schemaContent, { encoding: 'utf-8' });
 
-    console.log(`Schema file '${schemaFilePath}' has been generated.`);
+    console.log(`Schema file '${schemaFilePath}' has been generated in ${duration.elapsedTime}.`);
 } else if (!isNullOrEmpty(cliCmd['gen-lhq'])) {
     (async () => {
         await generateFromLhq(cliCmd['gen-lhq']);
@@ -43,8 +38,10 @@ if (cliCmd['gen-schema'] === true) {
     const file = cliCmd['validate-schema'];
     const lhqFile = fs.readFileSync(file, { encoding: 'utf-8' });
     const model = safeJsonParse<schemas.LhqModel>(lhqFile);
+    const duration = Duration.start();
     const valid = validateLhqModel(model);
-    console.log(`File '${file}' is valid: ${valid.success}${valid.success ? '' : `, ${valid.error}`}`);
+    duration.end();
+    console.log(`File '${file}' is valid: ${valid.success}${valid.success ? '' : `, ${valid.error}`} in ${duration.elapsedTime}.`);
 } else if (cliCmd['gen-dts'] === true) {
 
     const typesFile = path.resolve(__dirname, '../model/types.ts');
@@ -58,7 +55,7 @@ if (cliCmd['gen-schema'] === true) {
     if (allowedSchemaTypes.length === 0) {
         throw new Error(`No zod schema types imports found in: ${typesFile}`);
     }
-    
+
     function capitalizeWord(str: string): string {
         if (!str) return str;
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -87,4 +84,36 @@ if (cliCmd['gen-schema'] === true) {
 
     // const tsType = ZodToTypescript.convert(schemas.lqhModelMetadataSchema, {export: false, name: 'lqhModelMetadataSchema'});
     // console.log(tsType);
+}
+
+function testJMesPath() {
+    const query = `join(', ', map(&join(' ', ['object', @.name]), parameters))`;
+    const obj = {
+        "state": "Edited",
+        "parameters": [
+          {
+            "name": "user",
+            "description": "user name",
+            "order": 0
+          },
+          {
+            "name": "app",
+            "description": "app name",
+            "order": 1
+          }
+        ],
+        "values": {
+          "en": {
+            "value": "Welcome {0} in this {1} !",
+            "locked": true
+          },
+          "sk": {
+            "value": "Vitajte {0} v tejto {1} !",
+            "auto": true
+          }
+        }
+      };
+
+    const result = jsonQuery(obj, query);
+    console.log(result);
 }

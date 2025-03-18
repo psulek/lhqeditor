@@ -7,6 +7,20 @@
             "problemMatcher": [],
             "label": "npm: gen-lhq",
             "detail": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/Strings.lhq"
+        },
+        {
+            "type": "npm",
+            "script": "gen-lhq2",
+            "problemMatcher": [],
+            "label": "npm: gen-lhq2",
+            "detail": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/TypescriptJson01.lhq"
+        },
+        {
+            "type": "npm",
+            "script": "validate-schema",
+            "problemMatcher": [],
+            "label": "npm: validate-schema",
+            "detail": "ts-node --project tsconfig.build.json ./src/build/cli.ts --validate-schema data/WinFormsResxCsharp01.lhq"
         }
     ]
 }

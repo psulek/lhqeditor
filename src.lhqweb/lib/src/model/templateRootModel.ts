@@ -27,6 +27,8 @@ export class TemplateRootModel {
     private _templateRunType: TemplateRunType = 'root';
     private _childOutputs: OutputChildData[] = [];
     private _inlineOutputs: OutputInlineData[] = [];
+    private _inlineEvaluating = false;
+    private _currentTemplateId: string | undefined;
 
     constructor(model: IRootModelElement, data: Record<string, unknown>, host: Record<string, unknown>) {
         if (isNullOrEmpty(model)) {
@@ -38,14 +40,32 @@ export class TemplateRootModel {
         this._host = host ?? {};
     }
 
-    public setOutput(outputFile: OutputFileData): void {
-        // if (!isNullOrEmpty(this._output)) {
-        //     throw new AppError('Output was already set !');
-        // }
+    setCurrentTemplateId(templateId: string | undefined) {
+        this._currentTemplateId = templateId;
+    }
 
-        // if (this._templateRunType !== 'root') {
-        //     throw new AppError('Child template cannot set main output !');
-        // }
+    public get currentTemplateId(): string | undefined {
+        return this._currentTemplateId;
+    }
+
+    setInlineEvaluating(value: boolean): boolean {
+        let valid = true;
+        if (value) {
+            if (this._inlineEvaluating) {
+                valid = false;
+            } else {
+                this._inlineEvaluating = true;
+            }
+        } else {
+            this._inlineEvaluating = false;
+        }
+        return valid;
+    }
+
+    public setOutput(outputFile: OutputFileData): void {
+        if (isNullOrEmpty(outputFile)) {
+            throw new AppError(`Input 'outputFile' could not be empty !`);
+        }
 
         this._output = outputFile;
     }
@@ -60,6 +80,10 @@ export class TemplateRootModel {
 
     public addInlineOutputs(inlineOutput: OutputInlineData) {
         this._inlineOutputs.push(inlineOutput);
+    }
+
+    public get inlineEvaluating(): boolean {
+        return this._inlineEvaluating;
     }
 
     public get childOutputs(): OutputChildData[] {

@@ -1,5 +1,5 @@
 {{! '@root.host.lang' contain language code (eg: 'en', 'sk') }}
-{{~#m-output fileName=(x-concat model.name "." @root.host.lang ".resx") ~}}
+{{~#output fileName=(x-concat model.name "." @root.host.lang ".resx") ~}}
 childs[?name=='ResX'].attrs | [0].merge(@, {
     OutputFolder: (OutputFolder||'Resources'),
     EncodingWithBOM: (EncodingWithBOM||'false')=='true',
@@ -8,7 +8,7 @@ childs[?name=='ResX'].attrs | [0].merge(@, {
     CultureCodeInFileNameForPrimaryLanguage: (CultureCodeInFileNameForPrimaryLanguage||'true')=='true',
     CompatibleTextEncoding: (CompatibleTextEncoding||'true')=='true'
 })
-{{~/m-output~}}
+{{~/output~}}
 <?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 

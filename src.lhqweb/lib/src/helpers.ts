@@ -2,6 +2,7 @@ import Handlebars from "handlebars";
 
 import {
     copyObject,
+    formatDuration,
     hasItems,
     isNullOrEmpty,
     jsonQuery,
@@ -59,6 +60,7 @@ const helpersList: Record<string, Function> = {
     'x-textEncode': textEncodeHelper,
     'x-host-webHtmlEncode': hostWebHtmlEncodeHelper,
     'x-render': renderHelper,
+    'x-test': testHelper,
     'x-isNullOrEmpty': isNullOrEmptyHelper,
     'x-isNotNullOrEmpty': isNotNullOrEmptyHelper,
     'x-fn': callFunctionHelper,
@@ -70,9 +72,9 @@ const helpersList: Record<string, Function> = {
 
     // model specific helpers
     'm-data': modelDataHelper,
-    'm-output': modelOutputHelper,
-    'm-output-child': modelOutputChildHelper,
-    'm-output-inline': modelOutputInlineHelper,
+    'output': modelOutputHelper,
+    'output-child': modelOutputChildHelper,
+    'output-inline': modelOutputInlineHelper,
 
     //'m-settings': modelSettingsHelper,
     //'x-resourceComment': resourceCommentHelper,
@@ -96,6 +98,16 @@ type HbsDataContext<T = Record<string, unknown>> = {
     hash?: T;
     data?: Record<string, unknown>;
     fn?: (ctx: any) => any;
+    loc?: {
+        start: {
+            line: number,
+            column: number
+        },
+        end: {
+            line: number,
+            column: number
+        }
+    }
 };
 
 let dbgCounter = 0;
@@ -168,14 +180,6 @@ export function debugHelpersTimeTaken(): void {
     HostEnvironment.debugLog(`All helpers taken total: ${formatDuration(totalDuration)}`);
 }
 
-function formatDuration(ms: number): string {
-    const seconds = Math.floor(ms / 1000);
-    const milliseconds = ms % 1000;
-
-    return seconds > 0
-        ? `${seconds} second${seconds > 1 ? 's' : ''} and ${milliseconds} ms`
-        : `${milliseconds} ms`;
-}
 
 const fileHeader =
     `//------------------------------------------------------------------------------
@@ -220,12 +224,22 @@ function normalizePathHelper(context: any, options: HbsDataContext) {
     return result;
 }
 
-function queryObjValue(context: any, options: HbsDataContext<{ query?: string }>, defaultUndefined?: boolean): any {
-    defaultUndefined ??= false;
-    let value = defaultUndefined ? undefined : context;
-    let query = options?.hash?.query;
-    //let b = true;
-    if (typeof options?.fn === 'function') {
+type queryObjType = { query?: string };
+type queryObjFlags = {
+    undefinedForDefault?: boolean;
+    allowHash?: boolean;
+    allowFn?: boolean;
+}
+
+//function queryObjValue(context: any, options: HbsDataContext<queryObjType>, undefinedForDefault?: boolean, allowHash?: boolean): any {
+function queryObjValue(context: any, options: HbsDataContext<queryObjType>, flags?: queryObjFlags): any {
+    const undefinedForDefault = flags?.undefinedForDefault ?? false;
+    const allowHash = flags?.allowHash ?? true;
+    const allowFn = flags?.allowFn ?? true;
+
+    let value = undefinedForDefault ? undefined : context;
+    let query = allowHash ? options?.hash?.query : undefined;
+    if (typeof options?.fn === 'function' && allowFn) {
         query = options.fn(context);
         if (!isNullOrEmpty(query) && typeof query === 'string') {
             query = removeNewLines(query);
@@ -233,28 +247,19 @@ function queryObjValue(context: any, options: HbsDataContext<{ query?: string }>
     }
 
     if (!isNullOrEmpty(query) && typeof query === 'string' && !isNullOrEmpty(context)) {
-        value = jsonQuery(context, query);
-        //b = false;
+        try {
+            value = jsonQuery(context, query);
+        } catch (e) {
+            const templateId = getRoot(options).currentTemplateId ?? '';
+            const loc = options.loc;
+            const locText = isNullOrEmpty(loc) ? '' : `starts on ${loc.start.line}:${loc.start.column}, ends: ${loc.end.line}:${loc.end.column}`;
+            const msg = `Template: ${templateId}, failed on jmespath query: ${query}\n${locText}`;
+            throw new Error(msg);
+        }
     }
 
     return value;
 }
-// function queryObjValue(context: any, options: HbsDataContext<{ query?: string }>): any {
-//     let value = context;
-//     let query = options?.hash?.query;
-//     if (typeof options?.fn === 'function') {
-//         query = options.fn(context);
-//         if (!isNullOrEmpty(query) && typeof query === 'string') {
-//             query = removeNewLines(query);
-//         }
-//     }
-
-//     if (!isNullOrEmpty(query) && typeof query === 'string' && !isNullOrEmpty(context)) {
-//         value = jsonQuery(context, query);
-//     }
-
-//     return value;
-// }
 
 function charHelper(options: HbsDataContext) {
     const name = options.name?.split('-')[1];
@@ -269,12 +274,17 @@ function charHelper(options: HbsDataContext) {
     }
 }
 
+type valueHelperArgs = { default?: any; } & queryObjType;
+
 /**
  * @valueHelper
  * Works same as @modelDataHelper without storing result into @root.data, just returns into template to immediate use
  */
-function valueHelper(context: any, options: HbsDataContext) {
-    const defaultValue = options?.hash?.default;
+// function valueHelper(context: any, options: HbsDataContext) {
+function valueHelper() {
+    // @ts-ignore
+    const { context, options } = getContextAndOptions<valueHelperArgs>(this, ...arguments);
+    const defaultValue = options.hash?.default;
     return queryObjValue(context, options) ?? defaultValue;
 }
 
@@ -579,6 +589,32 @@ function renderHelper(input: any, options: any): string {
     return (!isNullOrEmpty(when) && (when === true || when === "true")) ? input : '';
 }
 
+type choiceHelperArgs = {
+    //if?: boolean;
+    then?: any;
+    else?: any;
+}
+
+//function testHelper(options: HbsDataContext<choiceHelperArgs>): string {
+function testHelper(): string {
+    // @ts-ignore
+    const { context, options } = getContextAndOptions<choiceHelperArgs>(this, ...arguments);
+
+    //const condition = options.hash?.if ?? true;
+    const condition = context;
+
+    //if (isNullOrEmpty(options.hash) || isNullOrEmpty(options.hash.if)) {
+    if (isNullOrEmpty(options.hash) || isNullOrEmpty(condition)) {
+        return '';
+    }
+
+    const then = options.hash?.then ?? '';
+    const _else = options.hash?.else ?? '';
+
+    // @ts-ignore
+    return (condition === true || condition === "true") ? then : _else;
+}
+
 function isNullOrEmptyHelper<T>(value: T | null | undefined | ''): value is undefined | null | '' {
     return isNullOrEmpty(value);
 }
@@ -635,6 +671,11 @@ function typeOfHelper(context: any) {
     }
 }
 
+type modalDataHelperArgs = {
+    default?: unknown;
+    root?: boolean;
+} & queryObjType;
+
 /**
  * @dataHelper
  * @example
@@ -653,11 +694,15 @@ function typeOfHelper(context: any) {
  * }
 {{/m-data}}
  */
-function modelDataHelper(context: any, options: HbsDataContext) {
-    const defaultValue = options?.hash?.default;
-    const value = queryObjValue(context, options) ?? defaultValue;
+//function modelDataHelper(context: any, options: HbsDataContext<modalDataHelperArgs>) {
+function modelDataHelper() {
+    // @ts-ignore
+    const { context, options } = getContextAndOptions<modalDataHelperArgs>(this, ...arguments);
 
-    const forceToRoot = options?.hash?.root ?? false;
+    const defaultValue = options.hash?.default;
+    const value = queryObjValue(context, options) ?? defaultValue;
+    const forceToRoot = valueOrDefault(options.hash?.root, false);
+
     //@ts-ignore
     setCustomData(this, options, value, forceToRoot);
 }
@@ -666,7 +711,10 @@ type modelOutputArgs = {
     fileName: string;
     mergeWithDefaults: boolean;
     settings?: CodeGeneratorBasicSettings
-};
+} & queryObjType;
+
+
+const modelOutputFlags: queryObjFlags = { undefinedForDefault: true, allowHash: false };
 
 function modelOutputHelper(options: HbsDataContext<modelOutputArgs>) {
     //@ts-ignore
@@ -676,19 +724,18 @@ function modelOutputHelper(options: HbsDataContext<modelOutputArgs>) {
         throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
     }
 
+    if (context.inlineEvaluating) {
+        throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside 'output-inline' helper !`);
+    }
+
     if (isNullOrEmpty(options.hash)) {
         throw new AppError(`Helper '${options.name}' missing hash properties !`);
     }
 
     const fileName = options?.hash?.fileName ?? '';
 
-    // // if fileName is not set in hash and also root context does not have set fileName then throw error
-    // if (isNullOrEmpty(fileName)) {
-    //     throw new AppError(`Helper '${options.name}' missing file name !`);
-    // }
-
     const settingsNode = context.model.codeGenerator?.settings;
-    const settingsObj = options.hash?.settings ?? queryObjValue(settingsNode, options as any, true);
+    const settingsObj = options.hash?.settings ?? queryObjValue(settingsNode, options as any, modelOutputFlags);
 
     let outputFile: OutputFileData = context.output!;
     let updateSettings = true;
@@ -704,18 +751,25 @@ function modelOutputHelper(options: HbsDataContext<modelOutputArgs>) {
     } else {
         outputFile = {
             fileName: fileName,
-            settings: settingsObj
+            settings: undefined
         };
+
+        updateSettings = !isNullOrEmpty(settingsObj);
     }
 
     if (updateSettings) {
         if (isNullOrEmpty(settingsObj)) {
-            throw new AppError(`Helper '${options.name}' could not find code gen settings from query !`);
+            throw new AppError(`Helper '${options.name}' must have child content with jmespath query expression to ` +
+                `retrieve settings (must be compatible with CodeGeneratorBasicSettings type) !`);
         }
 
-        const mergeWithDefaults = options?.hash?.mergeWithDefaults ?? true;
+        const mergeWithDefaults = options.hash?.mergeWithDefaults ?? true;
         const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
         outputFile.settings = settings;
+    }
+
+    if (isNullOrEmpty(outputFile.fileName) && isNullOrEmpty(outputFile.settings)) {
+        throw new AppError(`Helper '${options.name}' missing hash property 'fileName' or 'settings' or child content with jmespath query expression !`);
     }
 
     context.setOutput(outputFile);
@@ -726,6 +780,14 @@ function modelOutputChildHelper(options: HbsDataContext<{ templateId: string, ho
 
     if (!(context instanceof TemplateRootModel)) {
         throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
+    }
+
+    if (context.inlineEvaluating) {
+        throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside 'output-inline' helper !`);
+    }
+
+    if (typeof options?.fn === 'function') {
+        throw new AppError(`Helper '${options.name}' cannot be used as block helper (no child content is allowed) !`);
     }
 
     if (isNullOrEmpty(options.hash)) {
@@ -743,7 +805,8 @@ function modelOutputChildHelper(options: HbsDataContext<{ templateId: string, ho
 
 type modelOutputInlineArgs = modelOutputArgs;
 
-//function modelOutputInlineHelper(data: any, opts: HbsDataContext<modelOutputInlineArgs>) {
+const modelOutputInlineFlags: queryObjFlags = { undefinedForDefault: true, allowHash: true, allowFn: false };
+
 function modelOutputInlineHelper() {
     // @ts-ignore
     const { context, options } = getContextAndOptions<modelOutputInlineArgs>(this, ...arguments);
@@ -766,7 +829,7 @@ function modelOutputInlineHelper() {
     }
 
     const settingsNode = context.model.codeGenerator?.settings;
-    let settingsObj = options.hash?.settings ?? queryObjValue(settingsNode, options as any);
+    let settingsObj = options.hash?.settings ?? queryObjValue(settingsNode, options, modelOutputInlineFlags);
 
     if (isNullOrEmpty(settingsObj)) {
         // get settings from root template if not found on 'ouput-inline' helper...
@@ -780,7 +843,18 @@ function modelOutputInlineHelper() {
     const mergeWithDefaults = options?.hash?.mergeWithDefaults ?? true;
     const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
 
-    const fileContent = options.fn(context) ?? '';
+    let fileContent = '';
+    if (context.setInlineEvaluating(true)) {
+        try {
+            fileContent = options.fn(context) ?? '';
+        } catch (e) {
+            throw new AppError(`Helper '${options.name}' error: ${(e as any).message}`);
+        } finally {
+            context.setInlineEvaluating(false);
+        }
+    } else {
+        throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside another '${options.name}' helper !`);
+    }
 
     const inlineOutput: OutputInlineData = {
         fileName: fileName,

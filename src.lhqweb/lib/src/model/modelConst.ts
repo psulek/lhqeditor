@@ -1,5 +1,5 @@
-import { LhqModelLineEndings } from './api/schemas';
-import { CodeGeneratorBasicSettings, ModelVersionsType } from './api/types';
+import type { LhqModelLineEndings } from '../api/schemas';
+import type { CodeGeneratorBasicSettings, ModelVersionsType } from '../api/modelTypes';
 
 export const ModelVersions: ModelVersionsType = Object.freeze<ModelVersionsType>({
     model: 2,

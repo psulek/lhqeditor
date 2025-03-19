@@ -16,13 +16,12 @@
     ],
     "ignorePatterns": [
         ".eslintrc",
-        "src/eventEmitterCached.ts",
         "node_modules",
         "eslint.config.mjs",
         "dist",
         "*.mts",
         "tests",
-        "gendoc.js"
+        "webpack.config.js"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -42,6 +41,8 @@
 
         "require-await": "off",
         "@typescript-eslint/require-await": "error",
+
+        "@typescript-eslint/no-invalid-this": "off",
 
         "@typescript-eslint/no-inferrable-types": [
             "error",

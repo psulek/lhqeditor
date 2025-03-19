@@ -4,15 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gen-schema": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-schema",
+    "build-lib": "rimraf dist && webpack",
+    "genarate-lhq": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/WinFormsResxCsharp01.lhq"
+  },
+  "__scripts": {
+    "_gen-schema": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-schema",
+    "gen-schema": "bun run ./src/build/cli.ts --gen-schema",
     "validate-schema": "ts-node --project tsconfig.build.json ./src/build/cli.ts --validate-schema data/WinFormsResxCsharp01.lhq",
-    "gen-lhq": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/WinFormsResxCsharp01.lhq",
     "gen-lhq2": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/NetCoreResxCsharp01.lhq",
     "__gen-dts": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-dts",
     "test": "ts-node --project tsconfig.build.json ./src/build/test.ts",
     "build": "rimraf dist && webpack",
     "dts": "tsup src/model/api/index.ts --tsconfig tsconfig.dts.json --dts-only -d ./dist",
-    "pkg": "rimraf dist && npm run dts && cpx package.json dist && cd dist && npm pack"
+    "pkg": "rimraf dist && npm run dts && cpx package.json dist && cd dist && npm pack",
+    "eslint": "./node_modules/.bin/eslint.cmd ."
   },
   "keywords": [],
   "author": "",
@@ -26,14 +31,23 @@
     "zod": "^3"
   },
   "devDependencies": {
-    "@duplojs/zod-to-typescript": "0.3.0",
+    "@duplojs/zod-to-typescript": "0.4.0",
+    "@eslint/eslintrc": "^3.3.0",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/fs-extra": "^11.0.4",
     "@types/get-value": "3.0.5",
     "@types/jmespath": "0.15.2",
     "@types/minimist": "^1.2.5",
-    "@types/node": "^22.10.10",
-    "cpx": "1.5.0",
+    "@types/node": "^22.13.10",
+    "@typescript-eslint/eslint-plugin": "8.26.1",
+    "@typescript-eslint/parser": "8.26.1",
+    "eslint": "9.22.0",
+    "eslint-config-prettier": "10.1.1",
+    "eslint-plugin-eslint-comments": "3.2.0",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-jsdoc": "50.6.8",
+    "eslint-plugin-prefer-arrow": "1.2.3",
+    "eslint-plugin-tsdoc": "0.4.0",
     "fs-extra": "11.3.0",
     "minimist": "1.2.8",
     "rimraf": "^6.0.1",
@@ -44,8 +58,14 @@
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1",
     "zod": "^3.24.2",
-    "zod-to-json-schema": "^3.24.3",
+    "zod-to-json-schema": "^3.24.4",
     "zod-to-ts": "^1.2.0",
     "zod-validation-error": "3.4.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild"
+    ]
   }
 }

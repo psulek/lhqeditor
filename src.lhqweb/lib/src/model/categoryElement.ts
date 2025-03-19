@@ -1,6 +1,6 @@
 import { CategoryLikeTreeElement } from './categoryLikeTreeElement';
-import { LhqModelCategory, LhqModelResource } from './api/schemas';
-import { ICategoryElement, ICategoryLikeTreeElement, IResourceElement, IRootModelElement } from './api/types';
+import type { LhqModelCategory, LhqModelResource } from '../api/schemas';
+import type { ICategoryElement, ICategoryLikeTreeElement, IResourceElement, IRootModelElement } from '../api/modelTypes';
 import { ResourceElement } from './resourceElement';
 
 export class CategoryElement extends CategoryLikeTreeElement implements ICategoryElement {

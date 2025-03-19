@@ -1,7 +1,7 @@
-import { TreeElement } from './treeElement';
-import { ICategoryElement, ICategoryLikeTreeElement, IResourceElement, IRootModelElement, TreeElementType } from './api/types';
+import type { ICategoryElement, ICategoryLikeTreeElement, IResourceElement, IRootModelElement, TreeElementType } from '../api/modelTypes';
+import type { LhqModelCategoriesCollection, LhqModelCategory, LhqModelResource, LhqModelResourcesCollection } from '../api/schemas';
 import { isNullOrEmpty, iterateObject, sortObjectByKey } from '../utils';
-import { LhqModelCategoriesCollection, LhqModelCategory, LhqModelResource, LhqModelResourcesCollection } from './api/schemas';
+import { TreeElement } from './treeElement';
 
 export abstract class CategoryLikeTreeElement extends TreeElement implements ICategoryLikeTreeElement {
     private _categories: ICategoryElement[];
@@ -45,34 +45,12 @@ export abstract class CategoryLikeTreeElement extends TreeElement implements ICa
             });
         }
 
-        //this.setCategories(newCategories);
         this._categories = newCategories;
         this._hasCategories = this.categories.length > 0;
         
-        //this.setResources(newResources);
         this._resources = newResources;
         this._hasResources = this.resources.length > 0;
     }
-
-    // protected getIsFirst(): boolean {
-    //     return this.parent?.categories.indexOf(this) === 0;
-    // }
-
-    // protected getIsLast(): boolean {
-    //     if (this.parent?.categories?.length === 0) {
-    //         return false;
-    //     }
-    //     return this.parent?.categories[this.parent.categories.length - 1] === this;
-    // }
-
-    // public setCategories(categories: ICategoryElement[]): void {
-    //     this._categories = categories ?? [];
-    // }
-
-    // public setResources(resources: IResourceElement[]): void {
-    //     this._resources = resources ?? [];
-    // }
-
 
     public get categories(): Readonly<ICategoryElement[]> {
         return this._categories;

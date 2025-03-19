@@ -1,16 +1,29 @@
-import {
+import type {
     LhqModelOptions,
     LhqModelResourceTranslationState, LhqModelUid, LhqModelVersion, LhqModelMetadata,
     LhqCodeGenVersion,
     LhqModelLineEndings,
     LhqModelDataNode
-}
-    from './schemas';
+} from './schemas';
 
 export type TreeElementType = 'model' | 'category' | 'resource';
 
+/**
+ * Represents a tree element (root, category or resource) from `*.lhq` model file.
+ */
 export interface ITreeElement {
+    /**
+     * Gets the parent of the current tree element.
+     * @remarks
+     * For resource element, it will be category.
+     * For category element, it will be either another category or root.
+     * For root element, it will be undefined.
+     */
     readonly parent: Readonly<ICategoryLikeTreeElement | undefined>;
+
+    /**
+     * Gets the root of the tree.
+     */
     readonly root: Readonly<IRootModelElement>;
     readonly name: string;
     readonly elementType: TreeElementType;
@@ -61,7 +74,7 @@ export interface IRootModelElement extends ICategoryLikeTreeElement {
     readonly codeGenerator: ICodeGeneratorElement | undefined;
 }
 
-export interface ICategoryElement extends ICategoryLikeTreeElement { }
+export type ICategoryElement = ICategoryLikeTreeElement;
 
 export interface IResourceElement extends ITreeElement {
     readonly state: LhqModelResourceTranslationState;

@@ -1,50 +1,23 @@
-import { LhqModel, LhqModelLineEndings } from './model/api/schemas';
-import { LhqModelGroupSettings } from './modelGroupSettings';
-
-export type GeneratorSource = {
-    model: LhqModel;
-    fileName: string;
-    // csProjectFileName: string;
-    // outDir: string;
+export type HbsTemplatesData = {
+    [templateId: string]: string;
 };
 
+export interface IHostEnvironment {
+    debugLog(msg: string): void;
+    pathCombine(path1: string, path2: string): string;
+    webHtmlEncode(input: string): string;
+    stopwatchStart(): number;
+    stopwatchEnd(start: number): string;
+}
 
-/**
- * Represents information about a single generated file as a result of the Generator.Generate method. 
- */
-export type GeneratedFile = {
+export type GeneratorInitialization = {
     /**
-     * File name of generated file, usually relative path to source *.lhq model file.
+     * Handlebars templates, where each key represents 'templateId' (unique identifier) and value represents handlebars template content.
      */
-    fileName: string;
-
-    /**
-     * Generated content string that should be written to fileName.
-     */
-    content: string;
-
-    /**
-     * BOM marker that should be used when writing content to fileName file.
-     */
-    bom: boolean;
+    hbsTemplates: HbsTemplatesData;
 
     /**
-     * Line endings that should be used when writing content to fileName file.
+     * Host environment with which generator interacts when running code templates.
      */
-    lineEndings: LhqModelLineEndings;
-};
-
-/**
- * Represents result of code generator process of Generator.generate.
- */
-export type GenerateResult = {
-    /**
-     * List of generated files.
-     */
-    generatedFiles: Readonly<GeneratedFile[]>;
-
-    /**
-     * List of model group settings.
-     */
-    modelGroupSettings: Readonly<LhqModelGroupSettings[]>;
+    hostEnvironment: IHostEnvironment;
 }

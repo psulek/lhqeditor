@@ -1,21 +1,29 @@
+/* eslint-disable no-prototype-builtins */
 import Handlebars from 'handlebars';
 import { AppError } from './AppError';
 import { getKnownHelpers } from './helpers';
-
+import { HbsTemplatesData } from './types';
+import { isNullOrEmpty } from './utils';
 
 export class HbsTemplateManager {
-    private static _sources: {
-        [templateId: string]: string;
-    };
+    private static _sources: HbsTemplatesData;
 
     private static _compiled: {
         [templateId: string]: HandlebarsTemplateDelegate;
     };
 
-    public static registerTemplate(templateId: string, handlebarContent: string): void {
+    public static init(data: HbsTemplatesData): void {
+        if (isNullOrEmpty(data)) {
+            throw new Error('Missing templates data !');
+        }
+
+        HbsTemplateManager._sources = data;
+    }
+
+    /* public static registerTemplate(templateId: string, handlebarContent: string): void {
         HbsTemplateManager._sources ??= {};
         HbsTemplateManager._sources[templateId] = handlebarContent;
-    }
+    } */
 
     public static hasTemplate(templateId: string): boolean {
         return HbsTemplateManager._sources.hasOwnProperty(templateId);
@@ -51,3 +59,4 @@ export class HbsTemplateManager {
         return result;
     }
 }
+/* eslint-enable no-prototype-builtins */

@@ -147,7 +147,8 @@
                     "UseExpressionBodySyntax": "false",
                     "GenerateParamsMethods": "true",
                     "MissingTranslationFallbackToPrimary": "true",
-                    "ParamsMethodsSuffix": "WithParams"
+                    "ParamsMethodsSuffix": "WithParams",
+                    "EncodingWithBOM": "false"
                   }
                 },
                 {

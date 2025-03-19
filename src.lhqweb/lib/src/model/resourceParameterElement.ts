@@ -1,5 +1,5 @@
-import { LhqModelResourceParameter } from './api/schemas';
-import { IResourceElement, IResourceParameterElement } from './api/types';
+import type { LhqModelResourceParameter } from '../api/schemas';
+import type { IResourceElement, IResourceParameterElement } from '../api/modelTypes';
 
 export class ResourceParameterElement implements IResourceParameterElement {
     private _name: string;

@@ -1,5 +1,5 @@
 import { isNullOrEmpty } from '../utils';
-import { ITreeElement, ICategoryLikeTreeElement, IRootModelElement, TreeElementType, ITreeElementPaths } from './api/types';
+import type { ITreeElement, ICategoryLikeTreeElement, IRootModelElement, TreeElementType, ITreeElementPaths } from '../api/modelTypes';
 import { TreeElementPaths } from './treeElementPaths';
 
 export abstract class TreeElement implements ITreeElement {

@@ -1,6 +1,6 @@
 import { CategoryLikeTreeElement } from './categoryLikeTreeElement';
-import { LhqCodeGenVersion, LhqModel, LhqModelCategory, LhqModelDataNode, LhqModelResource, LhqModelUid, LhqModelVersion } from './api/schemas';
-import { ICategoryLikeTreeElement, ICodeGeneratorElement, IResourceElement, IRootModelElement } from './api/types';
+import { LhqCodeGenVersion, LhqModel, LhqModelCategory, LhqModelDataNode, LhqModelResource, LhqModelUid, LhqModelVersion } from '../api/schemas';
+import { ICategoryLikeTreeElement, ICodeGeneratorElement, IResourceElement, IRootModelElement } from '../api/modelTypes';
 import { isNullOrEmpty } from '../utils';
 import { ModelVersions } from './modelConst';
 import { CategoryElement } from './categoryElement';

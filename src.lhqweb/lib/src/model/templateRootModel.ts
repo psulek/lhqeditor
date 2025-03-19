@@ -1,6 +1,6 @@
 import { AppError } from '../AppError';
 import { isNullOrEmpty } from '../utils';
-import { CodeGeneratorBasicSettings, ICategoryLikeTreeElement, IRootModelElement, ITreeElement } from './api/types';
+import type { CodeGeneratorBasicSettings, ICategoryLikeTreeElement, IRootModelElement } from '../api/modelTypes';
 import { TreeElement } from './treeElement';
 
 export type OutputFileData = {
@@ -40,7 +40,7 @@ export class TemplateRootModel {
         this._host = host ?? {};
     }
 
-    setCurrentTemplateId(templateId: string | undefined) {
+    setCurrentTemplateId(templateId: string | undefined): void {
         this._currentTemplateId = templateId;
     }
 
@@ -70,7 +70,7 @@ export class TemplateRootModel {
         this._output = outputFile;
     }
 
-    public addChildOutput(templateId: string, host: Record<string, unknown> | undefined) {
+    public addChildOutput(templateId: string, host: Record<string, unknown> | undefined): void {
         if (this._templateRunType === 'child') {
             throw new AppError('Child template could not have other child outputs !');
         }
@@ -78,7 +78,7 @@ export class TemplateRootModel {
         this._childOutputs.push({ templateId, host });
     }
 
-    public addInlineOutputs(inlineOutput: OutputInlineData) {
+    public addInlineOutputs(inlineOutput: OutputInlineData): void {
         this._inlineOutputs.push(inlineOutput);
     }
 

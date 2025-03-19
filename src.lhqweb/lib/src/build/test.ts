@@ -1,5 +1,5 @@
-import { LhqModel } from '../model/api/schemas';
-import { validateLhqModel } from './utils';
+import { LhqModel } from '../api/schemas';
+import { validateLhqModel } from '../utils';
 
 const model = getModel();
 const result = validateLhqModel(model);

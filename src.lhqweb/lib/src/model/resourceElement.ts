@@ -1,9 +1,9 @@
 import { isNullOrEmpty, iterateObject, sortObjectByKey, sortObjectByValue, trimComment } from '../utils';
 import { ResourceParameterElement } from './resourceParameterElement';
 import { ResourceValueElement } from './resourceValueElement';
-import { LhqModelResource, LhqModelResourceTranslationState } from './api/schemas';
+import type { LhqModelResource, LhqModelResourceTranslationState } from '../api/schemas';
+import type { IResourceElement, IResourceParameterElement, IResourceValueElement, IRootModelElement, ICategoryLikeTreeElement } from '../api/modelTypes';
 import { TreeElement } from './treeElement';
-import { IResourceElement, IResourceParameterElement, IResourceValueElement, IRootModelElement, ICategoryLikeTreeElement } from './api/types';
 
 export class ResourceElement extends TreeElement implements IResourceElement {
     private _state: LhqModelResourceTranslationState;
@@ -54,7 +54,7 @@ export class ResourceElement extends TreeElement implements IResourceElement {
         if (!isNullOrEmpty(primaryLanguage) && this.values) {
             const value = this.values.find(x => x.languageName === primaryLanguage);
             const resourceValue = value?.value;
-            let propertyComment = (isNullOrEmpty(resourceValue) ? this.description : resourceValue) ?? '';
+            const propertyComment = (isNullOrEmpty(resourceValue) ? this.description : resourceValue) ?? '';
             return trimComment(propertyComment);
         }
 

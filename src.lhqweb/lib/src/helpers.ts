@@ -1,11 +1,10 @@
-import Handlebars from "handlebars";
+import Handlebars, { type HelperDelegate } from 'handlebars';
 
 import {
-    copyObject,
-    formatDuration,
     hasItems,
     isNullOrEmpty,
     jsonQuery,
+    type KeysMatching,
     normalizePath,
     objCount,
     removeNewLines,
@@ -13,39 +12,37 @@ import {
     sortBy,
     sortObjectByKey,
     textEncode,
-    TextEncodeModes,
-    valueAsBool,
+    type TextEncodeModes,
     valueOrDefault,
-} from "./utils";
+} from './utils';
 
 import { AppError } from './AppError';
 import { TreeElement } from './model/treeElement';
-import { OutputFileData, OutputInlineData, TemplateRootModel } from './model/templateRootModel';
+import { type OutputFileData, type OutputInlineData, TemplateRootModel } from './model/templateRootModel';
 import { DefaultCodeGenSettings } from './model/modelConst';
-import { CodeGeneratorBasicSettings } from './model/api/types';
+import type { CodeGeneratorBasicSettings } from './api/modelTypes';
+import type { IHostEnvironment } from './types';
 
-export function registerHelpers() {
+// declare var HostEnvironment: IHostEnvironment;
+
+let hostEnv: IHostEnvironment = undefined!;
+
+export function registerHelpers(hostEnvironment: IHostEnvironment): void {
+    hostEnv = hostEnvironment;
     Object.keys(helpersList).forEach(key => {
-        // @ts-ignore
         Handlebars.registerHelper(key, helpersList[key]);
-        //const fn = helpersList[key];
-        //Handlebars.registerHelper(key, () => debugLogAndExec(key, fn, ...arguments));
     });
-
-    clearHelpersContext();
 }
 
-const helpersList: Record<string, Function> = {
+const helpersList: Record<string, HelperDelegate> = {
     // generic helpers
     'x-header': headerHelper,
     'x-normalizePath': normalizePathHelper,
     'char-tab': charHelper,
     'char-quote': charHelper,
     'x-value': valueHelper,
-    'x-indent': indentHelper,
     'x-join': joinHelper,
     'x-split': splitHelper,
-    'x-raw': rawHelper,
     'x-concat': concatHelper,
     'x-replace': replaceHelper,
     'x-trimEnd': trimEndHelper,
@@ -75,12 +72,6 @@ const helpersList: Record<string, Function> = {
     'output': modelOutputHelper,
     'output-child': modelOutputChildHelper,
     'output-inline': modelOutputInlineHelper,
-
-    //'m-settings': modelSettingsHelper,
-    //'x-resourceComment': resourceCommentHelper,
-    // 'x-resourceValue': resourceValueHelper,
-    // 'x-resourceHasLang': resourceHasLangHelper,
-    //'x-resourceParamNames': resourceParamNamesHelper,
 };
 
 let _knownHelpers: KnownHelpers | undefined = undefined;
@@ -97,7 +88,7 @@ type HbsDataContext<T = Record<string, unknown>> = {
     name?: string;
     hash?: T;
     data?: Record<string, unknown>;
-    fn?: (ctx: any) => any;
+    fn?: (ctx: unknown) => unknown;
     loc?: {
         start: {
             line: number,
@@ -110,77 +101,6 @@ type HbsDataContext<T = Record<string, unknown>> = {
     }
 };
 
-let dbgCounter = 0;
-//let globalVarTemp: Record<string, unknown> = {};
-let helpersTimeTaken: Record<string, number> = {};
-const trackHelperTimes = false;
-
-export function clearHelpersContext() {
-    dbgCounter = 0;
-    //globalVarTemp = {};
-    //helpersTimeTaken = {};
-}
-
-function debugLogAndExec(helperName: string, fn: Function, ...args: any) {
-    let debug = false;
-    let header = '';
-    let cnt = 0;
-
-    if (arguments.length > 0) {
-        const ctx = arguments[arguments.length - 1] as HbsDataContext;
-        debug = valueAsBool(ctx.hash?._debug ?? false);
-        if (debug) {
-            cnt = ++dbgCounter;
-            const debugLog = (ctx.hash?._debugLog ?? '').toString();
-            const hash = copyObject(ctx.hash ?? {}, ['_debug', '_debugLog']);
-            const restArgs = Array.from(args).slice(0, -1);
-            header = `[${cnt}#${ctx.name}](${debugLog}) hash: ${JSON.stringify(hash, null, 0)}`;
-            HostEnvironment.debugLog(`${header} ${JSON.stringify(restArgs, null, 0)}`);
-        }
-    }
-
-    //HostEnvironment.debugLog(`[debugLogAndExec] fn: ${typeof fn} , arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
-    if (debug) {
-        //HostEnvironment.debugLog(`${header}, arguments: ${JSON.stringify(arguments, null, 0)}, args: ${JSON.stringify(args, null, 0)}`);
-    }
-
-    let start = 0;
-    if (trackHelperTimes) {
-        start = Date.now();
-    }
-
-    // @ts-ignore
-    const res = fn.call(this, ...args);
-
-    if (trackHelperTimes) {
-        const duration = Date.now() - start;
-        helpersTimeTaken[helperName] = (helpersTimeTaken[helperName] ?? 0) + duration;
-    }
-
-    if (debug) {
-        HostEnvironment.debugLog(`${header}, result: ${JSON.stringify(res, null, 0)}`);
-    }
-
-    return res;
-}
-
-export function debugHelpersTimeTaken(): void {
-    if (!trackHelperTimes) {
-        return;
-    }
-
-    let totalDuration = 0;
-    Object.keys(helpersTimeTaken).forEach(key => {
-        const duration = helpersTimeTaken[key] ?? 0;
-        totalDuration += duration;
-
-        HostEnvironment.debugLog(`helper '${key}' taken total: ${formatDuration(duration)}`);
-    });
-
-    HostEnvironment.debugLog(`All helpers taken total: ${formatDuration(totalDuration)}`);
-}
-
-
 const fileHeader =
     `//------------------------------------------------------------------------------
 // <auto-generated>
@@ -191,32 +111,34 @@ const fileHeader =
 // </auto-generated>
 //------------------------------------------------------------------------------`;
 
-function getContextAndOptions<T = any>(thisRef: any, ...args: any[]): { context: any, options: HbsDataContext<T> } {
+function getContextAndOptions<TOptionsArgs = unknown, TContext = unknown>(context: TContext, ...args: unknown[]): { context: TContext, options: HbsDataContext<TOptionsArgs> } {
     if (args.length === 1) {
         return {
-            context: thisRef,
-            options: args[0] as HbsDataContext<T>
+            context: context,
+            options: args[0] as HbsDataContext<TOptionsArgs>
         };
     }
 
     return {
-        context: args[0] ?? thisRef,
-        options: args[1] as HbsDataContext<T>
+        context: (args[0] as TContext) ?? context,
+        options: args[1] as HbsDataContext<TOptionsArgs>
     };
 }
 
 function headerHelper(options: HbsDataContext) {
-    return getRoot(options).host?.fileHeader ?? fileHeader;
+    return getRoot(options).host?.['fileHeader'] ?? fileHeader;
 }
 
-function normalizePathHelper(context: any, options: HbsDataContext) {
+type normalizePathHelperArgs = { replacePathSep?: string };
+
+function normalizePathHelper(context: unknown, options: HbsDataContext<normalizePathHelperArgs>) {
     if (typeof context !== 'string') {
         return context;
     }
 
     let result = normalizePath(context);
 
-    const replacePathSep = (options.hash?.replacePathSep || '') as string;
+    const replacePathSep = valueOrDefault(options.hash?.replacePathSep, '');
     if (!isNullOrEmpty(replacePathSep)) {
         result = result.split('/').join(replacePathSep);
     }
@@ -231,8 +153,7 @@ type queryObjFlags = {
     allowFn?: boolean;
 }
 
-//function queryObjValue(context: any, options: HbsDataContext<queryObjType>, undefinedForDefault?: boolean, allowHash?: boolean): any {
-function queryObjValue(context: any, options: HbsDataContext<queryObjType>, flags?: queryObjFlags): any {
+function queryObjValue(context: unknown, options: HbsDataContext<queryObjType>, flags?: queryObjFlags): unknown {
     const undefinedForDefault = flags?.undefinedForDefault ?? false;
     const allowHash = flags?.allowHash ?? true;
     const allowFn = flags?.allowFn ?? true;
@@ -240,7 +161,7 @@ function queryObjValue(context: any, options: HbsDataContext<queryObjType>, flag
     let value = undefinedForDefault ? undefined : context;
     let query = allowHash ? options?.hash?.query : undefined;
     if (typeof options?.fn === 'function' && allowFn) {
-        query = options.fn(context);
+        query = options.fn(context) as string;
         if (!isNullOrEmpty(query) && typeof query === 'string') {
             query = removeNewLines(query);
         }
@@ -274,48 +195,24 @@ function charHelper(options: HbsDataContext) {
     }
 }
 
-type valueHelperArgs = { default?: any; } & queryObjType;
+type valueHelperArgs = { default?: unknown; } & queryObjType;
 
-/**
- * @valueHelper
- * Works same as @modelDataHelper without storing result into @root.data, just returns into template to immediate use
- */
-// function valueHelper(context: any, options: HbsDataContext) {
 function valueHelper() {
-    // @ts-ignore
+    //@ts-ignore
     const { context, options } = getContextAndOptions<valueHelperArgs>(this, ...arguments);
     const defaultValue = options.hash?.default;
     return queryObjValue(context, options) ?? defaultValue;
 }
 
-function indentHelper(count: number, options: any) {
-    count = count < 0 ? 0 : count;
-    // @ts-ignore
-    var content = options.fn(this) as string;
+type splitHelperArgs = { sep?: string };
 
-    var paddedContent = content.split('\n')
-        .map(line => '\t'.repeat(count) + line)
-        .join('\n');
-
-    return paddedContent;
-}
-
-function splitHelper(context: any, options: HbsDataContext) {
+function splitHelper() {
+    //@ts-ignore
+    const { context, options } = getContextAndOptions<splitHelperArgs>(this, ...arguments);
     if (typeof context !== 'string') return context;
 
-    const sep = (options.hash?.sep || '') as string;
-    if (isNullOrEmpty(sep)) {
-        return context;
-    }
-
-    return context.split(sep);
-}
-
-function rawHelper(options: HbsDataContext) {
-    // @ts-ignore
-    const res = options.fn!(this);
-
-    return new Handlebars.SafeString(res);
+    const sep = valueOrDefault(options.hash?.sep, '');
+    return isNullOrEmpty(sep) ? context : context.split(sep);
 }
 
 type joinHelperArgs = {
@@ -326,39 +223,17 @@ type joinHelperArgs = {
     decorator?: string;
 };
 
-function joinHelper(items: any[], options: HbsDataContext<joinHelperArgs>) {
-    const separator = valueOrDefault(options.hash?.sep, ",");
+function joinHelper(items: unknown[], options: HbsDataContext<joinHelperArgs>) {
+    const separator = valueOrDefault(options.hash?.sep, ',');
     const start = valueOrDefault(options.hash?.start, 0);
     const len = items ? items.length : 0;
     let end = valueOrDefault(options.hash?.end, len);
     const decorator = options.hash?.decorator || '';
 
-    // const delimiter = options.hash?.delimiter || ",";
-    // const start = (options.hash?.start || 0) as number;
-    // const len = (items ? items.length : 0) as number;
-    // let end = (options.hash?.end || len) as number;
-    // const decorator = options.hash?.decorator || `"`;
-    let out = "";
-
     if (end > len) end = len;
 
-    if ('function' === typeof options) {
-        for (let i = start; i < end; i++) {
-            if (i > start) out += separator;
-            if ('string' === typeof items[i])
-                out += items[i];
-            else
-                out += options(items[i]);
-        }
-
-    } else {
-        // @ts-ignore
-        out = [].concat(items).map(x => `${decorator}${x}${decorator}`).slice(start, end).join(separator);
-        // @ts-ignore
-        //return new Handlebars.SafeString(res);
-    }
-
-    return out;
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    return items.map(x => `${decorator}${x}${decorator}`).slice(start, end).join(separator);
 }
 
 type concatHelperArgs = {
@@ -370,53 +245,25 @@ const concatHelperArgsDefault: concatHelperArgs = {
     empty: false
 }
 
-// usage: {{ x-concat 'prop1' 'prop2' 'prop3' sep="," }}
+//function concatHelper(args: unknown[], options: HbsDataContext<concatHelperArgs>): string {
 function concatHelper(...args: any[]): string {
     const options = args.pop() as HbsDataContext<concatHelperArgs>;
-    // const sep = valueOrDefault(options.hash?.sep, '');
-    // const includeEmpty = valueOrDefault(options.hash?.includeEmpty, false);
     const hash: concatHelperArgs = Object.assign({}, concatHelperArgsDefault, options.hash ?? {});
-
     const array = hash.empty ? args : args.filter(x => !isNullOrEmpty(x));
 
     removeProperties(options.hash, hash);
     options.hash = { sep: hash.sep };
 
     return joinHelper(array, options);
-
-    //return args.filter(x => !isNullOrEmpty(x)).join(sep);
 }
 
-function setCustomData(context: any, options: HbsDataContext, valueOrFn: () => any | any, forceToRoot: boolean): void {
-    const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
-    const key = valueOrDefault(options?.hash?.key, '');
-    //const target = valueOrDefault<ITreeElement | undefined>(options?.hash?.target, undefined);
-
-    //@ts-ignore
-    //const context = this;
-
-    if (!isNullOrEmpty(key)) {
-        if (forceToRoot) {
-            const root = getRoot(options);
-            root.addToTempData(key, value);
-        } else if (context instanceof TreeElement) {
-            context.addToTempData(key, value);
-        } else if (context instanceof TemplateRootModel) {
-            //const root = getRoot(options);
-            context.addToTempData(key, value);
-        } else {
-            HostEnvironment.debugLog(`[setCustomData] unknown context: ${typeof context} for key '${key}' !`);
-        }
-    }
+type replaceHelperArgs = {
+    what?: string;
+    with?: string;
+    opts?: string;
 }
 
-/**
- * @replaceHelper
- * @example 
- * // This will replace "World" with "Universe" and result string will be "Hello Universe"
- * {{x-replace "Hello World" what="World" with="Universe"}}
- */
-function replaceHelper(value: string, options: HbsDataContext): string {
+function replaceHelper(value: string, options: HbsDataContext<replaceHelperArgs>): string {
     const what = valueOrDefault(options.hash?.what, '');
     const withStr = valueOrDefault(options.hash?.with, '');
     const regexopts = valueOrDefault(options.hash?.opts, 'g');
@@ -430,108 +277,58 @@ function replaceHelper(value: string, options: HbsDataContext): string {
     return value.replace(regex, withStr);
 }
 
-// usage: {{x-trimEnd fullPath "/index.html"}}
 function trimEndHelper(input: string, endPattern: string): string {
     try {
         const regex = new RegExp(endPattern + '$');
         return input.replace(regex, '');
     } catch (error) {
-        HostEnvironment.debugLog('Invalid regex pattern:' + endPattern);
+        hostEnv.debugLog('Invalid regex pattern:' + endPattern);
         return input;
     }
 }
 
-function equalsHelper(input: any, value: any, options: any): boolean {
-    const { cs, val1, val2 } = getDataForCompare(input, value, options)
+type equalsHelperArgs = {
+    cs?: boolean;
+}
+
+function equalsHelper(input: unknown, value: unknown, options: HbsDataContext<equalsHelperArgs>): boolean {
+    const cs = (options.hash?.cs || 'true').toString().toLowerCase() == 'true';
+    const val1 = typeof input === 'string' ? input : (input?.toString() ?? '');
+    const val2 = typeof value === 'string' ? value : (value?.toString() ?? '');
+
     return cs ? val1 === val2 : (val1.toLowerCase() === val2.toLowerCase());
 }
 
-function isTrueHelper(input: any): boolean {
+function isTrueHelper(input: unknown): boolean {
     return input === true;
 }
 
-function isFalseHelper(input: any): boolean {
+function isFalseHelper(input: unknown): boolean {
     return input === false
 }
 
-function getDataForCompare(input: any, value: any, options: any): { cs: boolean, val1: string, val2: string } {
-    const cs = (options.hash?.cs || "true").toString().toLowerCase() == "true";
-    const val1 = typeof input === "string" ? input : (input?.toString() ?? '');
-    const val2 = typeof value === "string" ? value : (value?.toString() ?? '');
-    return { cs: cs, val1, val2 };
+type logicalHelperArgs = {
+    op?: 'and' | 'or';
 }
 
-function logicalHelper(input: any, value: any, options: any): boolean {
-    const op = (options.hash?.op || 'and').toLowerCase();
+function logicalHelper(input: unknown, value: unknown, options: HbsDataContext<logicalHelperArgs>): boolean {
+    const op = valueOrDefault(options.hash?.op, 'and').toLowerCase();
     if (op === 'and') {
-        //return input === value;
         return (input === true) && (value === true);
     } else if (op === 'or') {
-        //return input || value;
         return (input === true) || (value === true);
     }
 
     return false;
 }
 
-
-// function resourceCommentHelper(resource: LhqModelResourceType, options: any): string {
-//     if (typeof resource === 'object') {
-//         const model = (options.hash?.root as TemplateRootModel).model;
-//         const primaryLanguage = model?.model?.primaryLanguage ?? '';
-//         if (!isNullOrEmpty(primaryLanguage) && resource.values) {
-//             const resourceValue = resource.values[primaryLanguage]?.value;
-//             let propertyComment = isNullOrEmpty(resourceValue) ? resource.description : resourceValue;
-//             propertyComment = trimComment(propertyComment);
-//             // @ts-ignore
-//             return new Handlebars.SafeString(propertyComment);
-//         }
-//     }
-
-//     return '';
-// }
-
-// function resourceValueHelper(resource: LhqModelResourceType, options: any): string {
-//     if (typeof resource === 'object') {
-//         const lang = options.hash?.lang ?? '';
-//         const trim = options.hash?.trim ?? false;
-
-//         if (!isNullOrEmpty(lang)) {
-//             const res = resource?.values?.[lang]?.value ?? '';
-//             return trim ? res.trim() : res;
-//         }
-//     }
-
-//     return '';
-// }
-
-// function resourceHasLangHelper(resource: LhqModelResourceType, options: any): boolean {
-//     if (typeof resource === 'object') {
-//         const lang = options.hash?.lang ?? '';
-//         if (!isNullOrEmpty(lang) && resource.values && resource.values[lang]) {
-//             return true;
-//         }
-//     }
-
-//     return false;
-// }
-
-// function resourceParamNamesHelper(resource: LhqModelResourceType, options: any): string {
-//     if (typeof resource === 'object' && resource.parameters) {
-//         const withTypes = options?.hash?.withTypes ?? false;
-
-//         return Object.keys(resource.parameters).map(key => {
-//             return withTypes ? `object ${key}` : key;
-//         }).join(',');
-//     }
-
-//     return '';
-// }
-
-function mergeHelper(...args: any[]): any {
+function mergeHelper(...args: any[]) {
     const options = args.pop() as HbsDataContext;
     // @ts-ignore
     const context = args.length === 0 ? this : args.shift();
+
+    if (typeof context !== 'object') return context;
+    if (isNullOrEmpty(context)) return context;
 
     Object.assign(context, ...args, options.hash ?? {});
 
@@ -547,12 +344,16 @@ function mergeHelper(...args: any[]): any {
     return result;
 }
 
-function sortByHelper<T>(source: T[], propName?: string, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
+function sortByHelper<T>(source: T[], propName?: KeysMatching<T, string | number>, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
     return sortBy<T>(source, propName, sortOrder);
 }
 
-function sortObjectByKeyHelper(obj: Record<string, unknown>, options: any) {
-    const sortOrder = options?.hash?.sortOrder ?? 'asc';
+type sortObjectByKeyHelper = {
+    sortOrder?: 'asc' | 'desc';
+}
+
+function sortObjectByKeyHelper(obj: Record<string, unknown>, options: HbsDataContext<sortObjectByKeyHelper>): Record<string, unknown> {
+    const sortOrder = valueOrDefault(options.hash?.sortOrder, 'asc');
     return sortObjectByKey(obj, sortOrder);
 }
 
@@ -564,76 +365,77 @@ function hasItemsHelper<T>(obj: Record<string, T> | Array<T> | undefined): boole
     return hasItems<T>(obj);
 }
 
-export function textEncodeHelper(str: string, options: HbsDataContext): string {
+type textEncodeHelperArgs = {
+    mode?: TextEncodeModes;
+    quotes?: boolean;
+}
+
+export function textEncodeHelper(input: string, options: HbsDataContext<textEncodeHelperArgs>): Handlebars.SafeString {
     const mode = valueOrDefault<TextEncodeModes>(options?.hash?.mode, 'html');
     const quotes = valueOrDefault(options?.hash?.quotes, false);
-    const s = textEncode(str, { mode: mode, quotes });
-    // @ts-ignore
+    const s = textEncode(input, { mode: mode, quotes });
     return new Handlebars.SafeString(s);
 }
 
-function hostWebHtmlEncodeHelper(str: string): string {
-    if (isNullOrEmpty(str)) {
-        return str;
+function hostWebHtmlEncodeHelper(input: string): Handlebars.SafeString | string {
+    if (isNullOrEmpty(input)) {
+        return input;
     }
 
-    const encoded = HostEnvironment.webHtmlEncode(str);
-
-    // @ts-ignore
+    const encoded = hostEnv.webHtmlEncode(input);
     return new Handlebars.SafeString(encoded);
 }
 
-function renderHelper(input: any, options: any): string {
-    const when = options?.hash?.when ?? true;
-    // @ts-ignore
-    return (!isNullOrEmpty(when) && (when === true || when === "true")) ? input : '';
+type renderHelperArgs = {
+    when?: boolean;
 }
 
-type choiceHelperArgs = {
-    //if?: boolean;
-    then?: any;
-    else?: any;
+function renderHelper(input: string, options: HbsDataContext<renderHelperArgs>): string {
+    const when = valueOrDefault(options.hash?.when, true);
+    return (!isNullOrEmpty(when) && (when === true || when === 'true')) ? input : '';
 }
 
-//function testHelper(options: HbsDataContext<choiceHelperArgs>): string {
+type testHelperArgs = {
+    then?: unknown;
+    else?: unknown;
+}
+
 function testHelper(): string {
-    // @ts-ignore
-    const { context, options } = getContextAndOptions<choiceHelperArgs>(this, ...arguments);
-
-    //const condition = options.hash?.if ?? true;
+    //@ts-ignore
+    const { context, options } = getContextAndOptions<testHelperArgs>(this, ...arguments);
     const condition = context;
 
-    //if (isNullOrEmpty(options.hash) || isNullOrEmpty(options.hash.if)) {
     if (isNullOrEmpty(options.hash) || isNullOrEmpty(condition)) {
         return '';
     }
 
-    const then = options.hash?.then ?? '';
-    const _else = options.hash?.else ?? '';
+    const then = valueOrDefault(options.hash?.then, '');
+    const _else = valueOrDefault(options.hash?.else, '');
 
-    // @ts-ignore
-    return (condition === true || condition === "true") ? then : _else;
+    return condition === true ? then : _else;
 }
 
 function isNullOrEmptyHelper<T>(value: T | null | undefined | ''): value is undefined | null | '' {
     return isNullOrEmpty(value);
 }
 
-function isNotNullOrEmptyHelper(input: any): boolean {
+function isNotNullOrEmptyHelper(input: unknown): boolean {
     return !isNullOrEmpty(input);
 }
 
-function callFunctionHelper(fn: Function, ...args: any): any {
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+function callFunctionHelper(fn: Function, ...args: unknown[]): unknown {
     let fnArgs = undefined;
     if (arguments.length > 0) {
         fnArgs = Array.from(args).slice(0, -1);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     return fnArgs === undefined ? fn() : fn(...fnArgs);
 }
 
-function debugLogHelper(...args: any[]): string {
-    HostEnvironment.debugLog(args.join(' '));
+function debugLogHelper(...args: unknown[]): string {
+    hostEnv.debugLog(args.join(' '));
     return '';
 }
 
@@ -645,7 +447,13 @@ function getRoot(options: HbsDataContext): TemplateRootModel {
     return options.data['root'] as TemplateRootModel;
 }
 
-function stringifyHelper(context: any, options: HbsDataContext<{ space?: number | string | undefined }>) {
+type stringifyHelperArgs = {
+    space?: number | string | undefined;
+}
+
+function stringifyHelper() {
+    //@ts-ignore
+    const { context, options } = getContextAndOptions<stringifyHelperArgs>(this, ...arguments);
     let space = options.hash?.space ?? undefined;
 
     if (typeof space === 'string') {
@@ -655,7 +463,7 @@ function stringifyHelper(context: any, options: HbsDataContext<{ space?: number 
     return new Handlebars.SafeString(JSON.stringify(context, null, space));
 }
 
-function toJsonHelper(context: any) {
+function toJsonHelper(context: unknown) {
     if (typeof context === 'string') {
         return JSON.parse(context);
     }
@@ -663,48 +471,63 @@ function toJsonHelper(context: any) {
     return context;
 }
 
-function typeOfHelper(context: any) {
+function typeOfHelper(context: unknown) {
+    if (context === undefined) {
+        return 'undefined';
+    }
+    if (context === null) {
+        return 'null';
+    }
+
     if (typeof context === 'object') {
         return context.constructor ? context.constructor.name : 'object';
     } else {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-base-to-string
         return context === undefined ? 'undefined' : `${context}[${typeof context}]`;
     }
 }
 
 type modalDataHelperArgs = {
+    key: string;
     default?: unknown;
     root?: boolean;
 } & queryObjType;
 
-/**
- * @dataHelper
- * @example
- * // Example 1: this will concat model.name and "Localizer" string into @root.data dictionary under key "rootClassName"
- * {{m-data (x-concat model.name "Localizer") key="rootClassName" }}
- * 
- * // Example 2: this will query (using jmespath expression) to get custom data and will be stored into @root.data dictionary under key "settings"
- * {{m-data model.codeGenerator.settings key="settings" query="childs[?name=='CSharp'].attrs | [0]" }}
- * 
- * // Example 3: if query is long it can be placed in block helper , like this:
- * {{#m-data model.codeGenerator.settings key="settings" }}
- * childs[?name=='CSharp'].attrs | [0].{
- *    bodySyntax: (UseExpressionBodySyntax||'false') == 'true',
- *    fallbackToPrimary: (MissingTranslationFallbackToPrimary||'false') == 'true',
- *    outputFolder: (OutputFolder||'Resources')
- * }
-{{/m-data}}
- */
-//function modelDataHelper(context: any, options: HbsDataContext<modalDataHelperArgs>) {
 function modelDataHelper() {
+    //const { context, options } = getContextAndOptions<modalDataHelperArgs>(this, ...args);
     // @ts-ignore
     const { context, options } = getContextAndOptions<modalDataHelperArgs>(this, ...arguments);
+
 
     const defaultValue = options.hash?.default;
     const value = queryObjValue(context, options) ?? defaultValue;
     const forceToRoot = valueOrDefault(options.hash?.root, false);
 
-    //@ts-ignore
+    const key = options?.hash?.key ?? '';
+    if (isNullOrEmpty(key)) {
+        throw new AppError(`Helper '${options.name}' missing hash param 'key' !`);
+    }
+
+    // @ts-ignore
     setCustomData(this, options, value, forceToRoot);
+}
+
+function setCustomData(context: any, options: HbsDataContext, valueOrFn: () => any | any, forceToRoot: boolean): void {
+    const value = typeof valueOrFn === 'function' ? valueOrFn() : valueOrFn;
+    const key = valueOrDefault(options?.hash?.key, '');
+
+    if (!isNullOrEmpty(key)) {
+        if (forceToRoot) {
+            const root = getRoot(options);
+            root.addToTempData(key, value);
+        } else if (context instanceof TreeElement) {
+            context.addToTempData(key, value);
+        } else if (context instanceof TemplateRootModel) {
+            context.addToTempData(key, value);
+        } else {
+            hostEnv.debugLog(`[setCustomData] unknown context: ${typeof context} for key '${key}' !`);
+        }
+    }
 }
 
 type modelOutputArgs = {
@@ -716,9 +539,9 @@ type modelOutputArgs = {
 
 const modelOutputFlags: queryObjFlags = { undefinedForDefault: true, allowHash: false };
 
-function modelOutputHelper(options: HbsDataContext<modelOutputArgs>) {
+function modelOutputHelper() {
     //@ts-ignore
-    const context = this;
+    const { context, options } = getContextAndOptions<modelOutputArgs>(this, ...arguments);
 
     if (!(context instanceof TemplateRootModel)) {
         throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
@@ -735,7 +558,7 @@ function modelOutputHelper(options: HbsDataContext<modelOutputArgs>) {
     const fileName = options?.hash?.fileName ?? '';
 
     const settingsNode = context.model.codeGenerator?.settings;
-    const settingsObj = options.hash?.settings ?? queryObjValue(settingsNode, options as any, modelOutputFlags);
+    const settingsObj = options.hash?.settings ?? queryObjValue(settingsNode, options, modelOutputFlags);
 
     let outputFile: OutputFileData = context.output!;
     let updateSettings = true;
@@ -764,7 +587,7 @@ function modelOutputHelper(options: HbsDataContext<modelOutputArgs>) {
         }
 
         const mergeWithDefaults = options.hash?.mergeWithDefaults ?? true;
-        const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
+        const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj) as CodeGeneratorBasicSettings;
         outputFile.settings = settings;
     }
 
@@ -808,7 +631,7 @@ type modelOutputInlineArgs = modelOutputArgs;
 const modelOutputInlineFlags: queryObjFlags = { undefinedForDefault: true, allowHash: true, allowFn: false };
 
 function modelOutputInlineHelper() {
-    // @ts-ignore
+    //@ts-ignore
     const { context, options } = getContextAndOptions<modelOutputInlineArgs>(this, ...arguments);
 
     if (!(context instanceof TemplateRootModel)) {
@@ -841,14 +664,14 @@ function modelOutputInlineHelper() {
     }
 
     const mergeWithDefaults = options?.hash?.mergeWithDefaults ?? true;
-    const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
+    const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj) as CodeGeneratorBasicSettings;
 
     let fileContent = '';
     if (context.setInlineEvaluating(true)) {
         try {
-            fileContent = options.fn(context) ?? '';
+            fileContent = options.fn(context) as string ?? '';
         } catch (e) {
-            throw new AppError(`Helper '${options.name}' error: ${(e as any).message}`);
+            throw new AppError(`Helper '${options.name}' error: ${(e as Error).message}`);
         } finally {
             context.setInlineEvaluating(false);
         }

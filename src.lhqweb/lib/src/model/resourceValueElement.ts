@@ -1,5 +1,5 @@
-import { LhqModelResourceValue } from './api/schemas';
-import { IResourceElement, IResourceValueElement } from './api/types';
+import type { LhqModelResourceValue } from '../api/schemas';
+import type { IResourceElement, IResourceValueElement } from '../api/modelTypes';
 
 export class ResourceValueElement implements IResourceValueElement {
     private _languageName: string;

@@ -1,4 +1,4 @@
-import { ITreeElement, ITreeElementPaths } from './api/types';
+import type { ITreeElement, ITreeElementPaths } from '../api/modelTypes';
 
 export class TreeElementPaths implements ITreeElementPaths {
     private paths: string[] = [];

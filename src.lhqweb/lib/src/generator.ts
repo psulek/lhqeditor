@@ -1,40 +1,59 @@
 import { isNullOrEmpty, validateLhqModel } from './utils';
 import { AppError } from './AppError';
 import { RootModelElement } from './model/rootModelElement';
-import { HostEnvironmentDefault, IHostEnvironment } from './hostEnv';
 import { registerHelpers } from './helpers';
-import { OutputFileData, OutputInlineData, TemplateRootModel } from './model/templateRootModel';
+import { type OutputFileData, type OutputInlineData, TemplateRootModel } from './model/templateRootModel';
 import { HbsTemplateManager } from './hbsManager';
 import { DefaultCodeGenSettings } from './model/modelConst';
-import { GeneratedFile, GeneratorSource, GenerateResult } from './types';
-import { CodeGeneratorBasicSettings } from './model/api/types';
+import type { CodeGeneratorBasicSettings } from './api/modelTypes';
+import type { GeneratedFile, GenerateResult, GeneratorSource } from './api/types';
+import { GeneratorInitialization, IHostEnvironment } from './types';
 
 export const DataKeys = Object.freeze({
     Namespace: 'namespace'
 });
 
+// declare var HostEnvironment: IHostEnvironment;
+
 export class Generator {
     private static _initialized = false;
-    private static regexLF = new RegExp("\\r\\n|\\r", "g");
-    private static regexCRLF = new RegExp("(\\r(?!\\n))|((?<!\\r)\\n)", "g");
+    private static regexLF = new RegExp('\\r\\n|\\r', 'g');
+    private static regexCRLF = new RegExp('(\\r(?!\\n))|((?<!\\r)\\n)', 'g');
+    private static hostEnv: IHostEnvironment;
 
     private _generatedFiles: GeneratedFile[] = [];
 
-    public static initialize(hostEnv?: IHostEnvironment): void {
+    public static initialize(initialization: GeneratorInitialization): void {
         if (!Generator._initialized) {
-            const globalObject = typeof window !== 'undefined' ? window : global;
-            globalObject.HostEnvironment = hostEnv ?? new HostEnvironmentDefault();
-            Generator._initialized = true;
+            if (isNullOrEmpty(initialization)) {
+                throw new Error('Generator initialization is required !');
+            }
 
-            registerHelpers();
+            if (isNullOrEmpty(initialization.hbsTemplates)) {
+                throw new Error('Handlebars templates are required (initialization.hbsTemplates) !');
+            }
+
+            if (Object.keys(initialization.hbsTemplates).length === 0) {
+                throw new Error('Handlebars templates cannot be empty are required (initialization.hbsTemplates) !');
+            }
+
+            if (isNullOrEmpty(initialization.hostEnvironment)) {
+                throw new Error('Host environment is required (initialization.hostEnvironment) !');
+            }
+
+            HbsTemplateManager.init(initialization.hbsTemplates);
+
+            Generator.hostEnv = initialization.hostEnvironment;
+            registerHelpers(initialization.hostEnvironment);
+            Generator._initialized = true;
         }
     }
 
     /**
      * Gets the generated content string that should be written to the fileName file.
      * 
-     * @param generatedFile Information about the generated file.
-     * @param applyLineEndings Flag indicating whether to apply line endings to the content or not.
+     * @param generatedFile - Information about the generated file.
+     * @param applyLineEndings - Flag indicating whether to apply line endings to the content or not.
      * @returns The generated content string, without any modifications if applyLineEndings is false, or with line endings applied if applyLineEndings is true.
      */
     public getFileContent(generatedFile: GeneratedFile, applyLineEndings: boolean): string {
@@ -43,14 +62,14 @@ export class Generator {
         }
 
         return generatedFile.lineEndings === 'LF'
-            ? generatedFile.content.replace(Generator.regexLF, "\n")
-            : generatedFile.content.replace(Generator.regexCRLF, "\r\n");
+            ? generatedFile.content.replace(Generator.regexLF, '\n')
+            : generatedFile.content.replace(Generator.regexCRLF, '\r\n');
     }
 
     /**
      * Runs code templates for the given input LHQ model.
-     * @param inputModel input LHQ model
-     * @param hostData external host data
+     * @param inputModel - input LHQ model
+     * @param hostData - external host data
      * @returns generated result.
      */
     public generate(inputModel: GeneratorSource, hostData?: Record<string, unknown>): GenerateResult {
@@ -138,7 +157,7 @@ export class Generator {
         });
 
 
-        return { generatedFiles: this._generatedFiles, modelGroupSettings: [] };
+        return { generatedFiles: this._generatedFiles };
     }
 
     private addResultFile(templateId: string, templateResult: string, output: OutputFileData | undefined) {
@@ -158,9 +177,8 @@ export class Generator {
     }
 
     private addResultFileInternal(templateResult: string, fileName: string, settings: CodeGeneratorBasicSettings): void {
-
         if (settings.Enabled) {
-            const genFileName = isNullOrEmpty(settings.OutputFolder) ? fileName : HostEnvironment.pathCombine(settings.OutputFolder, fileName);
+            const genFileName = isNullOrEmpty(settings.OutputFolder) ? fileName : Generator.hostEnv.pathCombine(settings.OutputFolder, fileName);
             const bom = settings.EncodingWithBOM;
             const lineEndings = settings.LineEndings ?? DefaultCodeGenSettings.LineEndings;
             const result: GeneratedFile = { fileName: genFileName, content: templateResult, bom, lineEndings };

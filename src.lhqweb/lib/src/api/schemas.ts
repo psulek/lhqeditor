@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const LhqModelLineEndingsSchema = z.union([z.literal('LF'), z.literal('CRLF')]);
 
 export const LhqModelOptionsResourcesSchema = z.union([
-    z.literal("All"), z.literal("Categories")
+    z.literal('All'), z.literal('Categories')
 ]);
 
 export const LhqModelResourceParameterSchema = z.object({
@@ -12,7 +12,7 @@ export const LhqModelResourceParameterSchema = z.object({
 });
 
 export const LhqModelResourceTranslationStateSchema = z.union([
-    z.literal("New"), z.literal("Edited"), z.literal("NeedsReview"), z.literal("Final")
+    z.literal('New'), z.literal('Edited'), z.literal('NeedsReview'), z.literal('Final')
 ]);
 
 export const LhqModelResourceValueSchema = z.object({

@@ -4,10 +4,10 @@ import path from 'node:path';
 import { generateSchema, isNullOrEmpty, jsonQuery, safeJsonParse, validateLhqModel } from '../utils';
 import { printNode, zodToTs, createTypeAlias } from 'zod-to-ts'
 
-import * as schemas from '../model/api/schemas';
-import { ZodTypeAny } from 'zod';
+import * as schemas from '../api/schemas';
+import type { ZodTypeAny } from 'zod';
 import { generateFromLhq } from './gen';
-import { Duration } from '../duration';
+import { Duration } from '../Duration';
 
 
 type CliArguments = {
@@ -25,7 +25,7 @@ if (cliCmd['gen-schema'] === true) {
     const cwd = process.cwd();
     const schemaFilePath = path.join(cwd, 'lhq-schema.json');
     const duration = Duration.start();
-    const schemaContent = generateSchema(schemaFilePath);
+    const schemaContent = generateSchema();
     duration.end();
     fs.writeFileSync(schemaFilePath, schemaContent, { encoding: 'utf-8' });
 
@@ -46,20 +46,16 @@ if (cliCmd['gen-schema'] === true) {
 
     const typesFile = path.resolve(__dirname, '../model/types.ts');
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const regexPattern = /import\s*{(?<imports>[^}]*)}\s*from\s*'\.\/schemas';/m;
     const inputString = fs.readFileSync(typesFile, { encoding: 'utf-8' });
     const match = inputString.match(regexPattern);
-    const importsStr = match?.groups?.imports.replace(/\s+/g, ' ').trim() ?? '';
+    const importsStr = match?.groups?.['imports'].replace(/\s+/g, ' ').trim() ?? '';
     const allowedSchemaTypes = importsStr.split(',').map((x: string) => x.trim());
     if (allowedSchemaTypes.length === 0) {
         throw new Error(`No zod schema types imports found in: ${typesFile}`);
     }
-
-    function capitalizeWord(str: string): string {
-        if (!str) return str;
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    };
 
     const zodToStr = (zod: ZodTypeAny, identifier: string) => {
         const { node } = zodToTs(zod, identifier);
@@ -89,27 +85,27 @@ if (cliCmd['gen-schema'] === true) {
 function testJMesPath() {
     const query = `join(', ', map(&join(' ', ['object', @.name]), parameters))`;
     const obj = {
-        "state": "Edited",
-        "parameters": [
+        'state': 'Edited',
+        'parameters': [
           {
-            "name": "user",
-            "description": "user name",
-            "order": 0
+            'name': 'user',
+            'description': 'user name',
+            'order': 0
           },
           {
-            "name": "app",
-            "description": "app name",
-            "order": 1
+            'name': 'app',
+            'description': 'app name',
+            'order': 1
           }
         ],
-        "values": {
-          "en": {
-            "value": "Welcome {0} in this {1} !",
-            "locked": true
+        'values': {
+          'en': {
+            'value': 'Welcome {0} in this {1} !',
+            'locked': true
           },
-          "sk": {
-            "value": "Vitajte {0} v tejto {1} !",
-            "auto": true
+          'sk': {
+            'value': 'Vitajte {0} v tejto {1} !',
+            'auto': true
           }
         }
       };

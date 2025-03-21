@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-lib": "rimraf dist && webpack",
+    "build-lib": "rimraf dist && tsup --config tsup.lib.ts",
+    "build-lib2": "rimraf dist && webpack",
+    "test1": "ts-node --project tsconfig.build.json ./src/build/cli.ts file.lhq --project MyProj.csproj -d key1=value1 --data k2=v2",
+    "test2": "ts-node --project tsconfig.build.json ./src/build/cli.ts c:/dev/github/psulek/lhqeditor/src/Gen.Lib.Tests/TestData/WinFormsResxCsharp01/Strings.lhq",
     "genarate-lhq": "ts-node --project tsconfig.build.json ./src/build/cli.ts --gen-lhq data/WinFormsResxCsharp01.lhq"
   },
   "__scripts": {
@@ -41,6 +44,8 @@
     "@types/node": "^22.13.10",
     "@typescript-eslint/eslint-plugin": "8.26.1",
     "@typescript-eslint/parser": "8.26.1",
+    "@xmldom/xmldom": "^0.9.8",
+    "cpx": "1.5.0",
     "eslint": "9.22.0",
     "eslint-config-prettier": "10.1.1",
     "eslint-plugin-eslint-comments": "3.2.0",
@@ -49,6 +54,7 @@
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-tsdoc": "0.4.0",
     "fs-extra": "11.3.0",
+    "glob": "^11.0.1",
     "minimist": "1.2.8",
     "rimraf": "^6.0.1",
     "ts-loader": "^9.5.2",
@@ -57,6 +63,7 @@
     "typescript": "^5.8.2",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1",
+    "xpath": "^0.0.34",
     "zod": "^3.24.2",
     "zod-to-json-schema": "^3.24.4",
     "zod-to-ts": "^1.2.0",

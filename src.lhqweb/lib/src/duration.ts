@@ -1,5 +1,3 @@
-import { formatDuration } from './utils';
-
 export class Duration {
     private _start: number;
     private _end: number | undefined;
@@ -22,6 +20,15 @@ export class Duration {
     }
 
     public get elapsedTime(): string {
-        return formatDuration(this.elapsed);
+        return Duration.formatDuration(this.elapsed);
+    }
+
+    public static formatDuration(ms: number): string {
+        const seconds = Math.floor(ms / 1000);
+        const milliseconds = ms % 1000;
+    
+        return seconds > 0
+            ? `${seconds} second${seconds > 1 ? 's' : ''} and ${milliseconds} ms`
+            : `${milliseconds} ms`;
     }
 }

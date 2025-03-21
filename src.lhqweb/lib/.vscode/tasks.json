@@ -8,8 +8,7 @@
             "problemMatcher": [
                 "$ts-webpack"
             ],
-            "label": "BUILD-LIB",
-            "detail": "rimraf dist && webpack"
+            "label": "BUILD-LIB"
         },
         {
             "type": "npm",

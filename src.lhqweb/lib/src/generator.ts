@@ -1,4 +1,4 @@
-import { isNullOrEmpty, validateLhqModel } from './utils';
+import { isNullOrEmpty } from './utils';
 import { AppError } from './AppError';
 import { RootModelElement } from './model/rootModelElement';
 import { registerHelpers } from './helpers';
@@ -6,14 +6,15 @@ import { type OutputFileData, type OutputInlineData, TemplateRootModel } from '.
 import { HbsTemplateManager } from './hbsManager';
 import { DefaultCodeGenSettings } from './model/modelConst';
 import type { CodeGeneratorBasicSettings } from './api/modelTypes';
-import type { GeneratedFile, GenerateResult, GeneratorSource } from './api/types';
+import type { GeneratedFile, GenerateResult } from './api/types';
 import { GeneratorInitialization, IHostEnvironment } from './types';
+import { LhqModel } from './api/schemas';
+import { validateLhqModel } from './generatorUtils';
 
-export const DataKeys = Object.freeze({
-    Namespace: 'namespace'
+export const GeneratorHostDataKeys = Object.freeze({
+    namespace: 'namespace',
+    fileHeader: 'fileHeader'
 });
-
-// declare var HostEnvironment: IHostEnvironment;
 
 export class Generator {
     private static _initialized = false;
@@ -68,23 +69,23 @@ export class Generator {
 
     /**
      * Runs code templates for the given input LHQ model.
-     * @param inputModel - input LHQ model
-     * @param hostData - external host data
-     * @returns generated result.
+     * @param model - file *.lhq as deserialized JSON object, not yet validated agains LHQ model schema
+     * @param fileName - input LHQ model file name (*.lhq)
+     * @param csProjectFileName - input C# projector file name (*.csproj)
+     * @param hostData - external host data as key-value mapping that will be used by code generator templates.
+     * @returns generator result.
      */
-    public generate(inputModel: GeneratorSource, hostData?: Record<string, unknown>): GenerateResult {
+    public generate(fileName: string, model: LhqModel, csProjectFileName: string, hostData?: Record<string, unknown>): GenerateResult {
         if (!Generator._initialized) {
             throw new AppError('Generator not initialized !');
         }
 
-        if (isNullOrEmpty(inputModel)) {
-            throw new AppError('Missing input model data !');
-        }
-
-        const { model, fileName } = inputModel;
-
         if (isNullOrEmpty(fileName)) {
             throw new AppError('Missing input model file name !');
+        }
+
+        if (isNullOrEmpty(csProjectFileName)) {
+            throw new AppError('Missing input C# project file name !');
         }
 
         if (isNullOrEmpty(model)) {
@@ -99,7 +100,7 @@ export class Generator {
 
         const validation = validateLhqModel(model);
         if (!validation.success) {
-            throw new AppError(validation.error ?? `Unable to deserialize LHQ model '${fileName}' !`);
+            throw new AppError(validation.error ?? `Unable to deserialize or validate LHQ model '${fileName}' !`);
         }
 
         const rootModel = new RootModelElement(model);

@@ -1,5 +1,13 @@
+import * as fs from 'fs';
+import * as path from 'path';
+import { DOMParser } from '@xmldom/xmldom';
+import * as xpath from 'xpath';
+
 import { LhqModel } from '../api/schemas';
-import { validateLhqModel } from '../utils';
+import { tryRemoveBOM } from '../utils';
+import { validateLhqModel } from '../generatorUtils';
+
+
 
 const model = getModel();
 const result = validateLhqModel(model);

@@ -1,11 +1,11 @@
 import type { LhqModel, LhqModelLineEndings } from './schemas';
 
-export type GeneratorSource = {
-    model: LhqModel;
-    fileName: string;
-    // csProjectFileName: string;
-    // outDir: string;
-};
+// export type GeneratorSource = {
+//     model: LhqModel;
+//     fileName: string;
+//     csProjectFileName: string;
+//     // outDir: string;
+// };
 
 
 

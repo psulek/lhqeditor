@@ -1,36 +1,11 @@
-/* eslint-disable eslint-comments/disable-enable-pair */
-/* eslint-disable no-prototype-builtins */
-import { fromZodError } from 'zod-validation-error';
-import { zodToJsonSchema } from 'zod-to-json-schema';
-
-// import { search as jmespath, JSONValue, registerFunction, TYPE_STRING } from '@metrichor/jmespath';
 import { search as jmespath } from 'jmespath';
-import { type LhqModel, LhqModelSchema } from './api/schemas';
 
-// export function testJMesPath() {
-//     registerFunction('trimEnd',
-//         (resolvedArgs) => {
-//             const [input, endPattern] = resolvedArgs;
-//             return trimEnd(input, endPattern);
-//         },
-//         [{ types: [TYPE_STRING] }, { types: [TYPE_STRING] }]);
-
-//     const obj = {
-//         "languages": [
-//             "en",
-//             "sk",
-//             "de\\"
-//         ]
-//     };
-
-//     const a1 = jmespath(obj, `languages[2]`);
-//     const a2 = jmespath(obj, `trimEnd(languages[2],'[\\\\/]')`);
-//     console.log(a1);
-// }
-
+export function tryRemoveBOM(value: string): string {
+    return isNullOrEmpty(value) ? value : (value.charCodeAt(0) === 0xFEFF ? value.slice(1) : value);
+}
 
 export function safeJsonParse<T>(value: string): T {
-    return JSON.parse(value.charCodeAt(0) === 0xFEFF ? value.slice(1) : value) as T;
+    return JSON.parse(tryRemoveBOM(value)) as T;
 }
 
 export function jsonQuery<T>(obj: unknown, query: string, defaultValue?: T): T | undefined {
@@ -85,18 +60,6 @@ export function sortObjectByValue<T>(obj: Record<string, T>, predicate: (item: T
     }));
 }
 
-// export function sortBy<T>(source: T[], propName?: string, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
-//     /* eslint-disable */
-//     return source.concat([]).sort((a, b) => {
-//         const v1 = propName === undefined ? a : a[propName]; // @ts-ignore
-//         // @ts-ignore
-//         const v2 = propName === undefined ? b : b[propName]
-//         const res = v1 > v2 ? 1 : ((v2 > v1) ? -1 : 0);
-//         return sortOrder === 'asc' ? res : res * -1;
-//     });
-//     /* eslint-enable */
-// }
-
 export type KeysMatching<T, V> = { [K in keyof T]-?: T[K] extends V ? K : never }[keyof T];
 
 export function sortBy<T>(source: T[], key: KeysMatching<T, string | number> | undefined, sortOrder: 'asc' | 'desc' = 'asc'): T[] {
@@ -126,7 +89,6 @@ export function iterateObject<T>(obj: Record<string, T>, callback:
         }
     }
 }
-
 
 const encodingCharMaps = {
     html: {
@@ -196,7 +158,6 @@ export function textEncode(str: string, encoder: TextEncodeOptions): string {
 
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export function valueOrDefault<T>(value: T | null | undefined | '' | unknown, defaultValue: T): T {
-    //let result = isNullOrEmpty(value) ? defaultValue : value;
     let result = isNullOrUndefined(value) ? defaultValue : value;
 
     if (typeof defaultValue === 'boolean') {
@@ -257,9 +218,7 @@ export function toBoolean(value: string): boolean {
 }
 
 export function hasItems<T>(obj: Record<string, T> | Array<T> | undefined): boolean {
-    const result = objCount(obj) > 0;
-    //HostEnv.debugLog(`[hasItems] returns '${result}' for obj: ${JSON.stringify(obj)}`);
-    return result;
+    return objCount(obj) > 0;
 }
 
 export function objCount<T>(obj: Record<string, T> | Array<T> | undefined): number {
@@ -290,25 +249,6 @@ export function removeNewLines(input: string): string {
     return input.replace(/\r\n|\r|\n/g, '');
 }
 
-export function validateLhqModel(data: LhqModel): { success: boolean, error: string | undefined, model?: LhqModel } {
-    if (data === undefined || data === null || typeof data !== 'object') {
-        return { success: false, error: 'File or model must be specified.' };
-    }
-
-    const parseResult = LhqModelSchema.safeParse(data);
-    const success = parseResult.success;
-    const error = parseResult.success ? undefined : fromZodError(parseResult.error).toString();
-    return { success, error, model: success ? parseResult.data : undefined };
-}
-
-export function generateSchema(): string {
-    const jsonSchema = zodToJsonSchema(LhqModelSchema, {
-        name: 'LhqModel',
-        $refStrategy: 'root'
-    });
-
-    return JSON.stringify(jsonSchema, null, 2);
-}
 
 export function removeProperties<T>(obj: T | undefined, ...propertiesToRemove: unknown[]): T | undefined {
     if (isNullOrUndefined(obj)) return obj;
@@ -326,13 +266,4 @@ export function removeProperties<T>(obj: T | undefined, ...propertiesToRemove: u
     });
 
     return obj;
-}
-
-export function formatDuration(ms: number): string {
-    const seconds = Math.floor(ms / 1000);
-    const milliseconds = ms % 1000;
-
-    return seconds > 0
-        ? `${seconds} second${seconds > 1 ? 's' : ''} and ${milliseconds} ms`
-        : `${milliseconds} ms`;
 }

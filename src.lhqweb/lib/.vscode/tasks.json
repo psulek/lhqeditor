@@ -19,6 +19,15 @@
                 "$tsc"
             ],
             "label": "Genarate-LHQ"
+        },
+        {
+            "type": "npm",
+            "script": "eslint",
+            "problemMatcher": [
+                "$eslint-stylish"
+            ],
+            "label": "npm: eslint",
+            "detail": "./node_modules/.bin/eslint.cmd ."
         }
     ]
 }

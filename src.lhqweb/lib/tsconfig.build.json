@@ -1,17 +1,25 @@
 {
     "extends": "./tsconfig.base.json",
-    "compilerOptions": {},
+    "compilerOptions": {
+        "target": "es2020",
+        "module": "Node16",
+        "moduleResolution": "node16",
+        "esModuleInterop": true,
+        "importsNotUsedAsValues": "error",
+        "allowImportingTsExtensions": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "build/**/*.mts",
+        "build.mts"
+    ],
     "ts-node": {
-        "esm": false,
+        "esm": true,
         "compilerOptions": {
             "target": "ES2020",
-            "module": "CommonJS",
-            "traceResolution": false,
-            "esModuleInterop": true
-            // "moduleResolution": "node16",
-            // "allowImportingTsExtensions": true,
-            // "allowSyntheticDefaultImports": true,
-            
+            "module": "Node16",
+            "moduleResolution": "node16"
         }
     }
 }

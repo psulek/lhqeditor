@@ -4,7 +4,8 @@
         "es6": true
     },
     "plugins": [
-        "eslint-plugin-tsdoc"
+        "eslint-plugin-tsdoc",
+        "@typescript-eslint"
     ],
     "extends": [
         "eslint:recommended",
@@ -19,15 +20,17 @@
         "node_modules",
         "eslint.config.mjs",
         "dist",
-        "*.mts",
         "tests",
-        "webpack.config.js"
+        "webpack.config.js",
+        "tsconfig.json",
+        "tsconfig.*.json"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": "./tsconfig.build.json"
     },
     "rules": {
+        "@typescript-eslint/consistent-type-imports": "error",
         "tsdoc/syntax": "warn",
         "quotes": [2, "single", {
             "avoidEscape": true,
@@ -70,6 +73,7 @@
                 "extensions": [
                     ".js",
                     ".ts",
+                    ".mts",
                     ".tsx"
                 ]
             }

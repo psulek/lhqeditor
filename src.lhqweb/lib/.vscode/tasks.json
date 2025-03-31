@@ -1,25 +1,6 @@
 {
 	"version": "2.0.0",
-	"tasks": [
-        {
-            "type": "npm",
-            "script": "build-lib",
-            "group": "build",
-            "problemMatcher": [
-                "$ts-webpack"
-            ],
-            "label": "BUILD-LIB"
-        },
-        {
-            "type": "npm",
-            "script": "genarate-lhq",
-            "problemMatcher": [
-                "$esbuild",
-                "$ts-webpack",
-                "$tsc"
-            ],
-            "label": "Genarate-LHQ"
-        },
+	"tasks": [       
         {
             "type": "npm",
             "script": "eslint",

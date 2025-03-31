@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "ts-node index.mts",
-    "_build": "tsup-node",
-    "copy": "copy \"node_modules\\@lhq\\lhq-generators\\index.js\" \"web\\index.js\""
+    "build": "tsx index.mts",
+    "postinstall": "xcopy /y \"node_modules\\@lhq\\lhq-generators\\browser\\index.js\" \"web\\index.js\""
   },
   "author": "",
   "license": "ISC",
@@ -16,10 +15,11 @@
     "fs-extra": "^11.3.0",
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "@lhq/lhq-generators": "1.0.8"
+    "@lhq/lhq-generators": "1.0.63"
   },
   "sideEffects": false,
   "tsup": {

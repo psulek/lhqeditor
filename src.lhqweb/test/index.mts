@@ -1,19 +1,23 @@
 import fse from 'fs-extra';
 // import {LhqModel, LhqModelSchema} from '@lhq/lhq-generators';
-//import * as lhq from '@lhq/lhq-generators';
-import '@lhq/lhq-generators';
+import {generatorUtils, LhqModel} from '@lhq/lhq-generators';
+// import '@lhq/lhq-generators';
 
 
 (async () => {
     try {
-        const file = process.argv[2];
-        const content = await fse.readFile(file, { encoding: 'utf-8' });
+        // const file = process.argv[2];
+        // const content = await fse.readFile(file, { encoding: 'utf-8' });
         //utils.tryRemoveBOM()
         //const res = lhq.generatorUtils.validateLhqModel(content);
 
-        // @ts-ignore
-        const res = (LhqGenerators as any).generatorUtils.validateLhqModel(content);
+        const content = {} as LhqModel;
+        
+        const res = generatorUtils.validateLhqModel(content);
         console.log(res);
+
+        const schema = generatorUtils.generateLhqSchema();
+        console.log(schema);
 
     } catch (e) {
         console.error(e);

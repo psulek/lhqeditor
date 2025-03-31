@@ -17208,13 +17208,14 @@ var LhqGenerators = (() => {
     }
   });
 
-  // src/index.mts
+  // src/index.ts
   var index_exports = {};
   __export(index_exports, {
     AppError: () => AppError,
     Duration: () => Duration,
     Generator: () => Generator,
     GeneratorHostDataKeys: () => GeneratorHostDataKeys,
+    HostEnvironment: () => HostEnvironment,
     LhqCodeGenVersionSchema: () => LhqCodeGenVersionSchema,
     LhqModelCategoriesCollectionSchema: () => LhqModelCategoriesCollectionSchema,
     LhqModelCategorySchema: () => LhqModelCategorySchema,
@@ -17232,13 +17233,34 @@ var LhqGenerators = (() => {
     LhqModelSchema: () => LhqModelSchema,
     LhqModelUidSchema: () => LhqModelUidSchema,
     LhqModelVersionSchema: () => LhqModelVersionSchema,
+    arraySortBy: () => arraySortBy,
     baseCategorySchema: () => baseCategorySchema,
     baseDataNodeSchema: () => baseDataNodeSchema,
+    copyObject: () => copyObject,
     generatorUtils: () => generatorUtils_exports,
-    utils: () => utils_exports
+    hasItems: () => hasItems,
+    isNullOrEmpty: () => isNullOrEmpty,
+    isNullOrUndefined: () => isNullOrUndefined,
+    iterateObject: () => iterateObject,
+    jsonParseOrDefault: () => jsonParseOrDefault,
+    jsonQuery: () => jsonQuery,
+    normalizePath: () => normalizePath,
+    objCount: () => objCount,
+    removeNewLines: () => removeNewLines,
+    removeProperties: () => removeProperties,
+    sortBy: () => sortBy,
+    sortObjectByKey: () => sortObjectByKey,
+    sortObjectByValue: () => sortObjectByValue,
+    textEncode: () => textEncode,
+    toBoolean: () => toBoolean,
+    trimComment: () => trimComment,
+    tryJsonParse: () => tryJsonParse,
+    tryRemoveBOM: () => tryRemoveBOM,
+    valueAsBool: () => valueAsBool,
+    valueOrDefault: () => valueOrDefault
   });
 
-  // src/AppError.mts
+  // src/AppError.ts
   var AppError = class _AppError extends Error {
     constructor(message, stack) {
       super(message);
@@ -17253,7 +17275,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/duration.mts
+  // src/duration.ts
   var Duration = class _Duration {
     constructor() {
       this._start = Date.now();
@@ -17279,33 +17301,8 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/utils.mts
-  var utils_exports = {};
-  __export(utils_exports, {
-    arraySortBy: () => arraySortBy,
-    copyObject: () => copyObject,
-    hasItems: () => hasItems,
-    isNullOrEmpty: () => isNullOrEmpty,
-    isNullOrUndefined: () => isNullOrUndefined,
-    iterateObject: () => iterateObject,
-    jsonParseOrDefault: () => jsonParseOrDefault,
-    jsonQuery: () => jsonQuery,
-    normalizePath: () => normalizePath,
-    objCount: () => objCount,
-    removeNewLines: () => removeNewLines,
-    removeProperties: () => removeProperties,
-    sortBy: () => sortBy,
-    sortObjectByKey: () => sortObjectByKey,
-    sortObjectByValue: () => sortObjectByValue,
-    textEncode: () => textEncode,
-    toBoolean: () => toBoolean,
-    trimComment: () => trimComment,
-    tryJsonParse: () => tryJsonParse,
-    tryRemoveBOM: () => tryRemoveBOM,
-    valueAsBool: () => valueAsBool,
-    valueOrDefault: () => valueOrDefault
-  });
-  var import_jmespath = __toESM(require_jmespath(), 1);
+  // src/utils.ts
+  var import_jmespath = __toESM(require_jmespath());
   function tryRemoveBOM(value) {
     return isNullOrEmpty(value) ? value : value.charCodeAt(0) === 65279 ? value.slice(1) : value;
   }
@@ -17323,7 +17320,7 @@ var LhqGenerators = (() => {
     if (!isNullOrEmpty(value)) {
       try {
         result = JSON.parse(value);
-        success = isNullOrEmpty(result);
+        success = !isNullOrEmpty(result);
       } catch (e) {
         error = e instanceof Error ? e.message : e.toString();
       }
@@ -17522,7 +17519,26 @@ var LhqGenerators = (() => {
     return obj;
   }
 
-  // src/model/treeElementPaths.mts
+  // src/hostEnv.ts
+  var HostEnvironment = class {
+    debugLog(msg) {
+      console.log(msg);
+    }
+    pathCombine(path1, path2) {
+      return `${path1 != null ? path1 : ""}/` + (path2 != null ? path2 : "");
+    }
+    webHtmlEncode(input) {
+      return textEncode(input, { mode: "html" });
+    }
+    stopwatchStart() {
+      return performance.now();
+    }
+    stopwatchEnd(start) {
+      return `${(performance.now() - start).toFixed(2)}ms`;
+    }
+  };
+
+  // src/model/treeElementPaths.ts
   var TreeElementPaths = class _TreeElementPaths {
     constructor(element) {
       this.paths = [];
@@ -17541,7 +17557,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/model/treeElement.mts
+  // src/model/treeElement.ts
   var TreeElement = class {
     constructor(root, elementType, name2, description, parent) {
       this.addToTempData = (key, value) => {
@@ -17585,7 +17601,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/model/categoryLikeTreeElement.mts
+  // src/model/categoryLikeTreeElement.ts
   var CategoryLikeTreeElement = class extends TreeElement {
     constructor(root, elementType, name2, description, parent) {
       super(root, elementType, name2, description, parent);
@@ -17629,7 +17645,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/model/modelConst.mts
+  // src/model/modelConst.ts
   var ModelVersions = Object.freeze({
     model: 2,
     codeGenerator: 1
@@ -17642,7 +17658,7 @@ var LhqGenerators = (() => {
     Enabled: true
   };
 
-  // src/model/resourceParameterElement.mts
+  // src/model/resourceParameterElement.ts
   var ResourceParameterElement = class {
     constructor(name2, source, parent) {
       var _a;
@@ -17665,7 +17681,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/model/resourceValueElement.mts
+  // src/model/resourceValueElement.ts
   var ResourceValueElement = class {
     constructor(languageName, source, parent) {
       this._languageName = languageName;
@@ -17691,7 +17707,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/model/resourceElement.mts
+  // src/model/resourceElement.ts
   var ResourceElement = class extends TreeElement {
     constructor(root, name2, source, parent) {
       super(root, "resource", name2, source.description, parent);
@@ -17760,7 +17776,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/model/categoryElement.mts
+  // src/model/categoryElement.ts
   var CategoryElement = class _CategoryElement extends CategoryLikeTreeElement {
     constructor(root, name2, source, parent) {
       super(root, "category", name2, source == null ? void 0 : source.description, parent);
@@ -17773,7 +17789,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/model/rootModelElement.mts
+  // src/model/rootModelElement.ts
   var CodeGenUID = "b40c8a1d-23b7-4f78-991b-c24898596dd2";
   var RootModelElement = class extends CategoryLikeTreeElement {
     constructor(model) {
@@ -17853,10 +17869,10 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/helpers.mts
-  var import_handlebars = __toESM(require_handlebars(), 1);
+  // src/helpers.ts
+  var import_handlebars = __toESM(require_handlebars());
 
-  // src/model/templateRootModel.mts
+  // src/model/templateRootModel.ts
   var TemplateRootModel = class {
     constructor(model, data, host) {
       this._templateRunType = "root";
@@ -17980,7 +17996,7 @@ var LhqGenerators = (() => {
     }
   };
 
-  // src/helpers.mts
+  // src/helpers.ts
   var hostEnv = void 0;
   function registerHelpers(hostEnvironment) {
     hostEnv = hostEnvironment;
@@ -18444,8 +18460,8 @@ ${locText}`;
     context.addInlineOutputs(inlineOutput);
   }
 
-  // src/hbsManager.mts
-  var import_handlebars2 = __toESM(require_handlebars(), 1);
+  // src/hbsManager.ts
+  var import_handlebars2 = __toESM(require_handlebars());
   var HbsTemplateManager = class _HbsTemplateManager {
     static init(data) {
       if (isNullOrEmpty(data)) {
@@ -18466,7 +18482,8 @@ ${locText}`;
       (_a = _HbsTemplateManager._compiled) != null ? _a : _HbsTemplateManager._compiled = {};
       if (!_HbsTemplateManager._compiled.hasOwnProperty(templateId)) {
         if (!_HbsTemplateManager._sources.hasOwnProperty(templateId)) {
-          throw new AppError(`Template with id '${templateId}' not found !`);
+          const allTemplates = Object.keys(_HbsTemplateManager._sources).join(", ");
+          throw new AppError(`Template with id '${templateId}' not found (available templates: ${allTemplates})!`);
         }
         const source = _HbsTemplateManager._sources[templateId];
         compiled = import_handlebars2.default.compile(source, { knownHelpers: getKnownHelpers() });
@@ -18486,17 +18503,17 @@ ${locText}`;
     }
   };
 
-  // src/generatorUtils.mts
+  // src/generatorUtils.ts
   var generatorUtils_exports = {};
   __export(generatorUtils_exports, {
     generateLhqSchema: () => generateLhqSchema,
     getRootNamespaceFromCsProj: () => getRootNamespaceFromCsProj,
     validateLhqModel: () => validateLhqModel
   });
-  var import_xmldom = __toESM(require_lib(), 1);
-  var xpath = __toESM(require_xpath(), 1);
+  var import_xmldom = __toESM(require_lib());
+  var xpath = __toESM(require_xpath());
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/Options.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/Options.js
   var ignoreOverride = Symbol("Let zodToJsonSchema decide on which parser to use");
   var defaultOptions = {
     name: void 0,
@@ -18525,7 +18542,7 @@ ${locText}`;
     name: options
   }) : __spreadValues(__spreadValues({}, defaultOptions), options);
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/Refs.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/Refs.js
   var getRefs = (options) => {
     const _options = getDefaultOptions(options);
     const currentPath = _options.name !== void 0 ? [..._options.basePath, _options.definitionPath, _options.name] : _options.basePath;
@@ -18544,7 +18561,7 @@ ${locText}`;
     });
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/errorMessages.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/errorMessages.js
   function addErrorMessage(res, key, errorMessage, refs) {
     if (!(refs == null ? void 0 : refs.errorMessages))
       return;
@@ -22515,12 +22532,12 @@ ${locText}`;
     ZodError
   });
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/any.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/any.js
   function parseAnyDef() {
     return {};
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/array.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/array.js
   function parseArrayDef(def, refs) {
     var _a, _b, _c;
     const res = {
@@ -22544,7 +22561,7 @@ ${locText}`;
     return res;
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/bigint.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/bigint.js
   function parseBigintDef(def, refs) {
     const res = {
       type: "integer",
@@ -22590,24 +22607,24 @@ ${locText}`;
     return res;
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/boolean.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/boolean.js
   function parseBooleanDef() {
     return {
       type: "boolean"
     };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/branded.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/branded.js
   function parseBrandedDef(_def, refs) {
     return parseDef(_def.type._def, refs);
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/catch.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/catch.js
   var parseCatchDef = (def, refs) => {
     return parseDef(def.innerType._def, refs);
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/date.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/date.js
   function parseDateDef(def, refs, overrideDateStrategy) {
     const strategy = overrideDateStrategy != null ? overrideDateStrategy : refs.dateStrategy;
     if (Array.isArray(strategy)) {
@@ -22666,19 +22683,19 @@ ${locText}`;
     return res;
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/default.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/default.js
   function parseDefaultDef(_def, refs) {
     return __spreadProps(__spreadValues({}, parseDef(_def.innerType._def, refs)), {
       default: _def.defaultValue()
     });
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/effects.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/effects.js
   function parseEffectsDef(_def, refs) {
     return refs.effectStrategy === "input" ? parseDef(_def.schema._def, refs) : {};
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/enum.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/enum.js
   function parseEnumDef(def) {
     return {
       type: "string",
@@ -22686,7 +22703,7 @@ ${locText}`;
     };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/intersection.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/intersection.js
   var isJsonSchema7AllOfType = (type) => {
     if ("type" in type && type.type === "string")
       return false;
@@ -22725,7 +22742,7 @@ ${locText}`;
     }, unevaluatedProperties) : void 0;
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/literal.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/literal.js
   function parseLiteralDef(def, refs) {
     const parsedType = typeof def.value;
     if (parsedType !== "bigint" && parsedType !== "number" && parsedType !== "boolean" && parsedType !== "string") {
@@ -22745,7 +22762,7 @@ ${locText}`;
     };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/string.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/string.js
   var emojiRegex2 = void 0;
   var zodPatterns = {
     /**
@@ -23069,7 +23086,7 @@ ${locText}`;
     return pattern;
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/record.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/record.js
   function parseRecordDef(def, refs) {
     var _a, _b, _c, _d, _f, _g, _h;
     if (refs.target === "openAi") {
@@ -23119,7 +23136,7 @@ ${locText}`;
     return schema;
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/map.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/map.js
   function parseMapDef(def, refs) {
     if (refs.mapStrategy === "record") {
       return parseRecordDef(def, refs);
@@ -23142,7 +23159,7 @@ ${locText}`;
     };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/nativeEnum.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/nativeEnum.js
   function parseNativeEnumDef(def) {
     const object = def.values;
     const actualKeys = Object.keys(def.values).filter((key) => {
@@ -23156,14 +23173,14 @@ ${locText}`;
     };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/never.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/never.js
   function parseNeverDef() {
     return {
       not: {}
     };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/null.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/null.js
   function parseNullDef(refs) {
     return refs.target === "openApi3" ? {
       enum: ["null"],
@@ -23173,7 +23190,7 @@ ${locText}`;
     };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/union.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/union.js
   var primitiveMappings = {
     ZodString: "string",
     ZodNumber: "number",
@@ -23240,7 +23257,7 @@ ${locText}`;
     return anyOf.length ? { anyOf } : void 0;
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/nullable.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/nullable.js
   function parseNullableDef(def, refs) {
     if (["ZodString", "ZodNumber", "ZodBigInt", "ZodBoolean", "ZodNull"].includes(def.innerType._def.typeName) && (!def.innerType._def.checks || !def.innerType._def.checks.length)) {
       if (refs.target === "openApi3") {
@@ -23270,7 +23287,7 @@ ${locText}`;
     return base && { anyOf: [base, { type: "null" }] };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/number.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/number.js
   function parseNumberDef(def, refs) {
     const res = {
       type: "number"
@@ -23319,7 +23336,7 @@ ${locText}`;
     return res;
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/object.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/object.js
   function parseObjectDef(def, refs) {
     const forceOptionalIntoNullable = refs.target === "openAi";
     const result = {
@@ -23387,7 +23404,7 @@ ${locText}`;
     }
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/optional.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/optional.js
   var parseOptionalDef = (def, refs) => {
     var _a;
     if (refs.currentPath.toString() === ((_a = refs.propertyPath) == null ? void 0 : _a.toString())) {
@@ -23406,7 +23423,7 @@ ${locText}`;
     } : {};
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/pipeline.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/pipeline.js
   var parsePipelineDef = (def, refs) => {
     if (refs.pipeStrategy === "input") {
       return parseDef(def.in._def, refs);
@@ -23424,12 +23441,12 @@ ${locText}`;
     };
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/promise.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/promise.js
   function parsePromiseDef(def, refs) {
     return parseDef(def.type._def, refs);
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/set.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/set.js
   function parseSetDef(def, refs) {
     const items = parseDef(def.valueType._def, __spreadProps(__spreadValues({}, refs), {
       currentPath: [...refs.currentPath, "items"]
@@ -23448,7 +23465,7 @@ ${locText}`;
     return schema;
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/tuple.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/tuple.js
   function parseTupleDef(def, refs) {
     if (def.rest) {
       return {
@@ -23473,24 +23490,24 @@ ${locText}`;
     }
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/undefined.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/undefined.js
   function parseUndefinedDef() {
     return {
       not: {}
     };
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/unknown.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/unknown.js
   function parseUnknownDef() {
     return {};
   }
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/readonly.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/readonly.js
   var parseReadonlyDef = (def, refs) => {
     return parseDef(def.innerType._def, refs);
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/selectParser.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/selectParser.js
   var selectParser = (def, typeName, refs) => {
     switch (typeName) {
       case ZodFirstPartyTypeKind.ZodString:
@@ -23566,7 +23583,7 @@ ${locText}`;
     }
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parseDef.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parseDef.js
   function parseDef(def, refs, forceResolution = false) {
     var _a;
     const seenItem = refs.seen.get(def);
@@ -23631,7 +23648,7 @@ ${locText}`;
     return jsonSchema;
   };
 
-  // node_modules/.pnpm/zod-to-json-schema@3.24.4_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/zodToJsonSchema.js
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/zodToJsonSchema.js
   var zodToJsonSchema = (schema, options) => {
     var _a;
     const refs = getRefs(options);
@@ -23855,7 +23872,7 @@ ${locText}`;
     return toValidationError(options)(err);
   }
 
-  // src/api/schemas.mts
+  // src/api/schemas.ts
   var LhqModelLineEndingsSchema = z.union([z.literal("LF"), z.literal("CRLF")]);
   var LhqModelOptionsResourcesSchema = z.union([
     z.literal("All"),
@@ -23885,7 +23902,7 @@ ${locText}`;
   var LhqModelResourceSchema = LhqModelResourceSchemaBase;
   var baseDataNodeSchema = z.object({
     name: z.string(),
-    attrs: z.record(z.string()).optional()
+    attrs: z.record(z.string().nullable().optional()).optional()
   });
   var LhqModelDataNodeSchema = baseDataNodeSchema.extend({
     childs: z.lazy(() => z.array(LhqModelDataNodeSchema)).optional()
@@ -23924,7 +23941,8 @@ ${locText}`;
     categories: z.lazy(() => LhqModelCategoriesCollectionSchema).optional()
   });
 
-  // src/generatorUtils.mts
+  // src/generatorUtils.ts
+  var DOMParser;
   function validateLhqModel(data) {
     if (typeof data === "string") {
       const parseResult2 = tryJsonParse(data, true);
@@ -23937,7 +23955,7 @@ ${locText}`;
       return { success: false, error: 'Specified "data" must be an object!' };
     }
     const parseResult = LhqModelSchema.safeParse(data);
-    const success = parseResult.success;
+    const success = parseResult.success && !isNullOrEmpty(parseResult.data);
     let error = void 0;
     if (!parseResult.success) {
       const messageBuilder = createMessageBuilder({
@@ -23970,7 +23988,17 @@ ${locText}`;
     }
     let rootNamespace;
     try {
-      let findFileElement2 = function(fileName) {
+      const fileContent = tryRemoveBOM(csProjectFileContent);
+      if (typeof window !== "undefined" && typeof window.DOMParser !== "undefined") {
+        DOMParser = window.DOMParser;
+      } else {
+        DOMParser = import_xmldom.DOMParser;
+      }
+      const doc = new DOMParser().parseFromString(fileContent, "text/xml");
+      const rootNode = doc;
+      const ns = ((_a = doc.documentElement) == null ? void 0 : _a.namespaceURI) || "";
+      const xpathSelect = xpath.useNamespaces({ ns });
+      const findFileElement = function(fileName) {
         for (const itemGroupType of itemGroupTypes) {
           for (const attr of itemGroupTypesAttrs) {
             const xpathQuery = csProjectXPath.replace("##TYPE##", itemGroupType).replace("##ATTR##", attr).replace("##FILE##", fileName);
@@ -23982,15 +24010,9 @@ ${locText}`;
         }
         return void 0;
       };
-      var findFileElement = findFileElement2;
-      const fileContent = tryRemoveBOM(csProjectFileContent);
-      const doc = new import_xmldom.DOMParser().parseFromString(fileContent, "text/xml");
-      const rootNode = doc;
-      const ns = ((_a = doc.documentElement) == null ? void 0 : _a.namespaceURI) || "";
-      const xpathSelect = xpath.useNamespaces({ ns });
       rootNamespace = xpathSelect(xpathRootNamespace, rootNode, true);
-      referencedLhqFile = findFileElement2(lhqModelFileName) != void 0;
-      const t4FileElement = findFileElement2(t4FileName);
+      referencedLhqFile = findFileElement(lhqModelFileName) != void 0;
+      const t4FileElement = findFileElement(t4FileName);
       if (t4FileElement) {
         const dependentUpon = (_b = t4FileElement.getElementsByTagNameNS(ns, "DependentUpon")[0]) == null ? void 0 : _b.textContent;
         if (dependentUpon && dependentUpon === lhqModelFileName) {
@@ -24011,7 +24033,7 @@ ${locText}`;
     return rootNamespace;
   }
 
-  // src/generator.mts
+  // src/generator.ts
   var GeneratorHostDataKeys = Object.freeze({
     namespace: "namespace",
     fileHeader: "fileHeader"
@@ -24057,10 +24079,10 @@ ${locText}`;
      * Runs code templates for the given input LHQ model.
      * @param model - file *.lhq as deserialized JSON object, not yet validated agains LHQ model schema
      * @param fileName - input LHQ model file name (*.lhq)
-     * @param hostData - external host data as key-value mapping that will be used by code generator templates.
+     * @param data - external host data as key-value mapping that will be used by code generator templates.
      * @returns generator result.
      */
-    generate(fileName, model, hostData) {
+    generate(fileName, modelData, data) {
       var _a, _b, _c;
       if (!_Generator._initialized) {
         throw new AppError("Generator not initialized !");
@@ -24068,16 +24090,23 @@ ${locText}`;
       if (isNullOrEmpty(fileName)) {
         throw new AppError("Missing input model file name !");
       }
-      if (isNullOrEmpty(model)) {
-        throw new AppError("Missing input model !");
+      if (isNullOrEmpty(modelData)) {
+        throw new AppError("Missing input modelData !");
       }
-      if (!hostData) {
-        hostData = {};
+      let hostData = {};
+      if (typeof data === "string") {
+        hostData = jsonParseOrDefault(data, {}, true);
+      } else if (typeof data === "object") {
+        hostData = data != null ? data : {};
+      } else {
+        throw new AppError("Invalid host data type (object or string expected) !");
       }
-      const validation = validateLhqModel(model);
+      hostData != null ? hostData : hostData = {};
+      const validation = validateLhqModel(modelData);
       if (!validation.success) {
         throw new AppError((_a = validation.error) != null ? _a : `Unable to deserialize or validate LHQ model '${fileName}' !`);
       }
+      const model = validation.model;
       const rootModel = new RootModelElement(model);
       const templateId = (_c = (_b = rootModel.codeGenerator) == null ? void 0 : _b.templateId) != null ? _c : "";
       if (isNullOrEmpty(rootModel.codeGenerator) || isNullOrEmpty(templateId)) {

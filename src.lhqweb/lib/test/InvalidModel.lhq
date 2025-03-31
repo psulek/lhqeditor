@@ -1,0 +1,167 @@
+﻿{
+  "model": {
+    "uid": "Ace4d54c5dbd415c93019d315e278638",
+    "version": 2,
+    "description": "root desc",
+    "options": {
+      "categories": true,
+      "resources": "All"
+    },
+    "name": "Strings",
+    "primaryLanguage": "en"
+  },
+  "languages": [
+    "en",
+    "sk"
+  ],
+  "categories": {
+    "Cars": {
+      "description": "cars desc",
+      "categories": {
+        "Diesel": {
+          "categories": {
+            "Old": {
+              "resources": {
+                "Old_Kia": {
+                  "state": "New",
+                  "values": {
+                    "en": {
+                      "value": "Old_ kia EN"
+                    },
+                    "sk": {
+                      "value": "Old_ kia SK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "resources": {
+            "Mercedes": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Mercedes EN"
+                },
+                "sk": {
+                  "value": "Mercedes SK"
+                }
+              }
+            },
+            "Skoda": {
+              "state": "New",
+              "values": {
+                "en": {
+                  "value": "Skoda EN"
+                },
+                "sk": {
+                  "value": "Škoda SK"
+                }
+              }
+            }
+          }
+        },
+        "Electric": {
+          "resources": {
+            "ToyotaEV": {
+              "state": "New",
+              "values": {
+                "en": {
+                  "value": "toyota EN"
+                },
+                "sk": {
+                  "value": "toyota SK"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Messages": {
+      "resources": {
+        "Title": {
+          "state": "Edited",
+          "values": {
+            "en": {
+              "value": "Hi {0}, we're glad you are using {1} at {2} / \\ [ ] < > \" & car <abc> </end>"
+            },
+            "sk": {
+              "value": "Ahoj {0}, sme radi, že používate {1} na {2} / \\ [ ] < > \" & car <abc> </end>",
+              "auto": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "resources": {
+    "Welcome": {
+      "state": "Edited",
+      "parameters": {
+        "user": {
+          "description": "user name",
+          "order": 0
+        },
+        "app": {
+          "description": "app name",
+          "order": 1
+        }
+      },
+      "values": {
+        "en": {
+          "value": "Welcome {0} in this {1} !",
+          "locked": true
+        },
+        "sk": {
+          "value": "Vitajte {0} v tejto {1} !",
+          "auto": true
+        }
+      }
+    }
+  },
+  "metadatas": {
+  "childs": [
+    {
+      "name": "metadata",
+      "attrs": {
+        "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
+      },
+      "childs": [
+        {
+          "name": "content",
+          "attrs": {
+            "templateId": "NetCoreResxCsharp01"
+          },
+          "childs": [
+            {
+              "name": "Settings",
+              "childs": [
+                {
+                  "name": "CSharp",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "EncodingWithBOM": "false",
+                    "LineEndings": "LF",
+                    "UseExpressionBodySyntax": "true",
+                    "MissingTranslationFallbackToPrimary": "true"
+                  }
+                },
+                {
+                  "name": "ResX",
+                  "attrs": {
+                    "OutputFolder": "Resources",
+                    "EncodingWithBOM": "false",
+                    "LineEndings": "LF",
+                    "CultureCodeInFileNameForPrimaryLanguage": "true"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+}

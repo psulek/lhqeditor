@@ -37,10 +37,12 @@ namespace LHQ.Gen.Lib
         /// </summary>
         /// <param name="generatedFiles">List of <see cref="GeneratedFile"/> files.</param>
         /// <param name="modelGroupSettings">List of settings used in code generator process.</param>
-        public GenerateResult(List<GeneratedFile> generatedFiles, List<LhqModelGroupSettings> modelGroupSettings)
+        //public GenerateResult(List<GeneratedFile> generatedFiles, List<LhqModelGroupSettings> modelGroupSettings)
+        public GenerateResult(List<GeneratedFile> generatedFiles)
         {
             GeneratedFiles = generatedFiles;
-            ModelGroupSettings = modelGroupSettings;
+            //ModelGroupSettings = modelGroupSettings;
+            ModelGroupSettings = new List<LhqModelGroupSettings>();
         }
 
         /// <summary>

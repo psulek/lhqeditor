@@ -313,9 +313,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64">
-      <Version>3.27.3</Version>
-    </PackageReference>
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.5.0"/>
+<!--    <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64">-->
+<!--      <Version>3.27.3</Version>-->
+<!--    </PackageReference>-->
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.13.40008" ExcludeAssets="runtime" PrivateAssets="all" NoWarn="NU1604">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -330,7 +331,7 @@
   <ItemGroup>
     <PackageReference Include="Crc32.NET" Version="1.2.0" />
     <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
+      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.6.0</Version>
@@ -414,7 +415,7 @@
     <!-- 	<VSIXSourceItem Include="$(OutDir)\System.ValueTuple.dll" /> -->
     <!-- </ItemGroup> -->
      <ItemGroup> 
-     	<VSIXSourceItem Include="$(OutputPath)x64\ChakraCore.dll" />
+<!--     	<VSIXSourceItem Include="$(OutputPath)x64\ChakraCore.dll" />-->
      </ItemGroup> 
   </Target>
   <Import Project="$(TemplateBuilderTargets)" Condition="Exists('$(TemplateBuilderTargets)')" Label="TemplateBuilder" />

@@ -34,12 +34,15 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using JavaScriptEngineSwitcher.Core;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using NLog;
-// using JsEngine = JavaScriptEngineSwitcher.Jint.JintJsEngine;
-// using JsEngineSettings = JavaScriptEngineSwitcher.Jint.JintSettings;
-using JsEngine = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine;
-using JsEngineSettings = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings;
+// using JsEngine = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine;
+// using JsEngineSettings = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings;
+
+using JsEngine = JavaScriptEngineSwitcher.V8.V8JsEngine;
+using JsEngineSettings = JavaScriptEngineSwitcher.V8.V8Settings;
+// ReSharper disable InconsistentNaming
 
 namespace LHQ.Gen.Lib
 {
@@ -52,13 +55,6 @@ namespace LHQ.Gen.Lib
         private bool _disposed;
         private readonly JsEngine _engine;
         private readonly List<GeneratedFile> _generatedFiles = new List<GeneratedFile>();
-        private readonly Dictionary<string, LhqModelGroupSettings> _modelGroupSettings = new Dictionary<string, LhqModelGroupSettings>();
-
-        private static readonly string[] _jsFiles =
-        {
-            "handlebars.min.js",
-            "lhqgenerators.js"
-        };
 
         private const string XpathRootNamespace = "//ns:Project/ns:PropertyGroup/ns:RootNamespace";
         private const string XpathAssemblyName = "//ns:Project/ns:PropertyGroup/ns:AssemblyName";
@@ -89,51 +85,54 @@ namespace LHQ.Gen.Lib
                 AllowReflection = false,
                 //EnableDebugging = true // Jint
             });
-
-            var hostDebugLog = new Action<string, string>((msg, lvl) => { Console.WriteLine($"[{(lvl ?? "DEBUG")}] {msg}"); });
-
-            Action<string, string, bool, string> hostAddResultFile = HostAddResultFile;
-            Action<string, string> hostAddModelGroupSettings = HostAddModelGroupSettings;
-            var hostPathCombine = new Func<string, string, string>(Path.Combine);
-            var hostWebHtmlEncode = new Func<string, string>(System.Net.WebUtility.HtmlEncode);
-            var hostStopwatchStart = new Func<long>(() => DateTime.UtcNow.Ticks);
-            var hostStopwatchEnd = new Func<long, string>(start =>
-                {
-                    var startTime = new DateTime(start, DateTimeKind.Utc);
-                    var duration = DateTime.UtcNow - startTime;
-                    return duration.ToString();
-                });
-
-            _engine.EmbedHostObject("HostDebugLog", hostDebugLog);
-            _engine.EmbedHostObject("HostAddResultFile", hostAddResultFile);
-            _engine.EmbedHostObject("HostAddModelGroupSettings", hostAddModelGroupSettings);
-            _engine.EmbedHostObject("HostPathCombine", hostPathCombine);
-            _engine.EmbedHostObject("HostWebHtmlEncode", hostWebHtmlEncode);
-            _engine.EmbedHostObject("HostStopwatchStart", hostStopwatchStart);
-            _engine.EmbedHostObject("HostStopwatchEnd", hostStopwatchEnd);
-
+            
             var type = typeof(Generator);
             var thisAssembly = type.Assembly;
             var rootNamespace = type.Namespace;
 
-            foreach (var jsFile in _jsFiles)
+            var queryRoot = $"{rootNamespace}.content";
+            string[] allManigestResourceNames = thisAssembly.GetManifestResourceNames();
+            
+            try
             {
-                string resourceName = $"{rootNamespace}.js.{jsFile}";
-                _engine.ExecuteResource(resourceName, thisAssembly);
+                var queryBrowser = $"{queryRoot}.browser.";
+                var jsFiles = allManigestResourceNames.Where(x => x.StartsWith(queryBrowser)).ToList();
+                if (jsFiles.Count == 0)
+                {
+                    throw new ApplicationException("Could not find lhq engine implementation files in assembly.");
+                }
+                
+                foreach (var jsFile in jsFiles)
+                {
+                    _engine.ExecuteResource(jsFile, thisAssembly);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
 
             var handlebarFiles = new Dictionary<string, string>();
-            var hbsFiles = thisAssembly.GetManifestResourceNames().Where(x => x.Contains(".hbs.")).ToArray();
+            var queryTemplates = $"{queryRoot}.templates.";
+            var hbsFiles = allManigestResourceNames.Where(x => x.StartsWith(queryTemplates)).ToList();
+            if (hbsFiles.Count == 0)
+            {
+                throw new ApplicationException("Could not find any lhq code templates (*.hbs) in assembly.");
+            }
+            
             foreach (var hbsFile in hbsFiles)
             {
                 var content = JavaScriptEngineSwitcher.Core.Utilities.Utils.GetResourceAsString(hbsFile, thisAssembly);
-                var key = hbsFile.Replace($"{rootNamespace}.hbs.", "").Replace(".handlebars", "");
+                var key = hbsFile.Replace(queryTemplates, "").Replace(".hbs", "");
                 handlebarFiles.Add(key, content);
             }
 
-            var json = JsonConvert.SerializeObject(handlebarFiles);
-            _engine.SetVariableValue("__handlebarFiles", json);
-            _engine.Execute("LhqGenerators.TemplateManager.intialize(__handlebarFiles);");
+            var hbsTemplatesJson = JsonConvert.SerializeObject(handlebarFiles);
+            _engine.SetVariableValue("__hbsTemplates", hbsTemplatesJson);
+            _engine.EmbedHostObject("__hostEnvironment", new JSHostEnvironment());
+            var initJson = "{hbsTemplates: JSON.parse(__hbsTemplates), hostEnvironment: __hostEnvironment}";
+            _engine.Execute($"LhqGenerators.Generator.initialize({initJson});");
         }
 
         /// <summary>
@@ -148,26 +147,6 @@ namespace LHQ.Gen.Lib
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        private void HostAddResultFile(string file, string content, bool bom, string le)
-        {
-            var lineEndings = (LineEndings)Enum.Parse(typeof(LineEndings), le, true);
-            _generatedFiles.Add(new GeneratedFile(file, content, bom, lineEndings));
-        }
-
-        private void HostAddModelGroupSettings(string group, string settings)
-        {
-            var jsonSettings = JsonConvert.DeserializeObject<Dictionary<string, object>>(settings);
-
-            LhqModelGroupSettings groupSettings;
-            if (!_modelGroupSettings.TryGetValue(group, out groupSettings))
-            {
-                groupSettings = new LhqModelGroupSettings(group);
-                _modelGroupSettings.Add(group, groupSettings);
-            }
-
-            groupSettings.Settings = jsonSettings;
-        }
-
         private string FindOwnerCsProjectFile(string lhqModelFileName)
         {
             if (!File.Exists(lhqModelFileName))
@@ -176,7 +155,7 @@ namespace LHQ.Gen.Lib
             }
 
             var dir = Path.GetDirectoryName(lhqModelFileName);
-            var csProjectFiles = Directory.GetFiles(dir, "*.csproj", SearchOption.TopDirectoryOnly);
+            var csProjectFiles = dir == null ? Array.Empty<string>() : Directory.GetFiles(dir, "*.csproj", SearchOption.TopDirectoryOnly);
             var result = string.Empty;
             var resultNamespace = string.Empty;
             foreach (var csProj in csProjectFiles)
@@ -356,11 +335,15 @@ namespace LHQ.Gen.Lib
 
             try
             {
+                _engine.SetVariableValue("__modelFileName", lhqModelFileName);
                 _engine.SetVariableValue("__model", File.ReadAllText(lhqModelFileName));
                 var hostDataStr = JsonConvert.SerializeObject(hostData);
-
                 _engine.SetVariableValue("__hostData", hostDataStr);
-                _engine.Execute("LhqGenerators.TemplateManager.runTemplate(__model, __hostData)");
+                
+                var generateCall = "new LhqGenerators.Generator().generate(__modelFileName, __model, __hostData)";
+                var resultJson = _engine.Evaluate<string>($"JSON.stringify({generateCall})");
+                var result = JsonConvert.DeserializeObject<JSGenerateResult>(resultJson);
+                result.generatedFiles?.ForEach(x => _generatedFiles.Add(new GeneratedFile(x.FileName, x.Content, x.Bom, x.LineEndings)));
             }
             catch (Exception e)
             {
@@ -395,7 +378,7 @@ namespace LHQ.Gen.Lib
                 _logger.Info("Duplicated generated files: " + string.Join(", ", duplicateFiles));
             }
 
-            return new GenerateResult(_generatedFiles, _modelGroupSettings.Values.ToList());
+            return new GenerateResult(_generatedFiles);
         }
 
         public void Dispose()
@@ -417,10 +400,54 @@ namespace LHQ.Gen.Lib
         /// Unix like line endings (LF).
         /// </summary>
         LF,
-        
+
         /// <summary>
         /// Windows like line endings (CRLF).
         /// </summary>
         CRLF
+    }
+
+    public class JSGenerateResult
+    {
+        public List<JSGeneratedFile> generatedFiles { get; set; }
+    }
+
+    public class JSGeneratedFile
+    {
+        public string FileName { get; set; }
+        public string Content { get; set; }
+        public bool Bom { get; set; }
+        public LineEndings LineEndings { get; set; }
+    }
+    
+    [PublicAPI]
+    public class JSHostEnvironment // inherits interface 'IHostEnvironment' from npm '@lhq/lhq-generators' package 
+    {
+        public void debugLog(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public string pathCombine(string path1, string path2)
+        {
+            return Path.Combine(path1, path2);
+        }
+
+        public string webHtmlEncode(string input)
+        {
+            return System.Net.WebUtility.HtmlEncode(input);
+        }
+
+        public double stopwatchStart()
+        {
+            return DateTime.UtcNow.Ticks;
+        }
+
+        public string stopwatchEnd(long start)
+        {
+            var startTime = new DateTime(start, DateTimeKind.Utc);
+            var duration = DateTime.UtcNow - startTime;
+            return duration.ToString();
+        }
     }
 }

@@ -33,7 +33,8 @@
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64" Version="3.27.3" />
+<!--        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64" Version="3.27.3" />-->
+        <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.5.0"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0"/>
         <PackageReference Include="FluentAssertions" Version="6.12.1"/>
         <PackageReference Include="NUnit" Version="4.3.2" />

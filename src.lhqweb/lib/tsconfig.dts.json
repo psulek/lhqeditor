@@ -1,6 +1,7 @@
 {
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
+        "moduleResolution": "bundler",
         "removeComments": false,
         "declaration": true,
         "declarationMap": true,

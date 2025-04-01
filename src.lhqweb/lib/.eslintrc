@@ -27,7 +27,7 @@
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "./tsconfig.build.json"
+        "project": "./tsconfig.json"
     },
     "rules": {
         "@typescript-eslint/consistent-type-imports": "error",

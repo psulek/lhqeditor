@@ -5,10 +5,16 @@ import { fromZodError, createMessageBuilder } from 'zod-validation-error';
 
 import { type LhqModel, LhqModelSchema } from './api/schemas';
 import { isNullOrEmpty, tryJsonParse, tryRemoveBOM } from './utils';
-import type { LhqValidationResult } from './types';
+import type { CSharpNamespaceInfo, LhqValidationResult } from './types';
 
 let DOMParser: typeof globalThis.DOMParser;
 
+
+/**
+ * Validates the specified data (as JSON object or JSON as string) against the defined `LhqModel` schema.
+ * @param data The data (as JSON object or JSON as string) to validate.
+ * @returns The validation result.
+ */
 export function validateLhqModel(data: LhqModel | string): LhqValidationResult {
     if (typeof data === 'string') {
         const parseResult = tryJsonParse(data, true);
@@ -41,6 +47,10 @@ export function validateLhqModel(data: LhqModel | string): LhqValidationResult {
     return { success, error, model: success ? parseResult.data : undefined };
 }
 
+/**
+ * Generates the JSON schema (as string) for the `LhqModel` schema.
+ * @returns The JSON schema as a string.
+ */
 export function generateLhqSchema(): string {
     const jsonSchema = zodToJsonSchema.zodToJsonSchema(LhqModelSchema, {
         name: 'LhqModel',
@@ -57,14 +67,15 @@ const csProjectXPath = '//ns:ItemGroup/ns:##TYPE##[@##ATTR##="##FILE##"]';
 const xpathRootNamespace = 'string(//ns:RootNamespace)';
 const xpathAssemblyName = 'string(//ns:AssemblyName)';
 
-export type CSharpNamespaceInfo = {
-    csProjectFileName: string;
-    t4FileName: string;
-    namespace: string | undefined;
-    referencedLhqFile: boolean;
-    referencedT4File: boolean;
-};
-
+/**
+ * Retrieves the root namespace from a C# project file (.csproj).
+ * @param lhqModelFileName The full path of the `LHQ` model file (eg: `c:/Dir/Strings.lhq`).
+ * @param t4FileName The name of the T4 file associated with the `LHQ` model file (eg: `c:/Dir/Strings.lhq.tt`).
+ * @param csProjectFileName The name of the C# project file which using specified `lhqModelFileName`.
+ * @param csProjectFileContent The string content of the C# project file.
+ * @returns An object `CSharpNamespaceInfo` containing the root namespace with other information or `undefined` 
+ * if the project file is not valid or not information about namespace is found.
+ */
 export function getRootNamespaceFromCsProj(lhqModelFileName: string, t4FileName: string,
     csProjectFileName: string, csProjectFileContent: string): CSharpNamespaceInfo | undefined {
     let referencedLhqFile = false;

@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tsx index.mts",
+    "help": "lhqcmd",
+    "version": "lhqcmd --version",
+    "validate": "lhqcmd ../lib/test/NetCoreResxCsharp01.lhq validate",
+    "generate": "lhqcmd ../lib/test/NetCoreResxCsharp01.lhq -o temp --data namespace=test123q",
     "postinstall": "xcopy /y \"node_modules\\@lhq\\lhq-generators\\browser\\index.js\" \"web\\index.js\""
   },
   "author": "",
@@ -19,7 +23,7 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "@lhq/lhq-generators": "1.0.63"
+    "@lhq/lhq-generators": "1.0.86"
   },
   "sideEffects": false,
   "tsup": {

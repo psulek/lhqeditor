@@ -2,20 +2,29 @@ import path from 'node:path';
 import util from 'node:util';
 import { exec } from 'node:child_process';
 
-import { build } from 'tsup';
+import { build, type Options } from 'tsup';
 //type TsupBuildOptions = Parameters<typeof build>[0];
 
 import fse from 'fs-extra';
-import type { IDependencyMap, IPackageJson } from 'package-json-type';
+import type { IPackageJson } from 'package-json-type';
 import pc from "picocolors"
+
+import { generateLhqSchema } from './src/generatorUtils';
 
 const execAsync = util.promisify(exec);
 
 const distFolder = path.join(__dirname, 'dist');
 
+let packageJson: Partial<IPackageJson>;
+
+type EsBuildOptions = Parameters<NonNullable<Options['esbuildOptions']>>[0];
+
+
 (async () => {
     try {
         await fse.ensureDir(distFolder);
+
+        await preparePackageVersion();
 
         await Promise.all([
             buildLib('browser'),
@@ -23,13 +32,30 @@ const distFolder = path.join(__dirname, 'dist');
             buildLib('esm'),
             buildCli(),
             buildDts(),
-            copyPackageJson()
+            copyPackageJson(),
+            genLhqSchema()
         ]);
 
     } catch (error) {
         console.error('Build failed: ', error, error.stack);
     }
 })();
+
+function updateBuildOptions(opts: EsBuildOptions): void {
+    opts.define = {
+        'PKG_VERSION': `'${packageJson.version}'`,
+    };
+}
+
+async function preparePackageVersion() {
+    await execAsync('pnpm version patch', { cwd: __dirname });
+
+    const sourcePackageFile = path.join(__dirname, 'package.json');
+    packageJson = await fse.readJson(sourcePackageFile, { encoding: 'utf-8' });
+
+    console.log('Updated local version to ' + pc.blueBright(packageJson.version));
+
+}
 
 async function buildLib(type: 'browser' | 'cjs' | 'esm') {
     const isBrowser = type === 'browser';
@@ -50,7 +76,7 @@ async function buildLib(type: 'browser' | 'cjs' | 'esm') {
         globalName: isBrowser ? 'LhqGenerators' : undefined,
         target: target,
         minify: false,
-        splitting: isEsm ? false: undefined,
+        splitting: isEsm ? false : undefined,
         platform: isBrowser ? 'browser' : 'node',
         sourcemap: false,
         dts: false,
@@ -59,34 +85,11 @@ async function buildLib(type: 'browser' | 'cjs' | 'esm') {
         esbuildOptions(esOpts, _) {
             esOpts.target = target;
             esOpts.outfile = outfile;
+            updateBuildOptions(esOpts);
         },
     });
 }
-// async function buildLib(opts: Partial<TsupBuildOptions> & {outfile: string}) {
-//     let outfile = path.join('dist', 'lhqgenerators.js');
-//     console.log(`Building library to ${pc.blueBright(outfile)} ...`);
 
-//     outfile = path.join(__dirname, outfile);
-
-//     await build({
-//         entry: ['src/index.ts'],
-//         outDir: '',
-//         format: 'iife',
-//         silent: true,
-//         globalName: 'LhqGenerators',
-//         target: 'es2015',
-//         minify: false,
-//         platform: 'browser',
-//         sourcemap: false,
-//         dts: false,
-//         clean: false,
-//         tsconfig: 'tsconfig.json',
-//         esbuildOptions(options, _) {
-//             options.target = 'es2015';
-//             options.outfile = outfile;
-//         },
-//     });
-// }
 
 async function buildDts() {
     let dtsFile = path.join('dist', 'index.d.ts');
@@ -132,24 +135,22 @@ async function buildCli() {
         dts: false,
         clean: false,
         //tsconfig: 'tsconfig.build.json',
-        esbuildOptions(options) {
-            options.outfile = outfile;
-            options.platform = 'node';
-            options.external = external;
-            /* options.alias = {
-                'src/index': 'index'
-            } */
+        esbuildOptions(esOpts) {
+            esOpts.outfile = outfile;
+            esOpts.platform = 'node';
+            esOpts.external = external;
+            updateBuildOptions(esOpts);
         },
     });
 }
 
 async function copyPackageJson() {
-    await execAsync('pnpm version patch', { cwd: __dirname });
+    // await execAsync('pnpm version patch', { cwd: __dirname });
 
-    const sourcePackageFile = path.join(__dirname, 'package.json');
-    const packageJson: Partial<IPackageJson> = await fse.readJson(sourcePackageFile, { encoding: 'utf-8' });
+    // const sourcePackageFile = path.join(__dirname, 'package.json');
+    // const packageJson: Partial<IPackageJson> = await fse.readJson(sourcePackageFile, { encoding: 'utf-8' });
 
-    console.log('Updated local version to ' + pc.blueBright(packageJson.version));
+    // console.log('Updated local version to ' + pc.blueBright(packageJson.version));
 
     const newPackageJson: Partial<IPackageJson> = {
         name: packageJson.name,
@@ -175,9 +176,19 @@ async function copyPackageJson() {
     targetPackageFile = path.join(__dirname, targetPackageFile);
     await fse.writeJson(targetPackageFile, newPackageJson, { encoding: 'utf-8', spaces: 2 });
 
-    let targetHbsDir = path.join('dist', 'templates');
+    let targetHbsDir = path.join('dist', 'hbs');
     console.log('Copying hbs templates to ' + pc.blueBright(targetHbsDir));
     targetHbsDir = path.join(__dirname, targetHbsDir);
 
     await fse.copy(path.join(__dirname, 'hbs'), targetHbsDir);
+}
+
+async function genLhqSchema() {
+    const schenameFileName = 'lhq-schema.json';
+    console.log('Generating lhq model schema to ' + pc.blueBright(schenameFileName));
+
+    const lhqSchemaFile = path.join(__dirname, 'dist', schenameFileName);
+    const schemaJson = generateLhqSchema();
+    await fse.writeFile(lhqSchemaFile, schemaJson);
+    await fse.copy(lhqSchemaFile, path.join(__dirname, schenameFileName));
 }

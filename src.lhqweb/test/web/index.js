@@ -17238,6 +17238,7 @@ var LhqGenerators = (() => {
     baseDataNodeSchema: () => baseDataNodeSchema,
     copyObject: () => copyObject,
     generatorUtils: () => generatorUtils_exports,
+    getLibraryVersion: () => getLibraryVersion,
     hasItems: () => hasItems,
     isNullOrEmpty: () => isNullOrEmpty,
     isNullOrUndefined: () => isNullOrUndefined,
@@ -17436,8 +17437,9 @@ var LhqGenerators = (() => {
     }
     return encodedChars.join("");
   }
-  function valueOrDefault(value, defaultValue) {
-    let result = isNullOrUndefined(value) ? defaultValue : value;
+  function valueOrDefault(value, defaultValue, defaultOnEmptyString = false) {
+    defaultOnEmptyString = defaultOnEmptyString != null ? defaultOnEmptyString : false;
+    let result = defaultOnEmptyString ? isNullOrEmpty(value) ? defaultValue : value : isNullOrUndefined(value) ? defaultValue : value;
     if (typeof defaultValue === "boolean") {
       result = valueAsBool(value);
     }
@@ -18127,10 +18129,12 @@ ${locText}`;
     }
   }
   function valueHelper() {
-    var _a, _b;
+    var _a, _b, _c;
     const { context, options } = getContextAndOptions(this, ...arguments);
     const defaultValue = (_a = options.hash) == null ? void 0 : _a.default;
-    return (_b = queryObjValue(context, options)) != null ? _b : defaultValue;
+    const defaultOnEmpty = (_c = (_b = options.hash) == null ? void 0 : _b.defaultOnEmpty) != null ? _c : false;
+    const result = queryObjValue(context, options);
+    return valueOrDefault(result, defaultValue, defaultOnEmpty);
   }
   function splitHelper() {
     var _a;
@@ -18319,12 +18323,13 @@ ${locText}`;
     }
   }
   function modelDataHelper() {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
     const { context, options } = getContextAndOptions(this, ...arguments);
     const defaultValue = (_a = options.hash) == null ? void 0 : _a.default;
-    const value = (_b = queryObjValue(context, options)) != null ? _b : defaultValue;
-    const forceToRoot = valueOrDefault((_c = options.hash) == null ? void 0 : _c.root, false);
-    const key = (_e = (_d = options == null ? void 0 : options.hash) == null ? void 0 : _d.key) != null ? _e : "";
+    const defaultOnEmpty = (_c = (_b = options.hash) == null ? void 0 : _b.defaultOnEmpty) != null ? _c : false;
+    const value = valueOrDefault(queryObjValue(context, options), defaultValue, defaultOnEmpty);
+    const forceToRoot = valueOrDefault((_d = options.hash) == null ? void 0 : _d.root, false);
+    const key = (_f = (_e = options == null ? void 0 : options.hash) == null ? void 0 : _e.key) != null ? _f : "";
     if (isNullOrEmpty(key)) {
       throw new AppError(`Helper '${options.name}' missing hash param 'key' !`);
     }
@@ -23983,6 +23988,7 @@ ${locText}`;
   function getRootNamespaceFromCsProj(lhqModelFileName, t4FileName, csProjectFileName, csProjectFileContent) {
     var _a, _b, _c;
     let referencedLhqFile = false;
+    let referencedT4File = false;
     if (isNullOrEmpty(csProjectFileName) || isNullOrEmpty(csProjectFileContent)) {
       return void 0;
     }
@@ -24014,6 +24020,7 @@ ${locText}`;
       referencedLhqFile = findFileElement(lhqModelFileName) != void 0;
       const t4FileElement = findFileElement(t4FileName);
       if (t4FileElement) {
+        referencedT4File = true;
         const dependentUpon = (_b = t4FileElement.getElementsByTagNameNS(ns, "DependentUpon")[0]) == null ? void 0 : _b.textContent;
         if (dependentUpon && dependentUpon === lhqModelFileName) {
           referencedLhqFile = true;
@@ -24030,7 +24037,7 @@ ${locText}`;
       console.error("Error getting root namespace.", e);
       rootNamespace = void 0;
     }
-    return rootNamespace;
+    return { csProjectFileName, t4FileName, namespace: rootNamespace, referencedLhqFile, referencedT4File };
   }
 
   // src/generator.ts
@@ -24038,6 +24045,12 @@ ${locText}`;
     namespace: "namespace",
     fileHeader: "fileHeader"
   });
+  function getLibraryVersion() {
+    if (false) {
+      return "n/a";
+    }
+    return "1.0.86";
+  }
   var _Generator = class _Generator {
     constructor() {
       this._generatedFiles = [];

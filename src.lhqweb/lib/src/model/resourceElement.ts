@@ -1,4 +1,4 @@
-import { isNullOrEmpty, iterateObject, sortObjectByKey, sortObjectByValue, trimComment } from '../utils';
+import { isNullOrEmpty, iterateObject, sortObjectByKey, sortObjectByValue } from '../utils';
 import { ResourceParameterElement } from './resourceParameterElement';
 import { ResourceValueElement } from './resourceValueElement';
 import type { LhqModelResource, LhqModelResourceTranslationState } from '../api/schemas';
@@ -39,7 +39,7 @@ export class ResourceElement extends TreeElement implements IResourceElement {
     public get hasParameters(): boolean {
         return this._hasParameters;
     }
-    
+
     public get hasValues(): boolean {
         return this._hasValues;
     }
@@ -55,12 +55,45 @@ export class ResourceElement extends TreeElement implements IResourceElement {
             const value = this.values.find(x => x.languageName === primaryLanguage);
             const resourceValue = value?.value;
             const propertyComment = (isNullOrEmpty(resourceValue) ? this.description : resourceValue) ?? '';
-            return trimComment(propertyComment);
+            return this.trimComment(propertyComment);
         }
 
         return '';
     }
-    
+
+    private trimComment(value: string): string {
+        if (isNullOrEmpty(value)) {
+            return '';
+        }
+
+        let trimmed = false;
+        let idxNewLine = value.indexOf('\r\n');
+
+        if (idxNewLine == -1) {
+            idxNewLine = value.indexOf('\n');
+        }
+
+        if (idxNewLine == -1) {
+            idxNewLine = value.indexOf('\r');
+        }
+
+        if (idxNewLine > -1) {
+            value = value.substring(0, idxNewLine);
+            trimmed = true;
+        }
+
+        if (value.length > 80) {
+            value = value.substring(0, 80);
+            trimmed = true;
+        }
+
+        if (trimmed) {
+            value += '...';
+        }
+
+        return value.replace(/\t/g, ' ');
+    }
+
     public getValue = (language: string, trim?: boolean): string => {
         let result = '';
         if (!isNullOrEmpty(language) && this.values) {

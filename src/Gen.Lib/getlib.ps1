@@ -1,6 +1,7 @@
 $registry = "http://localhost:4873/"
 $packageName = "@lhq/lhq-generators"
-$packageVersion = "1.0.64"
+#$packageVersion = "1.0.64"
+$packageVersion = "latest"
 
 echo $PSScriptRoot
 

@@ -1,6 +1,6 @@
 {
 	"version": "2.0.0",
-	"tasks": [       
+	"tasks": [
         {
             "type": "npm",
             "script": "eslint",
@@ -9,6 +9,22 @@
             ],
             "label": "npm: eslint",
             "detail": "./node_modules/.bin/eslint.cmd ."
+        },
+        {
+            "type": "npm",
+            "script": "test",
+            "group": "test",
+            "problemMatcher": [],
+            "label": "npm: test",
+            "detail": "tsx mocha ./src/utils.test.ts",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
         }
     ]
 }

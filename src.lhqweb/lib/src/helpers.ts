@@ -23,8 +23,6 @@ import { DefaultCodeGenSettings } from './model/modelConst';
 import type { CodeGeneratorBasicSettings } from './api/modelTypes';
 import type { IHostEnvironment } from './types';
 
-// declare var HostEnvironment: IHostEnvironment;
-
 let hostEnv: IHostEnvironment = undefined!;
 
 export function registerHelpers(hostEnvironment: IHostEnvironment): void {
@@ -363,11 +361,11 @@ function sortByHelper<T>(source: T[], propName?: KeysMatching<T, string | number
     return sortBy<T>(source, propName, sortOrder);
 }
 
-type sortObjectByKeyHelper = {
+type sortObjectByKeyHelperArgs = {
     sortOrder?: 'asc' | 'desc';
 }
 
-function sortObjectByKeyHelper(obj: Record<string, unknown>, options: HbsDataContext<sortObjectByKeyHelper>): Record<string, unknown> {
+function sortObjectByKeyHelper(obj: Record<string, unknown>, options: HbsDataContext<sortObjectByKeyHelperArgs>): Record<string, unknown> {
     const sortOrder = valueOrDefault(options.hash?.sortOrder, 'asc');
     return sortObjectByKey(obj, sortOrder);
 }
@@ -507,7 +505,6 @@ type modalDataHelperArgs = {
 } & defaultValuesHelperArgs & queryObjType;
 
 function modelDataHelper() {
-    //const { context, options } = getContextAndOptions<modalDataHelperArgs>(this, ...args);
     // @ts-ignore
     const { context, options } = getContextAndOptions<modalDataHelperArgs>(this, ...arguments);
 

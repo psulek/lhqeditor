@@ -1,0 +1,18 @@
+{
+	"Cars": {
+		"Diesel": {
+			"Old": {
+				"Old_Kia": "Old_ kia EN"
+			},
+			"Mercedes": "Mercedes EN",
+			"Skoda": "Skoda EN"
+		},
+		"Electric": {
+			"ToyotaEV": "toyota EN"
+		}
+	},
+	"Messages": {
+		"Title": "Hi {0}, we're glad you are using {1} at {2} / \\ [ ] < > \" & car <abc> </end>"
+	},
+	"Welcome": "Welcome {0} in this {1} !"
+}

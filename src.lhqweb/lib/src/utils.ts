@@ -340,6 +340,25 @@ export function hasItems<T>(obj: Record<string, T> | Array<T> | undefined): bool
     return objCount(obj) > 0;
 }
 
+
+// /**
+//  * Copies an object while skipping specified keys.
+//  *
+//  * @typeParam T - The type of the object.
+//  * @typeParam K - The type of the keys to skip.
+//  * @param obj - The object to copy.
+//  * @param keysToSkip - The keys to skip while copying.
+//  * @returns A new object with the specified keys skipped.
+//  */
+// export function copyObject<T extends Record<string, unknown>, K extends keyof T>(obj: T, keysToSkip?: K[]): T | Omit<T, K> {
+//     if (!keysToSkip || keysToSkip.length === 0) {
+//         return { ...obj };
+//     }
+//     return Object.fromEntries(
+//         Object.entries(obj).filter(([key]) => !keysToSkip.includes(key as K))
+//     ) as Omit<T, K>;
+// }
+
 /**
  * Counts the number of items in an object or array.
  *

@@ -6,13 +6,17 @@ import { fromZodError, createMessageBuilder } from 'zod-validation-error';
 import { type LhqModel, LhqModelSchema } from './api/schemas';
 import { isNullOrEmpty, tryJsonParse, tryRemoveBOM } from './utils';
 import type { CSharpNamespaceInfo, LhqValidationResult } from './types';
+import type { GeneratedFile } from './api/types';
 
 let DOMParser: typeof globalThis.DOMParser;
+
+const regexLF = new RegExp('\\r\\n|\\r', 'g');
+const regexCRLF = new RegExp('(\\r(?!\\n))|((?<!\\r)\\n)', 'g');
 
 
 /**
  * Validates the specified data (as JSON object or JSON as string) against the defined `LhqModel` schema.
- * @param data The data (as JSON object or JSON as string) to validate.
+ * @param data - The data (as JSON object or JSON as string) to validate.
  * @returns The validation result.
  */
 export function validateLhqModel(data: LhqModel | string): LhqValidationResult {
@@ -48,6 +52,23 @@ export function validateLhqModel(data: LhqModel | string): LhqValidationResult {
 }
 
 /**
+ * Returns the content of the generated file with the appropriate line endings.
+ * 
+ * @param generatedFile - The generated file.
+ * @param applyLineEndings - A flag indicating whether to apply line endings to the content. Line endings are determined by the `lineEndings` property of the `GeneratedFile`.
+ * @returns The content of the generated file with the appropriate line endings.
+ */
+export function getGeneratedFileContent(generatedFile: GeneratedFile, applyLineEndings: boolean): string {
+    if (!applyLineEndings || generatedFile.content.length === 0) {
+        return generatedFile.content;
+    }
+
+    return generatedFile.lineEndings === 'LF'
+        ? generatedFile.content.replace(regexLF, '\n')
+        : generatedFile.content.replace(regexCRLF, '\r\n');
+}
+
+/**
  * Generates the JSON schema (as string) for the `LhqModel` schema.
  * @returns The JSON schema as a string.
  */
@@ -69,10 +90,10 @@ const xpathAssemblyName = 'string(//ns:AssemblyName)';
 
 /**
  * Retrieves the root namespace from a C# project file (.csproj).
- * @param lhqModelFileName The full path of the `LHQ` model file (eg: `c:/Dir/Strings.lhq`).
- * @param t4FileName The name of the T4 file associated with the `LHQ` model file (eg: `c:/Dir/Strings.lhq.tt`).
- * @param csProjectFileName The name of the C# project file which using specified `lhqModelFileName`.
- * @param csProjectFileContent The string content of the C# project file.
+ * @param lhqModelFileName - The full path of the `LHQ` model file (eg: `c:/Dir/Strings.lhq`).
+ * @param t4FileName - The name of the T4 file associated with the `LHQ` model file (eg: `c:/Dir/Strings.lhq.tt`).
+ * @param csProjectFileName - The name of the C# project file which using specified `lhqModelFileName`.
+ * @param csProjectFileContent - The string content of the C# project file.
  * @returns An object `CSharpNamespaceInfo` containing the root namespace with other information or `undefined` 
  * if the project file is not valid or not information about namespace is found.
  */
@@ -89,18 +110,20 @@ export function getRootNamespaceFromCsProj(lhqModelFileName: string, t4FileName:
 
     try {
         const fileContent = tryRemoveBOM(csProjectFileContent);
-        if (typeof window !== "undefined" && typeof window.DOMParser !== "undefined") {
+        if (typeof window !== 'undefined' && typeof window.DOMParser !== 'undefined') {
             // Running in a browser, use built-in DOMParser
             DOMParser = window.DOMParser;
         } else {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
             DOMParser = xmlDomParser as any;
         }
 
         const doc = new DOMParser().parseFromString(fileContent, 'text/xml');
         const rootNode = doc as unknown as Node;
-        const ns = doc.documentElement?.namespaceURI || '';
+        const rootNs = doc.documentElement?.namespaceURI || '';
+        const ns = isNullOrEmpty(rootNs) ? null : rootNs;
 
-        const xpathSelect = xpath.useNamespaces({ ns: ns });
+        const xpathSelect = xpath.useNamespaces({ ns: rootNs });
 
         const findFileElement = function (fileName: string): Element | undefined {
             for (const itemGroupType of itemGroupTypes) {

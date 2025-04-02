@@ -22,7 +22,7 @@
     "unpublish-local": "pnpm unpublish lhq-generators --registry http://localhost:4873/ --force",
     "build-all": "rimraf dist && tsx ./build.ts",
     "eslint": "eslint",
-    "test": "mocha ./tests/index.spec.ts"
+    "test": "mocha --delay ./tests/index.spec.ts"
   },
   "dependencies": {
     "@commander-js/extra-typings": "13.1.0",
@@ -64,6 +64,7 @@
     "babel-loader": "^10.0.0",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
+    "chai-bytes": "^0.1.2",
     "chai-datetime": "1.8.0",
     "cpx": "1.5.0",
     "eslint": "9.22.0",

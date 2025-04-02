@@ -7,9 +7,9 @@ import { HbsTemplateManager } from './hbsManager';
 import { DefaultCodeGenSettings } from './model/modelConst';
 import type { CodeGeneratorBasicSettings } from './api/modelTypes';
 import type { GeneratedFile, GenerateResult } from './api/types';
-import { GeneratorInitialization, IHostEnvironment } from './types';
-import { LhqModel } from './api/schemas';
 import { validateLhqModel } from './generatorUtils';
+import type { GeneratorInitialization, IHostEnvironment } from './types';
+import type { LhqModel } from './api';
 
 export const GeneratorHostDataKeys = Object.freeze({
     namespace: 'namespace',
@@ -41,8 +41,8 @@ export function getLibraryVersion(): string {
  */
 export class Generator {
     private static _initialized = false;
-    private static regexLF = new RegExp('\\r\\n|\\r', 'g');
-    private static regexCRLF = new RegExp('(\\r(?!\\n))|((?<!\\r)\\n)', 'g');
+    // private static regexLF = new RegExp('\\r\\n|\\r', 'g');
+    // private static regexCRLF = new RegExp('(\\r(?!\\n))|((?<!\\r)\\n)', 'g');
     private static hostEnv: IHostEnvironment;
 
     private _generatedFiles: GeneratedFile[] = [];
@@ -79,22 +79,22 @@ export class Generator {
         }
     }
 
-    /**
-     * Returns the content of the generated file with the appropriate line endings.
-     * 
-     * @param generatedFile - The generated file.
-     * @param applyLineEndings - A flag indicating whether to apply line endings to the content. Line endings are determined by the `lineEndings` property of the `GeneratedFile`.
-     * @returns The content of the generated file with the appropriate line endings.
-     */
-    public getFileContent(generatedFile: GeneratedFile, applyLineEndings: boolean): string {
-        if (!applyLineEndings || generatedFile.content.length === 0) {
-            return generatedFile.content;
-        }
+    // /**
+    //  * Returns the content of the generated file with the appropriate line endings.
+    //  * 
+    //  * @param generatedFile - The generated file.
+    //  * @param applyLineEndings - A flag indicating whether to apply line endings to the content. Line endings are determined by the `lineEndings` property of the `GeneratedFile`.
+    //  * @returns The content of the generated file with the appropriate line endings.
+    //  */
+    // public getFileContent(generatedFile: GeneratedFile, applyLineEndings: boolean): string {
+    //     if (!applyLineEndings || generatedFile.content.length === 0) {
+    //         return generatedFile.content;
+    //     }
 
-        return generatedFile.lineEndings === 'LF'
-            ? generatedFile.content.replace(Generator.regexLF, '\n')
-            : generatedFile.content.replace(Generator.regexCRLF, '\r\n');
-    }
+    //     return generatedFile.lineEndings === 'LF'
+    //         ? generatedFile.content.replace(Generator.regexLF, '\n')
+    //         : generatedFile.content.replace(Generator.regexCRLF, '\r\n');
+    // }
 
     /**
      * Generates code files based on the provided `LHQ` model and external host data.
@@ -111,10 +111,10 @@ export class Generator {
      * 
      * @example
      * const generator = new Generator();
-     * Generator.initialize({ hbsTemplates: templates, hostEnvironment: hostEnv });
+     * Generator.initialize(\{ hbsTemplates: templates, hostEnvironment: hostEnv \});
      * const file = 'model.lhq';
      * const model = fs.readFileSync(file, 'utf8');
-     * const data = { namespace: 'MyNamespace' };
+     * const data = \{ namespace: 'MyNamespace' \};
      * const result = generator.generate(file, model, data);
      * console.log(result.generatedFiles);
      */

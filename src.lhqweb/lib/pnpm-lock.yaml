@@ -111,6 +111,9 @@ importers:
       chai-as-promised:
         specifier: ^7.1.1
         version: 7.1.2(chai@4.5.0)
+      chai-bytes:
+        specifier: ^0.1.2
+        version: 0.1.2(chai@4.5.0)
       chai-datetime:
         specifier: 1.8.0
         version: 1.8.0
@@ -1486,6 +1489,12 @@ packages:
     resolution: {integrity: sha512-aBDHZxRzYnUYuIAIPBH2s511DjlKPzXNlXSGFC8CwmroWQLfrW0LtE1nK3MAwwNhJPa9raEjNCmRoFpG0Hurdw==}
     peerDependencies:
       chai: '>= 2.1.2 < 6'
+
+  chai-bytes@0.1.2:
+    resolution: {integrity: sha512-0ol6oJS0y1ozj6AZK8n1pyv1/G+l44nqUJygAkK1UrYl+IOGie5vcrEdrAlwmLYGIA9NVvtHWosPYwWWIXf/XA==}
+    engines: {node: '>=4'}
+    peerDependencies:
+      chai: '>=2 <5'
 
   chai-datetime@1.8.0:
     resolution: {integrity: sha512-qBG84K8oQNz8LWacuzmCBfdoeG2UBFfbGKTSQj6lS+sjuzGUdBvjJxfZfGA4zDAMiCSqApKcuqSLO0lQQ25cHw==}
@@ -4970,6 +4979,10 @@ snapshots:
     dependencies:
       chai: 4.5.0
       check-error: 1.0.3
+
+  chai-bytes@0.1.2(chai@4.5.0):
+    dependencies:
+      chai: 4.5.0
 
   chai-datetime@1.8.0:
     dependencies:

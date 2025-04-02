@@ -9,6 +9,12 @@
 	],
     "settings": {
         "powershell.cwd": "lib",
-        "liveServer.settings.multiRootWorkspaceName": "test"
+        "liveServer.settings.multiRootWorkspaceName": "test",
+        "dotnet.automaticallyCreateSolutionInWorkspace": false,
+        "csharp.suppressDotnetRestoreNotification": true,
+        "dotnet.testWindow.disableAutoDiscovery": true,
+        "omnisharp.enableMsBuildLoadProjectsOnDemand": false,
+        "omnisharp.enableRoslynAnalyzers": false,
+        "omnisharp.useModernNet": false
     }
 }

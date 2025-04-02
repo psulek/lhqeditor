@@ -15,7 +15,8 @@ import {
     hasItems,
     objCount,
     removeNewLines,
-    removeProperties
+    removeProperties,
+    //copyObject
 } from '../src/utils';
 
 describe('Utils Functions', () => {

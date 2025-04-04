@@ -30,7 +30,7 @@ namespace LHQ.App.Code
         private const string ModelFileExtension = "lhq";
 
         public const string ModernGeneratorMinVersion = "2025.1";
-        public const string ModernGeneratorNoT4MinVersion = "2025.2";
+        public const string ModernGeneratorNoT4MinVersion = "2025.3";
 
         public static class WebSiteUrls
         {

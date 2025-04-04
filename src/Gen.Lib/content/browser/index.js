@@ -17236,8 +17236,8 @@ var LhqGenerators = (() => {
     arraySortBy: () => arraySortBy,
     baseCategorySchema: () => baseCategorySchema,
     baseDataNodeSchema: () => baseDataNodeSchema,
-    copyObject: () => copyObject,
     generatorUtils: () => generatorUtils_exports,
+    getLibraryVersion: () => getLibraryVersion,
     hasItems: () => hasItems,
     isNullOrEmpty: () => isNullOrEmpty,
     isNullOrUndefined: () => isNullOrUndefined,
@@ -17252,11 +17252,8 @@ var LhqGenerators = (() => {
     sortObjectByKey: () => sortObjectByKey,
     sortObjectByValue: () => sortObjectByValue,
     textEncode: () => textEncode,
-    toBoolean: () => toBoolean,
-    trimComment: () => trimComment,
     tryJsonParse: () => tryJsonParse,
     tryRemoveBOM: () => tryRemoveBOM,
-    valueAsBool: () => valueAsBool,
     valueOrDefault: () => valueOrDefault
   });
 
@@ -17303,85 +17300,6 @@ var LhqGenerators = (() => {
 
   // src/utils.ts
   var import_jmespath = __toESM(require_jmespath());
-  function tryRemoveBOM(value) {
-    return isNullOrEmpty(value) ? value : value.charCodeAt(0) === 65279 ? value.slice(1) : value;
-  }
-  function jsonParseOrDefault(value, defaultValue, removeBOM = false) {
-    const { success, data: result } = tryJsonParse(value, removeBOM);
-    return success ? result != null ? result : defaultValue : defaultValue;
-  }
-  function tryJsonParse(value, removeBOM = false) {
-    if (removeBOM) {
-      value = tryRemoveBOM(value);
-    }
-    let result;
-    let success = false;
-    let error = void 0;
-    if (!isNullOrEmpty(value)) {
-      try {
-        result = JSON.parse(value);
-        success = !isNullOrEmpty(result);
-      } catch (e) {
-        error = e instanceof Error ? e.message : e.toString();
-      }
-    }
-    return { success, data: result, error };
-  }
-  function jsonQuery(obj, query, defaultValue) {
-    var _a;
-    return (_a = (0, import_jmespath.search)(obj, query)) != null ? _a : defaultValue;
-  }
-  function normalizePath(path) {
-    return path.replace(/\\/g, "/").replace(/\/\//g, "/").replace(/[\\/]$/g, "");
-  }
-  function isNullOrEmpty(value) {
-    return value === null || value === void 0 || value === "";
-  }
-  function isNullOrUndefined(value) {
-    return value === null || value === void 0;
-  }
-  function sortObjectByKey(obj, sortOrder = "asc") {
-    return Object.fromEntries(
-      Object.entries(obj).sort(
-        ([a], [b]) => sortOrder === "asc" ? a.localeCompare(b, "en") : b.localeCompare(a, "en")
-      )
-    );
-  }
-  function sortObjectByValue(obj, predicate, sortOrder = "asc") {
-    return Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => {
-      const aValue = predicate(a);
-      const bValue = predicate(b);
-      if (aValue < bValue) {
-        return sortOrder === "asc" ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return sortOrder === "asc" ? 1 : -1;
-      }
-      return 0;
-    }));
-  }
-  function sortBy(source, key, sortOrder = "asc") {
-    return arraySortBy(source, (x) => key === void 0 ? x : x[key], sortOrder);
-  }
-  function arraySortBy(source, predicate, sortOrder = "asc") {
-    return source.concat([]).sort((a, b) => {
-      const v1 = predicate(a);
-      const v2 = predicate(b);
-      const res = v1 > v2 ? 1 : v2 > v1 ? -1 : 0;
-      return sortOrder === "asc" ? res : res * -1;
-    });
-  }
-  function iterateObject(obj, callback) {
-    const entries = Object.entries(obj);
-    if (entries.length > 0) {
-      const lastIndex = entries.length - 1;
-      let index = -1;
-      for (const [key, value] of entries) {
-        index++;
-        callback(value, key, index, index == lastIndex);
-      }
-    }
-  }
   var encodingCharMaps = {
     html: {
       ">": "&gt;",
@@ -17412,6 +17330,96 @@ var LhqGenerators = (() => {
       "	": "\\t"
     }
   };
+  function tryRemoveBOM(value) {
+    return isNullOrEmpty(value) ? value : value.charCodeAt(0) === 65279 ? value.slice(1) : value;
+  }
+  function jsonParseOrDefault(value, defaultValue, removeBOM = false) {
+    const { success, data: result } = tryJsonParse(value, removeBOM);
+    return success ? result != null ? result : defaultValue : defaultValue;
+  }
+  function tryJsonParse(value, removeBOM = false) {
+    if (removeBOM) {
+      value = tryRemoveBOM(value);
+    }
+    let result;
+    let success = false;
+    let error = void 0;
+    if (!isNullOrEmpty(value)) {
+      try {
+        result = JSON.parse(value);
+        success = !isNullOrEmpty(result);
+      } catch (e) {
+        if (!isNullOrEmpty(e)) {
+          error = e instanceof Error ? e.message : String(e);
+        } else {
+          error = "Unknown error occurred";
+        }
+      }
+    }
+    return { success, data: result, error };
+  }
+  function jsonQuery(obj, query, defaultValue) {
+    var _a;
+    return (_a = (0, import_jmespath.search)(obj, query)) != null ? _a : defaultValue;
+  }
+  function normalizePath(path) {
+    return path.replace(/\\/g, "/").replace(/\/\//g, "/").replace(/[\\/]$/g, "");
+  }
+  function isNullOrEmpty(value) {
+    return value === null || value === void 0 || value === "";
+  }
+  function isNullOrUndefined(value) {
+    return value === null || value === void 0;
+  }
+  function sortObjectByKey(obj, sortOrder = "asc", locales) {
+    locales = locales != null ? locales : "en";
+    return Object.fromEntries(
+      Object.entries(obj).sort(
+        ([a], [b]) => sortOrder === "asc" ? a.localeCompare(b, locales) : b.localeCompare(a, locales)
+      )
+    );
+  }
+  function sortObjectByValue(obj, predicate, sortOrder = "asc") {
+    return Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => {
+      const aValue = predicate(a);
+      const bValue = predicate(b);
+      if (typeof aValue === "number" || typeof bValue === "number") {
+        let res = 0;
+        if (aValue > bValue) {
+          res = 1;
+        } else if (bValue > aValue) {
+          res = -1;
+        }
+        return sortOrder === "asc" ? res : res * -1;
+      }
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return sortOrder === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+      }
+      return 0;
+    }));
+  }
+  function sortBy(source, key, sortOrder = "asc") {
+    return arraySortBy(source, (x) => key === void 0 ? x : x[key], sortOrder);
+  }
+  function arraySortBy(source, predicate, sortOrder = "asc") {
+    return source.concat([]).sort((a, b) => {
+      const v1 = predicate(a);
+      const v2 = predicate(b);
+      const res = v1 > v2 ? 1 : v2 > v1 ? -1 : 0;
+      return sortOrder === "asc" ? res : res * -1;
+    });
+  }
+  function iterateObject(obj, callback) {
+    const entries = Object.entries(obj);
+    if (entries.length > 0) {
+      const lastIndex = entries.length - 1;
+      let index = -1;
+      for (const [key, value] of entries) {
+        index++;
+        callback(value, key, index, index == lastIndex);
+      }
+    }
+  }
   function textEncode(str, encoder) {
     var _a;
     if (isNullOrEmpty(str)) {
@@ -17428,7 +17436,7 @@ var LhqGenerators = (() => {
       } else {
         map = encodingCharMaps.json;
       }
-      if (map.hasOwnProperty(ch)) {
+      if (Object.prototype.hasOwnProperty.call(map, ch)) {
         encodedChars.push(map[ch]);
       } else {
         encodedChars.push(ch);
@@ -17438,51 +17446,7 @@ var LhqGenerators = (() => {
   }
   function valueOrDefault(value, defaultValue, defaultOnEmptyString = false) {
     defaultOnEmptyString = defaultOnEmptyString != null ? defaultOnEmptyString : false;
-    let result = defaultOnEmptyString ? isNullOrEmpty(value) ? defaultValue : value : isNullOrUndefined(value) ? defaultValue : value;
-    if (typeof defaultValue === "boolean") {
-      result = valueAsBool(value);
-    }
-    return result;
-  }
-  function trimComment(value) {
-    if (isNullOrEmpty(value)) {
-      return "";
-    }
-    let trimmed = false;
-    let idxNewLine = value.indexOf("\r\n");
-    if (idxNewLine == -1) {
-      idxNewLine = value.indexOf("\n");
-    }
-    if (idxNewLine == -1) {
-      idxNewLine = value.indexOf("\r");
-    }
-    if (idxNewLine > -1) {
-      value = value.substring(0, idxNewLine);
-      trimmed = true;
-    }
-    if (value.length > 80) {
-      value = value.substring(0, 80);
-      trimmed = true;
-    }
-    if (trimmed) {
-      value += "...";
-    }
-    return value.replace("	", " ");
-  }
-  function valueAsBool(value) {
-    switch (typeof value) {
-      case "boolean":
-        return value;
-      case "number":
-        return value > 0;
-      case "string":
-        return value.toLowerCase() === "true";
-      default:
-        return false;
-    }
-  }
-  function toBoolean(value) {
-    return value.toLowerCase() === "true";
+    return defaultOnEmptyString ? isNullOrEmpty(value) ? defaultValue : value : isNullOrUndefined(value) ? defaultValue : value;
   }
   function hasItems(obj) {
     return objCount(obj) > 0;
@@ -17499,11 +17463,6 @@ var LhqGenerators = (() => {
     }
     return 0;
   }
-  function copyObject(obj, keysToSkip) {
-    return Object.fromEntries(
-      Object.entries(obj).filter(([key]) => !keysToSkip.includes(key))
-    );
-  }
   function removeNewLines(input) {
     if (isNullOrEmpty(input)) return input;
     return input.replace(/\r\n|\r|\n/g, "");
@@ -17512,7 +17471,7 @@ var LhqGenerators = (() => {
     if (isNullOrUndefined(obj)) return obj;
     propertiesToRemove.forEach((propObj) => {
       for (const key in propObj) {
-        if (obj.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
           delete obj[key];
         }
       }
@@ -17720,7 +17679,7 @@ var LhqGenerators = (() => {
           const value = this.values.find((x) => x.languageName === primaryLanguage);
           const resourceValue = value == null ? void 0 : value.value;
           const propertyComment = (_b = isNullOrEmpty(resourceValue) ? this.description : resourceValue) != null ? _b : "";
-          return trimComment(propertyComment);
+          return this.trimComment(propertyComment);
         }
         return "";
       };
@@ -17765,6 +17724,31 @@ var LhqGenerators = (() => {
     }
     get comment() {
       return this._comment;
+    }
+    trimComment(value) {
+      if (isNullOrEmpty(value)) {
+        return "";
+      }
+      let trimmed = false;
+      let idxNewLine = value.indexOf("\r\n");
+      if (idxNewLine == -1) {
+        idxNewLine = value.indexOf("\n");
+      }
+      if (idxNewLine == -1) {
+        idxNewLine = value.indexOf("\r");
+      }
+      if (idxNewLine > -1) {
+        value = value.substring(0, idxNewLine);
+        trimmed = true;
+      }
+      if (value.length > 80) {
+        value = value.substring(0, 80);
+        trimmed = true;
+      }
+      if (trimmed) {
+        value += "...";
+      }
+      return value.replace(/\t/g, " ");
     }
     get state() {
       return this._state;
@@ -18511,6 +18495,7 @@ ${locText}`;
   var generatorUtils_exports = {};
   __export(generatorUtils_exports, {
     generateLhqSchema: () => generateLhqSchema,
+    getGeneratedFileContent: () => getGeneratedFileContent,
     getRootNamespaceFromCsProj: () => getRootNamespaceFromCsProj,
     validateLhqModel: () => validateLhqModel
   });
@@ -23947,6 +23932,8 @@ ${locText}`;
 
   // src/generatorUtils.ts
   var DOMParser;
+  var regexLF = new RegExp("\\r\\n|\\r", "g");
+  var regexCRLF = new RegExp("(\\r(?!\\n))|((?<!\\r)\\n)", "g");
   function validateLhqModel(data) {
     if (typeof data === "string") {
       const parseResult2 = tryJsonParse(data, true);
@@ -23971,6 +23958,12 @@ ${locText}`;
       error = err.toString();
     }
     return { success, error, model: success ? parseResult.data : void 0 };
+  }
+  function getGeneratedFileContent(generatedFile, applyLineEndings) {
+    if (!applyLineEndings || generatedFile.content.length === 0) {
+      return generatedFile.content;
+    }
+    return generatedFile.lineEndings === "LF" ? generatedFile.content.replace(regexLF, "\n") : generatedFile.content.replace(regexCRLF, "\r\n");
   }
   function generateLhqSchema() {
     const jsonSchema = zodToJsonSchema(LhqModelSchema, {
@@ -24001,8 +23994,9 @@ ${locText}`;
       }
       const doc = new DOMParser().parseFromString(fileContent, "text/xml");
       const rootNode = doc;
-      const ns = ((_a = doc.documentElement) == null ? void 0 : _a.namespaceURI) || "";
-      const xpathSelect = xpath.useNamespaces({ ns });
+      const rootNs = ((_a = doc.documentElement) == null ? void 0 : _a.namespaceURI) || "";
+      const ns = isNullOrEmpty(rootNs) ? null : rootNs;
+      const xpathSelect = xpath.useNamespaces({ ns: rootNs });
       const findFileElement = function(fileName) {
         for (const itemGroupType of itemGroupTypes) {
           for (const attr of itemGroupTypesAttrs) {
@@ -24044,10 +24038,22 @@ ${locText}`;
     namespace: "namespace",
     fileHeader: "fileHeader"
   });
+  function getLibraryVersion() {
+    if (false) {
+      return "0.0.0";
+    }
+    return "1.0.89";
+  }
   var _Generator = class _Generator {
     constructor() {
       this._generatedFiles = [];
     }
+    /**
+     * Initializes the generator with the given initialization information.
+     * 
+     * @param initialization - The initialization information for the generator.
+     * @throws Error if the initialization information is invalid or missing.
+     */
     static initialize(initialization) {
       if (!_Generator._initialized) {
         if (isNullOrEmpty(initialization)) {
@@ -24068,25 +24074,42 @@ ${locText}`;
         _Generator._initialized = true;
       }
     }
+    // /**
+    //  * Returns the content of the generated file with the appropriate line endings.
+    //  * 
+    //  * @param generatedFile - The generated file.
+    //  * @param applyLineEndings - A flag indicating whether to apply line endings to the content. Line endings are determined by the `lineEndings` property of the `GeneratedFile`.
+    //  * @returns The content of the generated file with the appropriate line endings.
+    //  */
+    // public getFileContent(generatedFile: GeneratedFile, applyLineEndings: boolean): string {
+    //     if (!applyLineEndings || generatedFile.content.length === 0) {
+    //         return generatedFile.content;
+    //     }
+    //     return generatedFile.lineEndings === 'LF'
+    //         ? generatedFile.content.replace(Generator.regexLF, '\n')
+    //         : generatedFile.content.replace(Generator.regexCRLF, '\r\n');
+    // }
     /**
-     * Gets the generated content string that should be written to the fileName file.
+     * Generates code files based on the provided `LHQ` model and external host data.
      * 
-     * @param generatedFile - Information about the generated file.
-     * @param applyLineEndings - Flag indicating whether to apply line endings to the content or not.
-     * @returns The generated content string, without any modifications if applyLineEndings is false, or with line endings applied if applyLineEndings is true.
-     */
-    getFileContent(generatedFile, applyLineEndings) {
-      if (!applyLineEndings || generatedFile.content.length === 0) {
-        return generatedFile.content;
-      }
-      return generatedFile.lineEndings === "LF" ? generatedFile.content.replace(_Generator.regexLF, "\n") : generatedFile.content.replace(_Generator.regexCRLF, "\r\n");
-    }
-    /**
-     * Runs code templates for the given input LHQ model.
-     * @param model - file *.lhq as deserialized JSON object, not yet validated agains LHQ model schema
-     * @param fileName - input LHQ model file name (*.lhq)
-     * @param data - external host data as key-value mapping that will be used by code generator templates.
-     * @returns generator result.
+     * This method validates the input `LHQ` model, processes the specified Handlebars template,
+     * and generates the corresponding output files. It also handles inline and child template outputs.
+     * 
+     * @param fileName - The name of the input LHQ model file (*.lhq).
+     * @param modelData - The LHQ model data, either as a deserialized JSON object or a JSON as string.
+     * @param data - Optional external host data as a key-value mapping (object or JSON as string) used by the templates.
+     * @returns A `GenerateResult` object containing the list of generated files.
+     * 
+     * @throws `AppError` if the generator is not initialized, or if any required input is missing or invalid.
+     * 
+     * @example
+     * const generator = new Generator();
+     * Generator.initialize(\{ hbsTemplates: templates, hostEnvironment: hostEnv \});
+     * const file = 'model.lhq';
+     * const model = fs.readFileSync(file, 'utf8');
+     * const data = \{ namespace: 'MyNamespace' \};
+     * const result = generator.generate(file, model, data);
+     * console.log(result.generatedFiles);
      */
     generate(fileName, modelData, data) {
       var _a, _b, _c;
@@ -24176,8 +24199,6 @@ ${locText}`;
     }
   };
   _Generator._initialized = false;
-  _Generator.regexLF = new RegExp("\\r\\n|\\r", "g");
-  _Generator.regexCRLF = new RegExp("(\\r(?!\\n))|((?<!\\r)\\n)", "g");
   var Generator = _Generator;
   return __toCommonJS(index_exports);
 })();

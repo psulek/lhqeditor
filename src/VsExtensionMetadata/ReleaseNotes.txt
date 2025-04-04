@@ -1,4 +1,9 @@
-﻿2025.2
+﻿2025.3
+- New modern generator now using 'V8' JS engine instead of 'Chakra'
+  - This means that the code generation is now faster and more reliable
+  - The new engine is also more compatible with the latest JavaScript features
+
+2025.2
 - New 'modern generator' is now default generator for both v1 & v2 model versions
   - This means no T4 templates are used now for code generator
 - Added upgrade hints when opened `v1` model

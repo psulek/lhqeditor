@@ -1,6 +1,6 @@
 {
   "name": "@lhq/lhq-generators",
-  "version": "1.0.86",
+  "version": "1.0.89",
   "author": "Peter Šulek",
   "description": "LHQ generators library",
   "keywords": [],
@@ -77,13 +77,9 @@
     "mocha": "^11.1.0",
     "package-json-type": "^1.0.3",
     "rimraf": "^6.0.1",
-    "terser-webpack-plugin": "^5.3.14",
-    "ts-loader": "^9.5.2",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "webpack": "^5.98.0",
-    "webpack-cli": "^6.0.1",
     "yargs": "^17.7.2"
   },
   "pnpm": {

@@ -1,6 +1,6 @@
 import path from 'node:path';
 import util from 'node:util';
-import { exec } from 'node:child_process';
+import { exec, spawn } from 'node:child_process';
 
 import { build, type Options } from 'tsup';
 //type TsupBuildOptions = Parameters<typeof build>[0];
@@ -22,6 +22,8 @@ type EsBuildOptions = Parameters<NonNullable<Options['esbuildOptions']>>[0];
 
 (async () => {
     try {
+        await runMochaTests()
+
         await fse.ensureDir(distFolder);
 
         await preparePackageVersion();
@@ -192,3 +194,109 @@ async function genLhqSchema() {
     await fse.writeFile(lhqSchemaFile, schemaJson);
     await fse.copy(lhqSchemaFile, path.join(__dirname, schenameFileName));
 }
+
+export async function runMochaTests(): Promise<void> {
+    const cwd = __dirname;
+    const bin = 'mocha/bin/mocha.js';
+    const mocha = path.join(cwd, 'node_modules', bin);
+    const testFile = './tests/index.spec.ts';
+
+    const args = [mocha, '--delay', '-n tsx', '--enable-source-maps', '--fail-zero', '--colors', testFile];
+
+    const { code, stdout, stderr } = await spawnAsync('node', args, { cwd, detached: false }, true);
+    if (code !== 0) {
+        throw new Error(`Some mocha tests failed (path '${cwd}')\n (code: ${code}) ${stdout || ''} ${stderr || ''}`);
+    }
+
+    const res = stdout.trim();
+    if (res?.length > 0) {
+        console.log(res);
+    }
+}
+
+export type SpawnResult = { code: number, stdout: string, stderr: string, takes: number };
+
+export type SpawnOptions = {
+    cwd: string;
+    detached: boolean;
+    shell?: boolean;
+    env?: NodeJS.ProcessEnv | undefined;
+};
+
+
+export function spawnAsync(command: string, args: string[], options: SpawnOptions, logToConsole: boolean = true, throwOnError: boolean = false): Promise<SpawnResult> {
+    return new Promise((resolve, reject) => {
+        let stderr = '';
+        let stdout = '';
+        const start = Date.now();
+
+        if (logToConsole === undefined) {
+            logToConsole = true;
+        }
+
+        if (throwOnError === undefined) {
+            throwOnError = true;
+        }
+
+        /* eslint-disable */
+        const ls = spawn(command, args, options || {});
+        ls.stdout.on('data', (data) => {
+            stdout += data.toString();
+
+            if (logToConsole) {
+                console.log(data.toString());
+            }
+        });
+
+        ls.stderr.on('data', function (data) {
+            stderr += data.toString();
+
+            if (logToConsole && !throwOnError) {
+                console.log(data.toString());
+            }
+        });
+        /* eslint-enable */
+
+        ls.on('exit', function (code) {
+            const takes = Date.now() - start;
+
+            if (code !== 0 && throwOnError) {
+                return reject(stderr);
+            }
+
+            return resolve({ code: code ?? 0, stdout: stdout, stderr: stderr, takes: takes });
+        });
+
+        ls.on('error', err => {
+            if (logToConsole) {
+                console.error(err);
+            }
+            return reject(err);
+        })
+    });
+}
+
+// async function runExec(command: string, cwd: string) {
+//     return new Promise<{ code: number; stdout: string; stderr: string }>((resolve, reject) => {
+//         const child = exec(command, { cwd });
+
+//         let stdout = '';
+//         let stderr = '';
+
+//         child.stdout?.on('data', (data) => {
+//             stdout += data;
+//         });
+
+//         child.stderr?.on('data', (data) => {
+//             stderr += data;
+//         });
+
+//         child.on('close', (code) => {
+//             resolve({ code: code ?? 0, stdout, stderr });
+//         });
+
+//         child.on('error', (error) => {
+//             reject(error);
+//         });
+//     });
+// }

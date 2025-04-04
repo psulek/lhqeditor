@@ -25,6 +25,13 @@
                 "showReuseMessage": true,
                 "clear": true
             }
+        },
+        {
+            "type": "npm",
+            "script": "publish-local",
+            "problemMatcher": [],
+            "label": "npm: publish-local",
+            "detail": "pnpm run build-all && cd dist && pnpm publish --registry http://localhost:4873/ --no-git-checks && rimraf dist"
         }
     ]
 }

@@ -4,16 +4,19 @@ $packageName = "@lhq/lhq-generators"
 $packageVersion = "latest"
 
 echo $PSScriptRoot
+# Change the working directory to the script's directory
+Set-Location $PSScriptRoot
 
 pnpm add $packageName@$packageVersion --registry $registry -P
-pnpm install --offline
+# pnpm install --offline
+pnpm install
 
 $packageJson = Join-Path $PSScriptRoot "package.json"
 $node_modules = Join-Path $PSScriptRoot "node_modules"
 $lib_folder = Join-Path $node_modules "@lhq\lhq-generators\"
 $out = Join-Path $PSScriptRoot "content"
 $out_browser = Join-Path $out "browser"
-$out_templates = Join-Path $out "templates"
+$out_templates = Join-Path $out "hbs"
 
 if (Test-Path -Path $out) {
     Remove-Item -Path $out -Recurse -Force
@@ -32,7 +35,7 @@ if (!(Test-Path -Path $out_templates)) {
 }
 
 Copy-Item -Recurse -Force $lib_folder\browser\*.* $out_browser
-Copy-Item -Recurse -Force $lib_folder\templates\*.* $out_templates
+Copy-Item -Recurse -Force $lib_folder\hbs\*.* $out_templates
 
-Remove-Item -Path $node_modules -Recurse -Force
-Remove-Item -Path $packageJson -Recurse -Force
+# Remove-Item -Path $node_modules -Recurse -Force
+# Remove-Item -Path $packageJson -Recurse -Force

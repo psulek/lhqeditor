@@ -114,7 +114,8 @@ namespace LHQ.Gen.Lib
             }
 
             var handlebarFiles = new Dictionary<string, string>();
-            var queryTemplates = $"{queryRoot}.templates.";
+            //var queryTemplates = $"{queryRoot}.templates.";
+            var queryTemplates = $"{queryRoot}.hbs.";
             var hbsFiles = allManigestResourceNames.Where(x => x.StartsWith(queryTemplates)).ToList();
             if (hbsFiles.Count == 0)
             {

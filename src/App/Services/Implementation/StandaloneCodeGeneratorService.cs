@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -31,6 +33,8 @@ using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Core.DependencyInjection;
 using LHQ.Data;
+using LHQ.Data.Extensions;
+using LHQ.Data.Templating.Templates;
 using LHQ.Gen.Lib;
 using LHQ.Utils.Utilities;
 using Exception = System.Exception;
@@ -38,6 +42,7 @@ using Exception = System.Exception;
 namespace LHQ.App.Services.Implementation
 {
     public class StandaloneCodeGeneratorService : AppContextServiceBase, IDisposable, IStandaloneCodeGeneratorService
+    // public class StandaloneCodeGeneratorService : ShellViewContextServiceBase,  IDisposable, IStandaloneCodeGeneratorService
     {
         private readonly ThreadSafeSingleShotGuard _generating = ThreadSafeSingleShotGuard.Create(false);
         private Generator _generator;
@@ -49,7 +54,7 @@ namespace LHQ.App.Services.Implementation
         public virtual async Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext)
         {
             var result = new StandaloneCodeGenerateResult();
-            
+
             if (!_generating.TrySetSignal())
             {
                 // report success because we are already generating and dont want to show error generating...
@@ -90,12 +95,37 @@ namespace LHQ.App.Services.Implementation
             }
             catch (GeneratorException ge)
             {
-                UIService.DispatchActionOnUI(() =>
-                    {
-                        DialogService.ShowError(new DialogShowInfo(Strings.Dialogs.CodeGenerator.CodeGeneratorTitle, ge.Title, ge.Message));                        
-                    }, TimeSpan.FromMilliseconds(200));
+                var message = $"Error generating code from LHQ file '{modelFileName}', {ge.Title}, {ge.Message}";
+                Logger.Error(message, ge);
                 
-                result.Success = true;
+                result.Error = string.IsNullOrEmpty(ge.Title) ? ge.Message : ge.Title;
+                result.ErrorKind = ge.Kind;
+                result.ErrorCode = ge.Code;
+
+                /*AppContext.UIService.DispatchActionOnUI(() =>
+                    {
+                        string title = "Code generator failed: " + ge.Title;
+                        string message = ge.Message;
+
+                        if (ge.Kind == GeneratorErrorKind.InvalidModelSchema)
+                        {
+                            title = "Code generator failed.";
+                            message = "Invalid model schema. " + (ge.Title ?? ge.Message);
+                        }
+                        else if (ge.Kind == GeneratorErrorKind.TemplateValidationError)
+                        {
+                            title = "Code generator failed.";
+                            message = "Invalid template settings. " + (ge.Title ?? ge.Message);
+                        }
+                        var dialogShowInfo = new DialogShowInfo(Strings.Dialogs.CodeGenerator.CodeGeneratorTitle, title, message);
+                        DialogService.ShowError(dialogShowInfo);
+
+                        if (ge.Code == GeneratorErrorCodes.CsharpNamespaceMissing)
+                        {
+                            AutodetectNamespace(modelFileName, modelContext);
+                        }
+
+                    }, TimeSpan.FromMilliseconds(200));*/
             }
             catch (Exception e)
             {
@@ -110,11 +140,16 @@ namespace LHQ.App.Services.Implementation
             return result;
         }
 
+        public string AutodetectNamespace(string modelFileName)
+        {
+            return _generator.AutodetectNamespace(modelFileName);
+        }
+
         protected virtual NLog.ILogger GetLoggerForGenerator()
         {
             return Logger.GetSourceLogger() as NLog.ILogger;
         }
-        
+
         public void Dispose()
         {
             if (!_disposed)

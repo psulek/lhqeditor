@@ -23,17 +23,19 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using LHQ.Gen.Lib;
+
 namespace LHQ.App.Model
 {
     public sealed class StandaloneCodeGenerateResult
     {
-        public StandaloneCodeGenerateResult()
-        {
-            Success = false;
-            GeneratedFileCount = 0;
-        }
-
         public bool Success { get; set; }
+
+        public string Error { get; set; } = string.Empty;
+
+        public GeneratorErrorKind? ErrorKind { get; set; } = null;
+
+        public string ErrorCode { get; set; } = string.Empty;
 
         public int GeneratedFileCount { get; set; }
     }

@@ -30,23 +30,11 @@ namespace LHQ.App.Localization
 		private StringsContext()
 		{}
 
-		public static ResourceManager ResourceManager
-		{
-			get
-			{
-				return _resourceManager.Value;
-			}
-		}
+		public static ResourceManager ResourceManager => _resourceManager.Value;
 
 		public const string PrimaryCulture = "en";
 
-		public string[] AvailableCultures
-		{
-			get
-			{
-				return new string[] { "en","sk" };
-			}
-		}
+		public string[] AvailableCultures => new string[] { "en","sk" };
 
 		public CultureInfo FallbackCulture
 		{
@@ -786,6 +774,26 @@ namespace LHQ.App.Localization
 				/// Gets localized string similar to: Export resources
 				/// </summary>
 				public const string PageTitle = "DialogsExportPageTitle";
+			}
+			
+			public static partial class FileCompatibilityIssue
+			{
+				/// <summary>
+				/// Gets localized string similar to: File compatibility issue
+				/// </summary>
+				public const string Caption = "DialogsFileCompatibilityIssueCaption";
+				/// <summary>
+				/// Gets localized string similar to: Content of project file has old format version 'v{0}' and needs to be upgraded t...
+				/// </summary>
+				public const string CreatedInPreviousVersion = "DialogsFileCompatibilityIssueCreatedInPreviousVersion";
+				/// <summary>
+				/// Gets localized string similar to: File was created in higher version of program....
+				/// </summary>
+				public const string CreatedWithHigherVersion = "DialogsFileCompatibilityIssueCreatedWithHigherVersion";
+				/// <summary>
+				/// Gets localized string similar to: Upgrading to new model version does not affect existing model data....
+				/// </summary>
+				public const string UpgradeToCurrentVersionConfirm = "DialogsFileCompatibilityIssueUpgradeToCurrentVersionConfirm";
 			}
 			
 			public static partial class Import
@@ -1709,22 +1717,6 @@ namespace LHQ.App.Localization
 				/// Gets localized string similar to: Error saving project file '{0}' to disk, permission denied?
 				/// </summary>
 				public const string ErrorSavingProjectFileToDiskMessage = "ServicesApplicationErrorSavingProjectFileToDiskMessage";
-				/// <summary>
-				/// Gets localized string similar to: File compatibility issue
-				/// </summary>
-				public const string FileCompatibilityIssueCaption = "ServicesApplicationFileCompatibilityIssueCaption";
-				/// <summary>
-				/// Gets localized string similar to: Project file '{0}' was created in previous version of program.
-				/// </summary>
-				public const string FileCompatibilityIssueCreatedInPreviousVersion = "ServicesApplicationFileCompatibilityIssueCreatedInPreviousVersion";
-				/// <summary>
-				/// Gets localized string similar to: File was created in higher version of program....
-				/// </summary>
-				public const string FileCompatibilityIssueCreatedWithHigherVersion = "ServicesApplicationFileCompatibilityIssueCreatedWithHigherVersion";
-				/// <summary>
-				/// Gets localized string similar to: File must be upgraded to current version to be able to open it....
-				/// </summary>
-				public const string FileCompatibilityIssueUpgradeToCurrentVersionConfirm = "ServicesApplicationFileCompatibilityIssueUpgradeToCurrentVersionConfirm";
 				/// <summary>
 				/// Gets localized string similar to: File {0} was updated to latest version.
 				/// </summary>
@@ -3857,6 +3849,30 @@ namespace LHQ.App.Localization
 		
 			}
 			
+			public static partial class FileCompatibilityIssue
+			{
+				/// <summary>
+				/// Gets localized string similar to: File compatibility issue
+				/// </summary>
+				public static string Caption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.FileCompatibilityIssue.Caption);
+		
+				/// <summary>
+				/// Gets localized string similar to: Content of project file has old format version 'v{0}' and needs to be upgraded t...
+				/// </summary>
+				public static string CreatedInPreviousVersion(object fileModelVersion) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.FileCompatibilityIssue.CreatedInPreviousVersion), fileModelVersion);
+		
+				/// <summary>
+				/// Gets localized string similar to: File was created in higher version of program....
+				/// </summary>
+				public static string CreatedWithHigherVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.FileCompatibilityIssue.CreatedWithHigherVersion);
+		
+				/// <summary>
+				/// Gets localized string similar to: Upgrading to new model version does not affect existing model data....
+				/// </summary>
+				public static string UpgradeToCurrentVersionConfirm(object latestVersion,object minVersion) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.FileCompatibilityIssue.UpgradeToCurrentVersionConfirm), latestVersion,minVersion);
+		
+			}
+			
 			public static partial class Import
 			{
 				/// <summary>
@@ -4973,26 +4989,6 @@ namespace LHQ.App.Localization
 				/// Gets localized string similar to: Error saving project file '{0}' to disk, permission denied?
 				/// </summary>
 				public static string ErrorSavingProjectFileToDiskMessage(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.ErrorSavingProjectFileToDiskMessage), fileName);
-		
-				/// <summary>
-				/// Gets localized string similar to: File compatibility issue
-				/// </summary>
-				public static string FileCompatibilityIssueCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCaption);
-		
-				/// <summary>
-				/// Gets localized string similar to: Project file '{0}' was created in previous version of program.
-				/// </summary>
-				public static string FileCompatibilityIssueCreatedInPreviousVersion(object fileName) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCreatedInPreviousVersion), fileName);
-		
-				/// <summary>
-				/// Gets localized string similar to: File was created in higher version of program....
-				/// </summary>
-				public static string FileCompatibilityIssueCreatedWithHigherVersion => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueCreatedWithHigherVersion);
-		
-				/// <summary>
-				/// Gets localized string similar to: File must be upgraded to current version to be able to open it....
-				/// </summary>
-				public static string FileCompatibilityIssueUpgradeToCurrentVersionConfirm => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Application.FileCompatibilityIssueUpgradeToCurrentVersionConfirm);
 		
 				/// <summary>
 				/// Gets localized string similar to: File {0} was updated to latest version.

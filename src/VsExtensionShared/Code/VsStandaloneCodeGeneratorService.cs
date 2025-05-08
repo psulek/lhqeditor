@@ -33,7 +33,6 @@ using LHQ.App.Services.Implementation;
 using LHQ.Data;
 using LHQ.Gen.Lib;
 using LHQ.Utils.Extensions;
-using LHQ.VsExtension.Code;
 using NLog;
 
 namespace LHQ.VsExtension.Code
@@ -73,13 +72,13 @@ namespace LHQ.VsExtension.Code
                                     ExtraButtonHeader = Strings.Common.ReadMore,
                                     ExtraButtonAction = () =>
                                         {
-                                            WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2_T4Obsolete);
+                                            WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.GetT4_ObsoleteUrl());
                                         }
                                 };
                                 
-                                UIService.DispatchActionOnUI(() =>
+                                AppContext.UIService.DispatchActionOnUI(() =>
                                     {
-                                        var dialogResultInfo = DialogService.ShowWarning(dialogShowInfo);
+                                        var dialogResultInfo = AppContext.DialogService.ShowWarning(dialogShowInfo);
                                         
                                         if (dialogResultInfo.DialogResult == DialogResult.OK)
                                         {

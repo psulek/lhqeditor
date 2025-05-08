@@ -91,7 +91,7 @@ namespace LHQ.Data.ModelStorage.Serializers
             return WriteRootModel();
         }
 
-        public virtual bool Upgrade(ModelContext previousModelContext)
+        public virtual bool Upgrade(string modelFileName, ModelContext previousModelContext)
         {
             return true;
         }

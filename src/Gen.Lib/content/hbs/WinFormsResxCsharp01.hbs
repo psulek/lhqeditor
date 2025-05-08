@@ -11,7 +11,8 @@ childs[?name=='CSharp'].attrs | [0].merge(@, {
 })
 {{~/output~}}
 
-{{~m-data @root.host.namespace default=model.name defaultOnEmpty=true key="rootNamespace" ~}}
+{{~m-data (x-select @root.settings.Namespace @root.host.namespace) key="rootNamespace" 
+   check="isNullOrEmpty" error="Missing 'Namespace' value for C# settings." errorCode="csharp.namespace.missing" ~}}
 
 {{! for each language generate resx file }}
 {{~#each model.languages ~}}

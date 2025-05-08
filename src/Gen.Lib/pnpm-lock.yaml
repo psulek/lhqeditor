@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@lhq/lhq-generators':
-        specifier: ^1.0.89
-        version: 1.0.89(typescript@5.8.2)
+        specifier: 1.0.0-rc.14
+        version: 1.0.0-rc.14(typescript@5.8.2)
 
 packages:
 
@@ -23,11 +23,11 @@ packages:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
 
-  '@lhq/lhq-generators@1.0.89':
-    resolution: {integrity: sha512-t6yb2POU1RFgDx57W26DcpocL5rQIlqh8gHPREYFy0PEknMAMqYlA8jcDZC/d/85ygaa9aLwr8PgdXladwKrbQ==}
+  '@lhq/lhq-generators@1.0.0-rc.14':
+    resolution: {integrity: sha512-jEN7RCxamjSrMCKISP8fxTgh8o95yUYCA4hC2gJ7nvI/3u096aLaSNSdMqJMFAFaey1ilMPo0AxuvZq4dbgp+g==}
     hasBin: true
     peerDependencies:
-      typescript: ^4.9.4 || ^5.0.2
+      typescript: ^5.0.2
 
   '@xmldom/xmldom@0.9.8':
     resolution: {integrity: sha512-p96FSY54r+WJ50FIOsCOjyj/wavs8921hG5+kVMmZgKcvIKxMXHTrjNJvRgWa/zuX3B6t2lijLNFaOyuxUH+2A==}
@@ -245,7 +245,7 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
-  '@lhq/lhq-generators@1.0.89(typescript@5.8.2)':
+  '@lhq/lhq-generators@1.0.0-rc.14(typescript@5.8.2)':
     dependencies:
       '@commander-js/extra-typings': 13.1.0(commander@13.1.0)
       '@xmldom/xmldom': 0.9.8

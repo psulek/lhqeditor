@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using JetBrains.Annotations;
 using LHQ.App.Code;
 using LHQ.App.Dialogs;
 using LHQ.App.Dialogs.AppSettings;
@@ -184,12 +185,16 @@ namespace LHQ.App.Services.Implementation
             }
         }
 
-        public bool ShowUpgradeModelDialog()
+        public bool ShowUpgradeModelDialog(string caption  = null, string title  = null)
         {
-            var caption = Strings.Dialogs.UpgradeModel.UpgradeModelCaption;
+            caption = caption ?? Strings.Dialogs.UpgradeModel.UpgradeModelCaption;
             var latestVersion = ModelConstants.CurrentModelVersion;
             var latestVersionStr = $"v{latestVersion}";
             var message = Strings.Dialogs.UpgradeModel.UpgradeModelMessage(latestVersionStr);
+            if (!string.IsNullOrEmpty(title))
+            {
+                message = $"{title}\n\n{message}";
+            }
             string detail = Strings.Dialogs.UpgradeModel.UpgradeModelDetail(latestVersionStr, AppConstants.ModernGeneratorMinVersion);
 
             var dialogShowInfo = new DialogShowInfo(caption, message, detail)
@@ -197,7 +202,7 @@ namespace LHQ.App.Services.Implementation
                 ExtraButtonHeader = Strings.Common.ReadMore,
                 ExtraButtonAction = () =>
                     {
-                        WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.ModelV2_Info);
+                        WebPageUtils.ShowUrl(AppConstants.WebSiteUrls.GetLatestModelChanges());
                     }
             };
             

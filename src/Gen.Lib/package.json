@@ -11,6 +11,6 @@
   "license": "ISC",
   "packageManager": "pnpm@10.7.0",
   "dependencies": {
-    "@lhq/lhq-generators": "^1.0.89"
+    "@lhq/lhq-generators": "1.0.0-rc.14"
   }
 }

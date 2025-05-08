@@ -85,32 +85,32 @@ namespace LHQ.App.Extensions
             }
         }
 
-        public static string ToDisplayName(this ModelLoadStatus modelLoadStatus)
-        {
-            switch (modelLoadStatus)
-            {
-                case ModelLoadStatus.Success:
-                {
-                    return Strings.Enums.ModelLoadStatus.Success;
-                }
-                case ModelLoadStatus.ModelSourceInvalid:
-                {
-                    return Strings.Enums.ModelLoadStatus.ModelSourceInvalid;
-                }
-                case ModelLoadStatus.ModelUpgraderRequired:
-                {
-                    return Strings.Enums.ModelLoadStatus.ModelUpgraderRequired;
-                }
-                case ModelLoadStatus.LoadError:
-                {
-                    return Strings.Enums.ModelLoadStatus.LoadError;
-                }
-                default:
-                {
-                    throw new ArgumentOutOfRangeException(nameof(modelLoadStatus));
-                }
-            }
-        }
+        // public static string ToDisplayName(this ModelLoadStatus modelLoadStatus)
+        // {
+        //     switch (modelLoadStatus)
+        //     {
+        //         case ModelLoadStatus.Success:
+        //         {
+        //             return Strings.Enums.ModelLoadStatus.Success;
+        //         }
+        //         case ModelLoadStatus.ModelSourceInvalid:
+        //         {
+        //             return Strings.Enums.ModelLoadStatus.ModelSourceInvalid;
+        //         }
+        //         case ModelLoadStatus.ModelUpgraderRequired:
+        //         {
+        //             return Strings.Enums.ModelLoadStatus.ModelUpgraderRequired;
+        //         }
+        //         case ModelLoadStatus.LoadError:
+        //         {
+        //             return Strings.Enums.ModelLoadStatus.LoadError;
+        //         }
+        //         default:
+        //         {
+        //             throw new ArgumentOutOfRangeException(nameof(modelLoadStatus));
+        //         }
+        //     }
+        // }
 
         public static string ToDisplayName(this ProjectLoadStatus status, string fileName)
         {

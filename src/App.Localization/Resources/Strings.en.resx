@@ -531,6 +531,23 @@ Other team members must also upgrade LHQ Extension to min. version &#39;{2}&#39;
   <data name="DialogsExportPageTitle" xml:space="preserve">
     <value>Export resources</value>
   </data>
+  <data name="DialogsFileCompatibilityIssueCaption" xml:space="preserve">
+    <value>File compatibility issue</value>
+  </data>
+  <data name="DialogsFileCompatibilityIssueCreatedInPreviousVersion" xml:space="preserve">
+    <value>Content of project file has old format version &#39;v{0}&#39; and needs to be upgraded to newer version.</value>
+  </data>
+  <data name="DialogsFileCompatibilityIssueCreatedWithHigherVersion" xml:space="preserve">
+    <value>File was created in higher version of program.
+Please upgrade program to latest version to be able to open this file.</value>
+  </data>
+  <data name="DialogsFileCompatibilityIssueUpgradeToCurrentVersionConfirm" xml:space="preserve">
+    <value>Upgrading to new model version does not affect existing model data.
+
+Old version of LHQ VS IDE extension will not work with {0} model unless upgraded at least to version {1}.
+
+Continue to upgrade?</value>
+  </data>
   <data name="DialogsImportAllowImportNewLanguages" xml:space="preserve">
     <value>Allow import of new languages</value>
   </data>
@@ -1128,20 +1145,6 @@ Do you want to continue with move action ?</value>
   </data>
   <data name="ServicesApplicationErrorSavingProjectFileToDiskMessage" xml:space="preserve">
     <value>Error saving project file &#39;{0}&#39; to disk, permission denied?</value>
-  </data>
-  <data name="ServicesApplicationFileCompatibilityIssueCaption" xml:space="preserve">
-    <value>File compatibility issue</value>
-  </data>
-  <data name="ServicesApplicationFileCompatibilityIssueCreatedInPreviousVersion" xml:space="preserve">
-    <value>Project file &#39;{0}&#39; was created in previous version of program.</value>
-  </data>
-  <data name="ServicesApplicationFileCompatibilityIssueCreatedWithHigherVersion" xml:space="preserve">
-    <value>File was created in higher version of program.
-Please upgrade program to latest version to be able to open this file.</value>
-  </data>
-  <data name="ServicesApplicationFileCompatibilityIssueUpgradeToCurrentVersionConfirm" xml:space="preserve">
-    <value>File must be upgraded to current version to be able to open it.
-Do you want to upgrade file and continue to open it?</value>
   </data>
   <data name="ServicesApplicationFileUpdatedToLatestVersion" xml:space="preserve">
     <value>File {0} was updated to latest version.</value>

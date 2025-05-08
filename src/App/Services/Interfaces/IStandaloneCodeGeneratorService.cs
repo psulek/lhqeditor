@@ -30,7 +30,9 @@ using LHQ.Data;
 namespace LHQ.App.Services.Interfaces
 {
     public interface IStandaloneCodeGeneratorService: IAppContextService
+    // public interface IStandaloneCodeGeneratorService: IShellViewContextService
     {
         Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext);
+        string AutodetectNamespace(string modelFileName);
     }
 }

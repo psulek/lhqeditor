@@ -52,6 +52,7 @@ namespace LHQ.VsExtension.Code
                 case ServicesRegistratorType.ShellViewContextService:
                 {
                     serviceContainer.ReplaceRegistration<IShellService, VsShellService>();
+                    // serviceContainer.ReplaceRegistration<IStandaloneCodeGeneratorService, VsStandaloneCodeGeneratorService>();
                     break;
                 }
                 default:

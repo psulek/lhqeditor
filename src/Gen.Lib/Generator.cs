@@ -30,18 +30,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using JavaScriptEngineSwitcher.Core;
 using JetBrains.Annotations;
+using LHQ.Utils;
 using Newtonsoft.Json;
 using NLog;
 // using JsEngine = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine;
 // using JsEngineSettings = JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings;
-
 using JsEngine = JavaScriptEngineSwitcher.V8.V8JsEngine;
 using JsEngineSettings = JavaScriptEngineSwitcher.V8.V8Settings;
+
 // ReSharper disable InconsistentNaming
 
 namespace LHQ.Gen.Lib
@@ -56,14 +54,14 @@ namespace LHQ.Gen.Lib
         private readonly JsEngine _engine;
         private readonly List<GeneratedFile> _generatedFiles = new List<GeneratedFile>();
 
-        private const string XpathRootNamespace = "//ns:Project/ns:PropertyGroup/ns:RootNamespace";
-        private const string XpathAssemblyName = "//ns:Project/ns:PropertyGroup/ns:AssemblyName";
-
-        private static readonly string[] ItemGroupTypes = { "Content", "None" };
-        private static readonly string[] ItemGroupTypesAttrs = { "Include", "Update" };
-
-        private const string CsProjectXPath =
-            "//ns:Project/ns:ItemGroup/ns:##TYPE##[@##ATTR##='##FILE##']";
+        // private const string XpathRootNamespace = "//ns:Project/ns:PropertyGroup/ns:RootNamespace";
+        // private const string XpathAssemblyName = "//ns:Project/ns:PropertyGroup/ns:AssemblyName";
+        //
+        // private static readonly string[] ItemGroupTypes = { "Content", "None", "Compile", "EmbeddedResource" };
+        // private static readonly string[] ItemGroupTypesAttrs = { "Include", "Update" };
+        //
+        // private const string CsProjectXPath =
+        //     "//ns:Project/ns:ItemGroup/ns:##TYPE##[@##ATTR##='##FILE##']";
 
         private static class DataKeys
         {
@@ -85,14 +83,14 @@ namespace LHQ.Gen.Lib
                 AllowReflection = false,
                 //EnableDebugging = true // Jint
             });
-            
+
             var type = typeof(Generator);
             var thisAssembly = type.Assembly;
             var rootNamespace = type.Namespace;
 
             var queryRoot = $"{rootNamespace}.content";
             string[] allManigestResourceNames = thisAssembly.GetManifestResourceNames();
-            
+
             try
             {
                 var queryBrowser = $"{queryRoot}.browser.";
@@ -101,7 +99,7 @@ namespace LHQ.Gen.Lib
                 {
                     throw new ApplicationException("Could not find lhq engine implementation files in assembly.");
                 }
-                
+
                 foreach (var jsFile in jsFiles)
                 {
                     _engine.ExecuteResource(jsFile, thisAssembly);
@@ -121,7 +119,7 @@ namespace LHQ.Gen.Lib
             {
                 throw new ApplicationException("Could not find any lhq code templates (*.hbs) in assembly.");
             }
-            
+
             foreach (var hbsFile in hbsFiles)
             {
                 var content = JavaScriptEngineSwitcher.Core.Utilities.Utils.GetResourceAsString(hbsFile, thisAssembly);
@@ -148,121 +146,202 @@ namespace LHQ.Gen.Lib
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        private string FindOwnerCsProjectFile(string lhqModelFileName)
+        // public CsProjectInfo FindOwnerCsProjectFile(string lhqModelFileName)
+        // {
+        //     if (!File.Exists(lhqModelFileName))
+        //     {
+        //         return new CsProjectInfo();
+        //     }
+        //
+        //     var dir = Path.GetDirectoryName(lhqModelFileName);
+        //     var csProjectFiles = dir == null ? Array.Empty<string>() : Directory.GetFiles(dir, "*.csproj", SearchOption.TopDirectoryOnly);
+        //     //var result = string.Empty;
+        //     //var resultNamespace = string.Empty;
+        //
+        //     NamespaceInfo result = null;
+        //     var namespaceResults = new List<NamespaceInfo>();
+        //
+        //     foreach (var csProj in csProjectFiles)
+        //     {
+        //         var rootNamespace = GetRootNamespace(lhqModelFileName, csProj);
+        //         if (rootNamespace != null)
+        //         {
+        //             namespaceResults.Add(rootNamespace);
+        //         }
+        //         // if (result == string.Empty || string.IsNullOrEmpty(resultNamespace))
+        //         // {
+        //         //     result = csProj;
+        //         //     resultNamespace = rootNamespace;
+        //         // }
+        //     }
+        //
+        //     if (namespaceResults.Count > 1)
+        //     {
+        //         var multipleRefs = namespaceResults.Count(x => x.ReferencedLhqFile || x.ReferencedT4File);
+        //         if (multipleRefs > 1)
+        //         {
+        //             var lhq = Path.GetFileName(lhqModelFileName);
+        //             var t4 = Path.GetFileName(lhqModelFileName) + ".tt";
+        //             throw new Exception($"Multiple C# project files found in directory '{dir}' that reference either '{lhq}' or a '{t4}' file.\n" +
+        //                 "Specify which C# project file to use with the '--project' argument.");
+        //         }
+        //
+        //         result = namespaceResults.FirstOrDefault(x => (x.ReferencedLhqFile || x.ReferencedT4File) && !string.IsNullOrEmpty(x.Namespace)) ??
+        //             namespaceResults.FirstOrDefault(x => !string.IsNullOrEmpty(x.Namespace)) ??
+        //             namespaceResults[0];
+        //     }
+        //     else if (namespaceResults.Count == 1)
+        //     {
+        //         result = namespaceResults[0];
+        //     }
+        //     
+        //     if (result != null && result.NamespaceDynamicExpression) {                            
+        //         result.Namespace = "";
+        //         _logger.Warn(
+        //             "Warning: \nValue in 'RootNamespace' or 'AssemblyName' element contains dynamic expression which is not supported.\n" +
+        //             "This value will not be used for 'Namespace' in generator.\n" +
+        //             "Set namespace directly in the lhq file in C# template setting 'Namespace' or provide namespace via cmd '--data namespace=<value>'.");
+        //     }
+        //
+        //     return new CsProjectInfo
+        //     {
+        //         CsProjectFile = result?.CsProjectFile ?? string.Empty,
+        //         Namespace = result?.Namespace ?? string.Empty
+        //     };
+        // }
+
+        // private NamespaceInfo GetRootNamespace(string lhqModelFileName, string csProjectFileName)
+        // {
+        //     return GetRootNamespace(lhqModelFileName, csProjectFileName, _logger);
+        // }
+        //
+        // internal static NamespaceInfo GetRootNamespace(string lhqModelFileName, string csProjectFileName,
+        //     ILogger logger)
+        // {
+        //     var referencedLhqFile = false;
+        //     var referencedT4File = false;
+        //     var namespaceDynamicExpression = false;
+        //
+        //     if (string.IsNullOrEmpty(csProjectFileName) || !File.Exists(csProjectFileName))
+        //     {
+        //         return null;
+        //     }
+        //
+        //     lhqModelFileName = Path.GetFileName(lhqModelFileName);
+        //     var lhqFileT4 = lhqModelFileName + ".tt";
+        //
+        //     string rootNamespace;
+        //
+        //     try
+        //     {
+        //         var doc = XDocument.Parse(File.ReadAllText(csProjectFileName));
+        //         var ns = doc.Root?.GetDefaultNamespace() ?? XNamespace.None;
+        //
+        //         var manager = new XmlNamespaceManager(new NameTable());
+        //         manager.AddNamespace("ns", ns.NamespaceName);
+        //
+        //         XElement FindFileElement(string fileName)
+        //         {
+        //             foreach (var itemGroupType in ItemGroupTypes)
+        //             {
+        //                 foreach (var attr in ItemGroupTypesAttrs)
+        //                 {
+        //                     var xpath = CsProjectXPath.Replace("##TYPE##", itemGroupType)
+        //                         .Replace("##ATTR##", attr).Replace("##FILE##", fileName);
+        //
+        //                     var element = doc.XPathSelectElement(xpath, manager);
+        //                     if (element != null)
+        //                     {
+        //                         return element;
+        //                     }
+        //                 }
+        //             }
+        //
+        //             return null;
+        //         }
+        //
+        //         // 1st: try to find <RootNamespace>
+        //         var rootNamespaceElem = doc.XPathSelectElement(XpathRootNamespace, manager);
+        //         rootNamespace = rootNamespaceElem?.Value;
+        //
+        //         // if csproj has imported lhq file (lhqModelFileName) explicitly eg: /ItemGroup/None[@Update="Strings.lhq"] (and other variants)
+        //         // we can look at CustomToolNamespace element under '{lhqModelFileName}.tt' element (if it exists)
+        //         referencedLhqFile = FindFileElement(lhqModelFileName) != null;
+        //         var t4FileElement = FindFileElement(lhqFileT4);
+        //         if (t4FileElement != null)
+        //         {
+        //             referencedT4File = true;
+        //             var dependentUpon = t4FileElement.Descendants(ns + "DependentUpon").FirstOrDefault()?.Value;
+        //             if (!string.IsNullOrEmpty(dependentUpon) && dependentUpon == lhqModelFileName)
+        //             {
+        //                 referencedLhqFile = true;
+        //             }
+        //
+        //             var customToolNamespace =
+        //                 t4FileElement.Descendants(ns + "CustomToolNamespace").FirstOrDefault()?.Value;
+        //             if (!string.IsNullOrEmpty(customToolNamespace))
+        //             {
+        //                 rootNamespace = customToolNamespace;
+        //             }
+        //         }
+        //
+        //         if (string.IsNullOrEmpty(rootNamespace))
+        //         {
+        //             // 2st: try to find <AssemblyName>
+        //             var assemblyNameElem = doc.XPathSelectElement(XpathAssemblyName, manager);
+        //             rootNamespace = assemblyNameElem?.Value;
+        //
+        //             if (string.IsNullOrEmpty(rootNamespace) && !string.IsNullOrEmpty(csProjectFileName))
+        //             {
+        //                 rootNamespace = Path.GetFileNameWithoutExtension(csProjectFileName).Replace(" ", "_");
+        //             }
+        //         }
+        //
+        //         if (!string.IsNullOrEmpty(rootNamespace))
+        //         {
+        //             string pattern = @"\$\((.*?)(?:\)(?!\)))";
+        //
+        //             if (Regex.Matches(rootNamespace, pattern).Count > 0)
+        //             {
+        //                 namespaceDynamicExpression = true;
+        //             }
+        //         }
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         logger?.Error(e, "Error getting root namespace.");
+        //         rootNamespace = null;
+        //     }
+        //
+        //     //return rootNamespace ?? string.Empty;
+        //     return new NamespaceInfo
+        //     {
+        //         CsProjectFile = csProjectFileName,
+        //         Namespace = rootNamespace ?? string.Empty,
+        //         NamespaceDynamicExpression = namespaceDynamicExpression,
+        //         ReferencedLhqFile = referencedLhqFile,
+        //         ReferencedT4File = referencedT4File
+        //     };
+        // }
+
+        public string AutodetectNamespace(string lhqModelFileName)
         {
-            if (!File.Exists(lhqModelFileName))
+            var csProjectInfo = CsProjectUtils.FindOwnerCsProjectFile(lhqModelFileName, _logger);
+            var csProjectFileName = csProjectInfo?.CsProjectFile;
+            var rootNamespace = csProjectInfo?.Namespace;
+            if (!string.IsNullOrEmpty(csProjectFileName))
             {
-                return string.Empty;
+                _logger?.Info($"Found '{csProjectFileName}' associated with '{lhqModelFileName}'.");
+            }
+            
+            if (string.IsNullOrEmpty(rootNamespace))
+            {
+                rootNamespace = CsProjectUtils.GetRootNamespace(lhqModelFileName, csProjectFileName, _logger)?.Namespace;
             }
 
-            var dir = Path.GetDirectoryName(lhqModelFileName);
-            var csProjectFiles = dir == null ? Array.Empty<string>() : Directory.GetFiles(dir, "*.csproj", SearchOption.TopDirectoryOnly);
-            var result = string.Empty;
-            var resultNamespace = string.Empty;
-            foreach (var csProj in csProjectFiles)
-            {
-                var rootNamespace = GetRootNamespace(lhqModelFileName, csProj);
-                if (result == string.Empty || string.IsNullOrEmpty(resultNamespace))
-                {
-                    result = csProj;
-                    resultNamespace = rootNamespace;
-                }
-            }
-
-            return result;
+            return rootNamespace;
         }
-
-        private string GetRootNamespace(string lhqModelFileName, string csProjectFileName)
-        {
-            return GetRootNamespace(lhqModelFileName, csProjectFileName, _logger);
-        }
-
-        internal static string GetRootNamespace(string lhqModelFileName, string csProjectFileName,
-            ILogger logger)
-        {
-            var referencedLhqFile = false;
-
-            if (string.IsNullOrEmpty(csProjectFileName) || !File.Exists(csProjectFileName))
-            {
-                return string.Empty;
-            }
-
-            lhqModelFileName = Path.GetFileName(lhqModelFileName);
-            var lhqFileT4 = lhqModelFileName + ".tt";
-
-            string rootNamespace;
-
-            try
-            {
-                var doc = XDocument.Parse(File.ReadAllText(csProjectFileName));
-                var ns = doc.Root?.GetDefaultNamespace() ?? XNamespace.None;
-
-                var manager = new XmlNamespaceManager(new NameTable());
-                manager.AddNamespace("ns", ns.NamespaceName);
-
-                XElement FindFileElement(string fileName)
-                {
-                    foreach (var itemGroupType in ItemGroupTypes)
-                    {
-                        foreach (var attr in ItemGroupTypesAttrs)
-                        {
-                            var xpath = CsProjectXPath.Replace("##TYPE##", itemGroupType)
-                                .Replace("##ATTR##", attr).Replace("##FILE##", fileName);
-
-                            var element = doc.XPathSelectElement(xpath, manager);
-                            if (element != null)
-                            {
-                                return element;
-                            }
-                        }
-                    }
-
-                    return null;
-                }
-
-                var rootNamespaceElem = doc.XPathSelectElement(XpathRootNamespace, manager);
-                rootNamespace = rootNamespaceElem?.Value;
-
-                // if csproj has imported lhq file (lhqModelFileName) explicitly eg: /ItemGroup/None[@Update="Strings.lhq"] (and other variants)
-                // we can look at CustomToolNamespace element under '{lhqModelFileName}.tt' element (if it exists)
-                referencedLhqFile = FindFileElement(lhqModelFileName) != null;
-                var t4FileElement = FindFileElement(lhqFileT4);
-                if (t4FileElement != null)
-                {
-                    var dependentUpon = t4FileElement.Descendants(ns + "DependentUpon").FirstOrDefault()?.Value;
-                    if (!string.IsNullOrEmpty(dependentUpon) && dependentUpon == lhqModelFileName)
-                    {
-                        referencedLhqFile = true;
-                    }
-
-                    var customToolNamespace =
-                        t4FileElement.Descendants(ns + "CustomToolNamespace").FirstOrDefault()?.Value;
-                    if (!string.IsNullOrEmpty(customToolNamespace))
-                    {
-                        rootNamespace = customToolNamespace;
-                    }
-                }
-
-                if (string.IsNullOrEmpty(rootNamespace))
-                {
-                    var assemblyNameElem = doc.XPathSelectElement(XpathAssemblyName, manager);
-                    rootNamespace = assemblyNameElem?.Value;
-
-                    if (string.IsNullOrEmpty(rootNamespace) && !string.IsNullOrEmpty(csProjectFileName))
-                    {
-                        rootNamespace = Path.GetFileNameWithoutExtension(csProjectFileName).Replace(" ", "_");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                logger?.Error(e, "Error getting root namespace.");
-                rootNamespace = null;
-            }
-
-            return rootNamespace ?? string.Empty;
-        }
-
+        
         /// <summary>
         /// Generates code from given LHQ model file (*.lhq) and C# project file (*.csproj0 using handlebars templates.
         /// </summary>
@@ -307,22 +386,28 @@ namespace LHQ.Gen.Lib
             bool csProjFound = false;
             if (string.IsNullOrEmpty(rootNamespace))
             {
-                if (string.IsNullOrEmpty(csProjectFileName))
-                {
-                    csProjectFileName = FindOwnerCsProjectFile(lhqModelFileName);
-                    if (!string.IsNullOrEmpty(csProjectFileName))
-                    {
-                        _logger.Info($"Found '{csProjectFileName}' associated with '{lhqModelFileName}'.");
-                        csProjFound = true;
-                    }
-                }
-
-                rootNamespace = GetRootNamespace(lhqModelFileName, csProjectFileName);
-                hostData[DataKeys.Namespace] = rootNamespace;
+                // if (string.IsNullOrEmpty(csProjectFileName))
+                // {
+                //     var csProjectInfo = CsProjectUtils.FindOwnerCsProjectFile(lhqModelFileName, _logger);
+                //     csProjectFileName = csProjectInfo?.CsProjectFile;
+                //     rootNamespace = csProjectInfo?.Namespace;
+                //     if (!string.IsNullOrEmpty(csProjectFileName))
+                //     {
+                //         _logger.Info($"Found '{csProjectFileName}' associated with '{lhqModelFileName}'.");
+                //         csProjFound = true;
+                //     }
+                // }
+                //
+                // if (string.IsNullOrEmpty(rootNamespace))
+                // {
+                //     rootNamespace = CsProjectUtils.GetRootNamespace(lhqModelFileName, csProjectFileName, _logger)?.Namespace;
+                // }
+                //
+                // hostData[DataKeys.Namespace] = rootNamespace;
             }
             else
             {
-                _logger.Info($"Using '{DataKeys.Namespace}' value '{rootNamespace}' from cmd args.");
+                _logger.Info($"Using '{DataKeys.Namespace}' value '{rootNamespace}' from host data dictionary.");
             }
 
             StringBuilder sb = new StringBuilder();
@@ -340,7 +425,7 @@ namespace LHQ.Gen.Lib
                 _engine.SetVariableValue("__model", File.ReadAllText(lhqModelFileName));
                 var hostDataStr = JsonConvert.SerializeObject(hostData);
                 _engine.SetVariableValue("__hostData", hostDataStr);
-                
+
                 var generateCall = "new LhqGenerators.Generator().generate(__modelFileName, __model, __hostData)";
                 var resultJson = _engine.Evaluate<string>($"JSON.stringify({generateCall})");
                 var result = JsonConvert.DeserializeObject<JSGenerateResult>(resultJson);
@@ -352,6 +437,19 @@ namespace LHQ.Gen.Lib
                 {
                     if (jsRuntimeException.Type == "AppError")
                     {
+                        var errorKind = GeneratorErrorKind.GenericError;
+                        var errorCode = string.Empty;
+                        
+                        if (e.InnerException is Microsoft.ClearScript.ScriptEngineException see)
+                        {
+                            errorCode = see.ScriptException.code;
+                            string kind = see.ScriptException.kind;
+                            if (!string.IsNullOrEmpty(kind) && Enum.TryParse(kind, true, out GeneratorErrorKind parsedKind))
+                            {
+                                errorKind = parsedKind;
+                            }
+                        }
+
                         var callStack = jsRuntimeException.CallStack;
                         var description = jsRuntimeException.Description;
                         var documentName = jsRuntimeException.DocumentName;
@@ -361,7 +459,7 @@ namespace LHQ.Gen.Lib
                         var message = items.Length > 1 ? string.Join("\n", items.Skip(1)) : string.Empty;
 
                         _logger.Error($"{title}\n{message}\nFILE: {documentName} >> {callStack}");
-                        throw new GeneratorException(title, message, e);
+                        throw new GeneratorException(title, message, errorKind, errorCode, e);
                     }
                 }
 
@@ -416,11 +514,14 @@ namespace LHQ.Gen.Lib
     public class JSGeneratedFile
     {
         public string FileName { get; set; }
+
         public string Content { get; set; }
+
         public bool Bom { get; set; }
+
         public LineEndings LineEndings { get; set; }
     }
-    
+
     [PublicAPI]
     public class JSHostEnvironment // inherits interface 'IHostEnvironment' from npm '@lhq/lhq-generators' package 
     {

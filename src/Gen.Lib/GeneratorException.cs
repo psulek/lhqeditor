@@ -37,7 +37,11 @@ namespace LHQ.Gen.Lib
         /// Title of the exception.
         /// </summary>
         public string Title { get; set; }
-        
+
+        public GeneratorErrorKind Kind { get; set; } = GeneratorErrorKind.GenericError;
+
+        public string Code { get; set; } = string.Empty;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GeneratorException"/> class.
         /// </summary>
@@ -58,9 +62,34 @@ namespace LHQ.Gen.Lib
         /// <param name="title">Title of the exception.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
-        public GeneratorException(string title, string message, Exception innerException) : base(message, innerException)
+        public GeneratorException(string title, string message, GeneratorErrorKind kind, string code, Exception innerException) : base(message, innerException)
         {
             Title = title;
+            Kind = kind;
+            Code = code;
         }
+    }
+    
+    public static class GeneratorErrorCodes
+    {
+        public const string CsharpNamespaceMissing = "csharp.namespace.missing";
+    }
+    
+    public enum GeneratorErrorKind
+    {
+        /// <summary>
+        ///  The generic error.
+        /// </summary>
+        GenericError,
+        
+        /// <summary>
+        /// The exception is caused by invalid model schema.
+        /// </summary>
+        InvalidModelSchema,
+
+        /// <summary>
+        /// The exception is caused by invalid template settings.
+        /// </summary>
+        TemplateValidationError
     }
 }

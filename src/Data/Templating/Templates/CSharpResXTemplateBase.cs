@@ -33,8 +33,13 @@ using Newtonsoft.Json;
 
 namespace LHQ.Data.Templating.Templates
 {
+    public interface ICSharpResXTemplateBase
+    {
+        CSharpGeneratorSettingsBase GetCSharp();
+    }
+    
     // [TypeDescriptionProvider(typeof(CodeGeneratorTemplateDescriptionProvider))]
-    public abstract class CSharpResXTemplateBase<TCSharpSettings> : CodeGeneratorTemplate where TCSharpSettings : CSharpGeneratorSettingsBase, IGeneratorSettings, new()
+    public abstract class CSharpResXTemplateBase<TCSharpSettings> : CodeGeneratorTemplate, ICSharpResXTemplateBase where TCSharpSettings : CSharpGeneratorSettingsBase, IGeneratorSettings, new()
     {
         private const string CategoryCSharpGenerator = "C# Generator";
         private const string CategoryResxGenerator = "ResX Generator";
@@ -44,6 +49,11 @@ namespace LHQ.Data.Templating.Templates
         {
             CSharp = new TCSharpSettings();
             ResX = new ResXGeneratorSettings();
+        }
+
+        CSharpGeneratorSettingsBase ICSharpResXTemplateBase.GetCSharp()
+        {
+            return CSharp;
         }
 
         [Browsable(false)]
@@ -81,6 +91,16 @@ namespace LHQ.Data.Templating.Templates
         {
             get => CSharp.UseExpressionBodySyntax;
             set => CSharp.UseExpressionBodySyntax = value;
+        }
+
+        [DisplayName("Namespace name for generated C# code")]
+        [Description("Namespace name for generated C# code, overwrites default namespace name from project settings." +
+            "If empty, default namespace name from project settings will be used.")]
+        [Category(CategoryCSharpGenerator)]
+        public string Namespace
+        {
+            get => CSharp.Namespace;
+            set => CSharp.Namespace = value;
         }
 
         [DisplayName("Encoding with BOM")]

@@ -26,6 +26,7 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 using LHQ.Gen.Lib;
+using LHQ.Utils;
 using Shouldly;
 
 namespace LHQ.Cmd.Tests;
@@ -51,7 +52,7 @@ public sealed class NamespaceTests: TestBase
     private string GetRootNamespace([CallerMemberName] string methodName = "")
     {
         string fileName = methodName.Split("_")[0].ToLowerInvariant() + ".csproj";
-        return Generator.GetRootNamespace("Strings.lhq", TestDir + fileName, null);
+        return CsProjectUtils.GetRootNamespace("Strings.lhq", TestDir + fileName, null).Namespace;
     }
 
     [Test]

@@ -74,6 +74,7 @@ namespace LHQ.App.Services.Implementation
                     serviceContainer.Register<IValidatorContext, ValidatorContext>();
                     serviceContainer.Register<IShellService, ShellService>();
                     serviceContainer.Register<IResourceImportExportService, ResourceImportService>();
+                    // serviceContainer.Register<IStandaloneCodeGeneratorService, StandaloneCodeGeneratorService>();
                     break;
                 }
                 default:

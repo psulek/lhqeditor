@@ -66,6 +66,6 @@ namespace LHQ.App.Services.Interfaces
 
         void ShowExceptionDialog(Exception exception);
         
-        bool ShowUpgradeModelDialog();
+        bool ShowUpgradeModelDialog(string caption = null, string title = null);
     }
 }

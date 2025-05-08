@@ -1038,8 +1038,7 @@ namespace LHQ.App.ViewModels
             var dialogResult = ProjectSettingsDialog.DialogShow(ShellViewContext);
             var modelContext = ShellViewModel.ModelContext;
             
-            if (dialogResult.IsUpgradeRequested &&
-                DialogService.ShowUpgradeModelDialog() &&
+            if (dialogResult.IsUpgradeRequested && DialogService.ShowUpgradeModelDialog() &&
                 modelContext.Model.Version < ModelConstants.CurrentModelVersion)
             {
                 ShellViewContext.ShellService.UpgradeModelToLatest();

@@ -17244,13 +17244,16 @@ var LhqGenerators = (() => {
     iterateObject: () => iterateObject,
     jsonParseOrDefault: () => jsonParseOrDefault,
     jsonQuery: () => jsonQuery,
+    namespaceUtils: () => namespaceUtils_exports,
     normalizePath: () => normalizePath,
     objCount: () => objCount,
     removeNewLines: () => removeNewLines,
     removeProperties: () => removeProperties,
+    replaceLineEndings: () => replaceLineEndings,
     sortBy: () => sortBy,
     sortObjectByKey: () => sortObjectByKey,
     sortObjectByValue: () => sortObjectByValue,
+    stringCompare: () => stringCompare,
     textEncode: () => textEncode,
     tryJsonParse: () => tryJsonParse,
     tryRemoveBOM: () => tryRemoveBOM,
@@ -17258,10 +17261,16 @@ var LhqGenerators = (() => {
   });
 
   // src/AppError.ts
+  var AppErrorKinds = Object.freeze({
+    invalidModelSchema: "invalidModelSchema",
+    templateValidationError: "templateValidationError"
+  });
   var AppError = class _AppError extends Error {
-    constructor(message, stack) {
+    constructor(message, stack, kind = "", code = "") {
       super(message);
       this.message = message;
+      this.kind = kind;
+      this.code = code;
       this.name = "AppError";
       if (Error.captureStackTrace) {
         Error.captureStackTrace(this, _AppError);
@@ -17300,6 +17309,8 @@ var LhqGenerators = (() => {
 
   // src/utils.ts
   var import_jmespath = __toESM(require_jmespath());
+  var regexLF = new RegExp("\\r\\n|\\r", "g");
+  var regexCRLF = new RegExp("(\\r(?!\\n))|((?<!\\r)\\n)", "g");
   var encodingCharMaps = {
     html: {
       ">": "&gt;",
@@ -17330,6 +17341,9 @@ var LhqGenerators = (() => {
       "	": "\\t"
     }
   };
+  function replaceLineEndings(value, lineEndings) {
+    return lineEndings === "LF" ? value.replace(regexLF, "\n") : value.replace(regexCRLF, "\r\n");
+  }
   function tryRemoveBOM(value) {
     return isNullOrEmpty(value) ? value : value.charCodeAt(0) === 65279 ? value.slice(1) : value;
   }
@@ -17397,6 +17411,12 @@ var LhqGenerators = (() => {
       }
       return 0;
     }));
+  }
+  function stringCompare(a, b, caseSensitive) {
+    if (caseSensitive) {
+      return a === b;
+    }
+    return a.toLowerCase() === b.toLowerCase();
   }
   function sortBy(source, key, sortOrder = "asc") {
     return arraySortBy(source, (x) => key === void 0 ? x : x[key], sortOrder);
@@ -17498,6 +17518,86 @@ var LhqGenerators = (() => {
     }
   };
 
+  // src/model/resourceParameterElement.ts
+  var ResourceParameterElement = class {
+    constructor(name2, source, parent) {
+      var _a;
+      this._name = name2;
+      this._description = source == null ? void 0 : source.description;
+      this._order = (_a = source == null ? void 0 : source.order) != null ? _a : 0;
+      this._parent = parent;
+    }
+    mapToModel() {
+      return {
+        description: this._description,
+        order: this._order
+      };
+    }
+    get name() {
+      return this._name;
+    }
+    set name(name2) {
+      this._name = name2;
+    }
+    get parent() {
+      return this._parent;
+    }
+    get description() {
+      return this._description;
+    }
+    set description(description) {
+      this._description = description;
+    }
+    get order() {
+      return this._order;
+    }
+    set order(order) {
+      this._order = order;
+    }
+  };
+
+  // src/model/resourceValueElement.ts
+  var ResourceValueElement = class {
+    constructor(languageName, source, parent) {
+      this._languageName = languageName;
+      this._parent = parent;
+      this._value = source == null ? void 0 : source.value;
+      this._locked = source == null ? void 0 : source.locked;
+      this._auto = source == null ? void 0 : source.auto;
+    }
+    mapToModel() {
+      return {
+        value: this._value,
+        locked: this._locked,
+        auto: this._auto
+      };
+    }
+    get languageName() {
+      return this._languageName;
+    }
+    get value() {
+      return this._value;
+    }
+    set value(value) {
+      this._value = value;
+    }
+    get locked() {
+      return this._locked;
+    }
+    set locked(locked) {
+      this._locked = locked;
+    }
+    get auto() {
+      return this._auto;
+    }
+    set auto(value) {
+      this._auto = value;
+    }
+    get parent() {
+      return this._parent;
+    }
+  };
+
   // src/model/treeElementPaths.ts
   var TreeElementPaths = class _TreeElementPaths {
     constructor(element) {
@@ -17518,8 +17618,29 @@ var LhqGenerators = (() => {
   };
 
   // src/model/treeElement.ts
-  var TreeElement = class {
-    constructor(root, elementType, name2, description, parent) {
+  var TreeElementBase = class {
+    debugSerialize() {
+      const seen = /* @__PURE__ */ new WeakSet();
+      return JSON.stringify(this, (key, value) => {
+        if (key === "_parent" || key === "_root") {
+          return void 0;
+        }
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) {
+            return `[Circular: ${value.name}]`;
+          }
+          seen.add(value);
+        }
+        return value;
+      }, 2);
+    }
+  };
+  var TreeElement = class extends TreeElementBase {
+    constructor(root, elementType, name2, parent) {
+      super();
+      // public getRoot = (): IRootModelElement => {
+      //     return this._isRoot ? this as unknown as IRootModelElement : this._root!;
+      // }
       this.addToTempData = (key, value) => {
         this._data[key] = value;
       };
@@ -17528,11 +17649,10 @@ var LhqGenerators = (() => {
       };
       this._name = name2 != null ? name2 : "";
       this._elementType = elementType;
-      this._description = description != null ? description : "";
       this._root = isNullOrEmpty(root) && isNullOrEmpty(parent) ? this : root;
+      this._isRoot = isNullOrEmpty(this.parent);
       this._parent = parent;
       this._paths = new TreeElementPaths(this);
-      this._isRoot = isNullOrEmpty(this.parent);
       this._data = {};
     }
     get isRoot() {
@@ -17550,131 +17670,34 @@ var LhqGenerators = (() => {
     get name() {
       return this._name;
     }
+    set name(name2) {
+      this._name = name2;
+    }
     get elementType() {
       return this._elementType;
     }
     get description() {
       return this._description;
     }
+    set description(description) {
+      this._description = description;
+    }
     get paths() {
       return this._paths;
     }
   };
 
-  // src/model/categoryLikeTreeElement.ts
-  var CategoryLikeTreeElement = class extends TreeElement {
-    constructor(root, elementType, name2, description, parent) {
-      super(root, elementType, name2, description, parent);
-      this._categories = [];
-      this._resources = [];
-      this._hasCategories = false;
-      this._hasResources = false;
-    }
-    populate(sourceCategories, sourceResources) {
-      const newCategories = [];
-      const newResources = [];
-      if (!isNullOrEmpty(sourceCategories)) {
-        iterateObject(sortObjectByKey(sourceCategories), (category, name2) => {
-          const newCategory = this.createCategory(this.root, name2, category, this);
-          newCategories.push(newCategory);
-          newCategory.populate(category.categories, category.resources);
-        });
-      }
-      if (!isNullOrEmpty(sourceResources)) {
-        iterateObject(sortObjectByKey(sourceResources), (resource, name2) => {
-          const newResource = this.createResource(this.root, name2, resource, this);
-          newResources.push(newResource);
-        });
-      }
-      this._categories = newCategories;
-      this._hasCategories = this.categories.length > 0;
-      this._resources = newResources;
-      this._hasResources = this.resources.length > 0;
-    }
-    get categories() {
-      return this._categories;
-    }
-    get resources() {
-      return this._resources;
-    }
-    get hasCategories() {
-      return this._hasCategories;
-    }
-    get hasResources() {
-      return this._hasResources;
-    }
-  };
-
-  // src/model/modelConst.ts
-  var ModelVersions = Object.freeze({
-    model: 2,
-    codeGenerator: 1
-  });
-  var DefaultLineEndings = "LF";
-  var DefaultCodeGenSettings = {
-    OutputFolder: "Resources",
-    EncodingWithBOM: false,
-    LineEndings: DefaultLineEndings,
-    Enabled: true
-  };
-
-  // src/model/resourceParameterElement.ts
-  var ResourceParameterElement = class {
-    constructor(name2, source, parent) {
-      var _a;
-      this._name = name2;
-      this._description = source.description;
-      this._order = (_a = source.order) != null ? _a : 0;
-      this._parent = parent;
-    }
-    get name() {
-      return this._name;
-    }
-    get parent() {
-      return this._parent;
-    }
-    get description() {
-      return this._description;
-    }
-    get order() {
-      return this._order;
-    }
-  };
-
-  // src/model/resourceValueElement.ts
-  var ResourceValueElement = class {
-    constructor(languageName, source, parent) {
-      this._languageName = languageName;
-      this._value = source.value;
-      this._locked = source.locked;
-      this._auto = source.auto;
-      this._parent = parent;
-    }
-    get languageName() {
-      return this._languageName;
-    }
-    get value() {
-      return this._value;
-    }
-    get locked() {
-      return this._locked;
-    }
-    get auto() {
-      return this._auto;
-    }
-    get parent() {
-      return this._parent;
-    }
-  };
-
   // src/model/resourceElement.ts
   var ResourceElement = class extends TreeElement {
-    constructor(root, name2, source, parent) {
-      super(root, "resource", name2, source.description, parent);
+    constructor(root, name2, parent) {
+      super(root, "resource", name2, parent);
+      this._state = "New";
+      this._comment = "";
+      this._hasParameters = false;
+      this._hasValues = false;
       this.getComment = () => {
         var _a, _b;
-        const root = this.root;
-        const primaryLanguage = (_a = root.primaryLanguage) != null ? _a : "";
+        const primaryLanguage = (_a = this.root.primaryLanguage) != null ? _a : "";
         if (!isNullOrEmpty(primaryLanguage) && this.values) {
           const value = this.values.find((x) => x.languageName === primaryLanguage);
           const resourceValue = value == null ? void 0 : value.value;
@@ -17699,31 +17722,90 @@ var LhqGenerators = (() => {
         }
         return false;
       };
-      this._state = source.state;
-      this._parameters = [];
-      if (!isNullOrEmpty(source.parameters)) {
-        iterateObject(sortObjectByValue(source.parameters, (x) => x.order), (parameter, name3) => {
-          this._parameters.push(new ResourceParameterElement(name3, parameter, this));
-        });
+    }
+    populate(source) {
+      if (source) {
+        this._state = source.state;
+        this._description = source.description;
+        if (!isNullOrEmpty(source.parameters)) {
+          iterateObject(sortObjectByValue(source.parameters, (x) => x.order), (parameter, name2) => {
+            var _a;
+            (_a = this._parameters) != null ? _a : this._parameters = [];
+            this._parameters.push(new ResourceParameterElement(name2, parameter, this));
+          });
+        }
+        if (!isNullOrEmpty(source.values)) {
+          iterateObject(sortObjectByKey(source.values), (resValue, name2) => {
+            var _a;
+            (_a = this._values) != null ? _a : this._values = [];
+            this._values.push(new ResourceValueElement(name2, resValue, this));
+          });
+        }
+      } else {
+        this._state = "New";
       }
       this._hasParameters = this.parameters.length > 0;
-      this._values = [];
-      if (!isNullOrEmpty(source.values)) {
-        iterateObject(sortObjectByKey(source.values), (resValue, name3) => {
-          this._values.push(new ResourceValueElement(name3, resValue, this));
-        });
-      }
       this._hasValues = this.values.length > 0;
       this._comment = this.getComment();
     }
-    get hasParameters() {
-      return this._hasParameters;
+    mapToModel() {
+      return {
+        state: this._state,
+        description: this._description,
+        parameters: this._parameters === void 0 || this._parameters.length === 0 ? void 0 : Object.fromEntries(this._parameters.map((param) => [param.name, param.mapToModel()])),
+        values: this._values === void 0 || this._values.length === 0 ? void 0 : Object.fromEntries(this._values.map((value) => [value.languageName, value.mapToModel()]))
+      };
     }
-    get hasValues() {
-      return this._hasValues;
+    addParameter(name2) {
+      var _a;
+      if (isNullOrEmpty(name2)) {
+        throw new Error("Parameter name cannot be null or empty.");
+      }
+      let maxOrder = 0;
+      if (this._parameters && this._parameters.length > 0) {
+        if (this._parameters.some((param) => param.name === name2)) {
+          throw new Error(`Parameter name "${name2}" already exists.`);
+        }
+        maxOrder = this._parameters.reduce((max, param) => Math.max(max, param.order), 0) + 1;
+      }
+      const parameter = new ResourceParameterElement(name2, { order: maxOrder }, this);
+      (_a = this._parameters) != null ? _a : this._parameters = [];
+      this._parameters.push(parameter);
+      this._hasParameters = true;
+      return parameter;
     }
-    get comment() {
-      return this._comment;
+    removeParameter(name2) {
+      if (this._parameters && !isNullOrEmpty(name2)) {
+        const index = this._parameters.findIndex((parameter) => parameter.name === name2);
+        if (index !== -1) {
+          this._parameters.splice(index, 1);
+          this._hasParameters = this._parameters.length > 0;
+        }
+      }
+    }
+    addValue(languageName, value) {
+      var _a;
+      if (isNullOrEmpty(languageName)) {
+        throw new Error("Language name cannot be null or empty.");
+      }
+      if (this._values && this._values.some((x) => x.languageName === languageName)) {
+        throw new Error(`Language name "${languageName}" already exists.`);
+      }
+      const resourceValue = new ResourceValueElement(languageName, void 0, this);
+      resourceValue.value = value;
+      (_a = this._values) != null ? _a : this._values = [];
+      this._values.push(resourceValue);
+      this._hasValues = true;
+      return resourceValue;
+    }
+    removeValue(language) {
+      if (this._values && !isNullOrEmpty(language)) {
+        const index = this._values.findIndex((value) => value.languageName === language);
+        if (index !== -1) {
+          this._values.splice(index, 1);
+          this._hasValues = this._values.length > 0;
+        }
+      }
     }
     trimComment(value) {
       if (isNullOrEmpty(value)) {
@@ -17750,820 +17832,134 @@ var LhqGenerators = (() => {
       }
       return value.replace(/\t/g, " ");
     }
+    get hasParameters() {
+      return this._hasParameters;
+    }
+    get hasValues() {
+      return this._hasValues;
+    }
+    get comment() {
+      return this._comment;
+    }
+    set comment(value) {
+      this._comment = value;
+    }
     get state() {
       return this._state;
     }
+    set state(state) {
+      this._state = state;
+    }
     get parameters() {
-      return this._parameters;
+      var _a;
+      return (_a = this._parameters) != null ? _a : [];
     }
     get values() {
-      return this._values;
+      var _a;
+      return (_a = this._values) != null ? _a : [];
     }
   };
 
-  // src/model/categoryElement.ts
-  var CategoryElement = class _CategoryElement extends CategoryLikeTreeElement {
-    constructor(root, name2, source, parent) {
-      super(root, "category", name2, source == null ? void 0 : source.description, parent);
+  // src/model/categoryLikeTreeElement.ts
+  var CategoryLikeTreeElement = class extends TreeElement {
+    constructor(root, elementType, name2, parent) {
+      super(root, elementType, name2, parent);
+      this._hasCategories = false;
+      this._hasResources = false;
     }
-    createCategory(root, name2, source, parent) {
-      return new _CategoryElement(root, name2, source, parent);
+    mapToModel() {
+      const model = {};
+      this.bindToModel(model);
+      return model;
     }
-    createResource(root, name2, source, parent) {
-      return new ResourceElement(root, name2, source, parent);
+    bindToModel(model) {
+      if (model) {
+        model.categories = this._categories === void 0 || this._categories.length === 0 ? void 0 : Object.fromEntries(this._categories.map((x) => [x.name, x.mapToModel()]));
+        model.resources = this._resources === void 0 || this._resources.length === 0 ? void 0 : Object.fromEntries(this._resources.map((x) => [x.name, x.mapToModel()]));
+      }
     }
-  };
-
-  // src/model/rootModelElement.ts
-  var CodeGenUID = "b40c8a1d-23b7-4f78-991b-c24898596dd2";
-  var RootModelElement = class extends CategoryLikeTreeElement {
-    constructor(model) {
-      var _a, _b;
-      super(void 0, "model", (_a = model.model.name) != null ? _a : "", (_b = model.model.description) != null ? _b : "", void 0);
-      this._uid = model.model.uid;
-      this._version = model.model.version;
-      this._options = { categories: model.model.options.categories, resources: model.model.options.resources };
-      this._primaryLanguage = model.model.primaryLanguage;
-      this._languages = Object.freeze([...model.languages]);
-      this._hasLanguages = this._languages.length > 0;
-      this._metadatas = model.metadatas ? Object.freeze(__spreadValues({}, model.metadatas)) : void 0;
-      this._codeGenerator = this.getCodeGenerator(model);
-      this.populate(model.categories, model.resources);
-    }
-    createCategory(root, name2, source, parent) {
-      return new CategoryElement(root, name2, source, parent);
-    }
-    createResource(root, name2, source, parent) {
-      return new ResourceElement(root, name2, source, parent);
-    }
-    getCodeGenerator(model) {
-      var _a, _b, _c, _d;
-      let templateId = "";
-      let codeGenVersion = 1;
-      let node = (_b = (_a = model.metadatas) == null ? void 0 : _a.childs) == null ? void 0 : _b.find((x) => {
-        var _a2;
-        return x.name === "metadata" && ((_a2 = x.attrs) == null ? void 0 : _a2["descriptorUID"]) === CodeGenUID;
-      });
-      if (node) {
-        node = (_c = node.childs) == null ? void 0 : _c.find((x) => {
-          var _a2;
-          return x.name === "content" && ((_a2 = x.attrs) == null ? void 0 : _a2["templateId"]) !== void 0;
-        });
-        if (node) {
-          templateId = node.attrs["templateId"];
-          const version = node.attrs["version"];
-          if (!isNullOrEmpty(version)) {
-            const versionInt = parseInt(version);
-            if (versionInt > 0 && versionInt <= ModelVersions.codeGenerator) {
-              codeGenVersion = versionInt;
-            }
-          }
-          node = (_d = node.childs) == null ? void 0 : _d.find((x) => {
-            var _a2, _b2;
-            return x.name === "Settings" && ((_b2 = (_a2 = x.childs) == null ? void 0 : _a2.length) != null ? _b2 : 0) > 0;
+    populate(source) {
+      if (source) {
+        this._description = source.description;
+        const sourceCategories = source.categories;
+        const sourceResources = source.resources;
+        const newCategories = [];
+        const newResources = [];
+        if (!isNullOrEmpty(sourceCategories)) {
+          iterateObject(sortObjectByKey(sourceCategories), (category, name2) => {
+            const newCategory = this.createCategory(this.root, name2, this);
+            newCategories.push(newCategory);
+            newCategory.populate(category);
           });
         }
-      }
-      if (!isNullOrEmpty(templateId) && !isNullOrEmpty(node)) {
-        return { templateId, settings: node, version: codeGenVersion };
-      }
-    }
-    get uid() {
-      return this._uid;
-    }
-    get version() {
-      return this._version;
-    }
-    get options() {
-      return this._options;
-    }
-    get primaryLanguage() {
-      return this._primaryLanguage;
-    }
-    get languages() {
-      return this._languages;
-    }
-    get hasLanguages() {
-      return this._hasLanguages;
-    }
-    get metadatas() {
-      return this._metadatas;
-    }
-    get codeGenerator() {
-      return this._codeGenerator;
-    }
-  };
-
-  // src/helpers.ts
-  var import_handlebars = __toESM(require_handlebars());
-
-  // src/model/templateRootModel.ts
-  var TemplateRootModel = class {
-    constructor(model, data, host) {
-      this._templateRunType = "root";
-      this._childOutputs = [];
-      this._inlineOutputs = [];
-      this._inlineEvaluating = false;
-      this.addToTempData = (key, value) => {
-        this._data[key] = value;
-      };
-      this.clearTempData = () => {
-        this._data = {};
-      };
-      if (isNullOrEmpty(model)) {
-        throw new AppError("Missing root model !");
-      }
-      this._model = model;
-      this._data = data != null ? data : {};
-      this._host = host != null ? host : {};
-    }
-    setCurrentTemplateId(templateId) {
-      this._currentTemplateId = templateId;
-    }
-    get currentTemplateId() {
-      return this._currentTemplateId;
-    }
-    setInlineEvaluating(value) {
-      let valid = true;
-      if (value) {
-        if (this._inlineEvaluating) {
-          valid = false;
-        } else {
-          this._inlineEvaluating = true;
-        }
-      } else {
-        this._inlineEvaluating = false;
-      }
-      return valid;
-    }
-    setOutput(outputFile) {
-      if (isNullOrEmpty(outputFile)) {
-        throw new AppError(`Input 'outputFile' could not be empty !`);
-      }
-      this._output = outputFile;
-    }
-    addChildOutput(templateId, host) {
-      if (this._templateRunType === "child") {
-        throw new AppError("Child template could not have other child outputs !");
-      }
-      this._childOutputs.push({ templateId, host });
-    }
-    addInlineOutputs(inlineOutput) {
-      this._inlineOutputs.push(inlineOutput);
-    }
-    get inlineEvaluating() {
-      return this._inlineEvaluating;
-    }
-    get childOutputs() {
-      return this._childOutputs;
-    }
-    get inlineOutputs() {
-      return this._inlineOutputs;
-    }
-    get templateRunType() {
-      return this._templateRunType;
-    }
-    setAsChildTemplate(childData) {
-      var _a, _b;
-      if (this._templateRunType === "root") {
-        this._rootHost = Object.freeze(Object.assign({}, (_a = this._host) != null ? _a : {}));
-        this._templateRunType = "child";
-      }
-      this.clearTempData();
-      this._inlineOutputs = [];
-      this._host = Object.assign({}, (_b = childData.host) != null ? _b : {}, this._rootHost);
-      this._output = void 0;
-      const recursiveClear = (element) => {
-        if (element instanceof TreeElement) {
-          element.clearTempData();
-        }
-        if (element.hasCategories) {
-          element.categories.forEach(recursiveClear);
-        }
-        if (element.hasResources) {
-          element.resources.forEach((e) => {
-            if (e instanceof TreeElement) {
-              e.clearTempData();
-            }
+        if (!isNullOrEmpty(sourceResources)) {
+          iterateObject(sortObjectByKey(sourceResources), (resource, name2) => {
+            const newResource = new ResourceElement(this.root, name2, this);
+            newResources.push(newResource);
+            newResource.populate(resource);
           });
         }
-      };
-      recursiveClear(this.model);
+        this._categories = newCategories;
+        this._hasCategories = this.categories.length > 0;
+        this._resources = newResources;
+        this._hasResources = this.resources.length > 0;
+      }
     }
-    get output() {
-      return this._output;
-    }
-    /**
-     * loaded lhq model file as parsed json structure
-     */
-    get model() {
-      return this._model;
-    }
-    /**
-     * extra data defined dynamically by template run, resets on each template run.
-     */
-    get data() {
-      return this._data;
-    }
-    get settings() {
+    get categories() {
       var _a;
-      const settings = (_a = this._output) == null ? void 0 : _a.settings;
-      if (isNullOrEmpty(settings)) {
-        throw new AppError("Missing root output file settings !");
-      }
-      return settings;
+      return (_a = this._categories) != null ? _a : [];
     }
-    /*
-     * data from host environment, stays for all template runs within the same session.
-     */
-    get host() {
-      return this._host;
-    }
-  };
-
-  // src/helpers.ts
-  var hostEnv = void 0;
-  function registerHelpers(hostEnvironment) {
-    hostEnv = hostEnvironment;
-    Object.keys(helpersList).forEach((key) => {
-      import_handlebars.default.registerHelper(key, helpersList[key]);
-    });
-  }
-  var helpersList = {
-    // generic helpers
-    "x-header": headerHelper,
-    "x-normalizePath": normalizePathHelper,
-    "char-tab": charHelper,
-    "char-quote": charHelper,
-    "x-value": valueHelper,
-    "x-join": joinHelper,
-    "x-split": splitHelper,
-    "x-concat": concatHelper,
-    "x-replace": replaceHelper,
-    "x-trimEnd": trimEndHelper,
-    "x-equals": equalsHelper,
-    "x-isTrue": isTrueHelper,
-    "x-isFalse": isFalseHelper,
-    "x-merge": mergeHelper,
-    "x-sortBy": sortByHelper,
-    "x-sortObject": sortObjectByKeyHelper,
-    "x-objCount": objCountHelper,
-    "x-hasItems": hasItemsHelper,
-    "x-textEncode": textEncodeHelper,
-    "x-host-webHtmlEncode": hostWebHtmlEncodeHelper,
-    "x-render": renderHelper,
-    "x-test": testHelper,
-    "x-isNullOrEmpty": isNullOrEmptyHelper,
-    "x-isNotNullOrEmpty": isNotNullOrEmptyHelper,
-    "x-fn": callFunctionHelper,
-    "x-logical": logicalHelper,
-    "x-debugLog": debugLogHelper,
-    "x-stringify": stringifyHelper,
-    "x-toJson": toJsonHelper,
-    "x-typeOf": typeOfHelper,
-    // model specific helpers
-    "m-data": modelDataHelper,
-    "output": modelOutputHelper,
-    "output-child": modelOutputChildHelper,
-    "output-inline": modelOutputInlineHelper
-  };
-  var _knownHelpers = void 0;
-  function getKnownHelpers() {
-    if (_knownHelpers === void 0) {
-      _knownHelpers = Object.fromEntries(Object.keys(helpersList).map((key) => [key, true]));
-    }
-    return _knownHelpers;
-  }
-  var fileHeader = `//------------------------------------------------------------------------------
-// <auto-generated>
-//     This code was generated by a tool - Localization HQ Editor.
-//
-//     Changes to this file may cause incorrect behavior and will be lost if
-//     the code is regenerated.
-// </auto-generated>
-//------------------------------------------------------------------------------`;
-  function getContextAndOptions(context, ...args) {
-    var _a;
-    if (args.length === 1) {
-      return {
-        context,
-        options: args[0]
-      };
-    }
-    return {
-      context: (_a = args[0]) != null ? _a : context,
-      options: args[1]
-    };
-  }
-  function headerHelper(options) {
-    var _a, _b;
-    return (_b = (_a = getRoot(options).host) == null ? void 0 : _a["fileHeader"]) != null ? _b : fileHeader;
-  }
-  function normalizePathHelper(context, options) {
-    var _a;
-    if (typeof context !== "string") {
-      return context;
-    }
-    let result = normalizePath(context);
-    const replacePathSep = valueOrDefault((_a = options.hash) == null ? void 0 : _a.replacePathSep, "");
-    if (!isNullOrEmpty(replacePathSep)) {
-      result = result.split("/").join(replacePathSep);
-    }
-    return result;
-  }
-  function queryObjValue(context, options, flags) {
-    var _a, _b, _c, _d, _e;
-    const undefinedForDefault = (_a = flags == null ? void 0 : flags.undefinedForDefault) != null ? _a : false;
-    const allowHash = (_b = flags == null ? void 0 : flags.allowHash) != null ? _b : true;
-    const allowFn = (_c = flags == null ? void 0 : flags.allowFn) != null ? _c : true;
-    let value = undefinedForDefault ? void 0 : context;
-    let query = allowHash ? (_d = options == null ? void 0 : options.hash) == null ? void 0 : _d.query : void 0;
-    if (typeof (options == null ? void 0 : options.fn) === "function" && allowFn) {
-      query = options.fn(context);
-      if (!isNullOrEmpty(query) && typeof query === "string") {
-        query = removeNewLines(query);
-      }
-    }
-    if (!isNullOrEmpty(query) && typeof query === "string" && !isNullOrEmpty(context)) {
-      try {
-        value = jsonQuery(context, query);
-      } catch (e) {
-        const templateId = (_e = getRoot(options).currentTemplateId) != null ? _e : "";
-        const loc = options.loc;
-        const locText = isNullOrEmpty(loc) ? "" : `starts on ${loc.start.line}:${loc.start.column}, ends: ${loc.end.line}:${loc.end.column}`;
-        const msg = `Template: ${templateId}, failed on jmespath query: ${query}
-${locText}`;
-        throw new Error(msg);
-      }
-    }
-    return value;
-  }
-  function charHelper(options) {
-    var _a;
-    const name2 = (_a = options.name) == null ? void 0 : _a.split("-")[1];
-    switch (name2) {
-      case "tab":
-        return "	";
-      case "quote":
-        return '"';
-      default: {
-        throw new AppError(`Unknown '${options == null ? void 0 : options.name}' char helper !`);
-      }
-    }
-  }
-  function valueHelper() {
-    var _a, _b, _c;
-    const { context, options } = getContextAndOptions(this, ...arguments);
-    const defaultValue = (_a = options.hash) == null ? void 0 : _a.default;
-    const defaultOnEmpty = (_c = (_b = options.hash) == null ? void 0 : _b.defaultOnEmpty) != null ? _c : false;
-    const result = queryObjValue(context, options);
-    return valueOrDefault(result, defaultValue, defaultOnEmpty);
-  }
-  function splitHelper() {
-    var _a;
-    const { context, options } = getContextAndOptions(this, ...arguments);
-    if (typeof context !== "string") return context;
-    const sep = valueOrDefault((_a = options.hash) == null ? void 0 : _a.sep, "");
-    return isNullOrEmpty(sep) ? context : context.split(sep);
-  }
-  function joinHelper(items, options) {
-    var _a, _b, _c, _d;
-    const separator = valueOrDefault((_a = options.hash) == null ? void 0 : _a.sep, ",");
-    const start = valueOrDefault((_b = options.hash) == null ? void 0 : _b.start, 0);
-    const len = items ? items.length : 0;
-    let end = valueOrDefault((_c = options.hash) == null ? void 0 : _c.end, len);
-    const decorator = ((_d = options.hash) == null ? void 0 : _d.decorator) || "";
-    if (end > len) end = len;
-    return items.map((x) => `${decorator}${x}${decorator}`).slice(start, end).join(separator);
-  }
-  var concatHelperArgsDefault = {
-    sep: "",
-    empty: false
-  };
-  function concatHelper(...args) {
-    var _a;
-    const options = args.pop();
-    const hash = Object.assign({}, concatHelperArgsDefault, (_a = options.hash) != null ? _a : {});
-    const array = hash.empty ? args : args.filter((x) => !isNullOrEmpty(x));
-    removeProperties(options.hash, hash);
-    options.hash = { sep: hash.sep };
-    return joinHelper(array, options);
-  }
-  function replaceHelper(value, options) {
-    var _a, _b, _c, _d;
-    const what = valueOrDefault((_a = options.hash) == null ? void 0 : _a.what, "");
-    const withStr = valueOrDefault((_b = options.hash) == null ? void 0 : _b.with, "");
-    const regexopts = valueOrDefault((_c = options.hash) == null ? void 0 : _c.opts, "g");
-    const hasOpts = !isNullOrEmpty((_d = options.hash) == null ? void 0 : _d.opts);
-    if (isNullOrEmpty(what) || isNullOrEmpty(withStr) || what === withStr && !hasOpts) {
-      return value;
-    }
-    const regex = new RegExp(what, regexopts);
-    return value.replace(regex, withStr);
-  }
-  function trimEndHelper(input, endPattern) {
-    try {
-      const regex = new RegExp(endPattern + "$");
-      return input.replace(regex, "");
-    } catch (error) {
-      hostEnv.debugLog("Invalid regex pattern:" + endPattern);
-      return input;
-    }
-  }
-  function equalsHelper(input, value, options) {
-    var _a, _b, _c;
-    const cs = (((_a = options.hash) == null ? void 0 : _a.cs) || "true").toString().toLowerCase() == "true";
-    const val1 = typeof input === "string" ? input : (_b = input == null ? void 0 : input.toString()) != null ? _b : "";
-    const val2 = typeof value === "string" ? value : (_c = value == null ? void 0 : value.toString()) != null ? _c : "";
-    return cs ? val1 === val2 : val1.toLowerCase() === val2.toLowerCase();
-  }
-  function isTrueHelper(input) {
-    return input === true;
-  }
-  function isFalseHelper(input) {
-    return input === false;
-  }
-  function logicalHelper(input, value, options) {
-    var _a;
-    const op = valueOrDefault((_a = options.hash) == null ? void 0 : _a.op, "and").toLowerCase();
-    if (op === "and") {
-      return input === true && value === true;
-    } else if (op === "or") {
-      return input === true || value === true;
-    }
-    return false;
-  }
-  function mergeHelper(...args) {
-    var _a, _b;
-    const options = args.pop();
-    const context = args.length === 0 ? this : args.shift();
-    if (typeof context !== "object") return context;
-    if (isNullOrEmpty(context)) return context;
-    Object.assign(context, ...args, (_a = options.hash) != null ? _a : {});
-    let result;
-    if (typeof (options == null ? void 0 : options.fn) === "function") {
-      try {
-        result = options.fn(context);
-      } finally {
-        removeProperties(context, ...args, (_b = options.hash) != null ? _b : {});
-      }
-    }
-    return result;
-  }
-  function sortByHelper(source, propName, sortOrder = "asc") {
-    return sortBy(source, propName, sortOrder);
-  }
-  function sortObjectByKeyHelper(obj, options) {
-    var _a;
-    const sortOrder = valueOrDefault((_a = options.hash) == null ? void 0 : _a.sortOrder, "asc");
-    return sortObjectByKey(obj, sortOrder);
-  }
-  function objCountHelper(obj) {
-    return objCount(obj);
-  }
-  function hasItemsHelper(obj) {
-    return hasItems(obj);
-  }
-  function textEncodeHelper(input, options) {
-    var _a, _b;
-    const mode = valueOrDefault((_a = options == null ? void 0 : options.hash) == null ? void 0 : _a.mode, "html");
-    const quotes = valueOrDefault((_b = options == null ? void 0 : options.hash) == null ? void 0 : _b.quotes, false);
-    const s = textEncode(input, { mode, quotes });
-    return new import_handlebars.default.SafeString(s);
-  }
-  function hostWebHtmlEncodeHelper(input) {
-    if (isNullOrEmpty(input)) {
-      return input;
-    }
-    const encoded = hostEnv.webHtmlEncode(input);
-    return new import_handlebars.default.SafeString(encoded);
-  }
-  function renderHelper(input, options) {
-    var _a;
-    const when = valueOrDefault((_a = options.hash) == null ? void 0 : _a.when, true);
-    return !isNullOrEmpty(when) && (when === true || when === "true") ? input : "";
-  }
-  function testHelper() {
-    var _a, _b;
-    const { context, options } = getContextAndOptions(this, ...arguments);
-    const condition = context;
-    if (isNullOrEmpty(options.hash) || isNullOrEmpty(condition)) {
-      return "";
-    }
-    const then = valueOrDefault((_a = options.hash) == null ? void 0 : _a.then, "");
-    const _else = valueOrDefault((_b = options.hash) == null ? void 0 : _b.else, "");
-    return condition === true ? then : _else;
-  }
-  function isNullOrEmptyHelper(value) {
-    return isNullOrEmpty(value);
-  }
-  function isNotNullOrEmptyHelper(input) {
-    return !isNullOrEmpty(input);
-  }
-  function callFunctionHelper(fn2, ...args) {
-    let fnArgs = [];
-    if (arguments.length > 0) {
-      fnArgs = args.slice(0, -1);
-    }
-    return fnArgs.length === 0 ? fn2() : fn2(...fnArgs);
-  }
-  function debugLogHelper(...args) {
-    hostEnv.debugLog(args.join(" "));
-    return "";
-  }
-  function getRoot(options) {
-    if (isNullOrEmpty(options) || isNullOrEmpty(options == null ? void 0 : options.data)) {
-      throw new AppError("Template has unknown definition for root data !");
-    }
-    return options.data["root"];
-  }
-  function stringifyHelper() {
-    var _a, _b;
-    const { context, options } = getContextAndOptions(this, ...arguments);
-    let space = (_b = (_a = options.hash) == null ? void 0 : _a.space) != null ? _b : void 0;
-    if (typeof space === "string") {
-      space = space.replace(/\\\\t/gm, "	");
-    }
-    return new import_handlebars.default.SafeString(JSON.stringify(context, null, space));
-  }
-  function toJsonHelper(context) {
-    if (typeof context === "string") {
-      return JSON.parse(context);
-    }
-    return context;
-  }
-  function typeOfHelper(context) {
-    if (context === void 0) {
-      return "undefined";
-    }
-    if (context === null) {
-      return "null";
-    }
-    if (typeof context === "object") {
-      return context.constructor ? context.constructor.name : "object";
-    } else {
-      return context === void 0 ? "undefined" : `${context}[${typeof context}]`;
-    }
-  }
-  function modelDataHelper() {
-    var _a, _b, _c, _d, _e, _f;
-    const { context, options } = getContextAndOptions(this, ...arguments);
-    const defaultValue = (_a = options.hash) == null ? void 0 : _a.default;
-    const defaultOnEmpty = (_c = (_b = options.hash) == null ? void 0 : _b.defaultOnEmpty) != null ? _c : false;
-    const value = valueOrDefault(queryObjValue(context, options), defaultValue, defaultOnEmpty);
-    const forceToRoot = valueOrDefault((_d = options.hash) == null ? void 0 : _d.root, false);
-    const key = (_f = (_e = options == null ? void 0 : options.hash) == null ? void 0 : _e.key) != null ? _f : "";
-    if (isNullOrEmpty(key)) {
-      throw new AppError(`Helper '${options.name}' missing hash param 'key' !`);
-    }
-    setCustomData(this, options, value, forceToRoot);
-  }
-  function setCustomData(context, options, valueOrFn, forceToRoot) {
-    var _a;
-    const value = typeof valueOrFn === "function" ? valueOrFn() : valueOrFn;
-    const key = valueOrDefault((_a = options == null ? void 0 : options.hash) == null ? void 0 : _a.key, "");
-    if (!isNullOrEmpty(key)) {
-      if (forceToRoot) {
-        const root = getRoot(options);
-        root.addToTempData(key, value);
-      } else if (context instanceof TreeElement) {
-        context.addToTempData(key, value);
-      } else if (context instanceof TemplateRootModel) {
-        context.addToTempData(key, value);
-      } else {
-        hostEnv.debugLog(`[setCustomData] unknown context: ${typeof context} for key '${key}' !`);
-      }
-    }
-  }
-  var modelOutputFlags = { undefinedForDefault: true, allowHash: false };
-  function modelOutputHelper() {
-    var _a, _b, _c, _d, _e, _f, _g;
-    const { context, options } = getContextAndOptions(this, ...arguments);
-    if (!(context instanceof TemplateRootModel)) {
-      throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
-    }
-    if (context.inlineEvaluating) {
-      throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside 'output-inline' helper !`);
-    }
-    if (isNullOrEmpty(options.hash)) {
-      throw new AppError(`Helper '${options.name}' missing hash properties !`);
-    }
-    const fileName = (_b = (_a = options == null ? void 0 : options.hash) == null ? void 0 : _a.fileName) != null ? _b : "";
-    const settingsNode = (_c = context.model.codeGenerator) == null ? void 0 : _c.settings;
-    const settingsObj = (_e = (_d = options.hash) == null ? void 0 : _d.settings) != null ? _e : queryObjValue(settingsNode, options, modelOutputFlags);
-    let outputFile = context.output;
-    let updateSettings = true;
-    if (outputFile) {
-      if (fileName !== void 0) {
-        outputFile.fileName = fileName;
-        if (settingsObj === void 0) {
-          updateSettings = false;
-        }
-      }
-    } else {
-      outputFile = {
-        fileName,
-        settings: void 0
-      };
-      updateSettings = !isNullOrEmpty(settingsObj);
-    }
-    if (updateSettings) {
-      if (isNullOrEmpty(settingsObj)) {
-        throw new AppError(`Helper '${options.name}' must have child content with jmespath query expression to retrieve settings (must be compatible with CodeGeneratorBasicSettings type) !`);
-      }
-      const mergeWithDefaults = (_g = (_f = options.hash) == null ? void 0 : _f.mergeWithDefaults) != null ? _g : true;
-      const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
-      outputFile.settings = settings;
-    }
-    if (isNullOrEmpty(outputFile.fileName) && isNullOrEmpty(outputFile.settings)) {
-      throw new AppError(`Helper '${options.name}' missing hash property 'fileName' or 'settings' or child content with jmespath query expression !`);
-    }
-    context.setOutput(outputFile);
-  }
-  function modelOutputChildHelper(options) {
-    var _a, _b;
-    const context = getRoot(options);
-    if (!(context instanceof TemplateRootModel)) {
-      throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
-    }
-    if (context.inlineEvaluating) {
-      throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside 'output-inline' helper !`);
-    }
-    if (typeof (options == null ? void 0 : options.fn) === "function") {
-      throw new AppError(`Helper '${options.name}' cannot be used as block helper (no child content is allowed) !`);
-    }
-    if (isNullOrEmpty(options.hash)) {
-      throw new AppError(`Helper '${options.name}' missing hash properties !`);
-    }
-    const templateId = (_a = options.hash) == null ? void 0 : _a.templateId;
-    if (isNullOrEmpty(templateId)) {
-      throw new AppError(`Helper '${options.name}' missing hash property 'templateId' !`);
-    }
-    context.addChildOutput(templateId, (_b = options.hash) == null ? void 0 : _b.host);
-  }
-  var modelOutputInlineFlags = { undefinedForDefault: true, allowHash: true, allowFn: false };
-  function modelOutputInlineHelper() {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
-    const { context, options } = getContextAndOptions(this, ...arguments);
-    if (!(context instanceof TemplateRootModel)) {
-      throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
-    }
-    if (arguments.length > 1) {
-      throw new AppError(`Helper '${options.name}' can be only use as block helper (value must be child of '${options.name}' begin/end tags) !`);
-    }
-    const fileName = (_b = (_a = options.hash) == null ? void 0 : _a.fileName) != null ? _b : "";
-    if (isNullOrEmpty(fileName)) {
-      throw new AppError(`Helper '${options.name}' missing property 'fileName' !`);
-    }
-    if (typeof (options == null ? void 0 : options.fn) !== "function") {
-      throw new AppError(`Helper '${options.name}' can be only use as block helper (value must be child of '${options.name}' begin/end tags) !`);
-    }
-    const settingsNode = (_c = context.model.codeGenerator) == null ? void 0 : _c.settings;
-    let settingsObj = (_e = (_d = options.hash) == null ? void 0 : _d.settings) != null ? _e : queryObjValue(settingsNode, options, modelOutputInlineFlags);
-    if (isNullOrEmpty(settingsObj)) {
-      settingsObj = getRoot(options).settings;
-      if (isNullOrEmpty(settingsObj)) {
-        throw new AppError(`Helper '${options.name}' could not find code gen settings from query (nor root settings) !`);
-      }
-    }
-    const mergeWithDefaults = (_g = (_f = options == null ? void 0 : options.hash) == null ? void 0 : _f.mergeWithDefaults) != null ? _g : true;
-    const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
-    let fileContent = "";
-    if (context.setInlineEvaluating(true)) {
-      try {
-        fileContent = (_h = options.fn(context)) != null ? _h : "";
-      } catch (e) {
-        throw new AppError(`Helper '${options.name}' error: ${e.message}`);
-      } finally {
-        context.setInlineEvaluating(false);
-      }
-    } else {
-      throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside another '${options.name}' helper !`);
-    }
-    const inlineOutput = {
-      fileName,
-      settings,
-      content: fileContent
-    };
-    context.addInlineOutputs(inlineOutput);
-  }
-
-  // src/hbsManager.ts
-  var import_handlebars2 = __toESM(require_handlebars());
-  var HbsTemplateManager = class _HbsTemplateManager {
-    static init(data) {
-      if (isNullOrEmpty(data)) {
-        throw new Error("Missing templates data !");
-      }
-      _HbsTemplateManager._sources = data;
-    }
-    /* public static registerTemplate(templateId: string, handlebarContent: string): void {
-        HbsTemplateManager._sources ??= {};
-        HbsTemplateManager._sources[templateId] = handlebarContent;
-    } */
-    static hasTemplate(templateId) {
-      return _HbsTemplateManager._sources.hasOwnProperty(templateId);
-    }
-    static runTemplate(templateId, data) {
+    get resources() {
       var _a;
-      let compiled;
-      (_a = _HbsTemplateManager._compiled) != null ? _a : _HbsTemplateManager._compiled = {};
-      if (!_HbsTemplateManager._compiled.hasOwnProperty(templateId)) {
-        if (!_HbsTemplateManager._sources.hasOwnProperty(templateId)) {
-          const allTemplates = Object.keys(_HbsTemplateManager._sources).join(", ");
-          throw new AppError(`Template with id '${templateId}' not found (available templates: ${allTemplates})!`);
+      return (_a = this._resources) != null ? _a : [];
+    }
+    get hasCategories() {
+      return this._hasCategories;
+    }
+    get hasResources() {
+      return this._hasResources;
+    }
+    addCategory(name2) {
+      var _a;
+      if (isNullOrUndefined(name2)) {
+        throw new Error("Category name cannot be null or undefined.");
+      }
+      const category = this.createCategory(this.root, name2, this);
+      (_a = this._categories) != null ? _a : this._categories = [];
+      this._categories.push(category);
+      this._hasCategories = true;
+      return category;
+    }
+    removeCategory(name2) {
+      if (this._categories && !isNullOrEmpty(name2)) {
+        const index = this._categories.findIndex((x) => x.name === name2);
+        if (index !== -1) {
+          this._categories.splice(index, 1);
+          this._hasCategories = this._categories.length > 0;
         }
-        const source = _HbsTemplateManager._sources[templateId];
-        compiled = import_handlebars2.default.compile(source, { knownHelpers: getKnownHelpers() });
-        _HbsTemplateManager._compiled[templateId] = compiled;
-      } else {
-        compiled = _HbsTemplateManager._compiled[templateId];
       }
-      const result = compiled(data, {
-        allowProtoPropertiesByDefault: true,
-        allowProtoMethodsByDefault: true,
-        allowCallsToHelperMissing: true
-      });
-      if (result.indexOf("\xA4") > -1) {
-        return result.replace(/\t¤$/gm, "");
+    }
+    addResource(name2) {
+      var _a;
+      if (isNullOrUndefined(name2)) {
+        throw new Error("Resource name cannot be null or undefined.");
       }
-      return result;
+      const resource = new ResourceElement(this.root, name2, this);
+      (_a = this._resources) != null ? _a : this._resources = [];
+      this._resources.push(resource);
+      this._hasResources = true;
+      return resource;
+    }
+    removeResource(name2) {
+      if (this._resources && !isNullOrEmpty(name2)) {
+        const index = this._resources.findIndex((x) => x.name === name2);
+        if (index !== -1) {
+          this._resources.splice(index, 1);
+          this._hasResources = this._resources.length > 0;
+        }
+      }
     }
   };
-
-  // src/generatorUtils.ts
-  var generatorUtils_exports = {};
-  __export(generatorUtils_exports, {
-    generateLhqSchema: () => generateLhqSchema,
-    getGeneratedFileContent: () => getGeneratedFileContent,
-    getRootNamespaceFromCsProj: () => getRootNamespaceFromCsProj,
-    validateLhqModel: () => validateLhqModel
-  });
-  var import_xmldom = __toESM(require_lib());
-  var xpath = __toESM(require_xpath());
-
-  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/Options.js
-  var ignoreOverride = Symbol("Let zodToJsonSchema decide on which parser to use");
-  var defaultOptions = {
-    name: void 0,
-    $refStrategy: "root",
-    basePath: ["#"],
-    effectStrategy: "input",
-    pipeStrategy: "all",
-    dateStrategy: "format:date-time",
-    mapStrategy: "entries",
-    removeAdditionalStrategy: "passthrough",
-    allowedAdditionalProperties: true,
-    rejectedAdditionalProperties: false,
-    definitionPath: "definitions",
-    target: "jsonSchema7",
-    strictUnions: false,
-    definitions: {},
-    errorMessages: false,
-    markdownDescription: false,
-    patternStrategy: "escape",
-    applyRegexFlags: false,
-    emailStrategy: "format:email",
-    base64Strategy: "contentEncoding:base64",
-    nameStrategy: "ref"
-  };
-  var getDefaultOptions = (options) => typeof options === "string" ? __spreadProps(__spreadValues({}, defaultOptions), {
-    name: options
-  }) : __spreadValues(__spreadValues({}, defaultOptions), options);
-
-  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/Refs.js
-  var getRefs = (options) => {
-    const _options = getDefaultOptions(options);
-    const currentPath = _options.name !== void 0 ? [..._options.basePath, _options.definitionPath, _options.name] : _options.basePath;
-    return __spreadProps(__spreadValues({}, _options), {
-      currentPath,
-      propertyPath: void 0,
-      seen: new Map(Object.entries(_options.definitions).map(([name2, def]) => [
-        def._def,
-        {
-          def: def._def,
-          path: [..._options.basePath, _options.definitionPath, name2],
-          // Resolution of references will be forced even though seen, so it's ok that the schema is undefined here for now.
-          jsonSchema: void 0
-        }
-      ]))
-    });
-  };
-
-  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/errorMessages.js
-  function addErrorMessage(res, key, errorMessage, refs) {
-    if (!(refs == null ? void 0 : refs.errorMessages))
-      return;
-    if (errorMessage) {
-      res.errorMessage = __spreadProps(__spreadValues({}, res.errorMessage), {
-        [key]: errorMessage
-      });
-    }
-  }
-  function setResponseValueAndErrors(res, key, value, errorMessage, refs) {
-    res[key] = value;
-    addErrorMessage(res, key, errorMessage, refs);
-  }
 
   // node_modules/.pnpm/zod@3.24.2/node_modules/zod/lib/index.mjs
   var util;
@@ -22521,6 +21917,1046 @@ ${locText}`;
     ZodError
   });
 
+  // src/api/schemas.ts
+  var LhqModelLineEndingsSchema = z.union([z.literal("LF"), z.literal("CRLF")]);
+  var LhqModelOptionsResourcesSchema = z.union([
+    z.literal("All"),
+    z.literal("Categories")
+  ]);
+  var LhqModelResourceParameterSchema = z.object({
+    description: z.string().optional(),
+    order: z.number()
+  });
+  var LhqModelResourceTranslationStateSchema = z.union([
+    z.literal("New"),
+    z.literal("Edited"),
+    z.literal("NeedsReview"),
+    z.literal("Final")
+  ]);
+  var LhqModelResourceValueSchema = z.object({
+    value: z.string().optional(),
+    locked: z.boolean().optional(),
+    auto: z.boolean().optional()
+  });
+  var LhqModelResourceSchemaBase = z.object({
+    state: LhqModelResourceTranslationStateSchema,
+    description: z.string().optional(),
+    parameters: z.record(LhqModelResourceParameterSchema).optional(),
+    values: z.record(LhqModelResourceValueSchema).optional()
+  });
+  var LhqModelResourceSchema = LhqModelResourceSchemaBase;
+  var baseDataNodeSchema = z.object({
+    name: z.string(),
+    attrs: z.record(z.string().nullable().optional()).optional()
+  });
+  var LhqModelDataNodeSchema = baseDataNodeSchema.extend({
+    childs: z.lazy(() => z.array(LhqModelDataNodeSchema)).optional()
+  });
+  var baseCategorySchema = z.object({
+    description: z.string().optional(),
+    resources: z.lazy(() => LhqModelResourcesCollectionSchema).optional()
+  });
+  var LhqModelCategorySchema = baseCategorySchema.extend({
+    categories: z.lazy(() => LhqModelCategoriesCollectionSchema).optional()
+  });
+  var LhqModelUidSchema = z.literal("6ce4d54c5dbd415c93019d315e278638");
+  var LhqModelVersionSchema = z.union([z.literal(1), z.literal(2), z.literal(3)]);
+  var LhqCodeGenVersionSchema = z.literal(1);
+  var LhqModelCategoriesCollectionSchema = z.record(LhqModelCategorySchema);
+  var LhqModelResourcesCollectionSchema = z.record(LhqModelResourceSchema);
+  var LhqModelOptionsSchema = z.object({
+    categories: z.boolean(),
+    resources: LhqModelOptionsResourcesSchema
+  });
+  var LhqModelMetadataSchema = z.object({
+    childs: z.array(LhqModelDataNodeSchema).optional()
+  });
+  var LhqModelSchema = z.object({
+    model: z.object({
+      uid: LhqModelUidSchema,
+      version: LhqModelVersionSchema,
+      options: LhqModelOptionsSchema,
+      name: z.string(),
+      description: z.string().optional(),
+      primaryLanguage: z.string()
+    }),
+    languages: z.array(z.string()),
+    metadatas: LhqModelMetadataSchema.optional(),
+    resources: z.lazy(() => LhqModelResourcesCollectionSchema).optional(),
+    categories: z.lazy(() => LhqModelCategoriesCollectionSchema).optional()
+  });
+
+  // src/model/modelConst.ts
+  var ModelVersions = Object.freeze({
+    model: 3,
+    codeGenerator: 1
+  });
+  var DefaultLineEndings = "LF";
+  var DefaultCodeGenSettings = {
+    OutputFolder: "Resources",
+    EncodingWithBOM: false,
+    LineEndings: DefaultLineEndings,
+    Enabled: true
+  };
+
+  // src/model/categoryElement.ts
+  var CategoryElement = class _CategoryElement extends CategoryLikeTreeElement {
+    constructor(root, name2, parent) {
+      super(root, "category", name2, parent);
+    }
+    populate(source) {
+      if (source) {
+        this._description = source.description;
+      }
+      super.populate(source);
+    }
+    bindToModel(model) {
+      super.bindToModel(model);
+      model.description = this._description;
+    }
+    createCategory(root, name2, parent) {
+      return new _CategoryElement(root, name2, parent);
+    }
+  };
+
+  // src/model/rootModelElement.ts
+  var CodeGenUID = "b40c8a1d-23b7-4f78-991b-c24898596dd2";
+  var RootModelElement = class extends CategoryLikeTreeElement {
+    constructor(model) {
+      var _a, _b;
+      super(void 0, "model", (_b = (_a = model == null ? void 0 : model.model) == null ? void 0 : _a.name) != null ? _b : "", void 0);
+      this._uid = LhqModelUidSchema.value;
+      this._version = ModelVersions.model;
+      this._options = { categories: true, resources: "All" };
+      this._primaryLanguage = "en";
+      this._languages = ["en"];
+      this._hasLanguages = true;
+      this.populate(model);
+    }
+    populate(model) {
+      if (model) {
+        this._uid = model.model.uid;
+        this._version = model.model.version;
+        this._options = { categories: model.model.options.categories, resources: model.model.options.resources };
+        this._primaryLanguage = model.model.primaryLanguage;
+        this._languages = [...model.languages];
+        this._hasLanguages = this._languages.length > 0;
+        this._metadatas = model.metadatas ? Object.freeze(__spreadValues({}, model.metadatas)) : void 0;
+        this._codeGenerator = this.getCodeGenerator(model);
+      } else {
+        this._uid = LhqModelUidSchema.value;
+        this._version = ModelVersions.model;
+        this._options = { categories: true, resources: "All" };
+        this._primaryLanguage = "en";
+        this._languages = ["en"];
+        this._hasLanguages = true;
+      }
+      super.populate(model);
+    }
+    bindToModel(model) {
+      super.bindToModel(model);
+      model.model = {
+        uid: this._uid,
+        version: this._version,
+        options: this._options,
+        name: this.name,
+        description: this._description,
+        primaryLanguage: this._primaryLanguage
+      };
+      model.languages = this._languages;
+      model.metadatas = this._metadatas;
+    }
+    createCategory(root, name2, parent) {
+      return new CategoryElement(root, name2, parent);
+    }
+    getCodeGenerator(model) {
+      var _a, _b, _c, _d;
+      let templateId = "";
+      let codeGenVersion = 1;
+      let node = (_b = (_a = model.metadatas) == null ? void 0 : _a.childs) == null ? void 0 : _b.find((x) => {
+        var _a2;
+        return x.name === "metadata" && ((_a2 = x.attrs) == null ? void 0 : _a2["descriptorUID"]) === CodeGenUID;
+      });
+      if (node) {
+        node = (_c = node.childs) == null ? void 0 : _c.find((x) => {
+          var _a2;
+          return x.name === "content" && ((_a2 = x.attrs) == null ? void 0 : _a2["templateId"]) !== void 0;
+        });
+        if (node) {
+          templateId = node.attrs["templateId"];
+          const version = node.attrs["version"];
+          if (!isNullOrEmpty(version)) {
+            const versionInt = parseInt(version);
+            if (versionInt > 0 && versionInt <= ModelVersions.codeGenerator) {
+              codeGenVersion = versionInt;
+            }
+          }
+          node = (_d = node.childs) == null ? void 0 : _d.find((x) => {
+            var _a2, _b2;
+            return x.name === "Settings" && ((_b2 = (_a2 = x.childs) == null ? void 0 : _a2.length) != null ? _b2 : 0) > 0;
+          });
+        }
+      }
+      if (!isNullOrEmpty(templateId) && !isNullOrEmpty(node)) {
+        return { templateId, settings: node, version: codeGenVersion };
+      }
+      return void 0;
+    }
+    createCodeGenerator(codeGeneratorElement) {
+      var _a, _b, _c, _d, _e, _f, _g, _h;
+      if (isNullOrUndefined(codeGeneratorElement)) {
+        throw new Error("Code generator element is undefined or null.");
+      }
+      const templateId = codeGeneratorElement.templateId;
+      const settings = Object.assign({}, (_a = codeGeneratorElement.settings) != null ? _a : {});
+      const codeGenVersion = codeGeneratorElement.version > 0 && codeGeneratorElement.version <= ModelVersions.codeGenerator ? codeGeneratorElement.version : ModelVersions.codeGenerator;
+      const metadata = Object.assign({}, (_b = this._metadatas) != null ? _b : {});
+      (_c = metadata.childs) != null ? _c : metadata.childs = [];
+      let metadataElem = metadata.childs.find((x) => {
+        var _a2;
+        return x.name === "metadata" && ((_a2 = x.attrs) == null ? void 0 : _a2["descriptorUID"]) === CodeGenUID;
+      });
+      if (!metadataElem) {
+        metadataElem = { name: "metadata", attrs: { descriptorUID: CodeGenUID }, childs: [] };
+        metadata.childs.push(metadataElem);
+      }
+      metadataElem.name = "metadata";
+      (_d = metadataElem.childs) != null ? _d : metadataElem.childs = [];
+      (_e = metadataElem.attrs) != null ? _e : metadataElem.attrs = {};
+      metadataElem.attrs["descriptorUID"] = CodeGenUID;
+      let contentElem = (_f = metadata.childs) == null ? void 0 : _f.find((x) => x.name === "content");
+      if (!contentElem) {
+        contentElem = { name: "content", childs: [], attrs: {} };
+        metadataElem.childs.push(contentElem);
+      }
+      contentElem.name = "content";
+      (_g = contentElem.attrs) != null ? _g : contentElem.attrs = {};
+      contentElem.attrs["templateId"] = templateId;
+      contentElem.attrs["version"] = codeGenVersion.toFixed(0);
+      (_h = contentElem.childs) != null ? _h : contentElem.childs = [];
+      settings.name = "Settings";
+      const settingsIdx = contentElem.childs.findIndex((x) => x.name === "Settings");
+      if (settingsIdx === -1) {
+        contentElem.childs.push(settings);
+      } else {
+        contentElem.childs[settingsIdx] = settings;
+      }
+      this._metadatas = Object.freeze(metadata);
+      return { templateId, settings, version: codeGenVersion };
+    }
+    get uid() {
+      return this._uid;
+    }
+    get version() {
+      return this._version;
+    }
+    get options() {
+      return this._options;
+    }
+    set options(options) {
+      this._options = options;
+    }
+    get primaryLanguage() {
+      return this._primaryLanguage;
+    }
+    set primaryLanguage(primaryLanguage) {
+      this._primaryLanguage = primaryLanguage;
+    }
+    get languages() {
+      return this._languages;
+    }
+    set languages(languages) {
+      this._languages = [...languages];
+    }
+    get hasLanguages() {
+      return this._hasLanguages;
+    }
+    get metadatas() {
+      return this._metadatas;
+    }
+    set metadatas(metadatas) {
+      this._metadatas = Object.freeze(__spreadValues({}, metadatas));
+    }
+    get codeGenerator() {
+      return this._codeGenerator;
+    }
+    set codeGenerator(value) {
+      if (isNullOrUndefined(value)) {
+        this._codeGenerator = value;
+      } else {
+        this._codeGenerator = this.createCodeGenerator(value);
+      }
+    }
+  };
+
+  // src/helpers.ts
+  var import_handlebars = __toESM(require_handlebars());
+
+  // src/model/templateRootModel.ts
+  var TemplateRootModel = class {
+    constructor(model, data, host) {
+      this._templateRunType = "root";
+      this._childOutputs = [];
+      this._inlineOutputs = [];
+      this._inlineEvaluating = false;
+      this.addToTempData = (key, value) => {
+        this._data[key] = value;
+      };
+      this.clearTempData = () => {
+        this._data = {};
+      };
+      if (isNullOrEmpty(model)) {
+        throw new AppError("Missing root model !");
+      }
+      this._model = model;
+      this._data = data != null ? data : {};
+      this._host = host != null ? host : {};
+    }
+    setCurrentTemplateId(templateId) {
+      this._currentTemplateId = templateId;
+    }
+    get currentTemplateId() {
+      return this._currentTemplateId;
+    }
+    setInlineEvaluating(value) {
+      let valid = true;
+      if (value) {
+        if (this._inlineEvaluating) {
+          valid = false;
+        } else {
+          this._inlineEvaluating = true;
+        }
+      } else {
+        this._inlineEvaluating = false;
+      }
+      return valid;
+    }
+    setOutput(outputFile) {
+      if (isNullOrEmpty(outputFile)) {
+        throw new AppError(`Input 'outputFile' could not be empty !`);
+      }
+      this._output = outputFile;
+    }
+    addChildOutput(templateId, host) {
+      if (this._templateRunType === "child") {
+        throw new AppError("Child template could not have other child outputs !");
+      }
+      this._childOutputs.push({ templateId, host });
+    }
+    addInlineOutputs(inlineOutput) {
+      this._inlineOutputs.push(inlineOutput);
+    }
+    get inlineEvaluating() {
+      return this._inlineEvaluating;
+    }
+    get childOutputs() {
+      return this._childOutputs;
+    }
+    get inlineOutputs() {
+      return this._inlineOutputs;
+    }
+    get templateRunType() {
+      return this._templateRunType;
+    }
+    setAsChildTemplate(childData) {
+      var _a, _b;
+      if (this._templateRunType === "root") {
+        this._rootHost = Object.freeze(Object.assign({}, (_a = this._host) != null ? _a : {}));
+        this._templateRunType = "child";
+      }
+      this.clearTempData();
+      this._inlineOutputs = [];
+      this._host = Object.assign({}, (_b = childData.host) != null ? _b : {}, this._rootHost);
+      this._output = void 0;
+      const recursiveClear = (element) => {
+        if (element instanceof TreeElement) {
+          element.clearTempData();
+        }
+        if (element.hasCategories) {
+          element.categories.forEach(recursiveClear);
+        }
+        if (element.hasResources) {
+          element.resources.forEach((e) => {
+            if (e instanceof TreeElement) {
+              e.clearTempData();
+            }
+          });
+        }
+      };
+      recursiveClear(this.model);
+    }
+    get output() {
+      return this._output;
+    }
+    /**
+     * loaded lhq model file as parsed json structure
+     */
+    get model() {
+      return this._model;
+    }
+    /**
+     * extra data defined dynamically by template run, resets on each template run.
+     */
+    get data() {
+      return this._data;
+    }
+    get settings() {
+      var _a;
+      const settings = (_a = this._output) == null ? void 0 : _a.settings;
+      if (isNullOrEmpty(settings)) {
+        throw new AppError("Missing root output file settings !");
+      }
+      return settings;
+    }
+    /*
+     * data from host environment, stays for all template runs within the same session.
+     */
+    get host() {
+      return this._host;
+    }
+  };
+
+  // src/helpers.ts
+  var hostEnv = void 0;
+  function registerHelpers(hostEnvironment) {
+    hostEnv = hostEnvironment;
+    Object.keys(helpersList).forEach((key) => {
+      import_handlebars.default.registerHelper(key, helpersList[key]);
+    });
+  }
+  var helpersList = {
+    // generic helpers
+    "x-header": headerHelper,
+    "x-normalizePath": normalizePathHelper,
+    "char-tab": charHelper,
+    "char-quote": charHelper,
+    "x-value": valueHelper,
+    "x-select": selectValueHelper,
+    "x-join": joinHelper,
+    "x-split": splitHelper,
+    "x-concat": concatHelper,
+    "x-replace": replaceHelper,
+    "x-trimEnd": trimEndHelper,
+    "x-equals": equalsHelper,
+    "x-isTrue": isTrueHelper,
+    "x-isFalse": isFalseHelper,
+    "x-merge": mergeHelper,
+    "x-sortBy": sortByHelper,
+    "x-sortObject": sortObjectByKeyHelper,
+    "x-objCount": objCountHelper,
+    "x-hasItems": hasItemsHelper,
+    "x-textEncode": textEncodeHelper,
+    "x-host-webHtmlEncode": hostWebHtmlEncodeHelper,
+    "x-render": renderHelper,
+    "x-test": testHelper,
+    "x-isNullOrEmpty": isNullOrEmptyHelper,
+    "x-isNotNullOrEmpty": isNotNullOrEmptyHelper,
+    "x-fn": callFunctionHelper,
+    "x-logical": logicalHelper,
+    "x-debugLog": debugLogHelper,
+    "x-stringify": stringifyHelper,
+    "x-toJson": toJsonHelper,
+    "x-typeOf": typeOfHelper,
+    "x-assert": assertHelper,
+    // model specific helpers
+    "m-data": modelDataHelper,
+    "output": modelOutputHelper,
+    "output-child": modelOutputChildHelper,
+    "output-inline": modelOutputInlineHelper
+  };
+  var _knownHelpers = void 0;
+  function getKnownHelpers() {
+    if (_knownHelpers === void 0) {
+      _knownHelpers = Object.fromEntries(Object.keys(helpersList).map((key) => [key, true]));
+    }
+    return _knownHelpers;
+  }
+  var fileHeader = `//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool - Localization HQ Editor.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------`;
+  function getContextAndOptions(context, ...args) {
+    var _a;
+    if (args.length === 1) {
+      return {
+        context,
+        options: args[0]
+      };
+    }
+    return {
+      context: (_a = args[0]) != null ? _a : context,
+      options: args[1]
+    };
+  }
+  function headerHelper(options) {
+    var _a, _b;
+    return (_b = (_a = getRoot(options).host) == null ? void 0 : _a["fileHeader"]) != null ? _b : fileHeader;
+  }
+  function normalizePathHelper(context, options) {
+    var _a;
+    if (typeof context !== "string") {
+      return context;
+    }
+    let result = normalizePath(context);
+    const replacePathSep = valueOrDefault((_a = options.hash) == null ? void 0 : _a.replacePathSep, "");
+    if (!isNullOrEmpty(replacePathSep)) {
+      result = result.split("/").join(replacePathSep);
+    }
+    return result;
+  }
+  function queryObjValue(context, options, flags) {
+    var _a, _b, _c, _d, _e, _f, _g;
+    const undefinedForDefault = (_a = flags == null ? void 0 : flags.undefinedForDefault) != null ? _a : false;
+    const allowHash = (_b = flags == null ? void 0 : flags.allowHash) != null ? _b : true;
+    const allowFn = (_c = flags == null ? void 0 : flags.allowFn) != null ? _c : true;
+    const debug = (_e = (_d = options == null ? void 0 : options.hash) == null ? void 0 : _d.debug) != null ? _e : false;
+    let value = undefinedForDefault ? void 0 : context;
+    let query = allowHash ? (_f = options == null ? void 0 : options.hash) == null ? void 0 : _f.query : void 0;
+    if (typeof (options == null ? void 0 : options.fn) === "function" && allowFn) {
+      query = options.fn(context);
+      if (!isNullOrEmpty(query) && typeof query === "string") {
+        query = removeNewLines(query);
+      }
+    }
+    if (!isNullOrEmpty(query) && typeof query === "string" && !isNullOrEmpty(context)) {
+      try {
+        if (debug) {
+          const json = context instanceof TreeElementBase ? context.debugSerialize() : JSON.stringify(context);
+          hostEnv.debugLog(`jmespath query: ${query} on context: ${json}`);
+        }
+        value = jsonQuery(context, query);
+      } catch (e) {
+        const templateId = (_g = getRoot(options).currentTemplateId) != null ? _g : "";
+        const loc = options.loc;
+        const locText = isNullOrEmpty(loc) ? "" : `starts on ${loc.start.line}:${loc.start.column}, ends: ${loc.end.line}:${loc.end.column}`;
+        const msg = `Template: ${templateId}, failed on jmespath query: ${query}
+${locText}`;
+        throw new Error(msg);
+      }
+    }
+    return value;
+  }
+  function charHelper(options) {
+    var _a;
+    const name2 = (_a = options.name) == null ? void 0 : _a.split("-")[1];
+    switch (name2) {
+      case "tab":
+        return "	";
+      case "quote":
+        return '"';
+      default: {
+        throw new AppError(`Unknown '${options == null ? void 0 : options.name}' char helper !`);
+      }
+    }
+  }
+  function valueHelper() {
+    var _a, _b, _c;
+    const { context, options } = getContextAndOptions(this, ...arguments);
+    const defaultValue = (_a = options.hash) == null ? void 0 : _a.default;
+    const defaultOnEmpty = (_c = (_b = options.hash) == null ? void 0 : _b.defaultOnEmpty) != null ? _c : false;
+    const result = queryObjValue(context, options);
+    return valueOrDefault(result, defaultValue, defaultOnEmpty);
+  }
+  function selectValueHelper() {
+    const items = [...arguments];
+    while (items.length > 0) {
+      const item = items.shift();
+      if (typeof item === "string" && !isNullOrEmpty(item)) {
+        return item;
+      } else if (typeof item === "number" && !isNaN(item)) {
+        return item;
+      } else if (typeof item === "boolean") {
+        return item;
+      }
+    }
+    return "";
+  }
+  function splitHelper() {
+    var _a;
+    const { context, options } = getContextAndOptions(this, ...arguments);
+    if (typeof context !== "string") return context;
+    const sep = valueOrDefault((_a = options.hash) == null ? void 0 : _a.sep, "");
+    return isNullOrEmpty(sep) ? context : context.split(sep);
+  }
+  function joinHelper(items, options) {
+    var _a, _b, _c, _d;
+    const separator = valueOrDefault((_a = options.hash) == null ? void 0 : _a.sep, ",");
+    const start = valueOrDefault((_b = options.hash) == null ? void 0 : _b.start, 0);
+    const len = items ? items.length : 0;
+    let end = valueOrDefault((_c = options.hash) == null ? void 0 : _c.end, len);
+    const decorator = ((_d = options.hash) == null ? void 0 : _d.decorator) || "";
+    if (end > len) end = len;
+    return items.map((x) => `${decorator}${x}${decorator}`).slice(start, end).join(separator);
+  }
+  var concatHelperArgsDefault = {
+    sep: "",
+    empty: false
+  };
+  function concatHelper(...args) {
+    var _a;
+    const options = args.pop();
+    const hash = Object.assign({}, concatHelperArgsDefault, (_a = options.hash) != null ? _a : {});
+    const array = hash.empty ? args : args.filter((x) => !isNullOrEmpty(x));
+    removeProperties(options.hash, hash);
+    options.hash = { sep: hash.sep };
+    return joinHelper(array, options);
+  }
+  function replaceHelper(value, options) {
+    var _a, _b, _c, _d;
+    const what = valueOrDefault((_a = options.hash) == null ? void 0 : _a.what, "");
+    const withStr = valueOrDefault((_b = options.hash) == null ? void 0 : _b.with, "");
+    const regexopts = valueOrDefault((_c = options.hash) == null ? void 0 : _c.opts, "g");
+    const hasOpts = !isNullOrEmpty((_d = options.hash) == null ? void 0 : _d.opts);
+    if (isNullOrEmpty(what) || isNullOrEmpty(withStr) || what === withStr && !hasOpts) {
+      return value;
+    }
+    const regex = new RegExp(what, regexopts);
+    return value.replace(regex, withStr);
+  }
+  function trimEndHelper(input, endPattern) {
+    try {
+      const regex = new RegExp(endPattern + "$");
+      return input.replace(regex, "");
+    } catch (error) {
+      hostEnv.debugLog("Invalid regex pattern:" + endPattern);
+      return input;
+    }
+  }
+  function equalsHelper(input, value, options) {
+    var _a, _b, _c;
+    const cs = (((_a = options.hash) == null ? void 0 : _a.cs) || "true").toString().toLowerCase() == "true";
+    const val1 = typeof input === "string" ? input : (_b = input == null ? void 0 : input.toString()) != null ? _b : "";
+    const val2 = typeof value === "string" ? value : (_c = value == null ? void 0 : value.toString()) != null ? _c : "";
+    return cs ? val1 === val2 : val1.toLowerCase() === val2.toLowerCase();
+  }
+  function isTrueHelper(input) {
+    return input === true;
+  }
+  function isFalseHelper(input) {
+    return input === false;
+  }
+  function logicalHelper(input, value, options) {
+    var _a;
+    const op = valueOrDefault((_a = options.hash) == null ? void 0 : _a.op, "and").toLowerCase();
+    if (op === "and") {
+      return input === true && value === true;
+    } else if (op === "or") {
+      return input === true || value === true;
+    }
+    return false;
+  }
+  function mergeHelper(...args) {
+    var _a, _b;
+    const options = args.pop();
+    const context = args.length === 0 ? this : args.shift();
+    if (typeof context !== "object") return context;
+    if (isNullOrEmpty(context)) return context;
+    Object.assign(context, ...args, (_a = options.hash) != null ? _a : {});
+    let result;
+    if (typeof (options == null ? void 0 : options.fn) === "function") {
+      try {
+        result = options.fn(context);
+      } finally {
+        removeProperties(context, ...args, (_b = options.hash) != null ? _b : {});
+      }
+    }
+    return result;
+  }
+  function sortByHelper(source, propName, sortOrder = "asc") {
+    return sortBy(source, propName, sortOrder);
+  }
+  function sortObjectByKeyHelper(obj, options) {
+    var _a;
+    const sortOrder = valueOrDefault((_a = options.hash) == null ? void 0 : _a.sortOrder, "asc");
+    return sortObjectByKey(obj, sortOrder);
+  }
+  function objCountHelper(obj) {
+    return objCount(obj);
+  }
+  function hasItemsHelper(obj) {
+    return hasItems(obj);
+  }
+  function textEncodeHelper(input, options) {
+    var _a, _b;
+    const mode = valueOrDefault((_a = options == null ? void 0 : options.hash) == null ? void 0 : _a.mode, "html");
+    const quotes = valueOrDefault((_b = options == null ? void 0 : options.hash) == null ? void 0 : _b.quotes, false);
+    const s = textEncode(input, { mode, quotes });
+    return new import_handlebars.default.SafeString(s);
+  }
+  function hostWebHtmlEncodeHelper(input) {
+    if (isNullOrEmpty(input)) {
+      return input;
+    }
+    const encoded = hostEnv.webHtmlEncode(input);
+    return new import_handlebars.default.SafeString(encoded);
+  }
+  function renderHelper(input, options) {
+    var _a;
+    const when = valueOrDefault((_a = options.hash) == null ? void 0 : _a.when, true);
+    return !isNullOrEmpty(when) && (when === true || when === "true") ? input : "";
+  }
+  function testHelper() {
+    var _a, _b;
+    const { context, options } = getContextAndOptions(this, ...arguments);
+    const condition = context;
+    if (isNullOrEmpty(options.hash) || isNullOrEmpty(condition)) {
+      return "";
+    }
+    const then = valueOrDefault((_a = options.hash) == null ? void 0 : _a.then, "");
+    const _else = valueOrDefault((_b = options.hash) == null ? void 0 : _b.else, "");
+    return condition === true ? then : _else;
+  }
+  function isNullOrEmptyHelper(value) {
+    return isNullOrEmpty(value);
+  }
+  function isNotNullOrEmptyHelper(input) {
+    return !isNullOrEmpty(input);
+  }
+  function callFunctionHelper(fn2, ...args) {
+    let fnArgs = [];
+    if (arguments.length > 0) {
+      fnArgs = args.slice(0, -1);
+    }
+    return fnArgs.length === 0 ? fn2() : fn2(...fnArgs);
+  }
+  function debugLogHelper(...args) {
+    hostEnv.debugLog(args.join(" "));
+    return "";
+  }
+  function getRoot(options) {
+    if (isNullOrEmpty(options) || isNullOrEmpty(options == null ? void 0 : options.data)) {
+      throw new AppError("Template has unknown definition for root data !");
+    }
+    return options.data["root"];
+  }
+  function stringifyHelper() {
+    var _a, _b;
+    const { context, options } = getContextAndOptions(this, ...arguments);
+    let space = (_b = (_a = options.hash) == null ? void 0 : _a.space) != null ? _b : void 0;
+    if (typeof space === "string") {
+      space = space.replace(/\\\\t/gm, "	");
+    }
+    return new import_handlebars.default.SafeString(JSON.stringify(context, null, space));
+  }
+  function toJsonHelper(context) {
+    if (typeof context === "string") {
+      return JSON.parse(context);
+    }
+    return context;
+  }
+  function typeOfHelper(context) {
+    if (context === void 0) {
+      return "undefined";
+    }
+    if (context === null) {
+      return "null";
+    }
+    if (typeof context === "object") {
+      return context.constructor ? context.constructor.name : "object";
+    } else {
+      return context === void 0 ? "undefined" : `${context}[${typeof context}]`;
+    }
+  }
+  function modelDataHelper() {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
+    const { context, options } = getContextAndOptions(this, ...arguments);
+    const defaultValue = (_a = options.hash) == null ? void 0 : _a.default;
+    const defaultOnEmpty = (_c = (_b = options.hash) == null ? void 0 : _b.defaultOnEmpty) != null ? _c : false;
+    const value = valueOrDefault(queryObjValue(context, options), defaultValue, defaultOnEmpty);
+    const forceToRoot = valueOrDefault((_d = options.hash) == null ? void 0 : _d.root, false);
+    const key = (_f = (_e = options == null ? void 0 : options.hash) == null ? void 0 : _e.key) != null ? _f : "";
+    if (isNullOrEmpty(key)) {
+      throw new AppError(`Helper '${options.name}' missing hash param 'key' !`);
+    }
+    const check = (_g = options.hash) == null ? void 0 : _g.check;
+    if (!isNullOrEmpty(check) && assertValueCheck(context, check)) {
+      const errorCode = (_i = (_h = options.hash) == null ? void 0 : _h.errorCode) != null ? _i : "";
+      throw new AppError((_k = (_j = options.hash) == null ? void 0 : _j.error) != null ? _k : "Template validation failure !", void 0, AppErrorKinds.templateValidationError, errorCode);
+    }
+    setCustomData(this, options, value, forceToRoot);
+  }
+  function setCustomData(context, options, valueOrFn, forceToRoot) {
+    var _a;
+    const value = typeof valueOrFn === "function" ? valueOrFn() : valueOrFn;
+    const key = valueOrDefault((_a = options == null ? void 0 : options.hash) == null ? void 0 : _a.key, "");
+    if (!isNullOrEmpty(key)) {
+      if (forceToRoot) {
+        const root = getRoot(options);
+        root.addToTempData(key, value);
+      } else if (context instanceof TreeElement) {
+        context.addToTempData(key, value);
+      } else if (context instanceof TemplateRootModel) {
+        context.addToTempData(key, value);
+      } else {
+        hostEnv.debugLog(`[setCustomData] unknown context: ${typeof context} for key '${key}' !`);
+      }
+    }
+  }
+  var modelOutputFlags = { undefinedForDefault: true, allowHash: false };
+  function modelOutputHelper() {
+    var _a, _b, _c, _d, _e, _f, _g;
+    const { context, options } = getContextAndOptions(this, ...arguments);
+    if (!(context instanceof TemplateRootModel)) {
+      throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
+    }
+    if (context.inlineEvaluating) {
+      throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside 'output-inline' helper !`);
+    }
+    if (isNullOrEmpty(options.hash)) {
+      throw new AppError(`Helper '${options.name}' missing hash properties !`);
+    }
+    const fileName = (_b = (_a = options == null ? void 0 : options.hash) == null ? void 0 : _a.fileName) != null ? _b : "";
+    const settingsNode = (_c = context.model.codeGenerator) == null ? void 0 : _c.settings;
+    const settingsObj = (_e = (_d = options.hash) == null ? void 0 : _d.settings) != null ? _e : queryObjValue(settingsNode, options, modelOutputFlags);
+    let outputFile = context.output;
+    let updateSettings = true;
+    if (outputFile) {
+      if (fileName !== void 0) {
+        outputFile.fileName = fileName;
+        if (settingsObj === void 0) {
+          updateSettings = false;
+        }
+      }
+    } else {
+      outputFile = {
+        fileName,
+        settings: void 0
+      };
+      updateSettings = !isNullOrEmpty(settingsObj);
+    }
+    if (updateSettings) {
+      if (isNullOrEmpty(settingsObj)) {
+        throw new AppError(`Helper '${options.name}' must have child content with jmespath query expression to retrieve settings (must be compatible with CodeGeneratorBasicSettings type) !`);
+      }
+      const mergeWithDefaults = (_g = (_f = options.hash) == null ? void 0 : _f.mergeWithDefaults) != null ? _g : true;
+      const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
+      outputFile.settings = settings;
+    }
+    if (isNullOrEmpty(outputFile.fileName) && isNullOrEmpty(outputFile.settings)) {
+      throw new AppError(`Helper '${options.name}' missing hash property 'fileName' or 'settings' or child content with jmespath query expression !`);
+    }
+    context.setOutput(outputFile);
+  }
+  function modelOutputChildHelper(options) {
+    var _a, _b;
+    const context = getRoot(options);
+    if (!(context instanceof TemplateRootModel)) {
+      throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
+    }
+    if (context.inlineEvaluating) {
+      throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside 'output-inline' helper !`);
+    }
+    if (typeof (options == null ? void 0 : options.fn) === "function") {
+      throw new AppError(`Helper '${options.name}' cannot be used as block helper (no child content is allowed) !`);
+    }
+    if (isNullOrEmpty(options.hash)) {
+      throw new AppError(`Helper '${options.name}' missing hash properties !`);
+    }
+    const templateId = (_a = options.hash) == null ? void 0 : _a.templateId;
+    if (isNullOrEmpty(templateId)) {
+      throw new AppError(`Helper '${options.name}' missing hash property 'templateId' !`);
+    }
+    context.addChildOutput(templateId, (_b = options.hash) == null ? void 0 : _b.host);
+  }
+  var modelOutputInlineFlags = { undefinedForDefault: true, allowHash: true, allowFn: false };
+  function modelOutputInlineHelper() {
+    var _a, _b, _c, _d, _e, _f, _g, _h;
+    const { context, options } = getContextAndOptions(this, ...arguments);
+    if (!(context instanceof TemplateRootModel)) {
+      throw new AppError(`Helper '${options.name}' can be used only on TemplateRootModel (@root) type !`);
+    }
+    if (arguments.length > 1) {
+      throw new AppError(`Helper '${options.name}' can be only use as block helper (value must be child of '${options.name}' begin/end tags) !`);
+    }
+    const fileName = (_b = (_a = options.hash) == null ? void 0 : _a.fileName) != null ? _b : "";
+    if (isNullOrEmpty(fileName)) {
+      throw new AppError(`Helper '${options.name}' missing property 'fileName' !`);
+    }
+    if (typeof (options == null ? void 0 : options.fn) !== "function") {
+      throw new AppError(`Helper '${options.name}' can be only use as block helper (value must be child of '${options.name}' begin/end tags) !`);
+    }
+    const settingsNode = (_c = context.model.codeGenerator) == null ? void 0 : _c.settings;
+    let settingsObj = (_e = (_d = options.hash) == null ? void 0 : _d.settings) != null ? _e : queryObjValue(settingsNode, options, modelOutputInlineFlags);
+    if (isNullOrEmpty(settingsObj)) {
+      settingsObj = getRoot(options).settings;
+      if (isNullOrEmpty(settingsObj)) {
+        throw new AppError(`Helper '${options.name}' could not find code gen settings from query (nor root settings) !`);
+      }
+    }
+    const mergeWithDefaults = (_g = (_f = options == null ? void 0 : options.hash) == null ? void 0 : _f.mergeWithDefaults) != null ? _g : true;
+    const settings = Object.assign({}, mergeWithDefaults ? DefaultCodeGenSettings : {}, settingsObj);
+    let fileContent = "";
+    if (context.setInlineEvaluating(true)) {
+      try {
+        fileContent = (_h = options.fn(context)) != null ? _h : "";
+      } catch (e) {
+        throw new AppError(`Helper '${options.name}' error: ${e.message}`);
+      } finally {
+        context.setInlineEvaluating(false);
+      }
+    } else {
+      throw new AppError(`Helper '${options.name}' cannot be used as a child helper inside another '${options.name}' helper !`);
+    }
+    const inlineOutput = {
+      fileName,
+      settings,
+      content: fileContent
+    };
+    context.addInlineOutputs(inlineOutput);
+  }
+  function assertHelper(context, options) {
+    var _a, _b, _c, _d;
+    const check = (_a = options.hash) == null ? void 0 : _a.check;
+    const error = (_b = options.hash) == null ? void 0 : _b.error;
+    const code = (_d = (_c = options.hash) == null ? void 0 : _c.code) != null ? _d : "";
+    if (isNullOrEmpty(check)) {
+      throw new AppError(`Helper '${options.name}' missing hash property 'check' !`);
+    }
+    if (isNullOrEmpty(error)) {
+      throw new AppError(`Helper '${options.name}' missing hash property 'error' !`);
+    }
+    if (assertValueCheck(context, check)) {
+      throw new AppError(error != null ? error : "Template validation failure !", void 0, AppErrorKinds.templateValidationError, code);
+    }
+  }
+  function assertValueCheck(value, check) {
+    const isTrue = check === "isTrue";
+    const isFalse = check === "isFalse";
+    const _isNullOrEmpty = check === "isNullOrEmpty";
+    const _isNullOrUndefined = check === "isNullOrUndefined";
+    const isNull = check === "isNull";
+    const isUndefined = check === "isUndefined";
+    const error = value === void 0 && (isUndefined || _isNullOrUndefined) || // undefined
+    value === null && (isNull || _isNullOrUndefined || _isNullOrEmpty) || // null
+    value === true && isTrue || // true
+    value === false && isFalse || // false
+    isNullOrEmpty(value) && _isNullOrEmpty || // empty string
+    isNullOrUndefined(value) && _isNullOrUndefined;
+    return error;
+  }
+
+  // src/hbsManager.ts
+  var import_handlebars2 = __toESM(require_handlebars());
+  var HbsTemplateManager = class _HbsTemplateManager {
+    static init(data) {
+      if (isNullOrEmpty(data)) {
+        throw new Error("Missing templates data !");
+      }
+      _HbsTemplateManager._sources = data;
+    }
+    /* public static registerTemplate(templateId: string, handlebarContent: string): void {
+        HbsTemplateManager._sources ??= {};
+        HbsTemplateManager._sources[templateId] = handlebarContent;
+    } */
+    static hasTemplate(templateId) {
+      return _HbsTemplateManager._sources.hasOwnProperty(templateId);
+    }
+    static runTemplate(templateId, data) {
+      var _a;
+      let compiled;
+      (_a = _HbsTemplateManager._compiled) != null ? _a : _HbsTemplateManager._compiled = {};
+      if (!_HbsTemplateManager._compiled.hasOwnProperty(templateId)) {
+        if (!_HbsTemplateManager._sources.hasOwnProperty(templateId)) {
+          const allTemplates = Object.keys(_HbsTemplateManager._sources).join(", ");
+          throw new AppError(`Template with id '${templateId}' not found (available templates: ${allTemplates})!`);
+        }
+        const source = _HbsTemplateManager._sources[templateId];
+        compiled = import_handlebars2.default.compile(source, { knownHelpers: getKnownHelpers() });
+        _HbsTemplateManager._compiled[templateId] = compiled;
+      } else {
+        compiled = _HbsTemplateManager._compiled[templateId];
+      }
+      const result = compiled(data, {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+        allowCallsToHelperMissing: true
+      });
+      if (result.indexOf("\xA4") > -1) {
+        return result.replace(/\t¤$/gm, "");
+      }
+      return result;
+    }
+  };
+
+  // src/generatorUtils.ts
+  var generatorUtils_exports = {};
+  __export(generatorUtils_exports, {
+    createRootElement: () => createRootElement,
+    detectLineEndings: () => detectLineEndings,
+    generateLhqSchema: () => generateLhqSchema,
+    getGeneratedFileContent: () => getGeneratedFileContent,
+    serializeLhqModelToString: () => serializeLhqModelToString,
+    serializeRootElement: () => serializeRootElement,
+    validateLhqModel: () => validateLhqModel
+  });
+
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/Options.js
+  var ignoreOverride = Symbol("Let zodToJsonSchema decide on which parser to use");
+  var defaultOptions = {
+    name: void 0,
+    $refStrategy: "root",
+    basePath: ["#"],
+    effectStrategy: "input",
+    pipeStrategy: "all",
+    dateStrategy: "format:date-time",
+    mapStrategy: "entries",
+    removeAdditionalStrategy: "passthrough",
+    allowedAdditionalProperties: true,
+    rejectedAdditionalProperties: false,
+    definitionPath: "definitions",
+    target: "jsonSchema7",
+    strictUnions: false,
+    definitions: {},
+    errorMessages: false,
+    markdownDescription: false,
+    patternStrategy: "escape",
+    applyRegexFlags: false,
+    emailStrategy: "format:email",
+    base64Strategy: "contentEncoding:base64",
+    nameStrategy: "ref"
+  };
+  var getDefaultOptions = (options) => typeof options === "string" ? __spreadProps(__spreadValues({}, defaultOptions), {
+    name: options
+  }) : __spreadValues(__spreadValues({}, defaultOptions), options);
+
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/Refs.js
+  var getRefs = (options) => {
+    const _options = getDefaultOptions(options);
+    const currentPath = _options.name !== void 0 ? [..._options.basePath, _options.definitionPath, _options.name] : _options.basePath;
+    return __spreadProps(__spreadValues({}, _options), {
+      currentPath,
+      propertyPath: void 0,
+      seen: new Map(Object.entries(_options.definitions).map(([name2, def]) => [
+        def._def,
+        {
+          def: def._def,
+          path: [..._options.basePath, _options.definitionPath, name2],
+          // Resolution of references will be forced even though seen, so it's ok that the schema is undefined here for now.
+          jsonSchema: void 0
+        }
+      ]))
+    });
+  };
+
+  // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/errorMessages.js
+  function addErrorMessage(res, key, errorMessage, refs) {
+    if (!(refs == null ? void 0 : refs.errorMessages))
+      return;
+    if (errorMessage) {
+      res.errorMessage = __spreadProps(__spreadValues({}, res.errorMessage), {
+        [key]: errorMessage
+      });
+    }
+  }
+  function setResponseValueAndErrors(res, key, value, errorMessage, refs) {
+    res[key] = value;
+    addErrorMessage(res, key, errorMessage, refs);
+  }
+
   // node_modules/.pnpm/zod-to-json-schema@3.24.5_zod@3.24.2/node_modules/zod-to-json-schema/dist/esm/parsers/any.js
   function parseAnyDef() {
     return {};
@@ -23861,79 +24297,28 @@ ${locText}`;
     return toValidationError(options)(err);
   }
 
-  // src/api/schemas.ts
-  var LhqModelLineEndingsSchema = z.union([z.literal("LF"), z.literal("CRLF")]);
-  var LhqModelOptionsResourcesSchema = z.union([
-    z.literal("All"),
-    z.literal("Categories")
-  ]);
-  var LhqModelResourceParameterSchema = z.object({
-    description: z.string().optional(),
-    order: z.number()
-  });
-  var LhqModelResourceTranslationStateSchema = z.union([
-    z.literal("New"),
-    z.literal("Edited"),
-    z.literal("NeedsReview"),
-    z.literal("Final")
-  ]);
-  var LhqModelResourceValueSchema = z.object({
-    value: z.string().optional(),
-    locked: z.boolean().optional(),
-    auto: z.boolean().optional()
-  });
-  var LhqModelResourceSchemaBase = z.object({
-    state: LhqModelResourceTranslationStateSchema,
-    description: z.string().optional(),
-    parameters: z.record(LhqModelResourceParameterSchema).optional(),
-    values: z.record(LhqModelResourceValueSchema).optional()
-  });
-  var LhqModelResourceSchema = LhqModelResourceSchemaBase;
-  var baseDataNodeSchema = z.object({
-    name: z.string(),
-    attrs: z.record(z.string().nullable().optional()).optional()
-  });
-  var LhqModelDataNodeSchema = baseDataNodeSchema.extend({
-    childs: z.lazy(() => z.array(LhqModelDataNodeSchema)).optional()
-  });
-  var baseCategorySchema = z.object({
-    description: z.string().optional(),
-    resources: z.lazy(() => LhqModelResourcesCollectionSchema).optional()
-  });
-  var LhqModelCategorySchema = baseCategorySchema.extend({
-    categories: z.lazy(() => LhqModelCategoriesCollectionSchema).optional()
-  });
-  var LhqModelUidSchema = z.literal("6ce4d54c5dbd415c93019d315e278638");
-  var LhqModelVersionSchema = z.union([z.literal(1), z.literal(2)]);
-  var LhqCodeGenVersionSchema = z.literal(1);
-  var LhqModelCategoriesCollectionSchema = z.record(LhqModelCategorySchema);
-  var LhqModelResourcesCollectionSchema = z.record(LhqModelResourceSchema);
-  var LhqModelOptionsSchema = z.object({
-    categories: z.boolean(),
-    resources: LhqModelOptionsResourcesSchema
-  });
-  var LhqModelMetadataSchema = z.object({
-    childs: z.array(LhqModelDataNodeSchema).optional()
-  });
-  var LhqModelSchema = z.object({
-    model: z.object({
-      uid: LhqModelUidSchema,
-      version: LhqModelVersionSchema,
-      options: LhqModelOptionsSchema,
-      name: z.string(),
-      description: z.string().optional(),
-      primaryLanguage: z.string()
-    }),
-    languages: z.array(z.string()),
-    metadatas: LhqModelMetadataSchema.optional(),
-    resources: z.lazy(() => LhqModelResourcesCollectionSchema).optional(),
-    categories: z.lazy(() => LhqModelCategoriesCollectionSchema).optional()
-  });
-
   // src/generatorUtils.ts
-  var DOMParser;
-  var regexLF = new RegExp("\\r\\n|\\r", "g");
-  var regexCRLF = new RegExp("(\\r(?!\\n))|((?<!\\r)\\n)", "g");
+  function createRootElement(data) {
+    return new RootModelElement(data);
+  }
+  function serializeRootElement(root) {
+    if (!(root instanceof RootModelElement)) {
+      throw new Error('Invalid root element. Expected an object that was created by calling fn "createRootElement".');
+    }
+    const str = JSON.stringify(root.mapToModel());
+    return JSON.parse(str);
+  }
+  function detectLineEndings(content) {
+    const match = content.match(/\r\n|\n/);
+    let lineEnding = match ? match[0] : "";
+    if (lineEnding !== "\r\n" && lineEnding !== "\n") {
+      lineEnding = "\r\n";
+    }
+    return lineEnding === "\r\n" ? "CRLF" : "LF";
+  }
+  function serializeLhqModelToString(model, lineEndings) {
+    return replaceLineEndings(JSON.stringify(model, null, 2), lineEndings);
+  }
   function validateLhqModel(data) {
     if (typeof data === "string") {
       const parseResult2 = tryJsonParse(data, true);
@@ -23963,7 +24348,7 @@ ${locText}`;
     if (!applyLineEndings || generatedFile.content.length === 0) {
       return generatedFile.content;
     }
-    return generatedFile.lineEndings === "LF" ? generatedFile.content.replace(regexLF, "\n") : generatedFile.content.replace(regexCRLF, "\r\n");
+    return replaceLineEndings(generatedFile.content, generatedFile.lineEndings);
   }
   function generateLhqSchema() {
     const jsonSchema = zodToJsonSchema(LhqModelSchema, {
@@ -23971,66 +24356,6 @@ ${locText}`;
       $refStrategy: "root"
     });
     return JSON.stringify(jsonSchema, null, 2);
-  }
-  var itemGroupTypes = ["None", "Compile", "Content", "EmbeddedResource"];
-  var itemGroupTypesAttrs = ["Include", "Update"];
-  var csProjectXPath = '//ns:ItemGroup/ns:##TYPE##[@##ATTR##="##FILE##"]';
-  var xpathRootNamespace = "string(//ns:RootNamespace)";
-  var xpathAssemblyName = "string(//ns:AssemblyName)";
-  function getRootNamespaceFromCsProj(lhqModelFileName, t4FileName, csProjectFileName, csProjectFileContent) {
-    var _a, _b, _c;
-    let referencedLhqFile = false;
-    let referencedT4File = false;
-    if (isNullOrEmpty(csProjectFileName) || isNullOrEmpty(csProjectFileContent)) {
-      return void 0;
-    }
-    let rootNamespace;
-    try {
-      const fileContent = tryRemoveBOM(csProjectFileContent);
-      if (typeof window !== "undefined" && typeof window.DOMParser !== "undefined") {
-        DOMParser = window.DOMParser;
-      } else {
-        DOMParser = import_xmldom.DOMParser;
-      }
-      const doc = new DOMParser().parseFromString(fileContent, "text/xml");
-      const rootNode = doc;
-      const rootNs = ((_a = doc.documentElement) == null ? void 0 : _a.namespaceURI) || "";
-      const ns = isNullOrEmpty(rootNs) ? null : rootNs;
-      const xpathSelect = xpath.useNamespaces({ ns: rootNs });
-      const findFileElement = function(fileName) {
-        for (const itemGroupType of itemGroupTypes) {
-          for (const attr of itemGroupTypesAttrs) {
-            const xpathQuery = csProjectXPath.replace("##TYPE##", itemGroupType).replace("##ATTR##", attr).replace("##FILE##", fileName);
-            const element = xpathSelect(xpathQuery, rootNode, true);
-            if (element) {
-              return element;
-            }
-          }
-        }
-        return void 0;
-      };
-      rootNamespace = xpathSelect(xpathRootNamespace, rootNode, true);
-      referencedLhqFile = findFileElement(lhqModelFileName) != void 0;
-      const t4FileElement = findFileElement(t4FileName);
-      if (t4FileElement) {
-        referencedT4File = true;
-        const dependentUpon = (_b = t4FileElement.getElementsByTagNameNS(ns, "DependentUpon")[0]) == null ? void 0 : _b.textContent;
-        if (dependentUpon && dependentUpon === lhqModelFileName) {
-          referencedLhqFile = true;
-        }
-        const customToolNamespace = (_c = t4FileElement.getElementsByTagNameNS(ns, "CustomToolNamespace")[0]) == null ? void 0 : _c.textContent;
-        if (customToolNamespace) {
-          rootNamespace = customToolNamespace;
-        }
-      }
-      if (!rootNamespace) {
-        rootNamespace = xpathSelect(xpathAssemblyName, rootNode, true);
-      }
-    } catch (e) {
-      console.error("Error getting root namespace.", e);
-      rootNamespace = void 0;
-    }
-    return { csProjectFileName, t4FileName, namespace: rootNamespace, referencedLhqFile, referencedT4File };
   }
 
   // src/generator.ts
@@ -24042,7 +24367,7 @@ ${locText}`;
     if (false) {
       return "0.0.0";
     }
-    return "1.0.89";
+    return "1.0.0-rc.14";
   }
   var _Generator = class _Generator {
     constructor() {
@@ -24133,7 +24458,7 @@ ${locText}`;
       hostData != null ? hostData : hostData = {};
       const validation = validateLhqModel(modelData);
       if (!validation.success) {
-        throw new AppError((_a = validation.error) != null ? _a : `Unable to deserialize or validate LHQ model '${fileName}' !`);
+        throw new AppError((_a = validation.error) != null ? _a : `Validation failed for file '${fileName}' !`, void 0, AppErrorKinds.invalidModelSchema);
       }
       const model = validation.model;
       const rootModel = new RootModelElement(model);
@@ -24200,5 +24525,127 @@ ${locText}`;
   };
   _Generator._initialized = false;
   var Generator = _Generator;
+
+  // src/namespaceUtils.ts
+  var namespaceUtils_exports = {};
+  __export(namespaceUtils_exports, {
+    findNamespaceForModel: () => findNamespaceForModel,
+    getRootNamespaceFromCsProj: () => getRootNamespaceFromCsProj
+  });
+  var import_xmldom = __toESM(require_lib());
+  var xpath = __toESM(require_xpath());
+  var DOMParser;
+  function findNamespaceForModel(lhqModelFile, csProjectFiles) {
+    var _a, _b, _c, _d, _e, _f, _g;
+    let namespaceInfo = void 0;
+    const dir = lhqModelFile.dirname;
+    const namespaceResults = [];
+    for (const csProj of csProjectFiles.filter((x) => x.exist)) {
+      const ttFile = lhqModelFile.basename + ".tt";
+      const csProjContent = csProj.content;
+      if (!isNullOrEmpty(csProjContent)) {
+        const namespaceInfo2 = getRootNamespaceFromCsProj(lhqModelFile, ttFile, csProj, csProjContent);
+        if (namespaceInfo2) {
+          namespaceResults.push(namespaceInfo2);
+        }
+      }
+    }
+    if (namespaceResults.length > 1) {
+      const mutileRefs = namespaceResults.filter((x) => x.referencedLhqFile || x.referencedT4File).length;
+      if (mutileRefs > 1) {
+        const lhq = lhqModelFile.basename;
+        const t4 = lhqModelFile.basename + ".tt";
+        throw new Error(
+          `Multiple C# project files found in directory '${dir}' that references either '${lhq}' or a '${t4}' file.
+Specify which C# project file to use with the '--project' argument.`
+        );
+      }
+      namespaceInfo = namespaceResults.find((x) => (x.referencedLhqFile || x.referencedT4File) && !isNullOrEmpty(x.namespace));
+      namespaceInfo = namespaceInfo || namespaceResults.find((x) => !isNullOrEmpty(x.namespace)) || namespaceResults[0];
+    } else if (namespaceResults.length === 1) {
+      namespaceInfo = namespaceResults[0];
+    }
+    if (namespaceInfo == null ? void 0 : namespaceInfo.namespaceDynamicExpression) {
+      namespaceInfo.namespace = "";
+      console.log(`Warning: Processing '${lhqModelFile.full}' and its '${(_b = (_a = namespaceInfo.csProjectFileName) == null ? void 0 : _a.full) != null ? _b : ""}' 
+Value in 'RootNamespace' or 'AssemblyName' element contains dynamic expression which is not supported.
+This value will not be used for 'Namespace' in generator.
+Set namespace directly in the lhq file in C# template setting 'Namespace' or provide namespace via cmd '--data namespace=<value>'.`);
+    }
+    const csProjFileName = (_d = (_c = namespaceInfo == null ? void 0 : namespaceInfo.csProjectFileName) == null ? void 0 : _c.full) != null ? _d : "";
+    const namespace = (_e = namespaceInfo == null ? void 0 : namespaceInfo.namespace) != null ? _e : "";
+    if (isNullOrEmpty(namespace) && namespaceInfo) {
+      namespaceInfo.namespace = isNullOrEmpty(csProjFileName) ? "" : (_g = (_f = namespaceInfo.csProjectFileName.extless) == null ? void 0 : _f.replace(" ", "_")) != null ? _g : "";
+    }
+    return namespaceInfo;
+  }
+  var itemGroupTypes = ["None", "Compile", "Content", "EmbeddedResource"];
+  var itemGroupTypesAttrs = ["Include", "Update"];
+  var csProjectXPath = '//ns:ItemGroup/ns:##TYPE##[@##ATTR##="##FILE##"]';
+  var xpathRootNamespace = "string(//ns:RootNamespace)";
+  var xpathAssemblyName = "string(//ns:AssemblyName)";
+  function getRootNamespaceFromCsProj(lhqModelFileName, t4FileName, csProjectFileName, csProjectFileContent) {
+    var _a, _b, _c;
+    let referencedLhqFile = false;
+    let referencedT4File = false;
+    let namespaceDynamicExpression = false;
+    if (isNullOrEmpty(csProjectFileName) || isNullOrEmpty(csProjectFileContent)) {
+      return void 0;
+    }
+    let rootNamespace;
+    try {
+      let xpathSelect = void 0;
+      let rootNode = void 0;
+      const fileContent = tryRemoveBOM(csProjectFileContent);
+      if (typeof window !== "undefined" && typeof window.DOMParser !== "undefined") {
+        DOMParser = window.DOMParser;
+      } else {
+        DOMParser = import_xmldom.DOMParser;
+      }
+      const doc = new DOMParser().parseFromString(fileContent, "text/xml");
+      rootNode = doc;
+      const rootNs = ((_a = doc.documentElement) == null ? void 0 : _a.namespaceURI) || "";
+      const ns = isNullOrEmpty(rootNs) ? null : rootNs;
+      xpathSelect = xpath.useNamespaces({ ns: rootNs });
+      const findFileElement = function(fileName) {
+        for (const itemGroupType of itemGroupTypes) {
+          for (const attr of itemGroupTypesAttrs) {
+            const xpathQuery = csProjectXPath.replace("##TYPE##", itemGroupType).replace("##ATTR##", attr).replace("##FILE##", fileName);
+            const element = xpathSelect(xpathQuery, rootNode, true);
+            if (element) {
+              return element;
+            }
+          }
+        }
+        return void 0;
+      };
+      rootNamespace = xpathSelect(xpathRootNamespace, rootNode, true);
+      referencedLhqFile = findFileElement(lhqModelFileName.basename) != void 0;
+      const t4FileElement = findFileElement(t4FileName);
+      if (t4FileElement) {
+        referencedT4File = true;
+        const dependentUpon = (_b = t4FileElement.getElementsByTagNameNS(ns, "DependentUpon")[0]) == null ? void 0 : _b.textContent;
+        if (dependentUpon && dependentUpon === lhqModelFileName.basename) {
+          referencedLhqFile = true;
+        }
+        const customToolNamespace = (_c = t4FileElement.getElementsByTagNameNS(ns, "CustomToolNamespace")[0]) == null ? void 0 : _c.textContent;
+        if (customToolNamespace) {
+          rootNamespace = customToolNamespace;
+        }
+      }
+      if (!rootNamespace) {
+        rootNamespace = xpathSelect(xpathAssemblyName, rootNode, true);
+      }
+      if (!isNullOrEmpty(rootNamespace)) {
+        const regexMsBuildProp = /\$\((.*?)(?:\)(?!\)))/g;
+        const match = [...rootNamespace.matchAll(regexMsBuildProp)];
+        namespaceDynamicExpression = match.length > 0;
+      }
+    } catch (e) {
+      console.error("Error getting root namespace.", e);
+      rootNamespace = void 0;
+    }
+    return { csProjectFileName, t4FileName, namespace: rootNamespace, referencedLhqFile, referencedT4File, namespaceDynamicExpression };
+  }
   return __toCommonJS(index_exports);
 })();

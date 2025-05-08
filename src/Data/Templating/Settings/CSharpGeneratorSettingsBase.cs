@@ -34,9 +34,12 @@ namespace LHQ.Data.Templating.Settings
         public CSharpGeneratorSettingsBase()
         {
             UseExpressionBodySyntax = false;
+            Namespace = null;
         }
 
         public bool UseExpressionBodySyntax { get; set; }
+
+        public string Namespace { get; set; }
 
         public override void AssignFrom(GeneratorSettingsBase other)
         {
@@ -45,6 +48,7 @@ namespace LHQ.Data.Templating.Settings
             if (other is CSharpGeneratorSettingsBase other2)
             {
                 UseExpressionBodySyntax = other2.UseExpressionBodySyntax;
+                Namespace = other2.Namespace;
             }
         }
 
@@ -53,6 +57,7 @@ namespace LHQ.Data.Templating.Settings
             base.Serialize(node, modelVersion);
 
             node.AddAttribute(nameof(UseExpressionBodySyntax), DataNodeValueHelper.ToString(UseExpressionBodySyntax));
+            node.AddAttribute(nameof(Namespace), Namespace);
         }
 
         public override bool Deserialize(DataNode node)
@@ -69,6 +74,8 @@ namespace LHQ.Data.Templating.Settings
                         UseExpressionBodySyntax = DataNodeValueHelper.FromString(attrGenerateParamsMethods.Value, true);
                     }
                 }
+                
+                Namespace = node.Attributes.Contains(nameof(Namespace)) ? node.Attributes[nameof(Namespace)].Value : null;
             }
 
             return result; 

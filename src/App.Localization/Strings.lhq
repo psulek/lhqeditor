@@ -1,7 +1,7 @@
 ﻿{
   "model": {
     "uid": "6ce4d54c5dbd415c93019d315e278638",
-    "version": 2,
+    "version": 3,
     "options": {
       "categories": true,
       "resources": "Categories"
@@ -1458,6 +1458,55 @@
               "values": {
                 "en": {
                   "value": "Export resources"
+                }
+              }
+            }
+          }
+        },
+        "FileCompatibilityIssue": {
+          "resources": {
+            "Caption": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "File compatibility issue"
+                }
+              }
+            },
+            "CreatedInPreviousVersion": {
+              "state": "Edited",
+              "parameters": {
+                "fileModelVersion": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Content of project file has old format version 'v{0}' and needs to be upgraded to newer version."
+                }
+              }
+            },
+            "CreatedWithHigherVersion": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "File was created in higher version of program.\r\nPlease upgrade program to latest version to be able to open this file."
+                }
+              }
+            },
+            "UpgradeToCurrentVersionConfirm": {
+              "state": "Edited",
+              "parameters": {
+                "latestVersion": {
+                  "order": 0
+                },
+                "minVersion": {
+                  "order": 1
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Upgrading to new model version does not affect existing model data.\r\n\r\nOld version of LHQ VS IDE extension will not work with {0} model unless upgraded at least to version {1}.\r\n\r\nContinue to upgrade?"
                 }
               }
             }
@@ -3655,43 +3704,6 @@
               "values": {
                 "en": {
                   "value": "Error saving project file '{0}' to disk, permission denied?"
-                }
-              }
-            },
-            "FileCompatibilityIssueCaption": {
-              "state": "Edited",
-              "values": {
-                "en": {
-                  "value": "File compatibility issue"
-                }
-              }
-            },
-            "FileCompatibilityIssueCreatedInPreviousVersion": {
-              "state": "Edited",
-              "parameters": {
-                "fileName": {
-                  "order": 1
-                }
-              },
-              "values": {
-                "en": {
-                  "value": "Project file '{0}' was created in previous version of program."
-                }
-              }
-            },
-            "FileCompatibilityIssueCreatedWithHigherVersion": {
-              "state": "Edited",
-              "values": {
-                "en": {
-                  "value": "File was created in higher version of program.\r\nPlease upgrade program to latest version to be able to open this file."
-                }
-              }
-            },
-            "FileCompatibilityIssueUpgradeToCurrentVersionConfirm": {
-              "state": "Edited",
-              "values": {
-                "en": {
-                  "value": "File must be upgraded to current version to be able to open it.\r\nDo you want to upgrade file and continue to open it?"
                 }
               }
             },
@@ -6865,7 +6877,8 @@
         {
           "name": "content",
           "attrs": {
-            "templateId": "WpfResxCsharp01"
+            "templateId": "WpfResxCsharp01",
+            "version": "1"
           },
           "childs": [
             {
@@ -6878,6 +6891,7 @@
                     "EncodingWithBOM": "false",
                     "LineEndings": "CRLF",
                     "UseExpressionBodySyntax": "true",
+                    "Namespace": "LHQ.App.Localization",
                     "MissingTranslationFallbackToPrimary": "true"
                   }
                 },

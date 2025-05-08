@@ -42,6 +42,7 @@ using LHQ.Data.ModelStorage.Serializers;
 
 [assembly: ModelSerializer(typeof(ModelSerializer_v1))]
 [assembly: ModelSerializer(typeof(ModelSerializer_v2))]
+[assembly: ModelSerializer(typeof(ModelSerializer_v3))]
 
 [assembly: InternalsVisibleTo("LHQ.App")]
 [assembly: InternalsVisibleTo("LHQ.UnitTests")]

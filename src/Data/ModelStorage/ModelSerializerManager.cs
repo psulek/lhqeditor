@@ -98,7 +98,7 @@ namespace LHQ.Data.ModelStorage
                     var manager = new ModelSerializerManager();
                     manager.Initialize(new[] { typeof(ModelSerializerManager).Assembly });
                     string fileContent = FileUtils.ReadAllText(fileName);
-                    loadResult = manager.Deserialize(modelContext, fileContent, new ModelLoadOptions(false));
+                    loadResult = manager.Deserialize(modelContext, fileContent, fileName, new ModelLoadOptions(false));
                 }
             }
             catch (Exception e)
@@ -110,7 +110,7 @@ namespace LHQ.Data.ModelStorage
         }
 
         public ModelLoadResult Deserialize(ModelContext modelContext, string source, 
-            ModelLoadOptions loadOptions)
+            string modelFileName, ModelLoadOptions loadOptions)
         {
             ModelLoadResult modelLoadResult;
 
@@ -160,7 +160,7 @@ namespace LHQ.Data.ModelStorage
 
                         foreach (var upgrader in upgraders)
                         {
-                            if (upgrader.Upgrade(modelContext))
+                            if (upgrader.Upgrade(modelFileName, modelContext))
                             {
                                 modelContext.Model.Version = upgrader.ModelVersion;
                             }

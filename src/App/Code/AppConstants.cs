@@ -29,7 +29,8 @@ namespace LHQ.App.Code
     {
         private const string ModelFileExtension = "lhq";
 
-        public const string ModernGeneratorMinVersion = "2025.1";
+        public const string ModernGeneratorInitVersion = "2025.1";
+        public const string ModernGeneratorMinVersion = "2025.3";
         public const string ModernGeneratorNoT4MinVersion = "2025.3";
 
         public static class WebSiteUrls
@@ -44,8 +45,14 @@ namespace LHQ.App.Code
 
             private const string NugetApiServer = "https://api.nuget.org/v3-flatcontainer/";
 
-            public const string ModelV2_Info = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes";
-            public const string ModelV2_T4Obsolete = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes#obsolete-t4-template-files-lhqtt";
+            private const string ModelV2_Info = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes";
+            private const string ModelV3_Info = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v3-Changes";
+            
+            private const string ModelV2_T4Obsolete = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes#obsolete-t4-template-files-lhqtt";
+
+            public static string GetLatestModelChanges() => ModelV3_Info;
+            
+            public static string GetT4_ObsoleteUrl() => ModelV2_T4Obsolete;
 
             public static string GetReportBug(string title, string body)
             {

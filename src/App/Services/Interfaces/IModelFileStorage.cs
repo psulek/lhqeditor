@@ -34,9 +34,9 @@ namespace LHQ.App.Services.Interfaces
 
         bool IsCompatible(ModelContext modelContext);
         
-        ModelLoadResult Load(ModelContext modelContext, string content);
+        ModelLoadResult Load(ModelContext modelContext, string content, string fileName);
 
-        ModelLoadResult Upgrade(ModelContext modelContext, string content, int fromModelVersion);
+        ModelLoadResult Upgrade(ModelContext modelContext, string content, string fileName, int fromModelVersion);
 
         string Save(ModelContext modelContext, ModelSaveOptions modelSaveOptions);
 

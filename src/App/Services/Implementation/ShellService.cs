@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +22,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -42,6 +44,7 @@ using LHQ.Data.Extensions;
 using LHQ.Data.Interfaces.Key;
 using LHQ.Data.ModelStorage;
 using LHQ.Data.Templating.Templates;
+using LHQ.Gen.Lib;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
 
@@ -142,12 +145,8 @@ namespace LHQ.App.Services.Implementation
             bool appStartedFirstTime = AppContext.AppStartedFirstTime;
             if (appStartedFirstTime)
             {
-                UIService.DelayedAction(() =>
-                    {
-                        ApplicationService.ShowAppSettings();
-                    }, TimeSpan.FromSeconds(1));
+                UIService.DelayedAction(() => { ApplicationService.ShowAppSettings(); }, TimeSpan.FromSeconds(1));
             }
-
         }
 
         public void NotifyShellLoaded()
@@ -162,7 +161,7 @@ namespace LHQ.App.Services.Implementation
                 var dialogShowInfo = new DialogShowInfo(Strings.Services.Application.TranslationServiceCaption,
                     Strings.Services.Application.TranslationServiceIsNotEnabled,
                     Strings.Services.Application.TranslationServiceEnableConfirm);
-                
+
                 if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes)
                 {
                     ApplicationService.ShowAppSettings(AppSettingsDialogPage.Translator);
@@ -183,7 +182,7 @@ namespace LHQ.App.Services.Implementation
                 var dialogShowInfo = new DialogShowInfo(Strings.Services.Application.TranslationServiceCaption,
                     Strings.Services.Application.TranslationServiceIsNotConfigured,
                     Strings.Services.Application.TranslationServiceConfigureConfirm);
-                
+
                 if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes)
                 {
                     ApplicationService.ShowAppSettings(AppSettingsDialogPage.Translator);
@@ -236,10 +235,8 @@ namespace LHQ.App.Services.Implementation
 
         private void OpenProject(string fileName, bool isLastOpened, int? forceUpgradeFromModel = null)
         {
-            CallProjectBusyOperation(() =>
-                {
-                    InternalOpenProject(fileName, isLastOpened, forceUpgradeFromModel);
-                }, ProjectBusyOperationType.OpenProject);
+            CallProjectBusyOperation(() => { InternalOpenProject(fileName, isLastOpened, forceUpgradeFromModel); },
+                ProjectBusyOperationType.OpenProject);
         }
 
         private void InternalOpenProject(string fileName, bool isLastOpened, int? forceUpgradeFromModel = null)
@@ -277,7 +274,7 @@ namespace LHQ.App.Services.Implementation
 
             try
             {
-                string captionFileCompatIssue = Strings.Services.Application.FileCompatibilityIssueCaption;
+                string captionFileCompatIssue = Strings.Dialogs.FileCompatibilityIssue.Caption;
 
                 void OnLoadingFailed()
                 {
@@ -299,7 +296,7 @@ namespace LHQ.App.Services.Implementation
                         {
                             DialogService.ShowWarning(new DialogShowInfo(captionFileCompatIssue,
                                 Strings.Services.Application.OpenProjectFailed(fileName),
-                                Strings.Services.Application.FileCompatibilityIssueCreatedWithHigherVersion));
+                                Strings.Dialogs.FileCompatibilityIssue.CreatedWithHigherVersion));
                         }
                         else
                         {
@@ -308,7 +305,7 @@ namespace LHQ.App.Services.Implementation
                                 : Strings.Operations.Project.OpenProjectCaption;
                             string message = Strings.Services.Application.OpenProjectFailed(fileName);
                             string detail = loadResult.LoadStatus.ToDisplayName(fileName);
-                            
+
                             DialogService.ShowError(new DialogShowInfo(caption, message, detail));
                         }
                     }
@@ -328,12 +325,18 @@ namespace LHQ.App.Services.Implementation
 
                             if (!doUpgrade)
                             {
-                                var dialogShowInfo = new DialogShowInfo(captionFileCompatIssue,
-                                    Strings.Services.Application.FileCompatibilityIssueCreatedInPreviousVersion(fileName),
-                                    Strings.Services.Application.FileCompatibilityIssueUpgradeToCurrentVersionConfirm);
-                                
-                                var confirmResult = DialogService.ShowConfirm(dialogShowInfo).DialogResult;
-                                doUpgrade = confirmResult == DialogResult.Yes;
+                                // var latestVersionStr = $"v{ModelConstants.CurrentModelVersion}";
+                                //
+                                // var dialogShowInfo = new DialogShowInfo(captionFileCompatIssue,
+                                //     Strings.Dialogs.FileCompatibilityIssue.CreatedInPreviousVersion(fileName),
+                                //     Strings.Dialogs.FileCompatibilityIssue.UpgradeToCurrentVersionConfirm(latestVersionStr, AppConstants.ModernGeneratorMinVersion));
+                                // dialogShowInfo.YesButtonHeader = Strings.Common.Yes;
+                                //
+                                // var confirmResult = DialogService.ShowConfirm(dialogShowInfo).DialogResult;
+                                //doUpgrade = confirmResult == DialogResult.Yes;
+
+                                var title = Strings.Dialogs.FileCompatibilityIssue.CreatedInPreviousVersion(loadResult.ModelVersion);
+                                doUpgrade = DialogService.ShowUpgradeModelDialog(captionFileCompatIssue, title);
                             }
 
                             if (doUpgrade)
@@ -384,6 +387,7 @@ namespace LHQ.App.Services.Implementation
                 {
                     ShellViewModel.MarkAsDirty();
                 }
+
                 ShellViewModel.TreeIsStartupFocused = true;
             }
         }
@@ -459,8 +463,8 @@ namespace LHQ.App.Services.Implementation
                 modelContext = new ModelContext(ModelContextOptions.Default);
 
                 ModelLoadResult loadResult = upgradingModel
-                    ? ModelFileStorage.Upgrade(modelContext, modelContent, upgradeFromModelVersion.Value)
-                    : ModelFileStorage.Load(modelContext, modelContent);
+                    ? ModelFileStorage.Upgrade(modelContext, modelContent, fileName, upgradeFromModelVersion.Value)
+                    : ModelFileStorage.Load(modelContext, modelContent, fileName);
 
                 result.ModelVersion = loadResult.ModelVersion;
                 bool loadedFromFile = loadResult.Status == ModelLoadStatus.Success;
@@ -499,7 +503,8 @@ namespace LHQ.App.Services.Implementation
                         {
                             string tmpModelContent = ModelFileStorage.Save(modelContext, new ModelSaveOptions(false));
                             //if (!tmpModelContent.IsNullOrEmpty() && tmpModelContent != loadResult.RawJson)
-                            if (!tmpModelContent.IsNullOrEmpty() && string.Compare(tmpModelContent, loadResult.RawJson, StringComparison.Ordinal) != 0)
+                            if (!tmpModelContent.IsNullOrEmpty() &&
+                                string.Compare(tmpModelContent, loadResult.RawJson, StringComparison.Ordinal) != 0)
                             {
                                 try
                                 {
@@ -537,17 +542,17 @@ namespace LHQ.App.Services.Implementation
                         {
                             case ModelLoadStatus.ModelSourceInvalid:
                             case ModelLoadStatus.LoadError:
-                                {
-                                    result.LoadStatus = ProjectLoadStatus.ModelLoadError;
-                                    break;
-                                }
+                            {
+                                result.LoadStatus = ProjectLoadStatus.ModelLoadError;
+                                break;
+                            }
                             case ModelLoadStatus.ModelUpgraderRequired:
-                                {
-                                    result.LoadStatus = loadResult.ModelVersion > ModelConstants.CurrentModelVersion
-                                        ? ProjectLoadStatus.ModelVersionHigherThanApp
-                                        : ProjectLoadStatus.ModelUpgradeRequired;
-                                    break;
-                                }
+                            {
+                                result.LoadStatus = loadResult.ModelVersion > ModelConstants.CurrentModelVersion
+                                    ? ProjectLoadStatus.ModelVersionHigherThanApp
+                                    : ProjectLoadStatus.ModelUpgradeRequired;
+                                break;
+                            }
                             default:
                             {
                                 throw new ArgumentOutOfRangeException();
@@ -624,12 +629,12 @@ namespace LHQ.App.Services.Implementation
 
             return result.IsSuccess;
         }
-        
+
         public void StandaloneCodeGenerate()
         {
             if (!ShellViewModel.HasCodeGeneratorItemTemplate)
             {
-                var dialogResultInfo = DialogService.ShowConfirm(new DialogShowInfo(Strings.Dialogs.CodeGenerator.RunCodeGenerator, 
+                var dialogResultInfo = DialogService.ShowConfirm(new DialogShowInfo(Strings.Dialogs.CodeGenerator.RunCodeGenerator,
                     Strings.Dialogs.CodeGenerator.NoGenerateTemplateAssociated,
                     Strings.Dialogs.CodeGenerator.NoGenerateTemplateAssociatedDetail), dialogIcon: DialogIcon.Error);
 
@@ -640,10 +645,10 @@ namespace LHQ.App.Services.Implementation
                         ShellViewModel.Commands.ProjectSettingsCommand.Execute(null);
                     }
                 }
-                
+
                 return;
             }
-            
+
             var standaloneCodeGenerator = AppContext.StandaloneCodeGeneratorService;
 
             var startTime = DateTime.UtcNow;
@@ -662,7 +667,7 @@ namespace LHQ.App.Services.Implementation
                         {
                             elapsedTime = DateTime.UtcNow - startTime;
                         }
-                        
+
                         UIService.DispatchActionOnUI(() =>
                             {
                                 StopProjectOperationIsBusy();
@@ -670,11 +675,61 @@ namespace LHQ.App.Services.Implementation
                                 {
                                     var info = new DialogShowInfo(Strings.Dialogs.CodeGenerator.CodeGeneratorTitle,
                                         Strings.Dialogs.CodeGenerator.ErrorGeneratingTemplateCode);
-                                    
+
+                                    if (codeGenResult.ErrorKind == GeneratorErrorKind.InvalidModelSchema)
+                                    {
+                                        info.Detail = "Invalid model schema.";
+                                    }
+                                    else if (codeGenResult.ErrorKind == GeneratorErrorKind.TemplateValidationError)
+                                    {
+                                        info.Detail = $"Invalid template settings. {codeGenResult.Error}";
+                                    }
+
                                     DialogService.ShowError(info);
+
+                                    if (codeGenResult.ErrorCode == GeneratorErrorCodes.CsharpNamespaceMissing)
+                                    {
+                                        AutodetectNamespace(ShellViewModel.ProjectFileName, ShellViewModel.ModelContext);
+                                    }
                                 }
                             }, TimeSpan.FromMilliseconds(200));
                     });
+        }
+
+        private void AutodetectNamespace(string modelFileName, ModelContext modelContext)
+        {
+            string dialogCaption = Strings.Dialogs.CodeGenerator.CodeGeneratorTitle;
+            var autoDetectNms = new DialogShowInfo(dialogCaption,
+                "Namespace value for C# generator is not set, but it is mandatory!",
+                "Do you want to try to auto-detect the namespace value from associated C# project file?");
+
+            if (DialogService.ShowConfirm(autoDetectNms).DialogResult == DialogResult.Yes)
+            {
+                string csharp_namespace = AppContext.StandaloneCodeGeneratorService.AutodetectNamespace(modelFileName);
+
+                var autoDetectDialogTitle = "Auto-detect namespace value for C# generator";
+                if (string.IsNullOrEmpty(csharp_namespace))
+                {
+                    DialogService.ShowWarning(new DialogShowInfo(dialogCaption,
+                        autoDetectDialogTitle,
+                        "No namespace value was detected, please set this value manually in " +
+                        " code generator settings for C#."));
+                }
+                else
+                {
+                    var codeGeneratorTemplate = modelContext.GetCodeGeneratorTemplate("");
+                    if (codeGeneratorTemplate is ICSharpResXTemplateBase csharpResXTemplateBase)
+                    {
+                        var cSharpSettings = csharpResXTemplateBase.GetCSharp();
+
+                        if (string.IsNullOrEmpty(cSharpSettings.Namespace))
+                        {
+                            cSharpSettings.Namespace = csharp_namespace;
+                            ShellViewModel.CodeGeneratorItemTemplateNavigateCommand.Execute(null);
+                        }
+                    }
+                }
+            }
         }
 
         public void UpgradeModelToLatest()
@@ -708,7 +763,7 @@ namespace LHQ.App.Services.Implementation
 
         public event EventHandler<ShellContextEventArgs> OnShellViewEvent;
 
-        public void NewProject(string modelName, string primaryLanguage, ModelOptions modelOptions, 
+        public void NewProject(string modelName, string primaryLanguage, ModelOptions modelOptions,
             CodeGeneratorTemplate codeGeneratorTemplate)
         {
             ModelContext modelContext = CreateModelContext(modelName);
@@ -800,7 +855,6 @@ namespace LHQ.App.Services.Implementation
                 action,
                 StopProjectOperationIsBusy);
         }
-
 
         public void StartProjectOperationIsBusy(ProjectBusyOperationType type)
         {

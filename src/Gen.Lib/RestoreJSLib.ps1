@@ -34,7 +34,7 @@ if (!(Test-Path -Path $out_templates)) {
     New-Item -ItemType Directory -Path $out_templates -Force | Out-Null
 }
 
-Copy-Item -Recurse -Force $lib_folder\browser\*.* $out_browser
+Copy-Item -Recurse -Force $lib_folder\browser\index.js $out_browser
 Copy-Item -Recurse -Force $lib_folder\hbs\*.* $out_templates
 
 # Remove-Item -Path $node_modules -Recurse -Force

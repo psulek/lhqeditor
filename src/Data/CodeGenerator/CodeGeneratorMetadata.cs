@@ -37,6 +37,7 @@ namespace LHQ.Data.CodeGenerator
     {
         private const string ElementSettings = "Settings";
         private const string AttributeTemplateId = "templateId";
+        private const string AttributeVersion = "version";
 
         [JsonIgnore]
         public Guid DescriptorUID { get; } = CodeGeneratorMetadataDescriptor.UID;
@@ -44,8 +45,11 @@ namespace LHQ.Data.CodeGenerator
         [JsonIgnore]
         public CodeGeneratorTemplate Template { get; set; }
 
-        [JsonProperty("templateId")]
+        [JsonProperty(AttributeTemplateId)]
         public string TemplateId { get; set; }
+
+        [JsonProperty(AttributeVersion)]
+        public int Version { get; set; } = ModelConstants.CurrentCodeGeneratorVersion;
 
         public DataNode Serialize(int modelVersion)
         {
@@ -54,6 +58,7 @@ namespace LHQ.Data.CodeGenerator
             {
                 result = new DataNode();
                 result.AddAttribute(AttributeTemplateId, TemplateId);
+                result.AddAttribute(AttributeVersion, DataNodeValueHelper.ToString(Version));
 
                 var templateNode = new DataNode(ElementSettings);
                 Template.Serialize(templateNode, modelVersion);
@@ -88,6 +93,16 @@ namespace LHQ.Data.CodeGenerator
                                 Template = template;
                             }
                         }
+                    }
+
+                    var versionStr = sourceNode.Attributes[AttributeVersion]?.Value;
+                    if (!string.IsNullOrEmpty(versionStr) && int.TryParse(versionStr, out int version))
+                    {
+                        Version = version;
+                    }
+                    else
+                    {
+                        Version = ModelConstants.CurrentCodeGeneratorVersion;
                     }
                 }
             }

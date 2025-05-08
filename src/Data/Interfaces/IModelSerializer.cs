@@ -39,7 +39,7 @@ namespace LHQ.Data.Interfaces
         ModelLoadResult Deserialize(ModelContext modelContext, JObject source, ModelLoadOptions loadOptions);
 
         // ReSharper disable once UnusedParameter.Global
-        bool Upgrade(ModelContext previousModelContext);
+        bool Upgrade(string modelFileName, ModelContext previousModelContext);
         bool IsCompatibleWithCurrent();
     }
 }

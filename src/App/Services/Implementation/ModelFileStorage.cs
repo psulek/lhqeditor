@@ -55,7 +55,7 @@ namespace LHQ.App.Services.Implementation
 
             var clonedModelContext = new ModelContext(source.Options);
             var loadOptions = new ModelLoadOptions(preserveKeys);
-            ModelLoadResult loadResult = _serializerManager.Deserialize(clonedModelContext, serializedContent, loadOptions);
+            ModelLoadResult loadResult = _serializerManager.Deserialize(clonedModelContext, serializedContent, null, loadOptions);
             return loadResult.Status == ModelLoadStatus.Success ? clonedModelContext : null;
         }
 
@@ -64,19 +64,19 @@ namespace LHQ.App.Services.Implementation
             return _serializerManager.IsCompatible(modelContext);
         }
 
-        public ModelLoadResult Load(ModelContext modelContext, string content)
+        public ModelLoadResult Load(ModelContext modelContext, string content, string fileName)
         {
             var loadOptions = new ModelLoadOptions(false);
-            return _serializerManager.Deserialize(modelContext, content, loadOptions);
+            return _serializerManager.Deserialize(modelContext, content, fileName, loadOptions);
         }
 
-        public ModelLoadResult Upgrade(ModelContext modelContext, string content, int fromModelVersion)
+        public ModelLoadResult Upgrade(ModelContext modelContext, string content, string fileName, int fromModelVersion)
         {
             var loadOptions = new ModelLoadOptions(false)
             {
                 UpgradeFromModelVersion = fromModelVersion
             };
-            return _serializerManager.Deserialize(modelContext, content, loadOptions);
+            return _serializerManager.Deserialize(modelContext, content, fileName, loadOptions);
         }
 
         public string Save(ModelContext modelContext, ModelSaveOptions modelSaveOptions)

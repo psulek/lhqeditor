@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,31 +22,38 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using LHQ.Data.Extensions;
-using LHQ.Data.Interfaces;
-using LHQ.Data.Interfaces.Key;
-using LHQ.Data.Metadata;
-using LHQ.Data.Support;
+using LHQ.Data.Templating.Settings;
+using LHQ.Data.Templating.Templates;
 using LHQ.Utils;
-using LHQ.Utils.Extensions;
-using LHQ.Utils.Utilities;
-using Newtonsoft.Json.Linq;
 
 namespace LHQ.Data.ModelStorage.Serializers
 {
-    public class ModelSerializer_v2: ModelSerializer_v1
+    public class ModelSerializer_v3: ModelSerializer_v1
     {
-        public override int ModelVersion => 2;
+        public override int ModelVersion => 3;
 
         public override bool Upgrade(string modelFileName, ModelContext previousModelContext)
         {
-            return previousModelContext.Model.Version == 1;
+            if (!string.IsNullOrEmpty(modelFileName))
+            {
+                CodeGeneratorTemplate codeGeneratorTemplate = previousModelContext.GetCodeGeneratorTemplate(string.Empty);
+                if (codeGeneratorTemplate is ICSharpResXTemplateBase csharpResXTemplateBase)
+                {
+                    var cSharpSettings = csharpResXTemplateBase.GetCSharp();
+
+                    if (string.IsNullOrEmpty(cSharpSettings.Namespace))
+                    {
+                        var csProjectInfo = CsProjectUtils.FindOwnerCsProjectFile(modelFileName, null);
+                        cSharpSettings.Namespace = csProjectInfo?.Namespace;
+                    }
+                }
+            }
+
+            return previousModelContext.Model.Version < 3;
         }
     }
 }

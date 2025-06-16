@@ -535,7 +535,7 @@ Other team members must also upgrade LHQ Extension to min. version &#39;{2}&#39;
     <value>File compatibility issue</value>
   </data>
   <data name="DialogsFileCompatibilityIssueCreatedInPreviousVersion" xml:space="preserve">
-    <value>Content of project file has old format version &#39;v{0}&#39; and needs to be upgraded to newer version.</value>
+    <value>Project file &#39;{0}&#39; has old format version &#39;v{1}&#39; and needs to be upgraded to newer version.</value>
   </data>
   <data name="DialogsFileCompatibilityIssueCreatedWithHigherVersion" xml:space="preserve">
     <value>File was created in higher version of program.
@@ -619,7 +619,7 @@ NOTE: You need to have active github account to report error.</value>
 Old version of LHQ VS IDE extension will not work with {0} model unless upgraded at least to version {1}.</value>
   </data>
   <data name="DialogsUpgradeModelUpgradeModelMessage" xml:space="preserve">
-    <value>Do you want to upgrade current model to new version ({0}) ?</value>
+    <value>Do you want to upgrade to the latest version `{0}` ?</value>
   </data>
   <data name="DialogsVsOptionsApplyChangesCaption" xml:space="preserve">
     <value>Apply Settings Change</value>

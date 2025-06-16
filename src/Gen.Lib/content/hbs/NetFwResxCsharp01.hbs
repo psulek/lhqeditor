@@ -16,7 +16,7 @@ childs[?name=='CSharp'].attrs | [0].merge(@, {
 
 {{~m-data (x-concat model.name "Context") key="rootClassName" ~}}
 {{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
-{{~m-data (x-select @root.settings.Namespace @root.host.namespace) key="rootNamespace" 
+{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" 
    check="isNullOrEmpty" error="Missing 'Namespace' value for C# settings." errorCode="csharp.namespace.missing" ~}}
 
 {{~m-data (x-normalizePath @root.settings.OutputFolder replacePathSep=".") key="outputFolderDots" ~}}

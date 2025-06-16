@@ -17236,6 +17236,7 @@ var LhqGenerators = (() => {
     arraySortBy: () => arraySortBy,
     baseCategorySchema: () => baseCategorySchema,
     baseDataNodeSchema: () => baseDataNodeSchema,
+    fileUtils: () => fileUtils_exports,
     generatorUtils: () => generatorUtils_exports,
     getLibraryVersion: () => getLibraryVersion,
     hasItems: () => hasItems,
@@ -24367,7 +24368,7 @@ ${locText}`;
     if (false) {
       return "0.0.0";
     }
-    return "1.0.0-rc.14";
+    return "1.0.0-rc.16";
   }
   var _Generator = class _Generator {
     constructor() {
@@ -24646,6 +24647,83 @@ Set namespace directly in the lhq file in C# template setting 'Namespace' or pro
       rootNamespace = void 0;
     }
     return { csProjectFileName, t4FileName, namespace: rootNamespace, referencedLhqFile, referencedT4File, namespaceDynamicExpression };
+  }
+
+  // src/fileUtils.ts
+  var fileUtils_exports = {};
+  __export(fileUtils_exports, {
+    readFileInfo: () => readFileInfo,
+    safeReadFile: () => safeReadFile
+  });
+  function safeReadFile(fileName, pathExists, readFile) {
+    return __async(this, null, function* () {
+      if (!(yield pathExists(fileName))) {
+        throw new Error(`File '${fileName}' not found.`);
+      }
+      const content = yield readFile(fileName, { encoding: "utf-8" });
+      return isNullOrEmpty(content) ? "" : tryRemoveBOM(content);
+    });
+  }
+  var formatRelativePath = (p) => {
+    const h = p.slice(0, 1);
+    const res = h === "." ? p : h === "/" ? `.${p}` : `./${p}`;
+    return res.replace("\\", "/");
+  };
+  function readFileInfo(inputPath, platformPath, pathExists, readFile, options) {
+    return __async(this, null, function* () {
+      var _a;
+      if (isNullOrEmpty(inputPath)) {
+        throw new Error(`Parameter 'inputPath' could not be undefined or empty!`);
+      }
+      options = Object.assign({
+        fileMustExist: false,
+        rootFolder: void 0,
+        formatRelative: false,
+        loadContent: false,
+        encoding: "utf-8"
+      }, options != null ? options : {});
+      let rootFolder = void 0;
+      const hasRootFolder = options.rootFolder !== void 0 && options.rootFolder !== null;
+      if (hasRootFolder) {
+        rootFolder = typeof options.rootFolder === "string" ? options.rootFolder : options.rootFolder.full;
+      }
+      const isAbsolute = platformPath.isAbsolute(inputPath);
+      if (!isAbsolute && rootFolder === void 0) {
+        throw new Error(`Parameter 'rootFolder' is required when 'inputPath' is relative!`);
+      }
+      const full = isAbsolute ? inputPath : platformPath.join(rootFolder, inputPath);
+      if (rootFolder && platformPath.relative(rootFolder, full).startsWith("../")) {
+        throw new Error(`File '${inputPath}' is outside of root folder '${rootFolder}'!`);
+      }
+      let relative;
+      if (hasRootFolder) {
+        relative = isAbsolute ? platformPath.relative(rootFolder, inputPath) : inputPath;
+        relative = relative.replace(/\\/g, "/");
+        if (options.formatRelative === true) {
+          relative = formatRelativePath(relative);
+        }
+        if (relative.startsWith("../")) {
+          throw new Error(`File '${inputPath}' is outside of root folder '${rootFolder}'!`);
+        }
+      }
+      const exist = yield pathExists(full);
+      if (!exist && options.fileMustExist === true) {
+        throw new Error(`File '${inputPath}' does not exist!`);
+      }
+      const basename = platformPath.basename(full);
+      const dirname = platformPath.dirname(full);
+      const ext = platformPath.extname(full);
+      const extless = platformPath.basename(full, ext);
+      let content = void 0;
+      if (options.loadContent === true) {
+        const encoding = (_a = options.encoding) != null ? _a : null;
+        content = yield readFile(full, { encoding });
+        if (typeof content === "string") {
+          content = isNullOrEmpty(content) ? "" : tryRemoveBOM(content);
+        }
+      }
+      return { full, relative, exist, basename, dirname, ext, extless, content };
+    });
   }
   return __toCommonJS(index_exports);
 })();

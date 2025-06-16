@@ -28,6 +28,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -54,6 +55,7 @@ using LHQ.Data.Templating.Templates;
 using LHQ.Utils;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
+using Newtonsoft.Json;
 using UndoAction = LHQ.App.Services.Implementation.Undo.UndoAction;
 
 namespace LHQ.App.ViewModels
@@ -109,6 +111,8 @@ namespace LHQ.App.ViewModels
             ModelContext = modelContext;
 
             DetectTranslationMode();
+
+            //Temp1();
 
             AppContext.OnAppEvent += HandleAppEvent;
 
@@ -170,6 +174,20 @@ namespace LHQ.App.ViewModels
                 Visible = ModelContext.Model.Version == 1
             };
         }
+
+        // private void Temp1()
+        // {
+        //     var cultures = CultureCache.Instance.GetAll()
+        //         .Where(x=>!x.IsGenericInvariantCulture())
+        //         .Select(x => new
+        //         {
+        //             name = x.Name, engName = x.EnglishName, nativeName = x.NativeName,
+        //             lcid = x.LCID, isNeutral = x.IsNeutralCulture
+        //         });
+        //
+        //     var json = JsonUtils.ToJsonString(cultures, Formatting.None);
+        //     File.WriteAllText($@"c:\tmp\cultures-{DateTime.Now.Ticks}.json", json);
+        // }
 
         public CodeGeneratorTemplate GetCodeGeneratorTemplate()
         {

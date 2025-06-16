@@ -40,17 +40,18 @@ namespace LHQ.Data.ModelStorage.Serializers
         {
             if (!string.IsNullOrEmpty(modelFileName))
             {
-                CodeGeneratorTemplate codeGeneratorTemplate = previousModelContext.GetCodeGeneratorTemplate(string.Empty);
-                if (codeGeneratorTemplate is ICSharpResXTemplateBase csharpResXTemplateBase)
-                {
-                    var cSharpSettings = csharpResXTemplateBase.GetCSharp();
-
-                    if (string.IsNullOrEmpty(cSharpSettings.Namespace))
-                    {
-                        var csProjectInfo = CsProjectUtils.FindOwnerCsProjectFile(modelFileName, null);
-                        cSharpSettings.Namespace = csProjectInfo?.Namespace;
-                    }
-                }
+                // TODO: Move to 'Code Generate UI' action
+                // CodeGeneratorTemplate codeGeneratorTemplate = previousModelContext.GetCodeGeneratorTemplate(string.Empty);
+                // if (codeGeneratorTemplate is ICSharpResXTemplateBase csharpResXTemplateBase)
+                // {
+                //     var cSharpSettings = csharpResXTemplateBase.GetCSharp();
+                //
+                //     if (string.IsNullOrEmpty(cSharpSettings.Namespace))
+                //     {
+                //         var csProjectInfo = CsProjectUtils.FindOwnerCsProjectFile(modelFileName, null);
+                //         cSharpSettings.Namespace = csProjectInfo?.Namespace;
+                //     }
+                // }
             }
 
             return previousModelContext.Model.Version < 3;

@@ -42,7 +42,7 @@ namespace LHQ.Gen.Lib
         {
             GeneratedFiles = generatedFiles;
             //ModelGroupSettings = modelGroupSettings;
-            ModelGroupSettings = new List<LhqModelGroupSettings>();
+            // ModelGroupSettings = new List<LhqModelGroupSettings>();
         }
 
         /// <summary>
@@ -53,6 +53,6 @@ namespace LHQ.Gen.Lib
         /// <summary>
         /// Gets list of settings used in code generator process.
         /// </summary>
-        public IReadOnlyList<LhqModelGroupSettings> ModelGroupSettings { get; }
+        // public IReadOnlyList<LhqModelGroupSettings> ModelGroupSettings { get; }
     }
 }

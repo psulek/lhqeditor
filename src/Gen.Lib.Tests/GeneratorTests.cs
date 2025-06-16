@@ -165,6 +165,16 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
         }
     }
 
+    [Test]
+    public void FindNamespaceForModel()
+    {
+        using var generator = new Generator(new NullLogger(new LogFactory()));
+        var lhqModelFileName = Path.Combine("TestData", "WpfResxCsharp01", "Strings.lhq");
+        CSharpNamespaceInfo namespaceInfo = generator.FindNamespaceForModel(lhqModelFileName);
+        namespaceInfo.ShouldNotBeNull();
+        namespaceInfo.Namespace.ShouldBe("test.localization");
+    }
+
     // WPF - start
     [Test]
     public Task WpfResxCsharp01() => Generate();

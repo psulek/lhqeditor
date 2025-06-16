@@ -778,7 +778,8 @@ namespace LHQ.Data.ModelStorage.Serializers
                 {
                     string metadataRawJson = DataNodeJsonSerializer.Serialize(metadataHolder, _saveOptions);
 
-                    jsonModel[ElementMetadatas] = new JRaw(metadataRawJson);
+                    var mtd = JObject.Parse(metadataRawJson);
+                    jsonModel[ElementMetadatas] = mtd;
                 }
             }
         }

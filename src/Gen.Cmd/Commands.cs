@@ -129,7 +129,7 @@ public class Commands
         var start = Stopwatch.GetTimestamp();
         var generateResult = generator.Generate(lhqFile, csProjFile, outDir, hostData);
         var generatedFiles = generateResult.GeneratedFiles;
-        var modelGroupSettings = generateResult.ModelGroupSettings;
+        //var modelGroupSettings = generateResult.ModelGroupSettings;
         var elapsedTime = Stopwatch.GetElapsedTime(start);
         
         var genMsg = $"Generated {generatedFiles.Count} files in {elapsedTime:g}\n";
@@ -137,23 +137,23 @@ public class Commands
         logger.Info(genMsg);
         Console.WriteLine($"Ouput directory: \n{outDir.Pastel(ConsoleColor.DarkCyan)}\n");
 
-        if (modelGroupSettings.Count > 0)
-        {
-            Console.WriteLine("Settings:");
-            foreach (var groupSetting in modelGroupSettings)
-            {
-                if (groupSetting.Settings != null)
-                {
-                    Console.WriteLine($"  [{groupSetting.Group.Pastel(ConsoleColor.DarkYellow)}]");
-                    foreach (var settings in groupSetting.Settings)
-                    {
-                        Console.WriteLine($"\t{settings.Key}: {settings.Value.ToString().Pastel(ConsoleColor.White)}");
-                    }
-                }
-            }
-
-            Console.WriteLine();
-        }
+        // if (modelGroupSettings.Count > 0)
+        // {
+        //     Console.WriteLine("Settings:");
+        //     foreach (var groupSetting in modelGroupSettings)
+        //     {
+        //         if (groupSetting.Settings != null)
+        //         {
+        //             Console.WriteLine($"  [{groupSetting.Group.Pastel(ConsoleColor.DarkYellow)}]");
+        //             foreach (var settings in groupSetting.Settings)
+        //             {
+        //                 Console.WriteLine($"\t{settings.Key}: {settings.Value.ToString().Pastel(ConsoleColor.White)}");
+        //             }
+        //         }
+        //     }
+        //
+        //     Console.WriteLine();
+        // }
 
         var processedFiles = new List<string>();
         foreach (var file in generatedFiles)

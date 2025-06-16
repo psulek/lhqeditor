@@ -325,17 +325,7 @@ namespace LHQ.App.Services.Implementation
 
                             if (!doUpgrade)
                             {
-                                // var latestVersionStr = $"v{ModelConstants.CurrentModelVersion}";
-                                //
-                                // var dialogShowInfo = new DialogShowInfo(captionFileCompatIssue,
-                                //     Strings.Dialogs.FileCompatibilityIssue.CreatedInPreviousVersion(fileName),
-                                //     Strings.Dialogs.FileCompatibilityIssue.UpgradeToCurrentVersionConfirm(latestVersionStr, AppConstants.ModernGeneratorMinVersion));
-                                // dialogShowInfo.YesButtonHeader = Strings.Common.Yes;
-                                //
-                                // var confirmResult = DialogService.ShowConfirm(dialogShowInfo).DialogResult;
-                                //doUpgrade = confirmResult == DialogResult.Yes;
-
-                                var title = Strings.Dialogs.FileCompatibilityIssue.CreatedInPreviousVersion(loadResult.ModelVersion);
+                                var title = Strings.Dialogs.FileCompatibilityIssue.CreatedInPreviousVersion(fileName, loadResult.ModelVersion);
                                 doUpgrade = DialogService.ShowUpgradeModelDialog(captionFileCompatIssue, title);
                             }
 

@@ -783,7 +783,7 @@ namespace LHQ.App.Localization
 				/// </summary>
 				public const string Caption = "DialogsFileCompatibilityIssueCaption";
 				/// <summary>
-				/// Gets localized string similar to: Content of project file has old format version 'v{0}' and needs to be upgraded t...
+				/// Gets localized string similar to: Project file '{0}' has old format version 'v{1}' and needs to be upgraded to new...
 				/// </summary>
 				public const string CreatedInPreviousVersion = "DialogsFileCompatibilityIssueCreatedInPreviousVersion";
 				/// <summary>
@@ -907,7 +907,7 @@ namespace LHQ.App.Localization
 				/// </summary>
 				public const string UpgradeModelDetail = "DialogsUpgradeModelUpgradeModelDetail";
 				/// <summary>
-				/// Gets localized string similar to: Do you want to upgrade current model to new version ({0}) ?
+				/// Gets localized string similar to: Do you want to upgrade to the latest version `{0}` ?
 				/// </summary>
 				public const string UpgradeModelMessage = "DialogsUpgradeModelUpgradeModelMessage";
 			}
@@ -3857,9 +3857,9 @@ namespace LHQ.App.Localization
 				public static string Caption => StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.FileCompatibilityIssue.Caption);
 		
 				/// <summary>
-				/// Gets localized string similar to: Content of project file has old format version 'v{0}' and needs to be upgraded t...
+				/// Gets localized string similar to: Project file '{0}' has old format version 'v{1}' and needs to be upgraded to new...
 				/// </summary>
-				public static string CreatedInPreviousVersion(object fileModelVersion) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.FileCompatibilityIssue.CreatedInPreviousVersion), fileModelVersion);
+				public static string CreatedInPreviousVersion(object fileName,object fileModelVersion) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.FileCompatibilityIssue.CreatedInPreviousVersion), fileName,fileModelVersion);
 		
 				/// <summary>
 				/// Gets localized string similar to: File was created in higher version of program....
@@ -4006,7 +4006,7 @@ namespace LHQ.App.Localization
 				public static string UpgradeModelDetail(object latestVersion,object minVersion) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UpgradeModel.UpgradeModelDetail), latestVersion,minVersion);
 		
 				/// <summary>
-				/// Gets localized string similar to: Do you want to upgrade current model to new version ({0}) ?
+				/// Gets localized string similar to: Do you want to upgrade to the latest version `{0}` ?
 				/// </summary>
 				public static string UpgradeModelMessage(object version) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Dialogs.UpgradeModel.UpgradeModelMessage), version);
 		

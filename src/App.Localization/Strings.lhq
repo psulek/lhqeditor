@@ -2,6 +2,7 @@
   "model": {
     "uid": "6ce4d54c5dbd415c93019d315e278638",
     "version": 3,
+    "description": "Root Desc1",
     "options": {
       "categories": true,
       "resources": "Categories"
@@ -1476,13 +1477,16 @@
             "CreatedInPreviousVersion": {
               "state": "Edited",
               "parameters": {
-                "fileModelVersion": {
+                "fileName": {
                   "order": 0
+                },
+                "fileModelVersion": {
+                  "order": 1
                 }
               },
               "values": {
                 "en": {
-                  "value": "Content of project file has old format version 'v{0}' and needs to be upgraded to newer version."
+                  "value": "Project file '{0}' has old format version 'v{1}' and needs to be upgraded to newer version."
                 }
               }
             },
@@ -1741,7 +1745,7 @@
               },
               "values": {
                 "en": {
-                  "value": "Do you want to upgrade current model to new version ({0}) ?"
+                  "value": "Do you want to upgrade to the latest version `{0}` ?"
                 }
               }
             }
@@ -6867,49 +6871,49 @@
     }
   },
   "metadatas": {
-  "childs": [
-    {
-      "name": "metadata",
-      "attrs": {
-        "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
-      },
-      "childs": [
-        {
-          "name": "content",
-          "attrs": {
-            "templateId": "WpfResxCsharp01",
-            "version": "1"
-          },
-          "childs": [
-            {
-              "name": "Settings",
-              "childs": [
-                {
-                  "name": "CSharp",
-                  "attrs": {
-                    "OutputFolder": "Resources",
-                    "EncodingWithBOM": "false",
-                    "LineEndings": "CRLF",
-                    "UseExpressionBodySyntax": "true",
-                    "Namespace": "LHQ.App.Localization",
-                    "MissingTranslationFallbackToPrimary": "true"
+    "childs": [
+      {
+        "name": "metadata",
+        "attrs": {
+          "descriptorUID": "b40c8a1d-23b7-4f78-991b-c24898596dd2"
+        },
+        "childs": [
+          {
+            "name": "content",
+            "attrs": {
+              "templateId": "WpfResxCsharp01",
+              "version": "1"
+            },
+            "childs": [
+              {
+                "name": "Settings",
+                "childs": [
+                  {
+                    "name": "CSharp",
+                    "attrs": {
+                      "OutputFolder": "Resources",
+                      "EncodingWithBOM": "false",
+                      "LineEndings": "CRLF",
+                      "UseExpressionBodySyntax": "true",
+                      "Namespace": "LHQ.App.Localization",
+                      "MissingTranslationFallbackToPrimary": "true"
+                    }
+                  },
+                  {
+                    "name": "ResX",
+                    "attrs": {
+                      "OutputFolder": "Resources",
+                      "EncodingWithBOM": "false",
+                      "LineEndings": "CRLF",
+                      "CultureCodeInFileNameForPrimaryLanguage": "true"
+                    }
                   }
-                },
-                {
-                  "name": "ResX",
-                  "attrs": {
-                    "OutputFolder": "Resources",
-                    "EncodingWithBOM": "false",
-                    "LineEndings": "CRLF",
-                    "CultureCodeInFileNameForPrimaryLanguage": "true"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

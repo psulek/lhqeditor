@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -77,13 +77,15 @@ namespace LHQ.VsExtension
 
             var uri = new Uri(typeof(VsPackageService).Assembly.CodeBase, UriKind.Absolute);
             ExtensionPath = Path.GetDirectoryName(uri.LocalPath);
+            
+            AddMessageToOutput($"Extension path: {ExtensionPath}", OutputMessageType.Info, false);
 
             AppDomain.CurrentDomain.AssemblyResolve += DomainOnAssemblyResolve;
 
             string appFullPath = Assembly.GetExecutingAssembly().Location;
 
             _servicesRegistrator = new VsServicesRegistrator();
-            AppContext = AppContext.Initialize(_servicesRegistrator, true, appFullPath, ExtensionPath);
+            AppContext = AppContext.Initialize(_servicesRegistrator, true, appFullPath, null, ExtensionPath);
             await AppContext.ApplicationService.Initialize();
 
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
@@ -91,7 +93,7 @@ namespace LHQ.VsExtension
 
         public static bool CanAutoShowOutputPane()
         {
-            bool canAutoShowOutputPane = _autoShowOutputPaneDisabled.SetSignal();
+            bool canAutoShowOutputPane = _autoShowOutputPaneDisabled.TrySetSignal();
             return canAutoShowOutputPane;
         }
 

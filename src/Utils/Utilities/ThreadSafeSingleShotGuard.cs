@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -44,7 +44,7 @@ namespace LHQ.Utils.Utilities
         {
             if (signaled)
             {
-                SetSignal();
+                TrySetSignal();
             }
             else
             {
@@ -63,7 +63,7 @@ namespace LHQ.Utils.Utilities
         /// <returns>
         /// Returns <c>true</c> if set signal was successful.
         /// </returns>
-        public bool SetSignal()
+        public bool TrySetSignal()
         {
             return Interlocked.Exchange(ref _state, SignalSet) == SignalNotset;
         }

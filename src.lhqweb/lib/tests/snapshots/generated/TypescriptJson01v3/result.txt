@@ -1,0 +1,214 @@
+{
+  "generatedFiles": [
+    {
+      "fileName": "typings\\Strings.d.ts",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.bg.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.cs.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.da.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.de.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.el.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.en.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings-metadata.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.es.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.fi.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.fr.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.hu.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.it.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.ja.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.nl.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.no.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.pl.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.pt.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.ro.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.ru.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.hr.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.sk.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.sv.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.tr.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.uk.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.et.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.lv.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.lt.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.vi.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.mk.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.ka.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.pt-BR.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.zh.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.bs.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "wwwroot\\Resources\\Strings.sr.json",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -32,6 +32,7 @@ using LHQ.App.Services.Interfaces.PluginSystem;
 using LHQ.Core.DependencyInjection;
 using LHQ.Core.Interfaces;
 using LHQ.Core.Interfaces.PluginSystem;
+using LHQ.Utils.Extensions;
 
 namespace LHQ.App.Services.Implementation
 {
@@ -56,11 +57,14 @@ namespace LHQ.App.Services.Implementation
             TranslationService = ServiceContainer.Get<ITranslationService>();
             DialogService = ServiceContainer.Get<IDialogService>();
             UpdateService = ServiceContainer.Get<IUpdateService>();
+            StandaloneCodeGeneratorService = ServiceContainer.Get<IStandaloneCodeGeneratorService>();
         }
 
         public bool AppStartedFirstTime { get; private set; }
 
         public UpdateCheckInfo UpdateInfo { get; private set; }
+
+        public ModelFileFromCmdLine ModelFileFromCmdLine { get; private set; }
 
         public IServicesRegistrator ServicesRegistrator { get; private set; }
 
@@ -94,11 +98,15 @@ namespace LHQ.App.Services.Implementation
 
         public ITranslationService TranslationService { get; private set; }
 
+        public IStandaloneCodeGeneratorService StandaloneCodeGeneratorService { get; private set; }
+
         public IDialogService DialogService { get; private set; }
 
         public bool RunInVsPackage { get; private set; }
 
         public string AppFolder { get; private set; }
+        
+        public string[] CmdArgs { get; private set; }
 
         public string DataFolder { get; private set; }
 
@@ -109,7 +117,7 @@ namespace LHQ.App.Services.Implementation
         public event EventHandler<ApplicationEventArgs> OnAppEvent;
 
         public static AppContext Initialize(IServicesRegistrator servicesRegistrator, bool runInVsPackage,
-            string appFileName, string extensionPath = null)
+            string appFileName, string[] cmdArgs = null, string extensionPath = null)
         {
             string dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             dataFolder = Path.Combine(dataFolder, "ScaleHQSolutions\\LHQ\\");
@@ -118,15 +126,26 @@ namespace LHQ.App.Services.Implementation
                 Directory.CreateDirectory(dataFolder);
             }
 
+            var modelFileFromCmdLine = new ModelFileFromCmdLine();
+            if (cmdArgs?.Length > 1)
+            {
+                if (cmdArgs[0].ToLower() == "-m" && !cmdArgs[1].IsNullOrEmpty())
+                {
+                    modelFileFromCmdLine = new ModelFileFromCmdLine(cmdArgs[1]);
+                }
+            }
+            
             var appCurrentVersion = typeof(AppContext).Assembly.GetName().Version;
             var appContext = new AppContext
             {
                 RunInVsPackage = runInVsPackage,
                 AppFileName = appFileName,
+                CmdArgs = cmdArgs,
                 AppFolder = Path.GetDirectoryName(appFileName),
                 DataFolder = dataFolder,
                 ServicesRegistrator = servicesRegistrator,
-                AppCurrentVersion = appCurrentVersion
+                AppCurrentVersion = appCurrentVersion,
+                ModelFileFromCmdLine = modelFileFromCmdLine
             };
 
             void OnServiceCreated(IService service)

@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -24,8 +24,10 @@
 #endregion
 
 using LHQ.App.Services.Interfaces;
+using LHQ.App.ViewModels;
 using LHQ.App.ViewModels.Dialogs;
 using LHQ.Data;
+using LHQ.Data.Templating.Templates;
 using LHQ.Utils.Utilities;
 
 namespace LHQ.App.Dialogs
@@ -40,20 +42,50 @@ namespace LHQ.App.Dialogs
             InitializeComponent();
         }
 
-        public static bool DialogShow(IShellViewContext shellViewContext, ModelOptions modelOptions)
+        public static Result DialogShow(IShellViewContext shellViewContext)
         {
-            ArgumentValidator.EnsureArgumentNotNull(modelOptions, "modelOptions");
+            //ArgumentValidator.EnsureArgumentNotNull(modelOptions, "modelOptions");
 
+            var shellViewModel = shellViewContext.ShellViewModel;
+            var modelOptions = shellViewModel.ModelOptions.Clone();
+            // bool canChangeGeneratorTemplate = !shellViewModel.HasCodeGeneratorItemTemplate;
+            // string templateId = shellViewModel.CodeGeneratorItemTemplate;
+
+            
             using (var viewModel = new ProjectSettingsDialogViewModel(shellViewContext))
             {
+                var selectedModelVersion = shellViewModel.ModelContext.Model.Version;
+                viewModel.UpdrageModelVisible = selectedModelVersion < ModelConstants.CurrentModelVersion;
                 bool? dialogResult = DialogShow<ProjectSettingsDialogViewModel, ProjectSettingsDialog>(viewModel);
-                bool result = dialogResult == true;
-                if (result)
+
+                var isUpgradeRequested = viewModel.UpdrageModelRequested;
+                
+                //isUpgradeRequested = viewModel.ProjectSettings.IsUpgradeRequested;
+                bool submitted = dialogResult == true && !isUpgradeRequested;
+                if (submitted)
                 {
                     viewModel.Save(modelOptions);
                 }
-                return result;
+                
+                return new Result
+                {
+                    Submitted = submitted,
+                    ModelOptions = modelOptions,
+                    IsUpgradeRequested = isUpgradeRequested,
+                    CodeGeneratorTemplate = viewModel.ProjectSettings.Template
+                };
             }
+        }
+        
+        public class Result
+        {
+            public bool Submitted { get; set; }
+
+            public bool IsUpgradeRequested { get; set; }
+
+            public CodeGeneratorTemplate CodeGeneratorTemplate { get; set; }
+
+            public ModelOptions ModelOptions { get; set; }
         }
     }
 }

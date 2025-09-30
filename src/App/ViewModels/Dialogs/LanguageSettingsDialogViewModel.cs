@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -191,12 +191,12 @@ namespace LHQ.App.ViewModels.Dialogs
                     {
                         LanguageViewModel currentPrimary = Languages.Single(x => x.IsPrimary);
 
-                        if (DialogService.ShowConfirm(
-                            Strings.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmCaption, 
+                        var dialogShowInfo = new DialogShowInfo(Strings.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmCaption, 
                             Strings.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmMessage(currentPrimary.EnglishName,
                                 _selectedLanguage.EnglishName), 
-                            Strings.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmDetail(_selectedLanguage.EnglishName)) 
-                            == Model.DialogResult.Yes)
+                            Strings.ViewModels.LanguageSettings.ChangePrimaryLanguageConfirmDetail(_selectedLanguage.EnglishName));
+                        
+                        if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == Model.DialogResult.Yes)
                         {
                             Languages.Run(x => x.UpdateIsPrimary(false));
                             _selectedLanguage.UpdateIsPrimary(true);
@@ -213,11 +213,11 @@ namespace LHQ.App.ViewModels.Dialogs
                     string fromLang = _selectedLanguage.EnglishName;
                     string toLang = language.CultureDisplayName;
 
-                    if (DialogService.ShowConfirm(
-                        Strings.ViewModels.LanguageSettings.ReplaceLanguageCaption,
+                    var dialogShowInfo = new DialogShowInfo(Strings.ViewModels.LanguageSettings.ReplaceLanguageCaption,
                         Strings.ViewModels.LanguageSettings.ReplaceLanguageMessage(fromLang, toLang),
-                        Strings.ViewModels.LanguageSettings.ReplaceLanguageDetail(fromLang, toLang))
-                        == Model.DialogResult.Yes)
+                        Strings.ViewModels.LanguageSettings.ReplaceLanguageDetail(fromLang, toLang));
+                    
+                    if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == Model.DialogResult.Yes)
                     {
                         _replacedLanguages[selectedLanguageName] = language.CultureName;
                         FinalizeEditLanguage();
@@ -240,10 +240,11 @@ namespace LHQ.App.ViewModels.Dialogs
             LanguageViewModel language = SelectedLanguage;
             string languageName = "{0} ({1})".FormatWith(language.EnglishName, language.Name);
 
-            if (DialogService.ShowConfirm(
-                Strings.ViewModels.LanguageSettings.RemoveLanguageConfirmCaption(languageName),
+            var dialogShowInfo = new DialogShowInfo(Strings.ViewModels.LanguageSettings.RemoveLanguageConfirmCaption(languageName),
                 Strings.ViewModels.LanguageSettings.RemoveLanguageConfirmMessage(languageName),
-                Strings.ViewModels.LanguageSettings.RemoveLanguageConfirmDetail) == Model.DialogResult.Yes)
+                Strings.ViewModels.LanguageSettings.RemoveLanguageConfirmDetail);
+            
+            if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == Model.DialogResult.Yes)
             {
                 Languages.Remove(language);
                 UpdateHasPrimaryLanguage();

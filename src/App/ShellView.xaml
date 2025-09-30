@@ -7,7 +7,7 @@
                             xmlns:converters="clr-namespace:LHQ.App.Components.Converters"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:fa="http://schemas.fontawesome.io/icons/"
-                            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
                             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
@@ -46,7 +46,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
+        
         <Menu Grid.Row="0"
               Grid.ColumnSpan="2"
               Effect="{x:Null}"
@@ -101,10 +101,22 @@
 
                 <!--<views:TranslationModePane Grid.Row="1" />-->
 
+                <!--
                 <components:HintPanel Grid.Row="1"
                                       Padding="1"
                                       DataContext="{Binding Path=NewVersionPanelViewModel}"
                                       Visibility="{Binding Path=Visible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                -->
+                
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <components:HintPanel Padding="0,0,5,0"
+                                          DataContext="{Binding Path=NewVersionPanelViewModel}"
+                                          Visibility="{Binding Path=Visible, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                    <components:HintPanel 
+                                          DataContext="{Binding Path=ModernGeneratorAvailablePanel}"
+                                          Visibility="{Binding Path=Visible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                </StackPanel>
 
                 <syncfusion:DockingManager Grid.Row="2"
                                            AllowProportionalResize="False"

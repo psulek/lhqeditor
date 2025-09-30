@@ -20,6 +20,11 @@ public abstract class GeneratorBase
 		get { return Manager.GetDte(); }
     }
 
+	// public bool ModernGenerator
+	// {
+	// 	get { return Manager.ModernGenerator; }
+	// }
+
 	public GeneratorBase(object textTemplatingHost, FileManager manager) {
 		this._textTemplatingHost = textTemplatingHost as TextTransformation;
 
@@ -60,32 +65,39 @@ public abstract class GeneratorBase<TSettings>: GeneratorBase where TSettings: G
 
 	public void PushIndent()
 	{
+		return;
 		//this._textTemplatingHost.PushIndent(new String(' ', 4));
 		this._textTemplatingHost.PushIndent("\t");
 	}
 
 	public void PopIndent() {
+		return;
 		this._textTemplatingHost.PopIndent();
 	}
 	
 	public void Write(string textToAppend) {
+		return;
 		this._textTemplatingHost.Write(textToAppend);
 	}
 
 	public void Write(string format, params object[] args) {
+		return;
 		this._textTemplatingHost.Write(format, args);
 	}
 
 	public void WriteLine(string textToAppend) {
+		return;
 		this._textTemplatingHost.WriteLine(textToAppend);
 	}
 
 	public void WriteLine(string format,params object[] args) {
+		return;
 		this._textTemplatingHost.WriteLine(format, args);
 	}
 
     protected void StartNewFile(string fileNameWithExtension, OutputSettings outputSettings)
     {
+	    return;
 	    var outputTarget = this.Manager.StartNewFile(fileNameWithExtension, outputSettings.OutputProjectName, 
 			outputSettings.OutputFolder);
 
@@ -96,6 +108,7 @@ public abstract class GeneratorBase<TSettings>: GeneratorBase where TSettings: G
     }
 
     public void Generate() {
+	    return;
 		if (T4Utils.HasLastError())
 		{
 			return;
@@ -103,7 +116,7 @@ public abstract class GeneratorBase<TSettings>: GeneratorBase where TSettings: G
 
 		if (!Settings.Enabled)
         {
-			T4Utils.AddMessageToOutput(string.Format("{0} is disabled, no output files will be generated.", this.GeneratorName), T4Utils.OutputMessageInfo);
+			//T4Utils.AddMessageToOutput(string.Format("{0} is disabled, no output files will be generated.", this.GeneratorName), T4Utils.OutputMessageInfo);
 			return;
         }
 

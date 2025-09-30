@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -40,8 +40,10 @@ namespace LHQ.Utils.Utilities
         /// </summary>
         public static string GetSimpleAssemblyQualifiedName(this Type pluginModuleType)
         {
-            var assemblyName = pluginModuleType.Assembly.GetName();
-            return $"{pluginModuleType.FullName}, {assemblyName.Name}, PublicKeyToken={assemblyName.GetPublicKeyTokenAsHex()}";
+            return pluginModuleType.AssemblyQualifiedName;
+
+            // var assemblyName = pluginModuleType.Assembly.GetName();
+            // return $"{pluginModuleType.FullName}, {assemblyName.Name}, PublicKeyToken={assemblyName.GetPublicKeyTokenAsHex()}";
         }
         
         public static List<TInstanceInterface> CreateInstancesFromTypedAttributes<TAttribute, TInstanceInterface>(string operationName,

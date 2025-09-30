@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -27,7 +27,7 @@ using System;
 using LHQ.App.Model;
 using LHQ.App.Services.Implementation;
 using LHQ.Utils.Utilities;
-using LHQ.VsExtension.Code.Extensions;
+using LHQ.VsExtension.Code;
 
 namespace LHQ.VsExtension.Code
 {
@@ -46,7 +46,8 @@ namespace LHQ.VsExtension.Code
                 DefaultProjectLanguage = CultureCache.English.Name,
                 CheckUpdatesOnAppStart = false,
                 EnableTranslation = false,
-                TranslatorProviderKey = string.Empty
+                TranslatorProviderKey = string.Empty,
+                RunTemplateAfterSave = true
             };
             newConfig.UpdateVersion(_appVersion);
             return newConfig;
@@ -60,6 +61,17 @@ namespace LHQ.VsExtension.Code
                 var appVisualTheme = VisualStudioThemeManager.Instance.Theme.ToAppVisualTheme();
                 appConfig.Theme = appVisualTheme;
             }
+        }
+
+        protected override bool UpgradeIfRequired()
+        {
+            var result = base.UpgradeIfRequired();
+            if (!result && !Current.RunTemplateAfterSave)
+            {
+                Current.RunTemplateAfterSave = true;
+                result = true;
+            }
+            return result;
         }
     }
 }

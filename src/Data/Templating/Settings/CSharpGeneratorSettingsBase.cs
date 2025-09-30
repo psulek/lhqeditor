@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -34,9 +34,12 @@ namespace LHQ.Data.Templating.Settings
         public CSharpGeneratorSettingsBase()
         {
             UseExpressionBodySyntax = false;
+            Namespace = null;
         }
 
         public bool UseExpressionBodySyntax { get; set; }
+
+        public string Namespace { get; set; }
 
         public override void AssignFrom(GeneratorSettingsBase other)
         {
@@ -45,14 +48,16 @@ namespace LHQ.Data.Templating.Settings
             if (other is CSharpGeneratorSettingsBase other2)
             {
                 UseExpressionBodySyntax = other2.UseExpressionBodySyntax;
+                Namespace = other2.Namespace;
             }
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             node.AddAttribute(nameof(UseExpressionBodySyntax), DataNodeValueHelper.ToString(UseExpressionBodySyntax));
+            node.AddAttribute(nameof(Namespace), Namespace);
         }
 
         public override bool Deserialize(DataNode node)
@@ -69,6 +74,8 @@ namespace LHQ.Data.Templating.Settings
                         UseExpressionBodySyntax = DataNodeValueHelper.FromString(attrGenerateParamsMethods.Value, true);
                     }
                 }
+                
+                Namespace = node.Attributes.Contains(nameof(Namespace)) ? node.Attributes[nameof(Namespace)].Value : null;
             }
 
             return result; 

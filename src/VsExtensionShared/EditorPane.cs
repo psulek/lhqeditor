@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -31,6 +31,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using EnvDTE;
 using LHQ.App;
@@ -39,7 +40,9 @@ using LHQ.App.Services.Implementation.Undo;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.Services.Interfaces.Undo;
 using LHQ.App.ViewModels;
+using LHQ.Data.Extensions;
 using LHQ.Utils.Extensions;
+using LHQ.VsExtension.Code;
 using LHQ.VsExtension.Undo;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
@@ -92,7 +95,6 @@ namespace LHQ.VsExtension
     //This is required for Find In files scenario to work properly. This provides a connection point 
     //to the event interface
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
-    //[ComSourceInterfaces(typeof(IVsTextViewEvents))]
     [ComVisible(true)]
     public sealed class EditorPane : WindowPane,
         IVsPersistDocData, //to Enable persistence functionality for document data
@@ -220,64 +222,16 @@ namespace LHQ.VsExtension
                         isDirty = false;
                     }
 
-                    if (eventAfterSave.Result.IsSuccess)
+                    /*if (eventAfterSave.Result.IsSuccess)
                     {
-                        RunT4Templates(ShellViewModel.ProjectFileName);
-                    }
+                        GenerateTemplateCode(ShellViewModel.ProjectFileName);
+                    }*/
 
                     break;
                 }
             }
         }
-
-        private void RunT4Templates(string projectFileName)
-        {
-            try
-            {
-                ProjectItem projectItem = _dte.Solution.FindProjectItem(projectFileName);
-                if (projectItem == null)
-                {
-                    return;
-                }
-
-                string parentFolder = Path.GetDirectoryName(projectFileName);
-
-                bool t4FileExist = false;
-                dynamic t4File = null;
-
-                try
-                {
-                    t4File = projectItem.Properties?.Item("CustomToolNamespace")?.Value?.ToString();
-                }
-                catch
-                {
-                    // ignored
-                }
-
-                if (!string.IsNullOrEmpty(t4File))
-                {
-                    t4File = Path.Combine(parentFolder, t4File);
-                    t4FileExist = File.Exists(t4File);
-                }
-
-                if (!t4FileExist && !parentFolder.IsNullOrEmpty())
-                {
-                    t4File = Path.Combine(parentFolder, Path.GetFileName(projectFileName) + ".tt");
-                    t4FileExist = File.Exists(t4File);
-                }
-
-                if (t4FileExist)
-                {
-                    var t4 = GetService(typeof(STextTemplating)) as ITextTemplating;
-                    T4TemplateExecutor.RunTemplate(t4, t4File);
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-        }
-
+        
         private void UndoManagerOnChanged(object sender, UndoActionArgs e)
         {
             if (_isLoading)
@@ -1248,18 +1202,18 @@ namespace LHQ.VsExtension
         /// <param name="_isFileReadOnly">Indicates whether the file loaded is Read Only or not</param>
         private void SetReadOnly(bool _isFileReadOnly)
         {
-            //this.editorControl.RichTextBoxControl.ReadOnly = _isFileReadOnly;
-
-            //update editor caption with "[Read Only]" or "" as necessary
+            ThreadHelper.ThrowIfNotOnUIThread();
             var frame = (IVsWindowFrame)GetService(typeof(SVsWindowFrame));
-            var editorCaption = "";
-            if (_isFileReadOnly)
+            if (frame != null)
             {
-                //editorCaption = GetResourceString("@100");
-                editorCaption = "[Read Only]";
+                var editorCaption = "";
+                if (_isFileReadOnly)
+                {
+                    editorCaption = "[Read Only]";
+                }
+
+                ErrorHandler.ThrowOnFailure(frame.SetProperty((int)__VSFPROPID.VSFPROPID_EditorCaption, editorCaption));
             }
-            ErrorHandler.ThrowOnFailure(frame.SetProperty((int)__VSFPROPID.VSFPROPID_EditorCaption, editorCaption));
-            //_backupObsolete = true;
         }
 
         /// <summary>

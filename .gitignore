@@ -14,7 +14,7 @@ Source/Sources/Setup/Debug/*
 #Releases/Build/*
 Source/BuildOut/*
 Source/NuGet/BuildOut/*
-
+_published/*
 
 
 

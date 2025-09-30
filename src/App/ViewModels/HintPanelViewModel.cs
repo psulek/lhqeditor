@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -35,6 +35,7 @@ using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs;
+using LHQ.Data;
 using LHQ.Utils.Extensions;
 
 namespace LHQ.App.ViewModels
@@ -55,12 +56,15 @@ namespace LHQ.App.ViewModels
             AppContext.OnAppEvent += HandleAppEvent;
             ShellViewModel.PropertyChanged += ShellViewOnPropertyChanged;
             CloseButtonVisible = true;
+            UpgradeModelCommand = new DelegateCommand(UpgradeModelCommandExecute);
             DataBind();
         }
 
         public ICommand CloseCommand { get; }
 
         public ICommand ReadUpdateChangedCommand { get; }
+        
+        public ICommand UpgradeModelCommand { get; }
 
         public List<BulletListItem> ItemsSource
         {
@@ -72,6 +76,8 @@ namespace LHQ.App.ViewModels
             }
         }
 
+        public bool RemoveFlagOnClose { get; set; } = true;
+
         public bool CloseButtonVisible
         {
             get => _closeButtonVisible;
@@ -82,6 +88,22 @@ namespace LHQ.App.ViewModels
         {
             get => _visible;
             set => SetProperty(ref _visible, value);
+        }
+
+        private void UpgradeModelCommandExecute(object obj)
+        {
+            if (ShellViewModel.ModelContext.Model.Version == 1 && DialogService.ShowUpgradeModelDialog())
+            {
+                if (ShellViewModel.ModelContext.Model.Version < ModelConstants.CurrentModelVersion)
+                {
+                    CloseCommand.Execute(null);
+                        
+                    UIService.DelayedAction(() =>
+                        {
+                            ShellViewContext.ShellService.UpgradeModelToLatest();        
+                        }, TimeSpan.FromMilliseconds(200));
+                }    
+            }
         }
 
         private void DataBind()
@@ -97,13 +119,29 @@ namespace LHQ.App.ViewModels
             var items = new List<BulletListItem>();
             switch (_appHintType)
             {
+                case AppHintType.ModernGeneratorAvailable:
+                {
+                    //Visible = Visible && ShellViewModel.ModelContext.Model.Version == 1;
+                    //Visible = ShellViewModel.ModelContext.Model.Version == 1;
+                    if (Visible && ShellViewModel.ModelContext.Model.Version > 1)
+                    {
+                        Visible = false;
+                    }
+                    
+                    items.Add(BulletListItem.Item($"LHQ (from version {AppConstants.ModernGeneratorInitVersion}) introduces new modern generator, that can generate code outside VS IDE..."));
+                    items.Add(BulletListItem.Item($"To use new modern generator, upgrade current file to version '{ModelConstants.CurrentModelVersion}'"));
+                    items.Add(BulletListItem.Hyperlink("Upgrade model", UpgradeModelCommand));
+                    items.Add(BulletListItem.Hyperlink("Read more about modern generator", AppConstants.WebSiteUrls.GetLatestModelChanges()));
+                    
+                    break;
+                }
                 case AppHintType.CodeGenerator:
                 {
-                    if (!AppContext.RunInVsPackage)
-                    {
-                        items.Add(BulletListItem.Item(Strings.ViewModels.HintPanel.CodeGenerator.HintTextOnlyInVS, FontWeights.DemiBold));
-                        items.Add(BulletListItem.Separator());
-                    }
+                    // if (!AppContext.RunInVsPackage)
+                    // {
+                    //     items.Add(BulletListItem.Item(Strings.ViewModels.HintPanel.CodeGenerator.HintTextOnlyInVS, FontWeights.DemiBold));
+                    //     items.Add(BulletListItem.Separator());
+                    // }
 
                     foreach (string line in Strings.ViewModels.HintPanel.CodeGenerator.HintText.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
                     {
@@ -160,8 +198,11 @@ namespace LHQ.App.ViewModels
         private void CloseCommandExecute(object obj)
         {
             Visible = false;
-            AppContext.AppConfigFactory.Current.RemoveAppHint(_appHintType);
-            AppContext.ApplicationService.SaveAppConfig();
+            if (RemoveFlagOnClose)
+            {
+                AppContext.AppConfigFactory.Current.RemoveAppHint(_appHintType);
+                AppContext.ApplicationService.SaveAppConfig();
+            }
         }
 
         private void ReadUpdateChangedExecute(object obj)

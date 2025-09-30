@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -39,6 +39,7 @@ namespace LHQ.Data.Templating.Templates.Typescript
         private const string CategoryTypescriptGenerator = "Typescript Generator";
         private const string CategoryJsonGenerator = "JSON Generator";
 
+        // public TypescriptJson01Template(int modelVersion): base(modelVersion)
         public TypescriptJson01Template()
         {
             Typescript = new TypescriptGeneratorSettings();
@@ -103,6 +104,26 @@ namespace LHQ.Data.Templating.Templates.Typescript
             set => Typescript.InterfacePrefix = value;
         }
 
+        [DisplayName("Encoding with BOM")]
+        [Description("Whenever the encoding contains BOM (Byte Order Mark), where default is false (No BOM).")]
+        [Category(CategoryTypescriptGenerator)]
+        [ModelVersionDepend(2)]
+        public bool TypescriptEncodingWithBOM
+        {
+            get => Typescript.EncodingWithBOM;
+            set => Typescript.EncodingWithBOM = value;
+        }
+        
+        [DisplayName("Line endings (LF or CRLF)")]
+        [Description("Line endings used when generated files are saved on disk, where default is LF.")]
+        [Category(CategoryTypescriptGenerator)]
+        [ModelVersionDepend(2)]
+        public LineEndings TypescriptLineEndings
+        {
+            get => Typescript.LineEndings;
+            set => Typescript.LineEndings = value;
+        }
+        
         [DisplayName("File name for primary language includes language code")]
         [Description("Json file for primary language will also (like foreign language files) includes language code.")]
         [Category(CategoryJsonGenerator)]
@@ -148,14 +169,35 @@ namespace LHQ.Data.Templating.Templates.Typescript
             get => Json.WriteEmptyValues;
             set => Json.WriteEmptyValues = value;
         }
+        
+        [DisplayName("Encoding with BOM")]
+        [Description("Whenever the encoding contains BOM (Byte Order Mark), where default is false (No BOM).")]
+        [Category(CategoryJsonGenerator)]
+        [ModelVersionDepend(2)]
+        public bool JsonEncodingWithBOM
+        {
+            get => Json.EncodingWithBOM;
+            set => Json.EncodingWithBOM = value;
+        }
+        
+        [DisplayName("Line endings (LF or CRLF)")]
+        [Description("Line endings used when generated files are saved on disk, where default is LF.")]
+        [Category(CategoryJsonGenerator)]
+        [ModelVersionDepend(2)]
+        public LineEndings JsonLineEndings
+        {
+            get => Json.LineEndings;
+            set => Json.LineEndings = value;
+        }
 
-        public override void Serialize(DataNode node)
+
+        public override void Serialize(DataNode node, int modelVersion)
         {
             var nodeTypescript = new DataNode(nameof(Typescript));
-            Typescript.Serialize(nodeTypescript);
+            Typescript.Serialize(nodeTypescript, modelVersion);
 
             var nodeJson = new DataNode(nameof(Json));
-            Json.Serialize(nodeJson);
+            Json.Serialize(nodeJson, modelVersion);
 
             node.Children.AddRange(new[] { nodeTypescript, nodeJson });
         }

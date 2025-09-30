@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Å ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -40,24 +40,31 @@ namespace LHQ.App.ViewModels.Dialogs
         private readonly DialogButtons _buttons;
         private bool _isChecked;
         private readonly string _caption;
+        private readonly Action _extraButtonAction;
 
         public MessageBoxDialogViewModel(IAppContext appContext,
-            string message, string caption, string detail, DialogIcon icon,
-            DialogButtons buttons, bool? checkValue, string checkHeader, string checkHint,
-            string cancelButtonHeader = null, string yesButtonHeader = null, string noButtonHeader = null)
+            DialogIcon icon, DialogButtons buttons, DialogShowInfo dialogShowInfo)
             : base(appContext)
         {
-            _caption = caption;
-            Message = message;
-            Detail = detail;
+            _caption = dialogShowInfo.Caption;
+            Message = dialogShowInfo.Message;
+            Detail = dialogShowInfo.Detail;
             Icon = icon;
             _buttons = buttons;
 
-            IsChecked = checkValue.HasValue && checkValue.Value;
-            CheckPanelVisibility = checkValue.HasValue ? Visibility.Visible : Visibility.Collapsed;
-            CheckHeader = checkValue.HasValue ? checkHeader : string.Empty;
-            CheckHintText = checkValue.HasValue ? checkHint : string.Empty;
-            CheckHintVisibility = checkValue.HasValue && !checkHint.IsNullOrEmpty()
+            _extraButtonAction = dialogShowInfo.ExtraButtonAction;
+            ExtraButtonVisibility = string.IsNullOrEmpty(dialogShowInfo.ExtraButtonHeader) ? Visibility.Collapsed : Visibility.Visible;
+            ExtraButtonVisibilityHeader = dialogShowInfo.ExtraButtonHeader;
+            if (!string.IsNullOrEmpty(dialogShowInfo.ExtraButtonHeader))
+            {
+                ExtraButtonVisibilityCommand = new DelegateCommand(ExtraButtonExecute);
+            }
+            
+            IsChecked = dialogShowInfo.CheckValue.HasValue && dialogShowInfo.CheckValue.Value;
+            CheckPanelVisibility = dialogShowInfo.CheckValue.HasValue ? Visibility.Visible : Visibility.Collapsed;
+            CheckHeader = dialogShowInfo.CheckValue.HasValue ? dialogShowInfo.CheckHeader : string.Empty;
+            CheckHintText = dialogShowInfo.CheckValue.HasValue ? dialogShowInfo.CheckHint : string.Empty;
+            CheckHintVisibility = dialogShowInfo.CheckValue.HasValue && !dialogShowInfo.CheckHint.IsNullOrEmpty()
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
@@ -75,7 +82,7 @@ namespace LHQ.App.ViewModels.Dialogs
 
             CancelButtonVisibility = buttons == DialogButtons.Ok ? Visibility.Collapsed : Visibility.Visible;
 
-            if (cancelButtonHeader.IsNullOrEmpty())
+            if (dialogShowInfo.CancelButtonHeader.IsNullOrEmpty())
             {
                 CancelButtonHeader = buttons == DialogButtons.YesNo
                     ? Strings.ViewModels.MessageBox.LabelNo
@@ -83,12 +90,12 @@ namespace LHQ.App.ViewModels.Dialogs
             }
             else
             {
-                CancelButtonHeader = cancelButtonHeader;
+                CancelButtonHeader = dialogShowInfo.CancelButtonHeader;
             }
 
             bool hasYesNo = buttons.In(DialogButtons.YesNo, DialogButtons.YesNoCancel);
 
-            if (yesButtonHeader.IsNullOrEmpty())
+            if (dialogShowInfo.YesButtonHeader.IsNullOrEmpty())
             {
                 YesOkButtonHeader = hasYesNo
                     ? Strings.ViewModels.MessageBox.LabelYes
@@ -96,12 +103,17 @@ namespace LHQ.App.ViewModels.Dialogs
             }
             else
             {
-                YesOkButtonHeader = yesButtonHeader;
+                YesOkButtonHeader = dialogShowInfo.YesButtonHeader;
             }
 
-            NoButtonHeader = noButtonHeader.IsNullOrEmpty() ? Strings.ViewModels.MessageBox.LabelNo : noButtonHeader;
+            NoButtonHeader = dialogShowInfo.NoButtonHeader.IsNullOrEmpty() ? Strings.ViewModels.MessageBox.LabelNo : dialogShowInfo.NoButtonHeader;
 
             Result = Model.DialogResult.None;
+        }
+
+        private void ExtraButtonExecute(object obj)
+        {
+            _extraButtonAction?.Invoke();
         }
 
         public DialogResult Result { get; private set; }
@@ -112,6 +124,12 @@ namespace LHQ.App.ViewModels.Dialogs
 
         public DialogIcon Icon { get; }
 
+        public string ExtraButtonVisibilityHeader { get; }
+        
+        public ICommand ExtraButtonVisibilityCommand { get; }
+        
+        public Visibility ExtraButtonVisibility { get; }
+        
         public Visibility NoButtonVisibility { get; }
 
         public string YesOkButtonHeader { get; }

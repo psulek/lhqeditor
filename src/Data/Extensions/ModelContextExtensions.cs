@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -33,6 +33,14 @@ namespace LHQ.Data.Extensions
 {
     public static class ModelContextExtensions
     {
+        public static string GetCodeGeneratorTemplateId(this ModelContext modelContext)
+        {
+            CodeGeneratorMetadata metadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+            return metadata?.TemplateId;
+        }
+
+        public static bool IsModernGenerator(this ModelContext modelContext) => modelContext.Model.Version > 1;
+
         public static bool HasCodeGeneratorTemplate(this ModelContext modelContext)
         {
             CodeGeneratorMetadata metadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);

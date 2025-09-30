@@ -10,7 +10,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:LHQ.App.Model"
@@ -197,7 +197,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Foreground="{Binding Path=ShowOnlyMarkedForExport, Converter={StaticResource SearchFilterIconConverter}, ConverterParameter='icon'}"
-                        Icon="Ambulance" />
+                        Icon="Bookmark" />
                 </ToggleButton>
 
                 <components1:SearchTextBox

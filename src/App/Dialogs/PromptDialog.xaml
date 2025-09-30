@@ -5,7 +5,7 @@
                     xmlns:code="clr-namespace:LHQ.App.Code"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:dialogs="clr-namespace:LHQ.App.ViewModels.Dialogs"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:local="clr-namespace:LHQ.App.Dialogs"
                     xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"

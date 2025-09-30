@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -54,11 +54,12 @@ namespace LHQ.App.Services.Implementation
                     serviceContainer.Register<ITranslationService, TranslationService>();
                     serviceContainer.Register<IPluginManager, PluginManager>();
                     serviceContainer.Register<IPluginServiceContainer, PluginServiceContainer>();
-                    serviceContainer.Register<IModelFileStorage, ModelFileStorage>();
                     serviceContainer.Register<ILogger, DefaultLogger>();
                     serviceContainer.Register<IUtilityHelper, UtilityHelper>();
                     serviceContainer.Register<IFileSystemService, FileSystemService>();
                     serviceContainer.Register<IUpdateService, UpdateService>();
+                    serviceContainer.Register<IModelFileStorage, ModelFileStorage>();
+                    serviceContainer.Register<IStandaloneCodeGeneratorService, StandaloneCodeGeneratorService>();
                     break;
                 }
                 case ServicesRegistratorType.ShellViewContextService:
@@ -73,6 +74,7 @@ namespace LHQ.App.Services.Implementation
                     serviceContainer.Register<IValidatorContext, ValidatorContext>();
                     serviceContainer.Register<IShellService, ShellService>();
                     serviceContainer.Register<IResourceImportExportService, ResourceImportService>();
+                    // serviceContainer.Register<IStandaloneCodeGeneratorService, StandaloneCodeGeneratorService>();
                     break;
                 }
                 default:

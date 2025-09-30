@@ -1,0 +1,82 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "plugins": [
+        "eslint-plugin-tsdoc",
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:eslint-comments/recommended",
+        "plugin:import/typescript",
+        "prettier"
+    ],
+    "ignorePatterns": [
+        ".eslintrc",
+        "node_modules",
+        "eslint.config.mjs",
+        "dist",
+        "tests",
+        "webpack.config.js",
+        "tsconfig.json",
+        "tsconfig.*.json"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "@typescript-eslint/consistent-type-imports": "error",
+        "tsdoc/syntax": "warn",
+        "quotes": [2, "single", {
+            "avoidEscape": true,
+            "allowTemplateLiterals": true
+        }],
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "error",
+
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+
+        "require-await": "off",
+        "@typescript-eslint/require-await": "error",
+
+        "@typescript-eslint/no-invalid-this": "off",
+
+        "@typescript-eslint/no-inferrable-types": [
+            "error",
+            {
+                "ignoreParameters": true
+            }
+        ],
+
+        "@typescript-eslint/no-misused-promises": [
+            "error",
+            {
+                "checksVoidReturn": false
+            }
+        ],
+        "@typescript-eslint/restrict-template-expressions": [
+            "error",
+            {
+                "allowBoolean": true
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts",
+                    ".mts",
+                    ".tsx"
+                ]
+            }
+        }
+    }
+}

@@ -17,7 +17,6 @@ Classic NET Framework WPF project.</Description>
   </TemplateData>
   <TemplateContent>
     <ProjectItem TargetFileName="$fileinputname$.lhq" ReplaceParameters="true">Strings.lhq</ProjectItem>
-    <ProjectItem TargetFileName="$fileinputname$.lhq\$fileinputname$.lhq.tt" ReplaceParameters="true">Strings.lhq.tt</ProjectItem>
     <CustomParameters>
       <CustomParameter Name="$lhq_itemtemplate$" Value="WpfResxCsharp01"/>
     </CustomParameters>

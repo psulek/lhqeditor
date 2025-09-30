@@ -1,0 +1,22 @@
+<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ LHQDirective Processor="LHQDirectiveProcessor" FileName="Strings.lhq" ItemTemplate="TypescriptJson01" #>
+<#@ include file="EnvDteUtils.ttinclude" #>
+<#@ include file="LhqGenerator.ttinclude" #>
+<#@ include file="LhqToJsonGenerator.ttinclude" #>
+<#@ include file="LhqToTypescriptGenerator.ttinclude" #>
+<#@ import namespace="LHQ.Data.Templating.Templates.Typescript" #>
+
+<# //System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+	// NOTE: DO NOT change this file. Changes to this file may cause incorrect behavior and will be lost if the file is regenerated.
+	var codeGeneratorTemplate = this.CodeGeneratorTemplate<TypescriptJson01Template>();
+
+	using(var fileManager = FileManager.CreateShared(this))
+    {
+		var jsonGenerator = new JsonGenerator(this, this.ModelContext, codeGeneratorTemplate.Json, fileManager);
+		jsonGenerator.Generate();
+
+		var typescriptGenerator = new TypescriptGenerator(this, this.ModelContext, codeGeneratorTemplate.Typescript, fileManager);
+		typescriptGenerator.Generate();
+    }
+#>

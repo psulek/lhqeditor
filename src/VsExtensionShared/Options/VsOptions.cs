@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -142,7 +142,9 @@ namespace LHQ.VsExtension.Options
                     var caption = App.Localization.Strings.Dialogs.VsOptions.ApplyChangesCaption;
                     var message = App.Localization.Strings.Dialogs.VsOptions.ApplyChangesMessage;
                     var detail = App.Localization.Strings.Dialogs.VsOptions.ApplyChangesDetail;
-                    canApply = AppContext.DialogService.ShowConfirm(caption, message, detail) == DialogResult.Yes;
+
+                    var dialogShowInfo = new DialogShowInfo(caption, message, detail);
+                    canApply = AppContext.DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes;
                 }
 
                 if (canApply)

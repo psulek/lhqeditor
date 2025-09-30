@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Å ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using JetBrains.Annotations;
 
 namespace LHQ.Data
 {
@@ -39,6 +40,9 @@ namespace LHQ.Data
 
         public ModelOptionsResources Resources { get; set; }
 
+        [CanBeNull]
+        public ModelOptionsValues Values { get; set; }
+
         public void AssignFrom(ModelOptions other)
         {
             if (other == null)
@@ -48,6 +52,14 @@ namespace LHQ.Data
 
             Categories = other.Categories;
             Resources = other.Resources;
+            if (other.Values != null)
+            {
+                Values = new ModelOptionsValues
+                {
+                    EOL = other.Values.EOL,
+                    Sanitize = other.Values.Sanitize
+                };
+            }
         }
 
         public ModelOptions Clone()
@@ -62,5 +74,12 @@ namespace LHQ.Data
     {
         All,
         Categories
+    }
+    
+    public class ModelOptionsValues
+    {
+        public LineEndings? EOL { get; set; }
+
+        public bool? Sanitize { get; set; }
     }
 }

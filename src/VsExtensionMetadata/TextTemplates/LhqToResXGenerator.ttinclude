@@ -1,6 +1,7 @@
 <#@ import namespace="System.Collections.ObjectModel" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="LHQ.Utils" #>
+<#@ import namespace="LHQ.Utils.Utilities" #>
 <#@ import namespace="LHQ.Data" #>
 <#@ import namespace="LHQ.Data.Extensions" #>
 <#@ import namespace="LHQ.Data.Templating.Settings" #>
@@ -147,7 +148,11 @@ class ResXGenerator: GeneratorBase<ResXGeneratorSettings> {
 			{
 				string resValue = string.Empty;
 				if (resourceValue.Value != null) {
-					resValue = System.Web.HttpUtility.HtmlEncode(resourceValue.Value);
+					if (Settings.CompatibleTextEncoding) {
+						resValue = System.Web.HttpUtility.HtmlEncode(resourceValue.Value);
+					} else {
+					    resValue = XmlValueEncode.EncodeText(resourceValue.Value, false);
+					}
 				}
 #>
   <data name="<#= resourceKey #>" xml:space="preserve">

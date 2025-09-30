@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -34,6 +34,8 @@ namespace LHQ.Utils.Utilities
 {
     public static class FileUtils
     {
+        private static readonly Encoding NoBomEncoding = new UTF8Encoding(false);
+
         private const int BufferSize = 0x1000;
 
         public static Encoding DefaultEncoding => new UTF8Encoding(true);
@@ -58,9 +60,15 @@ namespace LHQ.Utils.Utilities
             }
         }
 
-        public static async Task WriteAllTextAsync(string fileName, string text)
+        // public static string ToLinuxLineEndings(string str)
+        // {
+        //     return str.Replace("\r\n", "\n").Replace('\r', '\n');
+        // }
+
+        public static async Task WriteAllTextAsync(string fileName, string text, bool useBOM = false)
         {
-            byte[] encodedText = Encoding.UTF8.GetBytes(text);
+            var encoding = useBOM ? Encoding.UTF8 : NoBomEncoding;
+            byte[] encodedText = encoding.GetBytes(text);
 
             using (FileStream sourceStream = new FileStream(fileName,
                 FileMode.Create, FileAccess.Write, FileShare.None,

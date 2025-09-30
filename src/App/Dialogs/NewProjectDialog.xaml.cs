@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -46,20 +46,20 @@ namespace LHQ.App.Dialogs
             var openLanguageSettings = false;
             ModelOptions modelOptions = null;
             CodeGeneratorTemplate codeGeneratorTemplate = null;
-
+            
             using (var viewModel = new NewProjectDialogViewModel(shellViewContext))
             {
-                viewModel.SetVsExtraInfo(vsExtraInfo);
+                viewModel.SetExtraInfo(vsExtraInfo);
                 viewModel.ModelName = modelName;
                 
-                bool? dialogResult = DialogShow<NewProjectDialogViewModel, NewProjectDialog>(viewModel);
+                bool? dialogResult = DialogShow<NewProjectDialogViewModel, NewProjectDialog>(viewModel, true);
                 bool submitted = dialogResult == true;
                 if (submitted)
                 {
                     modelName = viewModel.ModelName;
                     primaryLanguage = viewModel.LanguageSelector.SelectedLanguage.CultureName;
                     openLanguageSettings = viewModel.OpenLanguageSettings;
-                    codeGeneratorTemplate = viewModel.Template;
+                    codeGeneratorTemplate = viewModel.ProjectSettings.Template;
                     modelOptions = new ModelOptions();
                     viewModel.ProjectSettings.Save(modelOptions);
                 }

@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -32,6 +32,9 @@ namespace LHQ.Data.Templating.Templates.NetCore
 {
     public class NetCoreResxCsharp01Template: CSharpResXTemplateBase<CSharpGeneratorSettings>
     {
+        // public NetCoreResxCsharp01Template(int modelVersion) : base(modelVersion)
+        // { }
+
         [Browsable(false)]
         [JsonIgnore]
         public override string Id { get; } = "NetCoreResxCsharp01";

@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -50,6 +50,7 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
         private bool? _lockTranslationsWithResource;
         private int _selectedThemeIndex;
         private bool _showHintsIsThreeState;
+        private bool _runTemplateAfterSave;
 
         public PageGeneral(IAppContext appContext, IAppSettingsDialogViewModel ownerViewModel, AppSettingsDialogPage page)
             : base(appContext, ownerViewModel, page)
@@ -128,6 +129,12 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
             set => SetProperty(ref _checkUpdatesOnAppStart, value);
         }
 
+        public bool RunTemplateAfterSave
+        {
+            get => _runTemplateAfterSave;
+            set => SetProperty(ref _runTemplateAfterSave, value);
+        }
+
         public LanguageSelectorViewModel ProjectLanguageSelector
         {
             get => _projectLanguageSelector;
@@ -170,6 +177,7 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
             SelectedLocalization = _uiService.GetUiLanguage(appConfig.UILanguage);
             OpenLastProjectOnStartup = appConfig.OpenLastProjectOnStartup;
             CheckUpdatesOnAppStart = appConfig.CheckUpdatesOnAppStart;
+            RunTemplateAfterSave = appConfig.RunTemplateAfterSave;
             LockTranslationsWithResource = appConfig.LockTranslationsWithResource;
             ProjectLanguageSelector.Select(appConfig.GetDefaultProjectCulture() ?? CultureInfoItem.English);
 
@@ -221,9 +229,8 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
         {
             if (!HasSelectedDefaultLanguage)
             {
-                DialogService.ShowError(
-                    Strings.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationCaption,
-                    Strings.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationMessage, null);
+                DialogService.ShowError(new DialogShowInfo(Strings.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationCaption,
+                    Strings.ViewModels.AppSettings.PageGeneral.DefaultLanguageValidationMessage));
 
                 return false;
             }
@@ -246,6 +253,7 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
             AppConfig.UILanguage = SelectedLocalization.Culture.Name;
             AppConfig.CheckUpdatesOnAppStart = CheckUpdatesOnAppStart;
             AppConfig.LockTranslationsWithResource = LockTranslationsWithResource;
+            AppConfig.RunTemplateAfterSave = RunTemplateAfterSave;
 
             var appVisualTheme = AppVisualTheme.Light;
             var detectTheme = false;

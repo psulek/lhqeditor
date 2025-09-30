@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -23,12 +23,18 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using LHQ.App.Localization;
+using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Data.CodeGenerator;
 using LHQ.Data.Templating;
 using LHQ.Data.Templating.Templates;
+using LHQ.Utils;
 using LHQ.Utils.Extensions;
 using Syncfusion.Windows.Utils;
 
@@ -37,13 +43,16 @@ namespace LHQ.App.ViewModels.Dialogs
     public class CodeGeneratorDialogViewModel : DialogViewModelBase
     {
         private CodeGeneratorTemplate _settings;
+        private readonly int _modelVersion;
 
         public CodeGeneratorDialogViewModel(IShellViewContext shellViewContext, string templateId, 
             CodeGeneratorTemplate template = null) : base(shellViewContext.AppContext)
         {
             var shellViewModel = shellViewContext.ShellViewModel;
             ResetToDefaultCommand = new DelegateCommand(ResetToDefaultExecute);
-            
+
+            _modelVersion = shellViewModel.ModelContext.Model.Version;
+
             if (!templateId.IsNullOrEmpty())
             {
                 if (template == null)
@@ -56,15 +65,34 @@ namespace LHQ.App.ViewModels.Dialogs
                     Settings = template;
                 }
 
+                var propertiesToHide = new List<string>();
+
                 if (Settings != null)
                 {
                     TemplateId = Settings.Id;
                     TemplateName = Settings.Name;
+
+                    PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(Settings);
+                    foreach (PropertyDescriptor propertyDescriptor in properties)
+                    {
+                        var versionDependAttribute = propertyDescriptor.Attributes.OfType<ModelVersionDependAttribute>().FirstOrDefault();
+                        if (versionDependAttribute != null)
+                        {
+                            if (_modelVersion < versionDependAttribute.MinModelVersion)
+                            {
+                                propertiesToHide.Add(propertyDescriptor.Name);
+                            }
+                        }
+                    }
                 }
+
+                PropertiesToHide = new ObservableCollectionExt<string>(propertiesToHide);
             }
         }
 
         public ICommand ResetToDefaultCommand { get; }
+
+        public ObservableCollection<string> PropertiesToHide { get; set; }
 
         public CodeGeneratorTemplate Settings
         {
@@ -82,7 +110,7 @@ namespace LHQ.App.ViewModels.Dialogs
         {
             string caption = Strings.Dialogs.CodeGenerator.ResetConfirmCaption;
             string message = Strings.Dialogs.CodeGenerator.ResetConfirmMessage;
-            if (DialogService.ShowConfirm(caption, message, null) == Model.DialogResult.Yes)
+            if (DialogService.ShowConfirm(new DialogShowInfo(caption, message)).DialogResult == Model.DialogResult.Yes)
             {
                 Settings = CodeGeneratorTemplateManager.Instance.CreateTemplate(TemplateId);
             }
@@ -99,16 +127,16 @@ namespace LHQ.App.ViewModels.Dialogs
                 {
                     if (error.IsConfirmation)
                     {
-                        valid = DialogService.ShowConfirm(Title, error.Message, error.Detail) == Model.DialogResult.Yes;
+                        valid = DialogService.ShowConfirm(new DialogShowInfo(Title, error.Message, error.Detail)).DialogResult == Model.DialogResult.Yes;
                     }
                     else
                     {
-                        DialogService.ShowWarning(Title, error.Message, error.Detail);
+                        DialogService.ShowWarning(new DialogShowInfo(Title, error.Message, error.Detail));
                     }
                 }
                 else
                 {
-                    DialogService.ShowError(Title, error.Message, error.Detail);
+                    DialogService.ShowError(new DialogShowInfo(Title, error.Message, error.Detail));
                 }
             }
 

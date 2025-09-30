@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -43,8 +43,9 @@ namespace LHQ.App.Services.Implementation.PluginSystem
     // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class PluginManager : AppContextServiceBase, IPluginManager
     {
-        private const string PublicKeyToken = "d8cff9c478cc93d2";
+        //private const string PublicKeyToken = "d8cff9c478cc93d2";
         private const string ReserverdPluginKeyPrefix = "LHQ.";
+        private const string ReserverdPluginFilePrefix = "LHQ.Plugin.";
         private static readonly Type _typeIPluginModule = typeof(IPluginModule);
 
         private PluginManagerConfigStorage _pluginManagerConfigStorage;
@@ -73,20 +74,27 @@ namespace LHQ.App.Services.Implementation.PluginSystem
             _pluginManagerConfigStorage.ConfigureDependencies(AppContext.ServiceContainer);
 
             List<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => x.GetName().GetPublicKeyTokenAsHex() == PublicKeyToken).ToList();
+                .Where(x => x.GetName().Name.StartsWith(ReserverdPluginFilePrefix, true)).ToList();
+                //.Where(x => x.GetName().GetPublicKeyTokenAsHex() == PublicKeyToken).ToList();
 
             string appFolder = AppContext.AppFolder;
-            string[] pluginAssemblyFiles = Directory.GetFiles(appFolder, "LHQ.Plugin.*.dll", SearchOption.TopDirectoryOnly);
+            var searchPattern = "LHQ.Plugin.*.dll";
+            Logger.Info($"Searching for plugins in: {appFolder} ({searchPattern}) ...");
+            string[] pluginAssemblyFiles = Directory.GetFiles(appFolder, searchPattern, SearchOption.TopDirectoryOnly);
+            Logger.Info($"Searching for plugins in: {appFolder} found {pluginAssemblyFiles.Length} plugins");
             if (pluginAssemblyFiles.Length > 0)
             {
                 foreach (string pluginAssemblyFile in pluginAssemblyFiles)
                 {
                     try
                     {
+                        Logger.Info($"Loading plugin assembly: {pluginAssemblyFile} ...");
                         Assembly pluginAssembly = Assembly.LoadFile(pluginAssemblyFile);
                         if (!assemblies.Contains(pluginAssembly))
                         {
                             assemblies.Add(pluginAssembly);
+                            
+                            Logger.Info($"Loading plugin assembly: {pluginAssemblyFile} succeed.");
                         }
                         else
                         {
@@ -103,8 +111,13 @@ namespace LHQ.App.Services.Implementation.PluginSystem
             List<Type> pluginModuleTypes = null;
             try
             {
+                Logger.Info($"Searching for 'plugin module registration' in {assemblies.Count} assemblies...");
+                
                 pluginModuleTypes = TypeHelper.LoadTypesFromTypedAttributes<PluginModuleRegistrationAttribute, IPluginModule>(
                     "GetPluginModules", assemblies.ToArray());
+                
+                Logger.Info($"Searching for 'plugin module registration' in {assemblies.Count}, found " 
+                    + (pluginModuleTypes == null ? "-" : $"{pluginModuleTypes.Count} types"));
             }
             catch (Exception e)
             {
@@ -147,14 +160,14 @@ namespace LHQ.App.Services.Implementation.PluginSystem
                             // check if its assembly public key token points to app vendor's (if its our plugin or not)
                             if (pluginModule.Key.ToUpper().StartsWith(ReserverdPluginKeyPrefix))
                             {
-                                string pluginModulePublicKeyToken = pluginModuleType.Assembly.GetName().GetPublicKeyTokenAsHex();
-                                if (pluginModulePublicKeyToken != PublicKeyToken)
-                                {
-                                    Logger.Error(
-                                        $"Type '{pluginModuleType.AssemblyQualifiedName}' has invalid prefix '{ReserverdPluginKeyPrefix}' for its Key name.");
-
-                                    continue;
-                                }
+                                // string pluginModulePublicKeyToken = pluginModuleType.Assembly.GetName().GetPublicKeyTokenAsHex();
+                                // if (pluginModulePublicKeyToken != PublicKeyToken)
+                                // {
+                                //     Logger.Error(
+                                //         $"Type '{pluginModuleType.AssemblyQualifiedName}' has invalid prefix '{ReserverdPluginKeyPrefix}' for its Key name.");
+                                //
+                                //     continue;
+                                // }
                             }
 
                             if (registration == null)

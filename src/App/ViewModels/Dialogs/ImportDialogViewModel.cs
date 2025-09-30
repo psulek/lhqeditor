@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -31,6 +31,7 @@ using System.Windows.Input;
 using LHQ.App.Code;
 using LHQ.App.Extensions;
 using LHQ.App.Localization;
+using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Core.Interfaces;
 using LHQ.Core.Model;
@@ -160,8 +161,8 @@ namespace LHQ.App.ViewModels.Dialogs
             IResourceImporter importer = GetSelectedImporter();
             if (importer == null)
             {
-                DialogService.ShowInfo(Strings.ViewModels.Import.PageTitle,
-                    Strings.ViewModels.Import.PleaseSelectImporter, null);
+                DialogService.ShowInfo(new DialogShowInfo(Strings.ViewModels.Import.PageTitle,
+                    Strings.ViewModels.Import.PleaseSelectImporter));
 
                 return;
             }
@@ -219,10 +220,9 @@ namespace LHQ.App.ViewModels.Dialogs
                 if (!valid)
                 {
                     string unsupportedFileExts = unknownFileExtensions.Select(Path.GetExtension).ToDelimitedString();
-                    DialogService.ShowError(
-                        Strings.ViewModels.Import.PageTitle,
-                        Strings.ViewModels.Import.UnsupportedFileExtensionsMessage,
-                        Strings.ViewModels.Import.UnsupportedFileExtensionsDetail(importer.DisplayName, unsupportedFileExts));
+                    DialogService.ShowError(new DialogShowInfo(Strings.ViewModels.Import.PageTitle,
+                            Strings.ViewModels.Import.UnsupportedFileExtensionsMessage,
+                            Strings.ViewModels.Import.UnsupportedFileExtensionsDetail(importer.DisplayName, unsupportedFileExts)));
                 }
             }
 
@@ -235,19 +235,19 @@ namespace LHQ.App.ViewModels.Dialogs
         {
             if (SelectedImporter.IsNullOrEmpty())
             {
-                DialogService.ShowError(GetTitle(), Strings.ViewModels.Import.PleaseSelectImporter, null);
+                DialogService.ShowError(new DialogShowInfo(GetTitle(), Strings.ViewModels.Import.PleaseSelectImporter));
                 return false;
             }
 
             if (SelectedFile.IsNullOrEmpty())
             {
-                DialogService.ShowError(GetTitle(), Strings.ViewModels.Import.PleaseSelectFilesToImport, null);
+                DialogService.ShowError(new DialogShowInfo(GetTitle(), Strings.ViewModels.Import.PleaseSelectFilesToImport));
                 return false;
             }
 
             if (!ModeAutoMerge && !ModeImportAsNew)
             {
-                DialogService.ShowError(GetTitle(), Strings.ViewModels.Import.PleaseSelectImportMode, null);
+                DialogService.ShowError(new DialogShowInfo(GetTitle(), Strings.ViewModels.Import.PleaseSelectImportMode));
                 return false;
             }
 

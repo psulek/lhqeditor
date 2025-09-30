@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -176,18 +176,18 @@ namespace LHQ.Utils.Extensions
             return new List<TItem> { value };
         }
 
-        public static IEnumerable<T> Append<T>(this IEnumerable<T> source, T value)
-        {
-            if (source != null)
-            {
-                foreach (T item in source)
-                {
-                    yield return item;
-                }
-            }
-
-            yield return value;
-        }
+        // public static IEnumerable<T> Append<T>(this IEnumerable<T> source, T value)
+        // {
+        //     if (source != null)
+        //     {
+        //         foreach (T item in source)
+        //         {
+        //             yield return item;
+        //         }
+        //     }
+        //
+        //     yield return value;
+        // }
 
         /// <summary>
         ///     Joins the collection to string with separator.

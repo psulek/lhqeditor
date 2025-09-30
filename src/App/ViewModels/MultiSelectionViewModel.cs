@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -402,9 +402,17 @@ namespace LHQ.App.ViewModels
 
             if (showRecursiveConfirm)
             {
-                DialogResult dialogResult = DialogService.ShowConfirm(dialogCaption,
-                    confirmMessage, null, confirmButtons, yesButtonHeader: confirmYesButtonHeader,
-                    noButtonHeader: confirmNoButtonHeader);
+                var dialogShowInfo = new DialogShowInfo(dialogCaption, confirmMessage)
+                {
+                    YesButtonHeader = confirmYesButtonHeader,
+                    NoButtonHeader = confirmNoButtonHeader
+                };
+                
+                var dialogResult = DialogService.ShowConfirm(dialogShowInfo, buttons: confirmButtons).DialogResult;
+                
+                // DialogResult dialogResult = DialogService.ShowConfirm(dialogCaption,
+                //     confirmMessage, null, confirmButtons, yesButtonHeader: confirmYesButtonHeader,
+                //     noButtonHeader: confirmNoButtonHeader);
 
                 if (dialogResult == DialogResult.Cancel)
                 {
@@ -417,7 +425,7 @@ namespace LHQ.App.ViewModels
             resourcesToProcess = getResources(recursiveScan).ToList();
             if (resourcesToProcess.Count == 0)
             {
-                DialogService.ShowWarning(dialogCaption, dialogMessage, dialogDetail);
+                DialogService.ShowWarning(new DialogShowInfo(dialogCaption, dialogMessage, dialogDetail));
             }
             else
             {

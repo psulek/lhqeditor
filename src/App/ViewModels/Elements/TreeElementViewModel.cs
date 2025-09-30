@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter �ulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -361,14 +361,15 @@ namespace LHQ.App.ViewModels.Elements
                     if (duplicates.Count == childsToMove.Count)
                     {
                         moveAllowed = false;
-                        DialogService.ShowError(dialogCaption, Strings.Operations.Move.MoveElementsStoppedErrorMessage, null);
+                        DialogService.ShowError(new DialogShowInfo(dialogCaption, Strings.Operations.Move.MoveElementsStoppedErrorMessage));
                     }
                     else
                     {
                         var message = Strings.Operations.Move.MoveElementsSomeDuplicatesMessage;
                         string detail = Strings.Operations.Move.MoveElementsSomeDuplicatesDetail;
 
-                        moveAllowed = DialogService.ShowConfirm(dialogCaption, message, detail) == DialogResult.Yes;
+                        var dialogShowInfo = new DialogShowInfo(dialogCaption, message, detail);  
+                        moveAllowed = DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes;
                         if (moveAllowed)
                         {
                             childsToMove = childsToMove.Except(duplicates).ToList();

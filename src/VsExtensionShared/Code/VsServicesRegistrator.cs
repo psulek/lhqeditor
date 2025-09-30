@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -46,11 +46,13 @@ namespace LHQ.VsExtension.Code
                     serviceContainer.ReplaceRegistration<IDialogService, VsDialogService>();
                     serviceContainer.ReplaceRegistration<IApplicationService, VsApplicationService>();
                     serviceContainer.ReplaceRegistration<IUpdateService, VsUpdateService>();
+                    serviceContainer.ReplaceRegistration<IStandaloneCodeGeneratorService, VsStandaloneCodeGeneratorService>();
                     break;
                 }
                 case ServicesRegistratorType.ShellViewContextService:
                 {
                     serviceContainer.ReplaceRegistration<IShellService, VsShellService>();
+                    // serviceContainer.ReplaceRegistration<IStandaloneCodeGeneratorService, VsStandaloneCodeGeneratorService>();
                     break;
                 }
                 default:

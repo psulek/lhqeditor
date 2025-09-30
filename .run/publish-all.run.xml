@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="publish-all" type="PowerShellRunType" factoryName="PowerShell" scriptUrl="C:\dev\github\psulek\lhqeditor\src\Gen.Cmd\publish-all.ps1" executablePath="$PROJECT_DIR$/../../../../WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe">
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

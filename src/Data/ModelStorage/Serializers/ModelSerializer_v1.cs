@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -57,6 +57,8 @@ namespace LHQ.Data.ModelStorage.Serializers
         private const string AttributeDescriptorUID = "descriptorUID";
         private const string AttributeNote = "note";
         private const string AttributeState = "state";
+        private const string AttributeEOL = "eol";
+        private const string AttributeSanitize = "sanitize";
         private const string ElementCategories = "categories";
         private const string ElementModel = "model";
         private const string ElementModelOptions = "options";
@@ -74,7 +76,7 @@ namespace LHQ.Data.ModelStorage.Serializers
         private Model _model;
         private ModelSaveOptions _saveOptions;
 
-        public int ModelVersion => 1;
+        public virtual int ModelVersion => 1;
 
         private void SetModelContext(ModelContext modelContext)
         {
@@ -91,9 +93,14 @@ namespace LHQ.Data.ModelStorage.Serializers
             return WriteRootModel();
         }
 
-        public bool Upgrade(ModelContext previousModelContext)
+        public virtual bool Upgrade(string modelFileName, ModelContext previousModelContext)
         {
             return true;
+        }
+
+        public virtual bool IsCompatibleWithCurrent()
+        {
+            return ModelConstants.CurrentModelVersion <= 2;
         }
 
         [Conditional("DEBUG")]
@@ -158,7 +165,14 @@ namespace LHQ.Data.ModelStorage.Serializers
 
                         if (result.Status == ModelLoadStatus.ModelUpgraderRequired)
                         {
-                            result.ModelVersion = modelVersion;
+                            if (IsCompatibleWithCurrent())
+                            {
+                                result.Status = ModelLoadStatus.Success;
+                            }
+                            else
+                            {
+                                result.ModelVersion = modelVersion;
+                            }
                         }
                     }
                     else
@@ -348,6 +362,37 @@ namespace LHQ.Data.ModelStorage.Serializers
                         if (!valid)
                         {
                             LogDeserializeError("model", AttributeOptionsResources);
+                        }
+                        else
+                        {
+                            if (jsonModelOptions.TryGetValue(ElementValues, out JToken elementOptionsValues) && 
+                                elementOptionsValues is JObject jsonOptionsValues)
+                            {
+                                LineEndings? eol = null;
+                                bool? sanitize = null;
+                                
+                                if (TryGetJsonValue(jsonOptionsValues, AttributeEOL, out string eolStr))
+                                {
+                                    if (ValueSerializer.TryDeserialize(eolStr, true, out LineEndings tmp_eol))
+                                    {
+                                        eol = tmp_eol;
+                                    }
+                                }
+
+                                if (TryGetJsonValue(jsonOptionsValues, AttributeSanitize, out bool tmp_sanitize))
+                                {
+                                    sanitize = tmp_sanitize;
+                                }
+
+                                if (eol != null || sanitize != null)
+                                {
+                                    modelOptions.Values = new ModelOptionsValues
+                                    {
+                                        EOL = eol,
+                                        Sanitize = sanitize
+                                    };
+                                }
+                            }
                         }
                     }
                 }
@@ -749,6 +794,23 @@ namespace LHQ.Data.ModelStorage.Serializers
 
             jsonModelOptions[AttributeOptionsCategories] = modelOptions.Categories;
             jsonModelOptions[AttributeOptionsResources] = ValueSerializer.Serialize(modelOptions.Resources);
+
+            var values = modelOptions.Values;
+            if (values != null)
+            {
+                JToken jsonOptionsValues = new JObject();
+                jsonModelOptions[ElementValues] = jsonOptionsValues;
+
+                if (values.EOL != null)
+                {
+                    jsonOptionsValues[AttributeEOL] = ValueSerializer.Serialize(values.EOL.Value);
+                }
+                
+                if (values.Sanitize != null)
+                {
+                    jsonOptionsValues[AttributeSanitize] = values.Sanitize.Value;
+                }
+            }
         }
 
         private void WriteMetadatas(JToken jsonModel)
@@ -766,7 +828,8 @@ namespace LHQ.Data.ModelStorage.Serializers
                 {
                     string metadataRawJson = DataNodeJsonSerializer.Serialize(metadataHolder, _saveOptions);
 
-                    jsonModel[ElementMetadatas] = new JRaw(metadataRawJson);
+                    var mtd = JObject.Parse(metadataRawJson);
+                    jsonModel[ElementMetadatas] = mtd;
                 }
             }
         }

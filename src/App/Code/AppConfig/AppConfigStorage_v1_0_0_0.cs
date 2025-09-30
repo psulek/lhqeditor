@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -45,6 +45,7 @@ namespace LHQ.App.Code
         private const string AttrTheme = "theme";
         private const string AttrData = "data";
         private const string AttrDetectTheme = "detectTheme";
+        private const string AttrRunTemplateAfterSave = "runTemplateAfterSave";
 
         protected override AppConfig LoadFromJson(JObject jsonRoot)
         {
@@ -88,6 +89,11 @@ namespace LHQ.App.Code
             if (TryGetJsonValue(jsonRoot, AttrLockTranslationsWithResource, JTokenType.Boolean, out bool lockTranslationsWithResource))
             {
                 result.LockTranslationsWithResource = lockTranslationsWithResource;
+            }
+
+            if (TryGetJsonValue(jsonRoot, AttrRunTemplateAfterSave, JTokenType.Boolean, out bool runTemplateAfterSave))
+            {
+                result.RunTemplateAfterSave = runTemplateAfterSave;
             }
 
             if (TryGetJsonValue(jsonRoot, AttrTheme, JTokenType.String, out string theme))
@@ -134,7 +140,8 @@ namespace LHQ.App.Code
                 [AttrEnableTranslation] = config.EnableTranslation,
                 [AttrTranslatorProviderKey] = config.TranslatorProviderKey,
                 [AttrTheme] = appVisualTheme.ToString(),
-                [AttrData] = JToken.FromObject(config.Data)
+                [AttrData] = JToken.FromObject(config.Data),
+                [AttrRunTemplateAfterSave] = config.RunTemplateAfterSave
             };
 
             if (config.LockTranslationsWithResource != null)

@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -55,28 +55,38 @@ namespace LHQ.App.Services.Implementation
 
             var clonedModelContext = new ModelContext(source.Options);
             var loadOptions = new ModelLoadOptions(preserveKeys);
-            ModelLoadResult loadResult = _serializerManager.Deserialize(clonedModelContext, serializedContent, loadOptions);
+            ModelLoadResult loadResult = _serializerManager.Deserialize(clonedModelContext, serializedContent, null, loadOptions);
             return loadResult.Status == ModelLoadStatus.Success ? clonedModelContext : null;
         }
 
-        public ModelLoadResult Load(ModelContext modelContext, string content)
+        public bool IsCompatible(ModelContext modelContext)
         {
-            var loadOptions = new ModelLoadOptions(false);
-            return _serializerManager.Deserialize(modelContext, content, loadOptions);
+            return _serializerManager.IsCompatible(modelContext);
         }
 
-        public ModelLoadResult Upgrade(ModelContext modelContext, string content, int fromModelVersion)
+        public ModelLoadResult Load(ModelContext modelContext, string content, string fileName)
+        {
+            var loadOptions = new ModelLoadOptions(false);
+            return _serializerManager.Deserialize(modelContext, content, fileName, loadOptions);
+        }
+
+        public ModelLoadResult Upgrade(ModelContext modelContext, string content, string fileName, int fromModelVersion)
         {
             var loadOptions = new ModelLoadOptions(false)
             {
                 UpgradeFromModelVersion = fromModelVersion
             };
-            return _serializerManager.Deserialize(modelContext, content, loadOptions);
+            return _serializerManager.Deserialize(modelContext, content, fileName, loadOptions);
         }
 
         public string Save(ModelContext modelContext, ModelSaveOptions modelSaveOptions)
         {
             return _serializerManager.Serialize(modelContext, modelSaveOptions);
+        }
+
+        public int[] GetSupportedModelVersions()
+        {
+            return _serializerManager.GetSupportedModelVersions();
         }
 
         public void Initialize()

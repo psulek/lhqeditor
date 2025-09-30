@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Å ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -28,20 +28,41 @@ using LHQ.App.Code;
 using LHQ.App.Localization;
 using LHQ.App.Services.Interfaces;
 using LHQ.Data;
+using LHQ.Data.CodeGenerator;
+using LHQ.Data.Templating;
 
 namespace LHQ.App.ViewModels.Dialogs
 {
     public class ProjectSettingsDialogViewModel : DialogViewModelBase
     {
-        public ProjectSettingsDialogViewModel(IShellViewContext shellViewContext) : base(shellViewContext.AppContext)
+        public ProjectSettingsDialogViewModel(IShellViewContext shellViewContext)
+            : base(shellViewContext.AppContext)
         {
+            var shellViewModel = shellViewContext.ShellViewModel;
+            //var modelOptions = shellViewModel.ModelOptions.Clone();
+            bool canChangeGeneratorTemplate = !shellViewModel.HasCodeGeneratorItemTemplate;
+            string templateId = shellViewModel.CodeGeneratorItemTemplate;
+            
+            var metadata = shellViewModel.ModelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+            var template = metadata.Template ??
+                (string.IsNullOrEmpty(templateId) ? null : CodeGeneratorTemplateManager.Instance.CreateTemplate(templateId));
+            
             ProjectSettings = new ProjectSettingsViewModel(shellViewContext);
-            ShowHelpCommand = new DelegateCommand(ShowHelpExecute);
+            ProjectSettings.CanChangeGeneratorTemplate = canChangeGeneratorTemplate;
+            ProjectSettings.SetTemplate(template);
+            //ProjectSettings.SelectTemplateById(templateId);
+            UpgradeModelCommand = new DelegateCommand(UpgradeModelCommandExecute);
+            UpdrageModelRequested = false;
         }
 
         public ProjectSettingsViewModel ProjectSettings { get; set; }
 
         public ICommand ShowHelpCommand { get; }
+        
+        public ICommand UpgradeModelCommand { get; }
+
+        public bool UpdrageModelVisible { get; set; }
+        public bool UpdrageModelRequested { get; set; }
 
         protected override string GetTitle()
         {
@@ -61,6 +82,12 @@ namespace LHQ.App.ViewModels.Dialogs
         private void ShowHelpExecute(object obj)
         {
             WebPageUtils.ShowDoc(WebPageDocSection.ProjectSettings);
+        }
+        
+        private void UpgradeModelCommandExecute(object obj)
+        {
+            UpdrageModelRequested = true;
+            CloseDialogCommand.Execute(null);
         }
     }
 }

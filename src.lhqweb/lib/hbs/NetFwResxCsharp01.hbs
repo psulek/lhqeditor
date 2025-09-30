@@ -1,0 +1,292 @@
+﻿{{~#output fileName=(x-concat model.name ".gen.cs") ~}}
+childs[?name=='CSharp'].attrs | [0].merge(@, {
+    OutputFolder: (OutputFolder||'Resources'),
+    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
+    LineEndings: (LineEndings||'LF'),
+    Enabled: (Enabled||'true')=='true',
+    UseExpressionBodySyntax: (UseExpressionBodySyntax||'false')=='true',
+    MissingTranslationFallbackToPrimary: (MissingTranslationFallbackToPrimary||'false')=='true'
+})
+{{~/output~}}
+
+{{! for each language generate resx file }}
+{{~#each model.languages ~}}
+    {{output-child templateId="NetResx" host=(x-value query="{lang: @}")}}
+{{~/each~}}
+
+{{~m-data (x-concat model.name "Context") key="rootClassName" ~}}
+{{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
+{{~m-data @root.host.namespace default=model.name defaultOnEmpty=true key="rootNamespace" ~}}
+
+{{~m-data (x-normalizePath @root.settings.OutputFolder replacePathSep=".") key="outputFolderDots" ~}}
+{{~m-data (x-concat @root.data.rootNamespace @root.data.outputFolderDots model.name sep=".") key="resourceTypeName" ~}}
+{{~m-data (x-concat @root.data.rootNamespace model.name sep=".") key="resourceType" ~}}
+
+{{{ x-header }}}
+
+{{#with model}}
+namespace {{ @root.data.rootNamespace }}
+{
+	using System;
+	using System.ComponentModel;
+	using System.Linq;
+	using System.Resources;
+	using System.Reflection;
+	using System.Globalization;
+	using System.Runtime.CompilerServices;
+	using System.Threading;
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public partial class {{@root.data.rootClassName}}: INotifyPropertyChanged, IFormattable
+	{
+		private CultureInfo _culture;
+		{{#if @root.settings.MissingTranslationFallbackToPrimary }}
+		private CultureInfo _fallbackCulture;
+		{{else}}
+	
+		{{/if}}
+		private static readonly Lazy<{{@root.data.rootClassName}}> _instance = new Lazy<{{@root.data.rootClassName}}>(() => new {{@root.data.rootClassName}}());
+		private static readonly Lazy<ResourceManager> _resourceManager = new Lazy<ResourceManager>(CreateResourceManager);
+
+		private {{@root.data.rootClassName}}()
+		{}
+
+		{{#if @root.settings.UseExpressionBodySyntax }}
+		public static ResourceManager ResourceManager => _resourceManager.Value;
+		{{else}}
+		public static ResourceManager ResourceManager
+		{
+			get
+			{
+				return _resourceManager.Value;
+			}
+		}
+		{{/if}}
+
+		public const string PrimaryCulture = "{{primaryLanguage}}";
+
+		{{#if @root.settings.UseExpressionBodySyntax }}
+		public string[] AvailableCultures => new string[] { {{{x-join languages decorator=(char-quote) }}} };
+		{{else}}
+		public string[] AvailableCultures
+		{
+			get
+			{
+				return new string[] { {{{x-join languages decorator=(char-quote) }}} };
+			}
+		}
+		{{/if}}
+
+		{{#if @root.settings.MissingTranslationFallbackToPrimary }}
+		public CultureInfo FallbackCulture
+		{
+			get
+			{
+				if (_fallbackCulture == null)
+				{
+					_fallbackCulture = new CultureInfo(PrimaryCulture);
+				}
+				return _fallbackCulture;
+			}
+			set
+			{
+				if ((value == null) || !AvailableCultures.Contains(value.Name))
+				{
+					throw new InvalidOperationException($"Unable to set fallback culture to '{value.Name}' which is not defined in available cultures!");
+				}
+
+				_fallbackCulture = value;
+			}
+		}
+		{{/if}}
+
+		public static {{@root.data.rootClassName}} Instance
+		{
+			get
+			{
+				return _instance.Value;
+			}
+		}
+		
+		public CultureInfo Culture
+		{
+			get
+			{
+				return _culture ?? (_culture = CultureInfo.CurrentUICulture);
+			}
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException("Culture must not be null");
+				}
+
+				if (value.Name == Culture.Name)
+				{
+					return;
+				}
+
+				_culture = value;
+				Thread.CurrentThread.CurrentUICulture = _culture;
+				OnPropertyChanged(nameof(Culture));
+			}
+		}
+
+		private static ResourceManager CreateResourceManager()
+		{
+			return new ResourceManager("{{@root.data.resourceTypeName}}",
+				typeof({{@root.data.resourceType}}).Assembly);
+		}
+
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return GetStringSafely(format);
+		}
+
+		public string GetStringSafely(string name)
+		{
+			if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
+			string result = GetStringSafely(name, Culture);
+			if (result == null)
+			{
+				{{#if @root.settings.MissingTranslationFallbackToPrimary }}
+				if (FallbackCulture != null)
+				{
+					result = GetStringSafely(name, FallbackCulture);
+					if (result == null)
+					{
+						result = string.Format("???{0}.{1}???", name, FallbackCulture == null ? string.Empty : FallbackCulture.Name);
+					}
+				}
+				{{else}}
+				result = string.Format("???{0}.{1}???", name, Culture == null ? string.Empty : Culture.Name);
+				{{/if}}
+			}
+
+			return result;
+		}
+
+		private string GetStringSafely(string name, CultureInfo culture)
+		{
+			string result = null;
+			try
+			{
+				result = culture == null ? ResourceManager.GetString(name) : ResourceManager.GetString(name, culture);
+			}
+			catch (MissingManifestResourceException)
+			{
+				// Resource does not exist
+			}
+
+			return result;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void OnPropertyChanged(string property)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+		}
+	}
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public static partial class {{@root.data.keysClassName}}
+	{
+	{{#each categories ~}}
+		{{~#x-merge _resourceRenderValue="key" ~}}
+		{{> category }}
+		{{~/x-merge~}}
+	{{#if (x-equals @last false) }}     
+		
+	{{/if}}
+	{{/each}}
+	{{#if resources}}
+		
+	{{#x-merge _resourceRenderValue="key" ~}}
+	{{> resources }}
+	{{~/x-merge~}}
+    {{/if}}
+	}
+
+	[System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public partial class {{name}}
+	{
+	{{#each categories ~}}
+		{{~#x-merge _resourceRenderValue="value" ~}}
+		{{> category }}
+		{{~/x-merge~}}
+	{{#if (x-equals @last false) }}
+		
+	{{/if}}
+	{{/each}}
+	{{#if resources}}
+		
+	{{#x-merge _resourceRenderValue="value" ~}}
+	{{> resources }}
+	{{~/x-merge~}}
+    {{/if}}
+	}
+}
+{{/with}}
+{{#*inline "category"}}
+public static partial class {{name}}
+{
+{{#each categories }}
+	{{~#x-merge _resourceRenderValue=../_resourceRenderValue ~}}
+	{{> category }}
+	{{~/x-merge~}}
+{{#if (x-equals @last false) }}
+	
+{{/if}}
+{{/each}}
+{{> resources }}
+}
+{{/inline}}
+{{#*inline "resources"}}
+{{#if resources}}
+{{#each resources}}
+	{{m-data (x-fn paths.getParentPath '') key="parentPath" ~}}
+	{{~m-data (x-concat (x-test (x-equals ../_resourceRenderValue "key") then=@root.data.keysClassName else=@root.data.rootClassName) ".Instance.GetStringSafely") key="localizer" ~}}
+	{{m-data (x-concat @root.data.keysClassName (x-fn paths.getParentPath '.') sep=".") key="resourceFullPath" ~}}
+	/// <summary>
+	/// Gets localized string similar to: {{{ this.comment }}}
+	/// </summary>
+	{{#if (x-equals ../_resourceRenderValue "key") }}
+	public const string {{name}} = "{{data.parentPath}}";
+	{{else}}
+	{{#if hasParameters}}
+	{{~m-data query="join(',', map(&join('', ['object ', @.name]), parameters))" key="resourceParamNamesWithTypes" ~}}
+	{{~m-data query="join(',', map(&@.name, parameters))" key="resourceParamNames" ~}}
+	{{#if @root.settings.UseExpressionBodySyntax }}
+	public static string {{name}}({{data.resourceParamNamesWithTypes}}) => string.Format({{data.localizer}}({{data.resourceFullPath}}), {{data.resourceParamNames}});
+	{{else}}
+	public static string {{name}}({{data.resourceParamNamesWithTypes}})
+	{
+		return string.Format({{data.localizer}}({{data.resourceFullPath}}), {{data.resourceParamNames}});
+	}
+	{{/if}}
+	{{else}}
+	{{#if @root.settings.UseExpressionBodySyntax }}
+	public static string {{name}} => {{data.localizer}}({{data.resourceFullPath}});
+	{{else}}
+	public static string {{name}}
+	{
+		get
+		{
+			return {{data.localizer}}({{data.resourceFullPath}});
+		}
+	}
+	{{/if}}
+	{{/if}}
+¤
+	{{/if}}
+{{/each}}
+{{/if}}
+{{/inline}}

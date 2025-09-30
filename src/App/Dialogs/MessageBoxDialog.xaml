@@ -5,13 +5,13 @@
                       xmlns:code="clr-namespace:LHQ.App.Code"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
-                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
                       xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
                       Title="{Binding Title}"
                       Width="550"
-                      Height="280"
+                      Height="330"
                       d:DataContext="{d:DesignInstance vm:MessageBoxDialogViewModel,
                                                        IsDesignTimeCreatable=false}"
                       sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
@@ -105,6 +105,11 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Orientation="Horizontal">
+                <Button Width="90"
+                        Margin="0,0,10,0"
+                        Command="{Binding Path=ExtraButtonVisibilityCommand}"
+                        Content="{Binding Path=ExtraButtonVisibilityHeader}"
+                        Visibility="{Binding Path=ExtraButtonVisibility}"/>
                 <Button Width="90"
                         Margin="0,0,10,0"
                         Command="{Binding Path=SubmitDialogCommand}"

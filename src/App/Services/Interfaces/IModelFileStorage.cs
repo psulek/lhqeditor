@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -32,10 +32,14 @@ namespace LHQ.App.Services.Interfaces
     {
         ModelContext Clone(ModelContext source, bool preserveKeys = false);
 
-        ModelLoadResult Load(ModelContext modelContext, string content);
+        bool IsCompatible(ModelContext modelContext);
+        
+        ModelLoadResult Load(ModelContext modelContext, string content, string fileName);
 
-        ModelLoadResult Upgrade(ModelContext modelContext, string content, int fromModelVersion);
+        ModelLoadResult Upgrade(ModelContext modelContext, string content, string fileName, int fromModelVersion);
 
         string Save(ModelContext modelContext, ModelSaveOptions modelSaveOptions);
+
+        int[] GetSupportedModelVersions();
     }
 }

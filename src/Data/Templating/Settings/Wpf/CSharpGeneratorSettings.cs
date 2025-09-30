@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -41,15 +41,15 @@ namespace LHQ.Data.Templating.Settings.Wpf
         {
             base.AssignFrom(other);
 
-            if (other is CSharpGeneratorSettings other2)
+            if (other is CSharpGeneratorSettings otherSettings)
             {
-                MissingTranslationFallbackToPrimary = other2.MissingTranslationFallbackToPrimary;
+                MissingTranslationFallbackToPrimary = otherSettings.MissingTranslationFallbackToPrimary;
             }
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             node.AddAttribute(nameof(MissingTranslationFallbackToPrimary), DataNodeValueHelper.ToString(MissingTranslationFallbackToPrimary));
         }
@@ -70,7 +70,7 @@ namespace LHQ.Data.Templating.Settings.Wpf
                 }
             }
 
-            return result; 
+            return result;
         }
     }
 }

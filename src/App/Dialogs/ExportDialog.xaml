@@ -8,7 +8,7 @@
                       xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
                       xmlns:export="clr-namespace:LHQ.App.ViewModels.Dialogs.Export"
                       xmlns:fa="http://schemas.fontawesome.io/icons/"
-                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
@@ -122,9 +122,14 @@
             <TextBlock HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        FontWeight="SemiBold"
-                       Height="20"
-                       Text="{Binding Path=ExportSourceText, Mode=OneTime}" />
-
+                       Height="20">
+                <Run Text="{Binding Path=ExportSourceText, Mode=OneTime}" />
+                <Hyperlink Command="{Binding Path=CopyElementsToClipboard}"
+                           Style="{StaticResource HyperlinkStyle}">
+                    <Run Text="Copy to clipboard" />
+                </Hyperlink>
+            </TextBlock>
+            
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,10,0,0" Height="80"
                           Visibility="{Binding Path=ElementsToExportVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ItemsControl ItemsSource="{Binding ElementsToExport, Mode=OneTime}" Focusable="False">

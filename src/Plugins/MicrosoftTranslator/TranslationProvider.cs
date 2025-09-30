@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -48,6 +48,7 @@ namespace LHQ.Plugin.MicrosoftTranslator
     public class TranslationProvider : ITranslationProvider, IDisposable
     {
         private const string OcpApimSubscriptionKeyHeader = "Ocp-Apim-Subscription-Key";
+        private const string OcpApimSubscriptionRegionHeader = "Ocp-Apim-Subscription-Region";
         private const string AzureHostUrl = "https://api.cognitive.microsofttranslator.com";
 
         private const string RouteTranslate = "/translate?api-version=3.0&from=";
@@ -229,6 +230,11 @@ namespace LHQ.Plugin.MicrosoftTranslator
                         if (useSubscriptionKey)
                         {
                             requestMessage.Headers.Add(OcpApimSubscriptionKeyHeader, PluginConfig.MicrosoftTranslatorSubscriptionKey);
+                        }
+
+                        if (!PluginConfig.MicrosoftTranslatorSubscriptionKeyRegion.IsNullOrEmpty())
+                        {
+                            requestMessage.Headers.Add(OcpApimSubscriptionRegionHeader, PluginConfig.MicrosoftTranslatorSubscriptionKeyRegion);
                         }
 
                         if (request != null)

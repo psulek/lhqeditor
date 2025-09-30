@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -32,7 +32,12 @@ namespace LHQ.Data
         /// <summary>
         /// Current version of model metadata
         /// </summary>
-        public const int CurrentModelVersion = 1;
+        public const int CurrentModelVersion = 3;
+        
+        //public const int LatestSupportedModelVersion = 3;
+        // public const int CurrentModelVersion = 2;
+
+        public const int CurrentCodeGeneratorVersion = 1; 
 
         public static readonly Guid ModelUID = new Guid("6CE4D54C-5DBD-415C-9301-9D315E278638");
     }

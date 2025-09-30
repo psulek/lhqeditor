@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -25,6 +25,7 @@
 
 using LHQ.Data.Support;
 using LHQ.Utils.Extensions;
+using LHQ.Utils.Utilities;
 
 namespace LHQ.Data.Templating.Settings.ResX
 {
@@ -37,6 +38,12 @@ namespace LHQ.Data.Templating.Settings.ResX
 
         public bool CultureCodeInFileNameForPrimaryLanguage { get; set; }
 
+        /// <summary>
+        /// CompatibleTextEncoding - when true - 'System.Web.HttpUtility.HtmlEncode()' is used on translated string to be written to resx <c>value</c> element,
+        /// when false - new 'modern' encoding is used to only encode minimum chars which cannot be in XML element (using <see cref="XmlValueEncode"/>).
+        /// </summary>
+        public bool CompatibleTextEncoding { get; set; } = true;
+
         public override void AssignFrom(GeneratorSettingsBase other)
         {
             base.AssignFrom(other);
@@ -44,14 +51,20 @@ namespace LHQ.Data.Templating.Settings.ResX
             if (other is ResXGeneratorSettings otherResx)
             {
                 CultureCodeInFileNameForPrimaryLanguage = otherResx.CultureCodeInFileNameForPrimaryLanguage;
+                CompatibleTextEncoding = otherResx.CompatibleTextEncoding;
             }
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             node.AddAttribute(nameof(CultureCodeInFileNameForPrimaryLanguage), DataNodeValueHelper.ToString(CultureCodeInFileNameForPrimaryLanguage));
+            // write only if CompatibleTextEncoding is false (for backward compatibility)
+            if (!CompatibleTextEncoding)
+            {
+                node.AddAttribute(nameof(CompatibleTextEncoding), DataNodeValueHelper.ToString(CompatibleTextEncoding));
+            }
         }
 
         public override bool Deserialize(DataNode node)
@@ -66,6 +79,16 @@ namespace LHQ.Data.Templating.Settings.ResX
                     if (!attrCultureCodeInFileNameForPrimaryLanguage.Value.IsNullOrEmpty())
                     {
                         CultureCodeInFileNameForPrimaryLanguage = DataNodeValueHelper.FromString(attrCultureCodeInFileNameForPrimaryLanguage.Value, false);
+                    }
+                }
+
+                CompatibleTextEncoding = true;
+                if (node.Attributes.Contains(nameof(CompatibleTextEncoding)))
+                {
+                    var attrCompatibleTextEncoding = node.Attributes[nameof(CompatibleTextEncoding)];
+                    if (!attrCompatibleTextEncoding.Value.IsNullOrEmpty())
+                    {
+                        CompatibleTextEncoding = DataNodeValueHelper.FromString(attrCompatibleTextEncoding.Value, true);
                     }
                 }
             }

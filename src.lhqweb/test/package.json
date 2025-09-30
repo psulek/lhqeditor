@@ -1,0 +1,43 @@
+{
+  "name": "lhq-generators-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsx index.mts",
+    "help": "lhqcmd",
+    "version": "lhqcmd --version",
+    "validate": "lhqcmd ../lib/test/NetCoreResxCsharp01.lhq validate",
+    "generate": "lhqcmd ../lib/test/NetCoreResxCsharp01.lhq -o temp --data namespace=test123q",
+    "postinstall": "xcopy /y \"node_modules\\@lhq\\lhq-generators\\browser\\index.js\" \"web\\index.js\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.10",
+    "fs-extra": "^11.3.0",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@lhq/lhq-generators": "1.0.86"
+  },
+  "sideEffects": false,
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "cjs"
+    ],
+    "clean": true
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

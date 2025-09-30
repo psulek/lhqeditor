@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using LHQ.App.Code;
@@ -31,6 +32,7 @@ using LHQ.App.Services.Implementation;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels;
 using LHQ.Data;
+using LHQ.Utils.Extensions;
 using AppContext = LHQ.App.Services.Implementation.AppContext;
 
 namespace LHQ.App
@@ -38,17 +40,24 @@ namespace LHQ.App
     public sealed class Bootstraper
     {
         private readonly string _appFileName;
+        private readonly string[] _cmdArgs;
         private AppView _appView;
 
-        public Bootstraper(string appFileName)
+        public Bootstraper(string appFileName, string[] cmdArgs)
         {
             _appFileName = appFileName;
+            _cmdArgs = cmdArgs;
+            
+            var list = new List<string>(new [] {"AWP"});
+            int idx = list.GetIndexForAddSorted("Appllication");
+            int compare = string.Compare(list[0], "Application");
+            DebugUtils.Log(idx.ToString());
         }
 
-        public static async Task<AppView> CreateAppView(string appFileName)
+        public static async Task<AppView> CreateAppView(string appFileName, string[] cmdArgs)
         {
             var servicesRegistrator = new DefaultServicesRegistrator();
-            AppContext appContext = CreateAppContext(appFileName, servicesRegistrator, false);
+            AppContext appContext = CreateAppContext(appFileName, servicesRegistrator, false, cmdArgs);
             ShellViewContext shellViewContext = CreateShellViewContext(appContext);
 
             var appView = new AppView();
@@ -82,9 +91,10 @@ namespace LHQ.App
             return shellView;
         }
 
-        public static AppContext CreateAppContext(string appFileName, IServicesRegistrator servicesRegistrator, bool runInVsPackage)
+        public static AppContext CreateAppContext(string appFileName, IServicesRegistrator servicesRegistrator, bool runInVsPackage,
+            string[] cmdArgs)
         {
-            return AppContext.Initialize(servicesRegistrator, runInVsPackage, appFileName);
+            return AppContext.Initialize(servicesRegistrator, runInVsPackage, appFileName, cmdArgs);
         }
 
         public static ShellViewContext CreateShellViewContext(IAppContext appContext)
@@ -101,7 +111,7 @@ namespace LHQ.App
 
         public async Task Run()
         {
-            _appView = await CreateAppView(_appFileName);
+            _appView = await CreateAppView(_appFileName, _cmdArgs);
 
 #if DEBUG
             /*var resetAppStorage = 0;

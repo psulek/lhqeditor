@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -40,6 +40,8 @@ namespace LHQ.App.Services.Interfaces
 
         string AppFolder { get; }
 
+        string[] CmdArgs { get; }
+
         string DataFolder { get; }
 
         string AppFileName { get; }
@@ -49,6 +51,8 @@ namespace LHQ.App.Services.Interfaces
         bool AppStartedFirstTime { get; }
 
         UpdateCheckInfo UpdateInfo { get; }
+
+        ModelFileFromCmdLine ModelFileFromCmdLine { get; }
 
         IServicesRegistrator ServicesRegistrator { get; }
 
@@ -67,6 +71,8 @@ namespace LHQ.App.Services.Interfaces
         IAppConfigStorage AppConfigStorage { get; }
 
         IAppConfigFactory AppConfigFactory { get; }
+        
+        IStandaloneCodeGeneratorService StandaloneCodeGeneratorService { get; }
 
         ITranslationService TranslationService { get; }
 

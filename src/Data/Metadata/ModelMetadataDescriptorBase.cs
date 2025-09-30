@@ -1,5 +1,5 @@
 #region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Å ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -62,7 +62,8 @@ namespace LHQ.Data.Metadata
 
         public virtual DataNode Serialize(ModelMetadataDefinition definition, IModelElementMetadata elementMetadata, ModelContext modelContext)
         {
-            return elementMetadata?.Serialize();
+            int modelVersion = modelContext.Model.Version;
+            return elementMetadata?.Serialize(modelVersion);
         }
     }
 }

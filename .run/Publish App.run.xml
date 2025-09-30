@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish App" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish configuration="Release" delete_existing_files="true" platform="Any CPU" target_folder="$PROJECT_DIR$/src/App/bin/Release/net48/publish" target_framework="net48" uuid_high="-8650812488706013422" uuid_low="-5698336602008067733" />
+    <method v="2" />
+  </configuration>
+</component>

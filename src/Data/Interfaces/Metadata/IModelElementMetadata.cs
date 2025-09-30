@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -38,7 +38,7 @@ namespace LHQ.Data.Interfaces.Metadata
         /// </summary>
         Guid DescriptorUID { get; }
 
-        DataNode Serialize();
+        DataNode Serialize(int modelVersion);
 
         bool Deserialize(DataNode sourceNode);
     }

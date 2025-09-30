@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -35,11 +35,14 @@ namespace LHQ.VsExtension.Code
         {
             AppConfig appConfig = base.Load();
 
-            // those props must not be used in VS extension!
             if (appConfig != null)
             {
+                // those props must not be used in VS extension!
                 appConfig.CheckUpdatesOnAppStart = false;
                 appConfig.OpenLastProjectOnStartup = false;
+                
+                // this must be true in VS ext
+                appConfig.RunTemplateAfterSave = true;
             }
 
             return appConfig;

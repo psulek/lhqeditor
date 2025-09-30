@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -190,8 +190,8 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
         {
             if (EnableTranslation && SelectedTranslator == null)
             {
-                DialogService.ShowError(Strings.Common.ValidationError,
-                    Strings.ViewModels.AppSettings.PageTranslator.TranslatorMustBeSelected, null);
+                DialogService.ShowError(new DialogShowInfo(Strings.Common.ValidationError,
+                    Strings.ViewModels.AppSettings.PageTranslator.TranslatorMustBeSelected));
 
                 return false;
             }
@@ -255,7 +255,7 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
                 if (userCancelled)
                 {
                     var testingText = Strings.Dialogs.AppSettings.PageTranslator.Test.TestingText(_translationProvider.DisplayName);
-                    dialogService.ShowError(testingText, Strings.Services.Translation.TestingWasCancelledByUser, null);
+                    dialogService.ShowError(new DialogShowInfo(testingText, Strings.Services.Translation.TestingWasCancelledByUser));
                 }
                 else
                 {
@@ -264,11 +264,11 @@ namespace LHQ.App.ViewModels.Dialogs.AppSettings
                         var title = Strings.Dialogs.AppSettings.PageTranslator.Test.TestSucceedTitle;
                         var text = Strings.Dialogs.AppSettings.PageTranslator.Test.TestSucceed(_translationProvider.DisplayName);
 
-                        dialogService.ShowInfo(title, text, null);
+                        dialogService.ShowInfo(new DialogShowInfo(title, text));
                     }
                     else
                     {
-                        dialogService.ShowError(Strings.Common.Error, Result.Message, Result.Detail);
+                        dialogService.ShowError(new DialogShowInfo(Strings.Common.Error, Result.Message, Result.Detail));
                     }
                 }
 

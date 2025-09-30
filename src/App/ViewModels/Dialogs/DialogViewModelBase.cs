@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -38,13 +38,15 @@ namespace LHQ.App.ViewModels.Dialogs
         private string _title;
         private Window _dialogWindow;
         private bool? _dialogResult;
+        private bool _initializeCompleted;
 
         protected DialogViewModelBase(IAppContext appContext)
             : base(appContext, true)
         {
             _title = string.Empty;
             _dialogResult = null;
-            Initialize();
+            
+            InitializeCommands();
         }
 
         public string Title
@@ -69,15 +71,32 @@ namespace LHQ.App.ViewModels.Dialogs
 
         protected bool? DialogResult => HasDialogWindow ? _dialogWindow.DialogResult : _dialogResult;
 
-        private void Initialize()
+        private void InitializeCommands()
         {
-            KeyDownCommand = new DelegateCommand<KeyEventArgs>(OnKeyDown);
-            LoadedWindowCommand = new DelegateCommand<RoutedEventArgs>(OnLoadedWindow);
-            ClosingWindowCommand = new DelegateCommand<CancelEventArgs>(OnClosingWindow);
+            try
+            {
+                KeyDownCommand = new DelegateCommand<KeyEventArgs>(OnKeyDown);
+                LoadedWindowCommand = new DelegateCommand<RoutedEventArgs>(OnLoadedWindow);
+                ClosingWindowCommand = new DelegateCommand<CancelEventArgs>(OnClosingWindow);
 
-            CloseDialogCommand = new DelegateCommand(CloseDialogExecute, CloseDialogCanExecute);
-            SubmitDialogCommand = new DelegateCommand(SubmitDialogExecute, SubmitDialogCanExecute);
-            CancelDialogCommand = new DelegateCommand(CancelDialogExecute);
+                CloseDialogCommand = new DelegateCommand(CloseDialogExecute, CloseDialogCanExecute);
+                SubmitDialogCommand = new DelegateCommand(SubmitDialogExecute, SubmitDialogCanExecute);
+                CancelDialogCommand = new DelegateCommand(CancelDialogExecute);
+            }
+            finally
+            {
+                _initializeCompleted = true;
+            }
+        }
+
+        protected internal override bool IsBlockedPropertyChange()
+        {
+            if (!_initializeCompleted)
+            {
+                return true;
+            }
+            
+            return base.IsBlockedPropertyChange();
         }
 
         protected virtual void OnLoadedWindow(RoutedEventArgs e)

@@ -1,0 +1,37 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "type": "npm",
+            "script": "eslint",
+            "problemMatcher": [
+                "$eslint-stylish"
+            ],
+            "label": "npm: eslint",
+            "detail": "./node_modules/.bin/eslint.cmd ."
+        },
+        {
+            "type": "npm",
+            "script": "test",
+            "group": "test",
+            "problemMatcher": [],
+            "label": "npm: test",
+            "detail": "tsx mocha ./src/utils.test.ts",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+        {
+            "type": "npm",
+            "script": "publish-local",
+            "problemMatcher": [],
+            "label": "npm: publish-local",
+            "detail": "pnpm run build-all && cd dist && pnpm publish --registry http://localhost:4873/ --no-git-checks && rimraf dist"
+        }
+    ]
+}

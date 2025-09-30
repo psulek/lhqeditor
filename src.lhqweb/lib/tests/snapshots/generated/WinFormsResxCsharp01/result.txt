@@ -1,0 +1,34 @@
+{
+  "generatedFiles": [
+    {
+      "fileName": "Resources\\Strings.gen.cs",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "Resources\\BindableObject.gen.cs",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "Resources\\Strings.de.resx",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "Resources\\Strings.en.resx",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    },
+    {
+      "fileName": "Resources\\Strings.sk.resx",
+      "content": "",
+      "bom": false,
+      "lineEndings": "LF"
+    }
+  ]
+}

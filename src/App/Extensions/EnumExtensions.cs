@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -85,32 +85,32 @@ namespace LHQ.App.Extensions
             }
         }
 
-        public static string ToDisplayName(this ModelLoadStatus modelLoadStatus)
-        {
-            switch (modelLoadStatus)
-            {
-                case ModelLoadStatus.Success:
-                {
-                    return Strings.Enums.ModelLoadStatus.Success;
-                }
-                case ModelLoadStatus.ModelSourceInvalid:
-                {
-                    return Strings.Enums.ModelLoadStatus.ModelSourceInvalid;
-                }
-                case ModelLoadStatus.ModelUpgraderRequired:
-                {
-                    return Strings.Enums.ModelLoadStatus.ModelUpgraderRequired;
-                }
-                case ModelLoadStatus.LoadError:
-                {
-                    return Strings.Enums.ModelLoadStatus.LoadError;
-                }
-                default:
-                {
-                    throw new ArgumentOutOfRangeException(nameof(modelLoadStatus));
-                }
-            }
-        }
+        // public static string ToDisplayName(this ModelLoadStatus modelLoadStatus)
+        // {
+        //     switch (modelLoadStatus)
+        //     {
+        //         case ModelLoadStatus.Success:
+        //         {
+        //             return Strings.Enums.ModelLoadStatus.Success;
+        //         }
+        //         case ModelLoadStatus.ModelSourceInvalid:
+        //         {
+        //             return Strings.Enums.ModelLoadStatus.ModelSourceInvalid;
+        //         }
+        //         case ModelLoadStatus.ModelUpgraderRequired:
+        //         {
+        //             return Strings.Enums.ModelLoadStatus.ModelUpgraderRequired;
+        //         }
+        //         case ModelLoadStatus.LoadError:
+        //         {
+        //             return Strings.Enums.ModelLoadStatus.LoadError;
+        //         }
+        //         default:
+        //         {
+        //             throw new ArgumentOutOfRangeException(nameof(modelLoadStatus));
+        //         }
+        //     }
+        // }
 
         public static string ToDisplayName(this ProjectLoadStatus status, string fileName)
         {
@@ -166,6 +166,10 @@ namespace LHQ.App.Extensions
                 case ProjectBusyOperationType.TreeSearch:
                 {
                     return Strings.Enums.ProjectBusyOperationType.TreeSearch;
+                }
+                case ProjectBusyOperationType.GenerateCode:
+                {
+                    return "Generating code...";
                 }
                 default:
                 {

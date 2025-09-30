@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;net48</TargetFrameworks>
+        <LangVersion>7.3</LangVersion>
+        <RootNamespace>LHQ.Gen.Lib</RootNamespace>
+        <AssemblyName>LHQ.Gen.Lib</AssemblyName>
+        <ImplicitUsings>false</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2025.1.0-eap1" />
+        <PackageReference Include="NLog" Version="4.6.0" />
+        <PackageReference Include="Pastel" Version="3.0.1"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+<!--        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore" Version="3.27.3"/>-->
+        <PackageReference Include="JavaScriptEngineSwitcher.V8" Version="3.29.1"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="LHQ.Cmd.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="content\**\*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="content\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Utils\Utils.csproj" />
+    </ItemGroup>
+
+</Project>

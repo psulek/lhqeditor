@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -33,15 +33,27 @@ using Newtonsoft.Json;
 
 namespace LHQ.Data.Templating.Templates
 {
-    public abstract class CSharpResXTemplateBase<TCSharpSettings> : CodeGeneratorTemplate where TCSharpSettings : CSharpGeneratorSettingsBase, IGeneratorSettings, new()
+    public interface ICSharpResXTemplateBase
+    {
+        CSharpGeneratorSettingsBase GetCSharp();
+    }
+    
+    // [TypeDescriptionProvider(typeof(CodeGeneratorTemplateDescriptionProvider))]
+    public abstract class CSharpResXTemplateBase<TCSharpSettings> : CodeGeneratorTemplate, ICSharpResXTemplateBase where TCSharpSettings : CSharpGeneratorSettingsBase, IGeneratorSettings, new()
     {
         private const string CategoryCSharpGenerator = "C# Generator";
         private const string CategoryResxGenerator = "ResX Generator";
 
+        // protected CSharpResXTemplateBase(int modelVersion): base(modelVersion)
         protected CSharpResXTemplateBase()
         {
             CSharp = new TCSharpSettings();
             ResX = new ResXGeneratorSettings();
+        }
+
+        CSharpGeneratorSettingsBase ICSharpResXTemplateBase.GetCSharp()
+        {
+            return CSharp;
         }
 
         [Browsable(false)]
@@ -81,6 +93,36 @@ namespace LHQ.Data.Templating.Templates
             set => CSharp.UseExpressionBodySyntax = value;
         }
 
+        [DisplayName("Namespace name for generated C# code")]
+        [Description("Namespace name for generated C# code, overwrites default namespace name from project settings." +
+            "If empty, default namespace name from project settings will be used.")]
+        [Category(CategoryCSharpGenerator)]
+        public string Namespace
+        {
+            get => CSharp.Namespace;
+            set => CSharp.Namespace = value;
+        }
+
+        [DisplayName("Encoding with BOM")]
+        [Description("Whenever the encoding contains BOM (Byte Order Mark), where default is false (No BOM).")]
+        [Category(CategoryCSharpGenerator)]
+        [ModelVersionDepend(2)]
+        public bool CSharpEncodingWithBOM
+        {
+            get => CSharp.EncodingWithBOM;
+            set => CSharp.EncodingWithBOM = value;
+        }
+        
+        [DisplayName("Line endings (LF or CRLF)")]
+        [Description("Line endings used when generated files are saved on disk, where default is LF.")]
+        [Category(CategoryCSharpGenerator)]
+        [ModelVersionDepend(2)]
+        public LineEndings CSharpLineEndings
+        {
+            get => CSharp.LineEndings;
+            set => CSharp.LineEndings = value;
+        }
+
         [Browsable(false)]
         [JsonIgnore]
         public ResXGeneratorSettings ResX { get; }
@@ -113,13 +155,43 @@ namespace LHQ.Data.Templating.Templates
             set => ResX.CultureCodeInFileNameForPrimaryLanguage = value;
         }
 
-        public override void Serialize(DataNode node)
+        [DisplayName("Compatible text encoding")]
+        [Description("When enabled, text will be encoded using compatibility mode (System.Web.HttpUtility.HtmlEncode), " +
+            "otherwise only subset of characters (required for xml encoding) will be encoded.")]
+        [Category(CategoryResxGenerator)]
+        public bool ResxCompatibleTextEncoding
+        {
+            get => ResX.CompatibleTextEncoding;
+            set => ResX.CompatibleTextEncoding = value;
+        }
+
+        [DisplayName("Encoding with BOM")]
+        [Description("Whenever the encoding contains BOM (Byte Order Mark), where default is false (No BOM).")]
+        [Category(CategoryResxGenerator)]
+        [ModelVersionDepend(2)]
+        public bool ResXEncodingWithBOM
+        {
+            get => ResX.EncodingWithBOM;
+            set => ResX.EncodingWithBOM = value;
+        }
+        
+        [DisplayName("Line endings (LF or CRLF)")]
+        [Description("Line endings used when generated files are saved on disk, where default is LF.")]
+        [Category(CategoryResxGenerator)]
+        [ModelVersionDepend(2)]
+        public LineEndings ResXLineEndings
+        {
+            get => ResX.LineEndings;
+            set => ResX.LineEndings = value;
+        }
+        
+        public override void Serialize(DataNode node, int modelVersion)
         {
             var nodeCSharp = new DataNode(nameof(CSharp));
-            CSharp.Serialize(nodeCSharp);
+            CSharp.Serialize(nodeCSharp, modelVersion);
 
             var nodeResX = new DataNode(nameof(ResX));
-            ResX.Serialize(nodeResX);
+            ResX.Serialize(nodeResX, modelVersion);
 
             node.Children.AddRange(new[] { nodeCSharp, nodeResX });
         }

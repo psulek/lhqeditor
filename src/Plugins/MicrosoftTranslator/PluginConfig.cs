@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -44,9 +44,15 @@ namespace LHQ.Plugin.MicrosoftTranslator
         [Description("For info how to obtain key, read instruction on provider URL.")]
         public string MicrosoftTranslatorSubscriptionKeyHelp { get; set; }
 
+        [Category(CategoryMicrosoftTranslator)]
+        [DisplayName("Subscription Key Region")]
+        [Description("Region name used for this subscription key.")]
+        public string MicrosoftTranslatorSubscriptionKeyRegion { get; set; }
+
         public PluginConfig()
         {
             MicrosoftTranslatorSubscriptionKey = string.Empty;
+            MicrosoftTranslatorSubscriptionKeyRegion = string.Empty;
             MicrosoftTranslatorSubscriptionKeyHelp = HelpUrl;
         }
     }

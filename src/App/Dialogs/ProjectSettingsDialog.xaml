@@ -6,7 +6,7 @@
     xmlns:code="clr-namespace:LHQ.App.Code"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogs="clr-namespace:LHQ.App.Dialogs"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:localization="clr-namespace:ScaleHQ.WPF.LHQ;assembly=ScaleHQ.WPF.LHQ"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:LHQ.App.Localization;assembly=LHQ.App.Localization"
@@ -14,8 +14,8 @@
     xmlns:views="clr-namespace:LHQ.App.Views"
     xmlns:vm="clr-namespace:LHQ.App.ViewModels.Dialogs"
     Title="Project settings"
-    Width="515"
-    Height="350"
+    Width="535"
+    Height="550"
     d:DataContext="{d:DesignInstance vm:ProjectSettingsDialogViewModel,
                                      IsDesignTimeCreatable=False}"
     sfSkinManager:SfSkinManager.VisualStyle="{Binding Path=VisualStyle, Source={x:Static code:VisualManager.Instance}}"
@@ -66,6 +66,13 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Orientation="Horizontal">
+            <Button
+                Width="170"
+                Margin="0,0,40,0"
+                Command="{Binding Path=UpgradeModelCommand}"
+                Content="Upgrade Model to Latest"
+                Visibility="{Binding Path=UpdrageModelVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                 />
             <Button
                 Width="70"
                 Margin="0,0,10,0"

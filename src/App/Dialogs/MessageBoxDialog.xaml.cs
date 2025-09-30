@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Dialogs;
@@ -39,31 +40,27 @@ namespace LHQ.App.Dialogs
             InitializeComponent();
         }
 
-        public static Result DialogShow(IAppContext appContext, string message, string caption,
-            DialogIcon icon, DialogButtons buttons, string detail, bool? checkValue, 
-            string checkHeader, string checkHint, string cancelButtonHeader = null, 
-            string yesButtonHeader = null, string noButtonHeader = null)
+        public static DialogResultInfo DialogShow(IAppContext appContext, DialogIcon icon, DialogButtons buttons, 
+            DialogShowInfo dialogShowInfo)
         {
-            using (var viewModel = new MessageBoxDialogViewModel(appContext, message,
-                caption, detail, icon, buttons, checkValue, checkHeader, checkHint, 
-                cancelButtonHeader, yesButtonHeader, noButtonHeader))
+            using (var viewModel = new MessageBoxDialogViewModel(appContext, icon, buttons, dialogShowInfo))
             {
                 DialogShow<MessageBoxDialogViewModel, MessageBoxDialog>(viewModel);
-                return new Result(viewModel.Result, viewModel.IsChecked);
+                return new DialogResultInfo(viewModel.IsChecked, viewModel.Result);
             }
         }
 
-        public class Result
-        {
-            public Result(DialogResult dialogResult, bool @checked)
-            {
-                DialogResult = dialogResult;
-                Checked = @checked;
-            }
-
-            public DialogResult DialogResult { get; }
-
-            public bool Checked { get; }
-        }
+        // public class Result
+        // {
+        //     public Result(DialogResult dialogResult, bool @checked)
+        //     {
+        //         DialogResult = dialogResult;
+        //         Checked = @checked;
+        //     }
+        //
+        //     public DialogResult DialogResult { get; }
+        //
+        //     public bool Checked { get; }
+        // }
     }
 }

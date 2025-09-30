@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -30,6 +30,6 @@ namespace LHQ.VsExtension
         public const string Id = "d5b195f6-4332-4061-9c2b-ce9edf43fb88";
         public const string Name = "LHQ Editor VS2022";
         public const string Description = @"Visual Studio 2022 (64-bit) editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.";
-        public const string Version = "2023.1";
+        public const string Version = "2025.3";
     }
 }

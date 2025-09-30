@@ -12,7 +12,7 @@
     xmlns:vm="clr-namespace:LHQ.App.ViewModels"
     d:DataContext="{d:DesignInstance vm:ProjectSettingsViewModel,
                                      IsDesignTimeCreatable=False}"
-    d:DesignHeight="600"
+    d:DesignHeight="700"
     d:DesignWidth="600"
     mc:Ignorable="d">
     <components:AppUserControl.Resources>
@@ -37,6 +37,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -106,6 +118,71 @@
                 VerticalAlignment="Center"
                 Source="{Binding Path=LayoutImage}" />
         </Grid>
+        
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Padding="10,5,0,5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Visibility="{Binding Path=ModelVersionVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+            Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
+            Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+            Text="Model version:" />
+        
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal"
+                    Visibility="{Binding Path=ModelVersionVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock HorizontalAlignment="Stretch" Text="{Binding Path=ModelVersion, Mode=OneTime}"/>
+        </StackPanel>
+        
+        <TextBlock Grid.Row="8"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Padding="10,5,0,5"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Background="{Binding Path=HeaderBackgroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                   Foreground="{Binding Path=HeaderForegroundBrush, Source={x:Static code:VisualManager.Instance}}"
+                   Text="{localization:Localization Key={x:Static resources:StringsKeys+ViewModels+NewProject.CodeGeneratorTemplateTitle}}" />
+
+        <ComboBox
+            Grid.Row="10"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            DisplayMemberPath="Key"
+            ItemsSource="{Binding Path=GeneratorTemplates, Mode=OneTime}"
+            SelectedIndex="{Binding Path=GeneratorTemplateIndex, Mode=TwoWay}"
+            Visibility="{Binding Path=CanChangeGeneratorTemplate, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        
+        <TextBlock Grid.Row="10"
+                   Grid.Column="1"
+                   HorizontalAlignment="Stretch"
+                   Text="{Binding Path=GeneratorTemplateId}"
+                   Visibility="{Binding Path=CanChangeGeneratorTemplate, Converter={StaticResource BoolToVisibilityConverterReverse}}"/>
+
+        <TextBlock Grid.Row="12"
+               Grid.Column="1"
+               Padding="0"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Center"
+               Text="{Binding Path=GeneratorTemplateName}"
+               FontWeight="SemiBold"
+               TextWrapping="Wrap"/>
+
+        <TextBlock Grid.Row="14"
+                   Grid.Column="1"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontWeight="Normal"
+                   Visibility="{Binding Path=HasSelectedCodeGenerator, Converter={StaticResource BoolToVisibilityConverter}}"
+                   TextWrapping="NoWrap">
+            <Hyperlink Command="{Binding Path=ChangeCodeGeneratorSettingsCommand}"
+                       Style="{StaticResource HyperlinkStyle}">
+                <Run Text="{localization:Localization Key={x:Static resources:StringsKeys+ViewModels+NewProject.ChangeCodeGeneratorSettingsLink}}" />
+            </Hyperlink>
+        </TextBlock>
+
     </Grid>
 
 </components:AppUserControl>

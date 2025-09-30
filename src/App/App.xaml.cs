@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -45,37 +45,39 @@ namespace LHQ.App
     /// </summary>
     public partial class App
     {
-        private static string _appFileName;
+        // private static string _appFileName;
+        // private static string[] _cmdArgs;
 
-        [STAThread]
-        public static void Main()
-        {
-            DateTimeHelper.Initialize();
+        // [STAThread]
+        // public static void Main(string[] args)
+        // {
+        //     _cmdArgs = args;
+        //     DateTimeHelper.Initialize();
+        //
+        //     LocalizationExtension.Initialize(new LocalizationContextFactoryDefault(() => StringsContext.Instance));
+        //     AppDomain.CurrentDomain.UnhandledException += OnAppUnhandledException;
+        //
+        //     _appFileName = Assembly.GetExecutingAssembly().Location;
+        //
+        //     var application = new App();
+        //     application.InitializeComponent();
+        //     application.Run();
+        // }
 
-            LocalizationExtension.Initialize(new LocalizationContextFactoryDefault(() => StringsContext.Instance));
-            AppDomain.CurrentDomain.UnhandledException += OnAppUnhandledException;
-
-            _appFileName = Assembly.GetExecutingAssembly().Location;
-
-            var application = new App();
-            application.InitializeComponent();
-            application.Run();
-        }
-
-        private static void OnAppUnhandledException(object sender, UnhandledExceptionEventArgs args)
-        {
-            //ExceptionViewerDialog.DialogShow(args.ExceptionObject as Exception);
-            ShowExceptionDialog(args.ExceptionObject as Exception);
-            Process.GetCurrentProcess().Kill();
-        }
-
-        private static void ShowExceptionDialog(Exception exception)
-        {
-            if (Current.MainWindow != null && exception != null && Current.MainWindow.DataContext is ShellViewModel shellViewModel)
-            {
-                shellViewModel.AppContext?.DialogService?.ShowExceptionDialog(exception);
-            }
-        }
+        // private static void OnAppUnhandledException(object sender, UnhandledExceptionEventArgs args)
+        // {
+        //     //ExceptionViewerDialog.DialogShow(args.ExceptionObject as Exception);
+        //     ShowExceptionDialog(args.ExceptionObject as Exception);
+        //     Process.GetCurrentProcess().Kill();
+        // }
+        //
+        // private static void ShowExceptionDialog(Exception exception)
+        // {
+        //     if (Current.MainWindow != null && exception != null && Current.MainWindow.DataContext is ShellViewModel shellViewModel)
+        //     {
+        //         shellViewModel.AppContext?.DialogService?.ShowExceptionDialog(exception);
+        //     }
+        // }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -118,7 +120,7 @@ namespace LHQ.App
 
         private static Task RunInDebugModeAsync()
         {
-            var bootstrapper = new Bootstraper(_appFileName);
+            var bootstrapper = new Bootstraper(LHQ.App.Startup._appFileName, LHQ.App.Startup._cmdArgs);
             return bootstrapper.Run();
         }
 
@@ -126,14 +128,14 @@ namespace LHQ.App
         private static async Task RunInReleaseModeAsync()
         {
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
-            var bootstrapper = new Bootstraper(_appFileName);
+            var bootstrapper = new Bootstraper(LHQ.App.Startup._appFileName, LHQ.App.Startup._cmdArgs);
             await bootstrapper.Run();
         }
 
         private static void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             //HandleException(e.ExceptionObject as Exception);
-            ShowExceptionDialog(e.ExceptionObject as Exception);
+            LHQ.App.Startup.ShowExceptionDialog(e.ExceptionObject as Exception);
         }
 
         // private static void HandleException(Exception ex)

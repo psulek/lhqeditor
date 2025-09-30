@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -44,12 +44,14 @@ namespace LHQ.Data.Templating.Settings
         {
             OutputFolder = other.OutputFolder;
             OutputProjectName = other.OutputProjectName;
+            EncodingWithBOM = other.EncodingWithBOM;
+            LineEndings = other.LineEndings;
             Enabled = other.Enabled;
         }
 
-        public override void Serialize(DataNode node)
+        public override void Serialize(DataNode node, int modelVersion)
         {
-            base.Serialize(node);
+            base.Serialize(node, modelVersion);
 
             // write only if Enabled is false
             if (!Enabled)

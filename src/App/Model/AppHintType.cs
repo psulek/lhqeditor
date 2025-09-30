@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -35,6 +35,12 @@ namespace LHQ.App.Model
         ResourceParameters = 2,
         ResourceValue = 4,
         NewVersion = 8,
-        All = CodeGenerator | ResourceParameters | ResourceValue | NewVersion
+        UnsupportedT4Template = 16,
+        
+        /// <summary>
+        /// Flag to notify about new modern generator (only when model version is 1) 
+        /// </summary>
+        ModernGeneratorAvailable = 32,
+        All = CodeGenerator | ResourceParameters | ResourceValue | NewVersion | UnsupportedT4Template | ModernGeneratorAvailable
     }
 }

@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -38,6 +38,8 @@ using LHQ.App.ViewModels.Dialogs;
 using LHQ.App.ViewModels.Dialogs.AppSettings;
 using LHQ.App.ViewModels.Elements;
 using LHQ.Data;
+using LHQ.Data.CodeGenerator;
+using LHQ.Data.Templating.Templates;
 using LHQ.Utils.Extensions;
 using Microsoft.Win32;
 
@@ -98,6 +100,8 @@ namespace LHQ.App.ViewModels
                  new KeyGesture(Key.D, ModifierKeys.Control, "Ctrl+D"), false);
 
             LanguageSettingsCommand = CreateDelegateCommand(LanguageSettingsExecute, LanguageSettingsCanExecute);
+            StandaloneCodeGenerateCommand = CreateDelegateCommand(StandaloneCodeGenerateExecute, StandaloneCodeGenerateCanExecute);
+            
             ProjectSettingsCommand = CreateDelegateCommand(ProjectSettingsExecute, ProjectSettingsCanExecute);
 
             PluginsCommand = CreateDelegateCommand(PluginsCommandExecute, PluginsCommandCanExecute);
@@ -316,6 +320,8 @@ namespace LHQ.App.ViewModels
         public MenuDelegateCommand DuplicateElementCommand { get; }
 
         public ICommand LanguageSettingsCommand { get; }
+        
+        public ICommand StandaloneCodeGenerateCommand { get; }
 
         public MenuDelegateCommand ExportCommand { get; }
 
@@ -473,7 +479,7 @@ namespace LHQ.App.ViewModels
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                ShellService.SaveProject(saveFileDialog.FileName);
+                ShellService.SaveProject(saveFileDialog.FileName, SaveProjectFlags.SkipCodeGeneration);
             }
         }
 
@@ -633,10 +639,10 @@ namespace LHQ.App.ViewModels
 
                 bool exit = true;
 
-                if (DialogService.ShowConfirm(caption, message, detail) == DialogResult.Yes)
+                if (DialogService.ShowConfirm(new DialogShowInfo(caption, message, detail)).DialogResult == DialogResult.Yes)
                 {
                     ShellViewModel.RootModel.ModelOptions.Resources = ModelOptionsResources.All;
-                    exit = ShellService.SaveProject() == false;
+                    exit = ShellService.SaveProject(flags: SaveProjectFlags.SkipCodeGeneration) == false;
                 }
 
                 if (exit)
@@ -976,6 +982,32 @@ namespace LHQ.App.ViewModels
             }
         }
 
+        private bool StandaloneCodeGenerateCanExecute(object arg)
+        {
+            return ShellIsNotBusy;
+        }
+
+        private void StandaloneCodeGenerateExecute(object obj)
+        {
+            bool projectIsDirty = ShellViewModel.ProjectIsDirty;
+            if (projectIsDirty || string.IsNullOrEmpty(ShellViewModel.ProjectFileName))
+            {
+                var message = projectIsDirty 
+                    ? "Please save changes before generating code!"
+                    : "Please save project before generating code!";
+                
+                DialogService.ShowError(new DialogShowInfo("Run Code Generator", message));
+                return;
+            }
+
+            ShellService.StandaloneCodeGenerate();
+            
+            // ShellService.StandaloneCodeGenerate().ContinueWith(_ =>
+            //     {
+            //         RaiseObjectPropertiesChanged();                    
+            //     });
+        }
+
         private bool PluginsCommandCanExecute(object arg)
         {
             return ShellIsNotBusy;
@@ -1003,11 +1035,35 @@ namespace LHQ.App.ViewModels
 
         private void ProjectSettingsExecute(object obj)
         {
-            ModelOptions clonedOptions = ShellViewModel.ModelOptions.Clone();
-            if (ProjectSettingsDialog.DialogShow(ShellViewContext, clonedOptions))
+            var dialogResult = ProjectSettingsDialog.DialogShow(ShellViewContext);
+            var modelContext = ShellViewModel.ModelContext;
+            
+            if (dialogResult.IsUpgradeRequested && DialogService.ShowUpgradeModelDialog() &&
+                modelContext.Model.Version < ModelConstants.CurrentModelVersion)
             {
-                ShellViewModel.RootModel.ModelOptions = clonedOptions;
-                ShellService.SaveProject();
+                ShellViewContext.ShellService.UpgradeModelToLatest();
+                return;
+            }
+            
+            if (dialogResult.Submitted)
+            {
+                ShellViewModel.RootModel.ModelOptions = dialogResult.ModelOptions;
+
+                var codeGeneratorTemplate = dialogResult.CodeGeneratorTemplate;
+                if (codeGeneratorTemplate == null)
+                {
+                    ShellViewModel.CodeGeneratorItemTemplate = string.Empty;
+                }
+                else
+                {
+                    var metadata = modelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
+                    metadata.TemplateId = codeGeneratorTemplate.Id;
+                    metadata.Template = codeGeneratorTemplate;
+                    ShellViewModel.CodeGeneratorItemTemplate = codeGeneratorTemplate.Id;
+                }
+
+                var saveFlags = ShellViewModel.HasCodeGeneratorItemTemplate ? SaveProjectFlags.None : SaveProjectFlags.SkipCodeGeneration;
+                ShellService.SaveProject(flags: saveFlags);
             }
         }
 
@@ -1139,11 +1195,11 @@ namespace LHQ.App.ViewModels
             {
                 if (!File.Exists(recentFileInfo.FileName))
                 {
-                    if (DialogService.ShowConfirm(
-                            Strings.Operations.Project.RecentProjectDoestNotExistCaption,
-                            Strings.Operations.Project.RecentProjectDoestNotExistMessage(recentFileInfo.FileName),
-                            Strings.Operations.Project.RecentProjectDoestNotExistDetail)
-                        == DialogResult.Yes)
+                    var dialogShowInfo = new DialogShowInfo(Strings.Operations.Project.RecentProjectDoestNotExistCaption,
+                        Strings.Operations.Project.RecentProjectDoestNotExistMessage(recentFileInfo.FileName),
+                        Strings.Operations.Project.RecentProjectDoestNotExistDetail);
+                    
+                    if (DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes)
                     {
                         RecentFilesService.Remove(recentFileInfo.FileName);
                         RecentFilesService.Save(ShellViewContext);
@@ -1231,8 +1287,8 @@ namespace LHQ.App.ViewModels
                 if (dialogResult.Submitted)
                 {
                     ShellService.NewProject(dialogResult.ModelName, dialogResult.PrimaryLanguage,
-                        dialogResult.ModelOptions);
-
+                        dialogResult.ModelOptions, dialogResult.Template);
+                    
                     if (dialogResult.OpenLanguageSettings)
                     {
                         if (LanguageSettingsCommand.CanExecute(null))

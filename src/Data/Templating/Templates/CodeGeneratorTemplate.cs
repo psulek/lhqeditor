@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -32,10 +32,10 @@ namespace LHQ.Data.Templating.Templates
     {
         public abstract string Id { get; }
         public abstract string Name { get; }
-
+        
         public abstract ModelFeatures ModelFeatures { get; }
 
-        public abstract void Serialize(DataNode node);
+        public abstract void Serialize(DataNode node, int modelVersion);
         public abstract bool Deserialize(DataNode node);
 
         public abstract SettingsValidationError Validate();

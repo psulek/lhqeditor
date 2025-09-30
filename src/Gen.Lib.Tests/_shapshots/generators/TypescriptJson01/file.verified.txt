@@ -1,0 +1,4 @@
+﻿Resources\Strings-metadata.json
+Resources\Strings.en.json
+Resources\Strings.json
+Typescript\Strings.d.ts

@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -28,6 +28,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -54,6 +55,7 @@ using LHQ.Data.Templating.Templates;
 using LHQ.Utils;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
+using Newtonsoft.Json;
 using UndoAction = LHQ.App.Services.Implementation.Undo.UndoAction;
 
 namespace LHQ.App.ViewModels
@@ -99,6 +101,7 @@ namespace LHQ.App.ViewModels
         private HintPanelViewModel _hintPanelViewModel;
         private string _codeGeneratorItemTemplate;
         private HintPanelViewModel _newVersionPanelViewModel;
+        private HintPanelViewModel _modernGeneratorAvailablePanel;
 
         public ShellViewModel(ShellViewContext shellViewContext, ModelContext modelContext, bool showMainMenu)
             : base(shellViewContext.AppContext, true)
@@ -108,6 +111,8 @@ namespace LHQ.App.ViewModels
             ModelContext = modelContext;
 
             DetectTranslationMode();
+
+            //Temp1();
 
             AppContext.OnAppEvent += HandleAppEvent;
 
@@ -163,7 +168,26 @@ namespace LHQ.App.ViewModels
 
             HintPanelViewModel = new HintPanelViewModel(shellViewContext, AppHintType.CodeGenerator);
             NewVersionPanelViewModel = new HintPanelViewModel(shellViewContext, AppHintType.NewVersion);
+            ModernGeneratorAvailablePanel = new HintPanelViewModel(shellViewContext, AppHintType.ModernGeneratorAvailable)
+            {
+                RemoveFlagOnClose = false,
+                Visible = ModelContext.Model.Version == 1
+            };
         }
+
+        // private void Temp1()
+        // {
+        //     var cultures = CultureCache.Instance.GetAll()
+        //         .Where(x=>!x.IsGenericInvariantCulture())
+        //         .Select(x => new
+        //         {
+        //             name = x.Name, engName = x.EnglishName, nativeName = x.NativeName,
+        //             lcid = x.LCID, isNeutral = x.IsNeutralCulture
+        //         });
+        //
+        //     var json = JsonUtils.ToJsonString(cultures, Formatting.None);
+        //     File.WriteAllText($@"c:\tmp\cultures-{DateTime.Now.Ticks}.json", json);
+        // }
 
         public CodeGeneratorTemplate GetCodeGeneratorTemplate()
         {
@@ -173,25 +197,33 @@ namespace LHQ.App.ViewModels
 
         public void CheckCodeGeneratorTemplate()
         {
+            CodeGeneratorTemplate template = null;
             if (!ModelContext.HasCodeGeneratorTemplate())
             {
-                CodeGeneratorTemplate template = GetCodeGeneratorTemplate();
+                template = GetCodeGeneratorTemplate();
                 if (template != null)
                 {
                     var metadata = ModelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
                     metadata.TemplateId = template.Id;
                     metadata.Template = template;
-                    if (!ShellService.SaveProject(hostEnvironmentSave: true))
+                    if (!ShellService.SaveProject(flags: SaveProjectFlags.HostEnvironmentSave))
                     {
-                        DialogService.ShowError(Strings.Operations.Project.ProjectSaveErrorTitle,
-                            Strings.Operations.Project.ProjectSaveFailed, 
-                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName),
-                            displayType: AppMessageDisplayType.HostDialog);
+                        var dialogShowInfo = new DialogShowInfo(Strings.Operations.Project.ProjectSaveErrorTitle,
+                            Strings.Operations.Project.ProjectSaveFailed,
+                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName));
+                        
+                        DialogService.ShowError(dialogShowInfo, displayType: AppMessageDisplayType.HostDialog);
                     }
 
                     ModelContext.HasCodeGeneratorTemplate();
                 }
             }
+            else
+            {
+                template = GetCodeGeneratorTemplate();
+            }
+            
+            CodeGeneratorItemTemplate = template?.Id;
         }
 
         private void CodeGeneratorItemTemplateNavigateExecute(object obj)
@@ -203,12 +235,17 @@ namespace LHQ.App.ViewModels
                 var metadata = ModelContext.GetMetadata<CodeGeneratorMetadata>(CodeGeneratorMetadataDescriptor.UID);
                 metadata.TemplateId = template.Id;
                 metadata.Template = template;
-                if (!ShellService.SaveProject(hostEnvironmentSave: true))
+
+                if (!string.IsNullOrEmpty(ProjectFileName))
                 {
-                    DialogService.ShowError(Strings.Operations.Project.ProjectSaveErrorTitle,
-                        Strings.Operations.Project.ProjectSaveFailed, 
-                        Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName),
-                        displayType: AppMessageDisplayType.HostDialog);
+                    if (!ShellService.SaveProject(flags: SaveProjectFlags.HostEnvironmentSave))
+                    {
+                        var dialogShowInfo = new DialogShowInfo(Strings.Operations.Project.ProjectSaveErrorTitle,
+                            Strings.Operations.Project.ProjectSaveFailed,
+                            Strings.Operations.Project.ProjectSaveFailedFileIsReadOnly(ProjectFileName));
+                        
+                        DialogService.ShowError(dialogShowInfo, displayType: AppMessageDisplayType.HostDialog);
+                    }
                 }
             }
         }
@@ -413,6 +450,12 @@ namespace LHQ.App.ViewModels
         {
             get => _newVersionPanelViewModel;
             set => SetProperty(ref _newVersionPanelViewModel, value);
+        }
+
+        public HintPanelViewModel ModernGeneratorAvailablePanel
+        {
+            get => _modernGeneratorAvailablePanel;
+            set => SetProperty(ref _modernGeneratorAvailablePanel, value);
         }
 
         public HintPanelViewModel HintPanelViewModel
@@ -937,6 +980,7 @@ namespace LHQ.App.ViewModels
                     RootModel.UpdateVersion(true);
 
                     Data.Model model = RootModel.SaveToModelElement();
+                    model.Version = ModelContext.Model.Version;
 
                     ModelContext.AssignModelFrom(model);
                     saveResult = ShellService.SaveModelContextToFile(fileName, ModelContext);
@@ -1129,10 +1173,11 @@ namespace LHQ.App.ViewModels
         {
             if (ProjectIsDirty)
             {
-                DialogResult confirmResult = DialogService.ShowConfirm(
-                    Strings.Operations.ExitApp.ConfirmCaption, 
+                var dialogShowInfo = new DialogShowInfo(Strings.Operations.ExitApp.ConfirmCaption, 
                     Strings.Operations.ExitApp.ConfirmMessage, 
-                    Strings.Operations.ExitApp.ConfirmDetail, DialogButtons.YesNoCancel);
+                    Strings.Operations.ExitApp.ConfirmDetail);
+                
+                var confirmResult = DialogService.ShowConfirm(dialogShowInfo, DialogButtons.YesNoCancel).DialogResult;
 
                 args.Cancel = confirmResult == DialogResult.Cancel;
                 if (confirmResult == DialogResult.Yes)

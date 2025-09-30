@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -35,23 +35,22 @@ namespace LHQ.VsExtension.Code
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class VsDialogService: DialogService
     {
-        public override void ShowError(string caption, string message, string detail, TimeSpan? delayTimeout = null,
-            AppMessageDisplayType displayType = AppMessageDisplayType.ModalDialog)
+        public override DialogResultInfo ShowError(DialogShowInfo dialogShowInfo, AppMessageDisplayType displayType = AppMessageDisplayType.ModalDialog)
         {
             if (displayType == AppMessageDisplayType.HostDialog)
             {
-                var msg = message;
-                if (!detail.IsNullOrEmpty())
+                var msg = dialogShowInfo.Message;
+                if (!dialogShowInfo.Detail.IsNullOrEmpty())
                 {
-                    msg = $"{msg}, {detail}";
+                    msg = $"{msg}, {dialogShowInfo.Detail}";
                 }
                 
                 VsPackageService.AddMessageToOutput(msg, OutputMessageType.Error);
+                
+                return DialogResultInfo.OK;
             }
-            else
-            {
-                base.ShowError(caption, message, detail, delayTimeout, displayType);
-            }
+
+            return base.ShowError(dialogShowInfo, displayType);
         }
 
         public override AppSettingsDialogResult ShowAppSettings(AppSettingsDialogPage activePage = AppSettingsDialogPage.General)
@@ -62,15 +61,17 @@ namespace LHQ.VsExtension.Code
                     {
                         AppContext.UnsetAppStartedFirstTime();
 
-                        string caption = App.Localization.Strings.VsExtension.FirstTimeOpenSettings.Caption;
+                        /*string caption = App.Localization.Strings.VsExtension.FirstTimeOpenSettings.Caption;
                         string message = App.Localization.Strings.VsExtension.FirstTimeOpenSettings.Message;
                         string detail = App.Localization.Strings.VsExtension.FirstTimeOpenSettings.Detail;
 
-                        if (AppContext.DialogService.ShowConfirm(caption, message, detail) == DialogResult.Yes)
+                        var dialogShowInfo = new DialogShowInfo(caption, message, detail);
+                        
+                        if (AppContext.DialogService.ShowConfirm(dialogShowInfo).DialogResult == DialogResult.Yes)
                         {
                             VsPackageService.CloseOpenedEditors();
                             VsPackageService.ShowOptionsPage(activePage, AppContext.AppStartedFirstTime);
-                        }
+                        }*/
                     });
             }
             else

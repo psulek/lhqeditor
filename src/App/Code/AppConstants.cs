@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -29,6 +29,10 @@ namespace LHQ.App.Code
     {
         private const string ModelFileExtension = "lhq";
 
+        public const string ModernGeneratorInitVersion = "2025.1";
+        public const string ModernGeneratorMinVersion = "2025.3";
+        public const string ModernGeneratorNoT4MinVersion = "2025.3";
+
         public static class WebSiteUrls
         {
             public const string HomePage = "https://psulek.github.io/lhqeditor/";
@@ -40,6 +44,15 @@ namespace LHQ.App.Code
                 "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery?api-version=3.0-preview.1";
 
             private const string NugetApiServer = "https://api.nuget.org/v3-flatcontainer/";
+
+            private const string ModelV2_Info = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes";
+            private const string ModelV3_Info = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v3-Changes";
+            
+            private const string ModelV2_T4Obsolete = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes#obsolete-t4-template-files-lhqtt";
+
+            public static string GetLatestModelChanges() => ModelV3_Info;
+            
+            public static string GetT4_ObsoleteUrl() => ModelV2_T4Obsolete;
 
             public static string GetReportBug(string title, string body)
             {

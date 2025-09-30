@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -37,6 +37,7 @@ namespace LHQ.Data.CodeGenerator
     {
         private const string ElementSettings = "Settings";
         private const string AttributeTemplateId = "templateId";
+        private const string AttributeVersion = "version";
 
         [JsonIgnore]
         public Guid DescriptorUID { get; } = CodeGeneratorMetadataDescriptor.UID;
@@ -44,19 +45,23 @@ namespace LHQ.Data.CodeGenerator
         [JsonIgnore]
         public CodeGeneratorTemplate Template { get; set; }
 
-        [JsonProperty("templateId")]
+        [JsonProperty(AttributeTemplateId)]
         public string TemplateId { get; set; }
 
-        public DataNode Serialize()
+        [JsonProperty(AttributeVersion)]
+        public int Version { get; set; } = ModelConstants.CurrentCodeGeneratorVersion;
+
+        public DataNode Serialize(int modelVersion)
         {
             DataNode result = null;
             if (!string.IsNullOrEmpty(TemplateId) && Template != null)
             {
                 result = new DataNode();
                 result.AddAttribute(AttributeTemplateId, TemplateId);
+                result.AddAttribute(AttributeVersion, DataNodeValueHelper.ToString(Version));
 
                 var templateNode = new DataNode(ElementSettings);
-                Template.Serialize(templateNode);
+                Template.Serialize(templateNode, modelVersion);
                 result.AddChildren(templateNode);
             }
 
@@ -88,6 +93,16 @@ namespace LHQ.Data.CodeGenerator
                                 Template = template;
                             }
                         }
+                    }
+
+                    var versionStr = sourceNode.Attributes[AttributeVersion]?.Value;
+                    if (!string.IsNullOrEmpty(versionStr) && int.TryParse(versionStr, out int version))
+                    {
+                        Version = version;
+                    }
+                    else
+                    {
+                        Version = ModelConstants.CurrentCodeGeneratorVersion;
                     }
                 }
             }

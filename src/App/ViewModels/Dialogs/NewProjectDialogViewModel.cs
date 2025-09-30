@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -25,21 +25,16 @@
 
 using System.Windows.Input;
 using LHQ.App.Code;
-using LHQ.App.Dialogs;
 using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels.Elements;
-using LHQ.Data.Templating;
-using LHQ.Data.Templating.Templates;
 using LHQ.Utils.Extensions;
 
 namespace LHQ.App.ViewModels.Dialogs
 {
     public class NewProjectDialogViewModel : DialogViewModelBase
     {
-        private readonly IShellViewContext _shellViewContext;
-
         /// <summary>
         /// Extra info provided from Visual Studio extension.
         /// </summary>
@@ -49,7 +44,9 @@ namespace LHQ.App.ViewModels.Dialogs
             public string TemplateName { get; }
             public string TemplateDescription { get; }
             public string TemplateId { get; }
-
+            
+            // public bool? CanChangeGeneratorTemplate { get; set; } = null;
+        
             public VsExtraInfo(string projectName, string templateName, string templateDescription, string templateId)
             {
                 ProjectName = projectName;
@@ -67,15 +64,15 @@ namespace LHQ.App.ViewModels.Dialogs
 
         public NewProjectDialogViewModel(IShellViewContext shellViewContext) : base(shellViewContext.AppContext)
         {
-            _shellViewContext = shellViewContext;
             CultureInfoItem defaultProjectCulture = AppContext.AppConfigFactory.Current.GetDefaultProjectCulture() ?? CultureInfoItem.English;
 
             LanguageSelector = new LanguageSelectorViewModel(shellViewContext.AppContext, false, false);
             LanguageSelector.Select(defaultProjectCulture);
 
             ProjectSettings = new ProjectSettingsViewModel(shellViewContext);
+            ProjectSettings.ModelVersionVisible = false;
+            ProjectSettings.CanChangeGeneratorTemplate = true;
             ShowHelpCommand = new DelegateCommand(ShowHelpExecute);
-            ChangeCodeGeneratorSettingsCommand = new DelegateCommand(ChangeCodeGeneratorSettingsExecute);
 
             if (AppContext.RunInVsPackage)
             {
@@ -85,30 +82,14 @@ namespace LHQ.App.ViewModels.Dialogs
 
         public bool RunInVsPackage => AppContext.RunInVsPackage;
        
-        public string TemplateId { get; set; }
-
         public ProjectSettingsViewModel ProjectSettings { get; set; }
 
         public ICommand ShowHelpCommand { get; }
         
-        public ICommand ChangeCodeGeneratorSettingsCommand { get; }
-
-        public VsExtraInfo ExtraInfo { get; set; }
-
         public string ModelName
         {
             get => _modelName;
             set => SetProperty(ref _modelName, value);
-        }
-
-        public void SetVsExtraInfo(VsExtraInfo extraInfo)
-        {
-            if (extraInfo != null)
-            {
-                ExtraInfo = extraInfo;
-                TemplateId = extraInfo.TemplateId;
-                Template = CodeGeneratorTemplateManager.Instance.CreateTemplate(TemplateId);
-            }
         }
 
         public string Error
@@ -143,22 +124,6 @@ namespace LHQ.App.ViewModels.Dialogs
 
         public string ProjectNameText => RunInVsPackage ? Strings.ViewModels.NewProject.ProjectNameVS : Strings.ViewModels.NewProject.ProjectName;
 
-        public CodeGeneratorTemplate Template { get; set; }
-
-        private void ChangeCodeGeneratorSettingsExecute(object obj)
-        {
-            if (!RunInVsPackage)
-            {
-                return;
-            }
-
-            (bool submitted, CodeGeneratorTemplate template) = CodeGeneratorDialog.DialogShow(_shellViewContext, TemplateId, Template);
-            if (submitted)
-            {
-                Template = template;
-            }
-        }
-
         private void ShowHelpExecute(object obj)
         {
             WebPageUtils.ShowDoc(WebPageDocSection.CreateNewProject);
@@ -178,9 +143,8 @@ namespace LHQ.App.ViewModels.Dialogs
         {
             if (LanguageSelector.SelectedLanguage == null)
             {
-                DialogService.ShowError(GetTitle(), 
-                    Strings.ViewModels.NewProject.PrimaryLanguageValidationMessage,
-                    null);
+                DialogService.ShowError(new DialogShowInfo(GetTitle(), 
+                    Strings.ViewModels.NewProject.PrimaryLanguageValidationMessage));
 
                 return false;
             }
@@ -204,6 +168,15 @@ namespace LHQ.App.ViewModels.Dialogs
         {
             base.OnDispose();
             LanguageSelector.Dispose();
+        }
+
+        public void SetExtraInfo(VsExtraInfo extraInfo)
+        {
+            if (extraInfo != null)
+            {
+                ProjectSettings.SelectTemplateById(extraInfo.TemplateId);
+                ProjectSettings.CanChangeGeneratorTemplate = ProjectSettings.Template == null;
+            }
         }
     }
 }

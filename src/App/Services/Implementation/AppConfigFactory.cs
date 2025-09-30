@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -60,6 +60,7 @@ namespace LHQ.App.Services.Implementation
                 CheckUpdatesOnAppStart = true,
                 EnableTranslation = false,
                 LockTranslationsWithResource = null,
+                RunTemplateAfterSave = false
             };
             newConfig.UpdateVersion(AppContext.AppCurrentVersion);
             return newConfig;
@@ -112,7 +113,7 @@ namespace LHQ.App.Services.Implementation
             return _storage.Load();
         }
 
-        private bool UpgradeIfRequired()
+        protected virtual bool UpgradeIfRequired()
         {
             var requireSave = false;
 
@@ -123,6 +124,9 @@ namespace LHQ.App.Services.Implementation
             {
                 requireSave = true;
                 Current.UpdateVersion(appCurrentVersion);
+                
+                // when upgrading, reset all app hints
+                Current.SetAllAppHints();
 
                 //TODO: Add some upgrade rules later, when required!
                 // loadedConfig.NewProperty = "defaultValue";

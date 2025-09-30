@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) 2021 Peter Šulek / ScaleHQ Solutions s.r.o.
+// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -36,6 +36,7 @@ namespace LHQ.App.Model
         {
             DetectTheme = null;
             Data = new Dictionary<string, string>();
+            RunTemplateAfterSave = true;
         }
 
         public string Version { get; set; }
@@ -62,9 +63,16 @@ namespace LHQ.App.Model
 
         public AppHintType AppHints { get; set; }
 
+        public bool RunTemplateAfterSave { get; set; }
+
         public void RemoveAppHint(AppHintType appHintType)
         {
             AppHints = AppHints.ClearFlags(appHintType);
+        }
+
+        public void UpdateAppHint(AppHintType appHintType, bool setFlag)
+        {
+            AppHints = AppHints.SetFlags(appHintType, setFlag);
         }
 
         public void SetAllAppHints()

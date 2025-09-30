@@ -1,4 +1,28 @@
-﻿2023.1
+﻿2025.3
+- New modern generator now using 'V8' JS engine instead of 'Chakra'
+  - This means that the code generation is now faster and more reliable
+  - The new engine is also more compatible with the latest JavaScript features
+
+2025.2
+- New 'modern generator' is now default generator for both v1 & v2 model versions
+  - This means no T4 templates are used now for code generator
+- Added upgrade hints when opened `v1` model
+- Added new code generator template settings:
+  - Line endings (LF or CRLF)
+  - Encoding file with BOM
+- Added new NET8 console app project template
+- Contains 'LHQ EditorApp', an windows standalone application, which can run & generate code without VS IDE.
+- Contains CLI tool 'lhqcmd.exe' to generate code form `*.lhq` files from command line
+  - Can be found in installation folder of 'LHQ EditorApp'
+  - In version `2025.1` this CLI tool was called 'LHQ.Gen.Cmd.exe' , now its renamed to simpler 'lhqcmd.exe' 
+
+
+2025.1
+- Added new feature 'Mark for export' on resources in tree
+  - New 'Export marked...' from tree
+- Added new standalone code generator (when LHQ.App.exe is run outside of VS)
+
+2023.1
 - Fixed bug #9, VS2022 bug when tt generators throws null reference exception
 
 2022.3

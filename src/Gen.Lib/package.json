@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.7.0",
+  "packageManager": "pnpm@10.17.1",
   "dependencies": {
     "@lhq/lhq-generators": "1.0.0"
   }

@@ -1,7 +1,0 @@
-{
-  "csProjectFileName": "./data/csprojs/project12.csproj",
-  "t4FileName": "Strings.lhq.tt",
-  "namespace": "RootNamespace04",
-  "referencedLhqFile": true,
-  "referencedT4File": false
-}

@@ -1,7 +1,0 @@
-{
-  "csProjectFileName": "./data/csprojs/project09.csproj",
-  "t4FileName": "Strings.lhq.tt",
-  "namespace": "CustomToolNamespace09",
-  "referencedLhqFile": true,
-  "referencedT4File": true
-}

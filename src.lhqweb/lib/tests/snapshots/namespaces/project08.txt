@@ -1,7 +1,0 @@
-{
-  "csProjectFileName": "./data/csprojs/project08.csproj",
-  "t4FileName": "Strings.lhq.tt",
-  "namespace": "ConsoleApp2",
-  "referencedLhqFile": true,
-  "referencedT4File": true
-}

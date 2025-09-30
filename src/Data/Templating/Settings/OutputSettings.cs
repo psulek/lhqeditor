@@ -48,7 +48,7 @@ namespace LHQ.Data.Templating.Settings
 
         [DisplayName("Line endings (LF or CRLF)")]
         [Description("Line endings used when generated files are saved on disk, where default is LF.")]
-        public OutputSettingsLineEndings LineEndings { get; set; } = OutputSettingsLineEndings.LF;
+        public LineEndings LineEndings { get; set; } = LineEndings.LF;
 
         protected OutputSettings()
         {
@@ -154,23 +154,17 @@ namespace LHQ.Data.Templating.Settings
                 EncodingWithBOM = attrEncodingWithBOM.Value.IsNullOrEmpty() || DataNodeValueHelper.FromString(attrEncodingWithBOM.Value, false);
             }
 
-            LineEndings = OutputSettingsLineEndings.LF;
+            LineEndings = LineEndings.LF;
             if (node.Attributes.Contains(nameof(LineEndings)))
             {
                 var attrLineEndings = node.Attributes[nameof(LineEndings)];
                 if (!attrLineEndings.Value.IsNullOrEmpty())
                 {
-                    LineEndings = DataNodeValueHelper.EnumFromString(attrLineEndings.Value, OutputSettingsLineEndings.LF);
+                    LineEndings = DataNodeValueHelper.EnumFromString(attrLineEndings.Value, LineEndings.LF);
                 }
             }
 
             return true;
         }
-    }
-    
-    public enum OutputSettingsLineEndings
-    {
-        LF,
-        CRLF
     }
 }

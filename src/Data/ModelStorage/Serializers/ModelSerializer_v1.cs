@@ -57,6 +57,8 @@ namespace LHQ.Data.ModelStorage.Serializers
         private const string AttributeDescriptorUID = "descriptorUID";
         private const string AttributeNote = "note";
         private const string AttributeState = "state";
+        private const string AttributeEOL = "eol";
+        private const string AttributeSanitize = "sanitize";
         private const string ElementCategories = "categories";
         private const string ElementModel = "model";
         private const string ElementModelOptions = "options";
@@ -360,6 +362,37 @@ namespace LHQ.Data.ModelStorage.Serializers
                         if (!valid)
                         {
                             LogDeserializeError("model", AttributeOptionsResources);
+                        }
+                        else
+                        {
+                            if (jsonModelOptions.TryGetValue(ElementValues, out JToken elementOptionsValues) && 
+                                elementOptionsValues is JObject jsonOptionsValues)
+                            {
+                                LineEndings? eol = null;
+                                bool? sanitize = null;
+                                
+                                if (TryGetJsonValue(jsonOptionsValues, AttributeEOL, out string eolStr))
+                                {
+                                    if (ValueSerializer.TryDeserialize(eolStr, true, out LineEndings tmp_eol))
+                                    {
+                                        eol = tmp_eol;
+                                    }
+                                }
+
+                                if (TryGetJsonValue(jsonOptionsValues, AttributeSanitize, out bool tmp_sanitize))
+                                {
+                                    sanitize = tmp_sanitize;
+                                }
+
+                                if (eol != null || sanitize != null)
+                                {
+                                    modelOptions.Values = new ModelOptionsValues
+                                    {
+                                        EOL = eol,
+                                        Sanitize = sanitize
+                                    };
+                                }
+                            }
                         }
                     }
                 }
@@ -761,6 +794,23 @@ namespace LHQ.Data.ModelStorage.Serializers
 
             jsonModelOptions[AttributeOptionsCategories] = modelOptions.Categories;
             jsonModelOptions[AttributeOptionsResources] = ValueSerializer.Serialize(modelOptions.Resources);
+
+            var values = modelOptions.Values;
+            if (values != null)
+            {
+                JToken jsonOptionsValues = new JObject();
+                jsonModelOptions[ElementValues] = jsonOptionsValues;
+
+                if (values.EOL != null)
+                {
+                    jsonOptionsValues[AttributeEOL] = ValueSerializer.Serialize(values.EOL.Value);
+                }
+                
+                if (values.Sanitize != null)
+                {
+                    jsonOptionsValues[AttributeSanitize] = values.Sanitize.Value;
+                }
+            }
         }
 
         private void WriteMetadatas(JToken jsonModel)

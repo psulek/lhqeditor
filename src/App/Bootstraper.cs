@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using LHQ.App.Code;
@@ -31,6 +32,7 @@ using LHQ.App.Services.Implementation;
 using LHQ.App.Services.Interfaces;
 using LHQ.App.ViewModels;
 using LHQ.Data;
+using LHQ.Utils.Extensions;
 using AppContext = LHQ.App.Services.Implementation.AppContext;
 
 namespace LHQ.App
@@ -45,6 +47,11 @@ namespace LHQ.App
         {
             _appFileName = appFileName;
             _cmdArgs = cmdArgs;
+            
+            var list = new List<string>(new [] {"AWP"});
+            int idx = list.GetIndexForAddSorted("Appllication");
+            int compare = string.Compare(list[0], "Application");
+            DebugUtils.Log(idx.ToString());
         }
 
         public static async Task<AppView> CreateAppView(string appFileName, string[] cmdArgs)

@@ -389,6 +389,12 @@ namespace LHQ.App.Services.Implementation
             return modelContext;
         }
 
+        private string InternalSaveModel(ModelContext modelContext, ModelSaveOptions options)
+        {
+            string jsonModel = ModelFileStorage.Save(modelContext, options);
+            return AppContext.StandaloneCodeGeneratorService.LoadAndSerializeModel(jsonModel);
+        }
+
         public OperationResult SaveModelContextToFile(string fileName, ModelContext modelContext)
         {
             ArgumentValidator.EnsureArgumentNotNull(modelContext, "modelContext");
@@ -399,7 +405,8 @@ namespace LHQ.App.Services.Implementation
             StartProjectOperationIsBusy(ProjectBusyOperationType.SaveProject);
             try
             {
-                string fileContent = ModelFileStorage.Save(modelContext, ModelSaveOptions);
+                // string fileContent = ModelFileStorage.Save(modelContext, ModelSaveOptions);
+                string fileContent = InternalSaveModel(modelContext, ModelSaveOptions);
                 FileUtils.WriteAllText(fileName, fileContent);
             }
             catch (Exception e)
@@ -491,8 +498,8 @@ namespace LHQ.App.Services.Implementation
                         }
                         else
                         {
-                            string tmpModelContent = ModelFileStorage.Save(modelContext, new ModelSaveOptions(false));
-                            //if (!tmpModelContent.IsNullOrEmpty() && tmpModelContent != loadResult.RawJson)
+                            // string tmpModelContent = ModelFileStorage.Save(modelContext, new ModelSaveOptions(false));
+                            string tmpModelContent = InternalSaveModel(modelContext, new ModelSaveOptions(false));
                             if (!tmpModelContent.IsNullOrEmpty() &&
                                 string.Compare(tmpModelContent, loadResult.RawJson, StringComparison.Ordinal) != 0)
                             {

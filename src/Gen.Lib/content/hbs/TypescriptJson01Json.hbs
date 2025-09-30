@@ -1,17 +1,11 @@
+{{! template-id: TypescriptJson01Json }}
+{{! template-name: Template which generates JSON file to be consumed by javascript with typescript (*.d.ts) type definition. Usable in web projects. }}
+{{! template-type: child }}
 {{! '@root.host.lang' contain language code (eg: 'en', 'sk') }}
 {{~m-data (x-equals model.primaryLanguage @root.host.lang cs=true) key="isPrimaryLang" ~}}
 {{! set output settings only (without fileName) }}
 {{~#output ~}}
-childs[?name=='Json'].attrs | [0].merge(@, {
-    OutputFolder: (OutputFolder||'Resources'),
-    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
-    LineEndings: (LineEndings||'LF'),
-    Enabled: (Enabled||'true')=='true',
-    CultureCodeInFileNameForPrimaryLanguage: (CultureCodeInFileNameForPrimaryLanguage||'true')=='true',
-    MetadataFileNameSuffix: (MetadataFileNameSuffix||'metadata'),
-    WriteEmptyValues: (WriteEmptyValues||'true')=='true',
-    UseLangInName: (CultureCodeInFileNameForPrimaryLanguage||'true')=='true' || '{{@root.data.isPrimaryLang}}'=='false'
-})
+Json.merge(@, {UseLangInName: (CultureCodeInFileNameForPrimaryLanguage || '{{@root.data.isPrimaryLang}}'=='false')})
 {{~/output~}}
 {{! sets output fileName using value 'UseLangInName' from settings set earlier }}
 {{~output fileName=(x-concat model.name (x-render @root.host.lang when=@root.settings.UseLangInName) "json" sep="." empty=false) ~}}

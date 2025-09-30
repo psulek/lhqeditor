@@ -1,13 +1,7 @@
+{{! template-id: TypescriptJson01 }}
+{{! template-name: Template which generates JSON file to be consumed by javascript with typescript (*.d.ts) type definition. Usable in web projects. }}
 {{~#output fileName=(x-concat model.name ".d.ts") ~}}
-childs[?name=='Typescript'].attrs | [0].merge(@, {
-    OutputFolder: (OutputFolder||'Resources'),
-    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
-    LineEndings: (LineEndings||'LF'),
-    Enabled: (Enabled||'true')=='true',
-    AmbientNamespaceName: (AmbientNamespaceName||''),
-    HasAmbientNamespaceName: (AmbientNamespaceName||'')!='',
-    InterfacePrefix: (InterfacePrefix||'')
-})
+Typescript.merge(@, {HasAmbientNamespaceName: AmbientNamespaceName!=''})
 {{~/output~}}
 {{~#each model.languages ~}}
     {{output-child templateId="TypescriptJson01Json" host=(x-value query="{lang: @}") }}

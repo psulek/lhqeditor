@@ -1,18 +1,8 @@
-﻿{{~#output fileName=(x-concat model.name ".gen.cs") ~}}
-childs[?name=='CSharp'].attrs | [0].merge(@, {
-    OutputFolder: (OutputFolder||'Resources'),
-    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
-    LineEndings: (LineEndings||'LF'),
-    Enabled: (Enabled||'true')=='true',
-    UseExpressionBodySyntax: (UseExpressionBodySyntax||'false')=='true',
-    MissingTranslationFallbackToPrimary: (MissingTranslationFallbackToPrimary||'false')=='true',
-    GenerateParamsMethods: (GenerateParamsMethods||'false')=='true',
-    ParamsMethodsSuffix: (ParamsMethodsSuffix||'WithParams')
-})
-{{~/output~}}
+﻿{{! template-id: WinFormsResxCsharp01 }}
+{{! template-name: Template which generates strongly typed C# and resource (*.resx) files. Usable in classic (WinForms) desktop applications. }}
+{{~#output fileName=(x-concat model.name ".gen.cs") ~}}CSharp{{~/output~}}
 
-{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" 
-   check="isNullOrEmpty" error="Missing 'Namespace' value for C# settings." errorCode="csharp.namespace.missing" ~}}
+{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" ~}}
 
 {{! for each language generate resx file }}
 {{~#each model.languages ~}}
@@ -295,7 +285,7 @@ public{{x-render " static" when=(x-equals _resourceRenderValue "key") }} partial
 {{#if resources}}
 {{#each resources}}
 	{{m-data (x-fn paths.getParentPath '') key="parentPath" ~}}
-	{{m-data (x-concat @root.data.keysClassName (x-fn paths.getParentPath '.') sep=".") key="resourceFullPath" ~}}
+	{{m-data (x-concat @root.data.keysClassName (x-fn paths.getPaths) sep=".") key="resourceFullPath" ~}}
 	{{m-data (x-concat name @root.settings.ParamsMethodsSuffix sep="") key="nameWithMethodsSuffix" ~}}
 	/// <summary>
 	/// Gets localized string similar to: {{{ this.comment }}}
@@ -349,7 +339,7 @@ public{{x-render " static" when=(x-equals _resourceRenderValue "key") }} partial
 {{#each resources}}
 {{m-data (x-fn paths.getParentPath '') key="parentPath" ~}}
 {{~m-data (x-concat name @root.settings.ParamsMethodsSuffix sep="") key="nameWithMethodsSuffix" ~}}
-{{m-data (x-concat @root.data.keysClassName (x-fn paths.getParentPath '.') sep=".") key="resourceFullPath" ~}}
+{{m-data (x-concat @root.data.keysClassName (x-fn paths.getPaths) sep=".") key="resourceFullPath" ~}}
 
 /// <summary>
 /// Gets localized string similar to: {{{ this.comment }}}

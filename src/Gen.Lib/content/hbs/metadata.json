@@ -1,0 +1,421 @@
+{
+  "settings": {
+    "CSharp": {
+      "displayName": "C# Code Generation",
+      "description": "Settings for C# code generation",
+      "properties": [
+        {
+          "name": "Enabled",
+          "displayName": "Enable C# Code Generation",
+          "description": "Enable or disable C# code generation",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        },
+        {
+          "name": "OutputFolder",
+          "displayName": "Output Folder",
+          "description": "The folder where the generated C# files will be placed",
+          "type": "string",
+          "default": "Resources",
+          "required": true
+        },
+        {
+          "name": "EncodingWithBOM",
+          "displayName": "Encoding with BOM",
+          "description": "Whenever the encoding contains BOM (Byte Order Mark)",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "LineEndings",
+          "displayName": "Line Endings",
+          "description": "The line endings to use in the generated files",
+          "type": "list",
+          "values": [
+            { "name": "LF", "value": "LF" },
+            { "name": "CRLF", "value": "CRLF" }
+          ],
+          "default": "LF",
+          "required": true
+        },
+        {
+          "name": "UseExpressionBodySyntax",
+          "displayName": "Use Expression Body Syntax",
+          "description": "Use expression body syntax for properties and methods in generated C# code",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "MissingTranslationFallbackToPrimary",
+          "displayName": "Return primary language text on missing foreign translation",
+          "description": "Return primary language text in case of missing translation in foreign language.",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "Namespace",
+          "displayName": "Namespace name for generated C# code",
+          "description": "The namespace to use for the generated C# code",
+          "type": "string",
+          "default": "",
+          "required": false,
+          "validators": [
+            {
+              "regex": "^(?![\\d\\._])(?!.*\\.$)[A-Za-z0-9._]*$",
+              "flags": "",
+              "error": "Value must start with a letter, can only contain letters, digits, and dots (cannot start/end with a dot).",
+              "errorCode": "csharp.namespace.invalidformat"
+            },
+            {
+              "regex": "^.+$",
+              "flags": "m",
+              "error": "Value cannot be empty.",
+              "errorCode": "csharp.namespace.missing"
+            }
+          ]
+        }
+      ]
+    },
+    "CSharpWinForms": {
+      "displayName": "C# Code Generation",
+      "description": "Settings for C# code generation",
+      "properties": [
+        {
+          "name": "Enabled",
+          "displayName": "Enable C# Code Generation",
+          "description": "Enable or disable C# code generation",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        },
+        {
+          "name": "OutputFolder",
+          "displayName": "Output Folder",
+          "description": "The folder where the generated C# files will be placed",
+          "type": "string",
+          "default": "Resources",
+          "required": true
+        },
+        {
+          "name": "EncodingWithBOM",
+          "displayName": "Encoding with BOM",
+          "description": "Whenever the encoding contains BOM (Byte Order Mark)",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "LineEndings",
+          "displayName": "Line Endings",
+          "description": "The line endings to use in the generated files",
+          "type": "list",
+          "values": [
+            { "name": "LF", "value": "LF" },
+            { "name": "CRLF", "value": "CRLF" }
+          ],
+          "default": "LF",
+          "required": true
+        },
+        {
+          "name": "UseExpressionBodySyntax",
+          "displayName": "Use Expression Body Syntax",
+          "description": "Use expression body syntax for properties and methods in generated C# code",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "MissingTranslationFallbackToPrimary",
+          "displayName": "Return primary language text on missing foreign translation",
+          "description": "Return primary language text in case of missing translation in foreign language.",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "Namespace",
+          "displayName": "Namespace name for generated C# code",
+          "description": "The namespace to use for the generated C# code",
+          "type": "string",
+          "default": "",
+          "required": false,
+          "validators": [
+            {
+              "regex": "^(?![\\d\\._])(?!.*\\.$)[A-Za-z0-9._]*$",
+              "flags": "",
+              "error": "Value must start with a letter, can only contain letters, digits, and dots (cannot start/end with a dot).",
+              "errorCode": "csharp.namespace.invalidformat"
+            },
+            {
+              "regex": "^.+$",
+              "flags": "m",
+              "error": "Value cannot be empty.",
+              "errorCode": "csharp.namespace.missing"
+            }
+          ]
+        },
+        {
+          "name": "GenerateParamsMethods",
+          "displayName": "Generate methods with parameters",
+          "description": "Generate methods for resources with parameters",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "ParamsMethodsSuffix",
+          "displayName": "Suffix for methods with parameters",
+          "description": "Suffix used to append to name of method with parameters",
+          "type": "string",
+          "default": "WithParams",
+          "required": true,
+          "validators": [
+            {
+              "regex": "^(?![\\d])[A-Za-z0-9_]*$",
+              "flags": "",
+              "error": "Value cannot start with a digit, can only contain letters, digits, and underscores.",
+              "errorCode": "csharp.paramsmethodssuffix.invalid"
+            }
+          ]
+        }
+      ]
+    },
+    "ResX": {
+      "displayName": "ResX Files Generation",
+      "description": "Settings for ResX files generation",
+      "properties": [
+        {
+          "name": "Enabled",
+          "displayName": "Enable ResX Files Generation",
+          "description": "Enable or disable ResX files generation",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        },
+        {
+          "name": "OutputFolder",
+          "displayName": "Output Folder",
+          "description": "The folder where the generated ResX files will be placed",
+          "type": "string",
+          "default": "Resources",
+          "required": true
+        },
+        {
+          "name": "EncodingWithBOM",
+          "displayName": "Encoding with BOM",
+          "description": "Whenever the encoding contains BOM (Byte Order Mark)",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "LineEndings",
+          "displayName": "Line Endings",
+          "description": "The line endings to use in the generated files",
+          "type": "list",
+          "values": [
+            { "name": "LF", "value": "LF" },
+            { "name": "CRLF", "value": "CRLF" }
+          ],
+          "default": "LF",
+          "required": true
+        },
+        {
+          "name": "CultureCodeInFileNameForPrimaryLanguage",
+          "displayName": "Culture Code in File Name for Primary Language",
+          "description": "Include the culture code in the file name for the primary language ResX file",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        },
+        {
+          "name": "CompatibleTextEncoding",
+          "displayName": "Compatible Text Encoding",
+          "description": "Use compatible text encoding for ResX files",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        }
+      ]
+    },
+    "Typescript": {
+      "displayName": "TypeScript Code Generation",
+      "description": "Settings for TypeScript code generation",
+      "properties": [
+        {
+          "name": "Enabled",
+          "displayName": "Enable TypeScript Code Generation",
+          "description": "Enable or disable TypeScript code generation",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        },
+        {
+          "name": "OutputFolder",
+          "displayName": "Output Folder",
+          "description": "The folder where the generated TypeScript files will be placed",
+          "type": "string",
+          "default": "Resources",
+          "required": true
+        },
+        {
+          "name": "EncodingWithBOM",
+          "displayName": "Encoding with BOM",
+          "description": "Whenever the encoding contains BOM (Byte Order Mark)",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "LineEndings",
+          "displayName": "Line Endings",
+          "description": "The line endings to use in the generated files",
+          "type": "list",
+          "values": [
+            { "name": "LF", "value": "LF" },
+            { "name": "CRLF", "value": "CRLF" }
+          ],
+          "default": "LF",
+          "required": true
+        },
+        {
+          "name": "AmbientNamespaceName",
+          "displayName": "Ambient namespace name",
+          "description": "Ambient namespace name used in typescript definition.",
+          "type": "string",
+          "default": "",
+          "required": false,
+          "validators": [
+            {
+              "regex": "^(?![\\d])[A-Za-z0-9_]*$",
+              "flags": "",
+              "error": "Value cannot start with a digit, can only contain letters, digits, and underscores.",
+              "errorCode": "typescript.ambientnamespace.invalid"
+            }
+          ]
+        },
+        {
+          "name": "InterfacePrefix",
+          "displayName": "Prefix for interface type",
+          "description": "Prefix for interface type in typescript definition.",
+          "type": "string",
+          "default": "",
+          "required": false,
+          "validators": [
+            {
+              "regex": "^(?![\\d])[A-Za-z0-9_]*$",
+              "flags": "",
+              "error": "Value cannot start with a digit, can only contain letters, digits, and underscores.",
+              "errorCode": "typescript.interfaceprefix.invalid"
+            }
+          ]
+        }
+      ]
+    },
+    "Json": {
+      "displayName": "JSON Files Generation",
+      "description": "Settings for JSON files generation",
+      "properties": [
+        {
+          "name": "Enabled",
+          "displayName": "Enable JSON Code Generation",
+          "description": "Enable or disable JSON code generation",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        },
+        {
+          "name": "OutputFolder",
+          "displayName": "Output Folder",
+          "description": "The folder where the generated JSON files will be placed",
+          "type": "string",
+          "default": "Resources",
+          "required": true
+        },
+        {
+          "name": "EncodingWithBOM",
+          "displayName": "Encoding with BOM",
+          "description": "Whenever the encoding contains BOM (Byte Order Mark)",
+          "type": "boolean",
+          "default": false,
+          "required": true
+        },
+        {
+          "name": "LineEndings",
+          "displayName": "Line Endings",
+          "description": "The line endings to use in the generated files",
+          "type": "list",
+          "values": [
+            { "name": "LF", "value": "LF" },
+            { "name": "CRLF", "value": "CRLF" }
+          ],
+          "default": "LF",
+          "required": true
+        },
+        {
+          "name": "CultureCodeInFileNameForPrimaryLanguage",
+          "displayName": "Culture Code in File Name for Primary Language",
+          "description": "Include the culture code in the file name for the primary language ResX file",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        },
+        {
+          "name": "MetadataFileNameSuffix",
+          "displayName": "Metadata file name suffix",
+          "description": "Suffix to append to the metadata file name",
+          "type": "string",
+          "default": "metadata",
+          "required": true,
+          "validators": [
+            {
+              "regex": "^(?!.*\\.$)[A-Za-z0-9_.]*$",
+              "flags": "",
+              "error": "Value can only contain letters, digits, underscores and dot (which cannot be at the end).",
+              "errorCode": "json.metadatafilesuffix.invalid"
+            }
+          ]
+        },
+        {
+          "name": "WriteEmptyValues",
+          "displayName": "Write empty translations",
+          "description": "Write key value pair even on empty translations.",
+          "type": "boolean",
+          "default": true,
+          "required": true
+        }
+      ]
+    }
+  },
+  "templates": {
+    "NetCoreResxCsharp01": {
+      "displayName": "C# and ResX files for .NET Core",
+      "description": "Template which generates strongly typed C# and resource (*.resx) files. Usable in .NET Core projects (Web, Console)",
+      "settings": ["CSharp", "ResX"]
+    },
+    "NetFwResxCsharp01": {
+      "displayName": "C# and ResX files for .NET Framework",
+      "description": "Template which generates strongly typed C# and resource (*.resx) files. Usable in classic desktop applications (Console, Windows Service, etc.)",
+      "settings": ["CSharp", "ResX"]
+    },
+    "WinFormsResxCsharp01": {
+      "displayName": "C# and ResX files for WinForms",
+      "description": "Template which generates strongly typed C# and resource (*.resx) files. Usable in classic (WinForms) desktop applications.",
+      "settings": ["CSharpWinForms:CSharp", "ResX"]
+    },
+    "WpfResxCsharp01": {
+      "displayName": "C# and ResX files for WPF",
+      "description": "Template which generates strongly typed C# and resource (*.resx) files. Usable in WPF desktop applications.",
+      "settings": ["CSharp", "ResX"]
+    },
+    "TypescriptJson01": {
+      "displayName": "TypeScript and JSON files",
+      "description": "Template which generates JSON file to be consumed by javascript with typescript (*.d.ts) type definition. Usable in web projects.",
+      "settings": ["Typescript", "Json"]
+    }
+  }
+}

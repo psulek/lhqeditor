@@ -118,7 +118,7 @@ namespace LHQ.Data.Templating.Templates.Typescript
         [Description("Line endings used when generated files are saved on disk, where default is LF.")]
         [Category(CategoryTypescriptGenerator)]
         [ModelVersionDepend(2)]
-        public OutputSettingsLineEndings TypescriptLineEndings
+        public LineEndings TypescriptLineEndings
         {
             get => Typescript.LineEndings;
             set => Typescript.LineEndings = value;
@@ -184,7 +184,7 @@ namespace LHQ.Data.Templating.Templates.Typescript
         [Description("Line endings used when generated files are saved on disk, where default is LF.")]
         [Category(CategoryJsonGenerator)]
         [ModelVersionDepend(2)]
-        public OutputSettingsLineEndings JsonLineEndings
+        public LineEndings JsonLineEndings
         {
             get => Json.LineEndings;
             set => Json.LineEndings = value;

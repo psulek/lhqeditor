@@ -105,7 +105,7 @@ namespace LHQ.Gen.Lib
             var handlebarFiles = new Dictionary<string, string>();
             //var queryTemplates = $"{queryRoot}.templates.";
             var queryTemplates = $"{queryRoot}.hbs.";
-            var hbsFiles = allManigestResourceNames.Where(x => x.StartsWith(queryTemplates)).ToList();
+            var hbsFiles = allManigestResourceNames.Where(x => x.StartsWith(queryTemplates) && x.EndsWith(".hbs")).ToList();
             if (hbsFiles.Count == 0)
             {
                 throw new ApplicationException("Could not find any lhq code templates (*.hbs) in assembly.");
@@ -118,10 +118,14 @@ namespace LHQ.Gen.Lib
                 handlebarFiles.Add(key, content);
             }
 
+            string metadataFileName = allManigestResourceNames.Single(x => x.EndsWith("metadata.json"));
+            var templatesMetadata = JavaScriptEngineSwitcher.Core.Utilities.Utils.GetResourceAsString(metadataFileName, thisAssembly);
+
             var hbsTemplatesJson = JsonConvert.SerializeObject(handlebarFiles);
             _engine.SetVariableValue("__hbsTemplates", hbsTemplatesJson);
+            _engine.SetVariableValue("__templatesMetadata", templatesMetadata);
             _engine.EmbedHostObject("__hostEnvironment", new JSHostEnvironment());
-            var initJson = "{hbsTemplates: JSON.parse(__hbsTemplates), hostEnvironment: __hostEnvironment}";
+            var initJson = "{hbsTemplates: JSON.parse(__hbsTemplates), templatesMetadata: JSON.parse(__templatesMetadata), hostEnvironment: __hostEnvironment}";
             _engine.Execute($"LhqGenerators.Generator.initialize({initJson});");
         }
 
@@ -202,14 +206,16 @@ namespace LHQ.Gen.Lib
                 csProjectFiles.Add(csProjectFile);
             }
 
-            string json1 = JsonConvert.SerializeObject(lhqModelFile);
-            _engine.SetVariableValue("__lhqModelFile", json1);
-            string json2 = JsonConvert.SerializeObject(csProjectFiles.ToArray());
-            _engine.SetVariableValue("__csProjectFiles", json2);
+            var options = new JSFindNamespaceOptions
+            {
+                LhqModelFile = lhqModelFile,
+                CsProjectFiles = csProjectFiles.ToArray()
+            };
+            _engine.SetVariableValue("__options", JsonConvert.SerializeObject(options));
 
             try
             {
-                var generateCall = "LhqGenerators.namespaceUtils.findNamespaceForModel(JSON.parse(__lhqModelFile), JSON.parse(__csProjectFiles))";
+                var generateCall = "LhqGenerators.namespaceUtils.findNamespaceForModel(JSON.parse(__options))";
                 var resultJson = _engine.Evaluate<string>($"JSON.stringify({generateCall})");
                 var callResult = JsonConvert.DeserializeObject<JSCSharpNamespaceInfo>(resultJson);
                 if (callResult != null)
@@ -224,8 +230,7 @@ namespace LHQ.Gen.Lib
             }
             finally
             {
-                _engine.RemoveVariable("__lhqModelFile");
-                _engine.RemoveVariable("__csProjectFiles");
+                _engine.RemoveVariable("__options");
             }
 
             return result;
@@ -324,38 +329,85 @@ namespace LHQ.Gen.Lib
 
             return new GenerateResult(_generatedFiles);
         }
+        
+        public string LoadAndSerialize(string jsonModel)
+        {
+            try
+            {
+                _engine.SetVariableValue("__data", jsonModel);
+
+                var generateCall = "LhqGenerators.ModelUtils.loadAndSerialize(__data)";
+                var result = _engine.Evaluate<string>(generateCall);
+                return result;
+                //var result = JsonConvert.DeserializeObject<JSGenerateResult>(resultJson);
+                //result.GeneratedFiles?.ForEach(x => _generatedFiles.Add(new GeneratedFile(x.FileName, x.Content, x.Bom, x.LineEndings)));
+            }
+            catch (Exception e)
+            {
+                HandleJsRuntimeException(e);
+                throw;
+            }
+            finally
+            {
+                _engine.RemoveVariable("__data");
+            }
+        }
 
         private void HandleJsRuntimeException(Exception exception)
         {
+            // var jsException = exception as JsException;
+            // if (exception is JsRuntimeException jsRuntimeException)
+            
+            var errorKind = GeneratorErrorKind.GenericError;
+            var errorCode = string.Empty;
+            string title = "Error";
+            string message = "";
+            string callStack = "";
+            string documentName = "";
+
+            T GetDynamicValue<T>(dynamic dyn, string property, T defaultValue = default)
+            {
+                var val = dyn[property];
+                if (val != null && val.GetType() == typeof(Microsoft.ClearScript.Undefined))
+                {
+                    return defaultValue;
+                }
+
+                return val;
+            }
+
+            if (exception.InnerException is Microsoft.ClearScript.ScriptEngineException see )
+            {
+                if (see.ScriptException != null && GetDynamicValue<string>(see.ScriptException, "name") == "AppError")
+                {
+                    // callStack = see.ScriptException.callStack ?? "";
+                    callStack = GetDynamicValue<string>(see.ScriptException, "stack", "");
+                    message = GetDynamicValue<string>(see.ScriptException, "message", "");
+                    errorCode = GetDynamicValue<string>(see.ScriptException, "code", "");
+                    string kind = GetDynamicValue<string>(see.ScriptException, "kind", "");
+                    if (!string.IsNullOrEmpty(kind) && Enum.TryParse(kind, true, out GeneratorErrorKind parsedKind))
+                    {
+                        errorKind = parsedKind;
+                    }
+                }
+            }
+            
             if (exception is JsRuntimeException jsRuntimeException)
             {
                 if (jsRuntimeException.Type == "AppError")
                 {
-                    var errorKind = GeneratorErrorKind.GenericError;
-                    var errorCode = string.Empty;
-
-                    if (exception.InnerException is Microsoft.ClearScript.ScriptEngineException see)
-                    {
-                        errorCode = see.ScriptException.code;
-                        string kind = see.ScriptException.kind;
-                        if (!string.IsNullOrEmpty(kind) && Enum.TryParse(kind, true, out GeneratorErrorKind parsedKind))
-                        {
-                            errorKind = parsedKind;
-                        }
-                    }
-
-                    var callStack = jsRuntimeException.CallStack;
+                    callStack = jsRuntimeException.CallStack;
                     var description = jsRuntimeException.Description;
-                    var documentName = jsRuntimeException.DocumentName;
+                    documentName = jsRuntimeException.DocumentName;
 
                     var items = description.Split('\n');
-                    var title = items.Length == 0 ? description : items[0];
-                    var message = items.Length > 1 ? string.Join("\n", items.Skip(1)) : string.Empty;
-
-                    _logger.Error($"{title}\n{message}\nFILE: {documentName} >> {callStack}");
-                    throw new GeneratorException(title, message, errorKind, errorCode, exception);
+                    title = items.Length == 0 ? description : items[0];
+                    message = items.Length > 1 ? string.Join("\n", items.Skip(1)) : string.Empty;
                 }
             }
+            
+            _logger.Error($"{title}\n{message}\nFILE: {documentName} >> {callStack}");
+            throw new GeneratorException(title, message, errorKind, errorCode, exception);
         }
 
         public void Dispose()
@@ -432,6 +484,18 @@ namespace LHQ.Gen.Lib
         public object Content { get; set; } // Optional, can be string or byte[]
     }
 
+    public class JSFindNamespaceOptions
+    {
+        [JsonProperty("lhqModelFile")]
+        public JSFileInfo LhqModelFile { get; set; }
+
+        [JsonProperty("csProjectFiles")]
+        public JSFileInfo[] CsProjectFiles { get; set; }
+
+        [JsonProperty("allowFileName")]
+        public bool? AllowFileName { get; set; }
+    }
+
     public class JSCSharpNamespaceInfo
     {
         [JsonProperty("csProjectFileName")]
@@ -466,21 +530,21 @@ namespace LHQ.Gen.Lib
             return Path.Combine(path1, path2);
         }
 
-        public string webHtmlEncode(string input)
-        {
-            return System.Net.WebUtility.HtmlEncode(input);
-        }
+        // public string webHtmlEncode(string input)
+        // {
+        //     return System.Net.WebUtility.HtmlEncode(input);
+        // }
 
-        public double stopwatchStart()
-        {
-            return DateTime.UtcNow.Ticks;
-        }
-
-        public string stopwatchEnd(long start)
-        {
-            var startTime = new DateTime(start, DateTimeKind.Utc);
-            var duration = DateTime.UtcNow - startTime;
-            return duration.ToString();
-        }
+        // public double stopwatchStart()
+        // {
+        //     return DateTime.UtcNow.Ticks;
+        // }
+        //
+        // public string stopwatchEnd(long start)
+        // {
+        //     var startTime = new DateTime(start, DateTimeKind.Utc);
+        //     var duration = DateTime.UtcNow - startTime;
+        //     return duration.ToString();
+        // }
     }
 }

@@ -1,4 +1,6 @@
-﻿{{! helper 'output'
+﻿{{! template-id: NetCoreResxCsharp01 }}
+{{! template-name: Template which generates strongly typed C# and resource (*.resx) files. Usable in .NET Core projects (Web, Console) }}
+{{! helper 'output'
     * allowed attributes: fileName(string), mergeWithDefaults(bool) / settings (CodeGeneratorBasicSettings))
     * child content is allowed and its evaluated value represents jmespath query expression to retrieve value for 'settings' attr
     * required: attr 'fileName' or child content (or both) must be specified
@@ -8,17 +10,7 @@
       * result of this query is stored in @root.settings (eg: @root.settings.OutputFolder)
       * more about jmespath query expressions - https://jmespath.org/
 }}
-{{~#output fileName=(x-concat model.name ".gen.cs") ~}}
-childs[?name=='CSharp'].attrs | [0].merge(@, {
-    OutputFolder: (OutputFolder||'Resources'),
-    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
-    LineEndings: (LineEndings||'LF'),
-    Enabled: (Enabled||'true')=='true',
-    Namespace: (Namespace||''),
-    UseExpressionBodySyntax: (UseExpressionBodySyntax||'false')=='true',
-    MissingTranslationFallbackToPrimary: (MissingTranslationFallbackToPrimary||'false')=='true'
-})
-{{~/output~}}
+{{~#output fileName=(x-concat model.name ".gen.cs") ~}}CSharp{{~/output~}}
 {{! for each language generate resx file
     * sets templateId to 'NetResx'
     * sets host.lang to iterated language code (using jmespath query, where @ represents currently iterated language code)
@@ -30,8 +22,7 @@ childs[?name=='CSharp'].attrs | [0].merge(@, {
 {{! setup some root data that will be accesible in template via '@root.data.[key]', eg: @root.data.rootClassName }}
 {{~m-data (x-concat model.name "Localizer") key="rootClassName" ~}}
 {{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
-{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" 
-   check="isNullOrEmpty" error="Missing 'Namespace' value for C# settings." errorCode="csharp.namespace.missing" ~}}
+{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" ~}}
 
 {{! normalize path value in 'outputFolder' from eg: 'Resources\\subdir\' to 'Resources/subdir' and also replace path sep (/) with . so result will be 'Resources.subdir' }}
 {{~m-data (x-normalizePath @root.settings.OutputFolder replacePathSep=".") key="outputFolderDots" ~}}
@@ -278,7 +269,7 @@ public static{{x-render " partial" when=(x-equals _resourceRenderValue "value") 
 	{{! prepare temp data for current resource element (m-data to put data in ITreeElement object and not @root) }}
 	{{~m-data (x-fn paths.getParentPath '') key="parentPath" ~}}
 	{{! constructs full resource path to resource separated by dot , eg: Strings.Dialogs.MyResource1 (Model name: 'Strings', sub category: 'Dialogs' and resource name: 'MyResource1') }}
-	{{m-data (x-concat @root.data.keysClassName (x-fn paths.getParentPath '.') sep=".") key="resourceFullPath" ~}}
+	{{m-data (x-concat @root.data.keysClassName (x-fn paths.getPaths) sep=".") key="resourceFullPath" ~}}
 	/// <summary>
 	/// Gets localized string similar to: {{{ this.comment }}}
 	/// </summary>

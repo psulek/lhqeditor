@@ -249,12 +249,12 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
-    <PackageReference Include="NLog.Config">
-      <Version>4.6.0</Version>
-    </PackageReference>
-    <PackageReference Include="NLog.Schema">
-      <Version>4.6.0</Version>
-    </PackageReference>
+<!--    <PackageReference Include="NLog.Config">-->
+<!--      <Version>4.6.0</Version>-->
+<!--    </PackageReference>-->
+<!--    <PackageReference Include="NLog.Schema">-->
+<!--      <Version>4.6.0</Version>-->
+<!--    </PackageReference>-->
     <PackageReference Include="RestSharpSigned">
       <Version>105.2.3</Version>
     </PackageReference>

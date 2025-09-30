@@ -1,13 +1,6 @@
-﻿{{~#output fileName=(x-concat model.name ".gen.cs") ~}}
-childs[?name=='CSharp'].attrs | [0].merge(@, {
-    OutputFolder: (OutputFolder||'Resources'),
-    EncodingWithBOM: (EncodingWithBOM||'false')=='true',
-    LineEndings: (LineEndings||'LF'),
-    Enabled: (Enabled||'true')=='true',
-    UseExpressionBodySyntax: (UseExpressionBodySyntax||'false')=='true',
-    MissingTranslationFallbackToPrimary: (MissingTranslationFallbackToPrimary||'false')=='true'
-})
-{{~/output~}}
+﻿{{! template-id: NetFwResxCsharp01 }}
+{{! template-name: Template which generates strongly typed C# and resource (*.resx) files. Usable in classic desktop applications (Console, Windows Service, etc.) }}
+{{~#output fileName=(x-concat model.name ".gen.cs") ~}}CSharp{{~/output~}}
 
 {{! for each language generate resx file }}
 {{~#each model.languages ~}}
@@ -16,8 +9,7 @@ childs[?name=='CSharp'].attrs | [0].merge(@, {
 
 {{~m-data (x-concat model.name "Context") key="rootClassName" ~}}
 {{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
-{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" 
-   check="isNullOrEmpty" error="Missing 'Namespace' value for C# settings." errorCode="csharp.namespace.missing" ~}}
+{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" ~}}
 
 {{~m-data (x-normalizePath @root.settings.OutputFolder replacePathSep=".") key="outputFolderDots" ~}}
 {{~m-data (x-concat @root.data.rootNamespace @root.data.outputFolderDots model.name sep=".") key="resourceTypeName" ~}}
@@ -255,7 +247,7 @@ public static partial class {{name}}
 {{#each resources}}
 	{{m-data (x-fn paths.getParentPath '') key="parentPath" ~}}
 	{{~m-data (x-concat (x-test (x-equals ../_resourceRenderValue "key") then=@root.data.keysClassName else=@root.data.rootClassName) ".Instance.GetStringSafely") key="localizer" ~}}
-	{{m-data (x-concat @root.data.keysClassName (x-fn paths.getParentPath '.') sep=".") key="resourceFullPath" ~}}
+	{{m-data (x-concat @root.data.keysClassName (x-fn paths.getPaths) sep=".") key="resourceFullPath" ~}}
 	/// <summary>
 	/// Gets localized string similar to: {{{ this.comment }}}
 	/// </summary>

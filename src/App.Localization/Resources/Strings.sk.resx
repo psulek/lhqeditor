@@ -118,67 +118,67 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppModelFileFilter" xml:space="preserve">
-    <value>S&#250;bor s prekladmi LHQ (*.lhq)|*.lhq</value>
+    <value>Súbor s prekladmi LHQ (*.lhq)|*.lhq</value>
   </data>
   <data name="AppProductName" xml:space="preserve">
-    <value>LHQ - Editor lokaliz&#225;ci&#237;</value>
+    <value>LHQ - Editor lokalizácií</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>LHQ - Editor lokaliz&#225;ci&#237;</value>
+    <value>LHQ - Editor lokalizácií</value>
   </data>
   <data name="AppUpdateStatusText" xml:space="preserve">
-    <value>Kontrolujem aktualiz&#225;cie programu...</value>
+    <value>Kontrolujem aktualizácie programu...</value>
   </data>
   <data name="AppUpdateUsingLatestVersionMessage" xml:space="preserve">
-    <value>M&#225;te najnovšiu verziu programu.</value>
+    <value>Máte najnovšiu verziu programu.</value>
   </data>
   <data name="CommonCountTextsCount0Category" xml:space="preserve">
-    <value>kateg&#243;ri&#237;</value>
+    <value>kategórií</value>
   </data>
   <data name="CommonCountTextsCount0Resource" xml:space="preserve">
     <value>položiek</value>
   </data>
   <data name="CommonCountTextsCount1Category" xml:space="preserve">
-    <value>kateg&#243;ria</value>
+    <value>kategória</value>
   </data>
   <data name="CommonCountTextsCount1Resource" xml:space="preserve">
     <value>položka</value>
   </data>
   <data name="CommonCountTextsCount2Category" xml:space="preserve">
-    <value>kateg&#243;rie</value>
+    <value>kategórie</value>
   </data>
   <data name="CommonCountTextsCount2Resource" xml:space="preserve">
     <value>položky</value>
   </data>
   <data name="CommonCountTextsCount3Category" xml:space="preserve">
-    <value>kateg&#243;rie</value>
+    <value>kategórie</value>
   </data>
   <data name="CommonCountTextsCount3Resource" xml:space="preserve">
     <value>položky</value>
   </data>
   <data name="CommonCountTextsCount4Category" xml:space="preserve">
-    <value>kateg&#243;rie</value>
+    <value>kategórie</value>
   </data>
   <data name="CommonCountTextsCount4Resource" xml:space="preserve">
     <value>položky</value>
   </data>
   <data name="CommonCountTextsCountMoreCategories" xml:space="preserve">
-    <value>kateg&#243;ri&#237;</value>
+    <value>kategórií</value>
   </data>
   <data name="CommonCountTextsCountMoreResources" xml:space="preserve">
     <value>položiek</value>
   </data>
   <data name="CommonPropertiesDescription" xml:space="preserve">
-    <value>pozn&#225;mka</value>
+    <value>poznámka</value>
   </data>
   <data name="CommonPropertiesName" xml:space="preserve">
-    <value>n&#225;zov</value>
+    <value>názov</value>
   </data>
   <data name="CommonPropertiesParameters" xml:space="preserve">
     <value>parametre</value>
   </data>
   <data name="CommonPropertiesTranslationNote" xml:space="preserve">
-    <value>pozn&#225;mka k prekladu</value>
+    <value>poznámka k prekladu</value>
   </data>
   <data name="CommonPropertiesTranslationState" xml:space="preserve">
     <value>stav prekladu</value>
@@ -211,7 +211,7 @@
     <value>OK</value>
   </data>
   <data name="CommonButtonPrevious" xml:space="preserve">
-    <value>_Nasp&#228;ť</value>
+    <value>_Naspäť</value>
   </data>
   <data name="CommonButtonRemove" xml:space="preserve">
     <value>_Odobrať</value>
@@ -220,13 +220,13 @@
     <value>Chyba</value>
   </data>
   <data name="CommonColumnName" xml:space="preserve">
-    <value>N&#225;zov</value>
+    <value>Názov</value>
   </data>
   <data name="CommonDontShowAgain" xml:space="preserve">
-    <value>Nabud&#250;ce nezobrazovať</value>
+    <value>Nabudúce nezobrazovať</value>
   </data>
   <data name="CommonDontShowThisPageAgain" xml:space="preserve">
-    <value>Nabud&#250;ce nezobrazovať t&#250;to str&#225;nku</value>
+    <value>Nabudúce nezobrazovať túto stránku</value>
   </data>
   <data name="CommonError" xml:space="preserve">
     <value>Chyba</value>
@@ -235,7 +235,7 @@
     <value>Nie</value>
   </data>
   <data name="CommonYes" xml:space="preserve">
-    <value>&#193;no</value>
+    <value>Áno</value>
   </data>
   <data name="DialogsAboutAppVersion" xml:space="preserve">
     <value>Verzia programu: {0}</value>
@@ -244,19 +244,19 @@
     <value>LHQ - Editor - o programe</value>
   </data>
   <data name="DialogsAppSettingsApplicationLocalization" xml:space="preserve">
-    <value>Jazyk aplik&#225;cie</value>
+    <value>Jazyk aplikácie</value>
   </data>
   <data name="DialogsAppSettingsButtonCheckForUpdates" xml:space="preserve">
-    <value>Skontrolovať aktualiz&#225;cie</value>
+    <value>Skontrolovať aktualizácie</value>
   </data>
   <data name="DialogsAppSettingsCaptionHint" xml:space="preserve">
-    <value>Zmeniť nastavenia aplik&#225;cie</value>
+    <value>Zmeniť nastavenia aplikácie</value>
   </data>
   <data name="DialogsAppSettingsCheckUpdatesOnAppStart" xml:space="preserve">
-    <value>Pri spusten&#237; aplik&#225;cie skontrolovať nov&#233; aktualiz&#225;cie</value>
+    <value>Pri spustení aplikácie skontrolovať nové aktualizácie</value>
   </data>
   <data name="DialogsAppSettingsDefaultLanguage" xml:space="preserve">
-    <value>Predvolen&#253; jazyk pre nov&#233; projekty</value>
+    <value>Predvolený jazyk pre nové projekty</value>
   </data>
   <data name="DialogsAppSettingsDialogCaption" xml:space="preserve">
     <value>Predvoľby</value>
@@ -265,16 +265,16 @@
     <value>LHQ - Editor - Predvoľby</value>
   </data>
   <data name="DialogsAppSettingsOpenLastProjectOnStartup" xml:space="preserve">
-    <value>Pri spusten&#237; aplik&#225;cie otvoriť posledne otvoren&#253; projekt</value>
+    <value>Pri spustení aplikácie otvoriť posledne otvorený projekt</value>
   </data>
   <data name="DialogsAppSettingsShowHints" xml:space="preserve">
-    <value>Zobraziť pom&#244;cky</value>
+    <value>Zobraziť pomôcky</value>
   </data>
   <data name="DialogsEditLanguageDialogCaptionAdd" xml:space="preserve">
     <value>Pridať jazyk</value>
   </data>
   <data name="DialogsEditLanguageDialogCaptionAddHint" xml:space="preserve">
-    <value>Pridať nov&#253; jazyk do projektu</value>
+    <value>Pridať nový jazyk do projektu</value>
   </data>
   <data name="DialogsEditLanguageDialogCaptionEdit" xml:space="preserve">
     <value>Upraviť jazyk</value>
@@ -289,64 +289,64 @@
     <value>Upraviť jazyk</value>
   </data>
   <data name="DialogsEditLanguageIsPrimaryLanguage" xml:space="preserve">
-    <value>Je z&#225;kladn&#253; jazyk?</value>
+    <value>Je základný jazyk?</value>
   </data>
   <data name="DialogsEditLanguageLanguagesTypeNeutral" xml:space="preserve">
-    <value>Neutr&#225;lny jazyk</value>
+    <value>Neutrálny jazyk</value>
   </data>
   <data name="DialogsEditLanguageLanguagesTypeSpecific" xml:space="preserve">
-    <value>Špecifick&#253; jazyk</value>
+    <value>Špecifický jazyk</value>
   </data>
   <data name="DialogsEditLanguageLanguageTypeInfo" xml:space="preserve">
     <value>Typ jazyka:</value>
   </data>
   <data name="DialogsEditLanguageSetAsPrimaryLanguage" xml:space="preserve">
-    <value>Nastaviť ako z&#225;kladn&#253; jazyk</value>
+    <value>Nastaviť ako základný jazyk</value>
   </data>
   <data name="DialogsExceptionViewerCopyToClipboard" xml:space="preserve">
-    <value>Skop&#237;rovať do schr&#225;nky</value>
+    <value>Skopírovať do schránky</value>
   </data>
   <data name="DialogsExceptionViewerDialogTitle" xml:space="preserve">
-    <value>Nastala neočak&#225;van&#225; chyba</value>
+    <value>Nastala neočakávaná chyba</value>
   </data>
   <data name="DialogsExceptionViewerWrapText" xml:space="preserve">
     <value>_Zalomiť text</value>
   </data>
   <data name="DialogsPasteConfirmAddMissingLanguages" xml:space="preserve">
-    <value>Vyberte ch&#253;baj&#250;ce jazyky ktor&#233; chcete pridať do projektu:</value>
+    <value>Vyberte chýbajúce jazyky ktoré chcete pridať do projektu:</value>
   </data>
   <data name="DialogsPasteConfirmCaption" xml:space="preserve">
-    <value>Preklady vložen&#233; zo schr&#225;nky obsahuj&#250; jazyky ktor&#233; ch&#253;baj&#250; v aktu&#225;lnom projekte.</value>
+    <value>Preklady vložené zo schránky obsahujú jazyky ktoré chýbajú v aktuálnom projekte.</value>
   </data>
   <data name="DialogsPasteConfirmDialogTitle" xml:space="preserve">
-    <value>Vložiť zo schr&#225;nky / ch&#253;baj&#250;ce jazyky</value>
+    <value>Vložiť zo schránky / chýbajúce jazyky</value>
   </data>
   <data name="EnumsModelLoadStatusLoadError" xml:space="preserve">
-    <value>Chyba pri nahr&#225;van&#237; projektu.</value>
+    <value>Chyba pri nahrávaní projektu.</value>
   </data>
   <data name="EnumsModelLoadStatusModelSourceInvalid" xml:space="preserve">
-    <value>Obsah s&#250;boru nie je validn&#253; lokalizačn&#253; projekt.</value>
+    <value>Obsah súboru nie je validný lokalizačný projekt.</value>
   </data>
   <data name="EnumsModelLoadStatusModelUpgraderRequired" xml:space="preserve">
-    <value>Obsah lokalizačn&#233;ho projektu je v staršom form&#225;te a vyžaduje aktualiz&#225;ciu na novšiu verziu.</value>
+    <value>Obsah lokalizačného projektu je v staršom formáte a vyžaduje aktualizáciu na novšiu verziu.</value>
   </data>
   <data name="EnumsModelLoadStatusSuccess" xml:space="preserve">
-    <value>Lokalizačn&#253; projekt bol &#250;spešne otvoren&#253;.</value>
+    <value>Lokalizačný projekt bol úspešne otvorený.</value>
   </data>
   <data name="EnumsStartupModelLoadStatusFileNotFoundOrAccessDenied" xml:space="preserve">
-    <value>Nie je možn&#233; otvoriť projekt &#39;{0}&#39;, s&#250;bor neexistuje ale nem&#225;te požadovan&#233; pr&#225;va!</value>
+    <value>Nie je možné otvoriť projekt &apos;{0}&apos;, súbor neexistuje ale nemáte požadované práva!</value>
   </data>
   <data name="EnumsStartupModelLoadStatusModelLoadError" xml:space="preserve">
-    <value>Nie je možn&#233; otvoriť projekt &#39;{0}&#39;, obsah s&#250;boru je neplatn&#253;!</value>
+    <value>Nie je možné otvoriť projekt &apos;{0}&apos;, obsah súboru je neplatný!</value>
   </data>
   <data name="EnumsStartupModelLoadStatusModelUpgradeRequired" xml:space="preserve">
     <value>ModelUpgradeRequired - {0}</value>
   </data>
   <data name="EnumsStartupModelLoadStatusSuccess" xml:space="preserve">
-    <value>Projektov&#253; s&#250;bor &#39;{0}&#39; bol &#250;spešne otvoren&#253;.</value>
+    <value>Projektový súbor &apos;{0}&apos; bol úspešne otvorený.</value>
   </data>
   <data name="EnumsTreeElementTypeCategory" xml:space="preserve">
-    <value>Kateg&#243;ria</value>
+    <value>Kategória</value>
   </data>
   <data name="EnumsTreeElementTypeModel" xml:space="preserve">
     <value>Model</value>
@@ -361,16 +361,16 @@
     <value>Hladať...</value>
   </data>
   <data name="MainMenuEditFindElementTooltip" xml:space="preserve">
-    <value>Hladať kateg&#243;riu alebo položku</value>
+    <value>Hladať kategóriu alebo položku</value>
   </data>
   <data name="MainMenuEditMenuItem" xml:space="preserve">
     <value>_Upraviť</value>
   </data>
   <data name="MainMenuEditNewCategory" xml:space="preserve">
-    <value>Nov&#225; kateg&#243;ria</value>
+    <value>Nová kategória</value>
   </data>
   <data name="MainMenuEditNewResource" xml:space="preserve">
-    <value>Nov&#225; položka</value>
+    <value>Nová položka</value>
   </data>
   <data name="MainMenuEditPreferences" xml:space="preserve">
     <value>Predvoľby</value>
@@ -382,40 +382,40 @@
     <value>Zatvoriť</value>
   </data>
   <data name="MainMenuFileCloseProjectTooltip" xml:space="preserve">
-    <value>Zatvoriť aktu&#225;lny projekt</value>
+    <value>Zatvoriť aktuálny projekt</value>
   </data>
   <data name="MainMenuFileExitApp" xml:space="preserve">
     <value>U_končiť</value>
   </data>
   <data name="MainMenuFileExitAppTooltip" xml:space="preserve">
-    <value>Ukončiť aplik&#225;ciu</value>
+    <value>Ukončiť aplikáciu</value>
   </data>
   <data name="MainMenuFileImport" xml:space="preserve">
     <value>_Import</value>
   </data>
   <data name="MainMenuFileImportTooltip" xml:space="preserve">
-    <value>Imortovať project z extern&#233;ho prekladu</value>
+    <value>Imortovať project z externého prekladu</value>
   </data>
   <data name="MainMenuFileMenuItem" xml:space="preserve">
-    <value>_S&#250;bor</value>
+    <value>_Súbor</value>
   </data>
   <data name="MainMenuFileNewProject" xml:space="preserve">
-    <value>_Nov&#253; projekt</value>
+    <value>_Nový projekt</value>
   </data>
   <data name="MainMenuFileNewProjectTooltip" xml:space="preserve">
-    <value>Vytvoriť nov&#253; projekt</value>
+    <value>Vytvoriť nový projekt</value>
   </data>
   <data name="MainMenuFileOpenProject" xml:space="preserve">
     <value>_Otvoriť projekt</value>
   </data>
   <data name="MainMenuFileOpenProjectTooltip" xml:space="preserve">
-    <value>Otvoriť projektov&#253; s&#250;bor</value>
+    <value>Otvoriť projektový súbor</value>
   </data>
   <data name="MainMenuFileRecentProjects" xml:space="preserve">
-    <value>Ned&#225;vno otvoren&#233; projekty</value>
+    <value>Nedávno otvorené projekty</value>
   </data>
   <data name="MainMenuFileRecentProjectsTooltip" xml:space="preserve">
-    <value>Zoznam ned&#225;vno otvoren&#253;ch projektov</value>
+    <value>Zoznam nedávno otvorených projektov</value>
   </data>
   <data name="MainMenuFileSaveProject" xml:space="preserve">
     <value>_Uložiť projekt</value>
@@ -424,10 +424,10 @@
     <value>Uložiť projekt _ako...</value>
   </data>
   <data name="MainMenuFileSaveProjectAsTooltip" xml:space="preserve">
-    <value>Uložiť projekt do nov&#233;ho suboru</value>
+    <value>Uložiť projekt do nového suboru</value>
   </data>
   <data name="MainMenuFileSaveProjectTooltip" xml:space="preserve">
-    <value>Uložiť zmeny v projekte do s&#250;boru</value>
+    <value>Uložiť zmeny v projekte do súboru</value>
   </data>
   <data name="MainMenuTranslations" xml:space="preserve">
     <value>_Preklady</value>
@@ -442,22 +442,22 @@
     <value>Zbaliť všetko</value>
   </data>
   <data name="MenuCopy" xml:space="preserve">
-    <value>Kop&#237;rovať</value>
+    <value>Kopírovať</value>
   </data>
   <data name="MenuCopyTooltip" xml:space="preserve">
-    <value>Kop&#237;rovať vybran&#233; kateg&#243;rie/položky do schr&#225;nky</value>
+    <value>Kopírovať vybrané kategórie/položky do schránky</value>
   </data>
   <data name="MenuCut" xml:space="preserve">
-    <value>Vy_strihn&#250;ť</value>
+    <value>Vy_strihnúť</value>
   </data>
   <data name="MenuCutTooltip" xml:space="preserve">
-    <value>Vystrihn&#250;ť vybran&#233; kateg&#243;rie/položky do schr&#225;nky</value>
+    <value>Vystrihnúť vybrané kategórie/položky do schránky</value>
   </data>
   <data name="MenuDelete" xml:space="preserve">
     <value>Vymazať</value>
   </data>
   <data name="MenuDeleteTooltip" xml:space="preserve">
-    <value>Vymazať vybran&#233; kateg&#243;rie/položky</value>
+    <value>Vymazať vybrané kategórie/položky</value>
   </data>
   <data name="MenuExpandAll" xml:space="preserve">
     <value>Rozbaliť všetko</value>
@@ -469,25 +469,25 @@
     <value>Jazyky</value>
   </data>
   <data name="MenuNewCategory" xml:space="preserve">
-    <value>Nov&#225; kateg&#243;ria</value>
+    <value>Nová kategória</value>
   </data>
   <data name="MenuNewCategoryTooltip" xml:space="preserve">
-    <value>Pridať nov&#250; kateg&#243;riu</value>
+    <value>Pridať novú kategóriu</value>
   </data>
   <data name="MenuNewResource" xml:space="preserve">
-    <value>Nov&#225; položka</value>
+    <value>Nová položka</value>
   </data>
   <data name="MenuNewResourceTooltip" xml:space="preserve">
-    <value>Pridať nov&#250; položku</value>
+    <value>Pridať novú položku</value>
   </data>
   <data name="MenuPaste" xml:space="preserve">
     <value>Vložiť</value>
   </data>
   <data name="MenuPasteTooltip" xml:space="preserve">
-    <value>Vložiť kateg&#243;rie/položky zo schr&#225;nky</value>
+    <value>Vložiť kategórie/položky zo schránky</value>
   </data>
   <data name="MenuPrimaryLanguage00" xml:space="preserve">
-    <value>Z&#225;kladn&#253; jazyk: {0}</value>
+    <value>Základný jazyk: {0}</value>
   </data>
   <data name="MenuRedo" xml:space="preserve">
     <value>Prerobiť</value>
@@ -505,94 +505,94 @@
     <value>Premenovať</value>
   </data>
   <data name="MenuUndo" xml:space="preserve">
-    <value>Sp&#228;ť</value>
+    <value>Späť</value>
   </data>
   <data name="MenuUndoTooltip" xml:space="preserve">
-    <value>Sp&#228;ť</value>
+    <value>Späť</value>
   </data>
   <data name="MenuUndoTooltipNamed" xml:space="preserve">
-    <value>Sp&#228;ť: {0}</value>
+    <value>Späť: {0}</value>
   </data>
   <data name="OperationsExitAppConfirmCaption" xml:space="preserve">
-    <value>Ukončiť aplik&#225;ciu</value>
+    <value>Ukončiť aplikáciu</value>
   </data>
   <data name="OperationsExitAppConfirmDetail" xml:space="preserve">
-    <value>Chcete uložiť zmeny v projekte pre ukončen&#237;m aplik&#225;cie?</value>
+    <value>Chcete uložiť zmeny v projekte pre ukončením aplikácie?</value>
   </data>
   <data name="OperationsExitAppConfirmMessage" xml:space="preserve">
-    <value>Boli zisten&#233; neuložen&#233; zmeny v projekte.</value>
+    <value>Boli zistené neuložené zmeny v projekte.</value>
   </data>
   <data name="OperationsMoveMoveChildsUndoUnitCommandName" xml:space="preserve">
-    <value>Presun {0}{1}{2} pod {3} &#39;{4}&#39;</value>
+    <value>Presun {0}{1}{2} pod {3} &apos;{4}&apos;</value>
   </data>
   <data name="OperationsMoveMoveElementsCaption" xml:space="preserve">
-    <value>Presun položiek (kateg&#243;ri&#237;)</value>
+    <value>Presun položiek (kategórií)</value>
   </data>
   <data name="OperationsMoveMoveElementsSomeDuplicatesDetail" xml:space="preserve">
-    <value>Niektor&#233; položky nem&#244;žu byť presunut&#233; pretože nov&#253; vlastn&#237;k už obsahuje položky s rovnak&#253;m n&#225;zvom.
-Dan&#233; položky bud&#250; vyňat&#233; z v&#253;beru pre presun.
+    <value>Niektoré položky nemôžu byť presunuté pretože nový vlastník už obsahuje položky s rovnakým názvom.
+Dané položky budú vyňaté z výberu pre presun.
 
 Chcete pokračovať s presunom položiek?</value>
   </data>
   <data name="OperationsMoveMoveElementsStoppedErrorMessage" xml:space="preserve">
-    <value>Žiadne položky nebud&#250; presunut&#233; pretože nov&#253; vlastn&#237;k už obsahuje položky s rovnak&#253;m n&#225;zvom pre dan&#233; položky.</value>
+    <value>Žiadne položky nebudú presunuté pretože nový vlastník už obsahuje položky s rovnakým názvom pre dané položky.</value>
   </data>
   <data name="OperationsProjectOpenProjectCaption" xml:space="preserve">
     <value>Otvoriť projekt</value>
   </data>
   <data name="OperationsProjectOpenProjectErrorMessage" xml:space="preserve">
-    <value>Chyba pri otv&#225;ran&#237; projektu zo s&#250;boru &#39;{0}&#39;, d&#244;vod: {1}</value>
+    <value>Chyba pri otváraní projektu zo súboru &apos;{0}&apos;, dôvod: {1}</value>
   </data>
   <data name="OperationsProjectProjectSaveErrorTitle" xml:space="preserve">
-    <value>Chyba pri ukladan&#237; projektu</value>
+    <value>Chyba pri ukladaní projektu</value>
   </data>
   <data name="OperationsProjectProjectSaveFailed" xml:space="preserve">
-    <value>Chyba pri ukladan&#237; projektu do s&#250;boru.</value>
+    <value>Chyba pri ukladaní projektu do súboru.</value>
   </data>
   <data name="OperationsProjectProjectSaveFailedFileIsReadOnly" xml:space="preserve">
-    <value>Ukladanie zmiem projektu do s&#250;boru zlyhala, s&#250;bor &#39;{0}&#39; m&#225; nastaven&#253; pr&#237;znak &#39;iba na č&#237;tanie&#39;.</value>
+    <value>Ukladanie zmiem projektu do súboru zlyhala, súbor &apos;{0}&apos; má nastavený príznak &apos;iba na čítanie&apos;.</value>
   </data>
   <data name="OperationsProjectRecentProjectDoestNotExistCaption" xml:space="preserve">
-    <value>Otvoriť ned&#225;vno otvoren&#253; projekt</value>
+    <value>Otvoriť nedávno otvorený projekt</value>
   </data>
   <data name="OperationsProjectRecentProjectDoestNotExistDetail" xml:space="preserve">
-    <value>Chcete odobrať tento projekt zo zoznamu ned&#225;vno otvoren&#253;ch projektov?</value>
+    <value>Chcete odobrať tento projekt zo zoznamu nedávno otvorených projektov?</value>
   </data>
   <data name="OperationsProjectRecentProjectDoestNotExistMessage" xml:space="preserve">
-    <value>Ned&#225;vno otvoren&#253; projekt &#39;{0}&#39; neexistuje pr&#237;p. bol zamietnut&#253; pr&#237;stup z bezpečnostn&#253;ch d&#244;vodov.</value>
+    <value>Nedávno otvorený projekt &apos;{0}&apos; neexistuje príp. bol zamietnutý prístup z bezpečnostných dôvodov.</value>
   </data>
   <data name="OperationsValidationsCategoryNameCouldNotBeEmpty" xml:space="preserve">
-    <value>N&#225;zov kateg&#243;rie nem&#244;že byť pr&#225;zdny.</value>
+    <value>Názov kategórie nemôže byť prázdny.</value>
   </data>
   <data name="OperationsValidationsModelNameCouldNotBeEmpty" xml:space="preserve">
-    <value>N&#225;zov modelu nem&#244;že byť pr&#225;zdny.</value>
+    <value>Názov modelu nemôže byť prázdny.</value>
   </data>
   <data name="OperationsValidationsNameContainsDisallowedCharacters" xml:space="preserve">
-    <value>N&#225;zov &#39;{0}&#39; obsahuje nepovolen&#233; znaky, povolen&#233; s&#250; iba a-z A-Z a č&#237;slice (nie na začiatku n&#225;zvu)</value>
+    <value>Názov &apos;{0}&apos; obsahuje nepovolené znaky, povolené sú iba a-z A-Z a číslice (nie na začiatku názvu)</value>
   </data>
   <data name="OperationsValidationsNameStartingWithNumbersNotAllowed" xml:space="preserve">
-    <value>N&#225;zov &#39;{0}&#39; zač&#237;na č&#237;slicami čo nie je povolen&#233;.</value>
+    <value>Názov &apos;{0}&apos; začína číslicami čo nie je povolené.</value>
   </data>
   <data name="OperationsValidationsResourceNameCouldNotBeEmpty" xml:space="preserve">
-    <value>N&#225;zov položky nem&#244;že byť pr&#225;zdny.</value>
+    <value>Názov položky nemôže byť prázdny.</value>
   </data>
   <data name="OperationsDelete000" xml:space="preserve">
     <value>Vymazať</value>
   </data>
   <data name="OperationsPasteFromClipboardUndoUnitCommandName" xml:space="preserve">
-    <value>Vložiť zo schr&#225;nky {0}{1}{2} pod {3} &#39;{4}&#39;</value>
+    <value>Vložiť zo schránky {0}{1}{2} pod {3} &apos;{4}&apos;</value>
   </data>
   <data name="OperationsPropertyChangeTransactionInfo1" xml:space="preserve">
-    <value>Zmenen&#225; hodnota {0} na &#39;{1}&#39;</value>
+    <value>Zmenená hodnota {0} na &apos;{1}&apos;</value>
   </data>
   <data name="OperationsRemoveChildUndoUnitCommandName" xml:space="preserve">
-    <value>Odobrať {0} &#39;{1}&#39; z {2} &#39;{3}&#39;</value>
+    <value>Odobrať {0} &apos;{1}&apos; z {2} &apos;{3}&apos;</value>
   </data>
   <data name="OperationsStartupModelLoadErrorCaption" xml:space="preserve">
-    <value>Nastala chyba pri otv&#225;ran&#237; projektu</value>
+    <value>Nastala chyba pri otváraní projektu</value>
   </data>
   <data name="OperationsUpdateLanguagesUndoUnitCommandName" xml:space="preserve">
-    <value>Jazyky projektu boli upraven&#233;</value>
+    <value>Jazyky projektu boli upravené</value>
   </data>
   <data name="ServicesApplicationDetectedUnsavedChangesCaption" xml:space="preserve">
     <value>Uložiť zmeny v projekte</value>
@@ -601,10 +601,10 @@ Chcete pokračovať s presunom položiek?</value>
     <value>Chcete uložiť zmeny v projekte?</value>
   </data>
   <data name="ServicesApplicationDetectedUnsavedChangesMessage" xml:space="preserve">
-    <value>Boli zisten&#233; neuložen&#233; zmeny v projekte.</value>
+    <value>Boli zistené neuložené zmeny v projekte.</value>
   </data>
   <data name="ServicesUndoUnitsAddSortedChildActionName" xml:space="preserve">
-    <value>Pridať {0} &#39;{1}&#39; pod {2} &#39;{3}&#39;</value>
+    <value>Pridať {0} &apos;{1}&apos; pod {2} &apos;{3}&apos;</value>
   </data>
   <data name="ViewModelsDeleteElementsConfirmCaption" xml:space="preserve">
     <value>Zmazať {0}</value>
@@ -619,154 +619,154 @@ Chcete pokračovať s presunom položiek?</value>
     <value>Odobrať jazyk</value>
   </data>
   <data name="ViewModelsLanguageSettingsButtonSetAsPrimary" xml:space="preserve">
-    <value>Nastaviť ako z&#225;kladn&#253;</value>
+    <value>Nastaviť ako základný</value>
   </data>
   <data name="ViewModelsLanguageSettingsButtonSetAsPrimaryToolip" xml:space="preserve">
-    <value>Nastaviť jazyk ako z&#225;kladn&#253;</value>
+    <value>Nastaviť jazyk ako základný</value>
   </data>
   <data name="ViewModelsLanguageSettingsChangePrimaryLanguageConfirmCaption" xml:space="preserve">
-    <value>Zmeniť z&#225;kladn&#253; jazyk</value>
+    <value>Zmeniť základný jazyk</value>
   </data>
   <data name="ViewModelsLanguageSettingsColumnHeaderCode" xml:space="preserve">
-    <value>K&#243;d</value>
+    <value>Kód</value>
   </data>
   <data name="ViewModelsLanguageSettingsDialogCaption" xml:space="preserve">
     <value>Nastavenia jazykov</value>
   </data>
   <data name="ViewModelsLanguageSettingsDialogCaptionHint" xml:space="preserve">
-    <value>Upraviť zoznam jazykov použit&#253;ch v projekte</value>
+    <value>Upraviť zoznam jazykov použitých v projekte</value>
   </data>
   <data name="ViewModelsLanguageSettingsHeaderIsPrimary" xml:space="preserve">
-    <value>Z&#225;kladny</value>
+    <value>Základny</value>
   </data>
   <data name="ViewModelsLanguageSettingsPageTitle" xml:space="preserve">
     <value>Nastavenia jazykov</value>
   </data>
   <data name="ViewModelsLanguageSettingsPrimaryLanguage" xml:space="preserve">
-    <value>Jazyk je z&#225;kladn&#253;m jazykom</value>
+    <value>Jazyk je základným jazykom</value>
   </data>
   <data name="ViewModelsLanguageSettingsPrimaryLanguageCantBeRemoved" xml:space="preserve">
-    <value>Z&#225;kladn&#253; jazyk nem&#244;že byť odobran&#253;</value>
+    <value>Základný jazyk nemôže byť odobraný</value>
   </data>
   <data name="ViewModelsLanguageSettingsProjectLanguages" xml:space="preserve">
-    <value>Projektov&#233; jazyky:</value>
+    <value>Projektové jazyky:</value>
   </data>
   <data name="ViewModelsLanguageSettingsRemoveLanguageConfirmCaption" xml:space="preserve">
-    <value>Odobrať jazyk &#39;{0}&#39;</value>
+    <value>Odobrať jazyk &apos;{0}&apos;</value>
   </data>
   <data name="ViewModelsLanguageSettingsRemoveLanguageConfirmDetail" xml:space="preserve">
-    <value>Všetky preklady v tomto jazyku bud&#253; taktiež odobran&#233;!</value>
+    <value>Všetky preklady v tomto jazyku budý taktiež odobrané!</value>
   </data>
   <data name="ViewModelsLanguageSettingsRemoveLanguageConfirmMessage" xml:space="preserve">
-    <value>Odobrať jazyk &#39;{0}&#39; ?</value>
+    <value>Odobrať jazyk &apos;{0}&apos; ?</value>
   </data>
   <data name="ViewModelsLanguageSettingsReplaceLanguageCaption" xml:space="preserve">
-    <value>Zameniť jazyk v projekte za in&#253; jazyk</value>
+    <value>Zameniť jazyk v projekte za iný jazyk</value>
   </data>
   <data name="ViewModelsLanguageSettingsReplaceLanguageDetail" xml:space="preserve">
-    <value>Pr&#225;ve chcete zameniť jazyk v projekte &#39;{0}&#39; za in&#253; jazyk &#39;{1}&#39;.
-Všetk&#253;m prekladom v jazyku &#39;{0}&#39; bude zmenen&#253; jazyk na &#39;{1}&#39;.
+    <value>Práve chcete zameniť jazyk v projekte &apos;{0}&apos; za iný jazyk &apos;{1}&apos;.
+Všetkým prekladom v jazyku &apos;{0}&apos; bude zmenený jazyk na &apos;{1}&apos;.
 
 Chcete pokračovať?</value>
   </data>
   <data name="ViewModelsLanguageSettingsReplaceLanguageMessage" xml:space="preserve">
-    <value>Pr&#225;ve chcete zameniť jazyk v projekte &#39;{0}&#39; za in&#253; jazyk &#39;{1}&#39;.</value>
+    <value>Práve chcete zameniť jazyk v projekte &apos;{0}&apos; za iný jazyk &apos;{1}&apos;.</value>
   </data>
   <data name="ViewModelsLanguageSettingsSetAsPrimaryConfirmCaption" xml:space="preserve">
-    <value>Nastaviť ako z&#225;kladn&#253; jazyk</value>
+    <value>Nastaviť ako základný jazyk</value>
   </data>
   <data name="ViewModelsLanguageSettingsSetAsPrimaryConfirmMessage" xml:space="preserve">
-    <value>Nastaviť jazyk &#39;{0}&#39; ako z&#225;kladn&#253; jazyk?</value>
+    <value>Nastaviť jazyk &apos;{0}&apos; ako základný jazyk?</value>
   </data>
   <data name="ViewModelsNewElementCategoryNameIsRequired" xml:space="preserve">
-    <value>N&#225;zov kateg&#243;rie je povinn&#253;.</value>
+    <value>Názov kategórie je povinný.</value>
   </data>
   <data name="ViewModelsNewElementNameHint" xml:space="preserve">
-    <value>Povolen&#233; znaky: a-z A-Z a č&#237;sla</value>
+    <value>Povolené znaky: a-z A-Z a čísla</value>
   </data>
   <data name="ViewModelsNewElementNewCategory" xml:space="preserve">
-    <value>Nov8 kateg&#243;ria</value>
+    <value>Nov8 kategória</value>
   </data>
   <data name="ViewModelsNewElementNewCategoryCaptionText" xml:space="preserve">
-    <value>Zadajte _n&#225;zov kateg&#243;rie:</value>
+    <value>Zadajte _názov kategórie:</value>
   </data>
   <data name="ViewModelsNewElementNewCategoryTemplateName" xml:space="preserve">
     <value>kategoria</value>
   </data>
   <data name="ViewModelsNewElementNewResource" xml:space="preserve">
-    <value>Nov&#225; položka</value>
+    <value>Nová položka</value>
   </data>
   <data name="ViewModelsNewElementNewResourceCaptionText" xml:space="preserve">
-    <value>Zadajte _n&#225;zov položky:</value>
+    <value>Zadajte _názov položky:</value>
   </data>
   <data name="ViewModelsNewElementNewResourceTemplateName" xml:space="preserve">
     <value>polozka</value>
   </data>
   <data name="ViewModelsNewElementParent" xml:space="preserve">
-    <value>Vlastn&#237;k:</value>
+    <value>Vlastník:</value>
   </data>
   <data name="ViewModelsNewElementParentHierarchy" xml:space="preserve">
     <value>Hierarchia:</value>
   </data>
   <data name="ViewModelsNewElementResourceNameIsRequired" xml:space="preserve">
-    <value>N&#225;zov položky je povinn&#253;.</value>
+    <value>Názov položky je povinný.</value>
   </data>
   <data name="ViewModelsNewProjectDefaultModelName" xml:space="preserve">
     <value>Model</value>
   </data>
   <data name="ViewModelsNewProjectDialogTitle" xml:space="preserve">
-    <value>Vytvoriť nov&#253; projekt</value>
+    <value>Vytvoriť nový projekt</value>
   </data>
   <data name="ViewModelsNewProjectLanguagesType" xml:space="preserve">
     <value>Typ jazyka:</value>
   </data>
   <data name="ViewModelsNewProjectLanguagesTypeNeutral" xml:space="preserve">
-    <value>Neutr&#225;lny jazyk (sk)</value>
+    <value>Neutrálny jazyk (sk)</value>
   </data>
   <data name="ViewModelsNewProjectLanguagesTypeSpecific" xml:space="preserve">
-    <value>Špecifick&#253; jazyk (sk-SK)</value>
+    <value>Špecifický jazyk (sk-SK)</value>
   </data>
   <data name="ViewModelsNewProjectOpenLanguageSettingsAfterCreate" xml:space="preserve">
-    <value>Otvoriť &quot;Nastavenia jazykov&quot; po vytvoren&#237; projektu</value>
+    <value>Otvoriť &quot;Nastavenia jazykov&quot; po vytvorení projektu</value>
   </data>
   <data name="ViewModelsNewProjectOtherLanguagesHint" xml:space="preserve">
-    <value>Ďalšie jazyky pre lokaliz&#225;ciu možete pridať v &quot;Nastavenia jazykov&quot;</value>
+    <value>Ďalšie jazyky pre lokalizáciu možete pridať v &quot;Nastavenia jazykov&quot;</value>
   </data>
   <data name="ViewModelsNewProjectPrimaryLanguage" xml:space="preserve">
-    <value>Z&#225;kladn&#253; jazyk:</value>
+    <value>Základný jazyk:</value>
   </data>
   <data name="ViewModelsNewProjectPrimaryLanguageIsRequired" xml:space="preserve">
-    <value>Z&#225;kladn&#253; jazyk je povinn&#253;.</value>
+    <value>Základný jazyk je povinný.</value>
   </data>
   <data name="ViewModelsNewProjectShowOnlyNeutralLanguages" xml:space="preserve">
-    <value>Zobraziť iba neutr&#225;lne jazyky</value>
+    <value>Zobraziť iba neutrálne jazyky</value>
   </data>
   <data name="ViewModelsRootModelChangePrimaryLanguageConfirmCaption" xml:space="preserve">
-    <value>Zmeniť z&#225;kladn&#253; jazyk</value>
+    <value>Zmeniť základný jazyk</value>
   </data>
   <data name="ViewModelsRootModelChangePrimaryLanguageConfirmMessage" xml:space="preserve">
-    <value>Naozaj chcete zmeniť z&#225;kladn&#253; jazyk na &#39;{0}&#39; ?</value>
+    <value>Naozaj chcete zmeniť základný jazyk na &apos;{0}&apos; ?</value>
   </data>
   <data name="ViewsCategoryViewCategory" xml:space="preserve">
-    <value>Kateg&#243;ria</value>
+    <value>Kategória</value>
   </data>
   <data name="ViewsCategoryViewDescription" xml:space="preserve">
-    <value>_Pozn&#225;mka</value>
+    <value>_Poznámka</value>
   </data>
   <data name="ViewsCategoryViewName" xml:space="preserve">
-    <value>N&#225;zov</value>
+    <value>Názov</value>
   </data>
   <data name="ViewsResourceViewClickToShowHint" xml:space="preserve">
-    <value>Kliknut&#237;m zobraz&#237;te pom&#244;cku</value>
+    <value>Kliknutím zobrazíte pomôcku</value>
   </data>
   <data name="ViewsResourceViewDescription" xml:space="preserve">
-    <value>_Pozn&#225;mka</value>
+    <value>_Poznámka</value>
   </data>
   <data name="ViewsResourceViewHold" xml:space="preserve">
-    <value>Preklad nie je zadan&#253;, označiť ako preložen&#253;</value>
+    <value>Preklad nie je zadaný, označiť ako preložený</value>
   </data>
   <data name="ViewsResourceViewName" xml:space="preserve">
-    <value>_N&#225;zov</value>
+    <value>_Názov</value>
   </data>
   <data name="ViewsResourceViewParameters" xml:space="preserve">
     <value>_Parametre</value>
@@ -775,28 +775,28 @@ Chcete pokračovať?</value>
     <value>Položka</value>
   </data>
   <data name="ViewsResourceViewResourceMarkedAsTranslated" xml:space="preserve">
-    <value>Preklad v jazyku &#39;{1}&#39; položky &#39;{0}&#39; bol označen&#237; ako preložen&#253;.</value>
+    <value>Preklad v jazyku &apos;{1}&apos; položky &apos;{0}&apos; bol označení ako preložený.</value>
   </data>
   <data name="ViewsResourceViewResourceUnmarkedAsTranslated" xml:space="preserve">
-    <value>Preklad v jazyku &#39;{1}&#39; položky &#39;{0}&#39; bol označen&#237; ako nepreložen&#253;.</value>
+    <value>Preklad v jazyku &apos;{1}&apos; položky &apos;{0}&apos; bol označení ako nepreložený.</value>
   </data>
   <data name="ViewsResourceViewTranslationNote" xml:space="preserve">
-    <value>_Pozn&#225;mka k prekladu</value>
+    <value>_Poznámka k prekladu</value>
   </data>
   <data name="ViewsResourceViewTranslations" xml:space="preserve">
     <value>Preklady</value>
   </data>
   <data name="ViewsResourceViewTranslationsHint" xml:space="preserve">
-    <value>Stlačen&#237;m Ctrl+Enter prid&#225;te nov&#253; riadok. Kl&#225;vesa Enter pre posun na ďalš&#237; jazyk prekladu</value>
+    <value>Stlačením Ctrl+Enter pridáte nový riadok. Klávesa Enter pre posun na ďalší jazyk prekladu</value>
   </data>
   <data name="ViewsRootViewAddMissingLanguages" xml:space="preserve">
-    <value>Pridať ch&#253;baj&#250;ce jazyky &#39;{0}&#39;</value>
+    <value>Pridať chýbajúce jazyky &apos;{0}&apos;</value>
   </data>
   <data name="ViewsRootViewDescription" xml:space="preserve">
-    <value>_Pozn&#225;mka</value>
+    <value>_Poznámka</value>
   </data>
   <data name="ViewsRootViewHoldResources" xml:space="preserve">
-    <value>Pozdržan&#233; preklady:</value>
+    <value>Pozdržané preklady:</value>
   </data>
   <data name="ViewsRootViewLanguages" xml:space="preserve">
     <value>Jazyky</value>
@@ -805,48 +805,48 @@ Chcete pokračovať?</value>
     <value>Model</value>
   </data>
   <data name="ViewsRootViewName" xml:space="preserve">
-    <value>N&#225;zov</value>
+    <value>Názov</value>
   </data>
   <data name="ViewsRootViewPrimaryLanguage" xml:space="preserve">
-    <value>Jazyk je z&#225;kladn&#253;m jazykom</value>
+    <value>Jazyk je základným jazykom</value>
   </data>
   <data name="ViewsRootViewSearchTreeText" xml:space="preserve">
     <value>Hladať</value>
   </data>
   <data name="ViewsRootViewTranslatedResources" xml:space="preserve">
-    <value>Preložen&#233; položky:</value>
+    <value>Preložené položky:</value>
   </data>
   <data name="ViewsRootViewUntranslatedResources" xml:space="preserve">
-    <value>Nepreložen&#233; položky:</value>
+    <value>Nepreložené položky:</value>
   </data>
   <data name="ViewsShellViewAllResourceCount" xml:space="preserve">
     <value>Počet položiek:</value>
   </data>
   <data name="ViewsShellViewPrimaryLanguage" xml:space="preserve">
-    <value>Z&#225;kladn&#253; jazyk:</value>
+    <value>Základný jazyk:</value>
   </data>
   <data name="ViewsTreeViewCanDropHere" xml:space="preserve">
-    <value>Presun&#250;ť sem.</value>
+    <value>Presunúť sem.</value>
   </data>
   <data name="ViewsTreeViewDropNotAllowed" xml:space="preserve">
-    <value>Presun sem nie je povolen&#253;.</value>
+    <value>Presun sem nie je povolený.</value>
   </data>
   <data name="ViewsTreeViewFilterTooltipActive" xml:space="preserve">
-    <value>Zobrazuj&#250; sa iba nepreložen&#233; položky - kliknut&#237;m zruš&#237;te filter</value>
+    <value>Zobrazujú sa iba nepreložené položky - kliknutím zrušíte filter</value>
   </data>
   <data name="ViewsTreeViewFilterTooltipNotActive" xml:space="preserve">
-    <value>Zobrazuj&#250; sa všetky položky - kliknut&#237;m sa zobrazia iba nepreložen&#233; položky</value>
+    <value>Zobrazujú sa všetky položky - kliknutím sa zobrazia iba nepreložené položky</value>
   </data>
   <data name="ViewsTreeViewLegendCompleteTranslation" xml:space="preserve">
-    <value>Kompletn&#253; preklad</value>
+    <value>Kompletný preklad</value>
   </data>
   <data name="ViewsTreeViewLegendIncompleteTranslation" xml:space="preserve">
-    <value>Nekompletn&#253; preklad</value>
+    <value>Nekompletný preklad</value>
   </data>
   <data name="ViewsTreeViewShowOnlyUntranslated" xml:space="preserve">
-    <value>Zobraziť iba nepreložen&#233;</value>
+    <value>Zobraziť iba nepreložené</value>
   </data>
   <data name="VsExtensionNugetFailedToInstallNugetPackage" xml:space="preserve">
-    <value>Please manually install NuGet package &#39;{0}&#39;{2} in Nuget Package Manager.</value>
+    <value>Please manually install NuGet package &apos;{0}&apos;{2} in Nuget Package Manager.</value>
   </data>
 </root>

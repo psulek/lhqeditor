@@ -117,7 +117,7 @@ namespace LHQ.Data.Templating.Templates
         [Description("Line endings used when generated files are saved on disk, where default is LF.")]
         [Category(CategoryCSharpGenerator)]
         [ModelVersionDepend(2)]
-        public OutputSettingsLineEndings CSharpLineEndings
+        public LineEndings CSharpLineEndings
         {
             get => CSharp.LineEndings;
             set => CSharp.LineEndings = value;
@@ -179,7 +179,7 @@ namespace LHQ.Data.Templating.Templates
         [Description("Line endings used when generated files are saved on disk, where default is LF.")]
         [Category(CategoryResxGenerator)]
         [ModelVersionDepend(2)]
-        public OutputSettingsLineEndings ResXLineEndings
+        public LineEndings ResXLineEndings
         {
             get => ResX.LineEndings;
             set => ResX.LineEndings = value;

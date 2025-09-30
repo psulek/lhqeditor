@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,20 +22,14 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
-using System.Threading.Tasks;
-using LHQ.App.Model;
-using LHQ.Data;
-
-namespace LHQ.App.Services.Interfaces
+namespace LHQ.Data
 {
-    public interface IStandaloneCodeGeneratorService: IAppContextService
-    // public interface IStandaloneCodeGeneratorService: IShellViewContextService
+    public enum LineEndings
     {
-        Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext);
-        string AutodetectNamespace(string modelFileName);
-        
-        string LoadAndSerializeModel(string jsonModel);
+        LF,
+        CRLF
     }
 }

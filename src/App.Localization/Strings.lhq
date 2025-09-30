@@ -6891,21 +6891,24 @@
                   {
                     "name": "CSharp",
                     "attrs": {
+                      "Enabled": "true",
                       "OutputFolder": "Resources",
                       "EncodingWithBOM": "false",
                       "LineEndings": "CRLF",
                       "UseExpressionBodySyntax": "true",
-                      "Namespace": "LHQ.App.Localization",
-                      "MissingTranslationFallbackToPrimary": "true"
+                      "MissingTranslationFallbackToPrimary": "true",
+                      "Namespace": "LHQ.App.Localization"
                     }
                   },
                   {
                     "name": "ResX",
                     "attrs": {
+                      "Enabled": "true",
                       "OutputFolder": "Resources",
                       "EncodingWithBOM": "false",
                       "LineEndings": "CRLF",
-                      "CultureCodeInFileNameForPrimaryLanguage": "true"
+                      "CultureCodeInFileNameForPrimaryLanguage": "true",
+                      "CompatibleTextEncoding": "true"
                     }
                   }
                 ]

@@ -51,6 +51,23 @@ namespace LHQ.App.Services.Implementation
         public override void ConfigureDependencies(IServiceContainer serviceContainer)
         { }
 
+        private Generator Generator
+        {
+            get
+            {
+                if (_generator == null)
+                {
+                    _generator = new Generator(GetLoggerForGenerator());
+                }
+                else
+                {
+                    _generator.UpdateLogger(GetLoggerForGenerator());
+                }
+                
+                return _generator;
+            }
+        }
+
         public virtual async Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext)
         {
             var result = new StandaloneCodeGenerateResult();
@@ -63,19 +80,21 @@ namespace LHQ.App.Services.Implementation
 
             try
             {
-                if (_generator == null)
-                {
-                    _generator = new Generator(GetLoggerForGenerator());
-                }
-                else
-                {
-                    _generator.UpdateLogger(GetLoggerForGenerator());
-                }
+                // if (_generator == null)
+                // {
+                //     _generator = new Generator(GetLoggerForGenerator());
+                // }
+                // else
+                // {
+                //     _generator.UpdateLogger(GetLoggerForGenerator());
+                // }
 
                 Logger.Info($"[GenerateCode] {modelFileName}");
 
+                var generator = Generator;
+
                 var outDir = Path.GetDirectoryName(modelFileName);
-                var generateResult = _generator.Generate(modelFileName, null, outDir);
+                var generateResult = generator.Generate(modelFileName, null, outDir);
                 var generatedFiles = generateResult.GeneratedFiles;
 
                 foreach (var file in generatedFiles)
@@ -97,8 +116,8 @@ namespace LHQ.App.Services.Implementation
             {
                 var message = $"Error generating code from LHQ file '{modelFileName}', {ge.Title}, {ge.Message}";
                 Logger.Error(message, ge);
-                
-                result.Error = string.IsNullOrEmpty(ge.Title) ? ge.Message : ge.Title;
+
+                result.Error = $"{ge.Title ?? ""} \n {ge.Message}";
                 result.ErrorKind = ge.Kind;
                 result.ErrorCode = ge.Code;
 
@@ -142,7 +161,14 @@ namespace LHQ.App.Services.Implementation
 
         public string AutodetectNamespace(string modelFileName)
         {
-            return _generator.AutodetectNamespace(modelFileName);
+            var generator = Generator;
+            return generator.AutodetectNamespace(modelFileName);
+        }
+
+        public string LoadAndSerializeModel(string jsonModel)
+        {
+            var generator = Generator;
+            return generator.LoadAndSerialize(jsonModel);
         }
 
         protected virtual NLog.ILogger GetLoggerForGenerator()

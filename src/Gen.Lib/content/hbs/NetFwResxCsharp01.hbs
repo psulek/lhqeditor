@@ -9,7 +9,7 @@
 
 {{~m-data (x-concat model.name "Context") key="rootClassName" ~}}
 {{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
-{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" ~}}
+{{~m-data @root.settings.Namespace key="rootNamespace" ~}}
 
 {{~m-data (x-normalizePath @root.settings.OutputFolder replacePathSep=".") key="outputFolderDots" ~}}
 {{~m-data (x-concat @root.data.rootNamespace @root.data.outputFolderDots model.name sep=".") key="resourceTypeName" ~}}

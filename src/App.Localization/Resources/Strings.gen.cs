@@ -1270,6 +1270,10 @@ namespace LHQ.App.Localization
 				/// </summary>
 				public const string About = "MainMenuHelpAbout";
 				/// <summary>
+				/// Gets localized string similar to: Check for updates
+				/// </summary>
+				public const string CheckForUpdates = "MainMenuHelpCheckForUpdates";
+				/// <summary>
 				/// Gets localized string similar to: _Help
 				/// </summary>
 				public const string MenuItem = "MainMenuHelpMenuItem";
@@ -1984,6 +1988,14 @@ namespace LHQ.App.Localization
 			public static partial class Updates
 			{
 				/// <summary>
+				/// Gets localized string similar to: Click here to update now ...
+				/// </summary>
+				public const string ClickHereToUpdateNow = "ServicesUpdatesClickHereToUpdateNow";
+				/// <summary>
+				/// Gets localized string similar to: Do you want to update to version '{0}' ?
+				/// </summary>
+				public const string ConfirmUpdateToNewVersion = "ServicesUpdatesConfirmUpdateToNewVersion";
+				/// <summary>
 				/// Gets localized string similar to: Don't check for updates
 				/// </summary>
 				public const string DontCheckForUpdatesRememberText = "ServicesUpdatesDontCheckForUpdatesRememberText";
@@ -1992,13 +2004,17 @@ namespace LHQ.App.Localization
 				/// </summary>
 				public const string NewVersionAvailableCaption = "ServicesUpdatesNewVersionAvailableCaption";
 				/// <summary>
-				/// Gets localized string similar to: Please navigate to Main Menu -> Tools -> Extensions and Updates, then "Updates" ...
+				/// Gets localized string similar to: New version '{0}' is available!
 				/// </summary>
-				public const string NewVersionAvailableDetail = "ServicesUpdatesNewVersionAvailableDetail";
+				public const string NewVersionAvailableMessage_DesktopApp = "ServicesUpdatesNewVersionAvailableMessage_DesktopApp";
 				/// <summary>
 				/// Gets localized string similar to: New version '{0}' is available! Navigate to Main Menu -> Tools -> Extensions and...
 				/// </summary>
-				public const string NewVersionAvailableMessage = "ServicesUpdatesNewVersionAvailableMessage";
+				public const string NewVersionAvailableMessage_VSIDE = "ServicesUpdatesNewVersionAvailableMessage_VSIDE";
+				/// <summary>
+				/// Gets localized string similar to: No new version available.
+				/// </summary>
+				public const string NoNewVersionAvailable = "ServicesUpdatesNoNewVersionAvailable";
 				/// <summary>
 				/// Gets localized string similar to: Read what's new
 				/// </summary>
@@ -4444,6 +4460,11 @@ namespace LHQ.App.Localization
 				public static string About => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.About);
 		
 				/// <summary>
+				/// Gets localized string similar to: Check for updates
+				/// </summary>
+				public static string CheckForUpdates => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.CheckForUpdates);
+		
+				/// <summary>
 				/// Gets localized string similar to: _Help
 				/// </summary>
 				public static string MenuItem => StringsContext.Instance.GetStringSafely(StringsKeys.MainMenu.Help.MenuItem);
@@ -5309,6 +5330,16 @@ namespace LHQ.App.Localization
 			public static partial class Updates
 			{
 				/// <summary>
+				/// Gets localized string similar to: Click here to update now ...
+				/// </summary>
+				public static string ClickHereToUpdateNow => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.ClickHereToUpdateNow);
+		
+				/// <summary>
+				/// Gets localized string similar to: Do you want to update to version '{0}' ?
+				/// </summary>
+				public static string ConfirmUpdateToNewVersion(object version) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.ConfirmUpdateToNewVersion), version);
+		
+				/// <summary>
 				/// Gets localized string similar to: Don't check for updates
 				/// </summary>
 				public static string DontCheckForUpdatesRememberText => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.DontCheckForUpdatesRememberText);
@@ -5319,14 +5350,19 @@ namespace LHQ.App.Localization
 				public static string NewVersionAvailableCaption => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableCaption);
 		
 				/// <summary>
-				/// Gets localized string similar to: Please navigate to Main Menu -> Tools -> Extensions and Updates, then "Updates" ...
+				/// Gets localized string similar to: New version '{0}' is available!
 				/// </summary>
-				public static string NewVersionAvailableDetail => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableDetail);
+				public static string NewVersionAvailableMessage_DesktopApp(object version) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableMessage_DesktopApp), version);
 		
 				/// <summary>
 				/// Gets localized string similar to: New version '{0}' is available! Navigate to Main Menu -> Tools -> Extensions and...
 				/// </summary>
-				public static string NewVersionAvailableMessage(object version) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableMessage), version);
+				public static string NewVersionAvailableMessage_VSIDE(object version) => string.Format(StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NewVersionAvailableMessage_VSIDE), version);
+		
+				/// <summary>
+				/// Gets localized string similar to: No new version available.
+				/// </summary>
+				public static string NoNewVersionAvailable => StringsContext.Instance.GetStringSafely(StringsKeys.Services.Updates.NoNewVersionAvailable);
 		
 				/// <summary>
 				/// Gets localized string similar to: Read what's new

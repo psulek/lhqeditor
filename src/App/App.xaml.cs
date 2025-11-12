@@ -37,6 +37,8 @@ using LHQ.App.Localization;
 using LHQ.App.ViewModels;
 using LHQ.Utils.Extensions;
 using ScaleHQ.WPF.LHQ;
+using Velopack.Locators;
+using Velopack.Windows;
 
 namespace LHQ.App
 {
@@ -45,40 +47,6 @@ namespace LHQ.App
     /// </summary>
     public partial class App
     {
-        // private static string _appFileName;
-        // private static string[] _cmdArgs;
-
-        // [STAThread]
-        // public static void Main(string[] args)
-        // {
-        //     _cmdArgs = args;
-        //     DateTimeHelper.Initialize();
-        //
-        //     LocalizationExtension.Initialize(new LocalizationContextFactoryDefault(() => StringsContext.Instance));
-        //     AppDomain.CurrentDomain.UnhandledException += OnAppUnhandledException;
-        //
-        //     _appFileName = Assembly.GetExecutingAssembly().Location;
-        //
-        //     var application = new App();
-        //     application.InitializeComponent();
-        //     application.Run();
-        // }
-
-        // private static void OnAppUnhandledException(object sender, UnhandledExceptionEventArgs args)
-        // {
-        //     //ExceptionViewerDialog.DialogShow(args.ExceptionObject as Exception);
-        //     ShowExceptionDialog(args.ExceptionObject as Exception);
-        //     Process.GetCurrentProcess().Kill();
-        // }
-        //
-        // private static void ShowExceptionDialog(Exception exception)
-        // {
-        //     if (Current.MainWindow != null && exception != null && Current.MainWindow.DataContext is ShellViewModel shellViewModel)
-        //     {
-        //         shellViewModel.AppContext?.DialogService?.ShowExceptionDialog(exception);
-        //     }
-        // }
-
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -117,7 +85,7 @@ namespace LHQ.App
 #endif
             ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
-
+        
         private static Task RunInDebugModeAsync()
         {
             var bootstrapper = new Bootstraper(LHQ.App.Startup._appFileName, LHQ.App.Startup._cmdArgs);

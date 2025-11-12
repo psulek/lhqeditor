@@ -335,6 +335,7 @@ namespace LHQ.VsExtension
 
             // Get a reference to the Running Document Table
             var runningDocTable = (IVsRunningDocumentTable)GetService(typeof(SVsRunningDocumentTable));
+            if (runningDocTable == null) { return; }
 
             uint docCookie;
             IVsHierarchy hierarchy;

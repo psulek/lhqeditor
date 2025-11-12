@@ -227,6 +227,9 @@ namespace LHQ.App.ViewModels
 
             // Help -> About
             AddMainMenuItem(menuHelp, Strings.MainMenu.Help.About, commands.AboutCommand, null, null);
+            
+            // Help -> Check for Updates
+            AddMainMenuItem(menuHelp, Strings.MainMenu.Help.CheckForUpdates, commands.CheckForUpdates, null, null);
 
             ShellViewModel.PropertyChanged += ShellViewOnPropertyChanged;
         }

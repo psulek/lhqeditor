@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using LHQ.App.Code;
 using LHQ.App.Dialogs;
@@ -158,6 +159,7 @@ namespace LHQ.App.ViewModels
             ProductWebPageCommand = CreateDelegateCommand(ProductWebPageExecute);
             ExitApplication = CreateDelegateCommand(ExitApplicationExecute);
             WhatsNewCommand = CreateDelegateCommand(WhatsNewExecute);
+            CheckForUpdates = CreateDelegateCommand(CheckForUpdatesExecute);
         }
 
 
@@ -360,6 +362,8 @@ namespace LHQ.App.ViewModels
         public MenuDelegateCommand FindElementCommand { get; }
 
         public ICommand AboutCommand { get; }
+        
+        public ICommand CheckForUpdates { get; }
 
         public ICommand OnlineManualCommand { get; }
 
@@ -1217,6 +1221,31 @@ namespace LHQ.App.ViewModels
             ApplicationService.Exit(false);
         }
 
+        private async void CheckForUpdatesExecute(object obj)
+        {
+            var checkResult = await AppContext.UpdateService.CheckForUpdate();
+            if (checkResult != null)
+            {
+                AppContext.SetUpdateInfo(checkResult);
+                if (!AppContext.UpdateService.InplaceUpgradeSupported())
+                {
+                    return;
+                }
+
+                var info = new DialogShowInfo(Strings.App.Title, Strings.Services.Updates.NewVersionAvailableCaption,
+                    Strings.Services.Updates.ConfirmUpdateToNewVersion(checkResult.NewerVersion.ToString()));
+                
+                if (DialogService.ShowConfirm(info).DialogResult == DialogResult.Yes)
+                {
+                    await AppContext.UpdateService.UpdateToNewVersion();
+                }
+            }
+            else
+            {
+                DialogService.ShowInfo(new DialogShowInfo(Strings.App.Title, Strings.Services.Updates.NoNewVersionAvailable));
+            }
+        }
+        
         private void WhatsNewExecute(object obj)
         {
             var updateCheckInfo = AppContext.UpdateInfo;

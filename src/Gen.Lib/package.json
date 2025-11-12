@@ -9,8 +9,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.17.1",
+  "packageManager": "pnpm@10.21.0",
   "dependencies": {
-    "@lhq/lhq-generators": "1.0.0"
+    "@lhq/lhq-generators": "1.0.0-rc.4"
   }
 }

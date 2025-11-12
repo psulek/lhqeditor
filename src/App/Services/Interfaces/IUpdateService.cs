@@ -31,5 +31,9 @@ namespace LHQ.App.Services.Interfaces
     public interface IUpdateService : IAppContextService
     {
         Task<UpdateCheckInfo> CheckForUpdate();
+
+        bool InplaceUpgradeSupported();
+
+        Task<bool> UpdateToNewVersion();
     }
 }

@@ -18,17 +18,13 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="NLog" Version="4.6.0" />
         <PackageReference Include="Pastel" Version="6.0.1"/>
-<!--        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore" Version="3.27.3"/>-->
         <PackageReference Include="JavaScriptEngineSwitcher.V8" Version="3.29.1"/>
     </ItemGroup>
     
     <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x64' OR '$(RuntimeIdentifier)' == ''">
-<!--        <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.win-x64" Version="3.27.3"/>-->
-        
         <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.5.0"/>
     </ItemGroup>
     <ItemGroup Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
-        
         <PackageReference Include="JavaScriptEngineSwitcher.V8.Native.linux-x64" Version="3.29.0"/>
     </ItemGroup>
     <ItemGroup>
@@ -55,5 +51,9 @@
       <None Update="NLog.config">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="logs\" />
     </ItemGroup>
 </Project>

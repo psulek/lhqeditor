@@ -22,7 +22,7 @@
 {{! setup some root data that will be accesible in template via '@root.data.[key]', eg: @root.data.rootClassName }}
 {{~m-data (x-concat model.name "Localizer") key="rootClassName" ~}}
 {{~m-data (x-concat model.name "Keys") key="keysClassName" ~}}
-{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" ~}}
+{{~m-data @root.settings.Namespace key="rootNamespace" ~}}
 
 {{! normalize path value in 'outputFolder' from eg: 'Resources\\subdir\' to 'Resources/subdir' and also replace path sep (/) with . so result will be 'Resources.subdir' }}
 {{~m-data (x-normalizePath @root.settings.OutputFolder replacePathSep=".") key="outputFolderDots" ~}}

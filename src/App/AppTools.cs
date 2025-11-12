@@ -24,16 +24,56 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using LHQ.App.Code;
 using LHQ.App.Model;
+using LHQ.App.Services.Interfaces;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
+using Velopack.Locators;
+using Velopack.Windows;
 
 namespace LHQ.App
 {
     public static class AppTools
     {
+        public static void CreateDesktopShortcut(IAppContext appContext)
+        {
+            try
+            {
+                // Only create shortcut if StartMeUp is installed (from software center)
+                if (VelopackLocator.Current.CurrentlyInstalledVersion == null)
+                {
+                    return;
+                }
+                
+                var processModule = Process.GetCurrentProcess().MainModule;
+                var appExeFileName = Path.GetFileName(processModule.FileName);
+                string appContextAppFileName = appContext.AppFileName;
+
+                var shortcutsApi = new Shortcuts();
+                var exePath = appExeFileName;
+                var shortcuts = shortcutsApi.FindShortcuts(exePath, ShortcutLocation.Desktop);
+        
+                appContext.Logger.Info($"[DesktopShortcut] Found {shortcuts.Count} shortcuts to {exePath}.");
+                foreach (var shortcut in shortcuts)
+                {
+                    appContext.Logger.Info("[DesktopShortcut] Found shortcut at: " + shortcut.Key + " -> " + shortcut.Value.Target);
+                }
+        
+                if (shortcuts.Count == 0)
+                {
+                    appContext.Logger.Info($"[DesktopShortcut] Creating desktop shortcut for: {exePath}");
+                    shortcutsApi.CreateShortcutForThisExe(ShortcutLocation.Desktop);
+                }
+            }
+            catch (Exception e)
+            {
+                appContext.Logger.Error($"[DesktopShortcut] Error creating desktop shortcut: {e.Message}", e);
+            }
+        }
+        
         public static void GenerateAppConfig(string folder, bool targetIsVs)
         {
             try

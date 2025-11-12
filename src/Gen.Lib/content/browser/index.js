@@ -17251,7 +17251,6 @@ var LhqGenerators = (() => {
     fileUtils: () => fileUtils_exports,
     generatorUtils: () => generatorUtils_exports,
     getIndexForSortedAdd: () => getIndexForSortedAdd,
-    getLibraryVersion: () => getLibraryVersion,
     getLineEndingsRaw: () => getLineEndingsRaw,
     hasItems: () => hasItems,
     isNullOrEmpty: () => isNullOrEmpty,
@@ -17354,6 +17353,7 @@ var LhqGenerators = (() => {
   __export(generatorUtils_exports, {
     generateLhqSchema: () => generateLhqSchema,
     getGeneratedFileContent: () => getGeneratedFileContent,
+    getLibraryVersion: () => getLibraryVersion,
     getZodError: () => getZodError,
     validateLhqModel: () => validateLhqModel,
     validateTemplateMetadata: () => validateTemplateMetadata
@@ -23328,6 +23328,12 @@ var LhqGenerators = (() => {
   });
 
   // src/generatorUtils.ts
+  function getLibraryVersion() {
+    if (false) {
+      return "0.0.0";
+    }
+    return "1.0.0-rc.4";
+  }
   function getZodError(error) {
     const messageBuilder = createMessageBuilder({
       prefix: "",
@@ -25580,6 +25586,12 @@ ${locText}`;
   var regexValidCharacters = /^[a-zA-Z]+[a-zA-Z0-9_]*$/;
   var _ModelUtils = class _ModelUtils {
     /**
+     * Returns the current model versions.
+     */
+    static getModelVersions() {
+      return modelConst_exports.ModelVersions;
+    }
+    /**
      * Returns an instance of `ICodeGeneratorSettingsConvertor` for converting code generator settings.
      */
     static getCodeGeneratorSettingsConvertor() {
@@ -26187,12 +26199,6 @@ ${locText}`;
     namespace: "namespace",
     fileHeader: "fileHeader"
   });
-  function getLibraryVersion() {
-    if (false) {
-      return "0.0.0";
-    }
-    return "1.0.0";
-  }
   var _Generator = class _Generator {
     constructor() {
       this._generatedFiles = [];

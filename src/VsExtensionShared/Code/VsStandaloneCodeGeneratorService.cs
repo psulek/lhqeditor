@@ -39,13 +39,14 @@ namespace LHQ.VsExtension.Code
 {
     public class VsStandaloneCodeGeneratorService : StandaloneCodeGeneratorService
     {
-        private NLog.Logger _logger;
+        // private NLog.Logger _logger;
 
         public override async Task<StandaloneCodeGenerateResult> GenerateCodeAsync(string modelFileName, ModelContext modelContext)
         {
-            using (var inMemoryLogger = new InMemoryLogger(Logger.GetSourceLogger() as NLog.Logger, OnLogMessage))
-            {
-                _logger = inMemoryLogger.Logger;
+            // using (var inMemoryLogger = new InMemoryLogger(Logger.GetSourceLogger() as NLog.Logger, OnLogMessage))
+            // {
+            //     _logger = inMemoryLogger.Logger;
+
                 var result = await base.GenerateCodeAsync(modelFileName, modelContext);
 
                 if (result.Success)
@@ -92,17 +93,24 @@ namespace LHQ.VsExtension.Code
                 }
 
                 return result;
-            }
+            //}
 
-            void OnLogMessage(Tuple<LogLevel, string> logItem)
-            {
-                VsPackageService.AddMessageToOutput(logItem.Item2, logItem.Item1.ToOutputMessageType());
-            }
         }
 
-        protected override ILogger GetLoggerForGenerator()
+        private void OnLogMessage(Tuple<LogLevel, string> logItem)
         {
-            return _logger;
+            VsPackageService.AddMessageToOutput(logItem.Item2, logItem.Item1.ToOutputMessageType());
         }
+
+        protected override (NLog.ILogger logger, IDisposable loggerRegion) GetLoggerForGenerator()
+        {
+            var inMemoryLogger = new InMemoryLogger(Logger.GetSourceLogger() as NLog.Logger, OnLogMessage);
+            return (inMemoryLogger.Logger, inMemoryLogger);
+        }
+
+        // protected override ILogger GetLoggerForGenerator()
+        // {
+        //     return _logger;
+        // }
     }
 }

@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -140,6 +141,22 @@ namespace LHQ.Gen.Lib
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        public (string model, string codeGenerator) GetModelVersions()
+        {
+            var generateCall = "LhqGenerators.ModelUtils.getModelVersions()";
+            var resultJson = _engine.Evaluate<string>($"JSON.stringify({generateCall})");
+            var callResult = JsonConvert.DeserializeObject<JSModelVersionsType>(resultJson);
+            return (model: callResult.Model, codeGenerator: callResult.CodeGenerator);
+        }
+
+        public string GetLibraryVersion()
+        {
+            // getLibraryVersion
+            var generateCall = "LhqGenerators.generatorUtils.getLibraryVersion()";
+            var version = _engine.Evaluate<string>($"{generateCall}");
+            return version;
+        }
         
         public string AutodetectNamespace(string lhqModelFileName)
         {
@@ -240,18 +257,12 @@ namespace LHQ.Gen.Lib
         /// Generates code from given LHQ model file (*.lhq) and C# project file (*.csproj0 using handlebars templates.
         /// </summary>
         /// <param name="lhqModelFileName">Full path to LHQ model file (*.lhq).</param>
-        /// <param name="csProjectFileName">
-        /// Full path to C# project file (*.csproj). This value is optional and if is not specified, process will try to find it
-        /// in the same directory as lhq model file.
-        /// </param>
-        /// <param name="outDir">Output directory for generated files.</param>
         /// <param name="hostData">Optional dictionary with host data that can be accessed in templates.</param>
         /// <returns>Result of generation process with list of generated files and used model group settings as an <see cref="GenerateResult"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="lhqModelFileName"/>.</exception>
         /// <exception cref="FileNotFoundException">Thrown when <paramref name="lhqModelFileName"/>.</exception>
         /// <exception cref="GeneratorException">Thrown when generation process fails on executing handlerbars templates.</exception>
-        public GenerateResult Generate(string lhqModelFileName, string csProjectFileName,
-            string outDir, Dictionary<string, object> hostData = null)
+        public GenerateResult Generate(string lhqModelFileName, Dictionary<string, object> hostData = null)
         {
             if (string.IsNullOrEmpty(lhqModelFileName))
             {
@@ -263,6 +274,7 @@ namespace LHQ.Gen.Lib
                 throw new FileNotFoundException($"LhQ model file '{lhqModelFileName}' was not found!");
             }
 
+            var start = DateTime.UtcNow;
             _generatedFiles.Clear();
 
             if (hostData == null)
@@ -284,11 +296,7 @@ namespace LHQ.Gen.Lib
             }
 
             var sb = new StringBuilder();
-            sb.AppendLine("Starting code generating for:");
-            sb.AppendLine($"- lhq model file: {lhqModelFileName}");
-            sb.AppendLine(
-                $"- c# project file: {(string.IsNullOrEmpty(csProjectFileName) ? "-" : csProjectFileName)} ({(csProjFound ? "auto found" : "cmd")})");
-            sb.AppendLine($"- out dir: {outDir}");
+            sb.AppendLine($"Starting code generating for: {lhqModelFileName}");
 
             _logger.Info(sb.ToString());
 
@@ -316,7 +324,8 @@ namespace LHQ.Gen.Lib
                 _engine.RemoveVariable("__hostData");
             }
 
-            _logger.Info($"Generating {_generatedFiles.Count} files from {lhqModelFileName} ended.");
+            var elapsedTime = DateTime.UtcNow - start;
+            _logger.Info($"Generated {_generatedFiles.Count} files ended in {elapsedTime:g}");
 
             var distinctFileKeys = _generatedFiles.Select(x => x.FileName).Distinct().ToList();
             if (_generatedFiles.Count != distinctFileKeys.Count)
@@ -339,8 +348,6 @@ namespace LHQ.Gen.Lib
                 var generateCall = "LhqGenerators.ModelUtils.loadAndSerialize(__data)";
                 var result = _engine.Evaluate<string>(generateCall);
                 return result;
-                //var result = JsonConvert.DeserializeObject<JSGenerateResult>(resultJson);
-                //result.GeneratedFiles?.ForEach(x => _generatedFiles.Add(new GeneratedFile(x.FileName, x.Content, x.Bom, x.LineEndings)));
             }
             catch (Exception e)
             {
@@ -516,6 +523,15 @@ namespace LHQ.Gen.Lib
         [JsonProperty("namespaceDynamicExpression")]
         public bool NamespaceDynamicExpression { get; set; }
     }
+    
+    public class JSModelVersionsType
+    {
+        [JsonProperty("model")]
+        public string Model { get; set; }
+
+        [JsonProperty("codeGenerator")]
+        public string CodeGenerator { get; set; }
+    };
 
     [PublicAPI]
     public class JSHostEnvironment // inherits interface 'IHostEnvironment' from npm '@lhq/lhq-generators' package 

@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 
 [assembly: AssemblyTitle("LHQ Application")]
-[assembly: AssemblyProduct("App")]
+[assembly: AssemblyProduct("LHQ Editor App")]
 
 [assembly: ComVisible(false)]
 

@@ -2537,6 +2537,14 @@
                 }
               }
             },
+            "CheckForUpdates": {
+              "state": "New",
+              "values": {
+                "en": {
+                  "value": "Check for updates"
+                }
+              }
+            },
             "MenuItem": {
               "state": "Edited",
               "values": {
@@ -4307,6 +4315,27 @@
         },
         "Updates": {
           "resources": {
+            "ClickHereToUpdateNow": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "Click here to update now ..."
+                }
+              }
+            },
+            "ConfirmUpdateToNewVersion": {
+              "state": "Edited",
+              "parameters": {
+                "version": {
+                  "order": 0
+                }
+              },
+              "values": {
+                "en": {
+                  "value": "Do you want to update to version '{0}' ?"
+                }
+              }
+            },
             "DontCheckForUpdatesRememberText": {
               "state": "Edited",
               "values": {
@@ -4323,15 +4352,20 @@
                 }
               }
             },
-            "NewVersionAvailableDetail": {
+            "NewVersionAvailableMessage_DesktopApp": {
               "state": "Edited",
+              "parameters": {
+                "version": {
+                  "order": 0
+                }
+              },
               "values": {
                 "en": {
-                  "value": "Please navigate to Main Menu -> Tools -> Extensions and Updates, then \"Updates\" tab, and search for \"LHQ Editor\"."
+                  "value": "New version '{0}' is available!"
                 }
               }
             },
-            "NewVersionAvailableMessage": {
+            "NewVersionAvailableMessage_VSIDE": {
               "state": "Edited",
               "parameters": {
                 "version": {
@@ -4341,6 +4375,14 @@
               "values": {
                 "en": {
                   "value": "New version '{0}' is available! Navigate to Main Menu -> Tools -> Extensions and Updates, then \"Updates\" tab, and search for \"LHQ Editor\"."
+                }
+              }
+            },
+            "NoNewVersionAvailable": {
+              "state": "Edited",
+              "values": {
+                "en": {
+                  "value": "No new version available."
                 }
               }
             },

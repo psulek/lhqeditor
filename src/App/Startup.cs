@@ -30,6 +30,10 @@ using LHQ.App.Code;
 using LHQ.App.Localization;
 using LHQ.App.ViewModels;
 using ScaleHQ.WPF.LHQ;
+using Velopack;
+using Velopack.Locators;
+using Velopack.Logging;
+using Velopack.Windows;
 using Application = System.Windows.Application;
 
 namespace LHQ.App
@@ -49,6 +53,29 @@ namespace LHQ.App
             AppDomain.CurrentDomain.UnhandledException += OnAppUnhandledException;
 
             _appFileName = Assembly.GetExecutingAssembly().Location;
+            
+            VelopackApp.Build()
+                .OnAfterInstallFastCallback(_ =>
+                    {
+                        try
+                        {
+                            var location = ShortcutLocation.AppRoot;
+                            new Shortcuts().CreateShortcutForThisExe(location);
+                        }
+                        catch
+                        {
+                            // NOTE: Ignore exceptions
+                        }
+                    })
+                .OnFirstRun(_ =>
+                    {
+                        var logger = VelopackLocator.Current.Log;
+                        var shortcutsApi = new Shortcuts();
+                        var location = ShortcutLocation.AppRoot;
+                        logger.Log(VelopackLogLevel.Information, $"Creating shortcut for: {VelopackLocator.Current.ThisExeRelativePath} on {location} (OnFirstRun)");
+                        shortcutsApi.CreateShortcutForThisExe(location);
+                    })
+                .Run();
 
             var application = new App();
             //application.InitializeComponent();

@@ -141,6 +141,11 @@ namespace LHQ.VsExtension.Code
             return result;
         }
 
+        public override bool InplaceUpgradeSupported()
+        {
+            return false;
+        }
+
         private string[] ReadCurrentVersionDescriptions()
         {
             string releaseNotesFile = VsPackageService.GetExtensionPath("ReleaseNotes.txt");

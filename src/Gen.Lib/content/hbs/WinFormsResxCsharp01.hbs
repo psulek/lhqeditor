@@ -2,7 +2,7 @@
 {{! template-name: Template which generates strongly typed C# and resource (*.resx) files. Usable in classic (WinForms) desktop applications. }}
 {{~#output fileName=(x-concat model.name ".gen.cs") ~}}CSharp{{~/output~}}
 
-{{~m-data (x-select @root.host.namespace @root.settings.Namespace) key="rootNamespace" ~}}
+{{~m-data @root.settings.Namespace key="rootNamespace" ~}}
 
 {{! for each language generate resx file }}
 {{~#each model.languages ~}}

@@ -846,6 +846,9 @@ Do you want to continue?</value>
   <data name="MainMenuHelpAbout" xml:space="preserve">
     <value>_About</value>
   </data>
+  <data name="MainMenuHelpCheckForUpdates" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
   <data name="MainMenuHelpMenuItem" xml:space="preserve">
     <value>_Help</value>
   </data>
@@ -1311,17 +1314,26 @@ List of unsupported languages: {1}</value>
   <data name="ServicesUndoUnitsMultiSelectionActionName" xml:space="preserve">
     <value>Action on multiple elements</value>
   </data>
+  <data name="ServicesUpdatesClickHereToUpdateNow" xml:space="preserve">
+    <value>Click here to update now ...</value>
+  </data>
+  <data name="ServicesUpdatesConfirmUpdateToNewVersion" xml:space="preserve">
+    <value>Do you want to update to version &apos;{0}&apos; ?</value>
+  </data>
   <data name="ServicesUpdatesDontCheckForUpdatesRememberText" xml:space="preserve">
     <value>Don&apos;t check for updates</value>
   </data>
   <data name="ServicesUpdatesNewVersionAvailableCaption" xml:space="preserve">
     <value>New version is available!</value>
   </data>
-  <data name="ServicesUpdatesNewVersionAvailableDetail" xml:space="preserve">
-    <value>Please navigate to Main Menu -&gt; Tools -&gt; Extensions and Updates, then &quot;Updates&quot; tab, and search for &quot;LHQ Editor&quot;.</value>
+  <data name="ServicesUpdatesNewVersionAvailableMessage_DesktopApp" xml:space="preserve">
+    <value>New version &apos;{0}&apos; is available!</value>
   </data>
-  <data name="ServicesUpdatesNewVersionAvailableMessage" xml:space="preserve">
+  <data name="ServicesUpdatesNewVersionAvailableMessage_VSIDE" xml:space="preserve">
     <value>New version &apos;{0}&apos; is available! Navigate to Main Menu -&gt; Tools -&gt; Extensions and Updates, then &quot;Updates&quot; tab, and search for &quot;LHQ Editor&quot;.</value>
+  </data>
+  <data name="ServicesUpdatesNoNewVersionAvailable" xml:space="preserve">
+    <value>No new version available.</value>
   </data>
   <data name="ServicesUpdatesReadWhatsNew" xml:space="preserve">
     <value>Read what&apos;s new</value>

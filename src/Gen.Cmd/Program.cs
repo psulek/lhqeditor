@@ -24,31 +24,42 @@
 #endregion
 
 using System.Diagnostics;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using ConsoleAppFramework;
 using JavaScriptEngineSwitcher.Core;
 using LHQ.Gen.Cmd;
 using LHQ.Gen.Lib;
-using NLog;
+using LHQ.Utils.Extensions;
 using Pastel;
 using ConsoleColor = System.ConsoleColor;
 
-string Grey(string msg) => msg.Pastel(ConsoleColor.Gray);
-string White(string msg) => msg.Pastel(ConsoleColor.White);
-string Error(string msg) => msg.Pastel(ConsoleColor.Red);
+string ColorGrey(string msg) => msg.Pastel(ConsoleColor.Gray);
+string ColorWhite(string msg) => msg.Pastel(ConsoleColor.White);
+string ColorError(string msg) => msg.Pastel(ConsoleColor.Red);
+string ColorPath(string msg) => msg.Pastel(ConsoleColor.Yellow);
 
 var logger = DefaultLogger.Instance.Logger;
 
 bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-string exePath = Process.GetCurrentProcess().MainModule.FileName;
-string exeName = Path.GetFileName(exePath);
+var mainModule = Process.GetCurrentProcess().MainModule;
+string exeName = isWindows ? "lhqcmd.exe" : "lhqcmd";
+string exePath = mainModule?.FileName ?? string.Empty;
+if (!exePath.IsNullOrEmpty())
+{
+    exeName = Path.GetFileName(exePath);
+}
+
+using var generator = new Generator(logger);
+Commands.GeneratorInstance.Instance = generator;
+string libraryVersion = generator.GetLibraryVersion();
+(string model, string codeGenerator) = generator.GetModelVersions();
 
 Console.OutputEncoding = Encoding.UTF8;
-Console.WriteLine(
-    $"{White("LHQ Model Generator")}  {Grey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions\n")}");
+Console.WriteLine($"{ColorWhite("LHQ Code Template Generator")}  {ColorGrey($"Copyright (c) {DateTime.Today.Year} ScaleHQ Solutions")}");
+Console.WriteLine(ColorGrey($"  engine library version: {libraryVersion}"));
+Console.WriteLine(ColorGrey($"  supported model version: <= {model}, code generator version: <= {codeGenerator}\n"));
 
 #if DEBUG
 var testDataMode = false;
@@ -56,7 +67,7 @@ var testDataMode = false;
 #endif
 
 var missingParams = args.Length == 0;
-bool requestedHelp = args is ["--help"];
+bool requestedHelp = args is ["--help"] or ["-h"] or ["/?"];
 
 try
 {
@@ -67,7 +78,7 @@ try
     else
     {
         logger.Debug(new string('-', 50));
-        logger.Info($"Program {exeName} started.");
+        logger.Debug($"Program {exeName} started.");
 
         var app = ConsoleApp.Create();
         app.Add<Commands>();
@@ -94,7 +105,7 @@ catch (Exception e)
                 var title = items.Length == 0 ? description : items[0];
                 var message = items.Length > 1 ? string.Join("\n", items.Skip(1)) : string.Empty;
 
-                Console.Write($"{Error(title)}\n{message}");
+                Console.Write($"{ColorError(title)}\n{message}");
 
                 logger.Info($"{title}\n{message}\nFILE: {documentName} >> {callStack}");
 
@@ -113,12 +124,12 @@ catch (Exception e)
 
     if (genericLog)
     {
-        Console.WriteLine(Error("Unexpected error occurred. See log file for details."));
+        Console.WriteLine(ColorError("Unexpected error occurred. See log file for details."));
     }
 }
 finally
 {
-    logger.Info($"Program {exeName} finished.");
+    logger.Debug($"Program {exeName} finished.");
 #if DEBUG
     if (testDataMode)
     {
@@ -129,68 +140,70 @@ finally
 
 void WriteHelp()
 {
-    var lhqcmd = exeName.Pastel(ConsoleColor.DarkCyan);
-    var exam_lhq = White("Strings.lhq");
-    var exam_csproj = "--project MyProject.csproj".Pastel(ConsoleColor.DarkYellow);
+    var lhqcmd = exeName.Pastel(ConsoleColor.Cyan);
 
     var folderExam = isWindows ? "c:\\MyOutputFolder" : "~/MyOutputFolder";
-    var exam_outDir = White($"--out {folderExam}");
-    var param_lhq = "lhq model file".PastelBg(Color.DimGray).Pastel(ConsoleColor.White);
-    var param_csproj = "--project MyProject.csproj".Pastel(ConsoleColor.DarkYellow);
+    var param_lhq = ColorPath("lhq model file");
+    var param_csproj = "--project MyProject.csproj";
+    var exam_lhq = ColorPath("Strings.lhq");
 
-    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> [{param_csproj}] [{Grey("--out DIR")}] {Grey("--data [data]")}";
+    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> [{param_csproj}] [--out DIR] [--data data]";
 
     if (missingParams && !requestedHelp)
     {
         Console.WriteLine(
             $"""
-             {Error("Missing required parameter(s).")}
+             {ColorError("Missing required parameter(s).")}
 
              {usageHelp}
 
              Example:
-             {lhqcmd} {exam_lhq} {exam_csproj} {exam_outDir}
+             {lhqcmd} {exam_lhq} {param_csproj} --out {folderExam}
 
-             For more information, run {White(exeName + " --help")}
+             For more information, run {ColorWhite(exeName + " --help")}
              """);
         return;
     }
 
+    string param_namespace = "namespace".Pastel(ConsoleColor.White);
+    
     Console.WriteLine(
         $"""
          {usageHelp}
 
          Example 1: 
-           {lhqcmd} {exam_lhq} {exam_csproj}
+           {lhqcmd} {exam_lhq} {param_csproj}
            
          Example 2:
-           {lhqcmd} {exam_lhq} {exam_csproj} --out {folderExam} --data namespace=customNamespace key1=value1
+           {lhqcmd} {exam_lhq} {param_csproj} --out {folderExam} --data namespace=customNamespace key1=value1
            
-         {White("NOTES:")}
+         {ColorWhite("NOTES:")}
 
-         {White("--project <path to csproj file>")}
-           - for C# related templates this parameter should be explicitly provided
-           - if not specified app will search for C# project within same folder as lhq model 
+         {ColorWhite("--project <path to csproj file>")}
+           - only these templates require C# project file to be specified: 
+             {ColorWhite("NetCoreResxCsharp01")}, {ColorWhite("NetFwResxCsharp01")}, {ColorWhite("WinFormsResxCsharp01")}, {ColorWhite("WpfResxCsharp01")}
+           - and only if {param_lhq} does not have set {param_namespace} value in template settings
+           - if not provided but required by template, application will try to locate 
+             appropriate C# project file (*.csproj) in the same folder as {param_lhq} 
+             where *.csproj file is linked to the {param_lhq} file (*)
 
-         {White("--out DIR")}
+         {ColorWhite("--out DIR")}
            - optional output directory where to save generated files from lhq model
            - defaults to directory of {param_lhq} 
 
-         {White("--data [data]")} 
+         {ColorWhite("--data [data]")} 
            - optional data in format: --data key1=value1 key2=value2 , etc...
 
-         Data with key {"namespace".Pastel(ConsoleColor.Yellow)} is required * 
+         Data with key {param_namespace} is required * 
 
-         Value for {White("namespace")} must provided either from:
-            1. command line argument: {White("--data namespace=customNamespace")}
+         * Value for {ColorWhite("namespace")} must provided either from:
+            1. command line argument: {ColorWhite("--data namespace=customNamespace")}
              OR
-            2. application will try to get value {White("namespace")} from {param_csproj} file automatically:
-               - xml element {White("//Project/PropertyGroup/RootNamespace")} 
+            2. application will try to get value {ColorWhite("namespace")} from {param_csproj} file automatically:
+               - xml element {ColorWhite("//Project/PropertyGroup/RootNamespace")} 
                 OR
-               - xml element {White($"/Project/ItemGroup/Content[@Include='{param_lhq}']/CustomToolNamespace")}
-               
-         * some templates does not require {"namespace".Pastel(ConsoleColor.Yellow)} value (eg: typescript one)
-                    
+               - xml element {ColorWhite($"/Project/ItemGroup/Content[@Include='{param_lhq}']/CustomToolNamespace")}
+
          """);
 }
 

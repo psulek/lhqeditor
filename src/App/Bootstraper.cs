@@ -65,6 +65,12 @@ namespace LHQ.App
             bool showMainMenu = !appContext.RunInVsPackage;
             var shellViewModel = new ShellViewModel(shellViewContext, startupModel, showMainMenu);
 
+            // create desktop shortcut if not running in VS IDE
+            if (!appContext.RunInVsPackage)
+            {
+                AppTools.CreateDesktopShortcut(appContext);
+            }
+
             appView.DataContext = shellViewModel;
             appView.Closing += (sender, args) => shellViewModel.OnClosing(args);
             appView.Closed += (sender, args) => shellViewModel.OnClosed();

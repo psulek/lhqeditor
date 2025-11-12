@@ -2,8 +2,8 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
         <Identity Id="d5b195f6-4332-4061-9c2b-ce9edf43fb88" Version="2025.3" Language="en-US" Publisher="ScaleHQ" />
-        <DisplayName>LHQ Editor VS2022</DisplayName>
-        <Description xml:space="preserve">Visual Studio 2022 (64-bit) editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.</Description>
+        <DisplayName>LHQ Editor VS2022/VS2026</DisplayName>
+        <Description xml:space="preserve">Visual Studio 2022/2026 (64-bit) editor extension for one-stop localizations, resources, strings, importing multiple resx strings into one centralized file. Generate C# source files with strong-typed classes to be consumed by .NET application.</Description>
         <MoreInfo>https://psulek.github.io/lhqeditor/</MoreInfo>
         <License>Resources\LICENSE</License>
         <GettingStartedGuide>readme.html</GettingStartedGuide>
@@ -12,17 +12,17 @@
         <Tags>resources,resx,localization,editor</Tags>
     </Metadata>
     <Installation InstalledByMsi="false">
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,18.0)">
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,19.0)">
             <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
     </Installation>
     <Dependencies>
         <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.8,)" />
-        <Dependency Id="Microsoft.VisualStudio.MPF.17.0" DisplayName="Visual Studio MPF 17.0" d:Source="Installed" Version="[17.0,18.0)" />
+        <Dependency Id="Microsoft.VisualStudio.MPF.17.0" DisplayName="Visual Studio MPF 17.0" d:Source="Installed" Version="[17.0,19.0)" />
     </Dependencies>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,18.0)" DisplayName="Visual Studio core editor" />
-        <Prerequisite Id="Microsoft.VisualStudio.Component.TextTemplating" Version="[17.0,18.0)" DisplayName="Text Template Transformation" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,19.0)" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.TextTemplating" Version="[17.0,19.0)" DisplayName="Text Template Transformation" />
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />

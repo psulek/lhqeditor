@@ -57,12 +57,15 @@ namespace LHQ.App.ViewModels
             ShellViewModel.PropertyChanged += ShellViewOnPropertyChanged;
             CloseButtonVisible = true;
             UpgradeModelCommand = new DelegateCommand(UpgradeModelCommandExecute);
+            UpdateAppNowCommand = new DelegateCommand(UpdateAppNowCommandExecute);
             DataBind();
         }
 
         public ICommand CloseCommand { get; }
 
         public ICommand ReadUpdateChangedCommand { get; }
+        
+        public ICommand UpdateAppNowCommand { get; }
         
         public ICommand UpgradeModelCommand { get; }
 
@@ -90,6 +93,11 @@ namespace LHQ.App.ViewModels
             set => SetProperty(ref _visible, value);
         }
 
+        private void UpdateAppNowCommandExecute(object obj)
+        {
+            AppContext.UpdateService.UpdateToNewVersion();
+        }
+        
         private void UpgradeModelCommandExecute(object obj)
         {
             if (ShellViewModel.ModelContext.Model.Version == 1 && DialogService.ShowUpgradeModelDialog())
@@ -170,12 +178,20 @@ namespace LHQ.App.ViewModels
 
                     if (updateCheckInfo?.HasNewerVersion == true)
                     {
-                        var text = Strings.Services.Updates.NewVersionAvailableMessage(updateCheckInfo.NewerVersion.ToString());
+                        var neverVersion = updateCheckInfo.NewerVersion.ToString();
+                        var text = AppContext.RunInVsPackage
+                            ? Strings.Services.Updates.NewVersionAvailableMessage_VSIDE(neverVersion)
+                            : Strings.Services.Updates.NewVersionAvailableMessage_DesktopApp(neverVersion);
                         items.Add(BulletListItem.Item(text));
 
                         if (updateCheckInfo.NewVersionDescriptions.Length > 0)
                         {
                             items.Add(BulletListItem.Hyperlink(Strings.Services.Updates.ReadWhatsNew, ReadUpdateChangedCommand));
+                        }
+
+                        if (AppContext.UpdateService.InplaceUpgradeSupported())
+                        {
+                            items.Add(BulletListItem.Hyperlink(Strings.Services.Updates.ClickHereToUpdateNow, UpdateAppNowCommand));
                         }
                     }
                     else

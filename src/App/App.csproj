@@ -1,279 +1,245 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <LangVersion>7.3</LangVersion>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>LHQ.App</RootNamespace>
-    <AssemblyName>LHQ.App</AssemblyName>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <PublishUrl>publish\</PublishUrl>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWPF>true</UseWPF>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <Configurations>AppSetup;Debug;Release</Configurations>
-<!--    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>TRACE;DEBUG;HIDE_IMP_EXP0</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DefineConstants>TRACE;HIDE_IMP_EXP0</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup>
-<!--    <StartupObject>LHQ.App.App</StartupObject>-->
-    <StartupObject>LHQ.App.Startup</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Syncfusion.Data.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.Data.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.PropertyGrid.Wpf, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.PropertyGrid.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.SfBusyIndicator.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfBusyIndicator.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.SfChromelessWindow.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfChromelessWindow.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.SfGrid.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfGrid.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.SfInput.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfInput.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.SfShared.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfShared.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.SfSkinManager.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfSkinManager.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Shared.MVVM.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.Shared.MVVM.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Shared.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.Shared.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Themes.Blend.Wpf, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.Themes.Blend.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Themes.Metro.Wpf, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.Themes.Metro.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Tools.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Syncfusion\Syncfusion.Tools.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.IO.Compression" />
-   <!-- <Reference Include="TreeViewEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2e0e4fd5520af127, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\TreeViewEx.dll</HintPath>
-    </Reference>-->
-    <Reference Include="TreeViewEx">
-      <HintPath>..\..\Libs\TreeViewEx.dll</HintPath>
-    </Reference>
-    <Reference Include="GongSolutions.WPF.DragDrop">
-      <HintPath>..\..\Libs\GongSolutions.WPF.DragDrop.dll</HintPath>
-    </Reference>
-    <Reference Include="Itenso.Windows.Controls.ListViewLayout">
-      <HintPath>..\..\Libs\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Remoting" />
-    <Reference Include="System.ServiceModel" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Behaviors\GridViewColumnResize.Behavior.cs">
-      <DependentUpon>GridViewColumnResize.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Behaviors\GridViewColumnResize.ListView.cs">
-      <DependentUpon>GridViewColumnResize.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Services\Implementation\ResourceImportService.Export.cs">
-      <DependentUpon>ResourceImportService.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Services\Implementation\ResourceImportService.Import.cs">
-      <DependentUpon>ResourceImportService.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Services\Implementation\TreeViewService.PropertyValidityProcess.cs">
-      <DependentUpon>TreeViewService.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Services\Implementation\TreeViewService.TranslationValidityProcess.cs">
-      <DependentUpon>TreeViewService.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Services\Implementation\TreeViewService.TreeSearchProcess.cs">
-      <DependentUpon>TreeViewService.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Services\Implementation\TreeViewService.BlockScopes.cs">
-      <DependentUpon>TreeViewService.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\..\ProductAssemblyInfo.cs">
-      <Link>Properties\ProductAssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\burger_menu.png" />
-    <Resource Include="Images\lock.png" />
-    <Resource Include="Images\auto_translate.png" />
-    <Resource Include="Images\dialog-error.png" />
-    <Resource Include="Images\dialog-info.png" />
-    <Resource Include="Images\dialog-question.png" />
-    <Resource Include="Images\dialog-warning.png" />
-    <Resource Include="Images\exclamation.png" />
-    <Resource Include="Images\element_resource_new.png" />
-    <Resource Include="Images\element_resource.png" />
-    <Resource Include="Images\element_resource_needsreview.png" />
-    <Resource Include="Images\element_resource_edited.png" />
-    <Resource Include="Images\element_resource_final.png" />
-    <Resource Include="Images\accordion_collapse.png" />
-    <Resource Include="Images\accordion_expand.png" />
-    <Resource Include="Images\element_category.png" />
-    <Resource Include="Images\element_model.png" />
-    <Resource Include="Images\check.png" />
-    <Resource Include="Images\play.png" />
-    <Resource Include="Components\SearchTextBox\Images\clear.png" />
-    <Resource Include="Components\SearchTextBox\Images\search.png" />
-    <Resource Include="Icon.ico" />
-    <Resource Include="Images\layout01-dark.png" />
-    <Resource Include="Images\layout01-light.png" />
-    <Resource Include="Images\layout02-dark.png" />
-    <Resource Include="Images\layout02-light.png" />
-    <Resource Include="Images\layout03-dark.png" />
-    <Resource Include="Images\layout03-light.png" />
-    <Resource Include="Images\dialog-info_24.png" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\App.Localization\App.Localization.csproj" />
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\Data\Data.csproj" />
-    <ProjectReference Include="..\Gen.Lib\Gen.Lib.csproj" />
-    <ProjectReference Include="..\Plugins\ExportImportPack\ExportImportPack.csproj" />
-    <ProjectReference Include="..\Plugins\MicrosoftTranslator\MicrosoftTranslator.csproj" />
-    <ProjectReference Include="..\Plugins\YandexTranslator\YandexTranslator.csproj" />
-    <ProjectReference Include="..\Utils\Utils.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Components\TokenizedTextBox\Images\delete8.png" />
-    <Resource Include="Images\bulb.png" />
-    <Resource Include="Images\close.png" />
-    <Resource Include="Images\copy.png" />
-    <Resource Include="Images\cut.png" />
-    <Resource Include="Images\delete.png" />
-    <Resource Include="Images\export.png" />
-    <Resource Include="Images\file_browse.png" />
-    <Resource Include="Images\find.png" />
-    <Resource Include="Images\import.png" />
-    <Resource Include="Images\language.png" />
-    <Resource Include="Images\paste.png" />
-    <Resource Include="Images\redo.png" />
-    <Resource Include="Images\undo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Flags\flag-en.png" />
-    <Resource Include="Images\Flags\flag-sk.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\filter-clear.png" />
-    <Resource Include="Images\filter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\project-new.png" />
-    <Resource Include="Images\project-open.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\project-save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\settings.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\state_new.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\state_needsreview.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\state_final.png" />
-    <Resource Include="Images\state_edited.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Crc32.NET">
-      <Version>1.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="EPPlus">
-      <Version>4.5.3.1</Version>
-    </PackageReference>
-    <PackageReference Include="FontAwesome.WPF">
-      <Version>4.7.0.9</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64">
-      <Version>7.5.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.NETCore.Platforms">
-      <Version>2.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
-      <Version>1.1.39</Version>
-    </PackageReference>
-    <PackageReference Include="morelinq">
-      <Version>2.4.0</Version>
-    </PackageReference>
-    <PackageReference Include="NETStandard.Library">
-      <Version>2.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.3</Version>
-    </PackageReference>
-<!--    <PackageReference Include="NLog.Config">-->
-<!--      <Version>4.6.0</Version>-->
-<!--    </PackageReference>-->
-<!--    <PackageReference Include="NLog.Schema">-->
-<!--      <Version>4.6.0</Version>-->
-<!--    </PackageReference>-->
-    <PackageReference Include="RestSharpSigned">
-      <Version>105.2.3</Version>
-    </PackageReference>
-    <PackageReference Include="ScaleHQ.WPF.LHQ.StrongName">
-      <Version>1.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.Diagnostics.Process">
-      <Version>4.3.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Management" Version="9.0.2" />
-    <PackageReference Include="System.Reactive">
-      <Version>4.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation">
-      <Version>4.3.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.ValueTuple">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>7.3</LangVersion>
+        <OutputType>WinExe</OutputType>
+        <RootNamespace>LHQ.App</RootNamespace>
+        <AssemblyName>LHQ.App</AssemblyName>
+        <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+        <PublishUrl>publish\</PublishUrl>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <UseWindowsForms>true</UseWindowsForms>
+        <UseWPF>true</UseWPF>
+        <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+        <Configurations>AppSetup;Debug;Release</Configurations>
+        <!--    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <Version>2025.3</Version>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DefineConstants>TRACE;DEBUG;HIDE_IMP_EXP0</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DefineConstants>TRACE;HIDE_IMP_EXP0</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup>
+        <!--    <StartupObject>LHQ.App.App</StartupObject>-->
+        <StartupObject>LHQ.App.Startup</StartupObject>
+    </PropertyGroup>
+    <PropertyGroup>
+        <ApplicationIcon>Icon.ico</ApplicationIcon>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="Syncfusion.Data.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.Data.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.PropertyGrid.Wpf, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.PropertyGrid.Wpf.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.SfBusyIndicator.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfBusyIndicator.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.SfChromelessWindow.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfChromelessWindow.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.SfGrid.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfGrid.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.SfInput.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfInput.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.SfShared.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfShared.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.SfSkinManager.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.SfSkinManager.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.Shared.MVVM.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.Shared.MVVM.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.Shared.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.Shared.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.Themes.Blend.Wpf, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.Themes.Blend.Wpf.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.Themes.Metro.Wpf, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.Themes.Metro.Wpf.dll</HintPath>
+        </Reference>
+        <Reference Include="Syncfusion.Tools.WPF, Version=15.3460.0.33, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\Libs\Syncfusion\Syncfusion.Tools.WPF.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Configuration"/>
+        <Reference Include="System.IO.Compression"/>
+        <!-- <Reference Include="TreeViewEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2e0e4fd5520af127, processorArchitecture=x86">
+           <SpecificVersion>False</SpecificVersion>
+           <HintPath>..\..\Libs\TreeViewEx.dll</HintPath>
+         </Reference>-->
+        <Reference Include="TreeViewEx">
+            <HintPath>..\..\Libs\TreeViewEx.dll</HintPath>
+        </Reference>
+        <Reference Include="GongSolutions.WPF.DragDrop">
+            <HintPath>..\..\Libs\GongSolutions.WPF.DragDrop.dll</HintPath>
+        </Reference>
+        <Reference Include="Itenso.Windows.Controls.ListViewLayout">
+            <HintPath>..\..\Libs\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Runtime.Remoting"/>
+        <Reference Include="System.ServiceModel"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Behaviors\GridViewColumnResize.Behavior.cs">
+            <DependentUpon>GridViewColumnResize.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Behaviors\GridViewColumnResize.ListView.cs">
+            <DependentUpon>GridViewColumnResize.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Services\Implementation\ResourceImportService.Export.cs">
+            <DependentUpon>ResourceImportService.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Services\Implementation\ResourceImportService.Import.cs">
+            <DependentUpon>ResourceImportService.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Services\Implementation\TreeViewService.PropertyValidityProcess.cs">
+            <DependentUpon>TreeViewService.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Services\Implementation\TreeViewService.TranslationValidityProcess.cs">
+            <DependentUpon>TreeViewService.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Services\Implementation\TreeViewService.TreeSearchProcess.cs">
+            <DependentUpon>TreeViewService.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Services\Implementation\TreeViewService.BlockScopes.cs">
+            <DependentUpon>TreeViewService.cs</DependentUpon>
+        </Compile>
+        <Compile Include="..\..\ProductAssemblyInfo.cs">
+            <Link>Properties\ProductAssemblyInfo.cs</Link>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\burger_menu.png"/>
+        <Resource Include="Images\lock.png"/>
+        <Resource Include="Images\auto_translate.png"/>
+        <Resource Include="Images\dialog-error.png"/>
+        <Resource Include="Images\dialog-info.png"/>
+        <Resource Include="Images\dialog-question.png"/>
+        <Resource Include="Images\dialog-warning.png"/>
+        <Resource Include="Images\exclamation.png"/>
+        <Resource Include="Images\element_resource_new.png"/>
+        <Resource Include="Images\element_resource.png"/>
+        <Resource Include="Images\element_resource_needsreview.png"/>
+        <Resource Include="Images\element_resource_edited.png"/>
+        <Resource Include="Images\element_resource_final.png"/>
+        <Resource Include="Images\accordion_collapse.png"/>
+        <Resource Include="Images\accordion_expand.png"/>
+        <Resource Include="Images\element_category.png"/>
+        <Resource Include="Images\element_model.png"/>
+        <Resource Include="Images\check.png"/>
+        <Resource Include="Images\play.png"/>
+        <Resource Include="Components\SearchTextBox\Images\clear.png"/>
+        <Resource Include="Components\SearchTextBox\Images\search.png"/>
+        <Resource Include="Icon.ico"/>
+        <Resource Include="Images\layout01-dark.png"/>
+        <Resource Include="Images\layout01-light.png"/>
+        <Resource Include="Images\layout02-dark.png"/>
+        <Resource Include="Images\layout02-light.png"/>
+        <Resource Include="Images\layout03-dark.png"/>
+        <Resource Include="Images\layout03-light.png"/>
+        <Resource Include="Images\dialog-info_24.png"/>
+        <Content Include="NLog.config">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <AppDesigner Include="Properties\"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\App.Localization\App.Localization.csproj"/>
+        <ProjectReference Include="..\Core\Core.csproj"/>
+        <ProjectReference Include="..\Data\Data.csproj"/>
+        <ProjectReference Include="..\Gen.Lib\Gen.Lib.csproj"/>
+        <ProjectReference Include="..\Plugins\ExportImportPack\ExportImportPack.csproj"/>
+        <ProjectReference Include="..\Plugins\MicrosoftTranslator\MicrosoftTranslator.csproj"/>
+        <ProjectReference Include="..\Plugins\YandexTranslator\YandexTranslator.csproj"/>
+        <ProjectReference Include="..\Utils\Utils.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Components\TokenizedTextBox\Images\delete8.png"/>
+        <Resource Include="Images\bulb.png"/>
+        <Resource Include="Images\close.png"/>
+        <Resource Include="Images\copy.png"/>
+        <Resource Include="Images\cut.png"/>
+        <Resource Include="Images\delete.png"/>
+        <Resource Include="Images\export.png"/>
+        <Resource Include="Images\file_browse.png"/>
+        <Resource Include="Images\find.png"/>
+        <Resource Include="Images\import.png"/>
+        <Resource Include="Images\language.png"/>
+        <Resource Include="Images\paste.png"/>
+        <Resource Include="Images\redo.png"/>
+        <Resource Include="Images\undo.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\Flags\flag-en.png"/>
+        <Resource Include="Images\Flags\flag-sk.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\filter-clear.png"/>
+        <Resource Include="Images\filter.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\project-new.png"/>
+        <Resource Include="Images\project-open.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\project-save.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\settings.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\state_new.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\state_needsreview.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\state_final.png"/>
+        <Resource Include="Images\state_edited.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Crc32.NET" Version="1.2.0"/>
+        <PackageReference Include="EPPlus" Version="4.5.3.1"/>
+        <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9"/>
+        <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.5.0"/>
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
+        <PackageReference Include="Microsoft.NETCore.Platforms" Version="2.2.0"/>
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39"/>
+        <PackageReference Include="morelinq" Version="2.4.0"/>
+        <PackageReference Include="NETStandard.Library" Version="2.0.3"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="RestSharpSigned" Version="105.2.3"/>
+        <PackageReference Include="ScaleHQ.WPF.LHQ.StrongName" Version="1.1.0"/>
+        <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0"/>
+        <PackageReference Include="System.Diagnostics.Process" Version="4.3.0"/>
+        <PackageReference Include="System.Management" Version="9.0.2"/>
+        <PackageReference Include="System.Reactive" Version="4.0.0"/>
+        <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0"/>
+        <PackageReference Include="System.ValueTuple" Version="4.3.0"/>
+        <PackageReference Include="Velopack" Version="0.0.1369-g1d5c984"/>
+    </ItemGroup>
 </Project>

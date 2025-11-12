@@ -26,17 +26,16 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using LHQ.App.Localization;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Core.DependencyInjection;
 using LHQ.Data;
-using LHQ.Data.Extensions;
-using LHQ.Data.Templating.Templates;
 using LHQ.Gen.Lib;
 using LHQ.Utils.Utilities;
+using NLog;
 using Exception = System.Exception;
 
 namespace LHQ.App.Services.Implementation
@@ -51,20 +50,38 @@ namespace LHQ.App.Services.Implementation
         public override void ConfigureDependencies(IServiceContainer serviceContainer)
         { }
 
-        private Generator Generator
+        // private Generator Generator
+        // {
+        //     get
+        //     {
+        //         if (_generator == null)
+        //         {
+        //             _generator = new Generator(GetLoggerForGenerator());
+        //         }
+        //         else
+        //         {
+        //             _generator.UpdateLogger(GetLoggerForGenerator());
+        //         }
+        //         
+        //         return _generator;
+        //     }
+        // }
+
+        private TResult GeneratorAction<TResult>(Func<Generator, TResult> action)
         {
-            get
+            (ILogger logger, IDisposable loggerRegion) = GetLoggerForGenerator();
+            using (loggerRegion)
             {
                 if (_generator == null)
                 {
-                    _generator = new Generator(GetLoggerForGenerator());
+                    _generator = new Generator(logger);
                 }
                 else
                 {
-                    _generator.UpdateLogger(GetLoggerForGenerator());
+                    _generator.UpdateLogger(logger);
                 }
-                
-                return _generator;
+
+                return action(_generator);
             }
         }
 
@@ -74,28 +91,18 @@ namespace LHQ.App.Services.Implementation
 
             if (!_generating.TrySetSignal())
             {
-                // report success because we are already generating and dont want to show error generating...
+                // report success because we are already generating and don't want to show error generating...
                 return new StandaloneCodeGenerateResult { Success = true };
             }
 
             try
             {
-                // if (_generator == null)
-                // {
-                //     _generator = new Generator(GetLoggerForGenerator());
-                // }
-                // else
-                // {
-                //     _generator.UpdateLogger(GetLoggerForGenerator());
-                // }
-
                 Logger.Info($"[GenerateCode] {modelFileName}");
 
-                var generator = Generator;
+                //var generator = Generator;
 
                 var outDir = Path.GetDirectoryName(modelFileName);
-                var generateResult = generator.Generate(modelFileName, null, outDir);
-                var generatedFiles = generateResult.GeneratedFiles;
+                var generatedFiles = GeneratorAction(generator => generator.Generate(modelFileName).GeneratedFiles);
 
                 foreach (var file in generatedFiles)
                 {
@@ -120,31 +127,6 @@ namespace LHQ.App.Services.Implementation
                 result.Error = $"{ge.Title ?? ""} \n {ge.Message}";
                 result.ErrorKind = ge.Kind;
                 result.ErrorCode = ge.Code;
-
-                /*AppContext.UIService.DispatchActionOnUI(() =>
-                    {
-                        string title = "Code generator failed: " + ge.Title;
-                        string message = ge.Message;
-
-                        if (ge.Kind == GeneratorErrorKind.InvalidModelSchema)
-                        {
-                            title = "Code generator failed.";
-                            message = "Invalid model schema. " + (ge.Title ?? ge.Message);
-                        }
-                        else if (ge.Kind == GeneratorErrorKind.TemplateValidationError)
-                        {
-                            title = "Code generator failed.";
-                            message = "Invalid template settings. " + (ge.Title ?? ge.Message);
-                        }
-                        var dialogShowInfo = new DialogShowInfo(Strings.Dialogs.CodeGenerator.CodeGeneratorTitle, title, message);
-                        DialogService.ShowError(dialogShowInfo);
-
-                        if (ge.Code == GeneratorErrorCodes.CsharpNamespaceMissing)
-                        {
-                            AutodetectNamespace(modelFileName, modelContext);
-                        }
-
-                    }, TimeSpan.FromMilliseconds(200));*/
             }
             catch (Exception e)
             {
@@ -161,20 +143,23 @@ namespace LHQ.App.Services.Implementation
 
         public string AutodetectNamespace(string modelFileName)
         {
-            var generator = Generator;
-            return generator.AutodetectNamespace(modelFileName);
+            return GeneratorAction(generator => generator.AutodetectNamespace(modelFileName));
         }
 
         public string LoadAndSerializeModel(string jsonModel)
         {
-            var generator = Generator;
-            return generator.LoadAndSerialize(jsonModel);
+            return GeneratorAction(generator => generator.LoadAndSerialize(jsonModel));
         }
 
-        protected virtual NLog.ILogger GetLoggerForGenerator()
+        protected virtual (NLog.ILogger logger, IDisposable loggerRegion) GetLoggerForGenerator()
         {
-            return Logger.GetSourceLogger() as NLog.ILogger;
+            return (Logger.GetSourceLogger() as NLog.ILogger, NoopDisposable.Instance);
         }
+
+        // protected virtual NLog.ILogger GetLoggerForGenerator()
+        // {
+        //     return Logger.GetSourceLogger() as NLog.ILogger;
+        // }
 
         public void Dispose()
         {
@@ -185,4 +170,15 @@ namespace LHQ.App.Services.Implementation
             }
         }
     }
+
+    internal class NoopDisposable : IDisposable
+    {
+        internal static IDisposable Instance { get; } = new NoopDisposable();
+
+        public void Dispose()
+        {
+
+        }
+    }
+
 }

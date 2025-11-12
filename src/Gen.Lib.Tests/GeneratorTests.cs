@@ -84,7 +84,7 @@ public sealed class GeneratorTests() : TestBase(GetVerifySettings("generators"))
         }
 
         using var generator = new Generator(new NullLogger(new LogFactory()));
-        var generateResult = generator.Generate(lhqModelFileName, csProjectFileName, string.Empty, hostData);
+        var generateResult = generator.Generate(lhqModelFileName, hostData);
         var generatedFiles = generateResult.GeneratedFiles; 
 
         generatedFiles.ShouldNotBeNull();

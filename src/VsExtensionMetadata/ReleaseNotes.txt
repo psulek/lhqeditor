@@ -1,7 +1,14 @@
 ﻿2025.3
+- New UI editors
+  - New `LHQ Editor` extension for `Visual Studio Code`
+  - Added `Visual Studio 2026` support for `LHQ Editor` Visual Studio extension
+- Sanitize strings from invalid unicode characters on save
+  - Added new model setting `Sanitize unsupported unicode characters`
+  - This will sanitize translations on save (non-breaking spaces will be replaced with space and unsupported characters will be removed.)
 - New modern generator now using 'V8' JS engine instead of 'Chakra'
   - This means that the code generation is now faster and more reliable
   - The new engine is also more compatible with the latest JavaScript features
+- Read more about [LHQ applications](https://github.com/psulek/lhqeditor/wiki/LHQ-Editor-Applications)
 
 2025.2
 - New 'modern generator' is now default generator for both v1 & v2 model versions

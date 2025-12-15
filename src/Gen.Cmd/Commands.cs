@@ -35,21 +35,22 @@ public class Commands
 {
     internal static class GeneratorInstance
     {
-        internal static Generator Instance;
+        // ReSharper disable once InconsistentNaming
+        internal static Generator Instance = null!;
     }
+    
+    private static readonly bool _isLinuxLike = !RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     
     /// <summary>
     /// LHQ Model Generator
     /// </summary>
     /// <param name="modelFile">LHQ model file (*.lhq)</param>
-    /// <param name="project">-p, File path to C# project file (*.csproj)</param>
     /// <param name="out">-o, Output directory where to save generated files from lhq model</param>
     /// <param name="data">-d, Extra data values, in format key1=value2</param>
     /// <returns></returns>
     [Command("")]
-    public async Task GenerateCode([Argument] string modelFile, string project = "", string @out = "", params string[] data)
+    public async Task GenerateCode([Argument] string modelFile, string @out = "", params string[] data)
     {
-
         var colorPath = ConsoleColor.White;
         
         var logger = DefaultLogger.Instance.Logger;
@@ -62,7 +63,6 @@ public class Commands
         generator.UpdateLogger(logger);
         
         var lhqFile = modelFile;
-        var csProjFile = project;
         var outDir = @out;
         var hostData = new Dictionary<string, object>();
 
@@ -97,31 +97,25 @@ public class Commands
             throw new Exception($"LhQ model file '{lhqFile}' was not found!");
         }
 
-        if (!string.IsNullOrEmpty(csProjFile) && !File.Exists(csProjFile))
-        {
-            throw new Exception($"C# project file '{csProjFile}' was not found!");
-        }
-
         string? lhqFilePath = Path.GetDirectoryName(lhqFile);
+        lhqFilePath = string.IsNullOrEmpty(lhqFilePath) ? Environment.CurrentDirectory : lhqFilePath;
         
         if (string.IsNullOrEmpty(outDir))
         {
-            outDir = !string.IsNullOrEmpty(csProjFile)
-                ? Path.GetDirectoryName(csProjFile)!
-                : lhqFilePath!;
+            outDir = lhqFilePath;
         }
-        else if (outDir == ".")
+        
+        if (outDir == ".")
         {
             outDir = Environment.CurrentDirectory;
         }
-        else
+        else if (!string.IsNullOrEmpty(outDir))
         {
-            TryGetLinuxHomeDir(ref outDir);
-            var currentDir = lhqFilePath ?? Environment.CurrentDirectory;
-
-            outDir = Path.IsPathRooted(outDir) 
-                ? outDir 
-                : Path.Combine(currentDir, outDir);
+            if (!TryGetLinuxHomeDir(ref outDir) && !Path.IsPathRooted(outDir))
+            {
+                var currentDir = Path.IsPathRooted(lhqFilePath) ? lhqFilePath : Environment.CurrentDirectory;
+                outDir = Path.Combine(currentDir, outDir);
+            }
         }
 
         if (string.IsNullOrEmpty(outDir))
@@ -129,12 +123,11 @@ public class Commands
             throw new Exception("Unable to determine output directory!");
         }
 
-        var hasProjectFile = !string.IsNullOrEmpty(csProjFile);
         Console.WriteLine($"""
                            LHQ model file: 
                            {lhqFile.Pastel(colorPath)}
-                           C# project file:
-                           {(hasProjectFile ? csProjFile : "-").Pastel(colorPath)}
+                           Output directory:
+                           {outDir.Pastel(colorPath)}
 
                            """);
 
@@ -163,7 +156,8 @@ public class Commands
                 string str = overwritingFile 
                     ? "[overwritten]".Pastel(Color.DarkOrange)
                     : "[generated]".Pastel(ConsoleColor.Gray);
-                Console.WriteLine($"{str} {shortName.Pastel(colorPath)}"); 
+                Console.WriteLine($"{str} {shortName.Pastel(colorPath)}");
+                logger.Debug($"Generated file: {fileName}");
 
                 var dir = Path.GetDirectoryName(fileName);
                 if (dir != null && !Directory.Exists(dir))
@@ -191,29 +185,30 @@ public class Commands
 
             if (e.Code == GeneratorErrorCodes.CsharpNamespaceMissing)
             {
-                reason = "C# namespace is missing.\nProvide valid C# project file (*.csproj) using --project parameter or set 'namespace' value in template settings.";
+                reason = "C# namespace is missing.\nSet 'namespace' value in template settings in UI editor";
             }
 
-            var message = $"Error running code template for file '{lhqFile}'";
+            var message = $"Error running code template: {e.Kind} / {e.Code}";
             logger.Error(e, message + $"\n{reason}");
-            Console.WriteLine($"{message.Pastel(ConsoleColor.Red)}\n\nReason: {reason.Pastel(ConsoleColor.White)}\n");
+            Console.WriteLine($"{message.Pastel(Color.OrangeRed)}\n\nReason: {reason.Pastel(ConsoleColor.White)}\n");
         }
         catch (Exception e)
         {
             var message = $"Error running code template for file '{lhqFile}'";
             logger.Error(e, message);
-            Console.WriteLine(message.Pastel(ConsoleColor.Red));
+            Console.WriteLine(message.Pastel(Color.OrangeRed));
         }
     }
 
-    private static void TryGetLinuxHomeDir(ref string dir)
+    private static bool TryGetLinuxHomeDir(ref string dir)
     {
-        bool isLinuxLike = !RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-        
-        if (isLinuxLike && dir.StartsWith("~/"))
+        bool result = _isLinuxLike && dir.StartsWith("~/");
+        if (result)
         {
             string homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             dir = Path.Combine(homeDirectory, dir.Substring(2));
         }
+        
+        return result;
     }
 }

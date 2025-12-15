@@ -24,6 +24,7 @@
 #endregion
 
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using ConsoleAppFramework;
@@ -36,7 +37,7 @@ using ConsoleColor = System.ConsoleColor;
 
 string ColorGrey(string msg) => msg.Pastel(ConsoleColor.Gray);
 string ColorWhite(string msg) => msg.Pastel(ConsoleColor.White);
-string ColorError(string msg) => msg.Pastel(ConsoleColor.Red);
+string ColorError(string msg) => msg.Pastel(Color.OrangeRed);
 string ColorPath(string msg) => msg.Pastel(ConsoleColor.Yellow);
 
 var logger = DefaultLogger.Instance.Logger;
@@ -144,10 +145,9 @@ void WriteHelp()
 
     var folderExam = isWindows ? "c:\\MyOutputFolder" : "~/MyOutputFolder";
     var param_lhq = ColorPath("lhq model file");
-    var param_csproj = "--project MyProject.csproj";
     var exam_lhq = ColorPath("Strings.lhq");
 
-    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> [{param_csproj}] [--out DIR] [--data data]";
+    string usageHelp = $"Usage:\n{lhqcmd} <{param_lhq}> [--out DIR] [--data data]";
 
     if (missingParams && !requestedHelp)
     {
@@ -158,34 +158,24 @@ void WriteHelp()
              {usageHelp}
 
              Example:
-             {lhqcmd} {exam_lhq} {param_csproj} --out {folderExam}
+             {lhqcmd} {exam_lhq} --out {folderExam}
 
              For more information, run {ColorWhite(exeName + " --help")}
              """);
         return;
     }
 
-    string param_namespace = "namespace".Pastel(ConsoleColor.White);
-    
     Console.WriteLine(
         $"""
          {usageHelp}
 
          Example 1: 
-           {lhqcmd} {exam_lhq} {param_csproj}
+           {lhqcmd} {exam_lhq}
            
          Example 2:
-           {lhqcmd} {exam_lhq} {param_csproj} --out {folderExam} --data namespace=customNamespace key1=value1
+           {lhqcmd} {exam_lhq} --out {folderExam} --data key1=value1 key2=value2
            
          {ColorWhite("NOTES:")}
-
-         {ColorWhite("--project <path to csproj file>")}
-           - only these templates require C# project file to be specified: 
-             {ColorWhite("NetCoreResxCsharp01")}, {ColorWhite("NetFwResxCsharp01")}, {ColorWhite("WinFormsResxCsharp01")}, {ColorWhite("WpfResxCsharp01")}
-           - and only if {param_lhq} does not have set {param_namespace} value in template settings
-           - if not provided but required by template, application will try to locate 
-             appropriate C# project file (*.csproj) in the same folder as {param_lhq} 
-             where *.csproj file is linked to the {param_lhq} file (*)
 
          {ColorWhite("--out DIR")}
            - optional output directory where to save generated files from lhq model
@@ -193,16 +183,6 @@ void WriteHelp()
 
          {ColorWhite("--data [data]")} 
            - optional data in format: --data key1=value1 key2=value2 , etc...
-
-         Data with key {param_namespace} is required * 
-
-         * Value for {ColorWhite("namespace")} must provided either from:
-            1. command line argument: {ColorWhite("--data namespace=customNamespace")}
-             OR
-            2. application will try to get value {ColorWhite("namespace")} from {param_csproj} file automatically:
-               - xml element {ColorWhite("//Project/PropertyGroup/RootNamespace")} 
-                OR
-               - xml element {ColorWhite($"/Project/ItemGroup/Content[@Include='{param_lhq}']/CustomToolNamespace")}
 
          """);
 }

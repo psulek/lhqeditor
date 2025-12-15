@@ -1,5 +1,5 @@
-$registry = "http://localhost:4873/"
-$packageName = "@lhq/lhq-generators"
+$registry = "https://npm.pkg.github.com/"
+$packageName = "@psulek/lhq-generators"
 #$packageVersion = "1.0.64"
 $packageVersion = "latest"
 
@@ -7,13 +7,23 @@ echo $PSScriptRoot
 # Change the working directory to the script's directory
 Set-Location $PSScriptRoot
 
-pnpm add $packageName@$packageVersion --registry $registry -P
+#pnpm add $packageName@$packageVersion --registry $registry -P
+# pnpm add $packageName@$packageVersion -P    
+
 # pnpm install --offline
+#pnpm install
+$authToken = $env:GH_READ_PACKAGES_TOKEN
+if (-not $authToken) {
+    Write-Error "Environment variable 'GH_READ_PACKAGES_TOKEN' is not set. Please set it to your GitHub Packages read token."
+    exit 1
+}
+
+#$env:NPM_TOKEN=$authToken
 pnpm install
 
 $packageJson = Join-Path $PSScriptRoot "package.json"
 $node_modules = Join-Path $PSScriptRoot "node_modules"
-$lib_folder = Join-Path $node_modules "@lhq\lhq-generators\"
+$lib_folder = Join-Path $node_modules "@psulek\lhq-generators\"
 $out = Join-Path $PSScriptRoot "content"
 $out_browser = Join-Path $out "browser"
 $out_templates = Join-Path $out "hbs"

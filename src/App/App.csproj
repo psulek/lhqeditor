@@ -14,7 +14,7 @@
         <Configurations>AppSetup;Debug;Release</Configurations>
         <!--    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-        <Version>2025.3</Version>
+        <Version>2025.4.0</Version>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DefineConstants>TRACE;DEBUG;HIDE_IMP_EXP0</DefineConstants>
@@ -241,5 +241,8 @@
         <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0"/>
         <PackageReference Include="System.ValueTuple" Version="4.3.0"/>
         <PackageReference Include="Velopack" Version="0.0.1369-g1d5c984"/>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Releases\" />
     </ItemGroup>
 </Project>

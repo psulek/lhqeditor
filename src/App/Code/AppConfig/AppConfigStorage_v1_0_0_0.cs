@@ -81,6 +81,11 @@ namespace LHQ.App.Code
                 result.EnableTranslation = enableTranslation;
             }
 
+            if (TryGetJsonValue(jsonRoot, "updateServerType", JTokenType.String, out string updateServerType))
+            {
+                result.UpdateServerType = updateServerType;
+            }
+
             if (TryGetJsonValue(jsonRoot, AttrTranslatorProviderKey, JTokenType.String, out string translatorProviderKey))
             {
                 result.TranslatorProviderKey = translatorProviderKey;
@@ -138,6 +143,7 @@ namespace LHQ.App.Code
                 [AttrOpenLastProjectOnStartup] = config.OpenLastProjectOnStartup,
                 [AttrAppHints] = config.AppHints.ToString(),
                 [AttrEnableTranslation] = config.EnableTranslation,
+                ["updateServerType"] = config.UpdateServerType,
                 [AttrTranslatorProviderKey] = config.TranslatorProviderKey,
                 [AttrTheme] = appVisualTheme.ToString(),
                 [AttrData] = JToken.FromObject(config.Data),

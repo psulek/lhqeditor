@@ -59,35 +59,46 @@ namespace LHQ.App.Services.Implementation
         
         private async Task<UpdateInfo> CheckForUpdateInternal()
         {
-            var useLocal = true;
-// #if DEGUG
-//             useLocal = true;
-// #endif
-            IUpdateSource updateSource = null;
+            try
+            {
+                string updateServerType = AppConfig.UpdateServerType ?? "";
+                bool useGithub = updateServerType.ToLower() == "github" || string.IsNullOrEmpty(updateServerType);
 
-            if (useLocal)
-            {
-                var path = "C:\\dev\\github\\psulek\\lhqeditor\\src\\App\\Releases\\";
-                var localDir = new DirectoryInfo(path);
-                if (localDir.Exists)
+                Logger.Info($"Checking for updates... (useGithub={useGithub})");
+            
+                IUpdateSource updateSource = null;
+                if (useGithub)
                 {
-                    updateSource = new SimpleFileSource(localDir);
+                    // NO: Do check only if Velopack version of App is installed (not runned from portable or from IDE)
+                    if (VelopackLocator.Current.CurrentlyInstalledVersion != null)
+                    {
+                        updateSource = new GithubSource("https://github.com/psulek/lhqeditor", null, true);
+                    }
+                    else
+                    {
+                        Logger.Info("App is not installed via Velopack. Skipping update check from GitHub.");
+                    }
                 }
-            }
-            else
-            {
-                // NO: Do check only if Velopack version of App is installed (not runned from portable or from IDE)
-                if (VelopackLocator.Current.CurrentlyInstalledVersion != null)
+                else
                 {
-                    updateSource = new GithubSource("https://github.com/psulek/lhqeditor", null, false);
+                    var path = "C:\\dev\\github\\psulek\\lhqeditor\\src\\App\\Releases\\";
+                    var localDir = new DirectoryInfo(path);
+                    if (localDir.Exists)
+                    {
+                        updateSource = new SimpleFileSource(localDir);
+                    }
                 }
-            }
 
-            if (updateSource != null)
-            {
-                _updateManager = new UpdateManager(updateSource);
-                return await _updateManager.CheckForUpdatesAsync();
+                if (updateSource != null)
+                {
+                    _updateManager = new UpdateManager(updateSource);
+                    return await _updateManager.CheckForUpdatesAsync();
                 
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Error while checking for updates.", e);
             }
 
             return null;

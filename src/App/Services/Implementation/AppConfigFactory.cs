@@ -59,6 +59,7 @@ namespace LHQ.App.Services.Implementation
                 DefaultProjectLanguage = CultureCache.English.Name,
                 CheckUpdatesOnAppStart = true,
                 EnableTranslation = false,
+                UpdateServerType = "github",
                 LockTranslationsWithResource = null,
                 RunTemplateAfterSave = false
             };

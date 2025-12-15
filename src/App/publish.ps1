@@ -48,3 +48,12 @@ echo "Packing $packId (version $packVersion, framework: $framework) to $outputDi
 vpk --yes pack --packId $packId --packVersion $packVersion `
     --packDir $packDir --mainExe $mainExe --packTitle $packTitle `
     --icon $icon --outputDir $outputDir --framework $framework --shortcuts None
+
+$githubRepo="https://github.com/psulek/lhqeditor"
+#$releaseName="Version 2025.4-rc.1"
+#$tagName="v2025.4-rc.1"
+$releaseName="$packVersion"
+$tagName=""
+$token="..."
+
+vpk upload github --repoUrl $githubRepo --releaseName $releaseName --merge --pre --token $token

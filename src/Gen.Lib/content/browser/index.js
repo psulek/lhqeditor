@@ -23332,7 +23332,7 @@ var LhqGenerators = (() => {
     if (false) {
       return "0.0.0";
     }
-    return "1.0.0-rc.4";
+    return "1.0.0-rc.1";
   }
   function getZodError(error) {
     const messageBuilder = createMessageBuilder({

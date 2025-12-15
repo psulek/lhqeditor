@@ -59,6 +59,8 @@ namespace LHQ.App.Model
 
         public bool? DetectTheme { get; set; }
 
+        public string UpdateServerType { get; set; }
+
         public Dictionary<string, string> Data { get; set; }
 
         public AppHintType AppHints { get; set; }

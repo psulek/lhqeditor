@@ -1,0 +1,65 @@
+name: Build VS2022 Extension
+
+on:
+  # push:
+  #   branches: [ main, master ]
+  # pull_request:
+  #   branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      SOLUTION_PATH: 'LHQ_vs2022.sln'
+      VSIX_PROJECT_PATH: 'src/VsExtension2022/VsExtension2022.csproj'
+      CONFIGURATION: 'Debug'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+    #   - name: Setup .NET
+    #     uses: actions/setup-dotnet@v4
+    #     with:
+    #       dotnet-version: '8.0.x'
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Setup VSWhere
+        uses: warrenbuckley/Setup-VSWhere@v1
+
+      - name: Find Visual Studio
+        run: |
+          $vsPath = vswhere -latest -requires Microsoft.Component.MSBuild -property installationPath
+          echo "VS_PATH=$vsPath" >> $env:GITHUB_ENV
+
+      - name: Restore NuGet packages
+        run: nuget restore ${{ env.SOLUTION_PATH }}
+
+      - name: Build VSIX
+        run: |
+          msbuild ${{ env.SOLUTION_PATH }} `
+            /p:Configuration=${{ env.CONFIGURATION }} `
+            /p:DeployExtension=false `
+            /p:ZipPackageCompressionLevel=normal `
+            /v:minimal
+
+      - name: Find VSIX file
+        id: find-vsix
+        run: |
+          $vsixFile = Get-ChildItem -Path . -Filter *.vsix -Recurse | Select-Object -First 1
+          echo "VSIX_PATH=$($vsixFile.FullName)" >> $env:GITHUB_OUTPUT
+          echo "VSIX_NAME=$($vsixFile.Name)" >> $env:GITHUB_OUTPUT
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vsix-package
+          path: ${{ steps.find-vsix.outputs.VSIX_PATH }}
+          if-no-files-found: error

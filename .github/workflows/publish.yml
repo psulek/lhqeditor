@@ -31,13 +31,13 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-      - name: Setup VSWhere
-        uses: warrenbuckley/Setup-VSWhere@v1
+    #   - name: Setup VSWhere
+    #     uses: warrenbuckley/Setup-VSWhere@v1
 
-      - name: Find Visual Studio
-        run: |
-          $vsPath = vswhere -latest -requires Microsoft.Component.MSBuild -property installationPath
-          echo "VS_PATH=$vsPath" >> $env:GITHUB_ENV
+    #   - name: Find Visual Studio
+    #     run: |
+    #       $vsPath = vswhere -latest -requires Microsoft.Component.MSBuild -property installationPath
+    #       echo "VS_PATH=$vsPath" >> $env:GITHUB_ENV
 
       - name: Restore NuGet packages
         run: nuget restore ${{ env.SOLUTION_PATH }}

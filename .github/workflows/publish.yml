@@ -12,18 +12,18 @@ jobs:
     runs-on: windows-latest
 
     env:
-      SOLUTION_PATH: 'src/YourExtension.sln'
-      VSIX_PROJECT_PATH: 'src/YourExtension/YourExtension.csproj'
-      CONFIGURATION: 'Release'
+      SOLUTION_PATH: 'LHQ_vs2022.sln'
+      VSIX_PROJECT_PATH: 'src/VsExtension2022/VsExtension2022.csproj'
+      CONFIGURATION: 'Debug'
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+    #   - name: Setup .NET
+    #     uses: actions/setup-dotnet@v4
+    #     with:
+    #       dotnet-version: '8.0.x'
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2

@@ -47,7 +47,7 @@ jobs:
             exit 1
           }
 
-          & $vsixPublisher.FullName -h
+          & $vsixPublisher.FullName help
 
           exit 1
 

@@ -36,8 +36,7 @@ jobs:
           nuget install Microsoft.VSSDK.Vsixsigntool -Version 17.10.34916.79 -OutputDirectory tools
           nuget install Microsoft.VSSDK.BuildTools -Version 17.14.2120 -OutputDirectory tools
 
-      - name: Publish to VS Marketplace
-        if: false
+      - name: test vsixPublisher
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: |

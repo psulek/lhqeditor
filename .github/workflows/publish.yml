@@ -31,13 +31,26 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-    #   - name: Setup VSWhere
-    #     uses: warrenbuckley/Setup-VSWhere@v1
+      - name: Install VsixSignTool and Publish Tool
+        run: |
+          nuget install Microsoft.VSSDK.Vsixsigntool -Version 17.10.34916.79 -OutputDirectory tools
+          nuget install Microsoft.VSSDK.BuildTools -Version 17.14.2120 -OutputDirectory tools
 
-    #   - name: Find Visual Studio
-    #     run: |
-    #       $vsPath = vswhere -latest -requires Microsoft.Component.MSBuild -property installationPath
-    #       echo "VS_PATH=$vsPath" >> $env:GITHUB_ENV
+      - name: Publish to VS Marketplace
+        if: false
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          $vsixPublisher = Get-ChildItem -Path tools -Filter "VsixPublisher.exe" -Recurse | Select-Object -First 1
+
+          if (-not $vsixPublisher) {
+            Write-Error "VsixPublisher.exe not found!"
+            exit 1
+          }
+
+          & $vsixPublisher.FullName -h
+
+          exit 1
 
       - name: Restore NuGet packages
         run: nuget restore ${{ env.SOLUTION_PATH }}
@@ -63,11 +76,6 @@ jobs:
           echo "VSIX_PATH=$($vsixFile.FullName)" >> $env:GITHUB_OUTPUT
           echo "VSIX_NAME=$($vsixFile.Name)" >> $env:GITHUB_OUTPUT
 
-      - name: Install VsixSignTool and Publish Tool
-        run: |
-          nuget install Microsoft.VSSDK.Vsixsigntool -Version 17.10.34916.79 -OutputDirectory tools
-          nuget install Microsoft.VSSDK.BuildTools -Version 17.14.2120 -OutputDirectory tools
-
       - name: Publish to VS Marketplace
         if: false
         env:
@@ -80,11 +88,9 @@ jobs:
             exit 1
           }
 
-          & $vsixPublisher.FullName -h
-
-        #   & $vsixPublisher.FullName publish `
-        #     -payload "${{ steps.find-vsix.outputs.VSIX_PATH }}" `
-        #     -personalAccessToken $env:VSCE_PAT
+          & $vsixPublisher.FullName publish `
+            -payload "${{ steps.find-vsix.outputs.VSIX_PATH }}" `
+            -personalAccessToken $env:VSCE_PAT
 
       - name: Upload VSIX artifact
         uses: actions/upload-artifact@v4

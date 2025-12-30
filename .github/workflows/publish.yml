@@ -25,6 +25,70 @@ jobs:
     #     with:
     #       dotnet-version: '8.0.x'
 
+      - name: Check Marketplace for existing version
+        run: |
+          # Extract version from vsixmanifest
+          VSIX_MANIFEST="src/VsExtension2022/source.extension.vsixmanifest"
+          TARGET_VERSION=$(grep -oP 'Identity[^>]*Version="\K[^"]+' "$VSIX_MANIFEST")
+          echo "Target version from manifest: $TARGET_VERSION"
+
+          TARGET_VERSION="2025.2"
+          echo "Using target version: $TARGET_VERSION (for testing purposes)"
+          
+          # Visual Studio Marketplace extension identifier
+          PUBLISHER="scalehqsolutions"
+          EXTENSION_NAME="lhqeditorvs2022"
+          EXTENSION_ID="$PUBLISHER.$EXTENSION_NAME"
+          
+          # Query the Visual Studio Marketplace API
+          bodyObj=$(cat <<EOF
+          {"filters":[{"criteria":[{"filterType":7,"value":"$EXTENSION_ID"}]}],"flags":1}
+          EOF
+          )
+          
+          response=$(curl -s -X POST "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery" \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/json;api-version=3.0-preview.1" \
+            -d "$bodyObj")
+          
+          # Check if extension exists
+          extensionCount=$(echo "$response" | jq -r '.results[0].extensions | length')
+          
+          if [[ "$extensionCount" == "0" || "$extensionCount" == "null" ]]; then
+            echo "Extension not found in Marketplace. This appears to be a new extension."
+            exit 0
+          fi
+          
+          # Get all versions
+          versions=$(echo "$response" | jq -r '.results[0].extensions[0].versions[].version')
+          echo "Published versions in Marketplace:"
+          echo "$versions"
+          
+          # Check if target version already exists
+          versionExists=$(echo "$response" | jq -r \
+            --arg ver "$TARGET_VERSION" \
+            '.results[0].extensions[0].versions[] | select(.version == $ver) | .version')
+          
+          if [[ "$versionExists" == "$TARGET_VERSION" ]]; then
+            echo "Error: Version $TARGET_VERSION already exists in VS Marketplace."
+            exit 1
+          fi
+          
+          # Get the highest version in Marketplace
+          highestMarketplaceVersion=$(echo "$versions" | sort -V | tail -n 1)
+          echo "Highest version in Marketplace: $highestMarketplaceVersion"
+          
+          # Check if Marketplace version is greater than target version
+          isGreater=$(semver "$highestMarketplaceVersion" -r ">$TARGET_VERSION" || echo "false")
+          if [[ "$isGreater" == "$highestMarketplaceVersion" ]]; then
+            echo "Error: Marketplace already contains a higher version ($highestMarketplaceVersion) than your manifest ($TARGET_VERSION)."
+            exit 1
+          fi
+          
+          echo "Version check passed. Ready to publish version $TARGET_VERSION"
+
+          exit 1
+
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
@@ -53,6 +117,10 @@ jobs:
 
       - name: Restore NuGet packages
         run: nuget restore ${{ env.SOLUTION_PATH }}
+
+      - name: Copy README.md to VSIX project directory
+        run: |
+          Copy-Item README.md src\VsExtension2022\README.md
 
       - name: Build VSIX
         run: |
@@ -86,6 +154,8 @@ jobs:
             Write-Error "VsixPublisher.exe not found!"
             exit 1
           }
+
+          cp README.md src/VsExtension2022/README.md          
 
           & $vsixPublisher.FullName publish `
             -payload "${{ steps.find-vsix.outputs.VSIX_PATH }}" `

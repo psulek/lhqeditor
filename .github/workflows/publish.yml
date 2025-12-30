@@ -33,8 +33,8 @@ jobs:
           TARGET_VERSION=$(grep -oE 'Identity[^>]*Version="[^"]+' "$VSIX_MANIFEST" | sed -E 's/.*Version="//')
           echo "Target version from manifest: $TARGET_VERSION"
 
-          TARGET_VERSION="2025.2"
-          echo "Using target version: $TARGET_VERSION (for testing purposes)"
+          # TARGET_VERSION="2025.2"
+          # echo "Using target version: $TARGET_VERSION (for testing purposes)"
           
           # Visual Studio Marketplace extension identifier
           PUBLISHER="scalehqsolutions"

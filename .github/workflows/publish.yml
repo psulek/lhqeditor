@@ -26,6 +26,7 @@ jobs:
     #       dotnet-version: '8.0.x'
 
       - name: Check Marketplace for existing version
+        shell: bash
         run: |
           # Extract version from vsixmanifest
           VSIX_MANIFEST="src/VsExtension2022/source.extension.vsixmanifest"

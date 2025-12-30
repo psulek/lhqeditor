@@ -20,10 +20,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-    #   - name: Setup .NET
-    #     uses: actions/setup-dotnet@v4
-    #     with:
-    #       dotnet-version: '8.0.x'
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install global tools
+        run: |
+          pnpm add -g semver
 
       - name: Check Marketplace for existing version
         shell: bash
@@ -89,12 +100,6 @@ jobs:
           echo "Version check passed. Ready to publish version $TARGET_VERSION"
 
           exit 1
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v2
 
       - name: Install VsixSignTool and Publish Tool
         run: |

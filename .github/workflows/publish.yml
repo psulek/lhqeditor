@@ -30,7 +30,7 @@ jobs:
         run: |
           # Extract version from vsixmanifest
           VSIX_MANIFEST="src/VsExtension2022/source.extension.vsixmanifest"
-          TARGET_VERSION=$(grep -oP 'Identity[^>]*Version="\K[^"]+' "$VSIX_MANIFEST")
+          TARGET_VERSION=$(grep -oE 'Identity[^>]*Version="[^"]+' "$VSIX_MANIFEST" | sed -E 's/.*Version="//')
           echo "Target version from manifest: $TARGET_VERSION"
 
           TARGET_VERSION="2025.2"

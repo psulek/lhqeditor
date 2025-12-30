@@ -89,6 +89,8 @@ jobs:
           # Get the highest version in Marketplace
           highestMarketplaceVersion=$(echo "$versions" | sort -V | tail -n 1)
           echo "Highest version in Marketplace: $highestMarketplaceVersion"
+
+          highestMarketplaceVersion=$(semver -c "$highestMarketplaceVersion")
           
           # Check if Marketplace version is greater than target version
           isGreater=$(semver -c "$highestMarketplaceVersion" -r ">$TARGET_VERSION" || echo "false")

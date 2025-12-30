@@ -91,7 +91,7 @@ jobs:
           echo "Highest version in Marketplace: $highestMarketplaceVersion"
           
           # Check if Marketplace version is greater than target version
-          isGreater=$(semver "$highestMarketplaceVersion" -r ">$TARGET_VERSION" || echo "false")
+          isGreater=$(semver -c "$highestMarketplaceVersion" -r ">$TARGET_VERSION" || echo "false")
           if [[ "$isGreater" == "$highestMarketplaceVersion" ]]; then
             echo "Error: Marketplace already contains a higher version ($highestMarketplaceVersion) than your manifest ($TARGET_VERSION)."
             exit 1

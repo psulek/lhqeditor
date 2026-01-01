@@ -60,6 +60,7 @@ jobs:
       - name: Verify tag validity
         if: env.TAG_VALID == '0'
         run: |
+          echo "TAG_VALID=${{ env.TAG_VALID }} , TAG_VERSION=${{ env.TAG_VERSION }}"
           echo "Error: The provided release tag '${{ github.event.inputs.release_tag }}' is not valid."
           exit 1
 

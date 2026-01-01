@@ -13,6 +13,14 @@ inputs:
     description: 'Mark the published package as prerelease.'
     required: true
     default: 'true'
+  release_name:
+    description: 'Name of the release.'
+    required: false
+    default: ''
+  release_tag:
+    description: 'Tag of the release.'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -25,6 +33,65 @@ runs:
           exit 1
         fi
 
+    - name: Check if release exists
+      id: releaseInfo
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const tag = '${{ inputs.release_tag }}';
+          if (!tag) {
+            core.setFailed(`Error: 'release_tag' input is required.`);
+            return;
+          }
+          
+          console.log(`Checking if release with tag '${tag}' exists...`);
+          
+          try {
+            const { data: release } = await github.rest.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: tag
+            });
+            
+            console.log(`Release '${release.name}' with tag '${tag}' already exists.`);
+            
+            // Check if release has any assets
+            if (release.assets && release.assets.length > 0) {
+              console.log(`Release has ${release.assets.length} asset(s):`);
+              release.assets.forEach(asset => console.log(`  - ${asset.name}`));
+              core.setFailed(`Error: Release '${tag}' already exists and has ${release.assets.length} attachment(s).`);
+              return;
+            }
+            
+            console.log('Release exists but has no attachments. Proceeding...');
+            core.setOutput('isPrerelease', release.prerelease.toString());
+            core.setOutput('releaseName', release.name);
+            core.setOutput('releaseTag', release.tag_name);
+          } catch (error) {
+            if (error.status === 404) {
+              console.log(`Release with tag '${tag}' does not exist. Creating new release...`);
+              
+              const releaseName = '${{ inputs.release_name }}' || tag;
+              const prerelease = '${{ inputs.prerelease }}' === 'true';
+              
+              const { data: newRelease } = await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: tag,
+                name: releaseName,
+                prerelease: prerelease,
+                draft: false
+              });
+              
+              console.log(`Created new release '${newRelease.name}' with tag '${tag}' (prerelease: ${prerelease})`);
+              core.setOutput('isPrerelease', prerelease.toString());
+              core.setOutput('releaseName', newRelease.name);
+              core.setOutput('releaseTag', newRelease.tag_name);
+            } else {
+              core.setFailed(`Error checking release: ${error.message}`);
+            }
+          }
+
     - name: Install global tools
       shell: bash
       run: |
@@ -35,9 +102,9 @@ runs:
       shell: pwsh
       run: | 
         $mode = if ("${{ inputs.mode }}" -eq "build_publish") { "-build" } else { "" }
-        $prerelease = if ("${{ inputs.prerelease }}" -eq "true") { "-prerelease" } else { "" }
+        $prerelease = if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { "-prerelease" } else { "" }
         $repoUrl = "https://github.com/${{ github.repository }}"
-        $releaseName = "${{ github.event.release.name }}"
-        $tagName = "${{ github.event.release.tag_name }}"
+        $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
+        $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
 
         ./src/App/publish.ps1 $mode $prerelease -repoUrl $repoUrl -releaseName $releaseName -tagName $tagName

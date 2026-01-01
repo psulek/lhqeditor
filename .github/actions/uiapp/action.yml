@@ -116,7 +116,7 @@ runs:
         $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
         $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
 
-        $psArgs = @{ repoUrl = $repoUrl; releaseName = $releaseName; tagName = $tagName; newVersion = "${{ inputs.new_version }}"; workingDir = "src/App"; ghToken = "${{ secrets.GITHUB_TOKEN }}" }
+        $psArgs = @{ repoUrl = $repoUrl; releaseName = $releaseName; tagName = $tagName; newVersion = "${{ inputs.new_version }}"; workingDir = "src/App"; ghToken = "${{ inputs.github_token }}" }
         if ("${{ inputs.mode }}" -eq "build_publish") { $psArgs['build'] = $true }
         if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { $psArgs['prerelease'] = $true }
         & ./src/App/publish.ps1 @psArgs

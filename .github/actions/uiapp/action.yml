@@ -114,7 +114,4 @@ runs:
         $psArgs = @{ repoUrl = $repoUrl; releaseName = $releaseName; tagName = $tagName }
         if ("${{ inputs.mode }}" -eq "build_publish") { $psArgs['build'] = $true }
         if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { $psArgs['prerelease'] = $true }
-        echo "Running publish script with arguments: $psArgs"
         & ./src/App/publish.ps1 @psArgs
-
-        #./src/App/publish.ps1 $mode $prerelease -repoUrl $repoUrl -releaseName $releaseName -tagName $tagName

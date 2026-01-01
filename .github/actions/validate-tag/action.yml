@@ -27,7 +27,9 @@ runs:
         fi
 
         TAG_VERSION=${TAG#v}
-        echo "tag_version=$TAG_VERSION" >> $GITHUB_OUTPUT       
+        echo "tag_version=$TAG_VERSION" >> $GITHUB_OUTPUT
+        echo "Extracted TAG_VERSION: $TAG_VERSION"
+        which semver
 
         if ! semver -r "*" "$TAG_VERSION" > /dev/null 2>&1; then
           echo "::error::Release tag version '$TAG_VERSION' is not a valid semantic version."

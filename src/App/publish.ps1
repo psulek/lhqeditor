@@ -65,11 +65,17 @@ echo "Updated App.csproj with version $packVersion"
 #$packVersion = $appProjectPropGroup.Version
 
 # vpk download from github releases
-$preArg = $isPrerelease ? "--pre" : ""
+# $preArg = $isPrerelease ? "--pre" : ""
 
 try
 {
-    vpk download github --repoUrl $repoUrl --outputDir $outputDir --timeout 5 $preArg
+    # vpk download github --repoUrl $repoUrl --outputDir $outputDir --timeout 5 $preArg
+
+    $dowloadArgs = @("download", "github", "--repoUrl", $repoUrl, "--outputDir", $outputDir, "--timeout", "5")
+    if ($isPrerelease) {
+        $dowloadArgs += "--pre"
+    }
+    vpk @dowloadArgs
 }
 catch {
     Write-Host "Error: $($_.Exception.Message)"
@@ -123,5 +129,11 @@ vpk --yes pack --packId $packId --packVersion $packVersion `
     --icon $icon --outputDir $outputDir --framework $framework --shortcuts None --noPortable
 
 ### vpk upload to github releases
-echo "Uploading package to GitHub Releases, url: $githubRepo, release: '$releaseName', tag: $tagName, $preArg"
-vpk upload github --repoUrl $githubRepo --releaseName $releaseName --tag $tagName --merge $preArg
+echo "Uploading package to GitHub Releases, url: $repoUrl, release: '$releaseName', tag: $tagName, $preArg"
+# vpk upload github --repoUrl $repoUrl --releaseName "$releaseName" --tag "$tagName" --merge $preArg
+
+$uploadArgs = @("upload", "github", "--repoUrl", $repoUrl, "--releaseName", $releaseName, "--tag", $tagName, "--merge")
+if ($isPrerelease) {
+    $uploadArgs += "--pre"
+}
+vpk @uploadArgs

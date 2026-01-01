@@ -61,7 +61,7 @@ namespace LHQ.App.Services.Implementation
         {
             try
             {
-                string updateServerType = AppConfig.UpdateServerType ?? "";
+                string updateServerType = AppConfig.UpdateServerType ?? "github";
                 bool useGithub = updateServerType.ToLower() == "github" || string.IsNullOrEmpty(updateServerType);
 
                 Logger.Info($"Checking for updates... (useGithub={useGithub})");
@@ -81,12 +81,14 @@ namespace LHQ.App.Services.Implementation
                 }
                 else
                 {
-                    var path = "C:\\dev\\github\\psulek\\lhqeditor\\src\\App\\Releases\\";
-                    var localDir = new DirectoryInfo(path);
-                    if (localDir.Exists)
-                    {
-                        updateSource = new SimpleFileSource(localDir);
-                    }
+                    Logger.Warning("Unsupported update source type configured in AppConfig. Supported is only 'github' currently.");
+                    
+                    // var path = "C:\\dev\\github\\psulek\\lhqeditor\\src\\App\\Releases\\";
+                    // var localDir = new DirectoryInfo(path);
+                    // if (localDir.Exists)
+                    // {
+                    //     updateSource = new SimpleFileSource(localDir);
+                    // }
                 }
 
                 if (updateSource != null)

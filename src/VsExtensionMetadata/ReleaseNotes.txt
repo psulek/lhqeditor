@@ -1,4 +1,4 @@
-﻿2025.3
+2025.3
 - New UI editors
   - New `LHQ Editor` extension for `Visual Studio Code`
   - Added `Visual Studio 2026` support for `LHQ Editor` Visual Studio extension

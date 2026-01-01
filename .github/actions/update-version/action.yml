@@ -1,0 +1,59 @@
+name: Update C# Projects Version
+description: Update version in C# project files
+inputs:
+  new_version:
+    description: 'New version to set in the project files.'
+    required: true
+    default: ''
+  app_project_path:
+    description: 'Path to the main application App.csproj file.'
+    required: true
+    default: 'src/App/'
+  root_path:
+    description: 'Root path of the repository.'
+    required: false
+    default: '.'
+  
+runs:
+  using: "composite"
+  steps:
+    - name: Validate inputs
+      shell: bash
+      run: |
+        if [[ -z "${{ inputs.new_version }}" ]]; then
+          echo "Error: 'new_version' input is required."
+          exit 1
+        fi
+
+    - name: Update version in C# project files
+      shell: powershell
+      run: |
+        $newVersion = "${{ inputs.new_version }}"
+        $appProjectPath = "${{ inputs.app_project_path }}"
+        $rootPath = "${{ inputs.root_path }}"
+        $csproj = Join-Path $appProjectPath "App.csproj"
+
+        if (-not (Test-Path $csproj)) {
+            Write-Error "App.csproj file not found at path '$csproj'!"
+            exit 1
+        }
+        
+        ### read version from csproj
+        $appProjectXml = [Xml] (Get-Content $csproj)
+        $appProjectPropGroup = $appProjectXml.Project.PropertyGroup | Where-Object { $_.Version -ne $null }
+
+        if ($appProjectPropGroup -eq $null) {
+            Write-Error "Missing <Version> within <PropertyGroup> element in '$csproj' file!"
+            exit 1
+        }
+        ### update App.csproj with new version
+        $appProjectPropGroup.Version = $newVersion
+        $appProjectXml.Save((Resolve-Path $csproj))
+        echo "Updated App.csproj with version $newVersion"
+
+        ### update ProductAssemblyInfo.cs with new version
+        $productAssemblyInfoPath = Join-Path $rootPath "ProductAssemblyInfo.cs"
+        $assemblyInfoContent = Get-Content $productAssemblyInfoPath -Raw
+        $assemblyInfoContent = $assemblyInfoContent -replace '\[assembly: AssemblyVersion\("[^"]+"\)\]', "[assembly: AssemblyVersion(`"$newVersion`")]"
+        Set-Content -Path $productAssemblyInfoPath -Value $assemblyInfoContent -NoNewline
+        echo "Updated ProductAssemblyInfo.cs with version $newVersion"

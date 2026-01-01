@@ -8,14 +8,14 @@ on:
         required: false
         default: true
         type: boolean
-      release_name:
-        description: 'Name of the release'
-        required: false
-        default: ''
-        type: string
       release_tag:
         description: 'Tag of the release'
         required: true
+        default: ''
+        type: string
+      release_name:
+        description: 'Name of the release'
+        required: false
         default: ''
         type: string
 

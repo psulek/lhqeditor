@@ -101,10 +101,17 @@ runs:
     - name: Build and publish
       shell: pwsh
       run: | 
-        $mode = if ("${{ inputs.mode }}" -eq "build_publish") { "-build" } else { "" }
-        $prerelease = if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { "-prerelease" } else { "" }
-        $repoUrl = "https://github.com/${{ github.repository }}"
-        $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
-        $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
+        # $mode = if ("${{ inputs.mode }}" -eq "build_publish") { "-build" } else { "" }
+        # $prerelease = if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { "-prerelease" } else { "" }
+        # $repoUrl = "https://github.com/${{ github.repository }}"
+        # $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
+        # $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
 
-        ./src/App/publish.ps1 $mode $prerelease -repoUrl $repoUrl -releaseName $releaseName -tagName $tagName
+        $psArgs = @()
+        if ("${{ inputs.mode }}" -eq "build_publish") { $psArgs += "-build" }
+        if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { $psArgs += "-prerelease" }
+        $psArgs += @("-repoUrl", $repoUrl, "-releaseName", $releaseName, "-tagName", $tagName)
+        echo "Running publish script with arguments: $psArgs"
+        & ./src/App/publish.ps1 @psArgs
+
+        #./src/App/publish.ps1 $mode $prerelease -repoUrl $repoUrl -releaseName $releaseName -tagName $tagName

@@ -29,7 +29,7 @@ runs:
         TAG_VERSION=${TAG#v}
         echo "tag_version=$TAG_VERSION" >> $GITHUB_OUTPUT       
 
-        if ! semver "$TAG_VERSION" &> /dev/null; then
+        if ! semver -r "*" "$TAG_VERSION" > /dev/null 2>&1; then
           echo "::error::Release tag version '$TAG_VERSION' is not a valid semantic version."
           echo "tag_valid=0" >> $GITHUB_OUTPUT
           exit 0

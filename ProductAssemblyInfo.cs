@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 // Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -32,4 +32,4 @@ using System.Reflection;
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "AssemblyInformationalVersion does not need to be a parsable version")]
 
-[assembly: AssemblyVersion("2025.3.0")]
+[assembly: AssemblyVersion("2025.3.1")]

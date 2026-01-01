@@ -66,7 +66,15 @@ echo "Updated App.csproj with version $packVersion"
 
 # vpk download from github releases
 $preArg = $isPrerelease ? "--pre" : ""
-vpk download github --repoUrl $repoUrl --outputDir $outputDir --timeout 5 $preArg
+
+try
+{
+    vpk download github --repoUrl $repoUrl --outputDir $outputDir --timeout 5 $preArg
+}
+catch {
+    Write-Host "Error: $($_.Exception.Message)"
+    Write-Host "Update server not reachable or returned error. Skipping download of current version."
+}
 
 ### update ProductAssemblyInfo.cs with new version
 $productAssemblyInfoPath = "..\..\ProductAssemblyInfo.cs"
@@ -75,24 +83,27 @@ $assemblyInfoContent = $assemblyInfoContent -replace '\[assembly: AssemblyVersio
 Set-Content -Path $productAssemblyInfoPath -Value $assemblyInfoContent -NoNewline
 echo "Updated ProductAssemblyInfo.cs with version $packVersion"
 
-$assemblyInfoContent2 = Get-Content $productAssemblyInfoPath -Raw
-echo "ProductAssemblyInfo.cs: \n$assemblyInfoContent2" 
+#$assemblyInfoContent2 = Get-Content $productAssemblyInfoPath -Raw
+#echo "ProductAssemblyInfo.cs: \n$assemblyInfoContent2" 
 
 
 ### build solution first
 if ($doBuild)
 {
-    echo "Restoring nuget packages"
-    dotnet restore $sln
-    echo "Building solution $sln"
-
-    msbuild $sln /p:Configuration=$buildConfiguration /v:minimal
-    
-    if ($LASTEXITCODE -ne 0) {
-        Write-Error "msbuild failed. Stopping script."
-        exit 1
-    }
+#    echo "Restoring nuget packages"
+#    dotnet restore $sln
+#    echo "Building solution $sln"
+#
+#    msbuild $sln /p:Configuration=$buildConfiguration /v:minimal
+#    
+#    if ($LASTEXITCODE -ne 0) {
+#        Write-Error "msbuild failed. Stopping script."
+#        exit 1
+#    }
 }
+
+echo "Restoring nuget packages"
+dotnet restore
 
 echo "Publishing $packId (version $packVersion) to $packDir"
 dotnet publish -c $buildConfiguration -r win-x64 --no-self-contained -o $packDir

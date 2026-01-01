@@ -1,0 +1,35 @@
+name: Publish UI App
+
+on:
+  workflow_dispatch:
+    inputs:
+      prerelease:
+        description: 'Mark as prerelease'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      VKP_VERSION: '0.0.1369-g1d5c984'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Build and Publish UI App
+        uses: ./.github/actions/uiapp/
+        with:
+          publish_only: 'false'
+          vpk_version: ${{ env.VKP_VERSION }}
+          prerelease: ${{ github.event.inputs.prerelease }}
+

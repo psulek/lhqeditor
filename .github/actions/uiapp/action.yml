@@ -1,0 +1,43 @@
+name: Build and publish UI App
+description: Build and publish LHQ editor UI App
+inputs:
+  mode:
+    description: 'Action mode: "publish" or "build_publish"'
+    required: true
+    default: 'build_publish'
+  vpk_version:
+    description: 'Version of the Velopack tool to use.'
+    required: true
+    default: '0.0.1369-g1d5c984'
+  prerelease:
+    description: 'Mark the published package as prerelease.'
+    required: true
+    default: 'true'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Validate inputs
+      shell: bash
+      run: |
+        if [[ "${{ inputs.mode }}" != "publish" && "${{ inputs.mode }}" != "build_publish" ]]; then
+          echo "Error: 'mode' must be 'publish' or 'build_publish', got '${{ inputs.mode }}'"
+          exit 1
+        fi
+
+    - name: Install global tools
+      shell: bash
+      run: |
+        echo "Installing VPK tool"
+        dotnet tool install --global vpk --version ${{ inputs.vpk_version }}
+
+    - name: Build and publish
+      shell: pwsh
+      run: | 
+        $mode = if ("${{ inputs.mode }}" -eq "build_publish") { "-build" } else { "" }
+        $prerelease = if ("${{ inputs.prerelease }}" -eq "true") { "-prerelease" } else { "" }
+        $repoUrl = "https://github.com/${{ github.repository }}"
+        $releaseName = "${{ github.event.release.name }}"
+        $tagName = "${{ github.event.release.tag_name }}"
+
+        ./src/App/publish.ps1 $mode $prerelease -repoUrl $repoUrl -releaseName $releaseName -tagName $tagName

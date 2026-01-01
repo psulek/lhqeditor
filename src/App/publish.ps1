@@ -4,8 +4,13 @@ param(
     [string]$repoUrl = "",
     [string]$releaseName = "",
     [string]$tagName = "",
-    [string]$newVersion = ""
+    [string]$newVersion = "",
+    [string]$workingDir = ""
 )
+
+if ($workingDir -ne "") {
+    Set-Location $workingDir
+}
 
 $doBuild = $build.IsPresent
 $isPrerelease = $prerelease.IsPresent

@@ -15,7 +15,7 @@ on:
         type: string
       release_tag:
         description: 'Tag of the release'
-        required: false
+        required: true
         default: ''
         type: string
 

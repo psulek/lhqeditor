@@ -36,6 +36,10 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
+      - name: Install dependencies
+        run: |
+          pnpm add -g vsce semver
+
       - name: Validate release tag value
         id: validate_tag
         uses: ./.github/actions/validate-tag

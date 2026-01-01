@@ -107,9 +107,13 @@ runs:
         # $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
         # $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
 
+        $repoUrl = "https://github.com/${{ github.repository }}"
+        $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
+        $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
+
         $psArgs = @{ repoUrl = $repoUrl; releaseName = $releaseName; tagName = $tagName }
-        if ("${{ inputs.mode }}" -eq "build_publish") { $psArgs += "-build" }
-        if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { $psArgs += "-prerelease" }
+        if ("${{ inputs.mode }}" -eq "build_publish") { $psArgs['build'] = $true }
+        if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { $psArgs['prerelease'] = $true }
         echo "Running publish script with arguments: $psArgs"
         & ./src/App/publish.ps1 @psArgs
 

@@ -5,7 +5,8 @@ param(
     [string]$releaseName = "",
     [string]$tagName = "",
     [string]$newVersion = "",
-    [string]$workingDir = ""
+    [string]$workingDir = "",
+    [string]$ghToken = ""
 )
 
 if ($workingDir -ne "") {
@@ -71,7 +72,7 @@ try
 {
     # vpk download github --repoUrl $repoUrl --outputDir $outputDir --timeout 5 $preArg
 
-    $dowloadArgs = @("download", "github", "--repoUrl", $repoUrl, "--outputDir", $outputDir, "--timeout", "5")
+    $dowloadArgs = @("download", "github", "--repoUrl", $repoUrl, "--outputDir", $outputDir, "--timeout", "5", "--token", $ghToken)
     if ($isPrerelease) {
         $dowloadArgs += "--pre"
     }
@@ -132,7 +133,7 @@ vpk --yes pack --packId $packId --packVersion $packVersion `
 echo "Uploading package to GitHub Releases, url: $repoUrl, release: '$releaseName', tag: $tagName, $preArg"
 # vpk upload github --repoUrl $repoUrl --releaseName "$releaseName" --tag "$tagName" --merge $preArg
 
-$uploadArgs = @("upload", "github", "--repoUrl", $repoUrl, "--releaseName", $releaseName, "--tag", $tagName, "--merge")
+$uploadArgs = @("upload", "github", "--repoUrl", $repoUrl, "--releaseName", $releaseName, "--tag", $tagName, "--merge", "--token", $ghToken)
 if ($isPrerelease) {
     $uploadArgs += "--pre"
 }

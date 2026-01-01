@@ -44,7 +44,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm add -g vsce semver
+          pnpm add -g semver
 
       - name: Validate release tag value
         id: validate_tag
@@ -53,11 +53,13 @@ jobs:
           tag: ${{ github.event.inputs.release_tag || '' }}
 
       - name: Update tag environment variables
+        shell: bash
         run: | 
           echo "TAG_VERSION=${{ steps.validate_tag.outputs.tag_version }}" >> $GITHUB_ENV
           echo "TAG_VALID=${{ steps.validate_tag.outputs.tag_valid }}" >> $GITHUB_ENV
 
       - name: Verify tag validity
+        shell: bash
         if: env.TAG_VALID == '0'
         run: |
           echo "TAG_VALID=${{ env.TAG_VALID }} , TAG_VERSION=${{ env.TAG_VERSION }}"

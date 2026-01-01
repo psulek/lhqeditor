@@ -59,7 +59,7 @@ namespace LHQ.App.Services.Implementation
         
         private async Task<UpdateInfo> CheckForUpdateInternal()
         {
-            var useLocal = true;
+            var useLocal = false;
 // #if DEGUG
 //             useLocal = true;
 // #endif

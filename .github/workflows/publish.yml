@@ -1,11 +1,9 @@
 name: Build VS2022 Extension
 
 on:
-  # push:
-  #   branches: [ main, master ]
-  # pull_request:
-  #   branches: [ main, master ]
-  workflow_dispatch:
+  release:
+    types: [published]
+#   workflow_dispatch:
 
 jobs:
   build:
@@ -14,7 +12,7 @@ jobs:
     env:
       SOLUTION_PATH: 'LHQ_vs2022.sln'
       VSIX_PROJECT_PATH: 'src/VsExtension2022/VsExtension2022.csproj'
-      CONFIGURATION: 'Debug'
+      BUILD_CONFIGURATION: 'Debug'
 
     steps:
       - name: Checkout repository
@@ -34,7 +32,12 @@ jobs:
 
       - name: Install global tools
         run: |
+          echo "Installing semver tool"
           pnpm add -g semver
+          
+          echo "Installing VPK tool"
+          vpk_version="0.0.1369-g1d5c984"
+          dotnet tool install --global vpk --version $vpk_version
 
       - name: Check Marketplace for existing version
         shell: bash
@@ -44,8 +47,8 @@ jobs:
           TARGET_VERSION=$(grep -oE 'Identity[^>]*Version="[^"]+' "$VSIX_MANIFEST" | sed -E 's/.*Version="//')
           echo "Target version from manifest: $TARGET_VERSION"
 
-          TARGET_VERSION="2025.0"
-          echo "Using target version: $TARGET_VERSION (for testing purposes)"
+          #   TARGET_VERSION="2025.0"
+          #   echo "Using target version: $TARGET_VERSION (for testing purposes)"
           
           # Visual Studio Marketplace extension identifier
           PUBLISHER="scalehqsolutions"
@@ -133,7 +136,7 @@ jobs:
       - name: Build VSIX
         run: |
           msbuild ${{ env.SOLUTION_PATH }} `
-            /p:Configuration=${{ env.CONFIGURATION }} `
+            /p:Configuration=${{ env.BUILD_CONFIGURATION }} `
             /p:DeployExtension=false `
             /p:ZipPackageCompressionLevel=normal `
             /v:minimal
@@ -175,3 +178,31 @@ jobs:
           name: vsix-package
           path: ${{ steps.find-vsix.outputs.VSIX_PATH }}
           if-no-files-found: error
+
+      - name: publish LhqEditorApp
+        run: |
+          $packDir = ".\_published"
+
+          dotnet publish src\App\App.csproj -c ${{ env.BUILD_CONFIGURATION }} -r win-x64 --no-self-contained -o $packDir
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "dotnet publish failed with exit code $LASTEXITCODE"
+            exit $LASTEXITCODE
+          }
+          
+      - name: Velopack create and upload package to GH Release
+        run: |
+          $packId = "ScaleHQSolutions.LhqEditorApp"
+          $packTitle = "LHQ Editor App"
+          $packDir = ".\_published"
+          $mainExe = "LHQ.App.exe"
+          $icon = ".\Icon.ico"
+          $outputDir = ".\Releases"
+          $framework = "net48"
+
+          echo "Packing $packId (version $packVersion, framework: $framework) to $outputDir"
+          vpk --yes pack --packId $packId --packVersion $packVersion `
+              --packDir $packDir --mainExe $mainExe --packTitle $packTitle `
+              --icon $icon --outputDir $outputDir --framework $framework --shortcuts None
+
+          echo "Uploading package to GitHub Releases"
+          vpk upload github --repoUrl $githubRepo --releaseName $releaseName --tag $tagName --merge --pre

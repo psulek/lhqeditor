@@ -36,6 +36,23 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
+      - name: Validate release tag value
+        id: validate_tag
+        uses: ./.github/actions/validate-tag
+        with:
+          tag: ${{ github.event.inputs.release_tag || '' }}
+
+      - name: Update tag environment variables
+        run: | 
+          echo "TAG_VERSION=${{ steps.validate_tag.outputs.tag_version }}" >> $GITHUB_ENV
+          echo "TAG_VALID=${{ steps.validate_tag.outputs.tag_valid }}" >> $GITHUB_ENV
+
+      - name: Verify tag validity
+        if: env.TAG_VALID == '0'
+        run: |
+          echo "Error: The provided release tag '${{ github.event.inputs.release_tag }}' is not valid."
+          exit 1
+
       - name: Build and Publish UI App
         uses: ./.github/actions/uiapp/
         with:
@@ -44,3 +61,4 @@ jobs:
           prerelease: ${{ github.event.inputs.prerelease }}
           release_name: ${{ github.event.inputs.release_name || '' }}
           release_tag: ${{ github.event.inputs.release_tag || '' }}
+          new_version: ${{ env.TAG_VERSION }}

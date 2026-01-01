@@ -1,0 +1,38 @@
+name: Validate Release Tag
+description: Validates the release tag and extracts TAG_VERSION and PACKAGE_VERSION
+inputs:
+  tag:
+    description: Release tag (e.g. v1.2.3)
+    required: true
+    default: ''
+outputs:
+  tag_version:
+    description: Extracted version from tag (e.g. 1.2.3)
+    value: ${{ steps.validate.outputs.tag_version }}
+  tag_valid:
+    description: 1 - valid, 0 - invalid
+    value: ${{ steps.validate.outputs.tag_valid }}
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      id: validate
+      run: |
+        TAG="${{ inputs.tag }}"
+                
+        if [[ ! "$TAG" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+          echo "::error::Release tag '$TAG' is not in the format vX.Y.Z"
+          echo "tag_valid=0" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        TAG_VERSION=${TAG#v}
+        echo "tag_version=$TAG_VERSION" >> $GITHUB_OUTPUT       
+
+        if ! semver "$TAG_VERSION" &> /dev/null; then
+          echo "::error::Release tag version '$TAG_VERSION' is not a valid semantic version."
+          echo "tag_valid=0" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        echo "tag_valid=1" >> $GITHUB_OUTPUT

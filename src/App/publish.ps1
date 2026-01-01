@@ -3,7 +3,8 @@ param(
     [switch]$prerelease,
     [string]$repoUrl = "",
     [string]$releaseName = "",
-    [string]$tagName = ""
+    [string]$tagName = "",
+    [string]$newVersion = ""
 )
 
 $doBuild = $build.IsPresent
@@ -21,9 +22,13 @@ if ($tagName -eq "") {
     Write-Error "Missing required parameter: tagName"
     exit 1
 }
+if ($newVersion -eq "") {
+    Write-Error "Missing required parameter: newVersion"
+    exit 1
+}
 
-echo "build: $doBuild, prerelease: $isPrerelease, repoUrl: $repoUrl, releaseName: '$releaseName', tagName: '$tagName'"
-exit 1
+echo "build: $doBuild, prerelease: $isPrerelease, repoUrl: $repoUrl, releaseName: '$releaseName', tagName: '$tagName', newVersion: '$newVersion'"
+#exit 1
 
 ### variables
 $csproj = ".\App.csproj"
@@ -37,34 +42,59 @@ $packDir = ".\_published"
 $mainExe = "LHQ.App.exe"
 $icon = ".\Icon.ico"
 $outputDir = ".\Releases"
+$packVersion = $newVersion
 
 ### read version from csproj
-$xml = [Xml] (Get-Content $csproj)
-$propertyGroup = $xml.Project.PropertyGroup | Where-Object { $_.Version -ne $null }
+$appProjectXml = [Xml] (Get-Content $csproj)
+$appProjectPropGroup = $appProjectXml.Project.PropertyGroup | Where-Object { $_.Version -ne $null }
 
-if ($propertyGroup -eq $null) {
+if ($appProjectPropGroup -eq $null) {
     Write-Error "Missing <Version> within <PropertyGroup> element in '$csproj' file!"
     exit 1
 }
-$packVersion = $propertyGroup.Version
+### update App.csproj with new version
+$appProjectPropGroup.Version = $packVersion
+$appProjectXml.Save((Resolve-Path $csproj))
+echo "Updated App.csproj with version $packVersion"
+
+#$packVersion = $appProjectPropGroup.Version
 
 # vpk download from github releases
 $preArg = $isPrerelease ? "--pre" : ""
 vpk download github --repoUrl $repoUrl --outputDir $outputDir --timeout 5 $preArg
 
+### update ProductAssemblyInfo.cs with new version
+$productAssemblyInfoPath = "..\..\ProductAssemblyInfo.cs"
+$assemblyInfoContent = Get-Content $productAssemblyInfoPath -Raw
+$assemblyInfoContent = $assemblyInfoContent -replace '\[assembly: AssemblyVersion\("[^"]+"\)\]', "[assembly: AssemblyVersion(`"$packVersion`")]"
+Set-Content -Path $productAssemblyInfoPath -Value $assemblyInfoContent -NoNewline
+echo "Updated ProductAssemblyInfo.cs with version $packVersion"
+
+$assemblyInfoContent2 = Get-Content $productAssemblyInfoPath -Raw
+echo "ProductAssemblyInfo.cs: \n$assemblyInfoContent2" 
+
+
 ### build solution first
-if ($doBuild) {
+if ($doBuild)
+{
     echo "Restoring nuget packages"
     dotnet restore $sln
     echo "Building solution $sln"
 
-    echo "Publishing $packId (version $packVersion) to $packDir"
-    dotnet publish -c $buildConfiguration -r win-x64 --no-self-contained -o $packDir
-
+    msbuild $sln /p:Configuration=$buildConfiguration /v:minimal
+    
     if ($LASTEXITCODE -ne 0) {
-        Write-Error "dotnet publish failed. Stopping script."
+        Write-Error "msbuild failed. Stopping script."
         exit 1
     }
+}
+
+echo "Publishing $packId (version $packVersion) to $packDir"
+dotnet publish -c $buildConfiguration -r win-x64 --no-self-contained -o $packDir
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "dotnet publish failed. Stopping script."
+    exit 1
 }
 
 ### pack with velopack
@@ -77,5 +107,5 @@ vpk --yes pack --packId $packId --packVersion $packVersion `
     --icon $icon --outputDir $outputDir --framework $framework --shortcuts None --noPortable
 
 ### vpk upload to github releases
-echo "Uploading package to GitHub Releases"
+echo "Uploading package to GitHub Releases, url: $githubRepo, release: '$releaseName', tag: $tagName, $preArg"
 vpk upload github --repoUrl $githubRepo --releaseName $releaseName --tag $tagName --merge $preArg

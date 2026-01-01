@@ -21,6 +21,10 @@ inputs:
     description: 'Tag of the release.'
     required: false
     default: ''
+  new_version: 
+    description: 'New version to set in the application.'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -30,6 +34,11 @@ runs:
       run: |
         if [[ "${{ inputs.mode }}" != "publish" && "${{ inputs.mode }}" != "build_publish" ]]; then
           echo "Error: 'mode' must be 'publish' or 'build_publish', got '${{ inputs.mode }}'"
+          exit 1
+        fi
+
+        if [[ -z "${{ inputs.new_version }}" ]]; then
+          echo "Error: 'new_version' input is required."
           exit 1
         fi
 
@@ -101,17 +110,11 @@ runs:
     - name: Build and publish
       shell: pwsh
       run: | 
-        # $mode = if ("${{ inputs.mode }}" -eq "build_publish") { "-build" } else { "" }
-        # $prerelease = if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { "-prerelease" } else { "" }
-        # $repoUrl = "https://github.com/${{ github.repository }}"
-        # $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
-        # $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
-
         $repoUrl = "https://github.com/${{ github.repository }}"
         $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
         $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
 
-        $psArgs = @{ repoUrl = $repoUrl; releaseName = $releaseName; tagName = $tagName }
+        $psArgs = @{ repoUrl = $repoUrl; releaseName = $releaseName; tagName = $tagName; newVersion = "${{ inputs.new_version }}" }
         if ("${{ inputs.mode }}" -eq "build_publish") { $psArgs['build'] = $true }
         if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { $psArgs['prerelease'] = $true }
         & ./src/App/publish.ps1 @psArgs

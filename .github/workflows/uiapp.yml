@@ -75,3 +75,5 @@ jobs:
           release_name: ${{ github.event.inputs.release_name || '' }}
           release_tag: ${{ github.event.inputs.release_tag || '' }}
           new_version: ${{ env.TAG_VERSION }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+

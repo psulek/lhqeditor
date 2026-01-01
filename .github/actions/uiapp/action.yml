@@ -25,7 +25,9 @@ inputs:
     description: 'New version to set in the application.'
     required: false
     default: ''
-
+  github_token:
+    description: 'GitHub token'
+    required: true
 runs:
   using: "composite"
   steps:

@@ -150,7 +150,7 @@ jobs:
           # & $vsixPublisher.FullName help
 
       - name: Restore NuGet packages
-        run: nuget restore ${{ env.SOLUTION_PATH }}
+        run: nuget restore ${{ env.SOLUTION_PATH }} -Verbosity quiet
       
       - name: Set token config
         working-directory: src/Gen.Lib
@@ -203,7 +203,7 @@ jobs:
           echo "VSIX_NAME=$($vsixFile.Name)" >> $env:GITHUB_OUTPUT
 
       - name: Publish to VS Marketplace
-        if: false
+        # if: false
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: |
@@ -219,21 +219,6 @@ jobs:
           & $vsixPublisher.FullName publish `
             -payload "${{ steps.find-vsix.outputs.VSIX_PATH }}" `
             -personalAccessToken $env:VSCE_PAT
-
-#      - name: Upload VSIX artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: vsix-package
-#          path: ${{ steps.find-vsix.outputs.VSIX_PATH }}
-#          if-no-files-found: error
-      
-              
-#      - name: update application version
-#        uses: ./.github/actions/update-version
-#        with:
-#          new_version: ${{ env.TAG_VERSION }}
-#          app_project_path: 'src/App/'
-#          root_path: '.'
 
       - name: publish UI App
         uses: ./.github/actions/uiapp/

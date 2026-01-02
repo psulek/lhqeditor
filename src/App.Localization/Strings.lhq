@@ -1079,7 +1079,7 @@
               },
               "values": {
                 "en": {
-                  "value": "LHQ model version {0} does not use any T4 template file.\r\nYou can safely delete file: \\n {1}.\r\n\r\nOther team members must also upgrade LHQ Extension to min. version '{2}' !"
+                  "value": "LHQ model version {0} does not use any T4 template file.\r\nYou can safely delete file: {1}.\r\nOther team members must also upgrade LHQ Extension to min. version '{2}' !"
                 }
               }
             },

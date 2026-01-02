@@ -63,7 +63,8 @@ namespace LHQ.VsExtension.Code
                             
                             if (flagUnsupportedT4Template)
                             {
-                                var message = Strings.Dialogs.CodeGenerator.T4NotUsedAnymore(modelVersion, t4File,
+                                var message = Strings.Dialogs.CodeGenerator.T4NotUsedAnymore(modelVersion, 
+                                    Path.GetFileName(t4File),
                                     AppConstants.ModernGeneratorNoT4MinVersion);
                                 
                                 var dialogShowInfo = new DialogShowInfo(Strings.Dialogs.CodeGenerator.CodeGeneratorTitle, message)

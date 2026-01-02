@@ -53,13 +53,15 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'src/Gen.Lib/pnpm-lock.yaml'
 
-#      - name: Set token config
-#        run: |
-#          echo "registry=https://registry.npmjs.org/" > .npmrc
-#          echo "@psulek:registry=https://npm.pkg.github.com" >> .npmrc
-#          echo "//npm.pkg.github.com/:_authToken=$GH_READ_PACKAGES_TOKEN" >> .npmrc
-#        env:
-#          GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
+      - name: Set token config
+        working-directory: src/Gen.Lib
+        shell: bash
+        run: |
+          echo "registry=https://registry.npmjs.org/" > .npmrc
+          echo "@psulek:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=$GH_READ_PACKAGES_TOKEN" >> .npmrc
+        env:
+          GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
 
       - name: Install dependencies
         run: |

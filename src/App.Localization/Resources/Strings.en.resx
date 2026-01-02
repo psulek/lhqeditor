@@ -416,8 +416,7 @@
   </data>
   <data name="DialogsCodeGeneratorT4NotUsedAnymore" xml:space="preserve">
     <value>LHQ model version {0} does not use any T4 template file.
-You can safely delete file: \n {1}.
-
+You can safely delete file: {1}.
 Other team members must also upgrade LHQ Extension to min. version &apos;{2}&apos; !</value>
   </data>
   <data name="DialogsCodeGeneratorTemplateId" xml:space="preserve">

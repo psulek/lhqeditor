@@ -48,7 +48,7 @@ namespace LHQ.App.Code
             private const string ModelV2_Info = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes";
             private const string ModelV3_Info = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v3-Changes";
             
-            private const string ModelV2_T4Obsolete = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes#obsolete-t4-template-files-lhqtt";
+            private const string ModelV2_T4Obsolete = "https://github.com/psulek/lhqeditor/wiki/LHQ-Model-v2-Changes#deprecated-t4-template-files-lhqtt";
 
             public static string GetLatestModelChanges() => ModelV3_Info;
             

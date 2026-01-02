@@ -1,4 +1,4 @@
-name: Build VS2022 Extension
+name: Publish ALL (VSIX, UI App, CLI App)
 
 on:
   release:

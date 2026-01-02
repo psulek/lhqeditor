@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System;
 using Velopack.Locators;
 using Velopack.Logging;
 using Velopack.Windows;
@@ -31,6 +32,10 @@ namespace LHQ.App
 {
     public static class VelopackService
     {
+        private const string FileExtension = ".lhq";
+        private const string ProgramUID = "ScaleHQSolutions.LhqEditorApp";
+        private const string ProgramDesc = "Localization Editor Project File";
+
         public static void AfterInstall()
         {
             try
@@ -42,15 +47,76 @@ namespace LHQ.App
             {
                 // NOTE: Ignore exceptions
             }
+            
+            RegisterFileAssociation();
+        }
+
+        private static void RegisterFileAssociation()
+        {
+            var logger = VelopackLocator.Current.Log;
+            if (!FileAssociationManager.IsAssociated(FileExtension, ProgramUID))
+            {
+                string appPath = VelopackLocator.Current.ProcessExePath;
+                string iconPath = $"{appPath},0"; // Use the exe's icon
+                FileAssociationManager.RegisterFileAssociation(
+                    FileExtension, 
+                    ProgramUID, 
+                    ProgramDesc, 
+                    appPath, 
+                    iconPath
+                );
+                logger.LogInformation($"File association for {FileExtension} registered successfully!");
+            }
+            else
+            {
+                logger.LogInformation($"File association for {FileExtension} already exists.");
+            }
         }
 
         public static void FirstRun()
         {
             var logger = VelopackLocator.Current.Log;
-            var shortcutsApi = new Shortcuts();
-            var location = ShortcutLocation.AppRoot;
-            logger.Log(VelopackLogLevel.Information, $"Creating shortcut for: {VelopackLocator.Current.ThisExeRelativePath} on {location} (OnFirstRun)");
-            shortcutsApi.CreateShortcutForThisExe(location);
+            try
+            {
+                var shortcutsApi = new Shortcuts();
+                var location = ShortcutLocation.AppRoot;
+                logger.Log(VelopackLogLevel.Information, $"Creating shortcut for: {VelopackLocator.Current.ThisExeRelativePath} on {location} (OnFirstRun)");
+                shortcutsApi.CreateShortcutForThisExe(location);
+            }
+            catch
+            {
+                // NOTE: Ignore exceptions
+            }
+
+            try
+            {
+                RegisterFileAssociation();
+            }
+            catch
+            {
+                // NOTE: Ignore exceptions
+            }
+        }
+
+        public static void AfterUpdate()
+        {
+            try
+            {
+                RegisterFileAssociation();
+            }
+            catch
+            {
+                // NOTE: Ignore exceptions
+            }
+        }
+
+        public static void BeforeUninstall()
+        {
+            try
+            {
+                FileAssociationManager.UnregisterFileAssociation(FileExtension, ProgramUID);
+            }
+            catch { /* Ignore errors during uninstall */ }
         }
     }
 }

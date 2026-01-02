@@ -57,8 +57,10 @@ namespace LHQ.App
             VelopackApp.Build()
                 .OnAfterInstallFastCallback(_ => VelopackService.AfterInstall())
                 .OnFirstRun(_ => VelopackService.FirstRun())
+                .OnAfterUpdateFastCallback(_ => VelopackService.AfterUpdate())
+                .OnBeforeUninstallFastCallback(_ => VelopackService.BeforeUninstall())
                 .Run();
-
+            
             var application = new App();
             //application.InitializeComponent();
             application.Run();

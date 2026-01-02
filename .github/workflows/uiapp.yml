@@ -93,7 +93,9 @@ jobs:
 
       - name: Restore JS Libs dependencies for Gen.Lib
         working-directory: src/Gen.Lib
-        run: & ./RestoreJSLib.ps1
+        shell: pwsh
+        run: |
+          & ./RestoreJSLib.ps1
         env:
           GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
 

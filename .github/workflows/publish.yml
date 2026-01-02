@@ -203,7 +203,6 @@ jobs:
           echo "VSIX_NAME=$($vsixFile.Name)" >> $env:GITHUB_OUTPUT
 
       - name: Publish to VS Marketplace
-        # if: false
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: |

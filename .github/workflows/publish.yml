@@ -121,8 +121,6 @@ jobs:
           
           echo "Version check passed. Ready to publish version $TARGET_VERSION"
 
-          exit 1
-
       - name: Install VsixSignTool and Publish Tool
         run: |
           nuget install Microsoft.VSSDK.Vsixsigntool -Version 17.10.34916.79 -OutputDirectory tools
@@ -139,9 +137,7 @@ jobs:
             exit 1
           }
 
-          & $vsixPublisher.FullName help
-
-          exit 1
+          # & $vsixPublisher.FullName help
 
       - name: Restore NuGet packages
         run: nuget restore ${{ env.SOLUTION_PATH }}

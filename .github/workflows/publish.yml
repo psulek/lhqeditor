@@ -39,6 +39,7 @@ jobs:
           registry-url: ${{ env.REGISTRY_URL }}
           scope: '@psulek'
           cache: 'pnpm'
+          cache-dependency-path: 'src/Gen.Lib/pnpm-lock.yaml'
 
 #      - name: Set token config
 #        run: |

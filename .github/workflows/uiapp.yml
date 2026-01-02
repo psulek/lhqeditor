@@ -19,12 +19,14 @@ on:
         default: ''
         type: string
 
+env:
+  VKP_VERSION: '0.0.1369-g1d5c984'
+  NODE_VERSION: '20.x'
+  REGISTRY_URL: 'https://npm.pkg.github.com'
+
 jobs:
   build:
     runs-on: windows-latest
-
-    env:
-      VKP_VERSION: '0.0.1369-g1d5c984'
 
     steps:
       - name: Checkout repository
@@ -41,6 +43,22 @@ jobs:
         with:
           run_install: false
           version: 10
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.REGISTRY_URL }}
+          scope: '@psulek'
+          cache: 'pnpm'
+
+#      - name: Set token config
+#        run: |
+#          echo "registry=https://registry.npmjs.org/" > .npmrc
+#          echo "@psulek:registry=https://npm.pkg.github.com" >> .npmrc
+#          echo "//npm.pkg.github.com/:_authToken=$GH_READ_PACKAGES_TOKEN" >> .npmrc
+#        env:
+#          GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
 
       - name: Install dependencies
         run: |
@@ -72,6 +90,12 @@ jobs:
           new_version: ${{ env.TAG_VERSION }}
           app_project_path: 'src/App/'
           root_path: '.'
+
+      - name: Restore JS Libs dependencies for Gen.Lib
+        working-directory: src/Gen.Lib
+        run: & ./RestoreJSLib.ps1
+        env:
+          GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
 
       - name: Build and Publish UI App
         uses: ./.github/actions/uiapp/

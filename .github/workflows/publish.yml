@@ -217,6 +217,7 @@ jobs:
 
           & $vsixPublisher.FullName publish `
             -payload "${{ steps.find-vsix.outputs.VSIX_PATH }}" `
+            -publishManifest "src/VsExtension2022/publishManifest.json" `
             -personalAccessToken $env:VSCE_PAT
 
       - name: publish UI App

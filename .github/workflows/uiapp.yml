@@ -3,6 +3,11 @@ name: Publish UI App
 on:
   workflow_dispatch:
     inputs:
+      publish_cli_tools:
+        description: 'Publish CLI tools along with UI App'
+        required: false
+        default: true
+        type: boolean
       prerelease:
         description: 'Mark as prerelease'
         required: false
@@ -123,3 +128,17 @@ jobs:
           new_version: ${{ env.TAG_VERSION }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: publish CLI App
+        id: publish-cli 
+        if: ${{ github.event.inputs.publish_cli_tools == true }}
+        uses: ./.github/actions/cliapp/
+        with:
+          new_version: ${{ env.TAG_VERSION }}
+
+      - name: Add CLI tools assets to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.release_tag }}
+          files: |
+            ${{ steps.publish-cli.outputs.linux_path }}
+            ${{ steps.publish-cli.outputs.windows_path }}

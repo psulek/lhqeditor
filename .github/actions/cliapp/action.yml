@@ -1,0 +1,57 @@
+name: Publish CLI Applications
+description: Build and publish CLI applications as GitHub releases
+inputs:
+  new_version:
+    description: 'Version of the release (e.g. 1.2.3)'
+    required: true
+    default: ''
+outputs:
+  linux_path:
+    description: 'Path to the published Linux CLI package'
+    value: ${{ steps.publish-cli.outputs.CLI_LINUX_PATH }}
+  windows_path:
+    description: 'Path to the published Windows CLI package'
+    value: ${{ steps.publish-cli.outputs.CLI_WIN_PATH }}
+runs:
+  using: "composite"
+  steps:
+    - name: publish CLI App
+      shell: pwsh
+      id: publish-cli
+      working-directory: src/Gen.Cmd
+      run: |
+        echo "Publishing CLI App version ${{ inputs.new_version }} ..."
+        & ./publish-all.ps1
+        
+        $linuxArchive = "./_published/lhqcmd-portable-linux-x64.tar.gz"
+        $winArchive = "./_published/lhqcmd-portable-win-x64.zip"
+        
+        if (-not (Test-Path $linuxArchive)) {
+        Write-Error "Linux archive not found: $linuxArchive"
+        exit 1
+        }
+        
+        if (-not (Test-Path $winArchive)) {
+        Write-Error "Windows archive not found: $winArchive"
+        exit 1
+        }
+        
+        Write-Host "Both CLI archives created successfully."
+        
+        $linuxPath = (Resolve-Path $linuxArchive).Path
+        $winPath = (Resolve-Path $winArchive).Path
+        
+        Write-Host "CLI_LINUX_PATH=$linuxPath"
+        Write-Host "CLI_WIN_PATH=$winPath"
+        
+        echo "CLI_LINUX_PATH=$linuxPath" >> $env:GITHUB_OUTPUT
+        echo "CLI_WIN_PATH=$winPath" >> $env:GITHUB_OUTPUT
+
+    - name: Upload CLI tools artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: cli-tools-packages
+        path: |
+          ${{ steps.publish-cli.outputs.CLI_LINUX_PATH }}
+          ${{ steps.publish-cli.outputs.CLI_WIN_PATH }}
+        if-no-files-found: error

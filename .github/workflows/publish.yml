@@ -215,10 +215,27 @@ jobs:
 
           cp README.md src/VsExtension2022/README.md          
 
-          & $vsixPublisher.FullName publish `
-            -payload "${{ steps.find-vsix.outputs.VSIX_PATH }}" `
-            -publishManifest "src/VsExtension2022/publishManifest.json" `
-            -personalAccessToken $env:VSCE_PAT
+          $logFile = "$env:TEMP\vsix-publish-output.log"
+
+          try {
+            & $vsixPublisher.FullName publish `
+              -payload "${{ steps.find-vsix.outputs.VSIX_PATH }}" `
+              -publishManifest "src/VsExtension2022/publishManifest.json" `
+              -personalAccessToken $env:VSCE_PAT 2>&1 | Out-File -FilePath $logFile
+            $exitCode = $LASTEXITCODE
+          } catch {
+            $_ | Out-File -FilePath $logFile -Append
+            $exitCode = 1
+          }
+            
+          # Always return success if the publish message is seen
+          $LastLog = Get-Content $logFile -Raw
+          if ($LastLog -match 'Uploaded.*to the marketplace') {
+            Write-Host "Ignoring VsixPublisher.exe exception since publish succeeded."
+            exit 0
+          } else {
+            exit $exitCode
+          }
 
       - name: publish UI App
         uses: ./.github/actions/uiapp/

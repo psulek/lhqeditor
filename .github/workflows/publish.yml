@@ -262,8 +262,8 @@ jobs:
       - name: Add CLI tools assets to the release
         uses: softprops/action-gh-release@v2
         with:
-          body: ''
-          append_body: ''
+          body: 'Automated release created by GitHub Actions\n\n'
+          append_body: true
           tag_name: ${{ github.event.release.tag_name }}
           files: |
             ${{ steps.find-vsix.outputs.VSIX_PATH }}

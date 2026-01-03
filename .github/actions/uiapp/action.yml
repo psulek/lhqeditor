@@ -71,14 +71,14 @@ runs:
             core.setOutput('releaseExist', false);
           }
 
-    - name: Create or update release
+    - name: Create new release
       if: steps.releaseInfo.outputs.releaseExist == 'false'
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ inputs.release_tag }}
         name: ${{ inputs.release_name || inputs.release_tag }}
         body: ''
-        append_body: ''
+        append_body: true
         draft: false
         prerelease: ${{ inputs.prerelease }}
 

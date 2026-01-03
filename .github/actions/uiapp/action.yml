@@ -108,7 +108,8 @@ runs:
       with:
         tag_name: ${{ inputs.release_tag }}
         name: ${{ inputs.release_name || inputs.release_tag }}
-        body: 'Automated release created by GitHub Actions.'
+        body: ''
+        append_body: ''
         draft: false
         prerelease: ${{ inputs.prerelease }}
 

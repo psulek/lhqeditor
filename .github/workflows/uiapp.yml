@@ -140,6 +140,8 @@ jobs:
         if: ${{ github.event.inputs.publish_cli_tools == 'true' }}
         with:
           tag_name: ${{ github.event.inputs.release_tag }}
+          body: ''
+          append_body: ''
           files: |
             ${{ steps.publish-cli.outputs.linux_path }}
             ${{ steps.publish-cli.outputs.windows_path }}

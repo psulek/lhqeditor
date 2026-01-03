@@ -262,6 +262,8 @@ jobs:
       - name: Add CLI tools assets to the release
         uses: softprops/action-gh-release@v2
         with:
+          body: ''
+          append_body: ''
           tag_name: ${{ github.event.release.tag_name }}
           files: |
             ${{ steps.find-vsix.outputs.VSIX_PATH }}

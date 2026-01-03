@@ -122,10 +122,10 @@ runs:
       shell: pwsh
       run: | 
         $repoUrl = "https://github.com/${{ github.repository }}"
-        $releaseName = "${{ steps.releaseInfo.outputs.releaseName }}"
-        $tagName = "${{ steps.releaseInfo.outputs.releaseTag }}"
+        $tagName = "${{ inputs.release_tag }}"
+        $releaseName = "${{ inputs.release_name || inputs.release_tag }}"
 
         $psArgs = @{ repoUrl = $repoUrl; releaseName = $releaseName; tagName = $tagName; newVersion = "${{ inputs.new_version }}"; workingDir = "src/App"; ghToken = "${{ inputs.github_token }}" }
         if ("${{ inputs.mode }}" -eq "build_publish") { $psArgs['build'] = $true }
-        if ("${{ steps.releaseInfo.outputs.isPrerelease }}" -eq "true") { $psArgs['prerelease'] = $true }
+        if ("${{ inputs.prerelease }}" -eq "true") { $psArgs['prerelease'] = $true }
         & ./src/App/publish.ps1 @psArgs

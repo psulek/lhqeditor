@@ -65,6 +65,25 @@ jobs:
           echo "TAG_VALID=${{ env.TAG_VALID }} , TAG_VERSION=${{ env.TAG_VERSION }}"
           echo "Error: The provided release tag '${{ github.event.release.tag_name }}' is not valid."
           exit 1
+
+      - name: Update vsix manifest version
+        shell: pwsh
+        run: |
+            $manifestPath = "src/VsExtension2022/source.extension.vsixmanifest"
+            [xml]$manifestXml = Get-Content $manifestPath
+    
+            $nsManager = New-Object System.Xml.XmlNamespaceManager($manifestXml.NameTable)
+            $nsManager.AddNamespace("vs", "http://schemas.microsoft.com/developer/vsx-schema/2011")
+            
+            $identityNode = $manifestXml.SelectSingleNode("//vs:PackageManifest/vs:Metadata/vs:Identity", $nsManager)
+            if ($identityNode -ne $null) {
+                $identityNode.Version = "${{ env.TAG_VERSION }}"
+                $manifestXml.Save($manifestPath)
+                Write-Host "Updated version in vsixmanifest to $($identityNode.Version)"
+            } else {
+                Write-Error "Identity node not found in $manifestPath."
+                exit 1
+            }
           
       - name: Check Marketplace for existing version
         shell: bash

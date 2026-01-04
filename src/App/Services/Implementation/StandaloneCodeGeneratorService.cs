@@ -114,10 +114,13 @@ namespace LHQ.App.Services.Implementation
                     }
 
                     await file.WriteToDiskAsync(outDir);
+                    
+                    var filePath = Path.Combine(outDir, file.FileName);
+                    result.GeneratedFiles.Add(filePath);
                 }
 
                 result.Success = true;
-                result.GeneratedFileCount = generatedFiles.Count;
+                //result.GeneratedFileCount = generatedFiles.Count;
             }
             catch (GeneratorException ge)
             {

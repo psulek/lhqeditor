@@ -189,7 +189,7 @@ jobs:
 
       - name: Copy README.md to VSIX project directory
         run: |
-          (Get-Content README.md) -replace '\(./', '(https://github.com/psulek/lhqeditor/blob/main/' | Set-Content src\VsExtension2022\README.md
+          (Get-Content README.md) -replace '\(./', '(https://raw.githubusercontent.com/psulek/lhqeditor/main/' | Set-Content src\VsExtension2022\README.md
 
       - name: update application version
         uses: ./.github/actions/update-version

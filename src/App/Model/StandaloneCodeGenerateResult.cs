@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System.Collections.Generic;
 using LHQ.Gen.Lib;
 
 namespace LHQ.App.Model
@@ -36,7 +37,9 @@ namespace LHQ.App.Model
         public GeneratorErrorKind? ErrorKind { get; set; } = null;
 
         public string ErrorCode { get; set; } = string.Empty;
+        
+        public List<string> GeneratedFiles { get; set; } = new List<string>();
 
-        public int GeneratedFileCount { get; set; }
+        public int GeneratedFileCount => GeneratedFiles?.Count ?? 0;
     }
 }

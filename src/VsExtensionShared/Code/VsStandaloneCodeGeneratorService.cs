@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using LHQ.App.Code;
@@ -51,6 +52,9 @@ namespace LHQ.VsExtension.Code
 
                 if (result.Success)
                 {
+                    // Add generated files to the current project
+                    AddGeneratedFilesToProject(modelFileName, result.GeneratedFiles);
+                    
                     int modelVersion = modelContext.Model.Version;
                     var isModernGenerator = modelVersion > 1;
                     if (isModernGenerator)
@@ -101,6 +105,77 @@ namespace LHQ.VsExtension.Code
         private void OnLogMessage(Tuple<LogLevel, string> logItem)
         {
             VsPackageService.AddMessageToOutput(logItem.Item2, logItem.Item1.ToOutputMessageType());
+        }
+
+        private void AddGeneratedFilesToProject(string modelFileName, List<string> generatedFiles)
+        {
+            if (generatedFiles == null || generatedFiles.Count == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                var dte = VsPackageService.DTE;
+                if (dte?.Solution == null)
+                {
+                    return;
+                }
+
+                // Find the project item for the model file
+                var modelProjectItem = dte.Solution.FindProjectItem(modelFileName);
+                if (modelProjectItem?.ContainingProject == null)
+                {
+                    return;
+                }
+
+                var project = modelProjectItem.ContainingProject;
+                var modelDir = Path.GetDirectoryName(modelFileName);
+
+                foreach (var generatedFile in generatedFiles)
+                {
+                    if (!File.Exists(generatedFile))
+                    {
+                        continue;
+                    }
+
+                    // Check if the file is already part of the project
+                    var existingItem = dte.Solution.FindProjectItem(generatedFile);
+                    if (existingItem != null)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        // Get the directory of the generated file relative to the model file
+                        var generatedDir = Path.GetDirectoryName(generatedFile);
+                        
+                        // If the generated file is in the same directory as the model, add it to the model's parent collection
+                        if (string.Equals(generatedDir, modelDir, StringComparison.OrdinalIgnoreCase))
+                        {
+                            modelProjectItem.Collection.AddFromFile(generatedFile);
+                        }
+                        else
+                        {
+                            // Add to project items (for files in different directories)
+                            project.ProjectItems.AddFromFile(generatedFile);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        VsPackageService.AddMessageToOutput(
+                            $"Failed to add generated file to project: {generatedFile}. Error: {ex.Message}",
+                            OutputMessageType.Warn);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                VsPackageService.AddMessageToOutput(
+                    $"Failed to add generated files to project. Error: {ex.Message}",
+                    OutputMessageType.Warn);
+            }
         }
 
         protected override (NLog.ILogger logger, IDisposable loggerRegion) GetLoggerForGenerator()

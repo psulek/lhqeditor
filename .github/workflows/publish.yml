@@ -189,7 +189,7 @@ jobs:
 
       - name: Copy README.md to VSIX project directory
         run: |
-          Copy-Item README.md src\VsExtension2022\README.md
+          (Get-Content README.md) -replace '\(./', '(https://github.com/psulek/lhqeditor/blob/main/' | Set-Content src\VsExtension2022\README.md
 
       - name: update application version
         uses: ./.github/actions/update-version
@@ -237,7 +237,7 @@ jobs:
             exit 1
           }
 
-          cp README.md src/VsExtension2022/README.md          
+          # cp README.md src/VsExtension2022/README.md          
 
           $logFile = "$env:TEMP\vsix-publish-output.log"
 

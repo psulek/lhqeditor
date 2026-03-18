@@ -68,7 +68,9 @@ namespace LHQ.App
             // create desktop shortcut if not running in VS IDE
             if (!appContext.RunInVsPackage)
             {
-                AppTools.CreateDesktopShortcut(appContext);
+                // BUGFIX: https://github.com/psulek/lhqeditor/issues/10
+                // do not create desktop shortcut each run of app
+                // AppTools.CreateDesktopShortcut(appContext);
             }
 
             appView.DataContext = shellViewModel;

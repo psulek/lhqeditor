@@ -67,7 +67,7 @@ There are two versions of **lhqeditor** extension:
 Install **lhqeditor** extension from [Visual Studio Marketplace](https://marketplace.visualstudio.com):
 
 - [LHQ Editor](https://marketplace.visualstudio.com/items?itemName=scalehqsolutions.lhqeditor)
-- [LHQ Editor VS2022](https://marketplace.visualstudio.com/items?itemName=scalehqsolutions.lhqeditorvs2022)
+- [LHQ Editor VS2022 / VS2026](https://marketplace.visualstudio.com/items?itemName=scalehqsolutions.lhqeditorvs2022)
 
 -or-
 

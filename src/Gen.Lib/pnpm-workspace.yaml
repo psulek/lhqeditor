@@ -1,3 +1,8 @@
 autoInstallPeers: true
-strictPeerDependencies: true
 shamefullyHoist: true
+strictPeerDependencies: true
+
+overrides:
+  '@isaacs/brace-expansion@<=5.0.0': '>=5.0.1'
+  minimatch@>=10.0.0 <10.2.1: '>=10.2.1'
+  minimatch@>=10.0.0 <10.2.3: '>=10.2.3'

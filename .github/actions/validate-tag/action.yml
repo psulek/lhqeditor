@@ -1,3 +1,5 @@
+# Composite action that validates a release tag in vX.Y.Z format,
+# extracts the semantic version, and reports validity via outputs.
 name: Validate Release Tag
 description: Validates the release tag and extracts TAG_VERSION and PACKAGE_VERSION
 inputs:

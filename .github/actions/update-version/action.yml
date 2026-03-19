@@ -1,3 +1,5 @@
+# Composite action that validates the provided version and updates version values
+# in App.csproj and ProductAssemblyInfo.cs within the repository.
 name: Update C# Projects Version
 description: Update version in C# project files
 inputs:

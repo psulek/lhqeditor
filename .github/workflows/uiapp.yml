@@ -1,3 +1,10 @@
+# This workflow builds and publishes the Desktop UI application as a GitHub release.
+# It validates the release tag, updates the application version, builds the UI app,
+# and optionally publishes CLI tools along with the UI app release.
+# Triggered manually via workflow_dispatch with inputs for release tag, name, prerelease flag,
+# and option to publish CLI tools.
+# If release refered by the tag does not exist, it will be created. If it exists, it will be updated with new assets and release information.
+
 name: Publish UI App
 
 on:

@@ -1,3 +1,7 @@
+# This workflow automatically builds and publishes the Visual Studio extension (VSIX), 
+# Desktop UI application, and CLI application to their respective marketplaces/repositories 
+# Includes version validation, marketplace checks, and asset uploads to the GitHub release.
+# Triggered on release publication with a valid semver tag.
 name: Publish ALL (VSIX, UI App, CLI App)
 
 on:

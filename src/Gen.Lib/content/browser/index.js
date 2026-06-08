@@ -1591,9 +1591,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/utils.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/utils.js
   var require_utils = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/utils.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/utils.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.extend = extend;
@@ -1690,9 +1690,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/exception.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/exception.js
   var require_exception = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/exception.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/exception.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       var errorProps = ["description", "fileName", "lineNumber", "endLineNumber", "message", "name", "number", "stack"];
@@ -1739,9 +1739,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/block-helper-missing.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/block-helper-missing.js
   var require_block_helper_missing = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/block-helper-missing.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/block-helper-missing.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       var _utils = require_utils();
@@ -1775,9 +1775,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/each.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/each.js
   var require_each = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/each.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/each.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -1859,9 +1859,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/helper-missing.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/helper-missing.js
   var require_helper_missing = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/helper-missing.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/helper-missing.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -1882,9 +1882,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/if.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/if.js
   var require_if = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/if.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/if.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -1922,9 +1922,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/log.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/log.js
   var require_log = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/log.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/log.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       exports["default"] = function(instance) {
@@ -1947,9 +1947,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/lookup.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/lookup.js
   var require_lookup = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/lookup.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/lookup.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       exports["default"] = function(instance) {
@@ -1964,9 +1964,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/with.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/with.js
   var require_with = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers/with.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers/with.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -2003,9 +2003,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers.js
   var require_helpers = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/helpers.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/helpers.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.registerDefaultHelpers = registerDefaultHelpers;
@@ -2040,16 +2040,16 @@ var LhqGenerators = (() => {
         if (instance.helpers[helperName]) {
           instance.hooks[helperName] = instance.helpers[helperName];
           if (!keepHelper) {
-            delete instance.helpers[helperName];
+            instance.helpers[helperName] = void 0;
           }
         }
       }
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/decorators/inline.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/decorators/inline.js
   var require_inline = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/decorators/inline.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/decorators/inline.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       var _utils = require_utils();
@@ -2074,9 +2074,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/decorators.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/decorators.js
   var require_decorators = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/decorators.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/decorators.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.registerDefaultDecorators = registerDefaultDecorators;
@@ -2091,9 +2091,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/logger.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/logger.js
   var require_logger = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/logger.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/logger.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       var _utils = require_utils();
@@ -2132,25 +2132,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/internal/create-new-lookup-object.js
-  var require_create_new_lookup_object = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/internal/create-new-lookup-object.js"(exports) {
-      "use strict";
-      exports.__esModule = true;
-      exports.createNewLookupObject = createNewLookupObject;
-      var _utils = require_utils();
-      function createNewLookupObject() {
-        for (var _len = arguments.length, sources = Array(_len), _key = 0; _key < _len; _key++) {
-          sources[_key] = arguments[_key];
-        }
-        return _utils.extend.apply(void 0, [/* @__PURE__ */ Object.create(null)].concat(sources));
-      }
-    }
-  });
-
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/internal/proto-access.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/internal/proto-access.js
   var require_proto_access = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/internal/proto-access.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/internal/proto-access.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.createProtoAccessControl = createProtoAccessControl;
@@ -2159,25 +2143,28 @@ var LhqGenerators = (() => {
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { "default": obj };
       }
-      var _createNewLookupObject = require_create_new_lookup_object();
+      var _utils = require_utils();
       var _logger = require_logger();
       var _logger2 = _interopRequireDefault(_logger);
       var loggedProperties = /* @__PURE__ */ Object.create(null);
       function createProtoAccessControl(runtimeOptions) {
-        var defaultMethodWhiteList = /* @__PURE__ */ Object.create(null);
-        defaultMethodWhiteList["constructor"] = false;
-        defaultMethodWhiteList["__defineGetter__"] = false;
-        defaultMethodWhiteList["__defineSetter__"] = false;
-        defaultMethodWhiteList["__lookupGetter__"] = false;
-        var defaultPropertyWhiteList = /* @__PURE__ */ Object.create(null);
-        defaultPropertyWhiteList["__proto__"] = false;
+        var propertyWhiteList = /* @__PURE__ */ Object.create(null);
+        propertyWhiteList["__proto__"] = false;
+        _utils.extend(propertyWhiteList, runtimeOptions.allowedProtoProperties);
+        var methodWhiteList = /* @__PURE__ */ Object.create(null);
+        methodWhiteList["constructor"] = false;
+        methodWhiteList["__defineGetter__"] = false;
+        methodWhiteList["__defineSetter__"] = false;
+        methodWhiteList["__lookupGetter__"] = false;
+        methodWhiteList["__lookupSetter__"] = false;
+        _utils.extend(methodWhiteList, runtimeOptions.allowedProtoMethods);
         return {
           properties: {
-            whitelist: _createNewLookupObject.createNewLookupObject(defaultPropertyWhiteList, runtimeOptions.allowedProtoProperties),
+            whitelist: propertyWhiteList,
             defaultValue: runtimeOptions.allowProtoPropertiesByDefault
           },
           methods: {
-            whitelist: _createNewLookupObject.createNewLookupObject(defaultMethodWhiteList, runtimeOptions.allowedProtoMethods),
+            whitelist: methodWhiteList,
             defaultValue: runtimeOptions.allowProtoMethodsByDefault
           }
         };
@@ -2213,9 +2200,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/base.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/base.js
   var require_base = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/base.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/base.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.HandlebarsEnvironment = HandlebarsEnvironment;
@@ -2230,7 +2217,7 @@ var LhqGenerators = (() => {
       var _logger = require_logger();
       var _logger2 = _interopRequireDefault(_logger);
       var _internalProtoAccess = require_proto_access();
-      var VERSION = "4.7.8";
+      var VERSION = "4.7.9";
       exports.VERSION = VERSION;
       var COMPILER_REVISION = 8;
       exports.COMPILER_REVISION = COMPILER_REVISION;
@@ -2314,9 +2301,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/safe-string.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/safe-string.js
   var require_safe_string = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/safe-string.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/safe-string.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function SafeString(string) {
@@ -2330,9 +2317,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/internal/wrapHelper.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/internal/wrapHelper.js
   var require_wrapHelper = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/internal/wrapHelper.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/internal/wrapHelper.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.wrapHelper = wrapHelper;
@@ -2350,9 +2337,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/runtime.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/runtime.js
   var require_runtime = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/runtime.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/runtime.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.checkRevision = checkRevision;
@@ -2416,14 +2403,12 @@ var LhqGenerators = (() => {
             }
           }
           partial = env.VM.resolvePartial.call(this, partial, context, options);
-          var extendedOptions = Utils.extend({}, options, {
-            hooks: this.hooks,
-            protoAccessControl: this.protoAccessControl
-          });
-          var result = env.VM.invokePartial.call(this, partial, context, extendedOptions);
+          options.hooks = this.hooks;
+          options.protoAccessControl = this.protoAccessControl;
+          var result = env.VM.invokePartial.call(this, partial, context, options);
           if (result == null && env.compile) {
             options.partials[options.name] = env.compile(partial, templateSpec.compilerOptions, env);
-            result = options.partials[options.name](context, extendedOptions);
+            result = options.partials[options.name](context, options);
           }
           if (result != null) {
             if (options.indent) {
@@ -2468,7 +2453,7 @@ var LhqGenerators = (() => {
             for (var i = 0; i < len; i++) {
               var result = depths[i] && container.lookupProperty(depths[i], name2);
               if (result != null) {
-                return depths[i][name2];
+                return result;
               }
             }
           },
@@ -2534,8 +2519,9 @@ var LhqGenerators = (() => {
         ret.isTop = true;
         ret._setup = function(options) {
           if (!options.partial) {
-            var mergedHelpers = Utils.extend({}, env.helpers, options.helpers);
-            wrapHelpersToPassLookupProperty(mergedHelpers, container);
+            var mergedHelpers = {};
+            addHelpers(mergedHelpers, env.helpers, container);
+            addHelpers(mergedHelpers, options.helpers, container);
             container.helpers = mergedHelpers;
             if (templateSpec.usePartial) {
               container.partials = container.mergeIfNeeded(options.partials, env.partials);
@@ -2585,18 +2571,18 @@ var LhqGenerators = (() => {
       function resolvePartial(partial, context, options) {
         if (!partial) {
           if (options.name === "@partial-block") {
-            partial = options.data["partial-block"];
+            partial = lookupOwnProperty(options.data, "partial-block");
           } else {
-            partial = options.partials[options.name];
+            partial = lookupOwnProperty(options.partials, options.name);
           }
         } else if (!partial.call && !options.name) {
           options.name = partial;
-          partial = options.partials[partial];
+          partial = lookupOwnProperty(options.partials, partial);
         }
         return partial;
       }
       function invokePartial(partial, context, options) {
-        var currentPartialBlock = options.data && options.data["partial-block"];
+        var currentPartialBlock = lookupOwnProperty(options.data, "partial-block");
         options.partial = true;
         if (options.ids) {
           options.data.contextPath = options.ids[0] || options.data.contextPath;
@@ -2629,6 +2615,11 @@ var LhqGenerators = (() => {
       function noop() {
         return "";
       }
+      function lookupOwnProperty(obj, name2) {
+        if (obj && Object.prototype.hasOwnProperty.call(obj, name2)) {
+          return obj[name2];
+        }
+      }
       function initData(context, data) {
         if (!data || !("root" in data)) {
           data = data ? _base.createFrame(data) : {};
@@ -2644,24 +2635,26 @@ var LhqGenerators = (() => {
         }
         return prog;
       }
-      function wrapHelpersToPassLookupProperty(mergedHelpers, container) {
-        Object.keys(mergedHelpers).forEach(function(helperName) {
-          var helper = mergedHelpers[helperName];
+      function addHelpers(mergedHelpers, helpers, container) {
+        if (!helpers) return;
+        Object.keys(helpers).forEach(function(helperName) {
+          var helper = helpers[helperName];
           mergedHelpers[helperName] = passLookupPropertyOption(helper, container);
         });
       }
       function passLookupPropertyOption(helper, container) {
         var lookupProperty = container.lookupProperty;
         return _internalWrapHelper.wrapHelper(helper, function(options) {
-          return Utils.extend({ lookupProperty }, options);
+          options.lookupProperty = lookupProperty;
+          return options;
         });
       }
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/no-conflict.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/no-conflict.js
   var require_no_conflict = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/no-conflict.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/no-conflict.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       exports["default"] = function(Handlebars3) {
@@ -2685,9 +2678,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars.runtime.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars.runtime.js
   var require_handlebars_runtime = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars.runtime.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars.runtime.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -2741,9 +2734,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/ast.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/ast.js
   var require_ast = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/ast.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/ast.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       var AST = {
@@ -2770,12 +2763,12 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js
   var require_parser = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
-      var handlebars = function() {
+      var handlebars = (function() {
         var parser = {
           trace: function trace() {
           },
@@ -3133,7 +3126,7 @@ var LhqGenerators = (() => {
             return true;
           }
         };
-        var lexer = function() {
+        var lexer = (function() {
           var lexer2 = {
             EOF: 1,
             parseError: function parseError(str, hash) {
@@ -3463,10 +3456,10 @@ var LhqGenerators = (() => {
                 break;
             }
           };
-          lexer2.rules = [/^(?:[^\x00]*?(?=(\{\{)))/, /^(?:[^\x00]+)/, /^(?:[^\x00]{2,}?(?=(\{\{|\\\{\{|\\\\\{\{|$)))/, /^(?:\{\{\{\{(?=[^/]))/, /^(?:\{\{\{\{\/[^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=[=}\s\/.])\}\}\}\})/, /^(?:[^\x00]+?(?=(\{\{\{\{)))/, /^(?:[\s\S]*?--(~)?\}\})/, /^(?:\()/, /^(?:\))/, /^(?:\{\{\{\{)/, /^(?:\}\}\}\})/, /^(?:\{\{(~)?>)/, /^(?:\{\{(~)?#>)/, /^(?:\{\{(~)?#\*?)/, /^(?:\{\{(~)?\/)/, /^(?:\{\{(~)?\^\s*(~)?\}\})/, /^(?:\{\{(~)?\s*else\s*(~)?\}\})/, /^(?:\{\{(~)?\^)/, /^(?:\{\{(~)?\s*else\b)/, /^(?:\{\{(~)?\{)/, /^(?:\{\{(~)?&)/, /^(?:\{\{(~)?!--)/, /^(?:\{\{(~)?![\s\S]*?\}\})/, /^(?:\{\{(~)?\*?)/, /^(?:=)/, /^(?:\.\.)/, /^(?:\.(?=([=~}\s\/.)|])))/, /^(?:[\/.])/, /^(?:\s+)/, /^(?:\}(~)?\}\})/, /^(?:(~)?\}\})/, /^(?:"(\\["]|[^"])*")/, /^(?:'(\\[']|[^'])*')/, /^(?:@)/, /^(?:true(?=([~}\s)])))/, /^(?:false(?=([~}\s)])))/, /^(?:undefined(?=([~}\s)])))/, /^(?:null(?=([~}\s)])))/, /^(?:-?[0-9]+(?:\.[0-9]+)?(?=([~}\s)])))/, /^(?:as\s+\|)/, /^(?:\|)/, /^(?:([^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=([=~}\s\/.)|]))))/, /^(?:\[(\\\]|[^\]])*\])/, /^(?:.)/, /^(?:$)/];
+          lexer2.rules = [/^(?:[^\x00]*?(?=(\{\{)))/, /^(?:[^\x00]+)/, /^(?:[^\x00]{2,}?(?=(\{\{|\\\{\{|\\\\\{\{|$)))/, /^(?:\{\{\{\{(?=[^\/]))/, /^(?:\{\{\{\{\/[^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=[=}\s\/.])\}\}\}\})/, /^(?:[^\x00]+?(?=(\{\{\{\{)))/, /^(?:[\s\S]*?--(~)?\}\})/, /^(?:\()/, /^(?:\))/, /^(?:\{\{\{\{)/, /^(?:\}\}\}\})/, /^(?:\{\{(~)?>)/, /^(?:\{\{(~)?#>)/, /^(?:\{\{(~)?#\*?)/, /^(?:\{\{(~)?\/)/, /^(?:\{\{(~)?\^\s*(~)?\}\})/, /^(?:\{\{(~)?\s*else\s*(~)?\}\})/, /^(?:\{\{(~)?\^)/, /^(?:\{\{(~)?\s*else\b)/, /^(?:\{\{(~)?\{)/, /^(?:\{\{(~)?&)/, /^(?:\{\{(~)?!--)/, /^(?:\{\{(~)?![\s\S]*?\}\})/, /^(?:\{\{(~)?\*?)/, /^(?:=)/, /^(?:\.\.)/, /^(?:\.(?=([=~}\s\/.)|])))/, /^(?:[\/.])/, /^(?:\s+)/, /^(?:\}(~)?\}\})/, /^(?:(~)?\}\})/, /^(?:"(\\["]|[^"])*")/, /^(?:'(\\[']|[^'])*')/, /^(?:@)/, /^(?:true(?=([~}\s)])))/, /^(?:false(?=([~}\s)])))/, /^(?:undefined(?=([~}\s)])))/, /^(?:null(?=([~}\s)])))/, /^(?:-?[0-9]+(?:\.[0-9]+)?(?=([~}\s)])))/, /^(?:as\s+\|)/, /^(?:\|)/, /^(?:([^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=([=~}\s\/.)|]))))/, /^(?:\[(\\\]|[^\]])*\])/, /^(?:.)/, /^(?:$)/];
           lexer2.conditions = { "mu": { "rules": [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44], "inclusive": false }, "emu": { "rules": [2], "inclusive": false }, "com": { "rules": [6], "inclusive": false }, "raw": { "rules": [3, 4, 5], "inclusive": false }, "INITIAL": { "rules": [0, 1, 44], "inclusive": true } };
           return lexer2;
-        }();
+        })();
         parser.lexer = lexer;
         function Parser() {
           this.yy = {};
@@ -3474,15 +3467,15 @@ var LhqGenerators = (() => {
         Parser.prototype = parser;
         parser.Parser = Parser;
         return new Parser();
-      }();
+      })();
       exports["default"] = handlebars;
       module.exports = exports["default"];
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js
   var require_visitor = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -3601,9 +3594,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/whitespace-control.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/whitespace-control.js
   var require_whitespace_control = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/whitespace-control.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/whitespace-control.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -3752,9 +3745,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/helpers.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/helpers.js
   var require_helpers2 = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/helpers.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/helpers.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.SourceLocation = SourceLocation;
@@ -3940,9 +3933,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js
   var require_base2 = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.parseWithoutProcessing = parseWithoutProcessing;
@@ -3970,12 +3963,15 @@ var LhqGenerators = (() => {
       var _whitespaceControl2 = _interopRequireDefault(_whitespaceControl);
       var _helpers = require_helpers2();
       var Helpers = _interopRequireWildcard(_helpers);
+      var _exception = require_exception();
+      var _exception2 = _interopRequireDefault(_exception);
       var _utils = require_utils();
       exports.parser = _parser2["default"];
       var yy = {};
       _utils.extend(yy, Helpers);
       function parseWithoutProcessing(input, options) {
         if (input.type === "Program") {
+          validateInputAst(input);
           return input;
         }
         _parser2["default"].yy = yy;
@@ -3990,12 +3986,57 @@ var LhqGenerators = (() => {
         var strip = new _whitespaceControl2["default"](options);
         return strip.accept(ast);
       }
+      function validateInputAst(ast) {
+        validateAstNode(ast);
+      }
+      function validateAstNode(node) {
+        if (node == null) {
+          return;
+        }
+        if (Array.isArray(node)) {
+          node.forEach(validateAstNode);
+          return;
+        }
+        if (typeof node !== "object") {
+          return;
+        }
+        if (node.type === "PathExpression") {
+          if (!isValidDepth(node.depth)) {
+            throw new _exception2["default"]("Invalid AST: PathExpression.depth must be an integer");
+          }
+          if (!Array.isArray(node.parts)) {
+            throw new _exception2["default"]("Invalid AST: PathExpression.parts must be an array");
+          }
+          for (var i = 0; i < node.parts.length; i++) {
+            if (typeof node.parts[i] !== "string") {
+              throw new _exception2["default"]("Invalid AST: PathExpression.parts must only contain strings");
+            }
+          }
+        } else if (node.type === "NumberLiteral") {
+          if (typeof node.value !== "number" || !isFinite(node.value)) {
+            throw new _exception2["default"]("Invalid AST: NumberLiteral.value must be a number");
+          }
+        } else if (node.type === "BooleanLiteral") {
+          if (typeof node.value !== "boolean") {
+            throw new _exception2["default"]("Invalid AST: BooleanLiteral.value must be a boolean");
+          }
+        }
+        Object.keys(node).forEach(function(propertyName) {
+          if (propertyName === "loc") {
+            return;
+          }
+          validateAstNode(node[propertyName]);
+        });
+      }
+      function isValidDepth(depth) {
+        return typeof depth === "number" && isFinite(depth) && Math.floor(depth) === depth && depth >= 0;
+      }
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js
   var require_compiler = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js"(exports) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js"(exports) {
       "use strict";
       exports.__esModule = true;
       exports.Compiler = Compiler;
@@ -4657,10 +4698,10 @@ var LhqGenerators = (() => {
         return Array(level + 1).join("../") + aPath.substr(aRoot.length + 1);
       }
       exports.relative = relative;
-      var supportsNullProto = function() {
+      var supportsNullProto = (function() {
         var obj = /* @__PURE__ */ Object.create(null);
         return !("__proto__" in obj);
-      }();
+      })();
       function identity(s) {
         return s;
       }
@@ -6173,9 +6214,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/code-gen.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/code-gen.js
   var require_code_gen = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/code-gen.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/code-gen.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       var _utils = require_utils();
@@ -6309,9 +6350,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js
   var require_javascript_compiler = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -6429,12 +6470,10 @@ var LhqGenerators = (() => {
             var programs = _context.programs;
             var decorators = _context.decorators;
             for (i = 0, l = programs.length; i < l; i++) {
-              if (programs[i]) {
-                ret[i] = programs[i];
-                if (decorators[i]) {
-                  ret[i + "_d"] = decorators[i];
-                  ret.useDecorators = true;
-                }
+              ret[i] = programs[i];
+              if (decorators[i]) {
+                ret[i + "_d"] = decorators[i];
+                ret.useDecorators = true;
               }
             }
             if (this.environment.usePartial) {
@@ -6695,22 +6734,25 @@ var LhqGenerators = (() => {
           }
           this.resolvePath("data", parts, 0, true, strict);
         },
-        resolvePath: function resolvePath(type, parts, i, falsy, strict) {
+        resolvePath: function resolvePath(type, parts, startPartIndex, falsy, strict) {
           var _this2 = this;
           if (this.options.strict || this.options.assumeObjects) {
-            this.push(strictLookup(this.options.strict && strict, this, parts, i, type));
+            this.push(strictLookup(this.options.strict && strict, this, parts, startPartIndex, type));
             return;
           }
           var len = parts.length;
-          for (; i < len; i++) {
-            this.replaceStack(function(current) {
-              var lookup = _this2.nameLookup(current, parts[i], type);
+          var _loop = function(i2) {
+            _this2.replaceStack(function(current) {
+              var lookup = _this2.nameLookup(current, parts[i2], type);
               if (!falsy) {
                 return [" != null ? ", lookup, " : ", current];
               } else {
                 return [" && ", lookup];
               }
             });
+          };
+          for (var i = startPartIndex; i < len; i++) {
+            _loop(i);
           }
         },
         // [resolvePossibleLambda]
@@ -6814,7 +6856,9 @@ var LhqGenerators = (() => {
         // and inserts the decorator into the decorators list.
         registerDecorator: function registerDecorator(paramSize, name2) {
           var foundDecorator = this.nameLookup("decorators", name2, "decorator"), options = this.setupHelperArgs(name2, paramSize);
-          this.decorators.push(["fn = ", this.decorators.functionCall(foundDecorator, "", ["fn", "props", "container", options]), " || fn;"]);
+          this.decorators.push(["var decorator = ", foundDecorator, ";"]);
+          this.decorators.push(['if (typeof decorator !== "function") { throw new Error(', this.quotedString('Missing decorator: "' + name2 + '"'), "); }"]);
+          this.decorators.push(["fn = ", this.decorators.functionCall("decorator", "", ["fn", "props", "container", options]), " || fn;"]);
         },
         // [invokeHelper]
         //
@@ -6961,8 +7005,7 @@ var LhqGenerators = (() => {
             compiler = new this.compiler();
             var existing = this.matchExistingProgram(child);
             if (existing == null) {
-              this.context.programs.push("");
-              var index = this.context.programs.length;
+              var index = this.context.programs.push("") - 1;
               child.index = index;
               child.name = "program" + index;
               this.context.programs[index] = compiler.compile(child, options, this.context, !this.precompile);
@@ -7206,16 +7249,16 @@ var LhqGenerators = (() => {
       JavaScriptCompiler.isValidJavaScriptVariableName = function(name2) {
         return !JavaScriptCompiler.RESERVED_WORDS[name2] && /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name2);
       };
-      function strictLookup(requireTerminal, compiler, parts, i, type) {
+      function strictLookup(requireTerminal, compiler, parts, startPartIndex, type) {
         var stack = compiler.popStack(), len = parts.length;
         if (requireTerminal) {
           len--;
         }
-        for (; i < len; i++) {
+        for (var i = startPartIndex; i < len; i++) {
           stack = compiler.nameLookup(stack, parts[i], type);
         }
         if (requireTerminal) {
-          return [compiler.aliasable("container.strict"), "(", stack, ", ", compiler.quotedString(parts[i]), ", ", JSON.stringify(compiler.source.currentLocation), " )"];
+          return [compiler.aliasable("container.strict"), "(", stack, ", ", compiler.quotedString(parts[len]), ", ", JSON.stringify(compiler.source.currentLocation), " )"];
         } else {
           return stack;
         }
@@ -7225,9 +7268,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars.js
+  // node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars.js
   var require_handlebars = __commonJS({
-    "node_modules/.pnpm/handlebars@4.7.8/node_modules/handlebars/dist/cjs/handlebars.js"(exports, module) {
+    "node_modules/.pnpm/handlebars@4.7.9/node_modules/handlebars/dist/cjs/handlebars.js"(exports, module) {
       "use strict";
       exports.__esModule = true;
       function _interopRequireDefault(obj) {
@@ -7272,9 +7315,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/conventions.js
+  // node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/conventions.js
   var require_conventions = __commonJS({
-    "node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/conventions.js"(exports) {
+    "node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/conventions.js"(exports) {
       "use strict";
       function find(list, predicate, ac) {
         if (ac === void 0) {
@@ -7481,9 +7524,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/errors.js
+  // node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/errors.js
   var require_errors = __commonJS({
-    "node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/errors.js"(exports) {
+    "node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/errors.js"(exports) {
       "use strict";
       var conventions = require_conventions();
       function extendError(constructor, writableName) {
@@ -7639,9 +7682,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/grammar.js
+  // node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/grammar.js
   var require_grammar = __commonJS({
-    "node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/grammar.js"(exports) {
+    "node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/grammar.js"(exports) {
       "use strict";
       function detectUnicodeSupport(RegExpImpl) {
         try {
@@ -7700,6 +7743,7 @@ var LhqGenerators = (() => {
       if (UNICODE_SUPPORT) {
         Char = reg("[", chars(Char), "\\u{10000}-\\u{10FFFF}", "]");
       }
+      var InvalidChar = new RegExp("[^" + chars(Char) + "]", UNICODE_SUPPORT ? "u" : "");
       var _SChar = /[\x20\x09\x0D\x0A]/;
       var SChar_s = chars(_SChar);
       var S = reg(_SChar, "+");
@@ -7771,6 +7815,8 @@ var LhqGenerators = (() => {
           regg(PUBLIC, S, "(?<PubidLiteral>", PubidLiteral, ")", S, "(?<SystemLiteral>", SystemLiteral, ")")
         )
       );
+      var PubidLiteral_match = reg("^", PubidLiteral, "$");
+      var SystemLiteral_match = reg("^", SystemLiteral, "$");
       var NDataDecl = regg(S, "NDATA", S, Name);
       var EntityDef = regg(EntityValue, "|", regg(ExternalID, NDataDecl, "?"));
       var ENTITY_DECL_START = "<!ENTITY";
@@ -7822,6 +7868,7 @@ var LhqGenerators = (() => {
       exports.PI = PI;
       exports.PUBLIC = PUBLIC;
       exports.PubidLiteral = PubidLiteral;
+      exports.PubidLiteral_match = PubidLiteral_match;
       exports.QName = QName;
       exports.QName_exact = QName_exact;
       exports.QName_group = QName_group;
@@ -7830,15 +7877,17 @@ var LhqGenerators = (() => {
       exports.S_OPT = S_OPT;
       exports.SYSTEM = SYSTEM;
       exports.SystemLiteral = SystemLiteral;
+      exports.SystemLiteral_match = SystemLiteral_match;
+      exports.InvalidChar = InvalidChar;
       exports.UNICODE_REPLACEMENT_CHARACTER = UNICODE_REPLACEMENT_CHARACTER;
       exports.UNICODE_SUPPORT = UNICODE_SUPPORT;
       exports.XMLDecl = XMLDecl;
     }
   });
 
-  // node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/dom.js
+  // node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/dom.js
   var require_dom = __commonJS({
-    "node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/dom.js"(exports) {
+    "node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/dom.js"(exports) {
       "use strict";
       var conventions = require_conventions();
       var find = conventions.find;
@@ -8000,14 +8049,31 @@ var LhqGenerators = (() => {
         /**
          * Returns a string representation of the NodeList.
          *
-         * @param {unknown} nodeFilter
-         * __A filter function? Not implemented according to the spec?__.
+         * Accepts the same `options` object as `XMLSerializer.prototype.serializeToString`
+         * (`requireWellFormed`, `splitCDATASections`, `nodeFilter`). Passing a function is treated as
+         * a legacy `nodeFilter` for backward compatibility.
+         *
+         * @param {Object | function} [options]
+         * @param {boolean} [options.requireWellFormed=false]
+         * @param {boolean} [options.splitCDATASections=true]
+         * @param {function} [options.nodeFilter]
          * @returns {string}
-         * A string representation of the NodeList.
          */
-        toString: function(nodeFilter) {
+        toString: function(options) {
+          var opts;
+          if (typeof options === "function") {
+            opts = { requireWellFormed: false, splitCDATASections: true, nodeFilter: options };
+          } else if (!!options) {
+            opts = {
+              requireWellFormed: !!options.requireWellFormed,
+              splitCDATASections: options.splitCDATASections !== false,
+              nodeFilter: options.nodeFilter || null
+            };
+          } else {
+            opts = { requireWellFormed: false, splitCDATASections: true, nodeFilter: null };
+          }
           for (var buf = [], i = 0; i < this.length; i++) {
-            serializeToString(this[i], buf, nodeFilter);
+            serializeToString(this[i], buf, null, opts);
           }
           return buf.join("");
         },
@@ -8420,11 +8486,21 @@ var LhqGenerators = (() => {
          * The {@link https://www.w3.org/TR/DOM-Level-3-Core/glossary.html#dt-qualifiedname qualified
          * name} of the document type to be created.
          * @param {string} [publicId]
-         * The external subset public identifier.
+         * The external subset public identifier. Stored verbatim including surrounding quotes.
+         * When serialized with `requireWellFormed: true`, the serializer throws `InvalidStateError`
+         * if the value is non-empty and does not match the XML `PubidLiteral` production
+         * (W3C DOM Parsing §3.2.1.3; XML 1.0 production [12]). Creation-time validation is not
+         * enforced — deferred to a future breaking release.
          * @param {string} [systemId]
-         * The external subset system identifier.
+         * The external subset system identifier. Stored verbatim including surrounding quotes.
+         * When serialized with `requireWellFormed: true`, the serializer throws `InvalidStateError`
+         * if the value is non-empty and does not match the XML `SystemLiteral` production
+         * (W3C DOM Parsing §3.2.1.3; XML 1.0 production [11]). Creation-time validation is not
+         * enforced — deferred to a future breaking release.
          * @param {string} [internalSubset]
-         * the internal subset or an empty string if it is not present
+         * The internal subset or an empty string if it is not present. Stored verbatim.
+         * When serialized with `requireWellFormed: true`, the serializer throws `InvalidStateError`
+         * if the value contains `"]>"`. Creation-time validation is not enforced.
          * @returns {DocumentType}
          * A new {@link DocumentType} node with {@link Node#ownerDocument} set to null.
          * @throws {DOMException}
@@ -8607,7 +8683,7 @@ var LhqGenerators = (() => {
           var parent = other;
           do {
             if (this === parent) return true;
-            parent = other.parentNode;
+            parent = parent.parentNode;
           } while (parent);
           return false;
         },
@@ -8639,51 +8715,59 @@ var LhqGenerators = (() => {
         /**
          * Checks whether the given node is equal to this node.
          *
+         * Two nodes are equal when they have the same type, defining characteristics (for the type),
+         * and the same childNodes. The comparison is iterative to avoid stack overflows on
+         * deeply-nested trees. Attribute nodes of each Element pair are also pushed onto the stack
+         * and compared the same way.
+         *
          * @param {Node} [otherNode]
+         * @returns {boolean}
          * @see https://dom.spec.whatwg.org/#concept-node-equals
+         * @see ../docs/walk-dom.md.
          */
         isEqualNode: function(otherNode) {
           if (!otherNode) return false;
-          if (this.nodeType !== otherNode.nodeType) return false;
-          switch (this.nodeType) {
-            case this.DOCUMENT_TYPE_NODE:
-              if (this.name !== otherNode.name) return false;
-              if (this.publicId !== otherNode.publicId) return false;
-              if (this.systemId !== otherNode.systemId) return false;
-              break;
-            case this.ELEMENT_NODE:
-              if (this.namespaceURI !== otherNode.namespaceURI) return false;
-              if (this.prefix !== otherNode.prefix) return false;
-              if (this.localName !== otherNode.localName) return false;
-              if (this.attributes.length !== otherNode.attributes.length) return false;
-              for (var i = 0; i < this.attributes.length; i++) {
-                var attr = this.attributes.item(i);
-                if (!attr.isEqualNode(otherNode.getAttributeNodeNS(attr.namespaceURI, attr.localName))) {
-                  return false;
+          var stack = [{ node: this, other: otherNode }];
+          while (stack.length > 0) {
+            var pair = stack.pop();
+            var node = pair.node;
+            var other = pair.other;
+            if (node.nodeType !== other.nodeType) return false;
+            switch (node.nodeType) {
+              case node.DOCUMENT_TYPE_NODE:
+                if (node.name !== other.name) return false;
+                if (node.publicId !== other.publicId) return false;
+                if (node.systemId !== other.systemId) return false;
+                break;
+              case node.ELEMENT_NODE:
+                if (node.namespaceURI !== other.namespaceURI) return false;
+                if (node.prefix !== other.prefix) return false;
+                if (node.localName !== other.localName) return false;
+                if (node.attributes.length !== other.attributes.length) return false;
+                for (var i = 0; i < node.attributes.length; i++) {
+                  var attr = node.attributes.item(i);
+                  var otherAttr = other.getAttributeNodeNS(attr.namespaceURI, attr.localName);
+                  if (!otherAttr) return false;
+                  stack.push({ node: attr, other: otherAttr });
                 }
-              }
-              break;
-            case this.ATTRIBUTE_NODE:
-              if (this.namespaceURI !== otherNode.namespaceURI) return false;
-              if (this.localName !== otherNode.localName) return false;
-              if (this.value !== otherNode.value) return false;
-              break;
-            case this.PROCESSING_INSTRUCTION_NODE:
-              if (this.target !== otherNode.target || this.data !== otherNode.data) {
-                return false;
-              }
-              break;
-            case this.TEXT_NODE:
-            case this.COMMENT_NODE:
-              if (this.data !== otherNode.data) return false;
-              break;
-          }
-          if (this.childNodes.length !== otherNode.childNodes.length) {
-            return false;
-          }
-          for (var i = 0; i < this.childNodes.length; i++) {
-            if (!this.childNodes[i].isEqualNode(otherNode.childNodes[i])) {
-              return false;
+                break;
+              case node.ATTRIBUTE_NODE:
+                if (node.namespaceURI !== other.namespaceURI) return false;
+                if (node.localName !== other.localName) return false;
+                if (node.value !== other.value) return false;
+                break;
+              case node.PROCESSING_INSTRUCTION_NODE:
+                if (node.target !== other.target || node.data !== other.data) return false;
+                break;
+              case node.TEXT_NODE:
+              case node.CDATA_SECTION_NODE:
+              case node.COMMENT_NODE:
+                if (node.data !== other.data) return false;
+                break;
+            }
+            if (node.childNodes.length !== other.childNodes.length) return false;
+            for (var i = node.childNodes.length - 1; i >= 0; i--) {
+              stack.push({ node: node.childNodes[i], other: other.childNodes[i] });
             }
           }
           return true;
@@ -8802,7 +8886,7 @@ var LhqGenerators = (() => {
          * is `TEXT_NODE`) into a single node with the combined data. It also removes any empty text
          * nodes.
          *
-         * This method operates recursively, so it also normalizes any and all descendent nodes within
+         * This method iterativly traverses all child nodes to normalize all descendent nodes within
          * the subtree.
          *
          * @throws {DOMException}
@@ -8811,19 +8895,24 @@ var LhqGenerators = (() => {
          * @since Modified in DOM Level 2
          * @see {@link Node.removeChild}
          * @see {@link CharacterData.appendData}
+         * @see ../docs/walk-dom.md.
          */
         normalize: function() {
-          var child = this.firstChild;
-          while (child) {
-            var next = child.nextSibling;
-            if (next && next.nodeType == TEXT_NODE && child.nodeType == TEXT_NODE) {
-              this.removeChild(next);
-              child.appendData(next.data);
-            } else {
-              child.normalize();
-              child = next;
+          walkDOM(this, null, {
+            enter: function(node) {
+              var child = node.firstChild;
+              while (child) {
+                var next = child.nextSibling;
+                if (next !== null && next.nodeType === TEXT_NODE && child.nodeType === TEXT_NODE) {
+                  node.removeChild(next);
+                  child.appendData(next.data);
+                } else {
+                  child = next;
+                }
+              }
+              return true;
             }
-          }
+          });
         },
         /**
          * Checks whether the DOM implementation implements a specific feature and its version.
@@ -9015,17 +9104,40 @@ var LhqGenerators = (() => {
       copy(DocumentPosition, Node);
       copy(DocumentPosition, Node.prototype);
       function _visitNode(node, callback) {
-        if (callback(node)) {
-          return true;
-        }
-        if (node = node.firstChild) {
-          do {
-            if (_visitNode(node, callback)) {
-              return true;
+        walkDOM(node, null, {
+          enter: function(n) {
+            return callback(n) ? walkDOM.STOP : true;
+          }
+        });
+      }
+      function walkDOM(node, context, callbacks) {
+        var stack = [{ node, context, phase: walkDOM.ENTER }];
+        while (stack.length > 0) {
+          var frame = stack.pop();
+          if (frame.phase === walkDOM.ENTER) {
+            var childContext = callbacks.enter(frame.node, frame.context);
+            if (childContext === walkDOM.STOP) {
+              return walkDOM.STOP;
             }
-          } while (node = node.nextSibling);
+            stack.push({ node: frame.node, context: childContext, phase: walkDOM.EXIT });
+            if (childContext === null || childContext === void 0) {
+              continue;
+            }
+            var child = frame.node.lastChild;
+            while (child) {
+              stack.push({ node: child, context: childContext, phase: walkDOM.ENTER });
+              child = child.previousSibling;
+            }
+          } else {
+            if (callbacks.exit) {
+              callbacks.exit(frame.node, frame.context);
+            }
+          }
         }
       }
+      walkDOM.STOP = Symbol("walkDOM.STOP");
+      walkDOM.ENTER = 0;
+      walkDOM.EXIT = 1;
       function Document(symbol, options) {
         checkSymbol(symbol);
         var opt = options || {};
@@ -9295,7 +9407,20 @@ var LhqGenerators = (() => {
             this.documentElement = newChild;
           }
         },
-        // Introduced in DOM Level 2:
+        /**
+         * Imports a node from another document into this document, creating a new copy owned by this
+         * document. The source node and its subtree are not modified.
+         *
+         * @param {Node} importedNode
+         * The node to import.
+         * @param {boolean} deep
+         * If true, the contents of the node are recursively imported.
+         * If false, only the node itself (and its attributes, if it is an element) are imported.
+         * @returns {Node}
+         * Returns the newly created import of the node.
+         * @see {@link importNode}
+         * @see {@link https://dom.spec.whatwg.org/#dom-document-importnode}
+         */
         importNode: function(importedNode, deep) {
           return importNode(this, importedNode, deep);
         },
@@ -9370,6 +9495,15 @@ var LhqGenerators = (() => {
         /**
          * @param {string} data
          * @returns {Comment}
+         * @see https://dom.spec.whatwg.org/#dom-document-createcomment
+         * @see https://www.w3.org/TR/xml/#NT-Comment XML 1.0 production [15]
+         * @see https://www.w3.org/TR/DOM-Parsing/#dfn-concept-serialize-xml §3.2.1.3
+         *
+         *      Note: no validation is performed at creation time. When the resulting document is
+         *      serialized with `requireWellFormed: true`, the serializer throws `InvalidStateError`
+         *      if the comment data contains `--` anywhere, ends with `-`, or contains characters
+         *      outside the XML Char production (W3C DOM Parsing §3.2.1.3). Without that option the
+         *      data is emitted verbatim.
          */
         createComment: function(data) {
           var node = new Comment(PDC);
@@ -9379,10 +9513,22 @@ var LhqGenerators = (() => {
           return node;
         },
         /**
+         * Returns a new CDATASection node whose data is `data`.
+         *
+         * __This implementation differs from the specification:__ - calling this method on an HTML
+         * document does not throw `NotSupportedError`.
+         *
          * @param {string} data
          * @returns {CDATASection}
+         * @throws {DOMException}
+         * With code `INVALID_CHARACTER_ERR` if `data` contains `"]]>"`.
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/Document/createCDATASection
+         * @see https://dom.spec.whatwg.org/#dom-document-createcdatasection
          */
         createCDATASection: function(data) {
+          if (data.indexOf("]]>") !== -1) {
+            throw new DOMException(DOMException.INVALID_CHARACTER_ERR, 'data contains "]]>"');
+          }
           var node = new CDATASection(PDC);
           node.ownerDocument = this;
           node.childNodes = new NodeList();
@@ -9390,9 +9536,24 @@ var LhqGenerators = (() => {
           return node;
         },
         /**
+         * Returns a ProcessingInstruction node whose target is target and data is data.
+         *
+         * __This behavior is slightly different from the in the specs__:
+         * - it does not do any input validation on the arguments and doesn't throw
+         * "InvalidCharacterError".
+         *
+         * Note: When the resulting document is serialized with `requireWellFormed: true`, the
+         * serializer throws `InvalidStateError` if `.target` contains `:` or is an ASCII
+         * case-insensitive match for `"xml"`, or if `.data` contains `?>` or characters outside the
+         * XML Char production (W3C DOM Parsing §3.2.1.7). Without that option the data is emitted
+         * verbatim.
+         *
          * @param {string} target
          * @param {string} data
          * @returns {ProcessingInstruction}
+         * @see https://developer.mozilla.org/docs/Web/API/Document/createProcessingInstruction
+         * @see https://dom.spec.whatwg.org/#dom-document-createprocessinginstruction
+         * @see https://www.w3.org/TR/DOM-Parsing/#dfn-concept-serialize-xml §3.2.1.7
          */
         createProcessingInstruction: function(target, data) {
           var node = new ProcessingInstruction(PDC);
@@ -9839,11 +10000,23 @@ var LhqGenerators = (() => {
       _extends(ProcessingInstruction, CharacterData);
       function XMLSerializer() {
       }
-      XMLSerializer.prototype.serializeToString = function(node, nodeFilter) {
-        return nodeSerializeToString.call(node, nodeFilter);
+      XMLSerializer.prototype.serializeToString = function(node, options) {
+        return nodeSerializeToString.call(node, options);
       };
       Node.prototype.toString = nodeSerializeToString;
-      function nodeSerializeToString(nodeFilter) {
+      function nodeSerializeToString(options) {
+        var opts;
+        if (typeof options === "function") {
+          opts = { requireWellFormed: false, splitCDATASections: true, nodeFilter: options };
+        } else if (options != null) {
+          opts = {
+            requireWellFormed: !!options.requireWellFormed,
+            splitCDATASections: options.splitCDATASections !== false,
+            nodeFilter: options.nodeFilter || null
+          };
+        } else {
+          opts = { requireWellFormed: false, splitCDATASections: true, nodeFilter: null };
+        }
         var buf = [];
         var refNode = this.nodeType === DOCUMENT_NODE && this.documentElement || this;
         var prefix = refNode.prefix;
@@ -9857,7 +10030,7 @@ var LhqGenerators = (() => {
             ];
           }
         }
-        serializeToString(this, buf, nodeFilter, visibleNamespaces);
+        serializeToString(this, buf, visibleNamespaces, opts);
         return buf.join("");
       }
       function needNamespaceDefine(node, isHTML, visibleNamespaces) {
@@ -9881,247 +10054,311 @@ var LhqGenerators = (() => {
       function addSerializedAttribute(buf, qualifiedName, value) {
         buf.push(" ", qualifiedName, '="', value.replace(/[<>&"\t\n\r]/g, _xmlEncoder), '"');
       }
-      function serializeToString(node, buf, nodeFilter, visibleNamespaces) {
+      function serializeToString(node, buf, visibleNamespaces, opts) {
         if (!visibleNamespaces) {
           visibleNamespaces = [];
         }
+        var nodeFilter = opts.nodeFilter;
+        var requireWellFormed = opts.requireWellFormed;
+        var splitCDATASections = opts.splitCDATASections;
         var doc = node.nodeType === DOCUMENT_NODE ? node : node.ownerDocument;
         var isHTML = doc.type === "html";
-        if (nodeFilter) {
-          node = nodeFilter(node);
-          if (node) {
-            if (typeof node == "string") {
-              buf.push(node);
-              return;
-            }
-          } else {
-            return;
-          }
-        }
-        switch (node.nodeType) {
-          case ELEMENT_NODE:
-            var attrs = node.attributes;
-            var len = attrs.length;
-            var child = node.firstChild;
-            var nodeName = node.tagName;
-            var prefixedNodeName = nodeName;
-            if (!isHTML && !node.prefix && node.namespaceURI) {
-              var defaultNS;
-              for (var ai = 0; ai < attrs.length; ai++) {
-                if (attrs.item(ai).name === "xmlns") {
-                  defaultNS = attrs.item(ai).value;
-                  break;
-                }
-              }
-              if (!defaultNS) {
-                for (var nsi = visibleNamespaces.length - 1; nsi >= 0; nsi--) {
-                  var namespace = visibleNamespaces[nsi];
-                  if (namespace.prefix === "" && namespace.namespace === node.namespaceURI) {
-                    defaultNS = namespace.namespace;
-                    break;
+        walkDOM(
+          node,
+          { ns: visibleNamespaces },
+          {
+            enter: function(n, ctx) {
+              var namespaces = ctx.ns;
+              if (nodeFilter) {
+                n = nodeFilter(n);
+                if (n) {
+                  if (typeof n == "string") {
+                    buf.push(n);
+                    return null;
                   }
+                } else {
+                  return null;
                 }
               }
-              if (defaultNS !== node.namespaceURI) {
-                for (var nsi = visibleNamespaces.length - 1; nsi >= 0; nsi--) {
-                  var namespace = visibleNamespaces[nsi];
-                  if (namespace.namespace === node.namespaceURI) {
-                    if (namespace.prefix) {
-                      prefixedNodeName = namespace.prefix + ":" + nodeName;
+              switch (n.nodeType) {
+                case ELEMENT_NODE:
+                  var attrs = n.attributes;
+                  var len = attrs.length;
+                  var nodeName = n.tagName;
+                  var prefixedNodeName = nodeName;
+                  if (!isHTML && !n.prefix && n.namespaceURI) {
+                    var defaultNS;
+                    for (var ai = 0; ai < attrs.length; ai++) {
+                      if (attrs.item(ai).name === "xmlns") {
+                        defaultNS = attrs.item(ai).value;
+                        break;
+                      }
                     }
-                    break;
+                    if (!defaultNS) {
+                      for (var nsi = namespaces.length - 1; nsi >= 0; nsi--) {
+                        var nsEntry = namespaces[nsi];
+                        if (nsEntry.prefix === "" && nsEntry.namespace === n.namespaceURI) {
+                          defaultNS = nsEntry.namespace;
+                          break;
+                        }
+                      }
+                    }
+                    if (defaultNS !== n.namespaceURI) {
+                      for (var nsi = namespaces.length - 1; nsi >= 0; nsi--) {
+                        var nsEntry = namespaces[nsi];
+                        if (nsEntry.namespace === n.namespaceURI) {
+                          if (nsEntry.prefix) {
+                            prefixedNodeName = nsEntry.prefix + ":" + nodeName;
+                          }
+                          break;
+                        }
+                      }
+                    }
                   }
-                }
-              }
-            }
-            buf.push("<", prefixedNodeName);
-            for (var i = 0; i < len; i++) {
-              var attr = attrs.item(i);
-              if (attr.prefix == "xmlns") {
-                visibleNamespaces.push({
-                  prefix: attr.localName,
-                  namespace: attr.value
-                });
-              } else if (attr.nodeName == "xmlns") {
-                visibleNamespaces.push({ prefix: "", namespace: attr.value });
-              }
-            }
-            for (var i = 0; i < len; i++) {
-              var attr = attrs.item(i);
-              if (needNamespaceDefine(attr, isHTML, visibleNamespaces)) {
-                var prefix = attr.prefix || "";
-                var uri = attr.namespaceURI;
-                addSerializedAttribute(buf, prefix ? "xmlns:" + prefix : "xmlns", uri);
-                visibleNamespaces.push({ prefix, namespace: uri });
-              }
-              serializeToString(attr, buf, nodeFilter, visibleNamespaces);
-            }
-            if (nodeName === prefixedNodeName && needNamespaceDefine(node, isHTML, visibleNamespaces)) {
-              var prefix = node.prefix || "";
-              var uri = node.namespaceURI;
-              addSerializedAttribute(buf, prefix ? "xmlns:" + prefix : "xmlns", uri);
-              visibleNamespaces.push({ prefix, namespace: uri });
-            }
-            var canCloseTag = !child;
-            if (canCloseTag && (isHTML || node.namespaceURI === NAMESPACE.HTML)) {
-              canCloseTag = isHTMLVoidElement(nodeName);
-            }
-            if (canCloseTag) {
-              buf.push("/>");
-            } else {
-              buf.push(">");
-              if (isHTML && isHTMLRawTextElement(nodeName)) {
-                while (child) {
-                  if (child.data) {
-                    buf.push(child.data);
+                  buf.push("<", prefixedNodeName);
+                  var childNamespaces = namespaces.slice();
+                  for (var i = 0; i < len; i++) {
+                    var attr = attrs.item(i);
+                    if (attr.prefix == "xmlns") {
+                      childNamespaces.push({
+                        prefix: attr.localName,
+                        namespace: attr.value
+                      });
+                    } else if (attr.nodeName == "xmlns") {
+                      childNamespaces.push({ prefix: "", namespace: attr.value });
+                    }
+                  }
+                  for (var i = 0; i < len; i++) {
+                    var attr = attrs.item(i);
+                    if (needNamespaceDefine(attr, isHTML, childNamespaces)) {
+                      var attrPrefix = attr.prefix || "";
+                      var uri = attr.namespaceURI;
+                      addSerializedAttribute(buf, attrPrefix ? "xmlns:" + attrPrefix : "xmlns", uri);
+                      childNamespaces.push({ prefix: attrPrefix, namespace: uri });
+                    }
+                    var filteredAttr = nodeFilter ? nodeFilter(attr) : attr;
+                    if (filteredAttr) {
+                      if (typeof filteredAttr === "string") {
+                        buf.push(filteredAttr);
+                      } else {
+                        addSerializedAttribute(buf, filteredAttr.name, filteredAttr.value);
+                      }
+                    }
+                  }
+                  if (nodeName === prefixedNodeName && needNamespaceDefine(n, isHTML, childNamespaces)) {
+                    var nodePrefix = n.prefix || "";
+                    var uri = n.namespaceURI;
+                    addSerializedAttribute(buf, nodePrefix ? "xmlns:" + nodePrefix : "xmlns", uri);
+                    childNamespaces.push({ prefix: nodePrefix, namespace: uri });
+                  }
+                  var canCloseTag = !n.firstChild;
+                  if (canCloseTag && (isHTML || n.namespaceURI === NAMESPACE.HTML)) {
+                    canCloseTag = isHTMLVoidElement(nodeName);
+                  }
+                  if (canCloseTag) {
+                    buf.push("/>");
+                    return null;
+                  }
+                  buf.push(">");
+                  if (isHTML && isHTMLRawTextElement(nodeName)) {
+                    var child = n.firstChild;
+                    while (child) {
+                      if (child.data) {
+                        buf.push(child.data);
+                      } else {
+                        serializeToString(child, buf, childNamespaces.slice(), opts);
+                      }
+                      child = child.nextSibling;
+                    }
+                    buf.push("</", prefixedNodeName, ">");
+                    return null;
+                  }
+                  return { ns: childNamespaces, tag: prefixedNodeName };
+                case DOCUMENT_NODE:
+                case DOCUMENT_FRAGMENT_NODE:
+                  if (requireWellFormed && n.nodeType === DOCUMENT_NODE && n.documentElement == null) {
+                    throw new DOMException("The Document has no documentElement", DOMExceptionName.InvalidStateError);
+                  }
+                  return { ns: namespaces };
+                case ATTRIBUTE_NODE:
+                  addSerializedAttribute(buf, n.name, n.value);
+                  return null;
+                case TEXT_NODE:
+                  if (requireWellFormed && g.InvalidChar.test(n.data)) {
+                    throw new DOMException(
+                      "The Text node data contains characters outside the XML Char production",
+                      DOMExceptionName.InvalidStateError
+                    );
+                  }
+                  buf.push(n.data.replace(/[<&>]/g, _xmlEncoder));
+                  return null;
+                case CDATA_SECTION_NODE:
+                  if (requireWellFormed && n.data.indexOf("]]>") !== -1) {
+                    throw new DOMException('The CDATASection data contains "]]>"', DOMExceptionName.InvalidStateError);
+                  }
+                  if (splitCDATASections) {
+                    buf.push(g.CDATA_START, n.data.replace(/]]>/g, "]]]]><![CDATA[>"), g.CDATA_END);
                   } else {
-                    serializeToString(child, buf, nodeFilter, visibleNamespaces.slice());
+                    buf.push(g.CDATA_START, n.data, g.CDATA_END);
                   }
-                  child = child.nextSibling;
-                }
-              } else {
-                while (child) {
-                  serializeToString(child, buf, nodeFilter, visibleNamespaces.slice());
-                  child = child.nextSibling;
-                }
+                  return null;
+                case COMMENT_NODE:
+                  if (requireWellFormed) {
+                    if (g.InvalidChar.test(n.data)) {
+                      throw new DOMException(
+                        "The comment node data contains characters outside the XML Char production",
+                        DOMExceptionName.InvalidStateError
+                      );
+                    }
+                    if (n.data.indexOf("--") !== -1 || n.data[n.data.length - 1] === "-") {
+                      throw new DOMException(
+                        'The comment node data contains "--" or ends with "-"',
+                        DOMExceptionName.InvalidStateError
+                      );
+                    }
+                  }
+                  buf.push(g.COMMENT_START, n.data, g.COMMENT_END);
+                  return null;
+                case DOCUMENT_TYPE_NODE:
+                  var pubid = n.publicId;
+                  var sysid = n.systemId;
+                  if (requireWellFormed) {
+                    if (pubid && !g.PubidLiteral_match.test(pubid)) {
+                      throw new DOMException("DocumentType publicId is not a valid PubidLiteral", DOMExceptionName.InvalidStateError);
+                    }
+                    if (sysid && sysid !== "." && !g.SystemLiteral_match.test(sysid)) {
+                      throw new DOMException("DocumentType systemId is not a valid SystemLiteral", DOMExceptionName.InvalidStateError);
+                    }
+                    if (n.internalSubset && n.internalSubset.indexOf("]>") !== -1) {
+                      throw new DOMException('DocumentType internalSubset contains "]>"', DOMExceptionName.InvalidStateError);
+                    }
+                  }
+                  buf.push(g.DOCTYPE_DECL_START, " ", n.name);
+                  if (pubid) {
+                    buf.push(" ", g.PUBLIC, " ", pubid);
+                    if (sysid && sysid !== ".") {
+                      buf.push(" ", sysid);
+                    }
+                  } else if (sysid && sysid !== ".") {
+                    buf.push(" ", g.SYSTEM, " ", sysid);
+                  }
+                  if (n.internalSubset) {
+                    buf.push(" [", n.internalSubset, "]");
+                  }
+                  buf.push(">");
+                  return null;
+                case PROCESSING_INSTRUCTION_NODE:
+                  if (requireWellFormed) {
+                    if (n.target.indexOf(":") !== -1 || n.target.toLowerCase() === "xml") {
+                      throw new DOMException("The ProcessingInstruction target is not well-formed", DOMExceptionName.InvalidStateError);
+                    }
+                    if (g.InvalidChar.test(n.data)) {
+                      throw new DOMException(
+                        "The ProcessingInstruction data contains characters outside the XML Char production",
+                        DOMExceptionName.InvalidStateError
+                      );
+                    }
+                    if (n.data.indexOf("?>") !== -1) {
+                      throw new DOMException('The ProcessingInstruction data contains "?>"', DOMExceptionName.InvalidStateError);
+                    }
+                  }
+                  buf.push("<?", n.target, " ", n.data, "?>");
+                  return null;
+                case ENTITY_REFERENCE_NODE:
+                  buf.push("&", n.nodeName, ";");
+                  return null;
+                //case ENTITY_NODE:
+                //case NOTATION_NODE:
+                default:
+                  buf.push("??", n.nodeName);
+                  return null;
               }
-              buf.push("</", prefixedNodeName, ">");
-            }
-            return;
-          case DOCUMENT_NODE:
-          case DOCUMENT_FRAGMENT_NODE:
-            var child = node.firstChild;
-            while (child) {
-              serializeToString(child, buf, nodeFilter, visibleNamespaces.slice());
-              child = child.nextSibling;
-            }
-            return;
-          case ATTRIBUTE_NODE:
-            return addSerializedAttribute(buf, node.name, node.value);
-          case TEXT_NODE:
-            return buf.push(node.data.replace(/[<&>]/g, _xmlEncoder));
-          case CDATA_SECTION_NODE:
-            return buf.push(g.CDATA_START, node.data, g.CDATA_END);
-          case COMMENT_NODE:
-            return buf.push(g.COMMENT_START, node.data, g.COMMENT_END);
-          case DOCUMENT_TYPE_NODE:
-            var pubid = node.publicId;
-            var sysid = node.systemId;
-            buf.push(g.DOCTYPE_DECL_START, " ", node.name);
-            if (pubid) {
-              buf.push(" ", g.PUBLIC, " ", pubid);
-              if (sysid && sysid !== ".") {
-                buf.push(" ", sysid);
+            },
+            exit: function(n, childCtx) {
+              if (childCtx && childCtx.tag) {
+                buf.push("</", childCtx.tag, ">");
               }
-            } else if (sysid && sysid !== ".") {
-              buf.push(" ", g.SYSTEM, " ", sysid);
             }
-            if (node.internalSubset) {
-              buf.push(" [", node.internalSubset, "]");
-            }
-            buf.push(">");
-            return;
-          case PROCESSING_INSTRUCTION_NODE:
-            return buf.push("<?", node.target, " ", node.data, "?>");
-          case ENTITY_REFERENCE_NODE:
-            return buf.push("&", node.nodeName, ";");
-          //case ENTITY_NODE:
-          //case NOTATION_NODE:
-          default:
-            buf.push("??", node.nodeName);
-        }
+          }
+        );
       }
       function importNode(doc, node, deep) {
-        var node2;
-        switch (node.nodeType) {
-          case ELEMENT_NODE:
-            node2 = node.cloneNode(false);
-            node2.ownerDocument = doc;
-          //var attrs = node2.attributes;
-          //var len = attrs.length;
-          //for(var i=0;i<len;i++){
-          //node2.setAttributeNodeNS(importNode(doc,attrs.item(i),deep));
-          //}
-          case DOCUMENT_FRAGMENT_NODE:
-            break;
-          case ATTRIBUTE_NODE:
-            deep = true;
-            break;
-        }
-        if (!node2) {
-          node2 = node.cloneNode(false);
-        }
-        node2.ownerDocument = doc;
-        node2.parentNode = null;
-        if (deep) {
-          var child = node.firstChild;
-          while (child) {
-            node2.appendChild(importNode(doc, child, deep));
-            child = child.nextSibling;
+        var destRoot;
+        walkDOM(node, null, {
+          enter: function(srcNode, destParent) {
+            var destNode = srcNode.cloneNode(false);
+            destNode.ownerDocument = doc;
+            destNode.parentNode = null;
+            if (destParent === null) {
+              destRoot = destNode;
+            } else {
+              destParent.appendChild(destNode);
+            }
+            var shouldDeep = srcNode.nodeType === ATTRIBUTE_NODE || deep;
+            return shouldDeep ? destNode : null;
           }
-        }
-        return node2;
+        });
+        return destRoot;
       }
       function cloneNode(doc, node, deep) {
-        var node2 = new node.constructor(PDC);
-        for (var n in node) {
-          if (hasOwn(node, n)) {
-            var v = node[n];
-            if (typeof v != "object") {
-              if (v != node2[n]) {
-                node2[n] = v;
+        var destRoot;
+        walkDOM(node, null, {
+          enter: function(srcNode, destParent) {
+            var destNode = new srcNode.constructor(PDC);
+            for (var n in srcNode) {
+              if (hasOwn(srcNode, n)) {
+                var v = srcNode[n];
+                if (typeof v != "object") {
+                  if (v != destNode[n]) {
+                    destNode[n] = v;
+                  }
+                }
               }
             }
-          }
-        }
-        if (node.childNodes) {
-          node2.childNodes = new NodeList();
-        }
-        node2.ownerDocument = doc;
-        switch (node2.nodeType) {
-          case ELEMENT_NODE:
-            var attrs = node.attributes;
-            var attrs2 = node2.attributes = new NamedNodeMap();
-            var len = attrs.length;
-            attrs2._ownerElement = node2;
-            for (var i = 0; i < len; i++) {
-              node2.setAttributeNode(cloneNode(doc, attrs.item(i), true));
+            if (srcNode.childNodes) {
+              destNode.childNodes = new NodeList();
             }
-            break;
-          case ATTRIBUTE_NODE:
-            deep = true;
-        }
-        if (deep) {
-          var child = node.firstChild;
-          while (child) {
-            node2.appendChild(cloneNode(doc, child, deep));
-            child = child.nextSibling;
+            destNode.ownerDocument = doc;
+            var shouldDeep = deep;
+            switch (destNode.nodeType) {
+              case ELEMENT_NODE:
+                var attrs = srcNode.attributes;
+                var attrs2 = destNode.attributes = new NamedNodeMap();
+                var len = attrs.length;
+                attrs2._ownerElement = destNode;
+                for (var i = 0; i < len; i++) {
+                  destNode.setAttributeNode(cloneNode(doc, attrs.item(i), true));
+                }
+                break;
+              case ATTRIBUTE_NODE:
+                shouldDeep = true;
+            }
+            if (destParent !== null) {
+              destParent.appendChild(destNode);
+            } else {
+              destRoot = destNode;
+            }
+            return shouldDeep ? destNode : null;
           }
-        }
-        return node2;
+        });
+        return destRoot;
       }
       function __set__(object, key, value) {
         object[key] = value;
       }
+      function childrenRefresh(node) {
+        var ls = [];
+        var child = node.firstChild;
+        while (child) {
+          if (child.nodeType === ELEMENT_NODE) {
+            ls.push(child);
+          }
+          child = child.nextSibling;
+        }
+        return ls;
+      }
       try {
         if (Object.defineProperty) {
-          let getTextContent = function(node) {
-            switch (node.nodeType) {
-              case ELEMENT_NODE:
-              case DOCUMENT_FRAGMENT_NODE:
-                var buf = [];
-                node = node.firstChild;
-                while (node) {
-                  if (node.nodeType !== 7 && node.nodeType !== 8) {
-                    buf.push(getTextContent(node));
-                  }
-                  node = node.nextSibling;
-                }
-                return buf.join("");
-              default:
-                return node.nodeValue;
-            }
-          };
           Object.defineProperty(LiveNodeList.prototype, "length", {
             get: function() {
               _updateLiveList(this);
@@ -10130,7 +10367,22 @@ var LhqGenerators = (() => {
           });
           Object.defineProperty(Node.prototype, "textContent", {
             get: function() {
-              return getTextContent(this);
+              if (this.nodeType === ELEMENT_NODE || this.nodeType === DOCUMENT_FRAGMENT_NODE) {
+                var buf = [];
+                walkDOM(this, null, {
+                  enter: function(n) {
+                    if (n.nodeType === ELEMENT_NODE || n.nodeType === DOCUMENT_FRAGMENT_NODE) {
+                      return true;
+                    }
+                    if (n.nodeType === PROCESSING_INSTRUCTION_NODE || n.nodeType === COMMENT_NODE) {
+                      return null;
+                    }
+                    buf.push(n.nodeValue);
+                  }
+                });
+                return buf.join("");
+              }
+              return this.nodeValue;
             },
             set: function(data) {
               switch (this.nodeType) {
@@ -10148,6 +10400,21 @@ var LhqGenerators = (() => {
                   this.value = data;
                   this.nodeValue = data;
               }
+            }
+          });
+          Object.defineProperty(Element.prototype, "children", {
+            get: function() {
+              return new LiveNodeList(this, childrenRefresh);
+            }
+          });
+          Object.defineProperty(Document.prototype, "children", {
+            get: function() {
+              return new LiveNodeList(this, childrenRefresh);
+            }
+          });
+          Object.defineProperty(DocumentFragment.prototype, "children", {
+            get: function() {
+              return new LiveNodeList(this, childrenRefresh);
             }
           });
           __set__ = function(object, key, value) {
@@ -10175,13 +10442,14 @@ var LhqGenerators = (() => {
       exports.Notation = Notation;
       exports.Text = Text;
       exports.ProcessingInstruction = ProcessingInstruction;
+      exports.walkDOM = walkDOM;
       exports.XMLSerializer = XMLSerializer;
     }
   });
 
-  // node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/entities.js
+  // node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/entities.js
   var require_entities = __commonJS({
-    "node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/entities.js"(exports) {
+    "node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/entities.js"(exports) {
       "use strict";
       var freeze = require_conventions().freeze;
       exports.XML_ENTITIES = freeze({
@@ -12322,9 +12590,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/sax.js
+  // node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/sax.js
   var require_sax = __commonJS({
-    "node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/sax.js"(exports) {
+    "node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/sax.js"(exports) {
       "use strict";
       var conventions = require_conventions();
       var g = require_grammar();
@@ -13078,9 +13346,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/dom-parser.js
+  // node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/dom-parser.js
   var require_dom_parser = __commonJS({
-    "node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/dom-parser.js"(exports) {
+    "node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/dom-parser.js"(exports) {
       "use strict";
       var conventions = require_conventions();
       var dom = require_dom();
@@ -13344,9 +13612,9 @@ var LhqGenerators = (() => {
     }
   });
 
-  // node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/index.js
+  // node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/index.js
   var require_lib = __commonJS({
-    "node_modules/.pnpm/@xmldom+xmldom@0.9.8/node_modules/@xmldom/xmldom/lib/index.js"(exports) {
+    "node_modules/.pnpm/@xmldom+xmldom@0.9.10/node_modules/@xmldom/xmldom/lib/index.js"(exports) {
       "use strict";
       var conventions = require_conventions();
       exports.assign = conventions.assign;
@@ -16747,7 +17015,7 @@ var LhqGenerators = (() => {
           }
           return null;
         };
-        var XPathException = function() {
+        var XPathException = (function() {
           function getMessage(code, exception) {
             var msg = exception ? ": " + exception.toString() : "";
             switch (code) {
@@ -16776,7 +17044,7 @@ var LhqGenerators = (() => {
           XPathException2.INVALID_EXPRESSION_ERR = 51;
           XPathException2.TYPE_ERR = 52;
           return XPathException2;
-        }();
+        })();
         XPathExpression.prototype = {};
         XPathExpression.prototype.constructor = XPathExpression;
         XPathExpression.superclass = Object.prototype;
@@ -21252,13 +21520,13 @@ var LhqGenerators = (() => {
   var onumber = () => numberType().optional();
   var oboolean = () => booleanType().optional();
   var coerce = {
-    string: (arg) => ZodString.create(__spreadProps(__spreadValues({}, arg), { coerce: true })),
-    number: (arg) => ZodNumber.create(__spreadProps(__spreadValues({}, arg), { coerce: true })),
-    boolean: (arg) => ZodBoolean.create(__spreadProps(__spreadValues({}, arg), {
+    string: ((arg) => ZodString.create(__spreadProps(__spreadValues({}, arg), { coerce: true }))),
+    number: ((arg) => ZodNumber.create(__spreadProps(__spreadValues({}, arg), { coerce: true }))),
+    boolean: ((arg) => ZodBoolean.create(__spreadProps(__spreadValues({}, arg), {
       coerce: true
-    })),
-    bigint: (arg) => ZodBigInt.create(__spreadProps(__spreadValues({}, arg), { coerce: true })),
-    date: (arg) => ZodDate.create(__spreadProps(__spreadValues({}, arg), { coerce: true }))
+    }))),
+    bigint: ((arg) => ZodBigInt.create(__spreadProps(__spreadValues({}, arg), { coerce: true }))),
+    date: ((arg) => ZodDate.create(__spreadProps(__spreadValues({}, arg), { coerce: true })))
   };
   var NEVER = INVALID;
   var z = /* @__PURE__ */ Object.freeze({
@@ -22804,10 +23072,13 @@ var LhqGenerators = (() => {
   // src/utils.ts
   var import_jmespath = __toESM(require_jmespath());
 
-  // node_modules/.pnpm/detect-indent@7.0.1/node_modules/detect-indent/index.js
+  // node_modules/.pnpm/detect-indent@7.0.2/node_modules/detect-indent/index.js
   var INDENT_REGEX = /^(?:( )+|\t+)/;
   var INDENT_TYPE_SPACE = "space";
   var INDENT_TYPE_TAB = "tab";
+  function shouldIgnoreSingleSpace(ignoreSingleSpaces, indentType, value) {
+    return ignoreSingleSpaces && indentType === INDENT_TYPE_SPACE && value === 1;
+  }
   function makeIndentsMap(string, ignoreSingleSpaces) {
     const indents = /* @__PURE__ */ new Map();
     let previousSize = 0;
@@ -22817,39 +23088,36 @@ var LhqGenerators = (() => {
       if (!line) {
         continue;
       }
-      let indent;
-      let indentType;
-      let use;
-      let weight;
-      let entry;
       const matches = line.match(INDENT_REGEX);
       if (matches === null) {
         previousSize = 0;
         previousIndentType = "";
       } else {
-        indent = matches[0].length;
-        indentType = matches[1] ? INDENT_TYPE_SPACE : INDENT_TYPE_TAB;
-        if (ignoreSingleSpaces && indentType === INDENT_TYPE_SPACE && indent === 1) {
+        const indent = matches[0].length;
+        const indentType = matches[1] ? INDENT_TYPE_SPACE : INDENT_TYPE_TAB;
+        if (shouldIgnoreSingleSpace(ignoreSingleSpaces, indentType, indent)) {
           continue;
         }
         if (indentType !== previousIndentType) {
           previousSize = 0;
         }
         previousIndentType = indentType;
-        use = 1;
-        weight = 0;
+        let use = 1;
+        let weight = 0;
         const indentDifference = indent - previousSize;
         previousSize = indent;
         if (indentDifference === 0) {
           use = 0;
           weight = 1;
         } else {
-          const absoluteIndentDifference = indentDifference > 0 ? indentDifference : -indentDifference;
+          const absoluteIndentDifference = Math.abs(indentDifference);
+          if (shouldIgnoreSingleSpace(ignoreSingleSpaces, indentType, absoluteIndentDifference)) {
+            continue;
+          }
           key = encodeIndentsKey(indentType, absoluteIndentDifference);
         }
-        entry = indents.get(key);
-        entry = entry === void 0 ? [1, 0] : [entry[0] + use, entry[1] + weight];
-        indents.set(key, entry);
+        const entry = indents.get(key);
+        indents.set(key, entry === void 0 ? [1, 0] : [entry[0] + use, entry[1] + weight]);
       }
     }
     return indents;
@@ -23332,7 +23600,7 @@ var LhqGenerators = (() => {
     if (false) {
       return "0.0.0";
     }
-    return "1.0.0-rc.1";
+    return "1.0.1-rc.3";
   }
   function getZodError(error) {
     const messageBuilder = createMessageBuilder({

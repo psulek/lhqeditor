@@ -10,7 +10,7 @@ inputs:
   vpk_version:
     description: 'Version of the Velopack tool to use.'
     required: true
-    default: '0.0.1369-g1d5c984'
+    default: '1.2.0'
   prerelease:
     description: 'Mark the published package as prerelease.'
     required: true
@@ -30,6 +30,10 @@ inputs:
   github_token:
     description: 'GitHub token'
     required: true
+  channel:
+    description: 'Velopack release channel (e.g., "dev"). Leave empty for default channel.'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -100,4 +104,5 @@ runs:
         $psArgs = @{ repoUrl = $repoUrl; releaseName = $releaseName; tagName = $tagName; newVersion = "${{ inputs.new_version }}"; workingDir = "src/App"; ghToken = "${{ inputs.github_token }}" }
         if ("${{ inputs.mode }}" -eq "build_publish") { $psArgs['build'] = $true }
         if ("${{ inputs.prerelease }}" -eq "true") { $psArgs['prerelease'] = $true }
+        if ("${{ inputs.channel }}" -ne "") { $psArgs['channel'] = "${{ inputs.channel }}" }
         & ./src/App/publish.ps1 @psArgs

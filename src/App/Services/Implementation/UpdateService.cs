@@ -99,7 +99,9 @@ namespace LHQ.App.Services.Implementation
 
                 if (updateSource != null)
                 {
-                    _updateManager = new UpdateManager(updateSource);
+                    string channel = AppConfig.UpdateChannel;
+                    var options = string.IsNullOrEmpty(channel) ? null : new UpdateOptions { ExplicitChannel = channel };
+                    _updateManager = new UpdateManager(updateSource, options);
                     return await _updateManager.CheckForUpdatesAsync();
                 
                 }

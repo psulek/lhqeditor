@@ -46,6 +46,8 @@ namespace LHQ.App.Code
         private const string AttrData = "data";
         private const string AttrDetectTheme = "detectTheme";
         private const string AttrRunTemplateAfterSave = "runTemplateAfterSave";
+        private const string AttrUpdateServerType = "updateServerType";
+        private const string AttrUpdateChannel = "updateChannel";
 
         protected override AppConfig LoadFromJson(JObject jsonRoot)
         {
@@ -81,9 +83,14 @@ namespace LHQ.App.Code
                 result.EnableTranslation = enableTranslation;
             }
 
-            if (TryGetJsonValue(jsonRoot, "updateServerType", JTokenType.String, out string updateServerType))
+            if (TryGetJsonValue(jsonRoot, AttrUpdateServerType, JTokenType.String, out string updateServerType))
             {
                 result.UpdateServerType = updateServerType;
+            }
+
+            if (TryGetJsonValue(jsonRoot, AttrUpdateChannel, JTokenType.String, out string updateChannel))
+            {
+                result.UpdateChannel = updateChannel;
             }
 
             if (TryGetJsonValue(jsonRoot, AttrTranslatorProviderKey, JTokenType.String, out string translatorProviderKey))
@@ -143,7 +150,8 @@ namespace LHQ.App.Code
                 [AttrOpenLastProjectOnStartup] = config.OpenLastProjectOnStartup,
                 [AttrAppHints] = config.AppHints.ToString(),
                 [AttrEnableTranslation] = config.EnableTranslation,
-                ["updateServerType"] = config.UpdateServerType,
+                [AttrUpdateServerType] = config.UpdateServerType,
+                [AttrUpdateChannel] = config.UpdateChannel,
                 [AttrTranslatorProviderKey] = config.TranslatorProviderKey,
                 [AttrTheme] = appVisualTheme.ToString(),
                 [AttrData] = JToken.FromObject(config.Data),

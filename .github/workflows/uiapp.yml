@@ -28,6 +28,11 @@ on:
         required: false
         default: ''
         type: string
+      channel:
+        description: 'Velopack release channel (e.g., "dev"). Leave empty for default channel.'
+        required: false
+        default: ''
+        type: string
 
 env:
   VKP_VERSION: '0.0.1369-g1d5c984'
@@ -132,6 +137,7 @@ jobs:
           release_tag: ${{ github.event.inputs.release_tag || '' }}
           new_version: ${{ env.TAG_VERSION }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          channel: ${{ github.event.inputs.channel || '' }}
 
       - name: publish CLI App
         id: publish-cli 

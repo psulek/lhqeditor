@@ -6,7 +6,8 @@ param(
     [string]$tagName = "",
     [string]$newVersion = "",
     [string]$workingDir = "",
-    [string]$ghToken = ""
+    [string]$ghToken = "",
+    [string]$channel = ""
 )
 
 if ($workingDir -ne "") {
@@ -72,6 +73,9 @@ try
     if ($isPrerelease) {
         $dowloadArgs += "--pre"
     }
+    if ($channel -ne "") {
+        $dowloadArgs += @("--channel", $channel)
+    }
     vpk @dowloadArgs
 }
 catch {
@@ -118,9 +122,13 @@ if ($LASTEXITCODE -ne 0) {
 # --framework net8.0-x64-desktop
 $framework = "net48"
 echo "Packing $packId (version $packVersion, framework: $framework) to $outputDir"
-vpk --yes pack --packId $packId --packVersion $packVersion `
-    --packDir $packDir --mainExe $mainExe --packTitle $packTitle `
-    --icon $icon --outputDir $outputDir --framework $framework --shortcuts None --noPortable
+$packArgs = @("--yes", "pack", "--packId", $packId, "--packVersion", $packVersion, `
+    "--packDir", $packDir, "--mainExe", $mainExe, "--packTitle", $packTitle, `
+    "--icon", $icon, "--outputDir", $outputDir, "--framework", $framework, "--shortcuts", "None")
+if ($channel -ne "") {
+    $packArgs += @("--channel", $channel)
+}
+vpk @packArgs
 
 ### vpk upload to github releases
 echo "Uploading package to GitHub Releases, url: $repoUrl, release: '$releaseName', tag: $tagName, $preArg"
@@ -129,5 +137,8 @@ echo "Uploading package to GitHub Releases, url: $repoUrl, release: '$releaseNam
 $uploadArgs = @("upload", "github", "--repoUrl", $repoUrl, "--releaseName", $releaseName, "--tag", $tagName, "--merge", "--token", $ghToken)
 if ($isPrerelease) {
     $uploadArgs += "--pre"
+}
+if ($channel -ne "") {
+    $uploadArgs += @("--channel", $channel)
 }
 vpk @uploadArgs

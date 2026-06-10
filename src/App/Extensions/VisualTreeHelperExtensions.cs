@@ -135,12 +135,17 @@ namespace LHQ.App.Extensions
         public static bool IsElementChildOfElement(DependencyObject child, DependencyObject parent)
         {
             if (child.GetHashCode() == parent.GetHashCode())
+            {
                 return true;
+            }
+
             IEnumerable<DependencyObject> elemList = FindVisualChildren<DependencyObject>(parent);
             foreach (DependencyObject obj in elemList)
             {
                 if (obj.GetHashCode() == child.GetHashCode())
+                {
                     return true;
+                }
             }
             return false;
         }

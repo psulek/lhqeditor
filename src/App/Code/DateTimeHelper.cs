@@ -84,7 +84,9 @@ namespace LHQ.App.Code
         public static long ToUnixTime(DateTime? dateTime)
         {
             if (dateTime == null)
+            {
                 return 0;
+            }
 
             return (long)dateTime.Value.Subtract(Epoch).TotalMilliseconds;
         }

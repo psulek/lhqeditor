@@ -96,7 +96,9 @@ namespace LHQ.App.Behaviors
             DependencyPropertyChangedEventArgs e)
         {
             if (!(sender is PasswordBox passwordBox))
+            {
                 return;
+            }
 
             if ((bool)e.OldValue)
             {

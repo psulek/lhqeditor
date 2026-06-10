@@ -47,6 +47,11 @@ namespace LHQ.App.Services.Implementation
 
         public virtual async Task<UpdateCheckInfo> CheckForUpdate()
         {
+#if DisableCheckForUpdates
+            Logger.Info("Update checks are disabled by compile-time constant 'DisableCheckForUpdates'.");
+            await Task.CompletedTask;
+            return null;
+#else
             var updateInfo = await CheckForUpdateInternal();
             if (updateInfo != null)
             {
@@ -55,6 +60,7 @@ namespace LHQ.App.Services.Implementation
             }
 
             return null;
+#endif
         }
         
         private async Task<UpdateInfo> CheckForUpdateInternal()
@@ -113,6 +119,11 @@ namespace LHQ.App.Services.Implementation
 
         public async Task<bool> UpdateToNewVersion()
         {
+#if DisableCheckForUpdates
+            Logger.Info("Update installation is disabled by compile-time constant 'DisableCheckForUpdates'.");
+            await Task.CompletedTask;
+            return false;
+#else
             var newVersion = await CheckForUpdateInternal();
             if (newVersion == null)
             {
@@ -126,6 +137,7 @@ namespace LHQ.App.Services.Implementation
             _updateManager.ApplyUpdatesAndRestart(newVersion);
             
             return true;
+#endif
         }
 
         private Version ToVersion(SemanticVersion semanticVersion)

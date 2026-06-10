@@ -22,6 +22,9 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DefineConstants>TRACE;HIDE_IMP_EXP0</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(DisableCheckForUpdates)' == 'True' ">
+    <DefineConstants>$(DefineConstants);DisableCheckForUpdates</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup>
     <!--    <StartupObject>LHQ.App.App</StartupObject>-->
     <StartupObject>LHQ.App.Startup</StartupObject>

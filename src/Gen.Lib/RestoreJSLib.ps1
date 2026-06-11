@@ -19,7 +19,7 @@ if (-not $authToken) {
 }
 
 #$env:NPM_TOKEN=$authToken
-pnpm install
+pnpm install  --frozen-lockfile
 
 $packageJson = Join-Path $PSScriptRoot "package.json"
 $node_modules = Join-Path $PSScriptRoot "node_modules"

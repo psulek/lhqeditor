@@ -237,15 +237,15 @@ jobs:
       - name: Restore NuGet packages
         run: nuget restore ${{ env.SOLUTION_PATH }} -Verbosity quiet
       
-      - name: Set token config
-        working-directory: src/Gen.Lib
-        shell: bash
-        run: |
-          echo "registry=https://registry.npmjs.org/" > .npmrc
-          echo "@psulek:registry=https://npm.pkg.github.com" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=$GH_READ_PACKAGES_TOKEN" >> .npmrc
-        env:
-          GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
+    #   - name: Set token config
+    #     working-directory: src/Gen.Lib
+    #     shell: bash
+    #     run: |
+    #       echo "registry=https://registry.npmjs.org/" > .npmrc
+    #       echo "@psulek:registry=https://npm.pkg.github.com" >> .npmrc
+    #       echo "//npm.pkg.github.com/:_authToken=$GH_READ_PACKAGES_TOKEN" >> .npmrc
+    #     env:
+    #       GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
 
       - name: Restore JS Libs dependencies for Gen.Lib
         working-directory: src/Gen.Lib
@@ -253,6 +253,7 @@ jobs:
         run: |
           & ./RestoreJSLib.ps1
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
           GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
 
       - name: Copy README.md to VSIX project directory

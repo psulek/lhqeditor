@@ -13,6 +13,7 @@ env:
   VKP_VERSION: '1.2.0'
   NODE_VERSION: '22.x'
   REGISTRY_URL: 'https://npm.pkg.github.com'
+  PUBLISH_MARKETPLACE: 'false'
 
 jobs:
   build:
@@ -154,6 +155,7 @@ jobs:
           Write-Host "Version check passed: all source files match tag version '$tagVersion'"
 
       - name: Check Marketplace for existing version
+        if: env.PUBLISH_MARKETPLACE == 'true'
         shell: bash
         run: |
           # Extract version from vsixmanifest
@@ -219,11 +221,13 @@ jobs:
           echo "Version check passed. Ready to publish version $TARGET_VERSION"
 
       - name: Install VsixSignTool and Publish Tool
+        if: env.PUBLISH_MARKETPLACE == 'true'
         run: |
           nuget install Microsoft.VSSDK.Vsixsigntool -Version 17.10.34916.79 -OutputDirectory tools
           nuget install Microsoft.VSSDK.BuildTools -Version 17.14.2120 -OutputDirectory tools
 
       - name: test vsixPublisher
+        if: env.PUBLISH_MARKETPLACE == 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: |
@@ -289,6 +293,7 @@ jobs:
           if-no-files-found: error
 
       - name: Publish to VS Marketplace
+        if: env.PUBLISH_MARKETPLACE == 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: |

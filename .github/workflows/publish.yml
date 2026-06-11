@@ -10,8 +10,8 @@ env:
   SOLUTION_PATH: 'LHQ_vs2022.sln'
   VSIX_PROJECT_PATH: 'src/VsExtension2022/VsExtension2022.csproj'
   BUILD_CONFIGURATION: 'Debug'
-  VKP_VERSION: '0.0.1369-g1d5c984'
-  NODE_VERSION: '20.x'
+  VKP_VERSION: '1.2.0'
+  NODE_VERSION: '22.x'
   REGISTRY_URL: 'https://npm.pkg.github.com'
 
 jobs:
@@ -28,10 +28,10 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
-          version: 10
+          version: 11
           run_install: false
 
       - name: Setup Node.js for GitHub Packages

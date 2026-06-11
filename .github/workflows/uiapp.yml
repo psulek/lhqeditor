@@ -40,8 +40,8 @@ on:
         type: string
 
 env:
-  VKP_VERSION: '0.0.1369-g1d5c984'
-  NODE_VERSION: '20.x'
+  VKP_VERSION: '1.2.0'
+  NODE_VERSION: '22.x'
   REGISTRY_URL: 'https://npm.pkg.github.com'
 
 jobs:

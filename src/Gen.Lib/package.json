@@ -6,7 +6,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@11.4.0",
+  "packageManager": "pnpm@11.5.3",
   "dependencies": {
     "@psulek/lhq-generators": "1.0.1-rc.3"
   }

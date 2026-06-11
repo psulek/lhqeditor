@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NuGet.Config = NuGet.Config
 		ProductAssemblyInfo.cs = ProductAssemblyInfo.cs
 		notes.md = notes.md
+		update-versions.ps1 = update-versions.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "src\App\App.csproj", "{87F223E0-202A-4712-B0EB-710D32B3E16B}"

@@ -4,7 +4,7 @@ name: Publish ALL (VSIX, UI App, CLI App)
 
 on:
   release:
-    types: [published]
+    types: [published, edited]
 
 env:
   SOLUTION_PATH: 'LHQ_vs2022.sln'
@@ -21,6 +21,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+
+      - name: Skip if release already has VSIX asset
+        if: github.event.action == 'edited'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: assets } = await github.rest.repos.listReleaseAssets({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: context.payload.release.id,
+            });
+            const hasVsix = assets.some(a => a.name.endsWith('.vsix'));
+            if (hasVsix) {
+              core.notice('Release already contains a .vsix asset — skipping rebuild.');
+              process.exit(1);
+            }
+            core.notice('No .vsix asset found — proceeding with build.');
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2

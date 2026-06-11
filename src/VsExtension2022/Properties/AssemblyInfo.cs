@@ -1,5 +1,5 @@
-﻿#region License
-// Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
+#region License
+// Copyright (c) 2025 Peter �ulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
@@ -41,4 +41,4 @@ using System.Runtime.InteropServices;
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "AssemblyInformationalVersion does not need to be a parsable version")]
 
-[assembly: AssemblyVersion("2026.1.0")]
+[assembly: AssemblyVersion("2026.1.1")]

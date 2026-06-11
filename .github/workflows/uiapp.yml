@@ -52,12 +52,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v2
-
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
@@ -73,16 +67,6 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'src/Gen.Lib/pnpm-lock.yaml'
 
-    #   - name: Set token config
-    #     working-directory: src/Gen.Lib
-    #     shell: bash
-    #     run: |
-    #       echo "registry=https://registry.npmjs.org/" > .npmrc
-    #       echo "@psulek:registry=https://npm.pkg.github.com" >> .npmrc
-    #       echo "//npm.pkg.github.com/:_authToken=$GH_READ_PACKAGES_TOKEN" >> .npmrc
-    #     env:
-    #       GH_READ_PACKAGES_TOKEN: ${{ secrets.GH_READ_PACKAGES_TOKEN }}
-
       - name: Install dependencies
         run: |
           pnpm add -g semver
@@ -95,7 +79,7 @@ jobs:
 
       - name: Update tag environment variables
         shell: bash
-        run: | 
+        run: |
           echo "TAG_VERSION=${{ steps.validate_tag.outputs.tag_version }}" >> $GITHUB_ENV
           echo "TAG_VALID=${{ steps.validate_tag.outputs.tag_valid }}" >> $GITHUB_ENV
           echo "NEW_VERSION=${{ github.event.inputs.new_version || steps.validate_tag.outputs.tag_version }}" >> $GITHUB_ENV
@@ -107,6 +91,12 @@ jobs:
           echo "TAG_VALID=${{ env.TAG_VALID }} , TAG_VERSION=${{ env.TAG_VERSION }}"
           echo "Error: The provided release tag '${{ github.event.inputs.release_tag }}' is not valid."
           exit 1
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
 
       - name: update application version
         uses: ./.github/actions/update-version
@@ -167,12 +157,12 @@ jobs:
           new_version: ${{ env.NEW_VERSION }}
 
       - name: Add CLI tools assets to the release
-        uses: softprops/action-gh-release@v2
         if: ${{ github.event.inputs.publish_cli_tools == 'true' }}
-        with:
-          tag_name: ${{ github.event.inputs.release_tag }}
-          body: ''
-          append_body: true
-          files: |
-            ${{ steps.publish-cli.outputs.linux_path }}
-            ${{ steps.publish-cli.outputs.windows_path }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ github.event.inputs.release_tag }}" \
+            "${{ steps.publish-cli.outputs.linux_path }}" \
+            "${{ steps.publish-cli.outputs.windows_path }}" \
+            --clobber

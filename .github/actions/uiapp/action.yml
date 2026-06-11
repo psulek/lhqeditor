@@ -50,43 +50,24 @@ runs:
           exit 1
         fi
 
-    - name: Check if release exists
-      id: releaseInfo
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const tag = '${{ inputs.release_tag }}';
-          if (!tag) {
-            core.setFailed(`Error: 'release_tag' input is required.`);
-            return;
-          }
-          
-          console.log(`Checking if release with tag '${tag}' exists...`);
-          
-          try {
-            const { data: release } = await github.rest.repos.getReleaseByTag({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag: tag
-            });
-            
-            console.log(`Release '${release.name}' with tag '${tag}' already exists.`);
-            
-            core.setOutput('releaseExist', true);
-          } catch (error) {
-            core.setOutput('releaseExist', false);
-          }
-
-    - name: Create new release
-      if: steps.releaseInfo.outputs.releaseExist == 'false'
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: ${{ inputs.release_tag }}
-        name: ${{ inputs.release_name || inputs.release_tag }}
-        body: ''
-        append_body: true
-        draft: false
-        prerelease: ${{ inputs.prerelease }}
+    - name: Ensure release exists
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github_token }}
+      run: |
+        tag="${{ inputs.release_tag }}"
+        name="${{ inputs.release_name || inputs.release_tag }}"
+        if gh release view "$tag" > /dev/null 2>&1; then
+          echo "Release for tag '$tag' already exists."
+        else
+          echo "Creating draft release for tag '$tag'..."
+          args=(--title "$name" --notes "" --draft)
+          if [[ "${{ inputs.prerelease }}" == "true" ]]; then
+            args+=(--prerelease)
+          fi
+          gh release create "$tag" "${args[@]}"
+          echo "Draft release created."
+        fi
 
     - name: Install global tools
       shell: bash

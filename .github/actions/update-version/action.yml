@@ -1,5 +1,6 @@
 # Composite action that validates the provided version and updates version values
-# in App.csproj, ProductAssemblyInfo.cs, VsExtension AssemblyInfo.cs, and VsExtensionConstants.cs within the repository.
+# in App.csproj, ProductAssemblyInfo.cs, VsExtension AssemblyInfo.cs, VsExtensionConstants.cs,
+# and source.extension.vsixmanifest within the repository.
 name: Update C# Projects Version
 description: Update version in C# project files
 inputs:
@@ -73,3 +74,18 @@ runs:
         $vsExtConstantsContent = $vsExtConstantsContent -replace 'public const string Version = "[^"]+";', "public const string Version = `"$newVersion`";"
         Set-Content -Path $vsExtConstantsPath -Value $vsExtConstantsContent -NoNewline
         echo "Updated VsExtensionConstants.cs with version $newVersion"
+
+        ### update source.extension.vsixmanifest with new version
+        $manifestPath = Join-Path $rootPath "src/VsExtension2022/source.extension.vsixmanifest"
+        [xml]$manifestXml = Get-Content $manifestPath
+        $nsManager = New-Object System.Xml.XmlNamespaceManager($manifestXml.NameTable)
+        $nsManager.AddNamespace("vs", "http://schemas.microsoft.com/developer/vsx-schema/2011")
+        $identityNode = $manifestXml.SelectSingleNode("//vs:PackageManifest/vs:Metadata/vs:Identity", $nsManager)
+        if ($identityNode -ne $null) {
+            $identityNode.Version = $newVersion
+            $manifestXml.Save((Resolve-Path $manifestPath))
+            echo "Updated source.extension.vsixmanifest with version $newVersion"
+        } else {
+            Write-Error "Identity node not found in '$manifestPath'!"
+            exit 1
+        }

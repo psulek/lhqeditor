@@ -28,6 +28,11 @@ on:
         required: false
         default: ''
         type: string
+      new_version:
+        description: 'New version to set for UI App. If not provided, it will be derived from the release tag.'
+        required: false
+        default: ''
+        type: string
       channel:
         description: 'Velopack release channel (e.g., "dev"). Leave empty for default channel.'
         required: false
@@ -93,6 +98,7 @@ jobs:
         run: | 
           echo "TAG_VERSION=${{ steps.validate_tag.outputs.tag_version }}" >> $GITHUB_ENV
           echo "TAG_VALID=${{ steps.validate_tag.outputs.tag_valid }}" >> $GITHUB_ENV
+          echo "NEW_VERSION=${{ github.event.inputs.new_version || steps.validate_tag.outputs.tag_version }}" >> $GITHUB_ENV
 
       - name: Verify tag validity
         shell: bash
@@ -105,7 +111,7 @@ jobs:
       - name: update application version
         uses: ./.github/actions/update-version
         with:
-          new_version: ${{ env.TAG_VERSION }}
+          new_version: ${{ env.NEW_VERSION }}
           app_project_path: 'src/App/'
           root_path: '.'
 
@@ -145,7 +151,7 @@ jobs:
           prerelease: ${{ github.event.inputs.prerelease }}
           release_name: ${{ github.event.inputs.release_name || '' }}
           release_tag: ${{ github.event.inputs.release_tag || '' }}
-          new_version: ${{ env.TAG_VERSION }}
+          new_version: ${{ env.NEW_VERSION }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           channel: ${{ github.event.inputs.channel || '' }}
 
@@ -154,7 +160,7 @@ jobs:
         if: ${{ github.event.inputs.publish_cli_tools == 'true' }}
         uses: ./.github/actions/cliapp/
         with:
-          new_version: ${{ env.TAG_VERSION }}
+          new_version: ${{ env.NEW_VERSION }}
 
       - name: Add CLI tools assets to the release
         uses: softprops/action-gh-release@v2

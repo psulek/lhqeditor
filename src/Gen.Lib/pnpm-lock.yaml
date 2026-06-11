@@ -68,8 +68,8 @@ packages:
   jsonfile@6.2.1:
     resolution: {integrity: sha512-zwOTdL3rFQ/lRdBnntKVOX6k5cKJwEc1HdilT71BWEu7J41gXIB2MRp+vxduPSwZJPWBxEzv4yH1wYLJGUHX4Q==}
 
-  lru-cache@11.5.0:
-    resolution: {integrity: sha512-5YgH9UJd7wVb9hIouI2adWpgqrrICkt070Dnj8EUY1+B4B2P9eRLPAkAAo6NICA7CEhOIeBHl46u9zSNpNu7zA==}
+  lru-cache@11.5.1:
+    resolution: {integrity: sha512-RPimw/7aMdv2oqRrxKwvZXcPfwBrn/JZ2xYcY9Hus/6LaS3VOAKVWKWgNLCFSiOm1ESXinjsDlidVU7JlnCN2A==}
     engines: {node: 20 || >=22}
 
   minimatch@10.2.5:
@@ -198,7 +198,7 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  lru-cache@11.5.0: {}
+  lru-cache@11.5.1: {}
 
   minimatch@10.2.5:
     dependencies:
@@ -212,7 +212,7 @@ snapshots:
 
   path-scurry@2.0.2:
     dependencies:
-      lru-cache: 11.5.0
+      lru-cache: 11.5.1
       minipass: 7.1.3
 
   picocolors@1.1.1: {}

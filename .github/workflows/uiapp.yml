@@ -59,13 +59,13 @@ jobs:
         uses: NuGet/setup-nuget@v2
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           run_install: false
-          version: 10
+          version: 11
 
       - name: Setup Node.js for GitHub Packages
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: ${{ env.REGISTRY_URL }}

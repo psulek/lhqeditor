@@ -57,9 +57,5 @@ namespace LHQ.VsExtension.Code
         { }
 
         public List<string> GetExpandedKeys(string fileName) => new List<string>();
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-        }
     }
 }

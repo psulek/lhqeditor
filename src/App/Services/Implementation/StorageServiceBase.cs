@@ -26,7 +26,6 @@
 using System;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
-using LHQ.Core.DependencyInjection;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
 
@@ -51,15 +50,12 @@ namespace LHQ.App.Services.Implementation
 
         protected abstract string StorageFileName { get; }
 
+        protected string StorageDirectory => _storageDirectory ?? (_storageDirectory = AppContext.RunInVsPackage ? "VS" : "APP");
+
         private TStorage Cache
         {
             get => _cache;
             set => _cache = value;
-        }
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-            _storageDirectory = AppContext.RunInVsPackage ? "VS" : "APP";
         }
 
         public virtual void Initialize()
@@ -76,7 +72,7 @@ namespace LHQ.App.Services.Implementation
                 TStorage content = default;
                 try
                 {
-                    content = _isolatedStorage.Load<TStorage>(_storageDirectory, StorageFileName, true);
+                    content = _isolatedStorage.Load<TStorage>(StorageDirectory, StorageFileName, true);
                 }
                 catch (Exception e)
                 {
@@ -136,7 +132,7 @@ namespace LHQ.App.Services.Implementation
         {
             if (Cache != null)
             {
-                _isolatedStorage.Save(_storageDirectory, StorageFileName, Cache, true);
+                _isolatedStorage.Save(StorageDirectory, StorageFileName, Cache, true);
             }
         }
 

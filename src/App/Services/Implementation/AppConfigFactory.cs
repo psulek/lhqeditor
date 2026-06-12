@@ -37,13 +37,8 @@ namespace LHQ.App.Services.Implementation
     {
         public AppConfig Current { get; private set; }
 
-        private IAppConfigStorage _storage;
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-            _storage = serviceContainer.Get<IAppConfigStorage>();
-        }
-
+        private IAppConfigStorage _storage => Container.Get<IAppConfigStorage>();
+        
         public void Set(AppConfig appConfig)
         {
             Current = appConfig ?? throw new ArgumentNullException(nameof(appConfig));

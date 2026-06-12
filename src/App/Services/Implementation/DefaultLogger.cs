@@ -28,7 +28,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using LHQ.App.Extensions;
 using LHQ.App.Services.Interfaces;
-using LHQ.Core.DependencyInjection;
 using LHQ.Core.Interfaces;
 using LHQ.Utils.Extensions;
 using NLog;
@@ -41,30 +40,47 @@ namespace LHQ.App.Services.Implementation
     public class DefaultLogger : AppContextServiceBase, ILogger, IHasInitialize
     {
         private readonly Logger _logger;
-        private IFileSystemService _fileSystemService;
+        private bool _isInitialized;
 
         public DefaultLogger()
         {
             _logger = LogManager.GetCurrentClassLogger();
         }
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-            _fileSystemService = serviceContainer.Get<IFileSystemService>();
-        }
+        
+        public bool IsInitialized => _isInitialized;
 
         public void Initialize()
         {
+            string appFolder = AppContext.AppFolder;
+            var fileSystemService = Container.Get<IFileSystemService>();
+            string logsFolder = AppContext.RunInVsPackage
+                ? fileSystemService.GetDataFileName("logs")
+                : Path.Combine(appFolder, "logs");
+            
+            Initialize(AppContext.AppFolder, logsFolder);
+        }
+
+        public void Initialize(string appFolder, string logsFolder)
+        {
+            if (_isInitialized)
+            {
+                return;
+            }
+
             if (LogManager.Configuration == null)
             {
-                string nlogConfigFile = Path.Combine(AppContext.AppFolder, "NLog.config");
+                string nlogConfigFile = Path.Combine(appFolder, "NLog.config");
                 LogManager.Configuration = new XmlLoggingConfiguration(nlogConfigFile, true);
                 LogManager.ReconfigExistingLoggers();
             }
 
             try
             {
-                string logsFolder = GetLogsFolder();
+                if (!Directory.Exists(logsFolder))
+                {
+                    Directory.CreateDirectory(logsFolder);
+                }
+
                 LogManager.Configuration.Variables["appLogsFolder"] = logsFolder;
             }
             catch (Exception e)
@@ -72,29 +88,7 @@ namespace LHQ.App.Services.Implementation
                 DebugUtils.Error($"{nameof(DefaultLogger)}.{nameof(Initialize)} failed", e);
             }
 
-            string msg = AppContext.RunInVsPackage
-                ? "Editor Instance Started"
-                : "Application Started.";
-            _logger.Info(msg);
-        }
-
-        private string GetLogsFolder()
-        {
-            bool useFileSystem = AppContext.RunInVsPackage;
-#if !DEBUG
-            useFileSystem = true;
-#endif
-
-            string appLogsFolder = useFileSystem
-                ? _fileSystemService.GetDataFileName("logs")
-                : Path.Combine(AppContext.AppFolder, "logs");
-
-            if (!Directory.Exists(appLogsFolder))
-            {
-                Directory.CreateDirectory(appLogsFolder);
-            }
-
-            return appLogsFolder;
+            _isInitialized = true;
         }
 
         public void Log(LogEventType eventType, string message, Exception exception = null)

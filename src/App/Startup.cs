@@ -25,21 +25,29 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using LHQ.App.Code;
 using LHQ.App.Localization;
+using LHQ.App.Services.Implementation;
 using LHQ.App.ViewModels;
+using NLog;
+using NLog.Config;
 using ScaleHQ.WPF.LHQ;
 using Velopack;
 using Velopack.Locators;
 using Velopack.Logging;
 using Velopack.Windows;
 using Application = System.Windows.Application;
+using ILogger = LHQ.Core.Interfaces.ILogger;
 
 namespace LHQ.App
 {
     public class Startup
     {
+        private static readonly ILogger _logger = new DefaultLogger();
+        
         public static string _appFileName;
         public static string[] _cmdArgs;
 
@@ -54,21 +62,35 @@ namespace LHQ.App
 
             _appFileName = Assembly.GetExecutingAssembly().Location;
             
+            var appFolder = Path.GetDirectoryName(_appFileName);
+            _logger.Initialize(appFolder, Path.Combine(appFolder, "logs"));
+            
+            _logger.Info($"Initializing velopack ... {_appFileName}");
+
             VelopackApp.Build()
                 .OnAfterInstallFastCallback(_ => VelopackService.AfterInstall())
                 .OnFirstRun(_ => VelopackService.FirstRun())
                 .OnAfterUpdateFastCallback(_ => VelopackService.AfterUpdate())
                 .OnBeforeUninstallFastCallback(_ => VelopackService.BeforeUninstall())
                 .Run();
+
+            _logger.Info("Velopack finished, starting application...");
             
             var application = new App();
-            //application.InitializeComponent();
             application.Run();
         }
 
+
         private static void OnAppUnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
-            //ExceptionViewerDialog.DialogShow(args.ExceptionObject as Exception);
+            try
+            {
+                _logger.Error("Unhandled exception", args.ExceptionObject as Exception);
+            }
+            catch
+            {
+                // Do nothing
+            }
             ShowExceptionDialog(args.ExceptionObject as Exception);
             Process.GetCurrentProcess().Kill();
         }

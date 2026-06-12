@@ -40,10 +40,7 @@ namespace LHQ.App.Services.Implementation.PluginSystem
             AppContext = appContext;
             _pluginModule = pluginModule ?? throw new ArgumentNullException(nameof(pluginModule));
         }
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
+        
         public IUtilityHelper UtilityHelper => AppContext.UtilityHelper;
 
         public IPluginModule GetPluginModule()

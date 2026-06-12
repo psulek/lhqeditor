@@ -34,7 +34,6 @@ using LHQ.Core.Attributes;
 using LHQ.Core.DependencyInjection;
 using LHQ.Core.Interfaces;
 using LHQ.Core.Interfaces.PluginSystem;
-using LHQ.Utils;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
 
@@ -55,11 +54,6 @@ namespace LHQ.App.Services.Implementation.PluginSystem
 
         private Dictionary<string, IPluginConfigStorage> _pluginConfigStorages;
 
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {}
-
-
         public void Initialize()
         {
             InternalInitialize(true);
@@ -71,7 +65,7 @@ namespace LHQ.App.Services.Implementation.PluginSystem
             _pluginModules = new Dictionary<string, PluginModuleItem>();
 
             _pluginManagerConfigStorage = new PluginManagerConfigStorage { AppContext = AppContext };
-            _pluginManagerConfigStorage.ConfigureDependencies(AppContext.ServiceContainer);
+            ((IService)_pluginManagerConfigStorage).SetContainer(Container);
 
             List<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(x => x.GetName().Name.StartsWith(ReserverdPluginFilePrefix, true)).ToList();
@@ -89,7 +83,8 @@ namespace LHQ.App.Services.Implementation.PluginSystem
                     try
                     {
                         Logger.Info($"Loading plugin assembly: {pluginAssemblyFile} ...");
-                        Assembly pluginAssembly = Assembly.LoadFile(pluginAssemblyFile);
+                        // Use LoadFrom so plugin dependencies participate in normal resolution context.
+                        Assembly pluginAssembly = Assembly.LoadFrom(pluginAssemblyFile);
                         if (!assemblies.Contains(pluginAssembly))
                         {
                             assemblies.Add(pluginAssembly);
@@ -209,7 +204,7 @@ namespace LHQ.App.Services.Implementation.PluginSystem
 
         private void LoadPlugins(List<PluginModuleItem> plugins)
         {
-            var pluginServiceContainer = AppContext.ServiceContainer.Get<IPluginServiceContainer>();
+            var pluginServiceContainer = Container.Get<IPluginServiceContainer>();
             var modulesToUnload = new List<IPluginModule>();
 
             void MarkForUnload(PluginModuleItem pluginModuleItem)
@@ -233,7 +228,7 @@ namespace LHQ.App.Services.Implementation.PluginSystem
 
                 IPluginConfigStorage pluginConfigStorage = new PluginConfigStorage(pluginModule);
                 pluginConfigStorage.AppContext = AppContext;
-                pluginConfigStorage.ConfigureDependencies(AppContext.ServiceContainer);
+                pluginConfigStorage.SetContainer(Container);
                 _pluginConfigStorages.Add(pluginModule.Key, pluginConfigStorage);
 
                 IPluginConfig pluginConfig = null;

@@ -44,15 +44,6 @@ namespace LHQ.App.Services.Implementation
     {
         private readonly List<IResourceImporter> _buildinImporters = new List<IResourceImporter>();
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-            _buildinImporters.Add(new ResXImporter());
-            _buildinImporters.Run(importer =>
-                {
-                    importer.Initialize();
-                });
-        }
-
         public IAsyncOperation CreateImporterAsyncOperation(IResourceImporter importer, 
             ResourceImportMergeMode importMergeMode, bool allowImportNewLanguages, string[] files)
         {
@@ -70,6 +61,16 @@ namespace LHQ.App.Services.Implementation
         public List<IResourceImporter> GetImporters()
         {
             var pluginsImporters = PluginServiceContainer.GetAll<IResourceImporter>();
+
+            if (_buildinImporters.Count == 0)
+            {
+                _buildinImporters.Add(new ResXImporter());
+                _buildinImporters.Run(importer =>
+                    {
+                        importer.Initialize();
+                    });
+            }
+            
             return _buildinImporters.Concat(pluginsImporters).ToList();
         }
 

@@ -33,9 +33,6 @@ namespace LHQ.App.Services.Implementation
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class FileSystemService : AppContextServiceBase, IFileSystemService
     {
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public string GetDataFileName(string fileName)
         {
             // for vs extension, it is possible to write into app folder (from where is extension loaded)

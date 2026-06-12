@@ -53,10 +53,7 @@ namespace LHQ.App.Services.Implementation
         /// indicates that 'exception dialog is visible' or not
         /// </summary>
         private readonly ThreadSafeSingleShotGuard _exceptionDialogIsVisible = ThreadSafeSingleShotGuard.Create(false);
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
+        
         public DialogResultInfo ShowConfirm(DialogShowInfo dialogShowInfo,
             DialogButtons buttons = DialogButtons.YesNo, DialogIcon dialogIcon = DialogIcon.Question)
         {

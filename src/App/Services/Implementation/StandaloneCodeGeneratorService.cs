@@ -47,26 +47,6 @@ namespace LHQ.App.Services.Implementation
         private Generator _generator;
         private bool _disposed;
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
-        // private Generator Generator
-        // {
-        //     get
-        //     {
-        //         if (_generator == null)
-        //         {
-        //             _generator = new Generator(GetLoggerForGenerator());
-        //         }
-        //         else
-        //         {
-        //             _generator.UpdateLogger(GetLoggerForGenerator());
-        //         }
-        //         
-        //         return _generator;
-        //     }
-        // }
-
         private TResult GeneratorAction<TResult>(Func<Generator, TResult> action)
         {
             (ILogger logger, IDisposable loggerRegion) = GetLoggerForGenerator();

@@ -43,10 +43,7 @@ namespace LHQ.App.Services.Implementation.PluginSystem
         {
             _instances = new ConcurrentDictionary<string, List<IPluginAwareService>>();
         }
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
+        
         public void Register<TService>(IPluginModule pluginModule)
             where TService : IPluginAwareService, new()
         {

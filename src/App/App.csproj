@@ -15,6 +15,8 @@
     <!--    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Version>2026.1.1</Version>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;DEBUG;HIDE_IMP_EXP0</DefineConstants>
@@ -234,7 +236,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="morelinq" Version="2.4.0" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="RestSharpSigned" Version="105.2.3" />
     <PackageReference Include="ScaleHQ.WPF.LHQ.StrongName" Version="1.1.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
@@ -243,6 +245,6 @@
     <PackageReference Include="System.Reactive" Version="4.0.0" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
-    <PackageReference Include="Velopack" Version="0.0.1369-g1d5c984" />
+    <PackageReference Include="Velopack" Version="1.2.0" />
   </ItemGroup>
 </Project>

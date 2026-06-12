@@ -36,10 +36,6 @@ namespace LHQ.App.Services.Implementation
     // ReSharper disable once ClassNeverInstantiated.Global
     public class UtilityHelper : AppContextServiceBase, IUtilityHelper
     {
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-        }
-
         public DateTime GetUtcDateTime()
         {
             return DateTimeHelper.UtcNow;

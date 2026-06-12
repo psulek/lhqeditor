@@ -47,9 +47,6 @@ namespace LHQ.App.Services.Implementation
 
         private readonly List<UILanguage> _uiLanguages;
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public UIService()
         {
             UiThreadDispatcher = Application.Current.Dispatcher;

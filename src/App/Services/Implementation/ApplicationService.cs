@@ -40,10 +40,7 @@ namespace LHQ.App.Services.Implementation
     public class ApplicationService : AppContextServiceBase, IApplicationService
     {
         private bool _disposed;
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
+        
         public virtual async Task Initialize()
         {
             // load and init plugins

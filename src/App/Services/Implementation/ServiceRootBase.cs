@@ -29,6 +29,11 @@ namespace LHQ.App.Services.Implementation
 {
     public abstract class ServiceBase : IService
     {
-        public abstract void ConfigureDependencies(IServiceContainer serviceContainer);
+        protected IServiceContainer Container { get; set; }
+
+        void IService.SetContainer(IServiceContainer serviceContainer)
+        {
+            Container = serviceContainer;
+        }
     }
 }

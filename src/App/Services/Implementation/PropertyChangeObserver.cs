@@ -42,9 +42,6 @@ namespace LHQ.App.Services.Implementation
         private Observer _currentObserver;
         private bool _blockForAll;
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public bool IsBlockedPropertyChange(object obj)
         {
             ArgumentValidator.EnsureArgumentNotNull(obj, "obj");

@@ -42,9 +42,6 @@ namespace LHQ.App.Services.Implementation
             _cache = new ConcurrentDictionary<string, ConcurrentDictionary<string, object>>();
         }
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public T GetOrCreate<T>(string cacheName, string objectKey, Func<T> createFactory)
         {
             ConcurrentDictionary<string, object> dictionary = _cache.GetOrAdd(cacheName, s => new ConcurrentDictionary<string, object>());

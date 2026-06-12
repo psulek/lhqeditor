@@ -52,6 +52,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
@@ -90,8 +92,16 @@
                 </Hyperlink>
             </TextBlock>
 
+            <TextBlock Grid.Row="6" Grid.Column="1"
+                Margin="0,4,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                TextWrapping="NoWrap">
+                <Run Text="Update channel:" FontWeight="SemiBold" />
+                <Run Text="{Binding Path=UpdateChannel, Mode=OneWay}" />
+            </TextBlock>
 
-            <Button Grid.Row="8" Grid.Column="1"
+            <Button Grid.Row="10" Grid.Column="1"
                 Width="70"
                 HorizontalAlignment="Right"
                 Content="{localization:Localization Key={x:Static resources:StringsKeys+Common.ButtonClose}}"

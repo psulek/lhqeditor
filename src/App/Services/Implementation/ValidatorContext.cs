@@ -46,9 +46,6 @@ namespace LHQ.App.Services.Implementation
         private int _iterationCount;
         private bool _hasErrors;
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public bool IsValidationDisabled => GetIsValidationDisabled();
 
         public ObservableCollectionExt<IValidationError> Errors { get; private set; }

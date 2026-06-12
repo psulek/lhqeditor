@@ -41,10 +41,7 @@ namespace LHQ.App.Services.Implementation.Messaging
     {
         private readonly object _syncRoot = new object();
         private readonly List<IMessageHandler> _subscribers = new List<IMessageHandler>();
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
+        
         public void Register(IMessageHandler handler)
         {
             ArgumentValidator.EnsureArgumentNotNull(handler, "action");

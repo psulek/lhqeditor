@@ -38,28 +38,6 @@ namespace LHQ.App.Services.Implementation
 {
     public sealed class AppContext : ServiceBase, IAppContext
     {
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-            ServiceContainer = serviceContainer ?? throw new ArgumentNullException(nameof(serviceContainer));
-
-            Logger = ServiceContainer.Get<ILogger>();
-            UtilityHelper = ServiceContainer.Get<IUtilityHelper>();
-            UIService = ServiceContainer.Get<IUIService>();
-            FileSystemService = ServiceContainer.Get<IFileSystemService>();
-            PluginManager = ServiceContainer.Get<IPluginManager>();
-            AppConfigStorage = ServiceContainer.Get<IAppConfigStorage>();
-            AppConfigFactory = ServiceContainer.Get<IAppConfigFactory>();
-            ModelFileStorage = ServiceContainer.Get<IModelFileStorage>();
-            PluginServiceContainer = ServiceContainer.Get<IPluginServiceContainer>();
-            RecentFilesService = ServiceContainer.Get<IRecentFilesService>();
-            AppStateStorageService = ServiceContainer.Get<IAppStateStorageService>();
-            ApplicationService = ServiceContainer.Get<IApplicationService>();
-            TranslationService = ServiceContainer.Get<ITranslationService>();
-            DialogService = ServiceContainer.Get<IDialogService>();
-            UpdateService = ServiceContainer.Get<IUpdateService>();
-            StandaloneCodeGeneratorService = ServiceContainer.Get<IStandaloneCodeGeneratorService>();
-        }
-
         public bool AppStartedFirstTime { get; private set; }
 
         public UpdateCheckInfo UpdateInfo { get; private set; }
@@ -67,40 +45,54 @@ namespace LHQ.App.Services.Implementation
         public ModelFileFromCmdLine ModelFileFromCmdLine { get; private set; }
 
         public IServicesRegistrator ServicesRegistrator { get; private set; }
+        
+        private IUIService _uiService;
+        public IUIService UIService => _uiService ?? (_uiService = Container.Get<IUIService>());
 
-        public IServiceContainer ServiceContainer { get; private set; }
+        private ILogger _logger;
+        public ILogger Logger => _logger ?? (_logger = Container.Get<ILogger>());
 
-        public IUIService UIService { get; private set; }
+        private IUtilityHelper _utilityHelper;
+        public IUtilityHelper UtilityHelper => _utilityHelper ?? (_utilityHelper = Container.Get<IUtilityHelper>());
 
-        public ILogger Logger { get; private set; }
+        private IFileSystemService _fileSystemService;
+        public IFileSystemService FileSystemService => _fileSystemService ?? (_fileSystemService = Container.Get<IFileSystemService>());
 
-        public IUtilityHelper UtilityHelper { get; private set; }
+        private IUpdateService _updateService;
+        public IUpdateService UpdateService => _updateService ?? (_updateService = Container.Get<IUpdateService>());
 
-        public IFileSystemService FileSystemService { get; private set; }
+        private IPluginManager _pluginManager;
+        public IPluginManager PluginManager => _pluginManager ?? (_pluginManager = Container.Get<IPluginManager>());
 
-        public IUpdateService UpdateService { get; private set; }
+        private IAppConfigStorage _appConfigStorage;
+        public IAppConfigStorage AppConfigStorage => _appConfigStorage ?? (_appConfigStorage = Container.Get<IAppConfigStorage>());
 
-        public IPluginManager PluginManager { get; private set; }
+        private IAppConfigFactory _appConfigFactory;
+        public IAppConfigFactory AppConfigFactory => _appConfigFactory ?? (_appConfigFactory = Container.Get<IAppConfigFactory>());
 
-        public IAppConfigStorage AppConfigStorage { get; private set; }
+        private IModelFileStorage _modelFileStorage;
+        public IModelFileStorage ModelFileStorage => _modelFileStorage ?? (_modelFileStorage = Container.Get<IModelFileStorage>());
 
-        public IAppConfigFactory AppConfigFactory { get; private set; }
+        private IPluginServiceContainer _pluginServiceContainer;
+        public IPluginServiceContainer PluginServiceContainer => _pluginServiceContainer ?? (_pluginServiceContainer = Container.Get<IPluginServiceContainer>());
 
-        public IModelFileStorage ModelFileStorage { get; private set; }
+        private IRecentFilesService _recentFilesService;
+        public IRecentFilesService RecentFilesService => _recentFilesService ?? (_recentFilesService = Container.Get<IRecentFilesService>());
 
-        public IPluginServiceContainer PluginServiceContainer { get; private set; }
+        private IAppStateStorageService _appStateStorageService;
+        public IAppStateStorageService AppStateStorageService => _appStateStorageService ?? (_appStateStorageService = Container.Get<IAppStateStorageService>());
 
-        public IRecentFilesService RecentFilesService { get; private set; }
+        private IApplicationService _applicationService;
+        public IApplicationService ApplicationService => _applicationService ?? (_applicationService = Container.Get<IApplicationService>());
 
-        public IAppStateStorageService AppStateStorageService { get; private set; }
+        private ITranslationService _translationService;
+        public ITranslationService TranslationService => _translationService ?? (_translationService = Container.Get<ITranslationService>());
 
-        public IApplicationService ApplicationService { get; private set; }
+        private IStandaloneCodeGeneratorService _standaloneCodeGeneratorService;
+        public IStandaloneCodeGeneratorService StandaloneCodeGeneratorService => _standaloneCodeGeneratorService ?? (_standaloneCodeGeneratorService = Container.Get<IStandaloneCodeGeneratorService>());
 
-        public ITranslationService TranslationService { get; private set; }
-
-        public IStandaloneCodeGeneratorService StandaloneCodeGeneratorService { get; private set; }
-
-        public IDialogService DialogService { get; private set; }
+        private IDialogService _dialogService;
+        public IDialogService DialogService => _dialogService ?? (_dialogService = Container.Get<IDialogService>());
 
         public bool RunInVsPackage { get; private set; }
 
@@ -157,16 +149,23 @@ namespace LHQ.App.Services.Implementation
                 }
             }
 
-            ServiceContainer serviceContainer = Implementation.ServiceContainer.Create(OnServiceCreated);
+            ServiceContainer serviceContainer = ServiceContainer.Create(OnServiceCreated);
             servicesRegistrator.RegisterServices(serviceContainer, ServicesRegistratorType.AppContextService);
 
+            // eager initialization of ILogger before any other service!
+            ILogger logger = serviceContainer.LoadByType<ILogger>();
+            string appFolder = appContext.AppFolder;
+            string logsFolder = Path.Combine(appFolder, "logs");
+            logger.Initialize(appFolder, logsFolder);
+            
+            ((IService)appContext).SetContainer(serviceContainer);
             serviceContainer.Load(obj =>
                 {
+                    obj.SetContainer(serviceContainer);
                     var hasInitialize = obj as IHasInitialize;
                     hasInitialize?.Initialize();
                 });
 
-            appContext.ConfigureDependencies(serviceContainer);
             appContext.AppStartedFirstTime = appContext.AppStateStorageService.Current.AppStartedFirstTime;
 
             return appContext;

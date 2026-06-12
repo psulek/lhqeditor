@@ -66,9 +66,6 @@ namespace LHQ.App.Services.Implementation
             }
         }
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         void IHasInitialize.Initialize()
         {
             _isolatedStorage = new IsolatedStorageManager();

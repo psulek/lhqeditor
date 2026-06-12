@@ -56,9 +56,6 @@ namespace LHQ.App.Services.Implementation
 
         private IMessenger Messenger => ShellViewContext.Messenger;
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public bool IsTempraryBlocked(TemporaryBlockType blockType)
         {
             switch (blockType)

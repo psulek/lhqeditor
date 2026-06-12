@@ -27,7 +27,6 @@ using System;
 using System.IO;
 using LHQ.App.Services.Implementation;
 using LHQ.App.Services.Interfaces;
-using LHQ.Core.DependencyInjection;
 using LHQ.Utils.Extensions;
 using LHQ.Utils.Utilities;
 using Newtonsoft.Json;
@@ -42,14 +41,8 @@ namespace LHQ.App.Code
             CommentHandling = CommentHandling.Ignore
         };
 
-        private IFileSystemService _fileSystemService;
-        private string _fullFileName;
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-            _fileSystemService = serviceContainer.Get<IFileSystemService>();
-            _fullFileName = _fileSystemService.GetDataFileName(GetFileName());
-        }
+        private string _fullPath;
+        private string FullPath => _fullPath ?? (_fullPath = Container.Get<IFileSystemService>().GetDataFileName(GetFileName()));
 
         public abstract string GetFileName();
 
@@ -72,11 +65,12 @@ namespace LHQ.App.Code
         public virtual T Load()
         {
             T result = default;
-            if (File.Exists(_fullFileName))
+            if (File.Exists(FullPath))
             {
                 try
                 {
-                    string fileContent = FileUtils.ReadAllText(_fullFileName);
+                    Logger.Info($"{GetType().FullName}.Load() loading from file '{FullPath}' ...");
+                    string fileContent = FileUtils.ReadAllText(FullPath);
 
                     if (!fileContent.IsNullOrEmpty())
                     {
@@ -86,6 +80,7 @@ namespace LHQ.App.Code
                 }
                 catch (Exception e)
                 {
+                    Logger.Error($"{GetType().Namespace}.Load() from file '{FullPath}' failed", e);
                     DebugUtils.Error($"{GetType().Namespace}.Load() failed", e);
                 }
             }
@@ -97,7 +92,7 @@ namespace LHQ.App.Code
 
         public virtual void Save(T config)
         {
-            SaveToFile(config, _fullFileName);
+            SaveToFile(config, FullPath);
         }
 
         internal void SaveToFile(T config, string fileName)
@@ -112,7 +107,7 @@ namespace LHQ.App.Code
             JObject jsonRoot = SaveToJson(config);
             ArgumentValidator.EnsureArgumentNotNull(jsonRoot, "jsonRoot");
 
-            string json = jsonRoot.ToString(Formatting.Indented);
+            string json = jsonRoot.ToString(Formatting.Indented, new JsonConverter[0]);
             FileUtils.WriteAllText(fileName, json);
         }
 

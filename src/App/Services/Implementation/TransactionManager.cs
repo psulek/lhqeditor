@@ -46,9 +46,6 @@ namespace LHQ.App.Services.Implementation
 
         private IUndoManager UndoManager => ShellViewContext.UndoManager;
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public IDisposable TemporaryBlockUndoManager()
         {
             return new BlockedUndoScope(this);

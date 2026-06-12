@@ -50,9 +50,6 @@ namespace LHQ.App.Services.Implementation
             _dataFormat = DataFormats.GetDataFormat(fullName + "TreeElementClipboardData");
         }
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public void SetSelectionToClipboard(bool isMarkedForCut, CopyElementSpecialTag specialCopyTag = CopyElementSpecialTag.None)
         {
             TreeSelectionInfo selectionInfo = TreeViewService.GetSelection();

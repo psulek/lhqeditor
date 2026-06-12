@@ -1,4 +1,5 @@
 #region License
+
 // Copyright (c) 2025 Peter Šulek / ScaleHQ Solutions s.r.o.
 // 
 // Permission is hereby granted, free of charge, to any person
@@ -21,9 +22,11 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
+using System.IO;
 using Velopack.Locators;
 using Velopack.Logging;
 using Velopack.Windows;
@@ -47,7 +50,7 @@ namespace LHQ.App
             {
                 // NOTE: Ignore exceptions
             }
-            
+
             RegisterFileAssociation();
         }
 
@@ -56,13 +59,13 @@ namespace LHQ.App
             var logger = VelopackLocator.Current.Log;
             if (!FileAssociationManager.IsAssociated(FileExtension, ProgramUID))
             {
-                string appPath = VelopackLocator.Current.ProcessExePath;
+                string appPath = Path.Combine(VelopackLocator.Current.AppContentDir, VelopackLocator.Current.ThisExeRelativePath);
                 string iconPath = $"{appPath},0"; // Use the exe's icon
                 FileAssociationManager.RegisterFileAssociation(
-                    FileExtension, 
-                    ProgramUID, 
-                    ProgramDesc, 
-                    appPath, 
+                    FileExtension,
+                    ProgramUID,
+                    ProgramDesc,
+                    appPath,
                     iconPath
                 );
                 logger.LogInformation($"File association for {FileExtension} registered successfully!");
@@ -80,7 +83,8 @@ namespace LHQ.App
             {
                 var shortcutsApi = new Shortcuts();
                 var location = ShortcutLocation.AppRoot;
-                logger.Log(VelopackLogLevel.Information, $"Creating shortcut for: {VelopackLocator.Current.ThisExeRelativePath} on {location} (OnFirstRun)");
+                logger.Log(VelopackLogLevel.Information,
+                    $"Creating shortcut for: {VelopackLocator.Current.ThisExeRelativePath} on {location} (OnFirstRun)");
                 shortcutsApi.CreateShortcutForThisExe(location);
             }
             catch
@@ -116,7 +120,10 @@ namespace LHQ.App
             {
                 FileAssociationManager.UnregisterFileAssociation(FileExtension, ProgramUID);
             }
-            catch { /* Ignore errors during uninstall */ }
+            catch
+            {
+                /* Ignore errors during uninstall */
+            }
         }
     }
 }

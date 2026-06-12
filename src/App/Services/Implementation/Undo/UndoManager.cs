@@ -35,9 +35,6 @@ namespace LHQ.App.Services.Implementation.Undo
 {
     public class UndoManager : ShellViewContextServiceBase, IUndoManager
     {
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         private readonly StackExt<IUndoCommand> _undoStack = new StackExt<IUndoCommand>();
         private readonly StackExt<IUndoCommand> _redoStack = new StackExt<IUndoCommand>();
 

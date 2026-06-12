@@ -45,6 +45,8 @@ namespace LHQ.Core.Interfaces
         void Log(LogEventType eventType, string message, Exception exception = null);
 
         object GetSourceLogger();
+        
+        void Initialize(string appFolder, string logsFolder);
     }
 
     public enum LogEventType

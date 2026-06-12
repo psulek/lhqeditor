@@ -42,9 +42,6 @@ namespace LHQ.App.Services.Implementation
             _serializerManager = new ModelSerializerManager();
         }
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public ModelContext Clone(ModelContext source, bool preserveKeys = false)
         {
             var saveOptions = new ModelSaveOptions

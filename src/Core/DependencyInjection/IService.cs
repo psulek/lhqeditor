@@ -27,6 +27,6 @@ namespace LHQ.Core.DependencyInjection
 {
     public interface IService
     {
-        void ConfigureDependencies(IServiceContainer serviceContainer);
+        void SetContainer(IServiceContainer serviceContainer);
     }
 }

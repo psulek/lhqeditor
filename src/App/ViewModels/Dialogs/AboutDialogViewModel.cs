@@ -42,10 +42,15 @@ namespace LHQ.App.ViewModels.Dialogs
 
             Copyright = StringsExt.CopyrightNow;
 
+            string updateChannel = appContext.AppConfigFactory.Current?.UpdateChannel;
+            UpdateChannel = string.IsNullOrWhiteSpace(updateChannel) ? "stable" : updateChannel;
+
             WebsiteLinkCommand = new DelegateCommand(WebsiteLinkExecute);
         }
 
         public string Copyright { get; }
+
+        public string UpdateChannel { get; }
 
         public ICommand WebsiteLinkCommand { get; }
 

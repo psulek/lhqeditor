@@ -97,6 +97,20 @@ namespace LHQ.App.Services.Implementation
                 Register(registration);
             }
         }
+        
+        public T LoadByType<T>() where T: IService
+        {
+            var type =  typeof(T);
+            var registration = _serviceRegistrations.Values.SingleOrDefault(x=>x.ContractType == type);
+            if (registration != null)
+            {
+                var instance = GetInstance<T>(registration);
+                instance.SetContainer(this);
+                return instance;
+            }
+            
+            return default;
+        }
 
         public void Load(Action<IService> loadTask)
         {
@@ -104,7 +118,7 @@ namespace LHQ.App.Services.Implementation
 
             foreach (IService service in services)
             {
-                service.ConfigureDependencies(this);
+                service.SetContainer(this);
             }
 
             foreach (IService service in services)

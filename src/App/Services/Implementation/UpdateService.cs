@@ -29,7 +29,6 @@ using System.Threading.Tasks;
 using LHQ.App.Model;
 using LHQ.App.Services.Interfaces;
 using LHQ.Core.DependencyInjection;
-using NuGet.Versioning;
 using Velopack;
 using Velopack.Locators;
 using Velopack.Sources;
@@ -41,9 +40,6 @@ namespace LHQ.App.Services.Implementation
         private UpdateManager _updateManager;
         private DateTime _lastUpdateCheckTime = DateTime.MinValue;
         private UpdateCheckInfo _lastUpdateCheckInfo = null;
-
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {}
 
         public virtual async Task<UpdateCheckInfo> CheckForUpdate()
         {
@@ -70,7 +66,8 @@ namespace LHQ.App.Services.Implementation
                 string updateServerType = AppConfig.UpdateServerType ?? "github";
                 bool useGithub = updateServerType.ToLower() == "github" || string.IsNullOrEmpty(updateServerType);
 
-                Logger.Info($"Checking for updates... (useGithub={useGithub})");
+                string updateChannel = AppConfig.UpdateChannel ?? string.Empty;
+                Logger.Info($"Checking for updates... (useGithub={useGithub}, type: {updateServerType}, channel: {updateChannel})");
             
                 IUpdateSource updateSource = null;
                 if (useGithub)
@@ -87,7 +84,7 @@ namespace LHQ.App.Services.Implementation
                 }
                 else
                 {
-                    Logger.Warning("Unsupported update source type configured in AppConfig. Supported is only 'github' currently.");
+                    Logger.Warning($"Unsupported update source type '{updateServerType}' configured in AppConfig. Supported is only 'github' currently.");
                     
                     // var path = "C:\\dev\\github\\psulek\\lhqeditor\\src\\App\\Releases\\";
                     // var localDir = new DirectoryInfo(path);
@@ -99,11 +96,15 @@ namespace LHQ.App.Services.Implementation
 
                 if (updateSource != null)
                 {
-                    string channel = AppConfig.UpdateChannel;
-                    var options = string.IsNullOrEmpty(channel) ? null : new UpdateOptions { ExplicitChannel = channel };
+                    Logger.Info($"Using update channel: '{updateChannel}' to check for updates");
+                    
+                    var options = string.IsNullOrEmpty(updateChannel) ? null : new UpdateOptions
+                    {
+                        ExplicitChannel = updateChannel,
+                        AllowVersionDowngrade = true
+                    };
                     _updateManager = new UpdateManager(updateSource, options);
                     return await _updateManager.CheckForUpdatesAsync();
-                
                 }
             }
             catch (Exception e)

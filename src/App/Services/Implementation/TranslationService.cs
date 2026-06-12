@@ -61,9 +61,6 @@ namespace LHQ.App.Services.Implementation
             }
         }
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         public List<ITranslationProvider> GetProviders()
         {
             return PluginServiceContainer.GetAll<ITranslationProvider>();

@@ -30,7 +30,6 @@ using LHQ.App.Services.Interfaces.Undo;
 using LHQ.App.ViewModels;
 using LHQ.Core.DependencyInjection;
 using LHQ.Data.Interfaces.Key;
-using LHQ.Utils.Extensions;
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace LHQ.App.Services.Implementation
@@ -42,51 +41,40 @@ namespace LHQ.App.Services.Implementation
             AppContext = appContext ?? throw new ArgumentNullException(nameof(appContext));
         }
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        {
-            ServiceContainer = serviceContainer ?? throw new ArgumentNullException(nameof(serviceContainer));
-            if (AppContext.ServiceContainer == serviceContainer)
-            {
-                throw new InvalidOperationException("shellServiceContainer must be different to AppServiceContainer!");
-            }
-
-            ShellService = ServiceContainer.Get<IShellService>();
-            Messenger = ServiceContainer.Get<IMessenger>();
-            ShellViewCache = ServiceContainer.Get<IShellViewCache>();
-            ClipboardManager = ServiceContainer.Get<ITreeElementClipboardManager>();
-            TreeViewService = ServiceContainer.Get<ITreeViewService>();
-            PropertyChangeObserver = ServiceContainer.Get<IPropertyChangeObserver>();
-            ValidatorContext = ServiceContainer.Get<IValidatorContext>();
-            UndoManager = ServiceContainer.Get<IUndoManager>();
-            TransactionManager = ServiceContainer.Get<ITransactionManager>();
-            ResourceImportExportService = ServiceContainer.Get<IResourceImportExportService>();
-        }
-
         public IAppContext AppContext { get; }
 
-        public IShellService ShellService { get; private set; }
+        private IShellService _shellService;
+        public IShellService ShellService => _shellService ?? (_shellService = Container.Get<IShellService>());
 
-        public IServiceContainer ServiceContainer { get; private set; }
-
-        public IMessenger Messenger { get; private set; }
+        private IMessenger _messenger;
+        public IMessenger Messenger => _messenger ?? (_messenger = Container.Get<IMessenger>());
 
         public ShellViewModel ShellViewModel { get; set; }
 
-        public IShellViewCache ShellViewCache { get; private set; }
+        private IShellViewCache _shellViewCache;
+        public IShellViewCache ShellViewCache => _shellViewCache ?? (_shellViewCache = Container.Get<IShellViewCache>());
 
-        public ITreeElementClipboardManager ClipboardManager { get; private set; }
+        private ITreeElementClipboardManager _clipboardManager;
+        public ITreeElementClipboardManager ClipboardManager => _clipboardManager ?? (_clipboardManager = Container.Get<ITreeElementClipboardManager>());
 
-        public ITreeViewService TreeViewService { get; private set; }
+        private ITreeViewService _treeViewService;
+        public ITreeViewService TreeViewService => _treeViewService ?? (_treeViewService = Container.Get<ITreeViewService>());
 
-        public IPropertyChangeObserver PropertyChangeObserver { get; private set; }
+        private IPropertyChangeObserver _propertyChangeObserver;
+        public IPropertyChangeObserver PropertyChangeObserver => _propertyChangeObserver ?? (_propertyChangeObserver = Container.Get<IPropertyChangeObserver>());
 
-        public IValidatorContext ValidatorContext { get; private set; }
+        private IValidatorContext _validatorContext;
+        public IValidatorContext ValidatorContext => _validatorContext ?? (_validatorContext = Container.Get<IValidatorContext>());
 
-        public ITransactionManager TransactionManager { get; private set; }
+        private ITransactionManager _transactionManager;
+        public ITransactionManager TransactionManager => _transactionManager ?? (_transactionManager = Container.Get<ITransactionManager>());
 
-        public IUndoManager UndoManager { get; private set; }
+        private IUndoManager _undoManager;
+        public IUndoManager UndoManager => _undoManager ?? (_undoManager = Container.Get<IUndoManager>());
 
-        public IResourceImportExportService ResourceImportExportService { get; private set; }
+        private IResourceImportExportService _resourceImportExportService;
+        public IResourceImportExportService ResourceImportExportService =>
+            _resourceImportExportService ?? (_resourceImportExportService = Container.Get<IResourceImportExportService>());
 
         public IModelElementKeyProvider ModelElementKeyProvider => ShellViewModel.ModelContext.KeyProvider;
 
@@ -104,7 +92,7 @@ namespace LHQ.App.Services.Implementation
                 }
             }
 
-            ServiceContainer serviceContainer = Implementation.ServiceContainer.Create(OnServiceCreated);
+            ServiceContainer serviceContainer = ServiceContainer.Create(OnServiceCreated);
             servicesRegistrator.RegisterServices(serviceContainer, ServicesRegistratorType.ShellViewContextService);
 
             serviceContainer.Load(obj =>
@@ -113,7 +101,7 @@ namespace LHQ.App.Services.Implementation
                     hasInitialize?.Initialize();
                 });
 
-            shellViewContext.ConfigureDependencies(serviceContainer);
+            ((IService)shellViewContext).SetContainer(serviceContainer);
 
             return shellViewContext;
         }

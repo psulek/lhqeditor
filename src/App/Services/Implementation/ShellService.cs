@@ -68,9 +68,6 @@ namespace LHQ.App.Services.Implementation
 
         protected IApplicationService ApplicationService => AppContext.ApplicationService;
 
-        public override void ConfigureDependencies(IServiceContainer serviceContainer)
-        { }
-
         protected override void AppContextUpdated()
         {
             RegisterEvents();

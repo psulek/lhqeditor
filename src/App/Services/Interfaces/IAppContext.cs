@@ -56,8 +56,6 @@ namespace LHQ.App.Services.Interfaces
 
         IServicesRegistrator ServicesRegistrator { get; }
 
-        IServiceContainer ServiceContainer { get; }
-
         IUIService UIService { get; }
 
         IDialogService DialogService { get; }

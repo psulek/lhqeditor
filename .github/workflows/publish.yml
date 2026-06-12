@@ -33,12 +33,15 @@ jobs:
               repo: context.repo.repo,
               release_id: context.payload.release.id,
             });
-            const hasVsix = assets.some(a => a.name.endsWith('.vsix'));
-            if (hasVsix) {
-              core.notice('Release already contains a .vsix asset — skipping rebuild.');
+            const hasScaleHqNonVsix = assets.some(a => {
+              const name = (a.name || '').toLowerCase();
+              return name.startsWith('scalehq');
+            });
+            if (hasScaleHqNonVsix) {
+              core.notice('Release already contains a ScaleHQ* asset(s) - skipping rebuild.');
               process.exit(1);
             }
-            core.notice('No .vsix asset found — proceeding with build.');
+            core.notice('No ScaleHQ* asset(s) found - proceeding with build.');
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
